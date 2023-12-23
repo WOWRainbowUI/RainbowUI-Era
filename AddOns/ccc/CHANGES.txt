@@ -1,0 +1,10 @@
+lightweight tag 0ac5b74c15dbf92c3a184a7a7eb94806ddedff3a v1.2.5
+Author:	Simon Hirsig <simon.hirsig@gmail.com>
+Date:	Sat Dec 9 08:13:52 2023 +0100
+
+commit 0ac5b74c15dbf92c3a184a7a7eb94806ddedff3a
+Author: Simon Hirsig <simon.hirsig@gmail.com>
+Date:   Sat Dec 9 08:13:52 2023 +0100
+
+    client version change
+

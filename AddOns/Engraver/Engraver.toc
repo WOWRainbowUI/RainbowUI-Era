@@ -1,0 +1,12 @@
+## Interface: 11500
+## Title: Engraver
+## Notes: One-click rune engraving for Season of Discovery.
+## Author: Nastiku
+## Version: v1.4
+## X-Curse-Project-ID: 947701
+
+## Title-zhTW: |cff0099FF[介面]|r 一鍵符文
+## Notes-zhTW: Engraver |n|n探索賽季專用的插件。在畫面上顯示你所擁有的符文，點一下立即套用，不用再打開角色視窗。|n|n|cffffd200使用方法: |r左鍵套用符文，右鍵拖曳移動面板的位置。
+## X-Category-zhTW: 介面
+
+Engraver.xml

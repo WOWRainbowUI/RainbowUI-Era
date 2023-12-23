@@ -1,0 +1,15 @@
+tag a34c4d788575bdac29613dc83e3896ad45af6726 r140
+Author:	corgatag <13686151+corgatag@users.noreply.github.com>
+Date:	Tue Dec 20 01:19:35 2022 -0800
+
+- Fix warlock interrupt spell checks
+- Add support for low-priority casts
+- Add low priority casts and purges for Dragonflight S1
+
+commit 84a680472f0e3a01ccbd19e14cd30a9cca96f28a
+Author: corgatag <13686151+corgatag@users.noreply.github.com>
+Date:   Tue Dec 20 01:17:52 2022 -0800
+
+    - Add support for low-priority casts
+    - Add low priority casts and purges for Dragonflight S1
+

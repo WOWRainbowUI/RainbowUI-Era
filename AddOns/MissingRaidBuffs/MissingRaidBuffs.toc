@@ -1,0 +1,35 @@
+## Interface: 11500
+## Title: Missing Raid Buffs
+## Title-zhCN: 缺失buff检测
+## Notes: List players missing raid buffs that you can cast
+## Notes-zhCN: 显示你的小队或团队成员缺失的buff
+## Title-zhTW: |cffFF7F00[團隊]|r 增益缺失監看
+## Notes-zhTW: Missing Raid Buffs |n|n增益缺失監看，智力、耐力、精神、爪子，讓你非常直覺快速的看到缺少增益的人，讓你可以快速地幫死掉的人補上增益。
+## Version: 1.1.8
+## Author: Slainsvirtue-Mankrik
+## X-Curse-Project-ID: 358106
+##
+## LoadOnDemand: 0
+## OptionalDeps: LibStub, CallbackHandler-1.0, Ace-3.0
+## X-Embeds: LibStub, CallbackHandler-1.0, Ace-3.0
+## SavedVariables: MissingRaidBuffsDB
+
+#@no-lib-strip@
+lib\LibStub\LibStub.lua
+lib\CallbackHandler-1.0\CallbackHandler-1.0.xml
+lib\AceLocale-3.0\AceLocale-3.0.xml
+lib\AceGUI-3.0\AceGUI-3.0.xml
+lib\AceDB-3.0\AceDB-3.0.xml
+lib\AceConfigRegistry-3.0\AceConfigRegistry-3.0.xml
+lib\AceConfigDialog-3.0\AceConfigDialog-3.0.xml
+#@end-no-lib-strip@
+
+locales.xml
+addon.lua
+media.lua
+config.lua
+
+Model.lua
+Controller.lua
+View.lua
+View.xml

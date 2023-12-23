@@ -1,0 +1,9 @@
+## Interface: 11500
+## Title: Action Cam
+## Author: 彩虹ui
+## Title-zhTW: |cffffffee[系統]|r 微動感鏡頭
+## Notes-zhTW: Action Cam |n|n登入時自動啟用遊戲內建的動感鏡頭功能，角色稍微偏下、加大前方的視野、畫面不會晃動。|n|n要恢復讓角色置中，取消載入這個插件，重新載入介面後在詢問實驗性功能的對話框按 "關閉" 即可。
+## X-Category-zhTW: 系統
+## Version: 10.0.2
+
+ActionCam.lua

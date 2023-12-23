@@ -1,0 +1,215 @@
+<Ui
+	xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+
+	<Button name="MissingRaidBuffsListViewButtonTemplate" mixin="MissingRaidBuffsListViewButtonMixIn" virtual="true" hidden="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\RaidFrame\Raid-Bar-Hp-Bg" setAllPoints="true" ignoreParentAlpha="true">
+					<TexCoords left="0" right="1" top="0" bottom="0.53125" />
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString parentKey="Name" inherits="GameFontHighlightOutline" justifyH="LEFT" justifyV="CENTER" wordwrap="false">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="3" />
+						<Anchor point="BOTTOMRIGHT" x="-3" />
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Status" inherits="GameFontDisable" justifyH="RIGHT" justifyV="CENTER" wordwrap="false">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="3" />
+						<Anchor point="BOTTOMRIGHT" x="-3" />
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="PreferredTexture" hidden="true">
+					<Size x="2" />
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeKey="$parent.Name" relativePoint="TOPLEFT" x="-1" />
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Name" relativePoint="BOTTOMLEFT" x="-1" y="1" />
+					</Anchors>
+					<Color r="0.8313725" g="0.68627" b="0.215686" />
+				</Texture>
+				<Texture parentKey="OutOfRangeIcon" file="Interface\RaidFrame\ReadyCheck-NotReady" ignoreParentAlpha="true">
+					<Size x="14" y="14" />
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<StatusBar parentKey="Background" useParentLevel="true" setAllPoints="true">
+				<BarTexture file="Interface\TargetingFrame\UI-StatusBar" />
+			</StatusBar>
+		</Frames>
+		<Scripts>
+			<OnUpdate method="OnUpdate"/>
+		</Scripts>
+	</Button>
+	<Button name="MissingRaidBuffsListViewSecureButtonTemplate" inherits="SecureUnitButtonTemplate,MissingRaidBuffsListViewButtonTemplate" virtual="true" hidden="true">
+		<Scripts>
+			<OnLoad>
+				self:SetAttribute("type1", "target");
+			</OnLoad>
+			<OnMouseDown>
+				self.Name:SetPoint("TOPLEFT", 4, -2)
+			</OnMouseDown>
+			<OnMouseUp>
+				self.Name:SetPoint("TOPLEFT", 3, 0)
+			</OnMouseUp>
+		</Scripts>
+		<HighlightTexture setAllPoints="true" file="Interface\Buttons\ListButtons">
+			<TexCoords left="0" right="0.8203125" top="0.1875" bottom="0.375"/>
+		</HighlightTexture>
+	</Button>
+
+	<Button name="MissingRaidBuffsListViewQuickSelectButtonTemplate" mixin="MissingRaidBuffsListViewQuickSelectButtonMixIn" virtual="true" hidden="true">
+		<Size x="18" y="18" />
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture parentKey="Icon" setAllPoints="true" />
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Highlight" atlas="bags-newitem" useAtlasSize="false" alphaMode="ADD" hidden="true" setAllPoints="true">
+					<Color r="0" g="1" b="0" a="1" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick method="OnClick" />
+			<OnMouseDown method="OnMouseDown" />
+			<OnMouseUp method="OnMouseUp" />
+			<OnEnter method="OnEnter" />
+			<OnLeave method="OnLeave" />
+		</Scripts>
+	</Button>
+
+	<Frame name="MissingRaidBuffsListView" hidden="false" toplevel="true" parent="UIParent" movable="true" resizable="true">
+		<Size x="175" y="100"/>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<ResizeBounds>
+			<minResize>
+				<AbsDimension x="175" y="100"/>
+			</minResize>
+			<maxResize>
+				<AbsDimension x="300" />
+			</maxResize>
+		</ResizeBounds>
+		<Frames>
+			<Frame parentKey="TitleBar" mixin="MissingRaidBuffsListViewTitleBarMixIn" frameLevel="100" hidden="false" enableMouse="true">
+				<Size y="20"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" />
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture setAllPoints="true">
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<FontString inherits="GameFontNormalMed1" text="L_MISSING_RAID_BUFFS" justifyH="CENTER" justifyV="CENTER" setAllPoints="true" />
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button parentKey="ConfigureButton" mixin="MissingRaidBuffsListViewConfigureButtonMixIn" hidden="false">
+						<Size x="19" y="19" />
+						<Anchors>
+							<Anchor point="RIGHT" x="0" y="0" />
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<Texture parentKey="texture" file="Interface\WorldMap\GEAR_64" alpha="0.75">
+									<TexCoords left="0" right="0.5" top="0" bottom="0.5" />
+								</Texture>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad method="OnLoad" />
+							<OnEnter method="OnEnter" />
+							<OnLeave method="OnLeave" />
+							<OnMouseDown method="OnMouseDown" />
+							<OnMouseUp method="OnMouseUp" />
+							<OnClick method="OnClick" />
+						</Scripts>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForDrag("LeftButton")
+					</OnLoad>
+					<OnDragStart method="OnDragStart" />
+					<OnDragStop method="OnDragStop" />
+				</Scripts>
+			</Frame>
+			<Frame parentKey="QuickSelect" mixin="MissingRaidBuffsListViewQuickSelectMixIn"  hidden="true">
+				<Size y="20" />
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" />
+					<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture>
+							<Anchors>
+								<Anchor point="TOPLEFT" />
+								<Anchor point="BOTTOMRIGHT" />
+							</Anchors>
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad method="OnLoad" />
+				</Scripts>
+			</Frame>
+			<ScrollFrame parentKey="ScrollFrame" mixin="MissingRaidBuffsListViewScrollFrameMixIn" inherits="FauxScrollFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="BOTTOMLEFT" />
+					<Anchor point="BOTTOMRIGHT" x="-22" />
+				</Anchors>
+				<Scripts>
+					<OnLoad method="OnLoad" />
+					<OnVerticalScroll method="OnVerticalScroll" />
+					<OnSizeChanged method="OnSizeChanged" />
+				</Scripts>
+			</ScrollFrame>
+			<Button parentKey="ResizeButton" mixin="MissingRaidBuffsListViewResizeButtonMixIn" frameLevel="200" enableMouse="true" movable="true" >
+				<Size x="16" y="16"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent" x="0" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnMouseDown method="OnMouseDown" />
+					<OnMouseUp method="OnMouseUp" />
+				</Scripts>
+				<NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+				<HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
+				<PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture>
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+					<Color r="0" g="0" b="0" a="0.5"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self:SetClampedToScreen(true)
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</Ui>

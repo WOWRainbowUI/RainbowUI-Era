@@ -1,0 +1,28 @@
+== v1.05 - 16th December 2023
+* Warriors added
+* Levels added to the Quick Start popup
+* Quick Start now also appears on the Kalimdor and Eastern Kingdoms maps
+* Some of the excessive pins removed
+
+== v1.04 - 15th December 2023
+* Mages added
+
+== v1.03 - 14th December 2023
+* Warlock added
+* Numerous formatting fixes
+* Couple of coding errors in the engine fixed - had to redesign the Quick Start data
+* Class colours added to Tooltips
+
+== v1.02 - 13th December 2023
+* Shaman added
+* Various formatting errors fixed, as you'd expect with an AddOn like this
+
+== v1.01 - 12th December 2023
+* Paladin added
+* Summary on the Azeroth map added - shows you where to start
+* Removed excessive Druid pins, especially Swamp of Sorrows, Westfall
+* A lot of typos fixed
+
+== v1.0 - 12th December 2023
+* Initial release - Druid only
+
