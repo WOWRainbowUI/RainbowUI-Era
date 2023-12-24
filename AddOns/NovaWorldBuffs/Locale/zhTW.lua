@@ -30,6 +30,8 @@ L["Ribbon Dance"] = "緞帶舞";
 L["Slip'kik's Savvy"] = "斯里基克的機智";
 L["Fengus' Ferocity"] = "芬古斯的狂暴";
 L["Mol'dar's Moxie"] = "摩爾達的勇氣";
+L["Boon of Blackfathom"] = "黑澗深淵的恩賜";
+L["Ashenvale Rallying Cry"] = "梣谷振奮咆哮";
 
 ---=====---
 ---Horde---
@@ -827,9 +829,42 @@ L["guildTerok10Desc"] = "在泰洛卡靈魂尖塔還剩 10 分鐘時，傳送公
 L["showShatWorldmapMarkersTerokTitle"] = "在薩塔斯世界地圖顯示泰洛卡計時器";
 L["showShatWorldmapMarkersTerokDesc"] = "是否在在薩塔斯世界地圖上顯示泰洛卡計時器圖標?";
 
+
+
+L["sodHeaderText"] = "探索賽季服選項";
+
+L["disableOnlyNefRendBelowMaxLevelTitle"] = "關閉 Ony/Nef/Rend 顯示";
+L["disableOnlyNefRendBelowMaxLevelDesc"] = "是否在特定等級以下時關閉 Ony/Nef/Rend 顯示?";
+
+L["disableOnlyNefRendBelowMaxLevelNumTitle"] = "Ony/Nef/Rend 最低等級";
+L["disableOnlyNefRendBelowMaxLevelNumDesc"] = "我們應該在哪個等級以下隱藏 Ony/Nef/Rend 圖示，不讓它們顯示在地圖和小地圖按鈕提示?";
+
+L["soundsBlackfathomBoonTitle"] = "黑澗深淵的恩賜音效";
+L["soundsBlackfathomBoonDesc"] = "在獲得黑澗深淵的恩賜增益效果時播放音效嗎?";
+
+L["soundsAshenvaleStartsSoonTitle"] = "梣谷即將開始音效";
+L["soundsAshenvaleStartsSoonDesc"] = "在梣谷即將開始時播放音效嗎?";
+
+L["blackfathomBoomBuffDropped"] = "黑澗深淵的恩賜增益效果已消失。";
+
+L["showAshenvaleOverlayTitle"] = "梣谷浮動提示";
+L["showAshenvaleOverlayDesc"] = "是否在你的介面上永久顯示可移動的梣谷資源提示?";
+
+L["lockAshenvaleOverlayTitle"] = "鎖定浮動提示";
+L["lockAshenvaleOverlayDesc"] = "鎖定梣谷提示，使其忽略你的滑鼠懸停。";
+
+L["ashenvaleOverlayScaleTitle"] = "梣谷提示縮放";
+L["ashenvaleOverlayScaleDesc"] = "設定梣谷提示的大小。";
+
+L["ashenvaleOverlayText"] = "|cFFFFFF00-在你的介面上永遠顯示梣谷資源提示-";
+L["layersNoteText"] = "|cFFFF6900關於 SoD 中的鏡像說明:|r |cFF9CD6DENWB 最多只能追蹤 10 個鏡像，這是為了讓資料大小不會太大，而能很容易地在玩家之間分享。在目前人口眾多的 SoD 伺服器上，鏡像超過了 10 個，因此如果它沒有顯示你所在的鏡像，那是因為你不是在 10 個已記錄的鏡像之一。一旦推出時的高峰期過去，數量可能會減少至低於 10 個，但在那之前它可能不可靠，對此我們感到抱歉。|r";
 --wolk
 L["showShatWorldmapMarkersTerokTitle"] = "佔塔/冬握湖顯示";
 L["showShatWorldmapMarkersTerokDesc"] = "在主城中顯示泰洛卡/冬握湖時間?";
+																				  
+
+													  
+																									  
 
 L["Completed PvP dailies:"] = "已完成 PvP 每日任務";
 L["Hellfire Towers"] = "地獄火佔塔";
@@ -924,4 +959,9 @@ L["|cFF9CD6DEControl Left-Click|r Guild Layers"] = "|cFF9CD6DEctrl+左鍵|r 公�
 L["10 minutes"] = "10分鐘"
 L["|CffDEDE42Shift Left-Click to send timers to guild chat.\nShift Right-Click to send timers to say."] = "|CffDEDE42Shift+左鍵點擊傳送計時到公會聊天。\nShift+右鍵點擊傳送到一般聊天。"
 L["Terokkar Towers\n|CffDEDE42Shift Left-Click to send timers to guild chat.\nShift Right-Click to send timers to say."] = "泰洛卡計時器|CffDEDE42Shift+左鍵點擊傳送計時到公會聊天。\nShift+右鍵點擊傳送到一般聊天。"
-L["[NWB] Terokkar Towers reset in "] = "[NWB]泰洛卡占塔重置於"
+L["[NWB] Terokkar Towers reset in "] = "[NWB]泰洛卡占塔重置於"																																	
+L["|cFF9CD6DELeft-Click|r Timers"] = "|cFF9CD6DE點擊左鍵|r 時間"
+L["|cFF9CD6DERight-Click|r Buffs"] = "|cFF9CD6DE點擊右鍵|r 增益"
+L["|cFF9CD6DEShift Left-Click|r Felwood Map"] = "|cFF9CD6DEShift+左鍵|r 費伍德地圖"
+L["|cFF9CD6DEShift Right-Click|r Config"] = "|cFF9CD6DEShift+右鍵 |r 設定"
+L["|cFF9CD6DEControl Left-Click|r Guild Layers"] = "|cFF9CD6DECtrl+左鍵|r 公會成員鏡像"

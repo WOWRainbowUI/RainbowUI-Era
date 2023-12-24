@@ -23,6 +23,10 @@ elseif (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) then
 elseif (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	NWB.isRetail = true;
 end
+if (C_Engraving and C_Engraving.IsEngravingEnabled()) then
+	NWB.isSOD = true;
+	NWB_isSOD = true; --External use.
+end
 --Temporary until actual launch.
 --if (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) then
 	--This basically meant prepatch, some things were still enabled.
@@ -53,6 +57,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("NovaWorldBuffs");
 local LDB = LibStub:GetLibrary("LibDataBroker-1.1");
 NWB.LDBIcon = LibStub("LibDBIcon-1.0");
 local version = GetAddOnMetadata("NovaWorldBuffs", "Version") or 9999;
+NWB.version = tonumber(version);
 NWB.latestRemoteVersion = version;
 NWB.prefixColor = "|cFFFF6900";
 local terokOffset = 2.7507;
@@ -97,6 +102,7 @@ function NWB:OnInitialize()
 	self:createShatDailyMarkers();
 	self:getDmfData();
 	self:createDmfMarkers();
+	self:loadAshenvale();
 	self:doResetTimerData();
 	self:resetSongFlowers();
 	self:resetLayerData();
@@ -119,10 +125,11 @@ function NWB:OnInitialize()
 		self:createTerokkarMarkers();
 		self:populateDailyData();
 	end
+	self:checkNewVersion();
 end
 
 --Set font used in fontstrings on frames.
-NWB.regionFont = "Fonts\\ARIALN.ttf";
+NWB.regionFont = STANDARD_TEXT_FONT;
 function NWB:setRegionFont()
 	if (LOCALE_koKR) then
      	NWB.regionFont = "Fonts\\2002.TTF";
@@ -237,7 +244,7 @@ function NWB:printBuffTimers(isLogon)
 			NWB:print("|HNWBCustomLink:timers|h" .. msg .. "|h", nil, "[DMF]");
 		end
 	end
-	if (NWB.isDmfUp and NWB.data.myChars[UnitName("player")].buffs) then
+	if ((NWB.isDmfUp or NWB.isSOD) and NWB.data.myChars[UnitName("player")].buffs) then
 		local dmfCooldown, noMsgs = NWB:getDmfCooldown();
 		if (dmfCooldown > 0 and not noMsgs) then
 			if ((not isLogon and NWB.db.global.showDmfBuffWb) or NWB.db.global.logonDmfBuffCooldown) then
@@ -650,7 +657,7 @@ function NWB:ticker()
 								NWB.data.layers[layer]["terokTowers10"] = nil;
 								local layer = NWB:GetLayerNum(layer);
 								local layerMsg = " (Layer " .. layer .. ")";
-								local msg = string.format(L["terokkarWarning"], "10 minutes") .. layerMsg .. ".";
+								local msg = string.format(L["terokkarWarning"], L["10 minutes"]) .. layerMsg .. ".";
 								if (NWB.db.global.terokkarChat10) then
 									NWB:print(msg);
 								end
@@ -708,7 +715,7 @@ function NWB:ticker()
 						local secondsLeft = endTime - GetServerTime();
 						if (secondsLeft <= 630 and secondsLeft >= 570) then
 							NWB.data["terokTowers10"] = nil;
-							local msg = string.format(L["terokkarWarning"], "10 minutes") .. ".";
+							local msg = string.format(L["terokkarWarning"], L["10 minutes"]) .. ".";
 							if (NWB.db.global.terokkarChat10) then
 								NWB:print(msg);
 							end
@@ -760,7 +767,7 @@ function NWB:ticker()
 	if (NWB.data.myChars[UnitName("player")].dmfCooldown) then
 		NWB.data.myChars[UnitName("player")].dmfCooldown = NWB.data.myChars[UnitName("player")].dmfCooldown - 1;
 		if (lastDmfTick >= 1 and NWB.data.myChars[UnitName("player")].dmfCooldown <= 0) then
-			if (NWB.isDmfUp) then
+			if (NWB.isDmfUp or NWB.isSOD) then
 				NWB:print(L["dmfBuffReset"]);
 			end
 			lastDmfTick = -99999;
@@ -1066,6 +1073,20 @@ function NWB:sendGuildMsg(msg, type, zoneName, prefix, minVersion)
 	end
 end
 
+function NWB:inMyGuild(who)
+	if (who) then
+		for i = 1, GetNumGuildMembers() do
+			local name = GetGuildRosterInfo(i);
+			if (name) then
+				local nameOnly, realm = strsplit("-", who, 2);
+				if (who == name or who == nameOnly) then
+					return true;
+				end
+			end
+		end
+	end
+end
+
 function NWB:logonCheckGuildMasterSetting()
 	C_Timer.After(10, function()
 		NWB.checkedGuildNote = true;
@@ -1321,6 +1342,10 @@ function NWB:monsterYell(...)
 		else
 			NWB.data.hellfireRep = GetServerTime();
 		end
+	--elseif ((name == L["Dawnwatcher Selgorm"] or name == L["Bashana Runetotem"]) and string.match(msg, L["the dread beast Aku'mai has been slain"])) then
+		--SoD Darnassus npc.
+		--print("darn yell", GetServerTime())
+		--This turned out to be only 6 seconds warning, probably not worth adding the yell to guild chat?
 	end
 end
 
@@ -2027,6 +2052,19 @@ function NWB:combatLogEventUnfiltered(...)
 			local expirationTime = NWB:getBuffDuration(spellName, 0);
 			if (expirationTime >= 7199) then
 				NWB:trackNewBuff(spellName, "swiftZanza");
+			end
+		--New SoD buffs, now that they allow spellIDs in classic this needs to all be changed to a hash table instead of this mess of elseif's in the future.
+		elseif (destName == UnitName("player") and spellName == L["Boon of Blackfathom"]) then
+			local expirationTime = NWB:getBuffDuration(spellName, 0);
+			if (expirationTime >= 7199) then
+				NWB:trackNewBuff(spellName, "boonOfBlackfathom");
+				NWB:playSound("soundsBlackfathomBoon", "bob");
+				NWB:print(L["blackfathomBoomBuffDropped"]);
+			end
+		elseif (destName == UnitName("player") and spellName == L["Ashenvale Rallying Cry"]) then
+			local expirationTime = NWB:getBuffDuration(spellName, 0);
+			if (expirationTime >= 7199) then
+				NWB:trackNewBuff(spellName, "ashenvaleRallyingCry");
 			end
 		elseif (destName == UnitName("player") and spellName == L["Stealth"]) then
 			--Vanish is hidden from combat log even to ourself, use stealth instead as it fires when we vanish.
@@ -2807,7 +2845,7 @@ function NWB:trackNewBuff(spellName, type, npcID)
 		NWB:print(string.format(L["dmfBuffDropped"], spellName));
 		NWB:addDmfCooldown();
 	end
-	NWB:debug("Tracking new buff", type, spellName);
+	--NWB:debug(GetServerTime(), "Tracking new buff", type, spellName);
 	NWB:recalcBuffListFrame();
 end
 
@@ -2890,125 +2928,128 @@ local spellTypes = {
 	[40586] = "unstableFlaskPhysician",
 	[40575] = "unstableFlaskSoldier",
 	[40587] = "unstableFlaskSoldier",
+	--SoD.
+	[430947] = "boonOfBlackfathom",
+	[430352] = "ashenvaleRallyingCry",
 }; 
 		
 local buffTable = {
 	--Classic.
 	["rend"] = {
 		icon = "|TInterface\\Icons\\spell_arcane_teleportorgrimmar:12:12:0:0|t",
-		fullName = "Warchief's Blessing",
+		fullName = L["Warchief's Blessing"],
 		maxDuration = 3600,
 	},
 	["ony"] = {
 		icon = "|TInterface\\Icons\\inv_misc_head_dragon_01:12:12:0:0|t",
-		fullName = "Rallying Cry of the Dragonslayer",
+		fullName = L["Rallying Cry of the Dragonslayer"],
 		maxDuration = 7200,
 	},
 	["nef"] = {
 		icon = "|TInterface\\Icons\\inv_misc_head_dragon_01:12:12:0:0|t",
-		fullName = "Rallying Cry of the Dragonslayer",
+		fullName = L["Rallying Cry of the Dragonslayer"],
 		maxDuration = 7200,
 	},
 	["dmf"] = {
 		icon = "|TInterface\\Icons\\inv_misc_orb_02:12:12:0:0|t",
-		fullName = "Darkmoon Faire",
+		fullName = L["Darkmoon Faire"],
 		maxDuration = 7200,
 	},
 	--These are just here for matching type to fullName, spell detection was messed up after some spellID changes by Blizzard.
 	["zan"] = {
 		icon = "|TInterface\\Icons\\ability_creature_poison_05:12:12:0:0|t",
-		fullName = "Spirit of Zandalar",
+		fullName = L["Spirit of Zandalar"],
 		maxDuration = 7200,
 	},
 	["moxie"] = {
 		icon = "|TInterface\\Icons\\spell_nature_massteleport:12:12:0:0|t",
-		fullName = "Mol'dar's Moxie",
+		fullName = L["Mol'dar's Moxie"],
 		maxDuration = 7200,
 	},
 	["ferocity"] = {
 		icon = "|TInterface\\Icons\\spell_nature_undyingstrength:12:12:0:0|t",
-		fullName = "Fengus' Ferocity",
+		fullName = L["Fengus' Ferocity"],
 		maxDuration = 7200,
 	},
 	["savvy"] = {
 		icon = "|TInterface\\Icons\\spell_holy_lesserheal02:12:12:0:0|t",
-		fullName = "Slip'kik's Savvy",
+		fullName = L["Slip'kik's Savvy"],
 		maxDuration = 7200,
 	},
 	["flaskPower"] = {
 		icon = "|TInterface\\Icons\\inv_potion_41:12:12:0:0|t",
-		fullName = "Supreme Power",
+		fullName = L["Supreme Power"],
 		maxDuration = 7200,
 	},
 	["flaskTitans"] = {
 		icon = "|TInterface\\Icons\\inv_potion_62:12:12:0:0|t",
-		fullName = "Flask of the Titans",
+		fullName = L["Flask of the Titans"],
 		maxDuration = 7200,
 	},
 	["flaskWisdom"] = {
 		icon = "|TInterface\\Icons\\inv_potion_97:12:12:0:0|t",
-		fullName = "Distilled Wisdom",
+		fullName = L["Distilled Wisdom"],
 		maxDuration = 7200,
 	},
 	["flaskResistance"] = {
 		icon = "|TInterface\\Icons\\inv_potion_48:12:12:0:0|t",
-		fullName = "Flask of Chromatic Resistance",
+		fullName = L["Flask of Chromatic Resistance"],
 		maxDuration = 7200,
 	},
 	["songflower"] = {
 		icon = "|TInterface\\Icons\\spell_holy_mindvision:12:12:0:0|t",
-		fullName = "Songflower Serenade",
+		fullName = L["Songflower Serenade"],
 		maxDuration = 3600,
 	},
 	["resistFire"] = {
 		icon = "|TInterface\\Icons\\spell_fire_firearmor:12:12:0:0|t",
-		fullName = "Resist Fire",
+		fullName = L["Resist Fire"],
 		maxDuration = 3600,
 	},
 	["blackfathom"] = {
 		icon = "|TInterface\\Icons\\spell_frost_frostward:12:12:0:0|t",
-		fullName = "Blessing of Blackfathom",
+		fullName = L["Blessing of Blackfathom"],
 		maxDuration = 3600,
 	},
 	["festivalFortitude"] = {
 		icon = "|TInterface\\Icons\\inv_summerfest_firespirit:12:12:0:0|t",
-		fullName = "Fire Festival Fortitude",
+		fullName = L["Fire Festival Fortitude"],
 		maxDuration = 3600,
 	},
 	["festivalFury"] = {
 		icon = "|TInterface\\Icons\\inv_misc_summerfest_brazierorange:12:12:0:0|t",
-		fullName = "Fire Festival Fury",
+		fullName = L["Fire Festival Fury"],
 		maxDuration = 3600,
 	},
 	["ribbonDance"] = {
 		icon = "|TInterface\\Icons\\inv_summerfest_symbol_medium:12:12:0:0|t",
-		fullName = "Ribbon Dance",
+		fullName = L["Ribbon Dance"],
 		maxDuration = 3600,
 	},
 	["silithyst"] = {
 		icon = "|TInterface\\Icons\\spell_nature_timestop:12:12:0:0|t",
-		fullName = "Traces of Silithyst",
+		fullName = L["Traces of Silithyst"],
 		maxDuration = 3600,
 	},
 	["sheenZanza"] = {
 		icon = "|TInterface\\Icons\\inv_potion_29:12:12:0:0|t",
-		fullName = "Sheen of Zanza",
+		fullName = L["Sheen of Zanza"],
 		maxDuration = 7200,
 	},
 	["spiritZanza"] = {
 		icon = "|TInterface\\Icons\\inv_potion_30:12:12:0:0|t",
-		fullName = "Spirit of Zanza",
+		fullName = L["Spirit of Zanza"],
 		maxDuration = 7200,
 	},
 	["swiftZanza"] = {
 		icon = "|TInterface\\Icons\\inv_potion_31:12:12:0:0|t",
-		fullName = "Swiftness of Zanza",
+		fullName = L["Swiftness of Zanza"],
 		maxDuration = 7200,
 	},
 	--TBC.
 	["flaskFort"] = {
 		icon = "|TInterface\\Icons\\inv_potion_119:12:12:0:0|t",
-		fullName = "Flask of Fortification",
+		fullName = L["Flask of Fortification"],
 		maxDuration = 7200,
 	},
 	["flaskPure"] = {
@@ -3099,6 +3140,17 @@ local buffTable = {
 		icon = "|TInterface\\Icons\\inv_potion_84:12:12:0:0|t",
 		--icon = "|TInterface\\Icons\\inv_potion_91:12:12:0:0|t",
 		fullName = "Unstable Flask of the Soldier",
+		maxDuration = 7200,
+	},
+	--SoD.
+	["boonOfBlackfathom"] = {
+		icon = "|TInterface\\Icons\\achievement_boss_bazil_akumai:12:12:0:0|t",
+		fullName = "Boon of Blackfathom",
+		maxDuration = 7200,
+	},
+	["ashenvaleRallyingCry"] = {
+		icon = "|TInterface\\Icons\\spell_misc_warsongfocus:12:12:0:0|t",
+		fullName = "Ashenvale Rallying Cry",
 		maxDuration = 7200,
 	},
 };
@@ -3195,7 +3247,7 @@ function NWB:dmfChronoCheck()
 		for k, v in pairs(NWB.data.myChars[UnitName("player")].storedBuffs) do
 			if (v.type == "dmf") then
 				NWB:addDmfCooldown();
-				if (NWB.isDmfUp) then
+				if (NWB.isDmfUp or NWB.isSOD) then
 					NWB:print("You have chronoboon released a Darkmoon Faire buff, a new 4 hour cooldown has started.");
 				end
 				return;
@@ -3328,14 +3380,15 @@ function NWB:storeBuffs()
 						or k == L["Sayge's Dark Fortune of Intelligence"] or k == L["Sayge's Dark Fortune of Spirit"]
 						or k == L["Sayge's Dark Fortune of Stamina"] or k == L["Sayge's Dark Fortune of Strength"]
 						or k == L["Sayge's Dark Fortune of Armor"] or k == L["Sayge's Dark Fortune of Resistance"]
-						or k == L["Sayge's Dark Fortune of Damage"]) then
+						or k == L["Sayge's Dark Fortune of Damage"] or k == L["Boon of Blackfathom"]) then
 					tempStoredBuffs[k] = {};
 					for kk, vv in pairs(v) do
 						tempStoredBuffs[k][kk] = vv;
 					end
 				elseif (v.npcID and (v.npcID == 14392 or v.npcID == 14394
 						or v.npcID == 14720 or v.npcID == 14721 or v.npcID == 4949 or v.npcID == 10719 or v.npcID == 14875
-						or v.npcID == 15076 or v.npcID == 14326 or v.npcID == 14321 or v.npcID == 14323)) then
+						or v.npcID == 15076 or v.npcID == 14326 or v.npcID == 14321 or v.npcID == 14323
+						or v.npcID == 9087 or v.npcID == 4783)) then
 					tempStoredBuffs[k] = {};
 					for kk, vv in pairs(v) do
 						tempStoredBuffs[k][kk] = vv;
@@ -3920,6 +3973,10 @@ f:SetScript("OnEvent", function(self, event, ...)
 		if (who == UnitName("player")) then
 			--Register ourself to other addon users when joining a guild.
 			NWB:requestData("GUILD", nil, "ALERT");
+		end
+		--Request roster update when guild member goes online or offline, this seems to be delayed, see if this helps?
+		if (string.match(text, string.gsub(ERR_FRIEND_ONLINE_SS, "|H.+|h", "(.+)")) or string.match(text, string.gsub(ERR_FRIEND_OFFLINE_S, "%%s", "(.+)"))) then
+			GuildRoster();
 		end
 	elseif (event == "CHAT_MSG_ADDON") then
 		local commPrefix, string, distribution, sender = ...;
@@ -4944,6 +5001,11 @@ function SlashCmdList.NWBCMD(msg, editBox)
 		end
 		return;
 	end
+	if (msg == "ashenvale") then
+		WorldMapFrame:Show();
+		WorldMapFrame:SetMapID(1440);
+		return;
+	end
 	if (msg == "options" or msg == "option" or msg == "config" or msg == "menu") then
 		NWB:openConfig();
 	elseif (msg ~= nil and msg ~= "") then
@@ -5131,8 +5193,9 @@ function NWB:updateMinimapButton(tooltip, frame)
 				end
 			end]]
 			tooltip:AddLine("|cff00ff00[Layer " .. count .. "]|r  |cFF989898(zone " .. k .. ") " .. wintergraspTexture .. buffTextures .. "|r");
-			if (NWB.isClassic or (not NWB.db.global.hideMinimapBuffTimers
-					and not (NWB.db.global.disableBuffTimersMaxBuffLevel and UnitLevel("player") > 64))) then
+			if ((NWB.isClassic or (not NWB.db.global.hideMinimapBuffTimers
+					and not (NWB.db.global.disableBuffTimersMaxBuffLevel and UnitLevel("player") > 64)))
+					and not (NWB.isSOD and UnitLevel("player") < NWB.db.global.disableOnlyNefRendBelowMaxLevelNum)) then
 				if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 					if (v.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
 						msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. ".";
@@ -5689,7 +5752,8 @@ function NWB:updateMinimapButton(tooltip, frame)
 				tooltip:AddLine(NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cff00ff00N|r|cFF9CD6DE)|r "
 						.. name .. " (" .. questData.abbrev .. ")");
 			end
-		else
+		elseif (NWB.isTBC) then
+			--Disabled this in wrath phase 4, there are no different dung dailies anyway just the same type every day.
 			tooltip:AddLine(NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cff00ff00N|r|cFF9CD6DE)|r Unknown.");
 		end
 		if (NWB.data.tbcHD and NWB.data.tbcHDT and GetServerTime() - NWB.data.tbcHDT < 86400) then
@@ -5699,7 +5763,8 @@ function NWB:updateMinimapButton(tooltip, frame)
 				tooltip:AddLine(NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cFFFF2222H|r|cFF9CD6DE)|r "
 						.. name .. " (" .. questData.abbrev .. ")");
 			end
-		else
+		elseif (NWB.isTBC) then
+			--Disabled this in wrath phase 4, there are no different dung dailies anyway just the same type every day.
 			tooltip:AddLine(NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cFFFF2222H|r|cFF9CD6DE)|r Unknown.");
 		end
 		local texture = "|TInterface\\TargetingFrame\\UI-PVP-Horde:12:12:-1:0:64:64:7:36:1:36|t";
@@ -5769,12 +5834,15 @@ function NWB:updateMinimapButton(tooltip, frame)
 			tooltip.NWBSeparator3:Show();
 		end
 	end
-	tooltip:AddLine("|cFF9CD6DELeft-Click|r Timers");
-	tooltip:AddLine("|cFF9CD6DERight-Click|r Buffs");
-	tooltip:AddLine("|cFF9CD6DEShift Left-Click|r Felwood Map");
-	tooltip:AddLine("|cFF9CD6DEShift Right-Click|r Config");
+	if (NWB.isSOD) then
+		NWB:addAshenvaleMinimapString(tooltip);
+	end
+	tooltip:AddLine(L["|cFF9CD6DELeft-Click|r Timers"]);
+	tooltip:AddLine(L["|cFF9CD6DERight-Click|r Buffs"]);
+	tooltip:AddLine(L["|cFF9CD6DEShift Left-Click|r Felwood Map"]);
+	tooltip:AddLine(L["|cFF9CD6DEShift Right-Click|r Config"]);
 	if (NWB.isLayered) then
-		tooltip:AddLine("|cFF9CD6DEControl Left-Click|r Guild Layers");
+		tooltip:AddLine(L["|cFF9CD6DEControl Left-Click|r Guild Layers"]);
 	end
 	C_Timer.After(0.1, function()
 		NWB:updateMinimapButton(tooltip, frame);
@@ -6513,6 +6581,7 @@ function NWB:updateFelwoodWorldmapMarker(type)
 					frame:SetWidth(42);
 					frame:SetHeight(24);
 					hasTimer = count;
+					frame.hasTimer = true;
 			  	elseif (time > 0) then
 					--If timer is less than 25 minutes old then return time left.
 			    	local minutes = string.format("%02.f", math.floor(time / 60));
@@ -6525,6 +6594,7 @@ function NWB:updateFelwoodWorldmapMarker(type)
 					frame:SetWidth(42);
 					frame:SetHeight(24);
 					hasTimer = count;
+					frame.hasTimer = true;
 			  	else
 			  		--tooltipText = tooltipText .. "\n" .. L["noTimer"] .. " (Layer " .. count .. ")";
 			  		tooltipText = L["noTimer"] .. " (Layer " .. count .. ")\n" .. tooltipText
@@ -6532,19 +6602,38 @@ function NWB:updateFelwoodWorldmapMarker(type)
 					frame.fs:SetText(L["noTimer"]);
 					frame:SetWidth(54);
 					frame:SetHeight(22);
+					frame.hasTimer = false;
 				end
 			end
 		end
 		if (hasTimer) then
 			--Show all frames if any have an active timer.
-			for i = 1, count do
+			--[[for i = 1, count do
 				if (i == 1) then
 					_G[type .. "NWB"]["timerFrame"]:Show();
 				elseif (_G[type .. "NWB"]["timerFrame" .. i]) then
 					_G[type .. "NWB"]["timerFrame" .. i]:SetPoint("CENTER", 0, i * 18.5);
 					_G[type .. "NWB"]["timerFrame" .. i]:Show();
 				end
+			end]]
+			
+			--Now we only show layers that have a timer instead.
+			local offset = 0;
+			for i = 1, count do
+				if (i == 1) then
+					if (_G[type .. "NWB"]["timerFrame"].hasTimer) then
+						offset = offset + 18.5;
+						_G[type .. "NWB"]["timerFrame"]:Show();
+					end
+				elseif (_G[type .. "NWB"]["timerFrame" .. i]) then
+					if (_G[type .. "NWB"]["timerFrame" .. i].hasTimer) then
+						offset = offset + 18.5;
+						_G[type .. "NWB"]["timerFrame" .. i]:SetPoint("CENTER", 0, offset);
+						_G[type .. "NWB"]["timerFrame" .. i]:Show();
+					end
+				end
 			end
+			
 			--_G[type .. "NWB"].tooltip.fs:SetText("|CffDEDE42" .. _G[type .. "NWB"].name .. "|r\n" .. _G[type .. "NWB"].subZone .. tooltipText);
 			_G[type .. "NWB"].tooltip.fs:SetText("|CffDEDE42" .. _G[type .. "NWB"].name .. "|r\n" .. _G[type .. "NWB"].subZone .. "\n" .. tooltipText);
 		else
@@ -7309,9 +7398,9 @@ function NWB:createWorldbuffMarkersTable()
 			};
 		else
 			NWB.worldBuffMapMarkerTypes = {
-				["rend"] = {x = 60.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]},
-				["ony"] = {x = 68, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]},
-				["nef"] = {x = 76.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]},
+				["rend"] = {x = 60.0, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]},
+				["ony"] = {x = 68, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]},
+				["nef"] = {x = 76.0, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]},
 				--["zanCity"] = {x = 84.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\ability_creature_poison_05", name = L["Zandalar"]},
 				--["zanStv"] = {x = 11.0, y = 20.5, mapID = 1434, icon = "Interface\\Icons\\ability_creature_poison_05", name = L["Zandalar"]},
 			};
@@ -7319,17 +7408,17 @@ function NWB:createWorldbuffMarkersTable()
 	else
 		if (NWB.faction == "Alliance") then
 			NWB.worldBuffMapMarkerTypes = {
-				["rend"] = {x = 74.0, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]},
-				["ony"] = {x = 79.5, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]},
-				["nef"] = {x = 85.0, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]},
+				["rend"] = {x = 78.0, y = 77.0, mapID = 1453, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]},
+				["ony"] = {x = 83.0, y = 77.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]},
+				["nef"] = {x = 88.0, y = 77.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]},
 				--["zanCity"] = {x = 90.5, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\ability_creature_poison_05", name = L["Zandalar"]},
 				--["zanStv"] = {x = 11.0, y = 20.5, mapID = 1434, icon = "Interface\\Icons\\ability_creature_poison_05", name = L["Zandalar"]},
 			};
 		else
 			NWB.worldBuffMapMarkerTypes = {
-				["rend"] = {x = 59.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]},
-				["ony"] = {x = 64.5, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]},
-				["nef"] = {x = 70.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]},
+				["rend"] = {x = 63.0, y = 87.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]},
+				["ony"] = {x = 68, y = 87.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]},
+				["nef"] = {x = 73.0, y = 87.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]},
 				--["zanCity"] = {x = 75.5, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\ability_creature_poison_05", name = L["Zandalar"]},
 				--["zanStv"] = {x = 11.0, y = 20.5, mapID = 1434, icon = "Interface\\Icons\\ability_creature_poison_05", name = L["Zandalar"]},
 			};
@@ -7337,6 +7426,9 @@ function NWB:createWorldbuffMarkersTable()
 	end
 	if (WorldMapFrame) then
 		hooksecurefunc(WorldMapFrame, "OnMapChanged", function()
+			NWB:refreshWorldbuffMarkers();
+		end)
+		hooksecurefunc(WorldMapFrame, "OnFrameSizeChanged", function()
 			NWB:refreshWorldbuffMarkers();
 		end)
 	end
@@ -7374,7 +7466,7 @@ function NWB:createWorldbuffMarker(type, data, layer, count)
 			obj.texture = bg;
 			obj:SetSize(23, 23);
 			--Worldmap tooltip.
-			obj.tooltip = CreateFrame("Frame", type .. layer .. "WorldMapTooltip", WorldMapFrame, "TooltipBorderedFrameTemplate");
+			obj.tooltip = CreateFrame("Frame", type .. layer .. "WorldMapTooltip", obj, "TooltipBorderedFrameTemplate");
 			obj.tooltip:SetPoint("CENTER", obj, "CENTER", 0, -46);
 			--obj.tooltip:SetPoint("CENTER", obj, "CENTER", 0, -26);
 			obj.tooltip:SetFrameStrata("TOOLTIP");
@@ -7394,7 +7486,7 @@ function NWB:createWorldbuffMarker(type, data, layer, count)
 			end)
 			obj.tooltip:Hide();
 			--Timer frame that sits above the icon when an active timer is found.
-			obj.timerFrame = CreateFrame("Frame", type .. layer .. "WorldMapTimerFrame", WorldMapFrame, "TooltipBorderedFrameTemplate");
+			obj.timerFrame = CreateFrame("Frame", type .. layer .. "WorldMapTimerFrame", obj, "TooltipBorderedFrameTemplate");
 			obj.timerFrame:SetPoint("CENTER", obj, "CENTER",  0, 21);
 			obj.timerFrame:SetFrameStrata("FULLSCREEN");
 			obj.timerFrame:SetFrameLevel(9);
@@ -7470,7 +7562,7 @@ function NWB:createWorldbuffMarker(type, data, layer, count)
 		obj.texture = bg;
 		obj:SetSize(23, 23);
 		--Worldmap tooltip.
-		obj.tooltip = CreateFrame("Frame", type.. "WorldMapTooltip", WorldMapFrame, "TooltipBorderedFrameTemplate");
+		obj.tooltip = CreateFrame("Frame", type.. "WorldMapTooltip", obj, "TooltipBorderedFrameTemplate");
 		obj.tooltip:SetPoint("CENTER", obj, "CENTER", 0, -46);
 		obj.tooltip:SetFrameStrata("TOOLTIP");
 		obj.tooltip:SetFrameLevel(9999);
@@ -7489,7 +7581,7 @@ function NWB:createWorldbuffMarker(type, data, layer, count)
 		end)
 		obj.tooltip:Hide();
 		--Timer frame that sits above the icon when an active timer is found.
-		obj.timerFrame = CreateFrame("Frame", type.. "WorldMapTimerFrame", WorldMapFrame, "TooltipBorderedFrameTemplate");
+		obj.timerFrame = CreateFrame("Frame", type.. "WorldMapTimerFrame", obj, "TooltipBorderedFrameTemplate");
 		obj.timerFrame:SetPoint("CENTER", obj, "CENTER",  0, 21);
 		obj.timerFrame:SetFrameStrata("FULLSCREEN");
 		obj.timerFrame:SetFrameLevel(9);
@@ -7548,6 +7640,63 @@ function NWB:createWorldbuffMarker(type, data, layer, count)
 	end
 end
 
+--Update scale when maz is resized, and depending on what zone we're viewing.
+function NWB:updateWorldbuffMarkersScale()
+	local scale = 0.8;
+	local mapModInstalled;
+	if (IsAddOnLoaded("Leatrix_Maps")) then
+		--Only needed with Leatrix Maps so far since it resizes the full map.
+		--ElvUI seems to use the blizzard large and small map.
+		mapModInstalled = true;
+	end
+	if (WorldMapFrame) then
+		if (not mapModInstalled) then
+			--This is usually nil if a map mod is installed?
+			local mapID = WorldMapFrame:GetMapID();
+			if (mapID == 1413) then
+				scale = 0.7;
+			end
+			if (not WorldMapFrame.isMaximized) then
+				scale = scale / 1.5;
+			end
+		end
+		--Still do the 0.8 to all markers even if there's a map mod installed.
+		for k, v in pairs(mapMarkers) do
+			_G[k]:SetScale(scale);
+		end
+		for k, v in pairs(NWB.extraMapMarkers) do
+			--Extra markers defined in NWBData.lua are 20% bigger.
+			_G[k]:SetScale(scale + (scale * 0.2));
+		end
+		--Update Felwood markers.
+		for k, v in pairs(NWB.songFlowers) do
+			_G[k .. "NWB"]:SetScale(scale);
+			_G[k .. "NWB"].tooltip:SetScale(scale);
+			_G[k .. "NWB"].timerFrame:SetScale(scale);
+		end
+	 	for k, v in pairs(NWB.tubers) do
+			_G[k .. "NWB"]:SetScale(scale);
+			_G[k .. "NWB"].tooltip:SetScale(scale);
+			_G[k .. "NWB"].timerFrame:SetScale(scale);
+		end
+	 	for k, v in pairs(NWB.dragons) do
+			_G[k .. "NWB"]:SetScale(scale);
+			_G[k .. "NWB"].tooltip:SetScale(scale);
+			_G[k .. "NWB"].timerFrame:SetScale(scale);
+		end
+		--DMF.
+		if (_G["NWBDMF"]) then
+			_G["NWBDMF"]:SetScale(scale);
+			_G["NWBDMF"].tooltip:SetScale(scale);
+			_G["NWBDMF"].timerFrame:SetScale(scale);
+		end
+		if (_G["NWBDMFContinent"]) then
+			_G["NWBDMFContinent"]:SetScale(scale);
+			_G["NWBDMFContinent"].tooltip:SetScale(scale);
+		end
+	end
+end
+
 function NWB:refreshWorldbuffMarkers()
 	local mapID = 0;
 	local hideFS;
@@ -7559,19 +7708,19 @@ function NWB:refreshWorldbuffMarkers()
 			--For alliance we'll add timers to the barrens and org if they have rend option enabled.
 			--Easy way to do this is just alter the map pin table above.
 			if (mapID == 1413 and NWB.db.global.allianceEnableRend) then --The Barrens.
-				NWB.worldBuffMapMarkerTypes.rend = {x = 71.5, y = 73.0, mapID = 1413, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-				NWB.worldBuffMapMarkerTypes.ony = {x = 79.5, y = 73.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-				NWB.worldBuffMapMarkerTypes.nef = {x = 87.5, y = 73.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+				NWB.worldBuffMapMarkerTypes.rend = {x = 77.5, y = 81.0, mapID = 1413, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+				NWB.worldBuffMapMarkerTypes.ony = {x = 82.5, y = 81.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+				NWB.worldBuffMapMarkerTypes.nef = {x = 87.5, y = 81.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				hideFS = true;
 			elseif (mapID == 1454 and NWB.db.global.allianceEnableRend) then --Orgrimmar.
 				if (LOCALE_koKR or LOCALE_zhCN or LOCALE_zhTW) then
-					NWB.worldBuffMapMarkerTypes.rend = {x = 60.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-					NWB.worldBuffMapMarkerTypes.ony = {x = 68, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-					NWB.worldBuffMapMarkerTypes.nef = {x = 76.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+					NWB.worldBuffMapMarkerTypes.rend = {x = 60.0, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+					NWB.worldBuffMapMarkerTypes.ony = {x = 68, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+					NWB.worldBuffMapMarkerTypes.nef = {x = 76.0, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				else
-					NWB.worldBuffMapMarkerTypes.rend = {x = 59.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-					NWB.worldBuffMapMarkerTypes.ony = {x = 64.5, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-					NWB.worldBuffMapMarkerTypes.nef = {x = 70.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+					NWB.worldBuffMapMarkerTypes.rend = {x = 77.0, y = 80.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+					NWB.worldBuffMapMarkerTypes.ony = {x = 82.0, y = 80.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+					NWB.worldBuffMapMarkerTypes.nef = {x = 87.0, y = 80.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				end
 				hideFS = true;
 			else
@@ -7581,27 +7730,27 @@ function NWB:refreshWorldbuffMarkers()
 					NWB.worldBuffMapMarkerTypes.ony = {x = 79.5, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
 					NWB.worldBuffMapMarkerTypes.nef = {x = 87.5, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				else
-					NWB.worldBuffMapMarkerTypes.rend = {x = 74.0, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-					NWB.worldBuffMapMarkerTypes.ony = {x = 79.5, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-					NWB.worldBuffMapMarkerTypes.nef = {x = 85.0, y = 73.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+					NWB.worldBuffMapMarkerTypes.rend = {x = 78.0, y = 77.0, mapID = 1453, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+					NWB.worldBuffMapMarkerTypes.ony = {x = 83.0, y = 77.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+					NWB.worldBuffMapMarkerTypes.nef = {x = 88.0, y = 77.0, mapID = 1453, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				end
 			end
 		else
 			if (mapID == 1413) then --The Barrens.
-				NWB.worldBuffMapMarkerTypes.rend = {x = 71.5, y = 73.0, mapID = 1413, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-				NWB.worldBuffMapMarkerTypes.ony = {x = 79.5, y = 73.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-				NWB.worldBuffMapMarkerTypes.nef = {x = 87.5, y = 73.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+				NWB.worldBuffMapMarkerTypes.rend = {x = 77.5, y = 85.0, mapID = 1413, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+				NWB.worldBuffMapMarkerTypes.ony = {x = 82.5, y = 85.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+				NWB.worldBuffMapMarkerTypes.nef = {x = 87.5, y = 85.0, mapID = 1413, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				hideFS = true;
 			else
 				--Default, matches the table a few functions above.
 				if (LOCALE_koKR or LOCALE_zhCN or LOCALE_zhTW) then
-					NWB.worldBuffMapMarkerTypes.rend = {x = 60.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-					NWB.worldBuffMapMarkerTypes.ony = {x = 68, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-					NWB.worldBuffMapMarkerTypes.nef = {x = 76.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+					NWB.worldBuffMapMarkerTypes.rend = {x = 60.0, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+					NWB.worldBuffMapMarkerTypes.ony = {x = 68, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+					NWB.worldBuffMapMarkerTypes.nef = {x = 76.0, y = 85.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				else
-					NWB.worldBuffMapMarkerTypes.rend = {x = 59.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
-					NWB.worldBuffMapMarkerTypes.ony = {x = 64.5, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
-					NWB.worldBuffMapMarkerTypes.nef = {x = 70.0, y = 79.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
+					NWB.worldBuffMapMarkerTypes.rend = {x = 63.0, y = 87.0, mapID = 1454, icon = "Interface\\Icons\\spell_arcane_teleportorgrimmar", name = L["rend"]};
+					NWB.worldBuffMapMarkerTypes.ony = {x = 68.0, y = 87.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_01", name = L["onyxia"]};
+					NWB.worldBuffMapMarkerTypes.nef = {x = 73.0, y = 87.0, mapID = 1454, icon = "Interface\\Icons\\inv_misc_head_dragon_black", name = L["nefarian"]};
 				end
 			end
 		end
@@ -7629,7 +7778,8 @@ function NWB:refreshWorldbuffMarkers()
 			for k, v in pairs(NWB.worldBuffMapMarkerTypes) do
 				--Change position to bottom corner of map so they can be stacked on top of each other for layered realms.
 				NWB.dragonLibPins:RemoveWorldMapIcon(k .. layer .. "NWBWorldMap", _G[k .. "NWBWorldMap"]);
-				if (NWB.db.global.showWorldMapMarkers and _G[k .. layer .. "NWBWorldMap"]) then
+				if (NWB.db.global.showWorldMapMarkers and _G[k .. layer .. "NWBWorldMap"]
+					and not (NWB.isSOD and UnitLevel("player") < NWB.db.global.disableOnlyNefRendBelowMaxLevelNum)) then
 					if (NWB.faction == "Horde") then
 						if (mapID == 1413) then
 							--If barrens the org coord offset is too far right so only rend shows.
@@ -7675,13 +7825,14 @@ function NWB:refreshWorldbuffMarkers()
 					_G[k .. layer .. "NWBWorldMap"].fs:Show();
 				end
 			end
-			offset = offset - 10;
+			offset = offset - 8;
 		end
 		--This will add layer icons and remove default non-layer icons when we go from having no timer info to got new layers timer info.
 		if (not foundLayers) then
 			for k, v in pairs(NWB.worldBuffMapMarkerTypes) do
 				NWB.dragonLibPins:RemoveWorldMapIcon(k .. "NWBWorldMap", _G[k .. "NWBWorldMap"]);
-				if (NWB.db.global.showWorldMapMarkers and _G[k .. "NWBWorldMap"]) then
+				if (NWB.db.global.showWorldMapMarkers and _G[k .. "NWBWorldMap"]
+						and not (NWB.isSOD and UnitLevel("player") < NWB.db.global.disableOnlyNefRendBelowMaxLevelNum)) then
 					if (NWB.faction == "Horde") then
 						if (mapID == 1413) then
 							NWB.dragonLibPins:AddWorldMapIconMap(k .. "NWBWorldMap", _G[k .. "NWBWorldMap"], v.mapID,
@@ -7719,7 +7870,8 @@ function NWB:refreshWorldbuffMarkers()
 	else
 		for k, v in pairs(NWB.worldBuffMapMarkerTypes) do
 			NWB.dragonLibPins:RemoveWorldMapIcon(k .. "NWBWorldMap", _G[k .. "NWBWorldMap"]);
-			if (NWB.db.global.showWorldMapMarkers and _G[k .. "NWBWorldMap"]) then
+			if (NWB.db.global.showWorldMapMarkers and _G[k .. "NWBWorldMap"]
+					and not (NWB.isSOD and UnitLevel("player") < NWB.db.global.disableOnlyNefRendBelowMaxLevelNum)) then
 				if (NWB.faction == "Horde") then
 					NWB.dragonLibPins:AddWorldMapIconMap(k .. "NWBWorldMap", _G[k .. "NWBWorldMap"], v.mapID,
 							(v.x  + 22) / 100, (v.y + 9) / 100, HBD_PINS_WORLDMAP_SHOW_PARENT);
@@ -7745,6 +7897,7 @@ function NWB:refreshWorldbuffMarkers()
 			end
 		end
 	end
+	NWB:updateWorldbuffMarkersScale();
 end
 
 ---=============---
@@ -8270,7 +8423,7 @@ function NWB:updateDmfMarkers(type)
     	tooltipText = tooltipText .. NWB:getTimeFormat(timestamp, true);
     	local dmfFound;
     	local buffText = "";
-    	if (NWB.isDmfUp) then
+    	if (NWB.isDmfUp or NWB.isSOD) then
     		local dmfCooldown, noMsgs = NWB:getDmfCooldown();
 			if (dmfCooldown > 0 and not noMsgs) then
 				buffText = "\n" .. string.format(L["dmfBuffCooldownMsg"],  NWB:getTimeString(dmfCooldown, true));
@@ -8401,6 +8554,10 @@ function NWB:refreshDmfMarkers()
 	if (not NWB.dmfZone) then
 		return;
 	end
+	if (NWB.isSOD) then
+		--Hide dmf markers in sod until we work out the new rotation, is it just every 2nd week?
+		return;
+	end
 	local x, y, mapID, worldX, worldY, worldMapID;
 	if (NWB.dmfZone == "Outlands") then
 		x, y, mapID = 34.8, 34.6, 1952;
@@ -8471,7 +8628,7 @@ NWBbuffListFrame.fs:SetText("|cffffff00" .. L["Your Current World Buffs"]);
 NWBbuffListFrame.fs2 = NWBbuffListFrame.EditBox:CreateFontString("NWBbuffListFrameFS2", "ARTWORK");
 NWBbuffListFrame.fs2:SetPoint("TOP", 0, -16);
 NWBbuffListFrame.fs2:SetFont(NWB.regionFont, 13);
-NWBbuffListFrame.fs2:SetText("|cffffff00Mouseover char names for extra info");
+NWBbuffListFrame.fs2:SetText(L["|cffffff00Mouseover char names for extra info"]);
 NWBbuffListFrame.fs3 = NWBbuffListFrame.EditBox:CreateFontString("NWBbuffListFrameFS3", "ARTWORK");
 NWBbuffListFrame.fs3:SetPoint("TOPLEFT", 1, -32);
 NWBbuffListFrame.fs3:SetFont(NWB.regionFont, 13);
@@ -8492,7 +8649,7 @@ NWBbuffListDragFrame.tooltip:SetAlpha(.8);
 NWBbuffListDragFrame.tooltip.fs = NWBbuffListDragFrame.tooltip:CreateFontString("NWBbuffListDragTooltipFS", "ARTWORK");
 NWBbuffListDragFrame.tooltip.fs:SetPoint("CENTER", 0, 0.5);
 NWBbuffListDragFrame.tooltip.fs:SetFont(NWB.regionFont, 12);
-NWBbuffListDragFrame.tooltip.fs:SetText("Hold to drag");
+NWBbuffListDragFrame.tooltip.fs:SetText(L["Hold to drag"]);
 NWBbuffListDragFrame.tooltip:SetWidth(NWBbuffListDragFrame.tooltip.fs:GetStringWidth() + 16);
 NWBbuffListDragFrame.tooltip:SetHeight(NWBbuffListDragFrame.tooltip.fs:GetStringHeight() + 10);
 NWBbuffListDragFrame:SetScript("OnEnter", function(self)
@@ -8573,7 +8730,7 @@ local NWBbuffListFrameTimersButton = CreateFrame("Button", "NWBbuffListFrameTime
 NWBbuffListFrameTimersButton:SetPoint("CENTER", -58, -13);
 NWBbuffListFrameTimersButton:SetWidth(90);
 NWBbuffListFrameTimersButton:SetHeight(17);
-NWBbuffListFrameTimersButton:SetText("Timers");
+NWBbuffListFrameTimersButton:SetText(L["Timers"]);
 NWBbuffListFrameTimersButton:SetNormalFontObject("GameFontNormalSmall");
 NWBbuffListFrameTimersButton:SetScript("OnClick", function(self, arg)
 	NWB:openLayerFrame();
@@ -8609,7 +8766,7 @@ NWBbuffListFrameWipeButton:SetText(L["Reset Data"]);
 NWBbuffListFrameWipeButton:SetNormalFontObject("GameFontNormalSmall");
 NWBbuffListFrameWipeButton:SetScript("OnClick", function(self, arg)
 	StaticPopupDialogs["NWB_BUFFDATARESET"] = {
-	  text = "Delete buff data?",
+	  text = L["Delete buff data?"],
 	  button1 = "Yes",
 	  button2 = "No",
 	  OnAccept = function()
@@ -8645,8 +8802,8 @@ function NWB:createShowStatsButton()
 		NWB.showStatsButton = CreateFrame("CheckButton", "NWBShowStatsButton", NWBbuffListFrame.EditBox, "ChatConfigCheckButtonTemplate");
 		NWB.showStatsButton:SetPoint("TOPLEFT", -1, 1);
 		--So strange the way to set text is to append Text to the global frame name.
-		NWBShowStatsButtonText:SetText("Show Stats");
-		NWB.showStatsButton.tooltip = "Show how many times you got each buff.";
+		NWBShowStatsButtonText:SetText(L["Show Stats"]);
+		NWB.showStatsButton.tooltip = L["Show how many times you got each buff."];
 		--NWB.showStatsButton:SetFrameStrata("HIGH");
 		NWB.showStatsButton:SetFrameLevel(3);
 		NWB.showStatsButton:SetWidth(24);
@@ -8664,8 +8821,8 @@ function NWB:createShowStatsButton()
 	if (not NWB.showStatsAllButton) then
 		NWB.showStatsAllButton = CreateFrame("CheckButton", "NWBShowStatsAllButton", NWBbuffListFrame.EditBox, "ChatConfigCheckButtonTemplate");
 		NWB.showStatsAllButton:SetPoint("TOPLEFT", 95, 1);
-		NWBShowStatsAllButtonText:SetText("All");
-		NWB.showStatsAllButton.tooltip = "Show all alts that have buff stats? (stats must be enabled).";
+		NWBShowStatsAllButtonText:SetText(L["All"]);
+		NWB.showStatsAllButton.tooltip = L["Show all alts that have buff stats? (stats must be enabled)."];
 		--NWB.showStatsAllButton:SetFrameStrata("HIGH");
 		NWB.showStatsAllButton:SetFrameLevel(4);
 		NWB.showStatsAllButton:SetWidth(24);
@@ -8820,12 +8977,12 @@ function NWB:recalcBuffListFrame()
 	framesUsed = {};
 	usedLineFrameCount = 0;
 	offset = 40; --Start offset, per line offset.
-	if (NWB.isDmfUp) then
+	if (NWB.isDmfUp or NWB.isSOD) then
 		offset = 57;
 		local dmfCooldown, noMsgs = NWB:getDmfCooldown();
 		if (dmfCooldown > 0 and not noMsgs) then
 			NWBbuffListFrame.fs3:SetText(string.format(L["dmfBuffCooldownMsg2"],  NWB:getTimeString(dmfCooldown, true)));
-	    else
+	    elseif (NWB.isDmfUp) then
 	    	NWBbuffListFrame.fs3:SetText(L["dmfBuffReady"]);
 	    end
 	end
@@ -8834,7 +8991,7 @@ function NWB:recalcBuffListFrame()
 	local maxWidth = 0;
 	local printRealm;
 	for k, v in NWB:pairsByKeys(NWB.db.global) do --Iterate realms.
-		if (type(v) == "table" and k ~= "minimapIcon") then --The only tables in db.global are realm names.
+		if (type(v) == "table" and k ~= "minimapIcon" and k ~= "versions") then --The only tables in db.global are realm names.
 			local realm = k;
 			for k, v in NWB:pairsByKeys(v) do --Iterate factions.
 				local faction = k;
@@ -9100,9 +9257,9 @@ function NWB:recalcBuffListFrame()
 	end
 	if (not foundChars) then
 		NWBbuffListFrame.fs2:SetText("");
-		NWB:insertBuffsLineFrameString("|cffffff00No characters with buffs found.");
+		NWB:insertBuffsLineFrameString(L["|cffffff00No characters with buffs found."]);
 	else
-		NWBbuffListFrame.fs2:SetText("|cffffff00Mouseover char names for extra info");
+		NWBbuffListFrame.fs2:SetText(L["|cffffff00Mouseover char names for extra info"]);
 	end
 	if (NWB.db.global.showBuffStats) then
 		--A little wider to fit the buff count.
@@ -9435,7 +9592,7 @@ end
 function NWB:resetBuffData()
 	for k, v in NWB:pairsByKeys(NWB.db.global) do --Iterate realms.
 		local msg = "";
-		if (type(v) == "table" and k ~= "minimapIcon") then --The only tables in db.global are realm names.
+		if (type(v) == "table" and k ~= "minimapIcon" and k ~= "versions") then --The only tables in db.global are realm names.
 			local realm = k;
 			for k, v in NWB:pairsByKeys(v) do --Iterate factions.
 				local f = k;
@@ -9464,7 +9621,7 @@ function NWB:removeCharsBelowLevel()
 	local count = 0;
 	for realm, v in NWB:pairsByKeys(NWB.db.global) do --Iterate realms.
 		local msg = "";
-		if (type(v) == "table" and realm ~= "minimapIcon") then --The only tables in db.global are realm names.
+		if (type(v) == "table" and realm ~= "minimapIcon" and realm ~= "versions") then --The only tables in db.global are realm names.
 			for k, v in NWB:pairsByKeys(v) do --Iterate factions.
 				local f = k;
 				if (v.myChars) then
@@ -9505,7 +9662,7 @@ function NWB:removeSingleChar(name)
 	local found;
 	for realm, v in NWB:pairsByKeys(NWB.db.global) do --Iterate realms.
 		local msg = "";
-		if (type(v) == "table" and realm ~= "minimapIcon") then --The only tables in db.global are realm names.
+		if (type(v) == "table" and realm ~= "minimapIcon" and realm ~= "versions") then --The only tables in db.global are realm names.
 			for k, v in NWB:pairsByKeys(v) do --Iterate factions.
 				local f = k;
 				if (v.myChars) then
@@ -9583,11 +9740,11 @@ end)
 NWBlayerFrame.fs = NWBlayerFrame.EditBox:CreateFontString("NWBlayerFrameFS", "ARTWORK");
 NWBlayerFrame.fs:SetPoint("TOP", 0, -0);
 NWBlayerFrame.fs:SetFont(NWB.regionFont, 14);
-NWBlayerFrame.fs:SetText(NWB.prefixColor .. "NovaWorldBuffs v" .. version .. "|r");
+NWBlayerFrame.fs:SetText(NWB.prefixColor .. L["Nova World Buffs"] .."v".. version .. "|r");
 NWBlayerFrame.fs2 = NWBlayerFrame.EditBox:CreateFontString("NWBlayerFrameFS", "ARTWORK");
 NWBlayerFrame.fs2:SetPoint("TOPLEFT", 0, -14);
 NWBlayerFrame.fs2:SetFont(NWB.regionFont, 14);
-NWBlayerFrame.fs2:SetText("|cFF9CD6DETarget any NPC to see your current layer.|r");
+NWBlayerFrame.fs2:SetText(L["|cFF9CD6DETarget any NPC to see your current layer.|r"]);
 NWBlayerFrame.fs3 = NWBlayerFrame:CreateFontString("NWBbuffListFrameFS", "ARTWORK");
 --NWBlayerFrame.fs3 = NWBlayerFrame.EditBox:CreateFontString("NWBbuffListFrameFS", "ARTWORK");
 NWBlayerFrame.fs3:SetPoint("BOTTOM", 0, 20);
@@ -9613,7 +9770,7 @@ NWBlayerDragFrame.tooltip:SetAlpha(.8);
 NWBlayerDragFrame.tooltip.fs = NWBlayerDragFrame.tooltip:CreateFontString("NWBlayerDragTooltipFS", "ARTWORK");
 NWBlayerDragFrame.tooltip.fs:SetPoint("CENTER", 0, 0.5);
 NWBlayerDragFrame.tooltip.fs:SetFont(NWB.regionFont, 12);
-NWBlayerDragFrame.tooltip.fs:SetText("Hold to drag");
+NWBlayerDragFrame.tooltip.fs:SetText(L["Hold to drag"]);
 NWBlayerDragFrame.tooltip:SetWidth(NWBlayerDragFrame.tooltip.fs:GetStringWidth() + 16);
 NWBlayerDragFrame.tooltip:SetHeight(NWBlayerDragFrame.tooltip.fs:GetStringHeight() + 10);
 NWBlayerDragFrame:SetScript("OnEnter", function(self)
@@ -9698,7 +9855,7 @@ local NWBlayerFrameBuffsButton = CreateFrame("Button", "NWBlayerFrameBuffsButton
 NWBlayerFrameBuffsButton:SetPoint("CENTER", -58, -14);
 NWBlayerFrameBuffsButton:SetWidth(90);
 NWBlayerFrameBuffsButton:SetHeight(17);
-NWBlayerFrameBuffsButton:SetText("Buffs");
+NWBlayerFrameBuffsButton:SetText(L["Buffs"]);
 NWBlayerFrameBuffsButton:SetNormalFontObject("GameFontNormalSmall");
 NWBlayerFrameBuffsButton:SetScript("OnClick", function(self, arg)
 	NWB:openBuffListFrame();
@@ -9728,7 +9885,7 @@ local NWBlayerFrameMapButton = CreateFrame("Button", "NWBlayerFrameMapButton", N
 NWBlayerFrameMapButton:SetPoint("CENTER", -58, -28);
 NWBlayerFrameMapButton:SetWidth(90);
 NWBlayerFrameMapButton:SetHeight(17);
-NWBlayerFrameMapButton:SetText("Layer Map");
+NWBlayerFrameMapButton:SetText(L["Layer Map"]);
 NWBlayerFrameMapButton:SetNormalFontObject("GameFontNormalSmall");
 NWBlayerFrameMapButton:SetScript("OnClick", function(self, arg)
 	NWB:openLayerMapFrame();
@@ -9758,7 +9915,7 @@ local NWBGuildLayersButton = CreateFrame("Button", "NWBGuildLayersButton", NWBla
 NWBGuildLayersButton:SetPoint("CENTER", -58, -57);
 NWBGuildLayersButton:SetWidth(90);
 NWBGuildLayersButton:SetHeight(17);
-NWBGuildLayersButton:SetText("Guild Layers");
+NWBGuildLayersButton:SetText(L["Guild Layers"]);
 NWBGuildLayersButton:SetNormalFontObject("GameFontNormalSmall");
 NWBGuildLayersButton:SetScript("OnClick", function(self, arg)
 	NWB:openLFrame();
@@ -9831,7 +9988,7 @@ NWBCopyDragFrame:SetBackdropBorderColor(0.235, 0.235, 0.235);
 NWBCopyDragFrame.fs = NWBCopyDragFrame:CreateFontString("NWBCopyDragFrameFS", "ARTWORK");
 NWBCopyDragFrame.fs:SetPoint("CENTER", 0, 0);
 NWBCopyDragFrame.fs:SetFont(NWB.regionFont, 14);
-NWBCopyDragFrame.fs:SetText(NWB.prefixColor .. "NovaWorldBuffs Copy Frame|r");
+NWBCopyDragFrame.fs:SetText(NWB.prefixColor .. L["NovaWorldBuffs Copy Frame|r"]);
 NWBCopyDragFrame:SetWidth(NWBCopyDragFrame.fs:GetWidth() + 16);
 NWBCopyDragFrame:SetHeight(22);
 
@@ -9862,7 +10019,7 @@ local NWBlayerFrameCopyButton = CreateFrame("Button", "NWBlayerFrameCopyButton",
 NWBlayerFrameCopyButton:SetPoint("TOPLEFT", 1, 1);
 NWBlayerFrameCopyButton:SetWidth(90);
 NWBlayerFrameCopyButton:SetHeight(17);
-NWBlayerFrameCopyButton:SetText("Copy/Paste");
+NWBlayerFrameCopyButton:SetText(L["Copy/Paste"]);
 NWBlayerFrameCopyButton:SetNormalFontObject("GameFontNormalSmall");
 NWBlayerFrameCopyButton:SetScript("OnClick", function(self, arg)
 	NWB:openCopyFrame();
@@ -9893,7 +10050,7 @@ function NWB:createCopyFormatButton()
 		NWB.copyDiscordButton:SetPoint("TOPRIGHT", -84, 3);
 		--So strange the way to set text is to append Text to the global frame name.
 		NWBCopyDiscordButtonText:SetText("Discord");
-		NWB.copyDiscordButton.tooltip = "Format the text to paste in discord? (Adds colors etc)";
+		NWB.copyDiscordButton.tooltip = L["Format the text to paste in discord? (Adds colors etc)"];
 		--NWB.copyDiscordButton:SetFrameStrata("HIGH");
 		NWB.copyDiscordButton:SetFrameLevel(3);
 		NWB.copyDiscordButton:SetWidth(24);
@@ -9957,7 +10114,7 @@ function NWB:recalcCopyFrame()
 end
 
 function NWB:openLayerFrame()
-	NWBlayerFrame.fs:SetText(NWB.prefixColor .. "NovaWorldBuffs v" .. version .. "|r");
+	NWBlayerFrame.fs:SetText(NWB.prefixColor .. L["Nova World Buffs"].. "v" .. version .. "|r");
 	--Quick fix to re-set the region font since the frames are created before we set region font.
 	NWBlayerFrame.fs2:SetFont(NWB.regionFont, 14);
 	NWBlayerFrame.fs3:SetFont(NWB.regionFont, 14);
@@ -11020,21 +11177,21 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 			local questData = NWB:getDungeonDailyData(NWB.data.tbcDD);
 			if (questData) then
 				local name = questData.nameLocale or questData.name;
-				text = text .. "\n" .. NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cff00ff00N|r|cFF9CD6DE)|r "
-						.. name .. " (" .. questData.abbrev .. ")";
+				text = (text .. "\n" .. NWB.chatColor .. L["|cFFFF6900Dungeon Daily|r |cFF9CD6DE(|r|cff00ff00N|r|cFF9CD6DE)|r "]
+						.. name .. " (" .. questData.abbrev .. ")");
 			end
 		else
-			text = text .. "\n" .. NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cff00ff00N|r|cFF9CD6DE)|r Unknown.";
+			text = (text .. "\n" .. NWB.chatColor .. L["|cFFFF6900Dungeon Daily|r |cFF9CD6DE(|r|cff00ff00N|r|cFF9CD6DE)|r  Unknown."]);
 		end
 		if (NWB.data.tbcHD and NWB.data.tbcHDT and GetServerTime() - NWB.data.tbcHDT < 86400) then
-			local questData = NWB:getHeroicDailyData(NWB.data.tbcHD);
+			local questData = NWB:getTbcHeroicDailyData(NWB.data.tbcHD);
 			if (questData) then
 				local name = questData.nameLocale or questData.name;
-				text = text .. "\n" .. NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cFFFF2222H|r|cFF9CD6DE)|r "
-						.. name .. " (" .. questData.abbrev .. ")";
+				text = (text .. "\n" .. NWB.chatColor .. L["|cFFFF6900Dungeon Daily|r |cFF9CD6DE(|r|cFFFF2222H|r|cFF9CD6DE)|r "]
+						.. name .. " (" .. questData.abbrev .. ")");
 			end
 		else
-			text = text .. "\n" .. NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r|cFFFF2222H|r|cFF9CD6DE)|r Unknown.";
+			text = (text .. "\n" .. NWB.chatColor .. L["|cFFFF6900Dungeon Daily|r |cFF9CD6DE(|r|cFFFF2222H|r|cFF9CD6DE)|r Unknown."]);
 		end
 		local texture = "|TInterface\\TargetingFrame\\UI-PVP-Horde:12:12:-1:-1:64:64:7:36:1:36|t";
 		if (NWB.faction == "Alliance") then
@@ -11044,11 +11201,11 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 			local questData = NWB:getPvpDailyData(NWB.data.tbcPD);
 			if (questData) then
 				local name = questData.nameLocale or questData.name;
-				text = text .. "\n" .. NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r" .. texture .. "|cFF9CD6DE)|r "
+				text = text .. "\n" .. NWB.chatColor ..L["|cFFFF6900Daily|r |cFF9CD6DE(|r"] .. texture .. "|cFF9CD6DE)|r "
 						.. name;
 			end
 		else
-			text = text .. "\n" .. NWB.chatColor .."|cFFFF6900Daily|r |cFF9CD6DE(|r" .. texture .. "|cFF9CD6DE)|r Unknown.";
+			text = text .. "\n" .. NWB.chatColor ..L["|cFFFF6900Daily|r |cFF9CD6DE(|r"] .. texture .. L["|cFF9CD6DE)|r Unknown."];
 		end
 		local completedQuests = {};
 		if (NWB.faction == "Horde") then
@@ -11085,7 +11242,7 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 		--Remove newline chars from start and end of string.
 		text = string.gsub(text, "^%s*(.-)%s*$", "%1");
 		if (not foundTimers) then
-			return NWB.chatColor .. "No current timers found.";
+			return NWB.chatColor .. L["No current timers found."];
 		else
 			return NWB.chatColor .. text;
 		end
@@ -11153,7 +11310,7 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 				text = msg .. text;
 				NWBlayerFrame.EditBox:Insert(NWB.chatColor .. text);
 			else
-				NWBlayerFrame.EditBox:Insert(NWB.chatColor .. "\n\n\nNo current timers found.");
+			NWBlayerFrame.EditBox:Insert(NWB.chatColor .. L["\n\n\nNo current timers found."]);
 			end
 		else
 			NWBlayerFrame.EditBox:Insert(NWB.chatColor .. text);
@@ -11186,8 +11343,8 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 		NWBlayerFrame.EditBox:Insert("\n\n|cFF9CD6DEYour guild master has the following public guild note settings enabled:" .. gmText);
 	end
 	if (NWB.latestRemoteVersion and tonumber(NWB.latestRemoteVersion) > tonumber(version)) then
-		NWBlayerFrame.fs3:SetText("Out of date version " .. version .. " (New version: "
-				.. NWB.latestRemoteVersion .. ")\nPlease update so your timers are accurate.");
+		NWBlayerFrame.fs3:SetText(L["Out of date version "] .. version .. L[" (New version: "]
+				.. NWB.latestRemoteVersion .. L[")\nPlease update so your timers are accurate."]);
 	end
 	--Add 2 extra blank lines to you can scroll layer data up past text at bottom of the frame.
 	NWBlayerFrame.EditBox:Insert("\n\n\n");
@@ -11374,9 +11531,9 @@ function NWB:setCurrentLayerText(unit)
 	end
 	if (unitType ~= "Creature" or NWB.companionCreatures[tonumber(npcID)]) then
 		if (NWB.faction == "Horde") then
-			NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. string.format(L["layerMsg3"], "Orgrimmar") .. "|r");
+			NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. string.format(L["layerMsg4"], L["Orgrimmar"]) .. "|r");
 		else
-			NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. string.format(L["layerMsg3"], "Stormwind") .. "|r");
+			NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. string.format(L["layerMsg4"], L["Stormwind"]) .. "|r");
 		end
 		return;
 	end
@@ -11384,7 +11541,7 @@ function NWB:setCurrentLayerText(unit)
 	for k, v in NWB:pairsByKeys(NWB.data.layers) do
 		count = count + 1;
 		if (k == tonumber(zoneID)) then
-			NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. L["You are currently on"] .. " |cff00ff00[Layer " .. count .. "]|cFF9CD6DE.|r");
+			NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. L["You are currently on"] .. L[" |cff00ff00[Layer "] .. count .. L["]|cFF9CD6DE.|r"]);
 			if (NWB.currentLayerShared ~= count) then
 				NWB:sendL(count, "set current layer text");
 				NWB.currentLayerShared = count;
@@ -11452,7 +11609,7 @@ function NWB:setCurrentLayerText(unit)
 			end
 		end
 	end]]
-	NWBlayerFrame.fs2:SetText("|cFF9CD6DECan't find current layer or no timers active for this layer.|r");
+	NWBlayerFrame.fs2:SetText(L["|cFF9CD6DECan't find current layer or no timers active for this layer.|r"]);
 end
 
 NWB.layerMapWhitelist = {
@@ -11854,7 +12011,7 @@ end)
 NWBLayerMapFrame.fs = NWBLayerMapFrame:CreateFontString("NWBLayerMapFrameFS", "ARTWORK");
 NWBLayerMapFrame.fs:SetPoint("TOP", 0, -0);
 NWBLayerMapFrame.fs:SetFont(NWB.regionFont, 14);
-NWBLayerMapFrame.fs:SetText("|cFFFFFF00Layer Mapping for " .. GetRealmName() .. "|r");
+NWBLayerMapFrame.fs:SetText(L["|cFFFFFF00Layer Mapping for "] .. GetRealmName() .. "|r");
 
 local NWBLayerMapDragFrame = CreateFrame("Frame", "NWBLayerMapDragFrame", NWBLayerMapFrame);
 NWBLayerMapDragFrame:SetToplevel(true);
@@ -11871,7 +12028,7 @@ NWBLayerMapDragFrame.tooltip:SetAlpha(.8);
 NWBLayerMapDragFrame.tooltip.fs = NWBLayerMapDragFrame.tooltip:CreateFontString("NWBLayerMapDragTooltipFS", "ARTWORK");
 NWBLayerMapDragFrame.tooltip.fs:SetPoint("CENTER", 0, 0.5);
 NWBLayerMapDragFrame.tooltip.fs:SetFont(NWB.regionFont, 12);
-NWBLayerMapDragFrame.tooltip.fs:SetText("Hold to drag");
+NWBLayerMapDragFrame.tooltip.fs:SetText(L["Hold to drag"]);
 NWBLayerMapDragFrame.tooltip:SetWidth(NWBLayerMapDragFrame.tooltip.fs:GetStringWidth() + 16);
 NWBLayerMapDragFrame.tooltip:SetHeight(NWBLayerMapDragFrame.tooltip.fs:GetStringHeight() + 10);
 NWBLayerMapDragFrame:SetScript("OnEnter", function(self)
@@ -11956,7 +12113,7 @@ end
 function NWB:recalcLayerMapFrame()
 	NWBLayerMapFrame.EditBox:SetText("\n");
 	if (not NWB.data.layers or type(NWB.data.layers) ~= "table" or not next(NWB.data.layers)) then
-		NWBLayerMapFrame.EditBox:Insert("|cffFFFF00No zones have been mapped yet since server restart.|r\n");
+		NWBLayerMapFrame.EditBox:Insert(L["|cffFFFF00No zones have been mapped yet since server restart.|r\n"]);
 	else
 		local count = 0;
 		for k, v in NWB:pairsByKeys(NWB.data.layers) do
@@ -11981,14 +12138,14 @@ function NWB:recalcLayerMapFrame()
 				end
 			else --C_Map.GetAreaInfo(
 			--C_Map.GetMapInfoAtPosition(1434, 1, 1)
-				text = text .. "  -|cffFFFF00No zones mapped for this layer yet.|r\n";
+				text = text .. L["  -|cffFFFF00No zones mapped for this layer yet.|r\n"];
 			end
 			if (NWB.faction == "Horde") then
-				NWBLayerMapFrame.EditBox:Insert("\n|cff00ff00[Layer " .. count .. "]|r  |cff9CD6DE(" .. NWB.mapName .. " " .. k .. ")|r  "
+				NWBLayerMapFrame.EditBox:Insert(L["\n|cff00ff00[Layer "] .. count .. L["]|r  |cff9CD6DE(Orgrimmar "] .. k .. ")|r  "
 						.. NWB.prefixColor .. "(" .. zoneCount .. " zones mapped)|r\n" .. text);
 			else
-				NWBLayerMapFrame.EditBox:Insert("\n|cff00ff00[Layer " .. count .. "]|r  |cff9CD6DE(" .. NWB.mapName .. " " .. k .. ")|r  "
-						.. NWB.prefixColor .. "(" .. zoneCount .. " zones mapped)|r\n" .. text);
+				NWBLayerMapFrame.EditBox:Insert(L["\n|cff00ff00[Layer "] .. count .. L["]|r  |cff9CD6DE(Stormwind "] .. k .. ")|r  "
+						.. NWB.prefixColor .. "(" .. zoneCount .. L[" zones mapped)|r\n"] .. text);
 			end
 		end
 	end
@@ -12211,7 +12368,7 @@ MinimapLayerFrame.tooltip:SetFrameLevel(9);
 MinimapLayerFrame.tooltip.fs = MinimapLayerFrame.tooltip:CreateFontString("NWBVersionDragTooltipFS", "ARTWORK");
 MinimapLayerFrame.tooltip.fs:SetPoint("CENTER", 0, 0.5);
 MinimapLayerFrame.tooltip.fs:SetFont(NWB.regionFont, 10);
-MinimapLayerFrame.tooltip.fs:SetText("Target a NPC to\nupdate your layer");
+MinimapLayerFrame.tooltip.fs:SetText(L["Target a NPC to\nupdate your layer"]);
 MinimapLayerFrame.tooltip:SetWidth(MinimapLayerFrame.tooltip.fs:GetStringWidth() + 10);
 MinimapLayerFrame.tooltip:SetHeight(MinimapLayerFrame.tooltip.fs:GetStringHeight() + 10);
 MinimapLayerFrame:SetScript("OnEnter", function(self)
@@ -12272,7 +12429,7 @@ function NWB:recalcMinimapLayerFrame(zoneID, event, unit)
 		for k, v in NWB:pairsByKeys(NWB.data.layers) do
 			count = count + 1;
 			if (k == NWB.lastKnownLayerMapID) then
-				NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. L["You are currently on"] .. " |cff00ff00[Layer " .. count .. "]|cFF9CD6DE.|r");
+				NWBlayerFrame.fs2:SetText("|cFF9CD6DE" .. L["You are currently on"] .. L[" |cff00ff00[Layer "] .. count .. L["]|cFF9CD6DE.|r"]);
 				if (NWB.currentLayerShared ~= count) then
 					NWB:sendL(count, "recalc minimap");
 					NWB.currentLayerShared = count;
@@ -12430,7 +12587,7 @@ end)
 NWBVersionFrame.fs = NWBVersionFrame:CreateFontString("NWBVersionFrameFS", "ARTWORK");
 NWBVersionFrame.fs:SetPoint("TOP", 0, -0);
 NWBVersionFrame.fs:SetFont(NWB.regionFont, 14);
-NWBVersionFrame.fs:SetText("|cFFFFFF00Guild versions seen since logon|r");
+NWBVersionFrame.fs:SetText(L["|cFFFFFF00Guild versions seen since logon|r"]);
 
 local NWBVersionDragFrame = CreateFrame("Frame", "NWBVersionDragFrame", NWBVersionFrame);
 NWBVersionDragFrame:SetToplevel(true);
@@ -12447,7 +12604,7 @@ NWBVersionDragFrame.tooltip:SetAlpha(.8);
 NWBVersionDragFrame.tooltip.fs = NWBVersionDragFrame.tooltip:CreateFontString("NWBVersionDragTooltipFS", "ARTWORK");
 NWBVersionDragFrame.tooltip.fs:SetPoint("CENTER", 0, 0.5);
 NWBVersionDragFrame.tooltip.fs:SetFont(NWB.regionFont, 12);
-NWBVersionDragFrame.tooltip.fs:SetText("Hold to drag");
+NWBVersionDragFrame.tooltip.fs:SetText(L["Hold to drag"]);
 NWBVersionDragFrame.tooltip:SetWidth(NWBVersionDragFrame.tooltip.fs:GetStringWidth() + 16);
 NWBVersionDragFrame.tooltip:SetHeight(NWBVersionDragFrame.tooltip.fs:GetStringHeight() + 10);
 NWBVersionDragFrame:SetScript("OnEnter", function(self)
@@ -12529,7 +12686,7 @@ end
 function NWB:recalcVersionFrame()
 	NWBVersionFrame.EditBox:SetText("\n\n");
 	if (not IsInGuild()) then
-		NWBVersionFrame.EditBox:Insert("|cffFFFF00You have no guild, this command shows guild members only.|r\n");
+		NWBVersionFrame.EditBox:Insert(L["|cffFFFF00You have no guild, this command shows guild members only.|r\n"]);
 	else
 		GuildRoster();
 		local numTotalMembers = GetNumGuildMembers();
