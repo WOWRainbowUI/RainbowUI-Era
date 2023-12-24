@@ -1,3 +1,11 @@
+== v1.11 - 25th December 2023
+* Added Priest
+* Leprithus added for Paladin Hand of Reckoning
+* Added Felreaver Scornn for Warrior Furious Thunder
+* Added Warlord Kolkanis for Mage Fingers of Frost
+* Improved Rogue Shiv
+* Paladin Exorcist simplified
+
 == v1.10 - 22nd December 2023
 * Rogue added
 * Spelling: Forrest to Forest

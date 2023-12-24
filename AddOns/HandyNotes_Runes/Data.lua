@@ -1,7 +1,5 @@
 local _, ns = ...
 local points = ns.points
-							
-						  
 local colourPrefix		= ns.colour.prefix
 local colourHighlight	= ns.colour.highlight
 local colourPlaintext	= ns.colour.plaintext
@@ -149,14 +147,54 @@ st.paladin.martyrdom = "與 Stormwind 的 Brother Romulus 交談。\n\n"
 			.."她有你的符文。你知道該做什麼了。"
 st.paladin.runeOfRebuke = "與在公園的 Liv Bradford 交談。\n"
 			.."你會發現 Stuart 在附近閒逛。\n返回 Liv 處領取你的獎勵"
-st.priest.citadel = ""
-						  
-st.priest.saviour = ""
-st.priest.sharedPain = "往南遠東方的鐵樂隊營地的貝爾德船長\n"
-			.."艾爾文森林的佛洛斯提德山洞的梅倫納斯領主\n"
-st.priest.voidPlague = "葛諾米根附近的痲瘋地精/吉伯威特；艾爾文森林的金牙\n"
-			.."泰達希爾的班西斯墓地，葛納平小屋(A)\n"
-			.."藏在剃刀嶺東邊的庫爾提拉斯暴徒，薩塔斯&#10;西北方、提里斯法林地的死亡鐘聲，基爾加(H)"
+st.priest.circle = "從暴風城戒備森嚴的地下室中獲取黑暗洞察，然後在隱蔽的墳墓處使用它。"
+st.priest.citadel = "霜鬃暴徒、希爾弗嶺、丹莫羅；\n迪菲亞流氓巫師、石墓湖、艾爾文森林；精靈、火焰石洞穴、泰達希爾（聯盟）；\n各種巨魔、豺狼人和女妖位於杜塔隆；\n血色軍團、索利登農場，提瑞斯法林地（部落）"
+st.priest.penanceMed = "\n\n別忘了！在嘗試學習符文時一定要有冥想增益效果。最初，\n"
+			.."你必須堅持你的種族地點。\n\n人類可以使用任何神聖地點\n"
+			.."而矮人可以使用任何聖光的祭壇。暗夜精靈可以使用任何月井！在部落陣營，\n"
+			.."被遺忘者需要前往任何墓地！巨魔可以使用洛阿祭壇，例如十字路口！\n\n"
+			.."在17級時，你必須完成一個任務來\n獲得第二個冥想增益。這\n"
+			.."對於學習更難的符文是必需的。\n\n稍後在16級的地圖上標記了詳細信息。\n\n"
+			.."注意：第二個增益可通過\n另一個牧師獲得：\n  玩家1：/跪下；\n"
+			.."  玩家2：/祈禱。\n現在互換角色。瞧！\n\n（/祈禱將傳遞你的所有冥想效果！）"
+st.priest.penanceDM = "\n\n布蘭斯托克·卡爾德會要求你洗劫一個\n石顎腳踏箱，你將獲得一個不活躍\n"
+			.."的符文。回到他那裡。\n\n在他附近有一個聖光祭壇。/跪下。\n一旦獲得增益，點擊你的符文即可！\n"
+			..st.priest.penanceMed
+st.priest.penanceDur = "和肯'傑伊交談並收到你的不活躍\n符文。前往洛阿祭壇，它位於\n"
+			.."森金村北部，然後在它面前下跪。一旦獲得增益，點擊\n你的符文。瞧！\n"
+			..st.priest.penanceMed
+st.priest.penanceEF = "\n\n特別是，人類牧師將拜訪北郡修道院的\n女祭司阿尼塔。\n"
+			.."然後前往回音嶺礦山並\n擊殺地精勞工，直到一個\n"
+			.."煩惱的侍僧的記憶掉落。\n\n回到修道院。/跪下。一旦你\n"
+			.."收到增益，單擊洗劫的\n記憶來學習符文！" ..st.priest.penanceMed
+st.priest.penanceTel = "\n\n珊妲位於艾爾達希爾的樹上。\n與她交談，然後前往位於\n"
+			.."艾爾達希爾北部和山洞東部的月井。\n/跪下。一旦獲得增益，點擊你的符文！\n\n" ..st.priest.penanceMed
+st.priest.penanceTG = "\n\n交談暗黑牧師迪斯滕後"
+			.."/kneel在墓地，你一旦收到強化"
+			.."你只需點擊你的符文!" ..st.priest.penanceMed
+st.priest.sharedPain = "隊長貝爾德 & 火槌脊、頭盔床湖、遠東洛丹倫、吉布威特、遠西洛丹倫; 槌骨小怪、母親牙齒、獵人魯克拉、賈斯珀礦坑區域、艾爾文森林;"
+			.."梅萊納斯大人、惡魔岩石洞穴、泰達希爾(聯盟)。\n\n"
+			.."瑪卡斯加、扎拉贊、科爾坎尼斯、斯克恩、蓋祖- 全部在杜洛塔; 提瑞斯法農民小怪、索利登農場區域、提瑞斯法林地(部落)"
+st.priest.strength = "從食人妖小怪取得原始洞察力"
+st.priest.twisted = "關於位置，請參閱快速入門指南\n\n"
+st.priest.twistedBarr = "屠殺剃刀嶺小怪取得援護之手"
+			.."。它的工具提示是提示！通過一級復活，復活一位倒下的冒險者。"
+			.."你也可以復活他的/她的寵物！\n\n"
+st.priest.twistedDark = "擊殺風鱗納迦，直到辛特蘭祭品掉落。"
+			.."在附近的水域中，跳進去，並點擊辛特蘭偶像。"
+			.."瞧！\n\n"
+st.priest.twistedLM = "在掠銀礦井的隧道鼠取得祭祀幣。"
+			.."走到出口，但在右邊尋找一個壁龕之前。"
+			.."把硬幣扔進水井，你就很好啦！\n\n"
+st.priest.twistedSil = "最簡單的版本。擊殺並掠奪"
+			.."可惜的是，15分鐘的重生計時器\n\n"
+st.priest.twistedWest = "擊殺任一個骷髏"
+			.."但是當它試圖重生時你必須用神聖傷害殺死它。"
+st.priest.twoMeditate = "17級時，前往暴風城公園（人類/矮人）、暗夜精靈的月亮神殿、下城區的戰爭區（所有部落）從牧師訓練師那裡獲得種族任務\。"
+			.."最終你將能夠跨種族（以及陣營。錯誤？）共享多個冥想增益。"
+			.."玩家1：/ 跪下；玩家2：/祈禱\n\n"
+st.priest.voidPlague = "靠近諾莫瑞根的麻瘋侏儒/吉布威特；艾爾文森林的金牙；格拉爾松木桶、班艾希爾墳墓洞穴、泰達希爾（聯盟）\n"
+			.."庫爾提拉斯暴徒、杜洛塔的剃刀嶺東部；吉爾加，提瑞斯法林地（部落）的死亡鐘聲西北方"
 st.rogue.bladeDance = "黑海岸的克里夫斯普林格河洞。鑰匙由克里夫斯普林格暴徒掉落；洛克莫丹的各個鐵矮人。打開鎖箱；扒竊迪菲亞暴徒，可獲得一份神秘信封。前往西瘟疫之地的死亡礦井後門(A)。\n\n"
 			.."扒竊南海暴徒，可獲得海盜的火柴盒。前往附近山丘。點燃火藥桶。砰！瞧，你的獎勵就在這裡！(H)"
 st.rogue.deadlyBrew = "在 20 等級時，你會收到一封來自「C」的信\n。不必理會。到了 22 等級時，學習閃避和分心術\n"
@@ -391,13 +429,8 @@ st.warrior.ragingBlow = "三件要取回的物品。頭盔位於\n影牙城堡�
 st.agon = "你需要殺死阿貢，一頭野豬。\n"
 			.."只有一個人可以獲得掉落物，單獨或組隊。\n重生成很快，2-3 分鐘"
 st.allClass = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
-																																
-																											  
 st.allSpellG = { "Survival of the Fittest", "Lone Wolf", "Rewind Time", "Divine Sacrifice", "Serendipity", "Main Gauche",
 				"Dual Wield Specialization", "Demonic Pact", "Warbringer" }
-																														 
-																									   
-								   
 st.allSpellACA = { "Skull Bash", "Serpent Spread", "Arcane Surge", "Beacon of Light", "Mind Sear", "Just a Flesh Wound",
 					"Healing Rain", "Everlasting Affliction", "Single-Minded Fury" }
 st.duskwoodCrypts = "標記要首先進入哪個地穴的地圖標記。\n\n在第一個地穴中左轉。點擊灰塵寶箱並拾取破舊的護身符。離開\n\n在第二個地穴中，右轉進入王座\n"
@@ -542,7 +575,7 @@ ns.runes = {
 		["Crusader Strike"]={ rune="Libram of Judgement", spellID=407676, level=4, icon=1,
 				start="Bromos Grummner, Anvilmar, Dun Morogh; Brother Sammuel, Northshire Abbey, Elwynn Forest" },
 		["Inspiration Exemplar"]={ rune="Rune of Inspiration", spellID=407880, level=5, icon=2,
-				start=st.twoPlusHealers .."Wendigo Cave, Dun Morogh; east of Jarod's Landing, Elwynn Forest" },
+				start=st.twoPlusHealers .."Wendigo Cave, Dun Morogh; east of Jerod's Landing, Elwynn Forest" },
 		["Rebuke"]={ rune="Rune of Rebuke", spellID=425609, level=8, icon=3,
 				start="Liv Bradford, The Park in Stormwind City" },
 		["Aegis"]={ rune="Rune of Aegis", spellID=425589, level=8, icon=4,
@@ -554,7 +587,7 @@ ns.runes = {
 		["Beacon of Light"]={ rune="Rune of Beckoning Light", spellID=407613, level=15, icon=7,
 				start=st.supplyFactionStart },
 		["Hand of Reckoning"]={ rune="Libram of Justice", spellID=407631, level=15, icon=8,
-				start="Far south cave in Stonesplitter Valley, Loch Modan; Defias Drone, far south-east corner of Westfall" },
+				start="Far south cave in Stonesplitter Valley, Loch Modan; Leprithus and Defias Drone, Westfall" },
 		["Divine Sacrifice"]={ rune="Rune of Sacrifice", spellID=407804, level=20, icon=9,
 				start="Grizzby @ Ratchet, The Barrens" },
 		["Avenger's Shield"]={ rune="Rune of the Avenger", spellID=407669, level=23, icon=10,
@@ -572,37 +605,39 @@ ns.runes = {
 
 	["PRIEST"] = {
 		["Penance"]={ rune="Memory of a Troubled Acolyte", spellID=402174, level=2, icon=1,
-				start= "Branstock Khalder, Anvilmar, Coldridge Valley; Kobolds, Echo Ridge Mine, Northshire; Shanda, Shadowglen (A)\n"
+				start= "Branstock Khalder, Anvilmar, Coldridge Valley; Priestess Anetta, Northshire Abbey; Shanda, Shadowglen (A)\n"
 					.."Ken'Jai, Valley of Trials; Dark Cleric Duesten, Deathknell" },
 		["Prayer of Mending"]={ rune="Reciprocal Epiphany", spellID=401859, level=7, icon=2,
 				start=st.twoPlusHealers
-					.."Grizzled Den, Dun Morogh; southern Elwynn Forest; Oracle Glade, Teldrassil (A)\n"
+					.."Grizzled Den, Dun Morogh; east of Jarod's Landing, southern Elwynn Forest; Oracle Glade, Teldrassil (A)\n"
 					.."South of and outside of the Valley of Trials, Durotar; near northern exit, Venture Co cave, Mulgore (H)" },
 		["Void Plague"]={ rune="Memory of a Dark Purpose", spellID=425204, level=7, icon=3,
 				start="Leper Gnome/Gibblewit near Gnomeregan; Goldtooth in Elwynn Forest; Gnarlpine Cache, Ban'ethil Barrow Den, "
 					.."Teldrassil (A)\nKul Tiras mob, east of Razor Hill, Durotar; Gillgar, north-west from Deathknell, Tirisfal GladeS (H)" },
 		["Homunculi"]={ rune="Prophecy of a Desecrated Citadel", spellID=402799, level=8, icon=4,
 				start="Shimmer Ridge, Dun Morogh; Defias Rogue Wizard, Elwynn Forest; Rascal Sprite, Fel Rock Cave, Teldrassil (A);\n"
-					.."Voodoo Troll, Echo Isle, Duratar; Scarlet mobs near Solliden Farmstead, Tirisfal Glades (H)" },
+					.."Voodoo Troll, Echo Isle, Duratar; Scarlet mobs near Solliden Farmstead, Tirisfal Glades (H)\n"
+					.."Needs two Meditations" },
 		["Shared Pain"]={ rune="Memory of an Imprisoned Saviour", spellID=401969, level=8, icon=5,
-				start="Defeat Captain Beld, far south-east Dun Morogh; Kobold Miner mobs, mines, Elwynn Forest; Lord Melenas, Teldrassil (A)\n"
+				start="Defeat Captain Beld, far south-east Dun Morogh; Kobold mobs, mines, Elwynn Forest; Lord Melenas, Teldrassil (A)\n"
 					.."Gazz'uz or Makasgar, Mulgore; Tirisfal Farmer mobs, Tirisfal Glades (H)" },
 		["Mind Sear"]={ rune="Tenebrous Epiphany", spellID=413259, level=15, icon=6,
 				start=st.supplyFactionStart },
 		["Twisted Faith"]={ rune="Memory of a Devout Champion", spellID=425198, level=15, icon=7,
-				start="Naga mobs around Ruins of Mathystra, Darkshore; Silverstream Mine, Loch Modan; Gold Coast Quarry, Westfall (A)\n"
-					.."Wailing Spirit, southern Silverpine Forest; Razormane mobs, The Barrens (H)" },
+				start="Naga mobs, Ruins of Mathystra, Darkshore; Silverstream Mine, Loch Modan; Gold Coast Quarry and\n"
+					.."Jangolode Mine, Westfall (A). Wailing Spirit, southern Silverpine Forest; Razormane mobs, The Barrens (H)" },
 		["Shadow Word: Death"]={ rune="Prophecy of a King's Demise", spellID=401955, level=20, icon=8,
-				start="Orb, coast, Darkshore; Mo'grosh Stronghold, Loch Modan; Leprithus, Westfall (A)\n"
-					.."Thule Ravenclaw, Fenris Isle, Silverpine Forest; Desert Mirage, The Barrens (H)" },
+				start="Orb, coast, Darkshore; Mo'grosh Stronghold, Loch Modan (A)\n"
+					.."Thule Ravenclaw, Fenris Isle, Silverpine Forest; Desert Mirage, The Barrens (H)\n"
+					.."Needs two Meditations" },
 		["Serendipity"]={ rune="Harmonious Epiphany", spellID=413248, level=20, icon=9,
 				start="Grizzby @ Ratchet, The Barrens" },
 		["Power Word: Barrier"]={ rune="Prophecy of a City Enthralled", spellID=425207, level=23, icon=10,
-				start="Blackrock Shadowcaster, Stone watch, Redridge Mountains (A/H)" },
+				start="Blackrock Shadowcaster, Stone watch, Redridge Mountains (A/H). Needs two Meditations" },
 		["Strength of Soul"]={ rune="Prophecy of Seven Visitors", spellID=415739, level=23, icon=11,
-				start="Primal Insight from Thistlefur mobs, Ashenvale (A/H)" },
+				start="Primal Insight from Thistlefur mobs, Ashenvale (A/H). Needs two Meditations" },
 		["Circle of Healing"]={ rune="Prophecy of a Thousand Lights", spellID=401946, level=25, icon=12,
-				start="Obtain Dark Insight from Defias mobs in Duskwood (A/H)" },
+				start="Obtain Dark Insight from Defias mobs in Duskwood (A/H). Needs two Meditations" },
 
 		spells={ "Penance", "Prayer of Mending", "Void Plague", "Homunculi", "Shared Pain",
 			"Mind Sear", "Twisted Faith", "Shadow Word: Death", "Serendipity", 
@@ -761,13 +796,7 @@ ns.runes = {
 --=======================================================================================================
 
 points[ 1426 ] = { -- Dun Morogh
-																										  
-															
-																											 
-																													
 	[21205380] = { npc=1124, name="Frostmane Shadowcaster", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },				
-																							 
-							
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
 							st.warrior.devastate ..st.warrior.devastateJunni },
@@ -781,7 +810,7 @@ points[ 1426 ] = { -- Dun Morogh
 	[22607840] = { npc=706, name="Frostmane Troll Whelp", class={ "PALADIN", "ROGUE", "WARRIOR" }, faction="Alliance",
 					tip={ nil, "Pick Pocket Top-Right Map Piece", nil },
 					spell={ "Crusader Strike", "Quick Draw", "Victory Rush" },
-					quest={ 77657, {}, ( ( ns.raceID == 3 ) and 77655 or 77656 ) },
+					quest={ 77657, {}, ( ( ns.race == "Dwarf" ) and 77655 or 77656 ) },
 					questName={ "Relics of the Light", {}, "The Lost Rune" },
 					guide={ st.paladin.judgement, st.rogue.quickDraw ..st.rogue.quickDrawDM, st.starterZoneClass } },
 	[23407860] = { name="Ragged Wolf (Various)", class={ "WARLOCK" }, faction="Alliance",
@@ -789,43 +818,33 @@ points[ 1426 ] = { -- Dun Morogh
 	[24607440] = { npc=724, name="Burly Rockjaw Trogg", class={ "ROGUE" }, faction="Alliance",
 					tip="Pick Pocket Top-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM } },
-	[25204440] = { name="Leper Gnome / Gibblewilt", class={ "PRIEST", "ROGUE" }, faction="Alliance",
-					tip={ nil, "Leper Gnomes only. Pick pocket\nand kill. Bottom-Right Map Piece" },
-					spell={ "Void Plague", "Quick Draw" }, 
-					guide={ st.priest.voidPlague, st.rogue.quickDraw .. st.rogue.quickDrawDM } },
 	[25405100] = { npc=1124, name="Frostmane Shadowcaster", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },
-																							 
-							
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
 							st.warrior.devastate ..st.warrior.devastateJunni },
-														 
 					tip={ nil, nil, "Ominous Tome", "Severed Troll Head"} },
 	[25604350] = { npc=208802, name="Wounded Adventurer", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Aegis" }, guide={ st.paladin.runeOfAegis } }, 
+	[25804440] = { npc=8503, name="Gibblewilt", class={ "PRIEST" }, faction="Alliance",
+					spell={ "Shared Pain" }, guide={ st.priest.sharedPain } },
 	[26006940] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
-																										  
-															
-																											 
-																													
 	[26607440] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
-	[26737255] = { object=405633, name="Rockjaw Footlocker", class={ "MAGE", "WARLOCK" },  faction="Alliance",
-														   
-					spell={ "Ice Lance", "Haunt" }, guide={ st.starterZoneClass },
-					quest={ 77667, 77666 }, questName={ "Spell Research", "Stolen Power" } },
+	[26737255] = { object=405633, name="Rockjaw Footlocker", class={ "MAGE", "PRIEST", "WARLOCK" },  faction="Alliance",
+					spell={ "Ice Lance", "Penance", "Haunt" },
+					guide={ st.starterZoneClass, st.starterZoneClass ..st.priest.penanceDM, st.starterZoneClass },
+					quest={ 77667, 77661, 77666 }, questName={ "Spell Research", "Meditation on the Light", "Stolen Power" } },
 	[26807620] = { name="Ragged Wolf (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
 	[27007840] = { npc=706, name="Frostmane Troll Whelp", class={ "PALADIN", "ROGUE", "WARRIOR" }, faction="Alliance",
 					tip={ nil, "Pick Pocket Top-Right Map Piece", nil },
 					spell={ "Crusader Strike", "Quick Draw", "Victory Rush" },
-					quest={ 77657, {}, ( ( ns.raceID == 3 ) and 77655 or 77656 ) },
+					quest={ 77657, {}, ( ( ns.race == "Dwarf" ) and 77655 or 77656 ) },
 					questName={ "Relics of the Light", {}, "The Lost Rune" },
 					guide={ st.paladin.judgement, st.rogue.quickDraw ..st.rogue.quickDrawDM, st.starterZoneClass } },
-	[27603680] = { name="Leper Gnome / Gibblewilt", class={ "PRIEST", "ROGUE" }, faction="Alliance",
-					tip={ nil, "Leper Gnomes only. Pick pocket\nand kill. Bottom-Right Map Piece" },
-					spell={ "Void Plague", "Quick Draw" }, 
+	[27603700] = { npc=1211, name="Leper Gnome", class={ "PRIEST", "ROGUE" }, faction="Alliance",
+					tip={ nil, "Pick pocket\nand kill. Bottom-Right Map Piece" }, spell={ "Void Plague", "Quick Draw" }, 
 					guide={ st.priest.voidPlague, st.rogue.quickDraw .. st.rogue.quickDrawDM } },
 	[27607560] = { npc=6113, name="Vejrek", class={ "WARRIOR" }, faction="Alliance",
 					tip="The quest is a normal levelling quest, for your convenience.\n"
@@ -836,7 +855,7 @@ points[ 1426 ] = { -- Dun Morogh
 					spell={ "Shadowstrike" }, guide={ st.starterZoneClass } },
 	[28606638] = { npc=837, name="Branstock Khalder", class={ "PRIEST" }, faction="Alliance", tip="Inside Anvilmar",
 					quest={ 77661 }, questName={ "Meditation on the Light" },
-					spell={ "Penance" }, guide={ st.starterZoneClass } },
+					spell={ "Penance" }, guide={ st.starterZoneClass ..st.priest.penanceDM } },
 	[28656615] = { npc=460, name="Alamar Grimm", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Haunt" }, guide={ st.starterZoneClass }, quest={ 77666 },
 					questName={ "Stolen Power" } },
@@ -848,33 +867,21 @@ points[ 1426 ] = { -- Dun Morogh
 	[28808060] = { npc=706, name="Frostmane Troll Whelp", class={ "PALADIN", "ROGUE", "WARRIOR" }, faction="Alliance",
 					tip={ nil, "Pick Pocket Top-Right Map Piece", nil },
 					spell={ "Crusader Strike", "Quick Draw", "Victory Rush" },
-					quest={ 77657, {}, ( ( ns.raceID == 3 ) and 77655 or 77656 ) },
+					quest={ 77657, {}, ( ( ns.race == "Dwarf" ) and 77655 or 77656 ) },
 					questName={ "Relics of the Light", {}, "The Lost Rune" },
 					guide={ st.paladin.judgement, st.rogue.quickDraw ..st.rogue.quickDrawDM, st.starterZoneClass } },
-																	   
-																					 
 	[28836724] = { npc=912, name="Thran Khorman", class={ "WARRIOR" }, rfaction="Alliance",
 					spell={ "Victory Rush" }, guide={ st.starterZoneClass },
-					quest={ ( ( ns.raceID == 3 ) and 77655 or 77656 ) } },
+					quest={ ( ( ns.race == "Dwarf" ) and 77655 or 77656 ) } },
 	[28836833] = { npc=926, name="Bromos Grummner", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Crusader Strike" }, quest={ 77657 }, questName={ "Relics of the Light" }, tip="Inside Anvilmar",
 					guide={ st.paladin.judgement } },
 	[29186745] = { npc=895, name="Thorgas Grimson", class={ "HUNTER" }, faction="Alliance", tip="Inside Anvlimar",
-															
-																											 
 					quest={ 77660 }, questName={ "Trek Through the Caves" },
 					spell={ "Chimera Shot" }, guide={ st.starterZoneClass } },
-																									  
 	[29404260] = { npc=1119, name="Fyodi", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
-																								 
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
-																										  
-															
-																											 
-																													
-																													  
-															   
 	[29807460] = { name="Ragged Wolf (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
 	[30008240] = { npc=946, name="Frostmane Novice", class={ "ROGUE" }, faction="Alliance",
@@ -890,12 +897,6 @@ points[ 1426 ] = { -- Dun Morogh
 					tip="Behind Grik'nir the Cold, deep in the cave" },
 	[31607000] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
-																													  
-															   
-																			  
-																								 
-																	   
-																					 
 	[31804400] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
 	[32803980] = { npc=1132, name="Timber", class={ "HUNTER", "MAGE" }, faction="Alliance",
@@ -908,16 +909,11 @@ points[ 1426 ] = { -- Dun Morogh
 	[35203500] = { npc=1119, name="Fyodi", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
-																													  
-															   
-																													  
-															   
 	[35604500] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
 	[36003880] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
 	[37203880] = { npc=1132, name="Timber", class={ "HUNTER", "MAGE" }, faction="Alliance",
-																								 
 					spell={ "Explosive Shot", "Fingers of Frost" }, 
 					guide={ st.hunter.explosiveShot, st.mage.fingers } },
 	[37904250] = { npc=208812, name="Jorul", class={ "HUNTER" }, spell={ "Flanking Strike" },
@@ -927,20 +923,14 @@ points[ 1426 ] = { -- Dun Morogh
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
 	[39604600] = { npc=1137, name="Edan the Howler", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
-																								 
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" }, tip="In the Grizzled Den",
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
 	[40603660] = { npc=1397, name="Frostmane Seer", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },
-																							 
-							
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
 							st.warrior.devastate ..st.warrior.devastateJunni },
-														 
 					tip={ nil, nil, "Ominous Tome", "Severed Troll Head" } },
 	[40604340] = { npc=1397, name="Frostmane Seer", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },
-																							 
-							
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
 							st.warrior.devastate ..st.warrior.devastateJunni },
@@ -958,44 +948,34 @@ points[ 1426 ] = { -- Dun Morogh
 	[41805140] = { npc=1135, name="Wendigo", faction="Alliance", class={ "WARLOCK", "WARRIOR" },
 					spell={ "Demonic Grace", "Devastate" },
 					guide={ st.warlock.grace ..st.warlock.graceDM, st.warrior.devastate  ..st.warrior.devastateJunni },
-														  
 					tip={ "Wendigo Blood", "Severed Wendigo Paw"} },
 	[42004560] = { npc=1397, name="Frostmane Seer", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },
-																							 
-							
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
 							st.warrior.devastate ..st.warrior.devastateJunni },
-														 
 					tip={ nil, nil, "Ominous Tome", "Severed Troll Head" } },
 	[42203560] = { npc=204070, name="Soboz", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Shimmer Ridge" },
 	[42204740] = { npc=1135, name="Wendigo", faction="Alliance", class={ "WARLOCK", "WARRIOR" },
 					spell={ "Demonic Grace", "Devastate" },
 					guide={ st.warlock.grace ..st.warlock.graceDM, st.warrior.devastate  ..st.warrior.devastateJunni },
-														  
 					tip={ "Wendigo Blood", "Severed Wendigo Paw"} },
 	[42603380] = { npc=1397, name="Frostmane Seer", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },
-																							 
-							
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
 							st.warrior.devastate ..st.warrior.devastateJunni},
-														 
 					tip={ nil, nil, "Ominous Tome", "Severed Troll Head" } },
 	[43004760] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
 	[43004960] = { npc=204827, name="Adventurer's Remains", class={ "DRUID", "PALADIN", "PRIEST", "SHAMAN" }, faction="Alliance",
 					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, 
-					guide={ st.woundedAdventurer  }, tip="In the Grizzled Den" },
+					guide={ st.woundedAdventurer }, tip="In the Grizzled Den" },
 	[43204960] = { npc=1137, name="Edan the Howler", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
-																								 
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
 	[43605560] = { npc=1134, name="Young Wendigo", faction="Alliance", class={ "WARLOCK", "WARRIOR" },
 					spell={ "Demonic Grace", "Devastate" },
 					guide={ st.warlock.grace ..st.warlock.graceDM, st.warrior.devastate  ..st.warrior.devastateJunni },
-														  
 					tip={ "Wendigo Blood", "Severed Wendigo Paw"} },
 	[45604320] = { name="Wolves (Various)", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDM }, tip="Wolf Jawbone" },
@@ -1035,17 +1015,11 @@ points[ 1426 ] = { -- Dun Morogh
 	[58806230] = { npc=1130, name="Bjarn", class={ "MAGE" }, faction="Alliance",
 					spell={ "Fingers of Frost" }, guide={ st.mage.fingers } },
 	[59804940] = { npc=1388, name="Vagash", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
-																								 
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
 	[61405940] = { npc=1130, name="Bjarn", class={ "MAGE" }, faction="Alliance", spell={ "Fingers of Frost" },
-															   
-																								   
-																								 
-																	   
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
 	[62604620] = { npc=1388, name="Vagash", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
-																								 
 					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
 					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
 	[62605640] = { npc=1130, name="Bjarn", class={ "MAGE" }, faction="Alliance",
@@ -1064,31 +1038,15 @@ points[ 1426 ] = { -- Dun Morogh
 					tip="Needs about five separate Fire debuffs to defrost",
 					spell={ "Burnout", "Chaos Bolt" }, guide={ st.frozen } },
 	[69805900] = { npc=1118, name="Rockjaw Trogg mobs (Various)", class={ "HUNTER" }, spell={ "Carve" },
-														 
 					guide={ st.hunter.carve } },
-																														   
-															   
 	[70005640] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
 					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-																  
-																														   
-															   
-																												   
-														 
-																  
-																												   
-														 
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-																													   
-															  
-																		 
-	[71605140] = { npc=1119, name="Hammerspine", class={ "MAGE" }, faction="Alliance",
-					spell={ "Fingers of Frost" }, guide={ st.mage.fingers } },
 	[71805040] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
 					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[72805380] = { npc=1119, name="Hammerspine", class={ "MAGE" }, faction="Alliance",
-					spell={ "Fingers of Frost" }, guide={ st.mage.fingers } },
+	[72605140] = { npc=1119, name="Hammerspine", class={ "MAGE", "PRIEST" }, faction="Alliance",
+					spell={ "Fingers of Frost", "Shared Pain" }, guide={ st.mage.fingers, st.priest.sharedPain } },
 	[73005920] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
 					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
@@ -1100,6 +1058,7 @@ points[ 1426 ] = { -- Dun Morogh
 					guide={ st.rogue.mutilate, st.rogue.quickDraw ..st.rogue.quickDrawDM } },
 	[78206230] = { npc=6124, name="Captain Beld", class={ "PRIEST", "WARLOCK" }, faction="Alliance",
 					spell={ "Shared Pain", "Soul Siphon" }, guide={ st.priest.sharedPain, st.warlock.soulSiphon } },
+
 	[79003710] = { npc=1961, name="Mangeclaw", class={ "HUNTER", "MAGE" }, faction="Alliance",
 					spell={ "Explosive Shot", "Fingers of Frost" }, 
 					guide={ st.hunter.explosiveShot, st.mage.fingers } },
@@ -1113,17 +1072,18 @@ points[ 1431 ] = { -- Duskwood
 					tip="In the last room of the Dawning Wood\nCatacombs. The western building" },
 	[17603740] = { object=411328, name="Slumbering Bones", class={ "MAGE", "WARRIOR" },
 					spell={ "Mass Regeneration", "Flagellation" }, guide={ st.duskwoodCrypts },
-																				
 					tip="This Crypt second" },
-	[19904550] = { npc=215, name="Defias Night Runner", class={ "ROGUE" },
+	[18002560] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Collect the Paws off these mobs. For the first quest",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
+	[19904550] = { npc=215, name="Statue", class={ "ROGUE" },
 					tip="/kneel here at the statue, after\nyou obtain an Engraved Gold Ring",
 					spell={ "Shiv" }, guide={ st.rogue.shiv } },
-	[21406360] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[21407280] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[22606880] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
+	[22606880] = { name="Defias Mobs (Various)", class={ "PALADIN", "PRIEST" },
+					spell={ "Exorcist", "Circle of Healing" }, guide={ st.paladin.banishment, st.priest.circle } },
 	[22806560] = { npc=215, name="Defias Night Runner", class={ "ROGUE" },
 					tip="Pp to obtain a Engraved Gold Ring",
 					spell={ "Shiv" }, guide={ st.rogue.shiv } },
@@ -1133,23 +1093,30 @@ points[ 1431 ] = { -- Duskwood
 					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
 	[26003090] = { object=411348, name="Dusty Coffer", class={ "MAGE", "WARRIOR" },
 					spell={ "Mass Regeneration", "Flagellation" }, guide={ st.duskwoodCrypts },
-																				
 					tip="This Crypt first" },
-	[47807600] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[49207160] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[49207860] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
+	[37602240] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Collect the Paws off these mobs. For the first quest",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
+	[50607540] = { name="Defias Mobs (Various)", class={ "PALADIN", "PRIEST" },
+					spell={ "Exorcist", "Circle of Healing" }, guide={ st.paladin.banishment, st.priest.circle } },
 	[50807100] = { npc=215, name="Defias Night Runner", class={ "ROGUE" },
 					tip="Pp to obtain a Engraved Gold Ring",
 					spell={ "Shiv" }, guide={ st.rogue.shiv } },
-	[51207400] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[52007700] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[56607220] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
+	[55406160] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Collect the Paws off these mobs. For the first quest",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
+	[59001960] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Collect the Paws off these mobs. For the first quest",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
 	[61403040] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
 					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
 	[65003440] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
@@ -1158,6 +1125,14 @@ points[ 1431 ] = { -- Duskwood
 					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
 	[67202940] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
 					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
+	[68203400] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Collect the Paws off these mobs. For the first quest",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
+	[91103060] = { name="Secluded Grave", class={ "PRIEST" },
+					spell={ "Circle of Healing" }, guide={ st.priest.circle } },
 }
 points[ 1429 ] = { -- Elwynn Forest
 	[22607320] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
@@ -1165,29 +1140,19 @@ points[ 1429 ] = { -- Elwynn Forest
 	[23609180] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
 	[24409460] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",				
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[25207060] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
 	[25408820] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[25607420] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
 	[26608420] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[26609360] = { npc=448, name="Hogger", class={ "MAGE", "WARLOCK", "WARRIOR" },
-																							  
 					spell={ "Fingers of Frost", "Soul Siphon", "Furious Thunder" },
 					guide={ st.mage.fingers, st.warlock.soulSiphon, st.warrior.furiousThunder },
 					tip="Pin marks his camp. Frequently kited" },
@@ -1198,30 +1163,21 @@ points[ 1429 ] = { -- Elwynn Forest
 	[27409200] = { npc=478, name="Riverpaw Outrunner", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[27808860] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[28009580] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
 	[29807480] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
 	[30608300] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[30608820] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
 	[31205720] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[41208820] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
-														
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
 	[36008260] = { npc=475, name="Kobold Tunneler", faction="Alliance", class={ "ROGUE", "WARRIOR" },
 					tip={ "Pick Pocket or kill. Top-Right Map Piece", "Severed Kobold Head" }, spell={ "Quick Draw", "Devastate" },
@@ -1230,19 +1186,16 @@ points[ 1429 ] = { -- Elwynn Forest
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
 	[38607560] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[41607660] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[41607800] = { npc=327, name="Goldtooth", class={ "PRIEST", "WARRIOR", "WARRIOR" }, faction="Alliance",
-																			  
-					spell={ "Void Plague", "Furious Thunder", "Devastate" }, tip={ nil, nil, "Severed Kobold Head" },
-																	  
-					guide={ st.priest.voidPlague, st.warrior.furiousThunder, st.warrior.devastate ..st.warrior.devastateVik } },
-									
-	[41607880] = { npc=40, name="Kobold Miner", faction="Alliance", class={ "PRIEST", "ROGUE", "WARRIOR" },
+	[40808020] = { npc=40, name="Kobold Miner", faction="Alliance", class={ "PRIEST", "ROGUE", "WARRIOR" },
 					tip={ nil, "Pick Pocket or kill. Top-Right Map Piece", "Severed Kobold Head" },
 					spell={ "Shared Pain", "Quick Draw", "Devastate" },
 					guide={ st.priest.sharedPain, st.rogue.quickDraw ..st.rogue.quickDrawEF, 
 							st.warrior.devastate ..st.warrior.devastateVik } },
+	[41607660] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
+					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
+	[41607800] = { npc=327, name="Goldtooth", class={ "PRIEST", "WARRIOR", "WARRIOR" }, faction="Alliance",
+					spell={ "Void Plague", "Furious Thunder", "Devastate" }, tip={ nil, nil, "Severed Kobold Head" },
+					guide={ st.priest.voidPlague, st.warrior.furiousThunder, st.warrior.devastate ..st.warrior.devastateVik } },
 	[44006620] = { npc=204256, name="Damien Kane", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Soul Siphon" }, guide={ st.warlock.soulSiphon },
 					tip= "Go to the basement of the Lion's Pride\nInn in Goldshire. Or go upstairs for ERP.\n"
@@ -1255,8 +1208,8 @@ points[ 1429 ] = { -- Elwynn Forest
 	[46807460] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[48402920] = { npc=80, name="Kobold Laborer", class={ "PRIEST" }, faction="Alliance",
-					tip="Look for a buff after a kill", spell={ "Penance" }, 
-					guide={ st.starterZoneClass }, quest={ 77619 }, questName={ "Meditation on the Light" } },
+					tip="You want a Memory of a Troubled Acolyte to drop", spell={ "Penance" }, 
+					guide={ st.starterZoneClass ..st.priest.penanceEF }, quest={ 77619 }, questName={ "Meditation on the Light" } },
 	[49008320] = { name="Defias Bandit/Bodyguard", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[49206560] = { name="Crystal Lake Murlocs (Various)", faction="Alliance", class={ "WARRIOR" }, tip="Severed Murloc Head",
@@ -1270,9 +1223,8 @@ points[ 1429 ] = { -- Elwynn Forest
 					tip="Stealthed. Outside of and leaning\nagainst the Northshire wall",
 					spell={ "Mutilate" }, guide={ st.rogue.mutilate } },
 	[49813949] = { npc=915, name="Priestess Anetta", class={ "PRIEST" }, faction="Alliance",
-					tip="In the Library Wing. As you enter,\nit's on th left at the back",
-					spell={ "Penance" }, 
-					guide={ st.starterZoneClass }, quest={ 77619 }, questName={ "Meditation on the Light" } },
+					tip="In the Library Wing. As you enter,\nit's on the left at the back", spell={ "Penance" }, 
+					guide={ st.starterZoneClass ..st.priest.penanceEF }, quest={ 77619 }, questName={ "Meditation on the Light" } },
 	[50003500] = { npc=257, name="Kobold Worker", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Right Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[50406100] = { name="Crystal Lake Murlocs (Various)", faction="Alliance", class={ "WARRIOR" }, tip="Severed Murloc Head",
@@ -1308,7 +1260,7 @@ points[ 1429 ] = { -- Elwynn Forest
 					spell={ "Ice Lance", "Crusader Strike" }, quest={ {}, { 77617 } }, questName={ {}, { "Relics of the Light" } },
 					guide={ st.starterZoneClass, st.paladin.judgement } },
 	[52208460] = { npc=204827, name="Adventurer's Remains", class={ "DRUID", "PALADIN", "PRIEST", "SHAMAN" }, faction="Alliance",
-					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer  } },
+					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer } },
 	[52805980] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[54005200] = { npc=38, name="Defias Thug", class={ "MAGE", "PALADIN" }, faction="Alliance",	
@@ -1334,38 +1286,22 @@ points[ 1429 ] = { -- Elwynn Forest
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
 	[59606940] = { npc=1922, name="Gray Forest Wolf", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
-																												
-																													 
 	[60405920] = { npc=1922, name="Gray Forest Wolf", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
-	[60805660] = { npc=476, name="Kobold Geomancer", class={ "MAGE", "WARLOCK" }, faction="Alliance",
-					spell={ "Living Flame", "Demonic Grace" },
-					guide={ st.mage.livingFlame, st.warlock.grace ..st.warlock.graceDM } },
-	[61004920] = { npc=476, name="Kobold Geomancer", class={ "MAGE", "WARLOCK" }, faction="Alliance",
-					spell={ "Living Flame", "Demonic Grace" },
-					guide={ st.mage.livingFlame, st.warlock.grace ..st.warlock.graceDM } },
-																												
-																													 
-	[61605380] = { npc=476, name="Kobold Geomancer", class={ "MAGE", "WARLOCK" }, faction="Alliance",
-					spell={ "Living Flame", "Demonic Grace" },
-					guide={ st.mage.livingFlame, st.warlock.grace ..st.warlock.graceDM } },
-	[61904730] = { npc=204989, name="Wounded Adventurer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Aegis" }, guide={ st.paladin.runeOfAegis } },
-	[63005680] = { npc=40, name="Kobold Miner", faction="Alliance", class={ "PRIEST", "ROGUE", "WARRIOR" },
+	[60804700] = { npc=471, name="Mother Fang", class={ "PRIEST" }, faction="Alliance",
+					spell={ "Shared Pain" }, guide={ st.priest.sharedPain } },
+	[61605380] = { npc=40, name="Kobold Miner", faction="Alliance", class={ "PRIEST", "ROGUE", "WARRIOR" },
 					tip={ nil, "Pick Pocket or kill. Top-Right Map Piece", "Severed Kobold Head" },
 					spell={ "Shared Pain", "Quick Draw", "Devastate" },
 					guide={ st.priest.sharedPain, st.rogue.quickDraw ..st.rogue.quickDrawEF, 
 							st.warrior.devastate ..st.warrior.devastateVik } },
-	[63605660] = { npc=476, name="Kobold Geomancer", class={ "MAGE", "WARLOCK" }, faction="Alliance",
-					spell={ "Living Flame", "Demonic Grace" },
-					guide={ st.mage.livingFlame, st.warlock.grace ..st.warlock.graceDM } },
-	[63605860] = { npc=476, name="Kobold Geomancer", class={ "MAGE", "WARLOCK" }, faction="Alliance",
-					spell={ "Living Flame", "Demonic Grace" },
-					guide={ st.mage.livingFlame, st.warlock.grace ..st.warlock.graceDM } },
+	[61904730] = { npc=204989, name="Wounded Adventurer", class={ "PALADIN" }, faction="Alliance",
+					spell={ "Aegis" }, guide={ st.paladin.runeOfAegis } },
+	[63605540] = { npc=476, name="Kobold Geomancer", class={ "MAGE", "PRIEST", "WARLOCK" }, faction="Alliance",
+					spell={ "Living Flame", "Shared Pain", "Demonic Grace" },
+					guide={ st.mage.livingFlame, st.priest.sharedPain, st.warlock.grace ..st.warlock.graceDM } },
 	[63806960] = { npc=1922, name="Gray Forest Wolf", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
-																												
-																													 
 	[65205840] = { npc=1922, name="Gray Forest Wolf", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
 	[65404460] = { npc=118, name="Prowler", class={ "WARLOCK" }, faction="Alliance",
@@ -1377,27 +1313,19 @@ points[ 1429 ] = { -- Elwynn Forest
 	[65608400] = { npc=46, name="Murloc Forager", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Right Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[66404380] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
+	[67005800] = { npc=60, name="Ruklar the Trapper", class={ "PRIEST" }, faction="Alliance",
+					spell={ "Shared Pain" }, guide={ st.priest.sharedPain } },
 	[67803840] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
 	[68204520] = { npc=478, name="Riverpaw Outrunner", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[68204580] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[68605080] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
 	[68807860] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
@@ -1406,29 +1334,20 @@ points[ 1429 ] = { -- Elwynn Forest
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
 	[70606160] = { npc=1922, name="Gray Forest Wolf", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
-																													   
-																									  
-																													   
-																									  
 	[72803860] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-													
-											 
 					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
 					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-																	  
 	[73436313] = { npc=925, name="Brother Sammuel", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Crusader Strike" }, quest={ 77617 }, questName={ "Relics of the Light" },
 					guide={ st.paladin.judgement } },
 	[74403860] = { npc=118, name="Prowler", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
-	[74805200] = { npc=474, name="Defias Rogue Wizard", faction="Alliance", class={ "ROGUE", "WARLOCK" },
-					tip={ "Pick Pocket or kill. Top-Left Map Piece",  "Ominous Tome" }, spell={ "Quick Draw", "Demonic Grace" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF, st.warlock.grace ..st.warlock.graceEF } },
+	[74805200] = { npc=474, name="Defias Rogue Wizard", faction="Alliance", class={ "PRIEST", "ROGUE", "WARLOCK" },
+					tip={ nil, "Pick Pocket or kill. Top-Left Map Piece",  "Ominous Tome" }, spell={ "Homunculi", "Quick Draw", "Demonic Grace" },
+					guide={ st.priest.citadel, st.rogue.quickDraw ..st.rogue.quickDrawEF, st.warlock.grace ..st.warlock.graceEF } },
 	[74806440] = { npc=1922, name="Gray Forest Wolf", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF }, tip="Wolf Jawbone" },
 	[76608580] = { npc=46, name="Murloc Forager", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Right Map Piece",
-																									  
-																													   
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[77005180] = { npc=202060, name="Frozen Murloc", class={ "MAGE", "WARLOCK" }, faction="Alliance",
 					tip="Needs about five separate Fire debuffs to defrost",
@@ -1448,6 +1367,14 @@ points[ 1429 ] = { -- Elwynn Forest
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 }
 points[ 1424 ] = { -- Hillsbrad Foothills
+	[33003600] = { name="Hillsbrad mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17, guide={ st.priest.twoMeditate },
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+	[35204700] = { name="Hillsbrad mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17, guide={ st.priest.twoMeditate },
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
 	[36917614] = { item=210026, name="Symbol of the Third Owl", class={ "DRUID" },
 					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.druid.swim },
 	[50504970] = { npc=3537, name="Zixil", class={ "HUNTER", "WARLOCK" }, tip=st.zixil,
@@ -1568,6 +1495,8 @@ points[ 1432 ] = { -- Loch Modan
 					tip="They will crack open your Skull-Shaped Geode" },				
 	[36407800] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
+	[36602560] = { name="Tunnel Rat mobs (Various)", class={ "PRIEST" }, faction="Alliance",
+					spell={ "Twisted Faith" }, guide={ st.priest.twisted ..st.priest.twistedLM } },
 	[36809160] = { object=407850, name="Sunken Reliquary", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Hand of Reckoning" }, guide={ st.paladin.justice },
 					tip="Hug the left side of the cave.\nGo to the very back.\nAt the bottom of the waterfall" },
@@ -1645,6 +1574,8 @@ points[ 1432 ] = { -- Loch Modan
 					spell={ "Endless Rage" }, guide={ st.warrior.endlessRage } },
 	[68202360] = { npc=1178, name="Mo'grosh Ogres", class={ "WARRIOR" }, faction="Alliance", tip=st.warrior.harenTip,
 					spell={ "Endless Rage" }, guide={ st.warrior.endlessRage } },
+	[71802760] = { npc=209908, name="Heretic Idol", class={ "PRIEST" }, faction="Alliance", 
+					spell={ "Shadow Word: Death" }, guide={ "/kneel at the Idol. Done!" } },
 	[72601940] = { name="Mo'grosh Ogres", class={ "WARRIOR" }, faction="Alliance", tip=st.warrior.harenTip,
 					spell={ "Endless Rage" }, guide={ st.warrior.endlessRage } },
 	[72606880] = { npc=209954, name="Demonic Remains", class={ "WARLOCK" }, faction="Alliance",
@@ -1747,6 +1678,8 @@ points[ 1433 ] = { -- Redridge Mountains
 					spell={ "Divine Storm" }, quest={ { 78088, 78089, 78090, 78091, 78092, 78093 } },
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" } }, guide={ st.paladin.divineStorm } },
+	[68405600] = { npc=436, name="Blackrock Shadowcaster", class={ "PRIEST" },
+					spell={ "Power Word: Barrier" }, guide={ "Low drop rate. Sucks to be Horde" } },
 	[68805740] = { name="Blackrock Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Divine Storm" }, quest={ { 78088, 78089, 78090, 78091, 78092, 78093 } },
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
@@ -1810,7 +1743,6 @@ points[ 1421 ] = { -- Silverpine Forest
 	[47107110] = { object=410369, name="Dead Drop", class={ "ROGUE" },
 					quest={ { 78261, 78307 } }, spell={ "Deadly Brew" }, guide={ st.rogue.deadlyBrew },
 					questName={ { "The Horn of Xelthos (Main)", "The Horn of Xelthos (Reward)" } } },
-																				 
 	[48004060] = { npc=1769, name="Moonrage Whitescalp", class={ "DRUID" },
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[48203360] = { npc=1769, name="Moonrage Whitescalp", class={ "DRUID" },
@@ -1819,8 +1751,6 @@ points[ 1421 ] = { -- Silverpine Forest
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[49403680] = { npc=1778, name="Ferocious Grizzled Bear", class={ "HUNTER" },
 					spell={ "Beast Mastery" }, guide={ st.hunter.beastMastery } },
-																											
-																				 
 	[49404000] = { npc=1769, name="Moonrage Whitescalp", class={ "DRUID" },
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[49606860] = { npc=1867, name="Dalaran Apprentice", class={ "MAGE" },
@@ -1843,14 +1773,8 @@ points[ 1421 ] = { -- Silverpine Forest
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[55404080] = { npc=1769, name="Moonrage Whitescalp", class={ "DRUID" },
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
-																											
-																				 
-																											
-																				 
 	[55607280] = { npc=1867, name="Dalaran Apprentice", class={ "MAGE" },
 					spell={ "Regeneration" }, guide={ st.mage.regeneration }, faction="Horde" },
-																									 
-														 
 	[56806540] = { npc=1867, name="Dalaran Apprentice", class={ "MAGE" },
 					spell={ "Regeneration" }, guide={ st.mage.regeneration }, faction="Horde" },
 	[57404480] = { npc=1972, name="Grimson the Pale", class={ "DRUID" }, faction="Horde",
@@ -1861,6 +1785,8 @@ points[ 1421 ] = { -- Silverpine Forest
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling },
 					tip= "In the same cave as Grimson the Pale so\nit'll be busy with rune engravers. This\n"
 						.."helps with clearing the cave of trash" },
+	[59307210] = { npc=212809, name="Wailing Spirit", class={ "PRIEST" },
+					spell={ "Twisted Faith" }, guide={ st.priest.twisted ..st.priest.twistedSil } },
 	[59407040] = { name="Ravenclaw Mobs (Various)", class={ "WARLOCK" },
 					spell={ "Shadow Bolt Volley" }, guide={ st.warlock.shadowbolts } },
 	[60607260] = { name="Ravenclaw Mobs (Various)", class={ "WARLOCK" },
@@ -1877,6 +1803,8 @@ points[ 1421 ] = { -- Silverpine Forest
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb }, tip="Look for \"A Talking Head\"",
 					quest={ { 460, 461, 491, 78277 } }, tip="Location of \"The Hidden Niche\"",
 					questName={ { "Resting in Pieces", "The Hidden Niche", "Wand to Bethor", "A Token of Gratitude" } } },
+	[65602420] = { npc=1947, name="Thule Ravenclaw", class={ "PRIEST" }, faction="Alliance", 
+					spell={ "Shadow Word: Death" }, guide={ "On the desk nearby. No kill needed" } },
 	[65603140] = { name="Rot Hide mobs (Various)", class={ "MAGE" }, faction="Horde",
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb }, tip="Look for \"A Talking Head\"",
 					quest={ { 460, 461, 491, 78277 } },
@@ -1903,6 +1831,12 @@ points[ 1421 ] = { -- Silverpine Forest
 					questName={ { "Resting in Pieces", "The Hidden Niche", "Wand to Bethor", "A Token of Gratitude" } } },
 }
 points[ 1453 ] = { -- Stormwind City
+	[20805020] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Begin here",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
 	[21405860] = { npc=203478, name="Stuart", class={ "PALADIN", "WARRIOR" }, faction="Alliance",
 					spell={ "Rebuke", "Frenzied Assault" },
 					guide={ st.paladin.runeOfRebuke, st.warrior.frenziedAssault },
@@ -1947,6 +1881,11 @@ points[ 1453 ] = { -- Stormwind City
 						"Friend of the Library\n" ..colourPlaintext .."The final step!" } } },
 	[38602880] = { npc=205278, name="Brother Romulus", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Seal of Martyrdom" }, guide={ st.paladin.martyrdom } },
+	[38802660] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Finish the second quest here. /kneel always!",
+					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race=="Night elf") and 78193 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
+							( ( ns.race == "Night Elf") and "Secrets of the Light (2)" or "" ) } } },
 	[55006160] = { npc=213077, name="Elaine Compton", faction="Alliance",
 					class=st.allClass, spell=st.allSpellACA, guide={ st.supplyFaction } },
 	[61602910] = { object=386777, name="Dusty Chest", class={ "ROGUE" }, faction="Alliance", guide={ st.rogue.precision },
@@ -2021,25 +1960,19 @@ points[ 1435 ] = { -- Swamp of Sorrows
 points[ 1420 ] = { -- Tirisfal Glades
 	[24705945] = { object=406736, name="Lost Stash", class={ "WARLOCK", "WARRIOR" }, faction="Horde",
 					spell={ "Haunt", "Victory Rush" }, guide={ st.starterZoneClass } },
-															 
 	[25604860] = { npc=208196, name="Gillgar", class={ "MAGE", "PRIEST", "WARRIOR" }, faction="Horde",
-																								   
 					spell={ "Fingers of Frost", "Void Plague", "Furious Thunder" },
 					guide={ st.mage.fingers, st.priest.voidPlague, st.warrior.furiousThunder } },
 	[27204640] = { npc=208196, name="Gillgar", class={ "MAGE", "PRIEST", "WARRIOR" }, faction="Horde",
-																								   
 					spell={ "Fingers of Frost", "Void Plague", "Furious Thunder" },
 					guide={ st.mage.fingers, st.priest.voidPlague, st.warrior.furiousThunder } },
 	[29404520] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor },
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[29804600] = { npc=208196, name="Gillgar", class={ "MAGE", "PRIEST", "WARRIOR" }, faction="Horde",
-																								   
 					spell={ "Fingers of Frost", "Void Plague", "Furious Thunder" },
 					guide={ st.mage.fingers, st.priest.voidPlague, st.warrior.furiousThunder } },
 	[30405080] = { npc=1535, name="Scarlet Warrior", class={ "MAGE" },
@@ -2048,12 +1981,12 @@ points[ 1420 ] = { -- Tirisfal Glades
 					quest={ 77671 }, faction="Horde", spell={ "Ice Lance" }, guide={ st.starterZoneClass } },
 	[30806620] = { npc=3156, name="Maximillion", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Haunt" }, guide={ st.starterZoneClass }, quest={ 77672 }, questName={ "The Lost Rune" } },
-									 
 	[31004620] = { npc=1535, name="Scarlet Warrior", class={ "MAGE" },
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
 	[31006600] = { npc=2123, name="Dark Cleric Duesten", class={ "PRIEST" }, faction="Horde",
 					tip="After picking up the quest, go to the Graveyard\njust next door and /kneel. Check your bag. Done",
-					spell={ "Penance" }, guide={ st.starterZoneClass }, quest={ 77670 }, questName={ "Meditation on Undeath" } },
+					spell={ "Penance" }, guide={ st.starterZoneClass ..st.priest.penanceTG }, 
+					quest={ 77670 }, questName={ "Meditation on Undeath" } },
 	[32604860] = { npc=1535, name="Scarlet Warrior", faction="Horde", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Right Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG } },
 	[32606560] = { npc=2122, name="David Trias", class={ "ROGUE" }, faction="Horde",
@@ -2065,11 +1998,9 @@ points[ 1420 ] = { -- Tirisfal Glades
 	[34604900] = { npc=1535, name="Scarlet Warrior", class={ "MAGE" },
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
 	[34804480] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							nil, "Severed Murloc Head" } },
 	[35604750] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
@@ -2077,11 +2008,9 @@ points[ 1420 ] = { -- Tirisfal Glades
 	[36406840] = { npc=1507, name="Scarlet Initiate", class={ "MAGE" }, faction="Horde",
 					spell={ "Ice Lance" }, questName={ "Spell Research" }, quest={ 77671 }, guide={ st.starterZoneClass } },
 	[36803980] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[36805100] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
@@ -2089,8 +2018,9 @@ points[ 1420 ] = { -- Tirisfal Glades
 	[36806660] = { npc=1506, name="Scarlet Convert", class={ "ROGUE" }, faction="Horde",
 					tip="Pickpocket. Don't kill. Quest says to \"steal\"",
 					spell={ "Shadowstrike" }, guide={ st.starterZoneClass }, quest={ 77669 }, questName={ "The Scarlet Rune" } },
-	[37404920] = { name="Tirisfal Farmers (Various)", faction="Horde", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG } },
+	[37404920] = { name="Tirisfal Farmers (Various)", faction="Horde", class={ "PRIEST", "ROGUE" },
+					tip={ nil, "Pick Pocket or kill. Top-Left Map Piece" }, spell={ "Sahred Pain", "Quick Draw" },
+					guide={ st.priest.sharedPain, st.rogue.quickDraw ..st.rogue.quickDrawTG } },
 	[37607160] = { npc=1507, name="Scarlet Initiate", class={ "MAGE" }, faction="Horde",
 					spell={ "Ice Lance" }, questName={ "Spell Research" }, quest={ 77671 },
 					guide={ st.starterZoneClass } },
@@ -2120,8 +2050,8 @@ points[ 1420 ] = { -- Tirisfal Glades
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceTG }, tip="Ominous Tome" },
 	[47003240] = { npc=1522, name="Darkeye Bonecaster", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceTG }, tip="Ominous Tome" },
-	[48006540] = { npc=1536, name="Scarlet Missionary", class={ "MAGE" },
-					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
+	[48006540] = { npc=1536, name="Scarlet Missionary", class={ "MAGE", "PRIEST" },
+					spell={ "Living Flame", "Homunculi" }, guide={ st.mage.livingFlame, st.priest.citadel } },
 	[48203940] = { npc=1522, name="Darkeye Bonecaster", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceTG }, tip="Ominous Tome" },
 	[48604960] = { name="Darkhound (Various)", class={ "WARLOCK" }, faction="Horde",
@@ -2132,8 +2062,9 @@ points[ 1420 ] = { -- Tirisfal Glades
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
 	[50406960] = { npc=1536, name="Scarlet Missionary", class={ "MAGE" },
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
-	[50606740] = { name="Scarlet mobs (Various)", faction="Horde", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Right Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG } },
+	[50606740] = { name="Scarlet mobs (Various)", faction="Horde", class={ "PRIEST", "ROGUE" },
+					tip={ "Warriors and Missionaries", "Pick Pocket or kill. Top-Right Map Piece" },
+					spell={ "Homunculi", "Quick Draw" }, guide={ st.priest.citadel, st.rogue.quickDraw ..st.rogue.quickDrawTG } },
 	[50806440] = { npc=1536, name="Scarlet Missionary", class={ "MAGE" },
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
 	[51206540] = { npc=1537, name="Scarlet Zealot", class={ "MAGE" },
@@ -2155,14 +2086,12 @@ points[ 1420 ] = { -- Tirisfal Glades
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
 	[53606800] = { npc=1537, name="Scarlet Zealot", class={ "MAGE" },
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
-	[53606900] = { npc=1536, name="Scarlet Missionary", class={ "MAGE" },
-					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
+	[53606900] = { npc=1536, name="Scarlet Missionary", class={ "MAGE", "PRIEST" },
+					spell={ "Living Flame", "Homunculi" }, guide={ st.mage.livingFlame, st.priest.citadel } },
 	[53805980] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
 					spell={ "Enlightenment" }, guide={ st.mage.enlightenment } },
 	[54005540] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
@@ -2170,56 +2099,38 @@ points[ 1420 ] = { -- Tirisfal Glades
 	[55005240] = { name="Darkhound (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceTG }, tip="Hound Jawbone" },
 	[55804140] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
+	[56204940] = { npc=6491, name="Spirit Healer (Brill)", class={ "PRIEST" }, faction="Horde",
+					level=17, guide={ st.priest.twoMeditate }, tip="Come to here for the second quest hand-in. /kneel",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
 	[56604660] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
 	[57003400] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
-					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
-							nil, "Gnoll Blood", "Severed Gnoll Head" } },
-	[56604660] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
-					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
-						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
 	[57602820] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[57803700] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
 	[58003600] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
@@ -2228,12 +2139,9 @@ points[ 1420 ] = { -- Tirisfal Glades
 					spell={ "Soul Siphon" }, guide={ st.warlock.soulSiphon },
 					tip="It's level 10. Two classes need it!\nInside the house in Garren's Haunt" },
 	[59204440] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
 	[59505230] = { object=405879, name="Apothecary Society Primer", class={ "MAGE" }, faction="Horde",
@@ -2245,7 +2153,6 @@ points[ 1420 ] = { -- Tirisfal Glades
 	[59903710] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
 					spell={ "Enlightenment" }, guide={ st.mage.enlightenment } },
 	[60403900] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
@@ -2255,20 +2162,15 @@ points[ 1420 ] = { -- Tirisfal Glades
 					tip="Pick Pocket Captain Perrine for a Signet Ring.\nThen go to the Brill Town Hall and make a forged\n"
 						.."document. Hand it to Jamie Nore nearby", guide={ st.rogue.mutilate } },
 	[60803580] = { name="Rot Hide (Various)", class={ "ROGUE", "ROGUE", "WARLOCK", "WARRIOR" }, faction="Horde",
-																					 
 					spell={ "Quick Draw", "Slaughter from the Shadows", "Demonic Grace", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.slaughter, 
 						st.warlock.grace ..st.warlock.graceTG, st.warrior.devastate ..st.warrior.devastateDor },
-													   
-														 
 					tip={ "Bottom-Left Map Piece\nAgamand Relic Coffer Key\n(Drop or Pickpocketing)",
 							nil, "Gnoll Blood", "Severed Gnoll Head" } },
 	[61602800] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[61605240] = { npc=2127, name="Rupert Boch", class={ "WARLOCK" }, faction="Horde",
@@ -2281,11 +2183,9 @@ points[ 1420 ] = { -- Tirisfal Glades
 					guide={ st.warrior.frenziedAssault },
 					tip= "He'll be in the Inn's basement. Speak to Penny\nfirst if you haven't already done so" },
 	[63603080] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[66204000] = { npc=202060, name="Frozen Murloc", class={ "MAGE", "WARLOCK" }, faction="Horde",
@@ -2295,19 +2195,15 @@ points[ 1420 ] = { -- Tirisfal Glades
 					spell={ "Between the Eyes" }, guide={ st.rogue.precision }, 
 					tip="Find the Shipwreck Cache Key from the Vile Fin Murlocs" },
 	[69202500] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[73802680] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
-																	
 					spell={ "Quick Draw", "Between the Eyes", "Devastate" },
 					guide={ st.rogue.quickDraw ..st.rogue.quickDrawTG, st.rogue.precision, 
 						st.warrior.devastate ..st.warrior.devastateDor }, 
-															  
 					tip={ "Bottom-Right Map Piece (Drop or Pickpocketing).\nShipwreck Cache Key (mostly) Pickpocketing",
 							"Key for the Cache", "Severed Murloc Head" } },
 	[74506160] = { npc=208712, name="Odd Melon", class={ "MAGE" }, faction="Horde",
@@ -2331,6 +2227,11 @@ points[ 1458 ] = { -- Undercity
 	[24004160] = { npc=204070, name="Soboz", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceTG },
 					tip="Undercity Sewer" },
+	[47201960] = { npc=211225, name="Baj'ura", class={ "PRIEST" }, faction="Horde", level=17, guide={ st.priest.twoMeditate },
+					tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
 	[48007060] = { npc=208619, name="Dorac Graves", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateDor }, },
 	[64603820] = { npc=214098, name="Gishah", faction="Horde",
@@ -2369,7 +2270,6 @@ points[ 1436 ] = { -- Westfall
 	[26006950] = { object=408799, name="Idol of the Deep", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
 					spell={ "Shadow Bolt Volley", "Quick Strike" },
 					guide={ st.warlock.shadowbolts, st.warrior.quickStrike },
-																   
 					tip={ "Must use Soul of the Sea", "You must have killed a nearby\nmurloc with your Gillsbane" } },				
 	[26206320] = { npc=391, name="Old Murk-Eye", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
 					spell={ "Shadow Bolt Volley", "Endless Rage" },
@@ -2387,8 +2287,6 @@ points[ 1436 ] = { -- Westfall
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[28405160] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
-	[29005040] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[29204520] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[29405700] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
@@ -2397,9 +2295,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
-	[29804660] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[29807920] = { npc=391, name="Old Murk-Eye", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
 					spell={ "Shadow Bolt Volley", "Endless Rage" },
 					guide={ st.warlock.shadowbolts, st.starterZoneClass },
@@ -2410,21 +2305,19 @@ points[ 1436 ] = { -- Westfall
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[31005000] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
+	[31404400] = { object=210537, name="Undying Laborer", class={ "PALADIN", "PRIEST" }, faction="Alliance",
+					spell={ "Horn of Lordaeron", "Twisted Faith" },
+					guide={ st.paladin.blessings, st.priest.twisted ..st.priest.twistedWest } },
 	[31604460] = { name="Defias Mobs (Various)", class={ "DRUID", "ROGUE", "WARRIOR" }, faction="Alliance",
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[31604680] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[31607260] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
-	[31804500] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[32003160] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
-	[32204240] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[32402700] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[32408740] = { npc=391, name="Old Murk-Eye", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
@@ -2437,7 +2330,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[32606100] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[33005540] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
@@ -2473,7 +2365,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[36005660] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[36008600] = { npc=391, name="Old Murk-Eye", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
@@ -2491,7 +2382,6 @@ points[ 1436 ] = { -- Westfall
 	[36606660] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[37008260] = { npc=450, name="Defias Renegade Mage", class={ "DRUID", "WARRIOR" }, faction="Alliance",
-																							   
 					guide={ st.druid.lacerate, st.warrior.quickStrike },
 					spell={ "Lacerate", "Quick Strike" }, tip={ "Magic Pumpkin Seed", "Gillsbane" } },
 	[37205460] = { name="Watchers & Golems", class={ "WARLOCK" },
@@ -2508,7 +2398,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[38603820] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[39602520] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
@@ -2534,7 +2423,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[41606160] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[42002360] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
@@ -2543,7 +2431,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[42403660] = { name="Watchers & Golems", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[42801960] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
@@ -2552,6 +2439,8 @@ points[ 1436 ] = { -- Westfall
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[43001500] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
+	[43203160] = { npc=572, name="Leprithus", class={ "PALADIN" }, faction="Alliance",
+					spell={ "Hand of Reckoning" }, guide={ st.paladin.justice } },
 	[43603180] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[43805620] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
@@ -2560,9 +2449,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
-	[44002680] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[44002850] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[44403920] = { npc=210501, name="Harvest Reaper Prototype", class={ "WARLOCK" },
@@ -2573,16 +2459,13 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
-	[44602000] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
+	[44602480] = { object=210537, name="Undying Laborer", class={ "PALADIN", "PRIEST" }, faction="Alliance",
+					spell={ "Horn of Lordaeron", "Twisted Faith" },
+					guide={ st.paladin.blessings, st.priest.twisted ..st.priest.twistedWest } },
 	[44802780] = { name="Defias Mobs (Various)", class={ "DRUID", "ROGUE", "WARRIOR" }, faction="Alliance",
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
-	[45002280] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[45003980] = { name="Watchers & Golems", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[45004080] = { npc=210501, name="Harvest Reaper Prototype", class={ "WARLOCK" },
@@ -2595,7 +2478,6 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[45407050] = { object=409562, name="Spellbook", class={ "MAGE" },
 					spell={ "Icy Veins" }, guide={ st.mage.icyVeins },
 					quest={ 78142 }, questName={ "Bewitchments and Glamours" },
@@ -2608,28 +2490,20 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
-	[46001860] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[46601460] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[46603760] = { name="Defias Mobs (Various)", class={ "DRUID", "ROGUE", "WARRIOR" }, faction="Alliance",
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
-	[46802960] = { object=210537, name="Undying Laborer", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Horn of Lordaeron" }, tip="Lower room", guide={ st.paladin.blessings } },
 	[46805220] = { name="Defias Mobs (Various)", class={ "DRUID", "ROGUE", "WARRIOR" }, faction="Alliance",
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[47004640] = { name="Defias Mobs (Various)", class={ "DRUID", "ROGUE", "WARRIOR" }, faction="Alliance",
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[47005160] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[47603560] = { name="Watchers & Golems", class={ "WARLOCK" },
@@ -2638,14 +2512,12 @@ points[ 1436 ] = { -- Westfall
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[49401920] = { name="Watchers & Golems", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[50001840] = { name="Defias Mobs (Various)", class={ "DRUID", "ROGUE", "WARRIOR" }, faction="Alliance",
 					guide={ st.druid.lacerate, st.rogue.bladeDance, st.warrior.quickStrike },
 					spell={ "Lacerate", "Blade Dance", "Quick Strike" },
 					tip={ "Magic Pumpkin Seed", "Pp for Discrete Envelope\nand Equipment Stash Key", "Gillsbane" } },
-																			 
 	[50201500] = { name="Riverpaw Mobs (Various Gnolls)", class={ "DRUID" },
 					spell={ "Savage Roar" }, guide={ st.druid.ferocious } },
 	[50201740] = { npc=210501, name="Harvest Reaper Prototype", class={ "WARLOCK" },
@@ -2668,7 +2540,6 @@ points[ 1436 ] = { -- Westfall
 	[51205500] = { npc=210501, name="Defias Scout", class={ "HUNTER", "ROGUE" },
 					tip={ "Pick Pocket, don't kill her. Use stealth to approach", nil }, faction="Alliance",
 					spell={ "Sniper Training", "Saber Slash" }, guide={ st.hunter.sniper, st.rogue.saberSlash } },
-																			 
 	[51803400] = { npc=210501, name="Harvest Reaper Prototype", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[52403020] = { name="Watchers & Golems", class={ "WARLOCK" },
@@ -2707,8 +2578,12 @@ points[ 1436 ] = { -- Westfall
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[61305810] = { npc=210501, name="Harvest Reaper Prototype", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
+	[61607540] = { npc=572, name="Leprithus", class={ "PALADIN" }, faction="Alliance",
+					spell={ "Hand of Reckoning" }, guide={ st.paladin.justice } },
 	[62405200] = { npc=832, name="Dust Devil", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
+	[65206320] = { npc=572, name="Leprithus", class={ "PALADIN" }, faction="Alliance",
+					spell={ "Hand of Reckoning" }, guide={ st.paladin.justice } },
 	[65206700] = { npc=7050, name="Defias Drone", class={ "PALADIN" }, faction="Alliance",
 					spell={ "Hand of Reckoning" }, guide={ st.paladin.justice } },
 	[66607040] = { npc=7050, name="Defias Drone", class={ "PALADIN" }, faction="Alliance",
@@ -2741,7 +2616,6 @@ points[ 1437 ] = { -- Wetlands
 					questName={ "Dragonslayer's Helm", "Dragonslayer's Lance", "Dragonslayer's Shield",
 						"Alonso the Dragonslayer" } },
 	[47606480] = { npc=211965, name="Carrodin", class={ "HUNTER", "WARRIOR" }, tip="Back of the cave. Level 25",
-																	 
 					spell={ "Heart of the Lion", "Consumed by Rage" }, guide={ st.hunter.heartLion, st.warrior.consumedRage } },
 	[48001540] = { name="Dark Iron Demolitionist/Dwarf/Saboteur/Tunneler", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78266 }, questName={ "Dark Iron Ordinance" } },
@@ -2794,15 +2668,29 @@ points[ 1440 ] = { -- Ashenvale
 					spell={ "Divine Storm" }, quest={ { 78088, 78089, 78090, 78091, 78092, 78093 } },
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" } }, guide={ st.paladin.divineStorm } },
-	[32004300] = { npc=3924, name="Thistlefur Shaman", class={ "HUNTER" }, spell={ "Kill Command" },
-					guide={ st.hunter.killCommand }, tip="Drops Wild Magic Essence",
-					quest={ 78114, 78121 }, questName={ "Wild Wyvern Wrangling", "Wrangling a Wild Wyvern" } },
-	[33603880] = { npc=3924, name="Thistlefur Shaman", class={ "HUNTER" }, spell={ "Kill Command" },
-					guide={ st.hunter.killCommand }, tip="Drops Wild Magic Essence",
-					quest={ 78114, 78121 }, questName={ "Wild Wyvern Wrangling", "Wrangling a Wild Wyvern" } },
-	[40803340] = { npc=3922, name="Thistlefur Totemic", class={ "HUNTER" }, spell={ "Kill Command" },
-					guide={ st.hunter.killCommand }, tip="Drops Wild Magic Essence",
-					quest={ 78114, 78121 }, questName={ "Wild Wyvern Wrangling", "Wrangling a Wild Wyvern" } },
+	[31602300] = { name="Forsaken mobs (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race == "Night elf" ) and 78193 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
+							( ( ns.race == "Night Elf" ) and "Secrets of the Light (2)" or "" ) } } },
+	[32004300] = { npc=3924, name="Thistlefur Shaman", class={ "HUNTER", "PRIEST" },
+					spell={ "Kill Command", "Strength of Soul" },
+					guide={ st.hunter.killCommand, st.priest.strength }, tip={ "Drops Wild Magic Essence", nil },
+					quest={ { 78114, 78121 }, {} }, questName={ { "Wild Wyvern Wrangling", "Wrangling a Wild Wyvern" }, {} } },
+	[33406820] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[38002600] = { name="This way to the Dream Catcher", class={ "PRIEST" },
+					tip= "Go north through a large Wooden Gate,\nveering a little east as you go north.\n"
+						.."straight through a stone gate. Up the\ntree and go right at the first fork.\n"
+						.."Now take the left branch. Obscured by\nleaves, you'll eventually find some\n"
+						.."dreamcatchers. Use your Primal Insight",
+					spell={ "Strength of Soul" }, guide={ st.priest.strength } },
+	[40003280] = { name="Thistlefur Shaman/Totemic", class={ "HUNTER", "PRIEST" },
+					spell={ "Kill Command", "Strength of Soul" },
+					guide={ st.hunter.killCommand, st.priest.strength }, tip={ "Drops Wild Magic Essence", nil },
+					quest={ { 78114, 78121 }, {} }, questName={ { "Wild Wyvern Wrangling", "Wrangling a Wild Wyvern" }, {} } },
 	[42407000] = { npc=210995, name="Alonso", class={ "WARRIOR" },
 					spell={ "Raging Blow" }, guide={ st.warrior.ragingBlow }, quest={ 78132, 78134, 78133, 78144 },
 					questName={ "Dragonslayer's Helm", "Dragonslayer's Lance", "Dragonslayer's Shield",
@@ -2838,15 +2726,42 @@ points[ 1440 ] = { -- Ashenvale
 					spell={ "Earth Shield" }, quest={ { 78506, 78537, 78561, 78575 } },
 					questName={ { "Elemental Distress", "Elixir of Insight", "Elixir of Insight", "Hirzek" } },
 					guide={ st.shaman.earthShield }, tip="Mote of Torential Rage" },
+	[54606300] = { npc=3750, name="Foulweald STotemic", class={ "PRIEST" },
+					spell={ "Strength of Soul" }, guide={ st.priest.strength } },
 	[56206400] = { name="Thistlefur Totemic / Foulweald Shaman", class={ "HUNTER" }, spell={ "Kill Command" },
 					guide={ st.hunter.killCommand }, tip="Drops Wild Magic Essence",
 					quest={ 78114, 78121 }, questName={ "Wild Wyvern Wrangling", "Wrangling a Wild Wyvern" } },
+	[61007620] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },									
+	[64206840] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[67208280] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
 	[69608380] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
 	[71208140] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
+	[71405400] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
 	[73207940] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
+	[76604520] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
 	[78008360] = { name="Mannoroc Lasher + (Infernals, Felguards, Hounds)", class={ "PALADIN", "WARLOCK" },
 					faction="Alliance",
 					spell={ "Divine Storm", "Metamorphosis" }, guide={ st.paladin.divineStorm, st.warlock.metamorphosis },
@@ -2854,9 +2769,19 @@ points[ 1440 ] = { -- Ashenvale
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" }, { "The Orb of Soran'ruk", "Rumors Abound",
 						"The Conjuring", "The Mysterious Traveler", "Raszel Ander" } } },
+	[79007360] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
 	[79008020] = { npc=213444, name="The Mysterious Traveler", class={ "WARLOCK" },			
 					spell={ "Metamorphosis" }, quest={ { 78684 } }, questName={ { "Mysterious Traveler" } },
 					guide={ st.warlock.metamorphosis } },
+	[79406200] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
 	[79808060] = { name="Mannoroc Lasher + (Infernals, Felguards, Hounds)", class={ "PALADIN", "WARLOCK" },
 					faction="Alliance",
 					spell={ "Divine Storm", "Metamorphosis" }, guide={ st.paladin.divineStorm, st.warlock.metamorphosis },
@@ -2924,6 +2849,11 @@ points[ 1440 ] = { -- Ashenvale
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" }, { "The Orb of Soran'ruk", "Rumors Abound",
 						"The Conjuring", "The Mysterious Traveler", "Raszel Ander" } } },
+	[85406640] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=17,
+					guide={ st.priest.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
 	[86007860] = { name="Mannoroc Lasher + (Infernals, Felguards, Hounds)", class={ "PALADIN", "WARLOCK" },
 					faction="Alliance",
 					spell={ "Divine Storm", "Metamorphosis" }, guide={ st.paladin.divineStorm, st.warlock.metamorphosis },
@@ -2951,20 +2881,21 @@ points[ 1440 ] = { -- Ashenvale
 						"It Must Be Destroyed", "Return to Delgren" } }, guide={ st.paladin.divineStorm } },
 }
 points[ 1439 ] = { -- Darkshore
+	[30404800] = { npc=414646, name="Remnant", class={ "PRIEST" }, faction="Alliance", 
+					spell={ "Shadow Word: Death" }, guide={ "Just click the glowing orb already!" } },
 	[32803710] = { object=414624, name="Lighthouse Stash", class={ "ROGUE" }, faction="Alliance",
 					tip="Between the roots of a large tree\non a small island with a lighthouse",
-																									
 					spell={ "Saber Slash" }, guide={ st.rogue.saberSlash } },
 	[37005360] = { npc=2234, name="Young Reef Crawler", class={ "DRUID", "HUNTER" },
 					spell={ "Lacerate", "Beast Mastery" }, guide={ st.druid.lacerate, st.hunter.beastMastery } },
-																									
-														 
+	[37604380] = { npc=211298, name="Syrnoya", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Complete the second quest here. /kneel always!",
+					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
+					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
+							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
 	[38603160] = { npc=2234, name="Young Reef Crawler", class={ "DRUID", "HUNTER" },
 					spell={ "Lacerate", "Beast Mastery" }, guide={ st.druid.lacerate, st.hunter.beastMastery } },
-																									
-														 
-																									
-														 
 	[38665689] = { name="Furbolg mobs (Various)", class={ "HUNTER" },
 					spell={ "Beast Mastery" }, guide={ st.hunter.beastMastery} },
 	[39005360] = { name="Blackwood Mobs (Various Furlbog)", class={ "DRUID" },
@@ -2979,23 +2910,10 @@ points[ 1439 ] = { -- Darkshore
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[42808660] = { name="Blackwood Mobs (Various Furlbog)", class={ "DRUID" },
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
-																										 
-																										
-																				   
 	[45008900] = { name="Blackwood Mobs (Various Furlbog)", class={ "DRUID" },
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
-																							  
-																										
-														
-															   
 	[48001650] = { object=408802, name="Gnarled Harpoon", class={ "HUNTER", "WARRIOR" }, faction="Alliance",
 					tip="Inside the head of a dead seas turtle",
-																				   
-																							  
-																										
-														
-															   
-																										 
 					spell={ "Sniper Training", "Quick Strike" },
 					guide={ st.hunter.sniper, st.warrior.quickStrike }, tip="Use it on Paxnozz" },
 	[50001360] = { npc=210482, name="Paxnozz", class={ "HUNTER", "WARRIOR" }, faction="Alliance",
@@ -3031,11 +2949,20 @@ points[ 1439 ] = { -- Darkshore
 					questName={ { "The Blackwood Corrupted" } }, faction="Alliance" },
 	[57602600] = { npc=2336, name="Dark Strand Fiend", class={ "WARLOCK" },
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
+	[57001920] = { name="Stormscale mobs (Various)", class={ "PRIEST" },
+					spell={ "Twisted Faith" }, guide={ st.priest.twisted ..st.priest.twistedDark } },
+	[59202260] = { object=414663, name="Shatterspear Idol", class={ "PRIEST" },
+					spell={ "Twisted Faith" }, guide={ st.priest.twisted ..st.priest.twistedDark } },
 	[59612213] = { object=409496, name="Scrolls", class={ "MAGE" },
 					spell={ "Icy Veins" }, guide={ st.mage.icyVeins },
 					quest={ 78124 }, questName={ "Nar'thalas Almanac" }, tip="Go down the stairs at the Ruins of Mathystra" },
 }
 points[ 1457 ] = { -- Darnassus
+	[38608880] = { npc=211188, name="Maethra Slagheart", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+					tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race == "Night elf" ) and 78193 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
+							( ( ns.race == "Night Elf" ) and "Secrets of the Light (2)" or "" ) } } },
 	[39800940] = { npc=209948, name="Relaeron", class={ "HUNTER" }, spell={ "Carve" },
 					guide={ st.hunter.carve } },
 	[60005640] = { npc=214101, name="Marcy Baker", faction="Alliance",
@@ -3107,31 +3034,10 @@ points[ 1411 ] = { -- Durotar
 	[39005180] = { npc=5823, name="Death Flayer", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
 	[39005360] = { npc=3113, name="Razormane Dustrunner", class={ "PRIEST" }, faction="Horde",
-																									   
-							
-																				
 					spell={ "Homunculi" }, guide={ st.priest.citadel } },
-														
-													   
-																 
-														  
-																										  
-																							   
-																		 
-												  
-																									
-																  
-														  
-																										
 	[39435007] = { name="Lightning Infused Totem", class={ "SHAMAN" }, faction="Horde",
 					spell={ "Shield Mastery" }, guide={ st.shaman.galvanicIcon } },
-																					  
-																											
-																											 
-																					  
-																		  
 	[39605260] = { npc=3114, name="Razormane Battleguard", class={ "HUNTER", "ROGUE", "WARRIOR" }, faction="Horde",
-																		 
 					spell={ "Carve", "Quick Draw", "Devastate" },
 					guide={ st.hunter.carve, st.rogue.quickDraw ..st.rogue.quickDrawDur, 
 						st.warrior.devastate ..st.warrior.devastateVah },
@@ -3158,30 +3064,15 @@ points[ 1411 ] = { -- Durotar
 
 	[41206800] = { npc=3155, name="Rwag", class={ "ROGUE" }, faction="Horde",
 					quest={ 77583 }, questName={ "Atop the Cliffs" },
-							
-																				
-																											
-														
-													   
-																 
-														  
-																										  
-																											 
 					spell={ "Shadowstrike" }, guide={ st.starterZoneClass } },
-																		  
 	[42002660] = { name="Burning Blade mobs (Various)", class={ "MAGE", "ROGUE" }, faction="Horde",
-															   
-																							   
-																		 
 					spell={ "Living Flame", "Mutilate" },
 					tip="Ignore the map. To get to here, exit\nfrom Razor Hill and take the eastern\npath that goes up and north"
-																  
-														  
 						..( ( ns.class == "ROGUE" ) and "\n\nPick Pocket. Don't need to kill" or "" ),					
 					guide={ st.mage.livingFlame, st.rogue.mutilate } },
 	[42406880] = { npc=3707, name="Ken'jai", class={ "PRIEST" }, faction="Horde",
-					spell={ "Penance" }, guide={ st.starterZoneClass }, quest={ 77642 }, questName={ "Wisdom of the Loa" } },
-																		  
+					spell={ "Penance" }, guide={ st.starterZoneClass ..st.priest.penanceDur },
+					quest={ 77642 }, questName={ "Wisdom of the Loa" } },
 	[42406900] = { npc=3157, name="Shikrik", class={ "SHAMAN" }, faction="Horde",
 					spell={ "Overload" }, quest={ ( ( ns.class == "ORC" ) and 77585 or 77587 ) }, guide={ st.shaman.dyadicIcon },
 					questName={ "Icons of Power" } },
@@ -3196,16 +3087,10 @@ points[ 1411 ] = { -- Durotar
 	[42806940] = { npc=3153, name="Frang", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Victory Rush" }, guide={ st.starterZoneClass },
 					quest={ ( ( ns.class == "TROLL" ) and 77588 or 77582 ) }, questName={ "A Trial of Fitness" } },					
-																 
-														  
-																										  
 	[43005440] = { object=404695, name="Waterlogged Stashbox", class={ "MAGE", "WARLOCK" }, faction="Horde",
 					spell={ "Ice Lance", "Haunt" },
 					guide={ st.starterZoneClass }, quest={ { 77643 }, { 77586 } },
 					questName={ { "Spell Research" }, { "Stolen Power" } }, tip="In the pond at the foot of the waterfall" },
-																											 
-																					  
-																			 
 	[43206960] = { object=404911, name="Hidden Cache", class={ "ROGUE", "WARRIOR" }, faction="Horde",
 					spell={ "Shadowstrike", "Victory Rush" },
 					quest={ 77583, ( ( ns.class == "TROLL" ) and 77588 or 77582 ) }, questName={ "Atop the Cliffs", "A Trial of Fitness" },
@@ -3217,47 +3102,19 @@ points[ 1411 ] = { -- Durotar
 						.."across a gap and then down and Voilà. Grab the lewt!" },
 	[43805960] = { npc=3124, name="Scorpid Worker", class={ "HUNTER", "SHAMAN" }, faction="Horde",
 					spell={ "Chimera Shot", "Overload" }, 
-																		  
-																											 
-																					  
-																		  
-																						 
-																		 
-												  
 					guide={ st.starterZoneClass, st.shaman.dyadicIcon },
 					quest={ ( ( ns.class == "TROLL" ) and 77590 or 77584 ), ( ( ns.class == "ORC" ) and 77585 or 77587 ) },
 					questName={ ( ( ns.class == "TROLL" ) and "Rugged Terrain" or "Hunt for the Rune" ), "Icons of Power" } },
-																										
-																							   
-																		 
-												  
-																									
-																  
-														  
-																										
 	[44003740] = { npc=3114, name="Razormane Battleguard", class={ "HUNTER", "ROGUE", "WARRIOR" }, faction="Horde",
-																		 
 					spell={ "Carve", "Quick Draw", "Devastate" },
 					guide={ st.hunter.carve, st.rogue.quickDraw ..st.rogue.quickDrawDur, 
 						st.warrior.devastate ..st.warrior.devastateVah }, 
-														  
 					tip={ "Adder Pheromone", "Bottom-Right Map Piece\n(Drop or Pickpocketing)", "Severed Quillboar Head" } },
 	[44203920] = { npc=3113, name="Razormane Dustrunner", class={ "PRIEST" }, faction="Horde",
 					spell={ "Homunculi" }, guide={ st.priest.citadel } },
-																		  
 	[45603000] = { name="Dustwind harpies (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
-																												   
-																									   
-							
-																				
-																											
-														
-													   
-																 
-														  
-																										  
 	[45803380] = { name="Dustwind harpies (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
@@ -3270,15 +3127,7 @@ points[ 1411 ] = { -- Durotar
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
 	[47404960] = { name="Razormane mobs (Various)", class={ "HUNTER" }, spell={ "Carve" },
-																		 
-												  
 					guide={ st.hunter.carve } },
-																  
-														  
-																										
-																											 
-																					  
-																		  
 	[47608060] = { name="Kolkar centaurs (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Centaur Head" },
@@ -3288,20 +3137,15 @@ points[ 1411 ] = { -- Durotar
 						st.warrior.devastate ..st.warrior.devastateVah }, 
 					tip={ "Adder Pheromone", "Bottom-Right Map Piece\n(Drop or Pickpocketing)", "Severed Quillboar Head" } },
 	[48007960] = { npc=204827, name="Adventurer's Remains", class={ "DRUID", "PALADIN", "PRIEST", "SHAMAN" }, faction="Horde",
-					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer  } },
+					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer } },
 	[48603300] = { name="Dustwind harpies (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
+	[49407980] = { npc=5808, name="Warlord Kolkanis", class={ "MAGE", "PRIEST" }, faction="Horde",
+					spell={ "Fingers of Frost", "Shared Pain" }, guide={ st.mage.fingers, st.priest.sharedPain } },
 	[49602120] = { name="Dustwind harpies (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
-																							 
-																		 
-												  
-																									
-																  
-														  
-																										
 	[50002740] = { name="Dustwind harpies (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
@@ -3310,13 +3154,6 @@ points[ 1411 ] = { -- Durotar
 					tip="Severed Centaur Head" },
 	[50005160] = { name="Lightning Infused Totem", class={ "SHAMAN" }, faction="Horde",
 					spell={ "Shield Mastery" }, guide={ st.shaman.galvanicIcon } },
-																								   
-																		 
-												  
-																									
-																  
-														  
-																										
 	[50603180] = { name="Dustwind harpies (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
@@ -3341,10 +3178,9 @@ points[ 1411 ] = { -- Durotar
 					tip="West of Tiragarde Keep, at the hills", guide={ st.rogue.mutilate } },
 	[52174395] = { npc=208184, name="Razzil", class={ "HUNTER" }, spell={ "Carve" },
 					guide={ st.hunter.carve } },
-	[52200920] = { npc=3204, name="Gazz'uz", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" }, faction="Horde",
-																								   
+	[51800960] = { npc=3204, name="Gazz'uz", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" }, faction="Horde",
 					spell={ "Fingers of Frost", "Shared Pain", "Soul Siphon", "Furious Thunder" },
-					guide={ st.mage.fingers, st.priest.saviour, st.warlock.soulSiphon, st.warrior.furiousThunder },
+					guide={ st.mage.fingers, st.priest.sharedPain, st.warlock.soulSiphon, st.warrior.furiousThunder },
 					tip="He's level 14 and has a Voidwalker.\nSeveral classes need him!" },
 	[52202680] = { name="Burning Blade mobs (Various)", class={ "MAGE", "ROGUE", "ROGUE" }, faction="Horde",
 					spell={ "Living Flame", "Mutilate", "Quick Draw" },
@@ -3357,6 +3193,8 @@ points[ 1411 ] = { -- Durotar
 	[52607640] = { name="Kolkar centaurs (Various)", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Centaur Head" },
+	[52600880] = { npc=5822, name="Felweaver Scornn", class={ "PRIEST", "WARRIOR" }, faction="Horde",
+					spell={ "Shared Pain", "Furious Thunder" }, guide={ st.priest.sharedPain, st.warrior,furiousThunder } },
 	[52802960] = { name="Burning Blade (Various)", class={ "MAGE" }, faction="Horde",
 					spell={ "Living Flame" }, guide={ st.mage.livingFlame } },
 	[52852903] = { name="Dustwind Cave mobs (various)", class={ "ROGUE" }, faction="Horde",
@@ -3381,20 +3219,16 @@ points[ 1411 ] = { -- Durotar
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVah },
 					tip="Severed Harpy Head" },
 	[55407250] = { object=208309, name="Loa Altar", class={ "PRIEST" }, faction="Horde",
-					tip="/kneel and wait a bit",
-					spell={ "Penance" }, guide={ st.starterZoneClass }, quest={ 77642 }, questName={ "Wisdom of the Loa" } },
+					tip="/kneel and wait a bit", guide={ st.starterZoneClass ..st.priest.penanceDur}, 
+					spell={ "Penance" }, quest={ 77642 }, questName={ "Wisdom of the Loa" } },
 	[54600880] = { npc=3198, name="Burning Blade Apprentice", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Ominous Tome" },
 	[54604160] = { npc=208226, name="Darmak Bloodhowl", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Soul Siphon" }, guide={ st.warlock.soulSiphon }, tip="In the Barracks" },
 	[55803840] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-																												
-																										  
 	[55808220] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
-																												
-																										  
 	[56602660] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
 	[56802160] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
@@ -3407,7 +3241,6 @@ points[ 1411 ] = { -- Durotar
 						st.warlock.grace ..st.warlock.graceDur },
 					tip={ nil, "Pick Pocket or kill. Top-Right Map Piece", "Kul Tiran Skull" } },
 	[58674592] = { npc=208275, name="Frozen Makrura", class={ "MAGE", "SHAMAN", "WARLOCK" }, faction="Horde",
-																			 
 					tip="Needs about five separate Fire debuffs to defrost",
 					spell={ "Burnout", "Molten Blast", "Chaos Bolt" }, guide={ st.frozen, st.shaman.sulfurousIcon, st.frozen } },
 	[58808460] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
@@ -3416,8 +3249,6 @@ points[ 1411 ] = { -- Durotar
 					spell={ "Shield Mastery" }, guide={ st.shaman.galvanicIcon } },
 	[59007760] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
-																												
-																										  
 	[61405220] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
 	[61604500] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
@@ -3426,12 +3257,16 @@ points[ 1411 ] = { -- Durotar
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
 	[51408460] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
+	[61006940] = { npc=13157, name="Makasgar", class={ "PRIEST" }, faction="Horde",
+					spell={ "Shared Pain" }, guide={ st.priest.sharedPain } },
 	[61609580] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
 	[62004980] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
 	[62109480] = { name="Rune of Quick Draw", faction="Horde", class={ "ROGUE" }, tip="Final location",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawDur } },
+	[62206520] = { npc=13157, name="Makasgar", class={ "PRIEST" }, faction="Horde",
+					spell={ "Shared Pain" }, guide={ st.priest.sharedPain } },
 	[62605260] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
 	[62606260] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
@@ -3452,14 +3287,19 @@ points[ 1411 ] = { -- Durotar
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
 	[67608360] = { name="Trolls (Various)", faction="Horde", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawDur } },
-	[67608780] = { npc=3205, name="Zalazane", class={ "MAGE" }, faction="Horde",
-					spell={ "Fingers of Frost" }, guide={ st.mage.fingers } },
+	[67608780] = { npc=3205, name="Zalazane", class={ "MAGE", "PRIEST" }, faction="Horde",
+					spell={ "Fingers of Frost", "Shared Pain" }, guide={ st.mage.fingers, st.priest.sharedPain } },
 	[67808860] = { npc=204070, name="Soboz", class={ "WARLOCK" }, faction="Horde",
-					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Zalazane" },
+					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur } },
 	[68608280] = { name="Hexed/Voodoo Trolls", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Ominous Tome" },
-	[68009080] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
+	[68009080] = { name="MakF-- rura (Various)", class={ "WARLOCK" }, faction="Horde",
 					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceDur }, tip="Makrura Leg" },
+	[68707110] = { object=410168, name="Voodoo Pile", class={ "PRIEST" }, faction="Horde", level=17, guide={ st.priest.twoMeditate },
+					tip="Ignore the quest directions. Climb the\nhill on the northern-most island",
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
 	[68707140] = { npc=208124, name="Raluk", class={ "HUNTER" }, spell={ "Flanking Strike" },
 					guide={ st.hunter.flankingStrike }, tip="Farm Durotar Pig Meat from nearby Dire Mottled Boars" },
 	[71007040] = { name="Makrura (Various)", class={ "WARLOCK" }, faction="Horde",
@@ -3783,8 +3623,7 @@ points[ 1412 ] = { -- Mulgore
 	[60402260] = { npc=3232, name="Bristleback Interloper", class={ "DRUID" }, faction="Horde",
 					spell={ "Mangle" }, guide={ st.druid.ursineRage } },
 	[60403360] = { npc=204827, name="Adventurer's Remains", class={ "DRUID", "PALADIN", "PRIEST", "SHAMAN" }, faction="Horde",
-																			 
-					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer  } },
+					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer } },
 	[60406380] = { name="Flatland Prowler/Taloned Swoop/Prairie Wolf Alpha", class={ "DRUID" },
 					spell={ "Mangle" }, guide={ st.druid.ursineRage } },
 	[60608020] = { npc=2954, name="Bristleback Battleboar", class={ "HUNTER" }, faction="Horde",
@@ -3851,6 +3690,11 @@ points[ 1412 ] = { -- Mulgore
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVat }, tip="Severed Harpy Head" },
 }
 points[ 1454 ] = { -- Orgrimmar
+	[35308780] = { npc=211229, name="Dietrich Praice", class={ "PRIEST" }, faction="Horde",
+					level=17, guide={ st.priest.twoMeditate }, tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
 	[38707840] = { item=409731, name="The Lessons of Ta'zo", class={ "MAGE" }, faction="Horde",
 					spell={ "Icy Veins" }, guide={ st.mage.icyVeins },
 					quest={ 79094 }, questName={ "The Lessons of Ta'zo" },
@@ -4010,7 +3854,7 @@ points[ 1442 ] = { -- Stonetalon Mountains
 }
 points[ 1438 ] = { -- Teldrassil
 	[33603560] = { npc=204827, name="Adventurer's Remains", class={ "DRUID", "PALADIN", "PRIEST", "SHAMAN" }, faction="Alliance",
-					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer  } },
+					spell={ "Lifebloom", "Inspiration Exemplar", "Prayer of Mending", "Ancestral Guidance" }, guide={ st.woundedAdventurer } },
 	[34802820] = { name="Harpies (Various)", faction="Alliance", class={ "ROGUE" }, faction="Alliance", 
 					tip="Pick Pocket or kill. Bottom-Right Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTel } },
@@ -4032,7 +3876,6 @@ points[ 1438 ] = { -- Teldrassil
 	[43807700] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
 					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy }, faction="Alliance" },
 	[44705900] = { object=407734, name="Gnarlpine Cache", class={ "PRIEST", "ROGUE", "WARRIOR" }, faction="Alliance",
-																						 
 					spell={ "Void Plague", "Slaughter from the Shadows", "Furious Thunder" }, tip="Several locations in the Barrows",
 					guide={ st.priest.voidPlague, st.rogue.slaughter, st.warrior.furiousThunder } },
 	[44805600] = { name="Gnarlpine mobs (Various)", class={ "HUNTER" }, spell={ "Carve" }, faction="Alliance",
@@ -4046,15 +3889,16 @@ points[ 1438 ] = { -- Teldrassil
 	[48303140] = { npc=209928, name="Mowgh", class={ "HUNTER" }, spell={ "Flanking Strike" },
 					guide={ st.hunter.flankingStrike }, tip="Farm Teldrassil Bird Meat from nearby Strigid Owls" },
 	[52604960] = { npc=2038, name="Lord Melenas", class={ "PRIEST", "ROGUE" }, faction="Alliance",
-					spell={ "Shared Pain", "Mutilate" }, guide={ st.priest.saviour, st.rogue.mutilate } },
+					spell={ "Shared Pain", "Mutilate" }, guide={ st.priest.sharedPain, st.rogue.mutilate } },
 	[52807200] = { name="Timberling mobs (Various)", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Right Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTel } },
 	[52807880] = { object=404433, name="Lunar Chest", class={ "DRUID" }, faction="Alliance",
 					spell={ "Sunfire" }, guide={ st.druid.runeOfTheSun } },
 	[52807980] = { npc=207577, name="Lunar Stone", class={ "DRUID" }, faction="Alliance",
 					spell={ "Sunfire" }, guide={ st.druid.runeOfTheSun } },
-	[53805040] = { name="Sprite (Various)", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTel } },
+	[53805040] = { name="Sprite (Various)", faction="Alliance", class={ "PRIEST", "ROGUE" },
+					tip={ nil, "Pick Pocket or kill. Bottom-Left Map Piece" },
+					spell={ "Homunculi", "Quick Draw" }, guide={ st.priest.citadel, st.rogue.quickDraw ..st.rogue.quickDrawTel } },
 	[55004220] = { npc=1989, name="Grellkin", class={ "DRUID" }, faction="Alliance",
 					spell={ "Fury of Stormrage" }, guide={ st.druid.lunarIdolA }, quest={ 77571 },
 					questName={ "Relics of the Kaldorei" } },
@@ -4069,12 +3913,6 @@ points[ 1438 ] = { -- Teldrassil
 	[55605980] = { npc=6736, name="Innkeeper Keldamyr", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Frenzied Assault" }, guide={ st.warrior.frenziedAssault },
 					tip="Speak to Keldamyr first, and then\nspeak to Syllart, who is upstairs" },
-																										
-																											
-											  
-																										
-																											
-											  
 	[56202480] = { npc=1986, name="Webwood Spider", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Victory Rush" }, guide={ st.starterZoneClass }, quest={ 77575 },
 					questName={ "Amidst the Shadowed Webs" } },
@@ -4092,9 +3930,6 @@ points[ 1438 ] = { -- Teldrassil
 	[57802660] = { npc=1986, name="Webwood Spider", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Victory Rush" }, guide={ st.starterZoneClass }, quest={ 77575 },
 					questName={ "Amidst the Shadowed Webs" } },
-																										
-																											
-											  
 	[58003460] = { npc=1986, name="Webwood Spider", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Victory Rush" }, guide={ st.starterZoneClass }, quest={ 77575 },
 					questName={ "Amidst the Shadowed Webs" } },
@@ -4104,14 +3939,13 @@ points[ 1438 ] = { -- Teldrassil
 	[58604060] = { npc=3596, name="Ayanna Everstride", class={ "HUNTER" }, faction="Alliance", tip="Inside Aldrassil. Ascend to the first level",
 					quest={ 77568 }, questName={ "A Hunter's Strength" },
 					spell={ "Chimera Shot" }, guide={ st.starterZoneClass } },
-	[58703550] = { name="Moonwell", class={ "PRIEST" }, faction="Alliance",
-					tip="/kneel and wait a bit",
-					quest={ 77574 }, questName={ "Meditation on Elune" },
-					spell={ "Penance" }, guide={ st.starterZoneClass } },
+	[59903340] = { name="Moonwell", class={ "PRIEST" }, faction="Alliance",
+					tip="/kneel and wait a bit", quest={ 77574 }, questName={ "Meditation on Elune" },
+					spell={ "Penance" }, guide={ st.starterZoneClass ..st.priest.penanceTel } },
 	[59184044] = { npc=3595, name="Shanda", class={ "PRIEST" }, faction="Alliance",
 					tip="Inside Aldrassil. Go up the ramp to the first landing",
 					quest={ 77574 }, questName={ "Meditation on Elune" },
-					spell={ "Penance" }, guide={ st.starterZoneClass } },
+					spell={ "Penance" }, guide={ st.starterZoneClass ..st.priest.penanceTel } },
 	[59603860] = { npc=3593, name="Alyissia", class={ "WARRIOR" }, faction="Alliance",
 					spell={ "Victory Rush" }, guide={ st.starterZoneClass }, quest={ 77575 },
 					questName={ "Amidst the Shadowed Webs" } },
@@ -4124,9 +3958,6 @@ points[ 1438 ] = { -- Teldrassil
 					spell={ "Shadowstrike" }, guide={ st.starterZoneClass } },
 	[61005400] = { item=208609, name="Glade Flower", class={ "DRUID" }, faction="Alliance",
 					spell={ "Living Seed" }, tip="Various locations", guide={ st.druid.naturalPotential } },
-																										
-																											
-											  
 	[62603680] = { npc=1989, name="Grellkin", class={ "DRUID" }, faction="Alliance",
 					spell={ "Fury of Stormrage" }, guide={ st.druid.lunarIdolA }, quest={ 77571 },
 					questName={ "Relics of the Kaldorei" } },
@@ -4139,17 +3970,13 @@ points[ 1438 ] = { -- Teldrassil
 }
 points[ 1413 ] = { -- The Barrens
 	[43002350] = { object=152608, name="Kolkar's Booty", class={ "DRUID", "MAGE", "SHAMAN" },
-																			
 					spell={ "Savage Roar", "Regeneration", "Water Shield" }, tip="The nearby centaurs drop a key",
 					guide={ st.druid.ferocious, st.shaman.tempestIcon, st.mage.regeneration } },
 	[43207860] = { npc=212694, name="Hirzek", class={ "SHAMAN" }, faction="Horde",
 					spell={ "Earth Shield" }, quest={ { 78506, 78537, 78561, 78575 } },
 					questName={ { "Elemental Distress", "Elixir of Insight", "Elixir of Insight", "Hirzek" } },
 					guide={ st.shaman.earthShield } },
-																															  
-														 
 	[44303770] = { object=152608, name="Kolkar's Booty", class={ "DRUID", "MAGE", "SHAMAN" },
-																			
 					spell={ "Savage Roar", "Regeneration", "Water Shield" }, tip="The nearby centaurs drop a key",
 					guide={ st.druid.ferocious, st.shaman.tempestIcon, st.mage.regeneration } },
 	[44605560] = { npc=209524, name="Patrolling Cheetah", class={ "HUNTER" },
@@ -4168,8 +3995,10 @@ points[ 1413 ] = { -- The Barrens
 						"The Conjuring", "The Mysterious Traveler", "Raszel Ander" } }, guide={ st.warlock.metamorphosis } },
 	[52003100] = { object=208739, name="Horde Warbanner", class={ "WARRIOR" }, faction="Horde",
 					spell={ "Endless Rage" }, guide={ st.warrior.endlessRage } },
-	[54803580] = { npc=209742, name="Desert Mirage", class={ "SHAMAN" }, faction="Horde",
-					spell={ "Way of Earth" }, guide={ st.shaman.earthenRune } },
+	[54202560] = { name="Razormane Quillboar mobs (Various)", class={ "PRIEST" }, faction="Horde",
+					spell={ "Twisted Faith" }, guide={ st.priest.twisted ..st.priest.twistedBarr } },
+	[54803580] = { npc=209742, name="Desert Mirage", class={ "PRIEST", "SHAMAN" }, faction="Horde",
+					spell={ "Shadow Word: Death", "Way of Earth" }, guide={ "Cast Dispel on it", st.shaman.earthenRune } },
 	[55804220] = { name="Oasis Snapjaw Nest/Hatchling", class={ "DRUID" }, faction="Horde",
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[56200860] = { npc=3445, name="Supervisor Lugwizzle", class={ "WARLOCK" },
@@ -4249,115 +4078,6 @@ points[ 1456 ] = { -- Thunder Bluff
 -- MISCELLANY
 --
 --=======================================================================================================
-
-									
-		  
-			   
-																										   
-																												
-																											   
-																												
-																					 
-																								   
-																												  
-																							 
-																								  
-																													
-					
-			  
-																											
-																										  
-																									   
-																												  
-																													
-																						
-																		   
-																									
-																						  
-																			 
-																  
-																											  
-								
-																		  
-																			   
-																			 
-															  
-																													  
-												   
-																		   
-																											  
-				 
-																							  
-																												 
-																											
-								  
-																											
-																								 
-						 
-																				   
-																			 
-																								   
-																										  
-															   
-				
-																									   
-																												   
-																												  
-																										 
-																									
-					 
-																								
-																	 
-																										
-																							 
-																										   
-																		   
-				 
-																										
-																										  
-																													
-							   
-																										
-																											  
-					 
-																				  
-																									
-																						  
-														  
-																					  
-																				
-																  
-																		
-																								
-																
-																		  
-																					
-															 
-																										
-				 
-																								
-																								 
-																							   
-																									  
-																											   
-																										   
-																						 
-											 
-																									
-																								  
-																								  
-															   
-																												
-																										 
-																			  
-															   
-																				   
-											  
-																				  
-																				   
-										
-  
- 
 
 points[ 1414 ] = { -- Kalimdor
 	[69005000] = "Quick Start"

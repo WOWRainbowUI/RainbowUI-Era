@@ -3,7 +3,7 @@
 
                                                 Runes
 
-                                     v1.10 - 22nd December 2023
+                                     v1.11 - 25th December 2023
 									 
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
@@ -36,17 +36,63 @@ local IsKnownRuneSpell = C_Engraving.IsKnownRuneSpell
 local IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local LibStub = _G.LibStub
 local UIParent = _G.UIParent
+local UnitLevel = UnitLevel
 local formatt, ipairs, next, type = format, ipairs, next, type
 local HandyNotes = _G.HandyNotes
 
-ns.name = UnitName( "player" ) or "角色"
+ns.name = UnitName( "player" ) or "Character"
 ns.faction = UnitFactionGroup( "player" )
 ns.classLocal, ns.class = UnitClass( "player" )
-ns.raceID = select( 3, UnitRace( "player" ) )
+ns.raceList = { "Human", "Orc", "Dwarf", "Night Elf", "Undead", "Tauren", "Gnome", "Troll" }
+ns.race = ns.raceList[ select( 3, UnitRace( "player" ) ) ]
 ns.colour.class = "\124c" ..select( 4, GetClassColor( ns.class ) )
 
 continents[ 1414 ] = true -- Kalimdor
 continents[ 1415 ] = true -- Eastern Kingdoms
+
+local function ShowPinForThisClassQuest( quests, level, forceCheck )
+
+	if forceCheck == false and ns.db.hideIfRuneLearnt == false then return true end
+	
+	if level > ( UnitLevel( "player" ) + 1 ) then return false end
+
+	if not HandyNotes_RunesDB then return true end -- too soon for the server
+	if HandyNotes_RunesDB.questsDone == nil then HandyNotes_RunesDB.questsDone = {} end
+	if HandyNotes_RunesDB.questsDone[ ns.class ] == nil then HandyNotes_RunesDB.questsDone[ ns.class ] = {} end
+	if HandyNotes_RunesDB.questsDone[ ns.class ].quests == nil then HandyNotes_RunesDB.questsDone[ ns.class ].quests = {} end
+
+	local completed = false
+	
+	if type( quests ) == "table" then
+		for j,w in ipairs( quests ) do
+			if w > 0 then
+				if HandyNotes_RunesDB.questsDone[ ns.class ].quests[ w ] then
+					completed = true
+				else
+					completed = IsQuestFlaggedCompleted( w )
+					if completed == true then
+						HandyNotes_RunesDB.questsDone[ ns.class ].quests[ w ] = true
+					else
+						return true
+					end
+				end
+			end
+		end
+		return false
+	elseif ( type( quests ) == "number" ) and ( quests > 0 ) then
+		if HandyNotes_RunesDB.questsDone[ ns.class ].quests[ quests ] then
+			return false
+		end
+		completed = IsQuestFlaggedCompleted( quests )
+		if completed == true then
+			HandyNotes_RunesDB.questsDone[ ns.class ].quests[ quests ] = true
+			return false
+		end
+		return true
+	else
+		return false
+	end
+end
 
 local function ShowPinForThisClassSpell( spell, forceCheck )
 
@@ -84,7 +130,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 	end
 
-	local completed;
+	local completed, quests, questNames;
 	local pin = ns.points[mapFile] and ns.points[mapFile][coord]
 	local previousEntry, spaceBeforeQuests = false, false
 	
@@ -92,11 +138,11 @@ function pluginHandler:OnEnter(mapFile, coord)
 		for k,v in pairs( ns.runes ) do
 			if k == ns.class then
 				local completed;
-				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." 快速開始 " ..ns.name )
+				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." QUICK START for " ..ns.name )
 				for r,s in ipairs( v.spells ) do	
 					completed = not ShowPinForThisClassSpell( s, true )
 					GameTooltip:AddDoubleLine( ns.colour.prefix ..s .."   (" ..v[s].level .."+)",
-							( completed == true ) and "\124cFF00FF00已完成" or "\124cFFFF0000未完成" )
+							( completed == true ) and "\124cFF00FF00Completed" or "\124cFFFF0000Not Completed" )
 					GameTooltip:AddLine( ns.colour.highlight ..v[s].rune )
 					GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
 				end
@@ -104,63 +150,86 @@ function pluginHandler:OnEnter(mapFile, coord)
 		end
 
 	else
+		
 		for i,v in ipairs( pin.class ) do
 
 			if ns.class == v then
 			
-				if previousEntry == true then GameTooltip:AddLine( "\n" ) end
-				previousEntry = true
-
-				GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.spell[ i ] ..ns.colour.highlight .."\n(" 
-											..ns.runes[ v ][ pin.spell[ i ] ].rune ..")",
-											ns.colour.class ..ns.classLocal )
-				GameTooltip:AddLine( ns.colour.highlight ..pin.name .."\n" )
+				-- Data will be typical spells or the new levelled quests type (currently only for priests)
+			
+				if not pin.level then			
+					if previousEntry == true then GameTooltip:AddLine( "\n" ) end
+					previousEntry = true
+					GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.spell[ i ] ..ns.colour.highlight .."\n(" 
+												..ns.runes[ v ][ pin.spell[ i ] ].rune ..")",
+												ns.colour.class ..ns.classLocal )
+					GameTooltip:AddLine( ns.colour.highlight ..pin.name .."\n" )
+				end
+				
+				-- Quests are listed as: (a) part of collecting the rune or (b) as a non-rune levelling guide
+				-- If (a) then there must be a 1:1 spell and quest (single or table) for each class v
+				-- If (b) then there must be a 1:1 quest (single or table) for each class v
 
 				if pin.quest then
 					-- Single quest for all classes is permitted. Always a table. Table within a table or number
 					-- To avoid a class with no quest being given pin.quest[ 1 ], use {} - can't use nil 
-					local quests = ( pin.quest[ i ] ~= nil ) and pin.quest[ i ] or pin.quest[ 1 ]
-					-- Avoid an API call (first time called it'll be null anyway)
-					local questsNames = ( pin.questName[ i ] ~= nil ) and pin.questName[ i ] or pin.questName[ 1 ]
-					if type( quests ) == "table" then
+					quests = ( pin.quest[ i ] ~= nil ) and pin.quest[ i ] or pin.quest[ 1 ]
+					questsNames = ( pin.questName[ i ] ~= nil ) and pin.questName[ i ] or pin.questName[ 1 ]
+
+					if type( quests ) == "table" then				
 						-- Note that a class with a {} for quests will safely drop through here, thus not pulling in any quests
 						for j,w in ipairs( quests ) do
+							if pin.level then
+								if previousEntry == false then
+									previousEntry = true
+									GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.name, 
+											ns.colour.highlight .."Level = " ..pin.level )
+								end
+							end
 							if spaceBeforeQuests == false then GameTooltip:AddLine( "\n" ) end
 							spaceBeforeQuests = true
 							completed = IsQuestFlaggedCompleted( w )
 							GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames[ j ],
-									( completed == true ) and ( "\124cFF00FF00" .."已完成" .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" .."未完成" .." (" ..ns.name ..")" ) )
+									( completed == true ) and ( "\124cFF00FF00" .."Completed" .." (" ..ns.name ..")" ) 
+									or ( "\124cFFFF0000" .."Not Completed" .." (" ..ns.name ..")" ) )
 						end
 					else
+						if pin.level then
+							if previousEntry == false then
+								previousEntry = true
+								GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.name, 
+										ns.colour.highlight .."Level = " ..pin.level )
+							end
+						end
 						GameTooltip:AddLine( "\n" )
 						completed = IsQuestFlaggedCompleted( quests )
 						GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames,
-								( completed == true ) and ( "\124cFF00FF00" .."已完成" .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" .."未完成" .." (" ..ns.name ..")" ) )
+								( completed == true ) and ( "\124cFF00FF00" .."Completed" .." (" ..ns.name ..")" ) 
+									or ( "\124cFFFF0000" .."Not Completed" .." (" ..ns.name ..")" ) )
 					end
 				end
 				
-				if pin.tip then
-					-- Table or string
-					if type( pin.tip ) == "table" then
-						if pin.tip[ i ] ~= nil then
-							GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip[ i ] )
+				if pin.level and ( previousEntry == true ) or not pin.level then
+					if pin.tip then
+						-- Table or string
+						if type( pin.tip ) == "table" then
+							if pin.tip[ i ] ~= nil then
+								GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip[ i ] )
+							end
+						else
+							-- Single tip for all classes is permitted
+							GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip )
 						end
-					else
-						-- Single tip for all classes is permitted
-						GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip )
 					end
-				end
-				
-				if pin.guide then
-					-- Single guide for all classes is permitted. Always a table
-					GameTooltip:AddLine( "\n" ..ns.colour.highlight .."指南\n\n" ..ns.colour.plaintext
-								..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
+					
+					if pin.guide then
+						-- Single guide for all classes is permitted. Always a table
+						GameTooltip:AddLine( "\n" ..ns.colour.highlight .."Guide\n\n" ..ns.colour.plaintext
+									..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
+					end
 				end
 			end
 		end
-		previousEntry = false
 
 		if ( ns.db.showCoords == true ) then
 			local mX, mY = HandyNotes:getXY(coord)
@@ -192,20 +261,29 @@ do
 				end
 			else
 				-- class and spell are aways 1:1 with indexing/existence
+				-- BUT... I added level 17 priest help and that has no spell
 				for i,v in ipairs( pin.class ) do
 					if ns.class == v then
 						if pin.faction then
 							if pin.faction == ns.faction then
-								if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
-									return coord, nil, ns.texturesNum[ ns.runes[ v ][ pin.spell[ i ] ].icon ],
-										ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
+								if pin.spell then
+									if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+										return coord, nil, ns.texturesNum[ ns.runes[ v ][ pin.spell[ i ] ].icon ],
+											ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
+									end
+								else
+									return coord, nil, ns.textures[ ns.db.iconChoice ],
+										ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
 								end
 							end
-						else
+						elseif pin.spell then
 							if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
 								return coord, nil, ns.texturesNum[ ns.runes[ v ][ pin.spell[ i ] ].icon ],
 									ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
 							end
+						elseif ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
+							return coord, nil, ns.textures[ ns.db.iconChoice ],
+								ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
 						end
 					end
 				end
@@ -312,14 +390,18 @@ function pluginHandler:OnEnable()
 						if ns.class == v then
 							if pin.faction then
 								if pin.faction == ns.faction then
-									if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+									if pin.level then
+										AddToContinent()
+									elseif ShowPinForThisClassSpell( pin.spell[ i ], false ) then
 										AddToContinent()
 									end
 								end
-							else
-								if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+							elseif pin.level then
+								if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
 									AddToContinent()
 								end
+							elseif ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+								AddToContinent()
 							end
 						end
 					end
