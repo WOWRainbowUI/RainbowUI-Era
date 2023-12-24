@@ -39,5 +39,5 @@ api\colors.lua
 config\ButtonPoolMixin.lua
 config\SavedVariables.lua
 config\Options.lua
-config\OptionsBlocklist.lua
+## config\OptionsBlocklist.lua
 config\OptionsPopups.lua

@@ -60,7 +60,9 @@ end)
 
 addon:RegisterSlash('/molinari', function()
 	createOptions() -- LoD
-	addon.CreateBlocklistOptions() -- LoD
+	if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then -- 自行修正
+		addon.CreateBlocklistOptions() -- LoD
+	end
 
 	addon:OpenSettings(L[addonName])
 end)
