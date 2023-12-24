@@ -263,7 +263,7 @@ local dbmHudOptionsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "DBM HUD 會整合 DeadlyBossMods 插件，顯示全螢幕的目標圖示雷達。啟用此功能需要重新載入介面 /reload 才能生效。",
-        ["esES"] = "El HUD de DBM se integra con el complemento DeadlyBossMods para mostrar un radar de iconos de objetivos en toda la pantalla. Al activar esta función generalmente requiere /recargar para tener efecto.",
+        ["esES"] = "El DBM HUD se integra con el addon DeadlyBossMods para mostrar un radar de iconos de objetivos en toda la pantalla. Al activar esta función generalmente requiere /recargar para tener efecto.",
         ["frFR"] = false,
     },
 }

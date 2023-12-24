@@ -237,7 +237,7 @@ local trackerOptionsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "啟用任務清單標題列",
-        ["esES"] = false,
+        ["esES"] = "Habilitar encabezado del rastreador",
         ["frFR"] = false,
     },
     ["When this is enabled the Tracker Header with the number of active quests and the Questie Icon will be permanently visible.\n\nWhen this is disabled the Questie Icon will fade in while your mouse is over the Tracker."] = {
@@ -249,7 +249,7 @@ local trackerOptionsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "啟用時，會一直顯示任務數量和 Questie 圖示。\n\n停用時，滑鼠指向清單時才會顯示 Questie 圖示。",
-        ["esES"] = false,
+        ["esES"] = "Cuando esto está habilitado, el encabezado del rastreador con el número de misiones activas y el icono de Questie estarán permanentemente visibles.\n\nCuando esto esté deshabilitado, el icono de Questie desaparecerá mientras el ratón esté sobre el rastreador.",
         ["frFR"] = false,
     },
     ---------------------------------------------------------

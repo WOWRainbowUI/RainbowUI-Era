@@ -467,7 +467,7 @@ local genericsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "可行",
-        ["esES"] = false,
+        ["esES"] = "Realizable",
         ["frFR"] = false,
     },
 	["Questie"] = {

@@ -911,7 +911,7 @@ local iconOptionsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "可接的重覆性任務",
-        ["esES"] = "Misiones repitibles disponibles",
+        ["esES"] = "Misiones repetibles disponibles",
         ["frFR"] = false,
     },
     ["Available PvP Quests"] = {
@@ -1067,7 +1067,7 @@ local iconOptionsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "專業訓練師",
-        ["esES"] = "Entrenadores de profesión",
+        ["esES"] = "Instructores de profesión",
         ["frFR"] = false,
     },
     ["Change between themes for objective icons."] = {
@@ -1115,7 +1115,7 @@ local iconOptionsLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "啟用時，會在大地圖和小地圖上顯示探索賽季符文和符文任務。",
-        ["esES"] = "Cuando esto esté habilitado, las ubicaciones de las runas de la Temporada de descubrimiento y las misiones de runas se mostrarán en el mapa/minimapa.",
+        ["esES"] = "Cuando está habilitado las localizaciones de las runas de la Temporada de descubrimiento y las misiones de runas se mostrarán en el mapa/minimapa.",
         ["frFR"] = false,
     },
 }

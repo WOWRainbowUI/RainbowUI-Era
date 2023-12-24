@@ -443,7 +443,7 @@ local debugMessagesLocales = {
         ["enUS"] = true,
         ["zhCN"] = false,
         ["zhTW"] = "顯示 Questie 和遊戲版本資訊",
-        ["esES"] = false,
+        ["esES"] = "Imprime la información de la versión del cliente y Questie",
         ["frFR"] = false,
     },
     -- Debug Offers
