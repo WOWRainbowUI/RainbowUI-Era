@@ -339,6 +339,28 @@ D["BagSync"] = {
         callback = function(cfg, v, loading) SlashCmdList["ACECONSOLE_BAGSYNC"]("profiles") end,
     },
 };
+D["BiaoGe"] = {
+    defaultEnable = 0,
+	tags = { "BOSSRAID" },
+	title = "金團表格",
+	desc = "好用的金團記錄表單，可與金團帳本等金團拍賣插件一起使用，可設定心願清單，可以通報帳單流拍或消費及欠款，加入團隊時還可連通 WCL 插件回報加入者的分數裝等。``還有冰冠城塞的攻略可以看!`",
+    {
+		type = "text",
+        text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",       
+	},
+	{
+        text = "顯示主視窗",
+        callback = function(cfg, v, loading) SlashCmdList["BIAOGE"]("") end,
+    },
+	{
+        text = "調整通知位置",
+        callback = function(cfg, v, loading) SlashCmdList["BIAOGEMOVE"]("") end,
+    },
+	{
+        text = "設定選項",
+        callback = function(cfg, v, loading) SlashCmdList["BIAOGEOPTIONS"]("") end,
+    },
+};
 D["BigDebuffs"] = {
     defaultEnable = 0,
 	title = "大型控場圖示",
