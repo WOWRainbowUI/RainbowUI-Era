@@ -2,6 +2,12 @@ local _, U1 = ...
 
 local D = {}
 U1.CfgDefaults = D
+D["!!!SharedMedia"] = { 
+	defaultEnable = 1,
+	tags = { "MISC" },
+	title = "遊戲預設字體",
+	desc = "載入時會自動將遊戲預設的系統、聊天和傷害數字，更改為字體材質包中的字體。``每個插件仍可分別設定字體，不受影響。``要使用自己的字體，請看問與答`https://addons.miliui.com/wow/rainbowui#q157 ``|cffFF2D2D關閉此插件和 '遊戲介面字體' 插件便可以換回遊戲原本的字體。|r`",
+};
 D["!BugGrabber"] = { 
 	defaultEnable = 1,
 	optdeps = { "BugSack", },
@@ -1128,8 +1134,9 @@ D["Glass"] = {
 };
 D["gmFonts"] = {
 	defaultEnable = 1,
+	tags = { "MISC" }, 
 	title = "遊戲介面字體",
-	desc = "更改整體遊戲介面預設的字體和大小。``只影響遊戲介面文字的字體和大小，每個插件仍可分別設定。``|cffFF2D2D特別注意：請不要選擇純英文字體，會無法顯示中文字。`",
+	desc = "更改整體遊戲介面預設的字體和大小。``只影響遊戲視窗和介面文字的字體和大小，每個插件仍可分別設定。``|cffFF2D2D特別注意：請不要選擇純英文字體，會無法顯示中文字。`",
 	modifier = "彩虹ui",
     {
         text = "設定選項",
