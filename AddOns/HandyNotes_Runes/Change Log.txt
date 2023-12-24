@@ -1,3 +1,27 @@
+== v1.10 - 22nd December 2023
+* Rogue added
+* Spelling: Forrest to Forest
+* Probably fixed some typoes here and there too
+
+== v1.09 - 21st December 2023
+* Hunter added
+* Bug Fixes: where multiple runes for the same mob can occur
+* Fixed a Warlock quest name missing - introduced error sadly
+
+== v1.08 - 19th December 2023
+* Pins by defualt disappear when the rune is collected
+  (eventually - I wait for the player to toggle options, or open a World Map, change zones, etc)
+* Pins are now numbered 1 to 12 but can still choose the summary pin
+
+== v1.07 - 18th December 2023
+* Priest, Hunter, Rogue have all commenced and the first three runes for each are complete
+
+== v1.06 - 17th December 2023
+* Redesigned the Quick Start menu so that it's more useful
+* Revamped the Quick Start text so that it's more useful / complete
+* Suggested level numbers and Quick Starts are now live for ALL classes
+* Note that complete zone map pins are still required for : Priest, Hunter, Rogue
+
 == v1.05 - 16th December 2023
 * Warriors added
 * Levels added to the Quick Start popup
