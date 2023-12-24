@@ -429,8 +429,9 @@ local function UpdatePreviewShields(r, g, b)
         else
             previewButton2.widget.shieldBar:Hide()
         end
-
+        
         if CellDB["appearance"]["overshield"] then
+            previewButton2.widget.overShieldGlow:SetVertexColor(CellDB["appearance"]["shield"][2][1], CellDB["appearance"]["shield"][2][2], CellDB["appearance"]["shield"][2][3], 1)
             previewButton2.widget.overShieldGlow:Show()
         else
             previewButton2.widget.overShieldGlow:Hide()
@@ -1189,10 +1190,10 @@ end
 -------------------------------------------------
 -- debuff type color
 -------------------------------------------------
-local curseCP, diseaseCP, magicCP, poisonCP
+local curseCP, diseaseCP, magicCP, poisonCP, bleedCP
 
 local function CreateDebuffTypeColorPane()
-    local dtcPane = Cell:CreateTitledPane(appearanceTab, L["Debuff Type Color"], 422, 45)
+    local dtcPane = Cell:CreateTitledPane(appearanceTab, L["Debuff Type Color"], 422, 60)
     dtcPane:SetPoint("TOPLEFT", appearanceTab, "TOPLEFT", 5, -585)
 
     -- curse
@@ -1222,6 +1223,13 @@ local function CreateDebuffTypeColorPane()
         Cell:Fire("UpdateIndicators", F:GetNotifiedLayoutName(Cell.vars.currentLayout), "dispels", "debuffTypeColor")
     end)
     poisonCP:SetPoint("TOPLEFT", magicCP, "TOPRIGHT", 95, 0)
+   
+    -- bleed
+    bleedCP = Cell:CreateColorPicker(dtcPane, "|TInterface\\AddOns\\Cell\\Media\\Debuffs\\Bleed:0|t"..L["Bleed"], false, nil, function(r, g, b)
+        I:SetDebuffTypeColor("Bleed", r, g, b)
+        Cell:Fire("UpdateIndicators", F:GetNotifiedLayoutName(Cell.vars.currentLayout), "dispels", "debuffTypeColor")
+    end)
+    bleedCP:SetPoint("TOPLEFT", curseCP, "BOTTOMLEFT", 0, -7)
 
     -- reset
     local resetBtn = Cell:CreateButton(dtcPane, L["Reset All"], "accent", {77, 17}, nil, nil, nil, nil, nil, L["Reset All"], L["[Ctrl+LeftClick] to reset these settings"])
@@ -1306,6 +1314,7 @@ LoadDebuffTypeColor = function()
     diseaseCP:SetColor(I:GetDebuffTypeColor("Disease"))
     magicCP:SetColor(I:GetDebuffTypeColor("Magic"))
     poisonCP:SetColor(I:GetDebuffTypeColor("Poison"))
+    bleedCP:SetColor(I:GetDebuffTypeColor("Bleed"))
 end
 
 LoadData = function()

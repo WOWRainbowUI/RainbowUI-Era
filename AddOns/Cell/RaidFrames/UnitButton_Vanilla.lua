@@ -314,24 +314,27 @@ end
 local function UpdateIndicators(layout, indicatorName, setting, value, value2)
     F:Debug("|cffff7777UpdateIndicators:|r ", layout, indicatorName, setting, value, value2)
 
+    local INDEX = Cell.vars.groupType == "solo" and "solo" or Cell.vars.layoutGroupType
+
     if layout then
         -- Cell:Fire("UpdateIndicators", layout): indicators copy/import
         -- Cell:Fire("UpdateIndicators", xxx, ...): indicator updated
         for k, v in pairs(previousLayout) do
             if v == layout then
                 previousLayout[k] = nil -- update required
+                F:Debug("UPDATE REQUIRED:", k)
             end
         end
 
-        --! indicator changed, bu not current layout
+        --! indicator changed, but not current layout
         if layout ~= Cell.vars.currentLayout then
             F:Debug("NO UPDATE: not active layout")
             return
         end
 
     elseif not indicatorName then -- Cell:Fire("UpdateIndicators")
-        --! layout switched, check if update is required
-        if previousLayout[Cell.vars.layoutGroupType] == Cell.vars.currentLayout then
+        --! layout/groupType switched, check if update is required
+        if previousLayout[INDEX] == Cell.vars.currentLayout then
             F:Debug("NO UPDATE: only reset custom indicator tables")
             I:ResetCustomIndicatorTables()
             ResetIndicators()
@@ -340,7 +343,7 @@ local function UpdateIndicators(layout, indicatorName, setting, value, value2)
             return
         end
     end
-    previousLayout[Cell.vars.layoutGroupType] = Cell.vars.currentLayout
+    previousLayout[INDEX] = Cell.vars.currentLayout
 
     if not indicatorName then -- init
         ResetIndicators()
@@ -732,6 +735,9 @@ local function UnitButton_UpdateDebuffs(self)
         
         local auraInstanceID = (source or "") .. spellId
         
+        -- check Bleed
+        debuffType = I:CheckDebuffType(debuffType, spellId)
+
         if duration then
             if Cell.vars.iconAnimation == "duration" then
                 local timeIncreased = self._debuffs_cache[auraInstanceID] and (expirationTime - self._debuffs_cache[auraInstanceID] >= 0.5) or false
@@ -2051,6 +2057,15 @@ local function UnitButton_OnEvent(self, event, unit)
         end
     end
 end
+
+local function EnterLeaveInstance()
+    C_Timer.After(1, function()
+        F:Debug("|cffff1111*** EnterLeaveInstance:|r UnitButton_UpdateAll")
+        F:IterateAllUnitButtons(UnitButton_UpdateAll, true)
+    end)
+end
+Cell:RegisterCallback("EnterInstance", "UnitButton_EnterInstance", EnterLeaveInstance)
+Cell:RegisterCallback("LeaveInstance", "UnitButton_LeaveInstance", EnterLeaveInstance)
 
 local function UnitButton_OnAttributeChanged(self, name, value)
     if name == "unit" and not self:GetAttribute("oldUnit") then

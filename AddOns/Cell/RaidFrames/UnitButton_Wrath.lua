@@ -334,24 +334,27 @@ end
 local function UpdateIndicators(layout, indicatorName, setting, value, value2)
     F:Debug("|cffff7777UpdateIndicators:|r ", layout, indicatorName, setting, value, value2)
 
+    local INDEX = Cell.vars.groupType == "solo" and "solo" or Cell.vars.layoutGroupType
+
     if layout then
         -- Cell:Fire("UpdateIndicators", layout): indicators copy/import
         -- Cell:Fire("UpdateIndicators", xxx, ...): indicator updated
         for k, v in pairs(previousLayout) do
             if v == layout then
                 previousLayout[k] = nil -- update required
+                F:Debug("UPDATE REQUIRED:", k)
             end
         end
 
-        --! indicator changed, bu not current layout
+        --! indicator changed, but not current layout
         if layout ~= Cell.vars.currentLayout then
             F:Debug("NO UPDATE: not active layout")
             return
         end
 
     elseif not indicatorName then -- Cell:Fire("UpdateIndicators")
-        --! layout switched, check if update is required
-        if previousLayout[Cell.vars.layoutGroupType] == Cell.vars.currentLayout then
+        --! layout/groupType switched, check if update is required
+        if previousLayout[INDEX] == Cell.vars.currentLayout then
             F:Debug("NO UPDATE: only reset custom indicator tables")
             I:ResetCustomIndicatorTables()
             ResetIndicators()
@@ -360,7 +363,7 @@ local function UpdateIndicators(layout, indicatorName, setting, value, value2)
             return
         end
     end
-    previousLayout[Cell.vars.layoutGroupType] = Cell.vars.currentLayout
+    previousLayout[INDEX] = Cell.vars.currentLayout
 
     if not indicatorName then -- init
         ResetIndicators()
@@ -773,6 +776,9 @@ local function UnitButton_UpdateDebuffs(self)
         end
         
         local auraInstanceID = (source or "") .. spellId
+
+        -- check Bleed
+        debuffType = I:CheckDebuffType(debuffType, spellId)
         
         if duration then
             if Cell.vars.iconAnimation == "duration" then
@@ -2033,6 +2039,8 @@ cleu:SetScript("OnEvent", function()
         end
 
     elseif subEvent == "SPELL_ABSORBED" then
+        if not F:IsFriend(destFlags) then return end
+
         -- [spellID, spellName, spellSchool], casterGUID, casterName, casterFlags, casterRaidFlags, absorbSpellId, absorbSpellName, absorbSpellSchool, amount, critical
         local absorbSpellId, absorbAmount
         if arg21 then -- spell
@@ -2359,6 +2367,15 @@ local function UnitButton_OnEvent(self, event, unit)
     end
 end
 
+local function EnterLeaveInstance()
+    C_Timer.After(1, function()
+        F:Debug("|cffff1111*** EnterLeaveInstance:|r UnitButton_UpdateAll")
+        F:IterateAllUnitButtons(UnitButton_UpdateAll, true)
+    end)
+end
+Cell:RegisterCallback("EnterInstance", "UnitButton_EnterInstance", EnterLeaveInstance)
+Cell:RegisterCallback("LeaveInstance", "UnitButton_LeaveInstance", EnterLeaveInstance)
+
 local function UnitButton_OnAttributeChanged(self, name, value)
     if name == "unit" and not self:GetAttribute("oldUnit") then
         if not value or value ~= self.state.unit then
@@ -2565,6 +2582,7 @@ function B:UpdateShields(button)
     overshieldEnabled = CellDB["appearance"]["overshield"]
 
     button.widget.shieldBar:SetVertexColor(CellDB["appearance"]["shield"][2][1], CellDB["appearance"]["shield"][2][2], CellDB["appearance"]["shield"][2][3], CellDB["appearance"]["shield"][2][4])
+    button.widget.overShieldGlow:SetVertexColor(CellDB["appearance"]["shield"][2][1], CellDB["appearance"]["shield"][2][2], CellDB["appearance"]["shield"][2][3], 1)
 
     UnitButton_UpdateHealPrediction(button)
     UnitButton_UpdateShieldAbsorbs(button)
@@ -2618,14 +2636,11 @@ function B:SetOrientation(button, orientation, rotateTexture)
         F:RotateTexture(powerBarLoss, 90)
         F:RotateTexture(incomingHeal, 90)
         F:RotateTexture(damageFlashTex, 90)
-        -- F:RotateTexture(shieldBar, 90)
     else
         F:RotateTexture(healthBarLoss, 0)
         F:RotateTexture(powerBarLoss, 0)
         F:RotateTexture(incomingHeal, 0)
-        F:RotateTexture(overShieldGlow, 0)
         F:RotateTexture(damageFlashTex, 0)
-        -- F:RotateTexture(shieldBar, 0)
     end
     
     if orientation == "horizontal" then
@@ -2707,9 +2722,9 @@ function B:SetOrientation(button, orientation, rotateTexture)
         
         -- update overShieldGlow
         P:ClearPoints(overShieldGlow)
-        P:Point(overShieldGlow, "BOTTOMLEFT", healthBar, "BOTTOMRIGHT", -4, 0)
-        P:Point(overShieldGlow, "TOPLEFT", healthBar, "TOPRIGHT", -4, 0)
-        P:Width(overShieldGlow, 8)
+        P:Point(overShieldGlow, "TOPRIGHT")
+        P:Point(overShieldGlow, "BOTTOMRIGHT")
+        P:Width(overShieldGlow, 4)
         F:RotateTexture(overShieldGlow, 0)
         
         -- update damageFlashTex
@@ -2806,9 +2821,9 @@ function B:SetOrientation(button, orientation, rotateTexture)
         
         -- update overShieldGlow
         P:ClearPoints(overShieldGlow)
-        P:Point(overShieldGlow, "BOTTOMLEFT", healthBar, "TOPLEFT", 0, -4)
-        P:Point(overShieldGlow, "BOTTOMRIGHT", healthBar, "TOPRIGHT", 0, -4)
-        P:Height(overShieldGlow, 8)
+        P:Point(overShieldGlow, "TOPLEFT")
+        P:Point(overShieldGlow, "TOPRIGHT")
+        P:Height(overShieldGlow, 4)
         F:RotateTexture(overShieldGlow, 90)
         
         -- update damageFlashTex
@@ -2926,8 +2941,10 @@ function B:UpdatePixelPerfect(button, updateIndicators)
 
     P:Repoint(button.widget.incomingHeal)
     P:Repoint(button.widget.shieldBar)
-    P:Repoint(button.widget.overShieldGlow)
     P:Repoint(button.widget.damageFlashTex)
+
+    P:Resize(button.widget.overShieldGlow)
+    P:Repoint(button.widget.overShieldGlow)
     
     B:UpdateHighlightSize(button)
 
@@ -3054,11 +3071,8 @@ function CellUnitButton_OnLoad(button)
     -- over-shield glow
     local overShieldGlow = healthBar:CreateTexture(name.."OverShieldGlow", "OVERLAY")
     button.widget.overShieldGlow = overShieldGlow
-    overShieldGlow:SetTexture("Interface\\RaidFrame\\Shield-Overshield")
+    overShieldGlow:SetTexture("Interface\\AddOns\\Cell\\Media\\overshield")
     overShieldGlow:SetBlendMode("ADD")
-    -- P:Point(overShieldGlow, "BOTTOMLEFT", healthBar, "BOTTOMRIGHT", -4, 0)
-    -- P:Point(overShieldGlow, "TOPLEFT", healthBar, "TOPRIGHT", -4, 0)
-    -- overShieldGlow:SetWidth(8)
     overShieldGlow:Hide()
 
     -- bar animation

@@ -804,7 +804,7 @@ local function ShowActionsMenu(index, b)
                     changed[index] = changed[index] or {b}
                     if b.bindAction ~= "target" then
                         changed[index]["bindAction"] = "target"
-                        b.actionGrid:SetText(L["Target"])
+                        b.actionGrid:SetText(L["target"])
                     else
                         changed[index]["bindAction"] = nil
                         b.actionGrid:SetText(L[b.bindAction])
@@ -819,7 +819,7 @@ local function ShowActionsMenu(index, b)
                     changed[index] = changed[index] or {b}
                     if b.bindAction ~= "focus" then
                         changed[index]["bindAction"] = "focus"
-                        b.actionGrid:SetText(L["Focus"])
+                        b.actionGrid:SetText(L["focus"])
                     else
                         changed[index]["bindAction"] = nil
                         b.actionGrid:SetText(L[b.bindAction])

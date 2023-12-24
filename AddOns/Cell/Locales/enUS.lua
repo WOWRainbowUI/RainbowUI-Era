@@ -84,6 +84,23 @@ select(2, ...).L = setmetatable({
         <p>(Retail) Enable "Always Update Buffs/Debuffs" in General tab, if indicators do not update correctly.</p>
         <br/>
 
+        <h1>r212-release (Dec 18, 2023, 19:54 GMT+8)</h1>
+        <p>* Fixed a issue that newly created indicators did not show up when solo or in a party.</p>
+        <p>* Updated overshield texture. Now it uses the color of shield texture.</p>
+        <br/>
+
+        <h1>r211-release (Dec 16, 2023, 17:57 GMT+8)</h1>
+        <p>* Updated dispel checker, removed snippet var: CELL_DISPEL_EVOKER_CAUTERIZING_FLAME.</p>
+        <p>* When enter/leave instance, all visible unit buttons will be refreshed.</p>
+        <p>* Updated zhTW.</p>
+        <br/>
+
+        <h1>r210-release (Dec 15, 2023, 23:55 GMT+8)</h1>
+        <p>+ Implemented Bleed debuff type (using data from https://wago.tools/db2/SpellEffect, EffectMechanic=15).</p>
+        <p>* Fixed Quick Assist config/preview.</p>
+        <p>* (Wrath) Fixed PW:S indicator.</p>
+        <br/>
+
         <h1>r209-release (Dec 14, 2023, 11:20 GMT+8)</h1>
         <p>* Fixed issues with newly created custom Color indicators.</p>
         <p>* Updated zhTW.</p>

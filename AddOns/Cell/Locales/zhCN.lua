@@ -181,6 +181,7 @@ L["Curse"] = "诅咒"
 L["Poison"] = "中毒"
 L["Disease"] = "疾病"
 L["Magic"] = "魔法"
+L["Bleed"] = "流血"
 
 -------------------------------------------------
 -- click-castings
@@ -801,6 +802,23 @@ L["Click to view older changelogs"] = "点击查看远古更新记录"
 L["CHANGELOGS"] = [[
     <h1>更新后如果有各种问题，先排查代码片段。</h1>
     <p>（正式服）如果指示器不能正常刷新，尝试启用常规页面下的“总是更新增益/减益”选项。</p>
+    <br/>
+
+    <h1>r212-release (Dec 18, 2023, 19:54 GMT+8)</h1>
+    <p>* 修复在单人/小队时新创建的指示器不显示的问题。</p>
+    <p>* 更新超过血量上限的护盾材质，现在它使用护盾材质的颜色。</p>
+    <br/>
+
+    <h1>r211-release (Dec 16, 2023, 17:57 GMT+8)</h1>
+    <p>* 更新驱散检查，移除代码片段变量 CELL_DISPEL_EVOKER_CAUTERIZING_FLAME。</p>
+    <p>* 当进入/离开副本时，所有可见的单位按钮都将刷新。</p>
+    <p>* 更新繁中。</p>
+    <br/>
+
+    <h1>r210-release (Dec 15, 2023, 23:55 GMT+8)</h1>
+    <p>+ 新增“流血”减益类型（数据来自https://wago.tools/db2/SpellEffect，EffectMechanic为15）。</p>
+    <p>* 修复快速协助的设置与预览。</p>
+    <p>* （巫妖王）修复真言术：盾指示器。</p>
     <br/>
 
     <h1>r209-release (Dec 14, 2023, 11:20 GMT+8)</h1>
