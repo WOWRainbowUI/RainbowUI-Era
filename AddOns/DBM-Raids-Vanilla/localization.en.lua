@@ -1111,6 +1111,10 @@ L:SetGeneralLocalization({
 	name = "Baron Aquanis"
 })
 
+L:SetMiscLocalization({
+	Water		= "Water"
+})
+
 ------------------
 --  Ghamoo-ra  --
 ------------------
@@ -1145,6 +1149,14 @@ L = DBM:GetModLocalization("LorgusJettSoD")
 
 L:SetGeneralLocalization({
 	name = "Lorgus Jett"
+})
+
+L:SetWarningLocalization({
+	warnPriestRemaining		= "%s Priestesses remaining"
+})
+
+L:SetOptionLocalization({
+	warnPriestRemaining	= "Show warning for how maining Blackfathom Tide Priestesses are remaining"
 })
 
 ------------------
