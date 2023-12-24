@@ -40,7 +40,7 @@ local UnitLevel = UnitLevel
 local formatt, ipairs, next, type = format, ipairs, next, type
 local HandyNotes = _G.HandyNotes
 
-ns.name = UnitName( "player" ) or "Character"
+ns.name = UnitName( "player" ) or "角色"
 ns.faction = UnitFactionGroup( "player" )
 ns.classLocal, ns.class = UnitClass( "player" )
 ns.raceList = { "Human", "Orc", "Dwarf", "Night Elf", "Undead", "Tauren", "Gnome", "Troll" }
@@ -138,11 +138,11 @@ function pluginHandler:OnEnter(mapFile, coord)
 		for k,v in pairs( ns.runes ) do
 			if k == ns.class then
 				local completed;
-				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." QUICK START for " ..ns.name )
+				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." 快速開始 - " ..ns.name )
 				for r,s in ipairs( v.spells ) do	
 					completed = not ShowPinForThisClassSpell( s, true )
 					GameTooltip:AddDoubleLine( ns.colour.prefix ..s .."   (" ..v[s].level .."+)",
-							( completed == true ) and "\124cFF00FF00Completed" or "\124cFFFF0000Not Completed" )
+							( completed == true ) and "\124cFF00FF00已完成" or "\124cFFFF0000未完成" )
 					GameTooltip:AddLine( ns.colour.highlight ..v[s].rune )
 					GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
 				end
@@ -190,8 +190,8 @@ function pluginHandler:OnEnter(mapFile, coord)
 							spaceBeforeQuests = true
 							completed = IsQuestFlaggedCompleted( w )
 							GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames[ j ],
-									( completed == true ) and ( "\124cFF00FF00" .."Completed" .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" .."Not Completed" .." (" ..ns.name ..")" ) )
+									( completed == true ) and ( "\124cFF00FF00" .."已完成" .." (" ..ns.name ..")" ) 
+									or ( "\124cFFFF0000" .."未完成" .." (" ..ns.name ..")" ) )
 						end
 					else
 						if pin.level then
@@ -204,8 +204,8 @@ function pluginHandler:OnEnter(mapFile, coord)
 						GameTooltip:AddLine( "\n" )
 						completed = IsQuestFlaggedCompleted( quests )
 						GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames,
-								( completed == true ) and ( "\124cFF00FF00" .."Completed" .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" .."Not Completed" .." (" ..ns.name ..")" ) )
+								( completed == true ) and ( "\124cFF00FF00" .."已完成" .." (" ..ns.name ..")" ) 
+									or ( "\124cFFFF0000" .."未完成" .." (" ..ns.name ..")" ) )
 					end
 				end
 				
@@ -224,7 +224,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 					
 					if pin.guide then
 						-- Single guide for all classes is permitted. Always a table
-						GameTooltip:AddLine( "\n" ..ns.colour.highlight .."Guide\n\n" ..ns.colour.plaintext
+						GameTooltip:AddLine( "\n" ..ns.colour.highlight .."指南\n\n" ..ns.colour.plaintext
 									..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
 					end
 				end

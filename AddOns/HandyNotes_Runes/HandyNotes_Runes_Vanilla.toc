@@ -7,5 +7,10 @@
 ## RequiredDeps: HandyNotes
 ## SavedVariables: HandyNotes_RunesDB
 
+## Title-zhTW: |cff4DFF4D[地圖]|r 地圖標記-符文
+## Notes-zhTW: HandyNotes: Runes |n|n在地圖上顯示探索賽季的符文位置。
+## X-Category-zhTW: 地圖
+## DefaultState: disabled
+
 Core.lua
 Data.lua
