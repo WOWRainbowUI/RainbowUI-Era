@@ -1,35 +1,75 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<Script file="Engraver.lua"/>
-	<Button name="EngraverRuneButtonTemplate" inherits="ActionButtonTemplate,SecureActionButtonTemplate" virtual="true" mixin="EngraverRuneButtonMixin">
+	<Script file="EngraverOptions.lua"/>
+	<CheckButton name="EngraverRuneButtonTemplate" inherits="ActionButtonTemplate,SecureActionButtonTemplate" virtual="true" mixin="EngraverRuneButtonMixin">
 		<Size>
-			<AbsDimension x="45" y="45" />
+			<AbsDimension x="40" y="40" />
 		</Size>
 		<Scripts>
 			<OnClick method="OnClick"/>
+			<OnEnter method="OnEnter"/>
+			<OnLeave method="OnLeave"/>
+			<OnLoad method="OnLoad"/>
 		</Scripts>
 		<Layers>
 			<Layer level="BORDER"/>
 		</Layers>
-	</Button>
-	<Frame name="EngraverCategoryFrameTemplate" virtual="true" mixin="EngraverCategoryFrameMixin">
+	</CheckButton>
+	<Frame name="EngraverCategoryFrameTemplate" virtual="true" mixin="EngraverCategoryFrameBaseMixin">
 		<Size>
-			<AbsDimension x="45" y="45" />
+			<AbsDimension x="40" y="40" />
 		</Size>
+		<Frames>
+			<Button parentKey="emptyRuneButton" inherits="EngraverRuneButtonTemplate" setAllPoints="true" hidden="true"/>
+		</Frames>
 	</Frame>
-	<Frame name="EngraverFrame" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent" hidden="true" inherits="BackdropTemplate" mixin="EngraverFrameMixin">
+	<Frame name="EngraverFrame" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent" hidden="false" inherits="BackdropTemplate" mixin="EngraverFrameMixin">
 		<Size>
-			<AbsDimension x="45" y="45" />
+			<AbsDimension x="40" y="40" />
 		</Size>
 		<Anchors>
-			<Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="BOTTOMLEFT">
+			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 				<Offset>
-					<AbsDimension x="400" y="400"/>
+					<AbsDimension x="0" y="0"/>
 				</Offset>
 			</Anchor>
 		</Anchors>
 		<Frames>
-			<Frame parentKey="noRunesFrame" mixin="EngraverNoRunesFrameMixin">
-				<Size x="135" y="135"/>
+			<Button name="EngraverDragTab" parentKey="dragTab" inherits="ChatTabArtTemplate" mixin="EngraverDragTabMixin" alpha="1">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT"/>
+				</Anchors>
+				<Scripts>
+					<OnShow>
+						-- selected textures are not hidden by default, so hide them
+						self.leftSelectedTexture:Hide()
+						self.rightSelectedTexture:Hide()
+						self.middleSelectedTexture:Hide()
+					</OnShow>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:AddLine("拖曳此標籤頁移動一鍵符文");
+						GameTooltip:AddLine("右鍵打開設定選項");
+						GameTooltip:AddLine("(選項中可以隱藏此標籤頁)");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+					<OnMouseDown method="OnMouseDown"/>
+					<OnMouseUp method="OnMouseUp"/>
+				</Scripts>
+				<ButtonText name="$parentText" parentKey="Text" text="符文">
+					<Size x="50" y="8"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentMiddle" relativePoint="CENTER" x="0" y="-5"/>
+					</Anchors>
+				</ButtonText>
+				<NormalFont style="GameFontNormalSmall"/>
+				<!--<PushedTextOffset x="0" y="0" />-->
+			</Button>
+			<Frame parentKey="noRunesFrame">
+				<Size x="120" y="40"/>
 				<Anchors>
 					<Anchor />
 				</Anchors>
@@ -38,33 +78,15 @@
 						<Texture name="$parentBackground" parentKey="background">
 							<Color r="0" g="0.694" b="0.941" a="0.125"/>
 						</Texture>
-						<FontString name="$parent_EngraverLabel" inherits="GameFontNormal" justifyH="CENTER" text="Engraver" outline="THICK" parentKey="engraverLabel">
-							<Size x="135" y="45"/>
-							<Anchors>
-								<Anchor point="TOP"/>
-							</Anchors>
-							<Color r="1" g="1" b="0"/>
-						</FontString>
 						<FontString name="$parent_NoRunesLabel" inherits="GameFontNormal" justifyH="CENTER" text="NO_RUNES" parentKey="noRunesLabel">
-							<Size x="135" y="45"/>
+							<Size x="120" y="40"/>
 							<Anchors>
 								<Anchor point="CENTER"/>
 							</Anchors>
 							<Color r="1" g="1" b="1"/>
 						</FontString>
-						<FontString name="$parent_DragLabel" inherits="GameFontNormal" justifyH="CENTER" text="右鍵拖曳移動位置" parentKey="dragLabel">
-							<Size x="135" y="45"/>
-							<Anchors>
-								<Anchor point="BOTTOM"/>
-							</Anchors>
-							<Color r="0" g="1" b="1"/>
-						</FontString>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnMouseDown method="OnMouseDown"/>
-					<OnMouseUp method="OnMouseUp"/>
-				</Scripts>
 			</Frame>
 			<Frame name="$parent_CategoryFrame1" parentKey="categoryFrame1" inherits="EngraverCategoryFrameTemplate" />
 			<Frame name="$parent_CategoryFrame2" parentKey="categoryFrame2" inherits="EngraverCategoryFrameTemplate" />

@@ -887,6 +887,17 @@ D["EasyFrames"] = {
         text = "顯示血量數字和百分比：按 Esc > 介面 > 顯示 > 狀態文字 > 選擇 '數值'，然後便可以在暴雪頭像 (美化調整) 的設定選項中調整血量條文字格式。\n\n分兩邊顯示血量數字和百分比：按 Esc > 介面 > 顯示 > 狀態文字 > 選擇 '兩者'，此方式無法在暴雪頭像 (美化調整) 的設定選項中調整文字格式。\n",
 	},
 };
+D["Engraver"] = {
+	defaultEnable = 0,
+	tags = { "ENHANCEMENT" }, 
+	title = "一鍵符文",
+	desc = "探索賽季專用的插件。在畫面上顯示你所擁有的符文，點一下立即套用，不用再打開角色視窗。`",
+	modifier = "彩虹ui",
+	{
+		type = "text",
+        text = "設定選項: 右鍵點一鍵符文框架的標籤頁，或是從 Esc > 選項 > 插件 > 符文。",       
+	},
+};
 D["EnableEquipmentSelect"] = {
 	defaultEnable = 1,
 	tags = { "ITEM" },

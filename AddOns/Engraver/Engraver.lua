@@ -1,71 +1,69 @@
+local addonName, Addon = ...
+
 EngraverFrameMixin = {};
-EngraverCategoryFrameMixin = {};
-EngraverRuneButtonMixin = {};
+EngraverCategoryFrameBaseMixin = {};
+EngraverCategoryFrameShowAllMixin = {}
+EngraverCategoryFramePopUpMenuMixin = {}
+EngraverRuneButtonMixin = {}
 EngraverNoRunesFrameMixin = {};
+
+local EngraverDisplayModes = {
+	{ text = "顯示全部", mixin = EngraverCategoryFrameShowAllMixin },
+	{ text = "彈出選單", mixin = EngraverCategoryFramePopUpMenuMixin }
+}
+Addon.EngraverDisplayModes = EngraverDisplayModes
+local EngraverLayoutDirections = {
+	{ text = "左到右", categoryPoint = "TOPLEFT", categoryRelativePoint = "BOTTOMLEFT", runePoint = "LEFT", runeRelativePoint = "RIGHT" },
+	{ text = "上到下", categoryPoint = "TOPLEFT", categoryRelativePoint = "TOPRIGHT", runePoint = "TOP", runeRelativePoint = "BOTTOM" },
+	{ text = "右到左", categoryPoint = "TOPLEFT", categoryRelativePoint = "BOTTOMLEFT", runePoint = "RIGHT", runeRelativePoint = "LEFT" },
+	{ text = "下到上", categoryPoint = "TOPLEFT", categoryRelativePoint = "TOPRIGHT", runePoint = "BOTTOM", runeRelativePoint = "TOP" }
+}
+Addon.EngraverLayoutDirections = EngraverLayoutDirections
 
 -------------------
 -- EngraverFrame --
 -------------------
 
 function EngraverFrameMixin:OnLoad()
-	if not self.categoryFrames then
-		self.categoryFrames = {
-			[5] =  self.categoryFrame1,
-			[7] =  self.categoryFrame2,
-			[10] =  self.categoryFrame3
-		}
-	end
-	self:RegisterEvent("RUNE_UPDATED");
 	self:RegisterEvent("PLAYER_ENTERING_WORLD");
+	self:RegisterEvent("RUNE_UPDATED");
 	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
+	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 	self:RegisterForDrag("RightButton")
 end
 
 function EngraverFrameMixin:OnEvent(event, ...)
 	if (event == "PLAYER_ENTERING_WORLD") then
-		self:CheckToLoad()
+		self:Initialize()
 	elseif (event == "RUNE_UPDATED") then
-		self:CheckToLoad()
-		self:UpdateCategory(...)
-	elseif (event == "PLAYER_EQUIPMENT_CHANGED") then
-		self:HandleEquipmentChanged(...)
-	end
-end
-
-function EngraverFrameMixin:CheckToLoad()
-	if not self:IsShown() then
-		self:SetShown(true)
-		self:LoadCategories()
-	end
-end
-
-function EngraverFrameMixin:UpdateCategory(engravingData)
-	if engravingData then
-		local categoryFrame = self.categoryFrames[engravingData.equipmentSlot]
-		if categoryFrame then
-			categoryFrame:ResetRuneButtons()
-			categoryFrame:HighlightRuneButton(engravingData)
+		local engravingData = select(1, ...)
+		if engravingData then
+			self:UpdateCategory(engravingData.equipmentSlot)
 		end
+	elseif (event == "PLAYER_EQUIPMENT_CHANGED") then
+		self:UpdateCategory(...)
+	elseif (event == "PLAYER_REGEN_ENABLED") then
+		-- Update after leaving combat lockdown in case settings changed during combat
+		self:InitFromOptions()
+		self:UpdateLayout()
 	end
 end
 
-function EngraverFrameMixin:HandleEquipmentChanged(equipmentSlot, hasCurrent)
-	local categoryFrame = self.categoryFrames[equipmentSlot]
-	if categoryFrame then
-		categoryFrame:ResetRuneButtons()
-		self:UpdateCategory(C_Engraving.GetRuneForEquipmentSlot(equipmentSlot))
-	end
+function EngraverFrameMixin:Initialize()
+	self.categoryFrames = { self.categoryFrame1, self.categoryFrame2, self.categoryFrame3 }
+	self.equipmentSlotFrameMap = { [5] = self.categoryFrame1, [7] = self.categoryFrame2, [10] = self.categoryFrame3 }
+	self:LoadCategories()
+	self:InitFromOptions()
+	self:UpdateLayout()
 end
-
+	
 function EngraverFrameMixin:LoadCategories()
 	C_Engraving.RefreshRunesList();
 	local categories = C_Engraving.GetRuneCategories(true, true);
 	if #categories > 0 then
 		for c, category in ipairs(categories) do
-			--local CategoryName = GetItemInventorySlotInfo(category)
-			local categoryFrame = self["categoryFrame"..c]
+			local categoryFrame = self.categoryFrames[c]
 			if categoryFrame then
-				categoryFrame:SetPoint("BOTTOMLEFT", 0, - (c - 1) * 45)
 				categoryFrame:LoadCategoryRunes(category)
 			end
 		end
@@ -75,11 +73,86 @@ function EngraverFrameMixin:LoadCategories()
 	end
 end
 
--------------------
--- CategoryFrame --
--------------------
+function EngraverFrameMixin:InitFromOptions()
+	function registerOptionChangedCallback(optionName, callback)
+		EngraverOptions:RegisterCallback(optionName, function(_, newValue) if not InCombatLockdown() then callback(newValue) end end, self)
+	end
+	-- UIScale
+	self:UpdateScale(EngraverOptions.UIScale)
+	registerOptionChangedCallback("UIScale", function (newValue)
+		self:UpdateScale(newValue)
+	end)
+	-- DisplayMode
+	self:SetDisplayMode(EngraverDisplayModes[EngraverOptions.DisplayMode+1].mixin)
+	registerOptionChangedCallback("DisplayMode", function (newValue) 
+		self:SetDisplayMode(EngraverDisplayModes[newValue+1].mixin) 
+		self:UpdateLayout()
+	end)
+	-- LayoutDirection
+	registerOptionChangedCallback("LayoutDirection", function (newValue)  
+		self:UpdateLayout()
+	end)
+	-- HideDragTab
+	registerOptionChangedCallback("HideDragTab", function (newValue)  
+		self:UpdateLayout()
+	end)
+end
 
-function EngraverCategoryFrameMixin:LoadCategoryRunes(category)
+function EngraverFrameMixin:UpdateCategory(equipmentSlot)
+	if self.equipmentSlotFrameMap then
+		local categoryFrame = self.equipmentSlotFrameMap[equipmentSlot]
+		if categoryFrame and categoryFrame.UpdateCategoryLayout then
+			categoryFrame:UpdateCategoryLayout()
+		end
+	end
+end
+
+function EngraverFrameMixin:SetDisplayMode(displayModeMixin)
+	if self.categoryFrames and displayModeMixin and type(displayModeMixin) == "table" then
+		for c, categoryFrame in ipairs(self.categoryFrames) do
+			if categoryFrame then
+				if categoryFrame.TearDownDisplayMode then
+					categoryFrame:TearDownDisplayMode()
+				end
+				Mixin(categoryFrame, displayModeMixin)
+				if categoryFrame.SetUpDisplayMode then
+					categoryFrame:SetUpDisplayMode()
+				end
+			end
+		end
+	end
+end
+
+function EngraverFrameMixin:UpdateScale(newScale)
+	self:SetScale(newScale)
+end
+
+function EngraverFrameMixin:UpdateLayout()
+	if self.categoryFrames then
+		for c, categoryFrame in ipairs(self.categoryFrames) do
+			if categoryFrame then
+				local LayoutDirection = EngraverLayoutDirections[EngraverOptions.LayoutDirection+1]
+				if c == 1 then
+					categoryFrame:SetPoint(LayoutDirection.categoryPoint)
+				elseif c > 1 then
+					categoryFrame:SetPoint(LayoutDirection.categoryPoint, self.categoryFrames[c-1], LayoutDirection.categoryRelativePoint)
+				end
+				if categoryFrame.UpdateCategoryLayout then
+					categoryFrame:UpdateCategoryLayout()
+				end
+			end
+		end
+	end
+	if self.dragTab then
+		self.dragTab:SetShown(not EngraverOptions.HideDragTab);
+	end
+end
+
+-----------------------
+-- CategoryFrameBase --
+-----------------------
+
+function EngraverCategoryFrameBaseMixin:LoadCategoryRunes(category)
 	local runes = C_Engraving.GetRunesForCategory(category, false);
 	local knownRunes = C_Engraving.GetRunesForCategory(category, true);
 	if not self.runeButtons then
@@ -94,12 +167,27 @@ function EngraverCategoryFrameMixin:LoadCategoryRunes(category)
 		if runeButton then
 			local isKnown = self:IsRuneKnown(rune, knownRunes)
 			runeButton:SetRune(rune, category, isKnown)
-			runeButton:SetPoint("TOPLEFT", (r - 1) * 45, 0)
 		end
+	end
+	self:LoadEmptyRuneButton(category)
+end
+
+function EngraverCategoryFrameBaseMixin:LoadEmptyRuneButton(slotId)
+	if self.emptyRuneButton then
+		-- TODO figure out how to get slotName from slotId using API or maybe a constant somewhere
+		local tempSlotsMap = {
+			[5] = "CHESTSLOT",
+			[7] = "LEGSSLOT",
+			[10] = "HANDSSLOT"
+		}
+		local slotName = tempSlotsMap[slotId]
+		local id, textureName, checkRelic = GetInventorySlotInfo(slotName);
+		self:SetID(id);
+		self.emptyRuneButton.icon:SetTexture(textureName);
 	end
 end
 
-function EngraverCategoryFrameMixin:IsRuneKnown(runeToCheck, knownRunes)
+function EngraverCategoryFrameBaseMixin:IsRuneKnown(runeToCheck, knownRunes)
 	for r, rune in ipairs(knownRunes) do
 		if rune.skillLineAbilityID == runeToCheck.skillLineAbilityID then
 			return true
@@ -107,24 +195,7 @@ function EngraverCategoryFrameMixin:IsRuneKnown(runeToCheck, knownRunes)
 	end
 end
 
-function EngraverCategoryFrameMixin:ResetRuneButtons()
-	if self.runeButtons then
-		for r, runeButton in ipairs(self.runeButtons) do
-			runeButton:SetHighlighted(false)
-		end
-	end
-end
-
-function EngraverCategoryFrameMixin:HighlightRuneButton(engravingData)
-	if engravingData then
-		local runeButton = self:GetRuneButton(engravingData.skillLineAbilityID)
-		if runeButton then
-			runeButton:SetHighlighted(true)
-		end
-	end
-end
-
-function EngraverCategoryFrameMixin:GetRuneButton(skillLineAbilityID)
+function EngraverCategoryFrameBaseMixin:GetRuneButton(skillLineAbilityID)
 	if self.runeButtons then
 		for r, runeButton in ipairs(self.runeButtons) do
 			if runeButton.skillLineAbilityID == skillLineAbilityID then
@@ -134,9 +205,157 @@ function EngraverCategoryFrameMixin:GetRuneButton(skillLineAbilityID)
 	end
 end
 
+function EngraverCategoryFrameBaseMixin:UpdateCategoryLayout()
+	self:DetermineActiveAndInactiveButtons()
+	if self.UpdateCategoryLayoutImpl then
+		self:UpdateCategoryLayoutImpl() -- implemented by "subclasses"/mixins
+	end
+end
+
+function EngraverCategoryFrameBaseMixin:DetermineActiveAndInactiveButtons()
+	self.activeButton = nil
+	self.inactiveButtons = {}
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			if C_Engraving.IsRuneEquipped(runeButton.skillLineAbilityID) then
+				self.activeButton = runeButton
+			else
+				table.insert(self.inactiveButtons, runeButton)
+			end
+		end
+	end
+end
+
+--------------------------
+-- CategoryFrameShowAll --
+--------------------------
+
+function EngraverCategoryFrameShowAllMixin:UpdateCategoryLayoutImpl()
+	-- update position of each button and highlight the active one
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			if runeButton then
+				runeButton:SetShown(true)
+				if r == 1 then
+					runeButton:SetAllPoints()
+				else
+					runeButton:ClearAllPoints()
+					local LayoutDirection = EngraverLayoutDirections[EngraverOptions.LayoutDirection+1]
+					runeButton:SetPoint(LayoutDirection.runePoint, self.runeButtons[r-1], LayoutDirection.runeRelativePoint)
+				end
+				runeButton:SetHighlighted(C_Engraving.IsRuneEquipped(runeButton.skillLineAbilityID))
+			end
+		end
+	end
+end
+
+function EngraverCategoryFrameShowAllMixin:SetUpDisplayMode()
+	-- do nothing for now
+end
+
+function EngraverCategoryFrameShowAllMixin:TearDownDisplayMode()
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			runeButton:SetHighlighted(false)
+		end
+	end
+end
+
+----------------------------
+-- CategoryFramePopUpMenu --
+----------------------------
+
+function EngraverCategoryFramePopUpMenuMixin:UpdateCategoryLayoutImpl()
+	-- update visibility and position of each button
+	if self.emptyRuneButton then
+		self.emptyRuneButton:Hide()
+	end
+	if self.runeButtons then
+		local showInactives = self:IsMouseOverAnyButtons()
+		self.activeButton = self.activeButton or self.emptyRuneButton
+		if self.activeButton then
+			self.activeButton:SetShown(true)
+			self.activeButton:SetAllPoints()
+			if self.inactiveButtons then
+				local prevButton = self.activeButton
+				for r, runeButton in ipairs(self.inactiveButtons) do
+					runeButton:SetShown(showInactives)
+					runeButton:ClearAllPoints()
+					local LayoutDirection = EngraverLayoutDirections[EngraverOptions.LayoutDirection+1]
+					runeButton:SetPoint(LayoutDirection.runePoint, prevButton, LayoutDirection.runeRelativePoint)
+					prevButton = runeButton
+				end
+			end
+		end
+	end
+end
+
+function EngraverCategoryFramePopUpMenuMixin:SetUpDisplayMode()
+	if self.emptyRuneButton then
+		self.emptyRuneButton:RegisterCallback("PostOnEnter", self.OnRuneButtonPostEnter, self)
+		self.emptyRuneButton:RegisterCallback("PostOnLeave", self.OnRuneButtonPostLeave, self)
+	end
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			runeButton:RegisterCallback("PostOnEnter", self.OnRuneButtonPostEnter, self)
+			runeButton:RegisterCallback("PostOnLeave", self.OnRuneButtonPostLeave, self)
+		end
+	end
+end
+
+function EngraverCategoryFramePopUpMenuMixin:TearDownDisplayMode()
+	if self.emptyRuneButton then
+		self.emptyRuneButton:UnregisterCallback("PostOnEnter", self)
+		self.emptyRuneButton:UnregisterCallback("PostOnLeave", self)
+		self.emptyRuneButton:Hide()
+	end
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			runeButton:UnregisterCallback("PostOnEnter", self)
+			runeButton:UnregisterCallback("PostOnLeave", self)
+		end
+	end
+end
+
+function EngraverCategoryFramePopUpMenuMixin:OnRuneButtonPostEnter()
+	self:SetInactiveButtonsShown(true) 
+end
+
+function EngraverCategoryFramePopUpMenuMixin:OnRuneButtonPostLeave()
+	self:SetInactiveButtonsShown(self:IsMouseOverAnyButtons())
+end
+
+function EngraverCategoryFramePopUpMenuMixin:IsMouseOverAnyButtons()
+	if self.emptyRuneButton and self.emptyRuneButton:IsMouseOver() then
+		return true
+	end
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			if runeButton:IsMouseOver() then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function EngraverCategoryFramePopUpMenuMixin:SetInactiveButtonsShown(isShown)
+	if not InCombatLockdown() then
+		for r, runeButton in ipairs(self.inactiveButtons) do
+			runeButton:SetShown(isShown)
+		end
+	end
+end
+
 ----------------
 -- RuneButton --
 ----------------
+
+function EngraverRuneButtonMixin:OnLoad()
+	Mixin(self, CallbackRegistryMixin);
+	self:SetUndefinedEventsAllowed(true)
+	self:OnLoad() -- NOTE not an infinite loop because mixing in CallbackRegistryMixin redefines OnLoad
+end
 
 function EngraverRuneButtonMixin:SetRune(rune, category, isKnown)
 	self.category = category
@@ -154,17 +373,13 @@ function EngraverRuneButtonMixin:SetRune(rune, category, isKnown)
 		self.icon:SetVertexColor(0.2, 0.0, 0.0);
 		self.NormalTexture:SetVertexColor(0.2, 0.0, 0.0);
 	end
-	if C_Engraving.IsRuneEquipped(self.skillLineAbilityID) then
-		self:SetHighlighted(true)
-	end
-	self:Show();
 end
 
 function EngraverRuneButtonMixin:OnClick()
 	local buttonClicked = GetMouseButtonClicked();
 	if buttonClicked == "LeftButton" then
 		self:TryEngrave()
-	elseif buttonClicked  == "RightButton" then
+	elseif buttonClicked  == "RightButton" and EngraverOptions.EnableRightClickDrag then
 		if IsKeyDown(buttonClicked) then
 			EngraverFrame:StartMoving()
 		else
@@ -174,7 +389,7 @@ function EngraverRuneButtonMixin:OnClick()
 end
 
 function EngraverRuneButtonMixin:TryEngrave()
-	if self.category and self.skillLineAbilityID then
+	if self.category and self.skillLineAbilityID and not InCombatLockdown() then
 		ClearCursor()
 		C_Engraving.CastRune(self.skillLineAbilityID);
 		if self.category == 5 then
@@ -190,18 +405,37 @@ function EngraverRuneButtonMixin:TryEngrave()
 end
 
 function EngraverRuneButtonMixin:SetHighlighted(isHighlighted)
-	self.FlyoutBorder:SetShown(isHighlighted)
-	self.FlyoutBorderShadow:SetShown(isHighlighted)
+	--self.FlyoutBorder:SetShown(isHighlighted)
+	--self.FlyoutBorderShadow:SetShown(isHighlighted)
 	self.SpellHighlightTexture:SetShown(isHighlighted)
 end
 
+function EngraverRuneButtonMixin:OnEnter()
+	if self.skillLineAbilityID and EngraverOptions.HideTooltip ~= true then
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+		GameTooltip:SetEngravingRune(self.skillLineAbilityID);
+		self.showingTooltip = true;
+		GameTooltip:Show();
+	end
+	self:TriggerEvent("PostOnEnter")
+end
 
--------------------------------
--- EngraverNoRunesFrameMixin --
--------------------------------
+function EngraverRuneButtonMixin:OnLeave()
+	GameTooltip_Hide();
+	self.showingTooltip = false;
+	self:TriggerEvent("PostOnLeave")
+end
 
-function EngraverNoRunesFrameMixin:OnMouseDown(button)
+-------------
+-- DragTab --
+-------------
+
+EngraverDragTabMixin = {}
+
+function EngraverDragTabMixin:OnMouseDown(button)
 	if button == "RightButton" then
+		Settings.OpenToCategory(addonName);
+	elseif button == "LeftButton" then
 		local parent = self:GetParent()
 		if parent and parent.StartMoving then
 			parent:StartMoving();
@@ -209,11 +443,9 @@ function EngraverNoRunesFrameMixin:OnMouseDown(button)
 	end
 end
 
-function EngraverNoRunesFrameMixin:OnMouseUp(button)
-	if button == "RightButton" then
-		local parent = self:GetParent()
-		if parent and parent.StopMovingOrSizing then
-			parent:StopMovingOrSizing();
-		end
+function EngraverDragTabMixin:OnMouseUp(button)
+	local parent = self:GetParent()
+	if parent and parent.StopMovingOrSizing then
+		parent:StopMovingOrSizing();
 	end
 end
