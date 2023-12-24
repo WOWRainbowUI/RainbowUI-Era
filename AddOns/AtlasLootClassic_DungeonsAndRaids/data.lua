@@ -43,7 +43,7 @@ local QUEST_EXTRA_ITTYPE = data:AddExtraItemTableType("Quest")
 local PRICE_EXTRA_ITTYPE = data:AddExtraItemTableType("Price")
 
 local DUNGEON_CONTENT = data:AddContentType(AL["Dungeons"], ATLASLOOT_DUNGEON_COLOR)
-local RAID_CONTENT = data:AddContentType(AL["SoD Raids"], ATLASLOOT_RAID20_COLOR)
+local RAID10_CONTENT = data:AddContentType(AL["10 Raids"], ATLASLOOT_RAID10_COLOR)
 local RAID20_CONTENT = data:AddContentType(AL["20 Raids"], ATLASLOOT_RAID20_COLOR)
 local RAID40_CONTENT = data:AddContentType(AL["40 Raids"], ATLASLOOT_RAID40_COLOR)
 
@@ -97,6 +97,19 @@ local KEYS = {	-- Keys
 	},
 }
 
+local BFD_SET = {
+	name = AL["BFD Tier Sets"],
+	ExtraList = true,
+	LoadDifficulty = RAID10_DIFF,
+	TableType = SET_ITTYPE,
+	IgnoreAsSource = true,
+	[RAID10_DIFF] = {
+		{ 1, 1570 }, -- Twilight Invoker's Vestments
+		{ 3, 1578 }, -- Blackfathom Slayer's Leather
+		{ 5, 1579 }, -- Blackfathom Elementalist's Hide
+		{ 7, 1577 }, -- Blackfathom Avenger's Mail
+	},
+}
 local T1_SET = {
 	name = format(AL["Tier %s Sets"], "1"),
 	ExtraList = true,
@@ -893,6 +906,240 @@ data["BlackfathomDeeps"] = {
 				{ 11, 2271 }, -- Staff of the Blessed Seer
 			},
 		},
+	},
+}
+
+data["BlackfathomDeepsRaid"] = {
+	MapID = 719,
+	InstanceID = 48,
+	AtlasModule = ATLAS_MODULE_NAME,
+	AtlasMapID = "BlackfathomDeeps",
+	AtlasMapFile = {"CL_BlackfathomDeepsA", "CL_BlackfathomDeepsEnt"},
+	AtlasMapFile_AL = {"BlackfathomDeeps", "BlackfathomDeepsEnt"},
+	ContentType = RAID10_CONTENT,
+	LoadDifficulty = RAID10_DIFF,
+	LevelRange = GetForVersion({25, 39}, {19, 22, 24}),
+	items = {
+		{ -- BFDBaronAquanis
+			name = AL["Baron Aquanis"],
+			npcID = 202699,
+			Level = 999,
+			DisplayIDs = {{110}},
+			AtlasMapFile = {"CL_BlackfathomDeepsB", "CL_BlackfathomDeepsEnt"},
+			AtlasMapBossID = 1,
+			[NORMAL_DIFF] = {
+				{ 1,  209825 }, -- Droplet Choker
+				{ 2,  209422 }, -- High Tide Choker
+				{ 3,  209677 }, -- Loop of Swift Currents
+				{ 5,  209828 }, -- Sub-Zero Pauldrons
+				{ 6,  209423 }, -- Flowing Scarf
+				{ 7,  211852 }, -- Handwraps of Befouled Water
+				{ 8,  209421 }, -- Cord of Aquanis
+				{ 9,  209676 }, -- Shoulderguards of Crushing Depths
+				{ 10, 204804 }, -- Hydraxian Bangles
+				{ 16, 204807 }, -- Fathomblade
+				{ 17, 209590 }, -- Cracked Water Globe
+				{ 19, 211454 }, -- Strange Water Globe (Horde)
+				{ 20, 211818 }, -- Strange Water Globe (Alliance)
+			},
+		},
+		{ -- BFDGhamoora
+			name = AL["Ghamoo-ra"],
+			npcID = 201722,
+			Level = 999,
+			DisplayIDs = {{111481}},
+			AtlasMapBossID = 2,
+			[NORMAL_DIFF] = {
+				{ 1, 209523 }, -- Shimmering Thresher Cape
+				{ 2, 209675 }, -- Clamweave Tunic
+				{ 3, 209432 }, -- Ghamoo-ra's Cinch
+				{ 4, 209524 }, -- Bindings of Serra'kis
+				{ 5, 209678 }, -- Mantle of the Thresher Slayer
+				{ 6, 209418 }, -- Adamantine Tortoise Armor
+				{ 7, 209824 }, -- Shimmering Shoulderpads
+				{ 16, 209436 }, -- Chipped Bite of Serra'kis
+				{ 17, 209830 }, -- Ironhide Arbalest
+				{ 18, 209424 }, -- Shell Plate Barrier
+			},
+		},
+		{ -- BFDLadySarevess
+			name = AL["Lady Sarevess"],
+			npcID = 204068,
+			Level = 999,
+			DisplayIDs = {{112103}},
+			AtlasMapBossID = 3,
+			[NORMAL_DIFF] = {
+				{ 1, 209680 }, -- Waterproof Scarf
+				{ 2, 209565 }, -- Band of Deep Places
+				{ 3, 209823 }, -- Signet of Beasts
+				{ 4, 211842 }, -- Rakkamar's Tattered Thinking Cap
+				{ 5, 209679 }, -- Azshari Novice's Shoulderpads
+				{ 6, 209527 }, -- Naga Battle Gauntlets
+				{ 7, 211789 }, -- Artemis Cowl
+				{ 8, 211843 }, -- Mask of Scorn
+				{ 9, 209566 }, -- Leggings of the Faithful
+				{ 16, 209822 }, -- Strength of Purpose
+				{ 17, 209525 }, -- Honed Darkwater Talwar
+				{ 18, 209564 }, -- Guardian's Trident
+				{ 19, 209563 }, -- Naga Heartrender
+			}
+		},
+		{ -- BFDGelihast
+			name = AL["Gelihast"],
+			npcID = 204921,
+			Level = 999,
+			DisplayIDs = {{5243}},
+			AtlasMapBossID = 4,
+			[NORMAL_DIFF] = {
+				{ 1,   209683 }, -- Twilight Invoker's Shawl
+				{ 2,   209671 }, -- Twilight Invoker's Robes
+				{ 3,   209669 }, -- Twilight Invoker's Shoes
+				{ 5,   211510 }, -- Twilight Slayer's Cowl
+				{ 6,   211512 }, -- Twilight Slayer's Tunic
+				{ 7,   211511 }, -- Twilight Slayer's Footpads
+				{ 9,   211507 }, -- Twilight Elementalist's Cowl
+				{ 10,  211509 }, -- Twilight Elementalist's Robe
+				{ 11,  211508 }, -- Twilight Elementalist's Footpads
+				{ 13,  211505 }, -- Twilight Avenger's Helm
+				{ 14,  211504 }, -- Twilight Avenger's Chain
+				{ 15,  211506 }, -- Twilight Avenger's Boots
+				{ 16,  209670 }, -- Skinwalkers
+				{ 17,  209569 }, -- Murloc Hide Kneeboots
+				{ 18,  209568 }, -- Algae Gauntlets
+				{ 19,  209572 }, -- Black Boiled Leathers
+				{ 20,  209820 }, -- Black Shroud Choker
+				{ 21,  209821 }, -- Ring of Shadowsight
+				{ 22,  209681 }, -- Black Murloc Egg
+				{ 23,  209559 }, -- Twilight Sage's Walking Stick
+				{ 24,  209573 }, -- Wrathful Spire
+				{ 25,  209567 }, -- Coral Reef Axe
+				{ 26,  209571 }, -- Deadlight
+				{ 27,  209570 }, -- Tome of Cavern Lore
+				{ 28,  211491 }, -- Bottomless Murloc Skin Bag
+			},
+		},
+		{ -- BFDLorgusJett
+			name = AL["Lorgus Jett"],
+			npcID = 207356,
+			Level = 999,
+			DisplayIDs = {{12822}},
+			AtlasMapFile = {"CL_BlackfathomDeepsB", "CL_BlackfathomDeepsEnt"},
+			AtlasMapBossID = 5,
+			[NORMAL_DIFF] = {
+				{ 1,   209683 }, -- Twilight Invoker's Shawl
+				{ 2,   209671 }, -- Twilight Invoker's Robes
+				{ 3,   209669 }, -- Twilight Invoker's Shoes
+				{ 5,   211510 }, -- Twilight Slayer's Cowl
+				{ 6,   211512 }, -- Twilight Slayer's Tunic
+				{ 7,   211511 }, -- Twilight Slayer's Footpads
+				{ 9,   211507 }, -- Twilight Elementalist's Cowl
+				{ 10,  211509 }, -- Twilight Elementalist's Robe
+				{ 11,  211508 }, -- Twilight Elementalist's Footpads
+				{ 13,  211505 }, -- Twilight Avenger's Helm
+				{ 14,  211504 }, -- Twilight Avenger's Chain
+				{ 15,  211506 }, -- Twilight Avenger's Boots
+				{ 16,  209682 }, -- Sturdy Hood 
+				{ 17,  209578 }, -- Glowing Leather Bands
+				{ 18,  209581 }, -- Silver Hand Sabatons
+				{ 20,  209574 }, -- Discarded Tenets of the Silver Hand
+				{ 21,  209576 }, -- Mind-Expanding Mushroom
+				{ 23,  209818 }, -- Sun-Touched Crescent
+				{ 24,  209577 }, -- Fist of the Wild
+				{ 25,  209560 }, -- Hammer of Righteous Judgement
+				{ 26,  209579 }, -- Crashing Thunder
+				{ 27,  209575 }, -- Carved Driftwood Icon
+			},
+		},
+		{ -- BFDTwilightLordKelris
+			name = AL["Twilight Lord Kelris"],
+			npcID = 209678,
+			Level = 999,
+			DisplayIDs = {{4939}},
+			AtlasMapFile = {"CL_BlackfathomDeepsB", "CL_BlackfathomDeepsEnt"},
+			AtlasMapBossID = 6,
+			[NORMAL_DIFF] = {
+				{ 1,   209683 }, -- Twilight Invoker's Shawl
+				{ 2,   209671 }, -- Twilight Invoker's Robes
+				{ 3,   209669 }, -- Twilight Invoker's Shoes
+				{ 5,   211510 }, -- Twilight Slayer's Cowl
+				{ 6,   211512 }, -- Twilight Slayer's Tunic
+				{ 7,   211511 }, -- Twilight Slayer's Footpads
+				{ 9,   211507 }, -- Twilight Elementalist's Cowl
+				{ 10,  211509 }, -- Twilight Elementalist's Robe
+				{ 11,  211508 }, -- Twilight Elementalist's Footpads
+				{ 13,  211505 }, -- Twilight Avenger's Helm
+				{ 14,  211504 }, -- Twilight Avenger's Chain
+				{ 15,  211506 }, -- Twilight Avenger's Boots
+				{ 16,  209673 }, -- Glowing Fetish Amulet
+				{ 17,  209686 }, -- Jagged Bone Necklace
+				{ 18,  209817 }, -- Voidwalker Brooch
+				{ 19,  209668 }, -- Signet of the Twilight Lord
+				{ 20,  209816 }, -- Fetish of Mischief
+				{ 21,  209694 }, -- Blackfathom Ritual Dagger
+				{ 22,  209674 }, -- Phoenix Ignition
+				{ 23,  211458 }, -- Tome of Shadow Warding
+				{ 25,  209672 }, -- Black Fingerless Gloves
+				{ 26,  209667 }, -- Gaze Dreamer Leggings
+				{ 27,  211455 }, -- Slick Fingerless Gloves
+				{ 28,  211457 }, -- Twilight Defender's Girdle
+				{ 29,  209561 }, -- Rod of the Ancient Sleepwalker
+				{ 30,  211492 }, -- Kelris's Satchel
+			},
+		},
+		{ -- BFDAkumai
+			name = AL["Aku'mai"],
+			npcID = 213334,
+			Level = 999,
+			DisplayIDs = {{2837}},
+			AtlasMapBossID = 7,
+			AtlasMapFile = {"CL_BlackfathomDeepsB", "CL_BlackfathomDeepsEnt"},
+			[NORMAL_DIFF] = {
+				{ 1,   209683 }, -- Twilight Invoker's Shawl
+				{ 2,   209671 }, -- Twilight Invoker's Robes
+				{ 3,   209669 }, -- Twilight Invoker's Shoes
+				{ 5,   211510 }, -- Twilight Slayer's Cowl
+				{ 6,   211512 }, -- Twilight Slayer's Tunic
+				{ 7,   211511 }, -- Twilight Slayer's Footpads
+				{ 9,   211507 }, -- Twilight Elementalist's Cowl
+				{ 10,  211509 }, -- Twilight Elementalist's Robe
+				{ 11,  211508 }, -- Twilight Elementalist's Footpads
+				{ 13,  211505 }, -- Twilight Avenger's Helm
+				{ 14,  211504 }, -- Twilight Avenger's Chain
+				{ 15,  211506 }, -- Twilight Avenger's Boots
+				{ 16,  209691 }, -- Vampiric Boot Knife
+				{ 17,  211456 }, -- Dagger of Willing Sacrifice
+				{ 18,  209688 }, -- Bael Modan Blunderbuss
+				{ 19,  209580 }, -- Gusting Wind
+				{ 21,  209534 }, -- Azshari Arbalest
+				{ 22,  209562 }, -- Deadly Strike of the Hydra
+				{ 23,  211452 }, -- Perfect Blackfathom Pearl
+				{ 24,  209693 }, -- Perfect Blackfathom Pearl
+				{ 25,  209684 }, -- Soul Leech Pants
+				{ 26,  209687 }, -- Hydra Hide Cuirass
+				{ 27,  209692 }, -- Sentinel Pauldrons
+				{ 28,  209685 }, -- Ancient Moss Cinch
+				{ 29,  209690 }, -- Shadowscale Coif
+				{ 30,  209689 }, -- Crabshell Waders
+			},
+		},
+		{ -- BFDTrash
+			name = AL["Trash"],
+			ExtraList = true,
+			[NORMAL_DIFF] = {
+				{ 1,  1486 }, -- Tree Bark Jacket
+				{ 2,  3416 }, -- Martyr's Chain
+				{ 3,  1491 }, -- Ring of Precision
+				{ 4,  3414 }, -- Crested Scepter
+				{ 5,  1454 }, -- Axe of the Enforcer
+				{ 6,  1481 }, -- Grimclaw
+				{ 7,  2567 }, -- Evocator's Blade
+				{ 8,  3413 }, -- Doomspike
+				{ 9,  3417 }, -- Onyx Claymore
+				{ 10, 3415 }, -- Staff of the Friar
+				{ 11, 2271 }, -- Staff of the Blessed Seer
+			},
+		},
+		BFD_SET,
 	},
 }
 
@@ -7020,229 +7267,5 @@ data["Naxxramas"] = {
 			},
 		},
 		T3_SET,
-	},
-}
-data["BlackfathomDeeps2"] = {
-	MapID = 719,
-	InstanceID = 48,
-	AtlasModule = ATLAS_MODULE_NAME,
-	AtlasMapID = "BlackfathomDeeps",
-	AtlasMapFile = {"CL_BlackfathomDeepsA", "CL_BlackfathomDeepsEnt"},
-	AtlasMapFile_AL = {"BlackfathomDeeps", "BlackfathomDeepsEnt"},
-	ContentType = RAID_CONTENT,
-	LevelRange = {25, 25, 25},
-	items = {
-		{ -- BFDBaronAquanis
-			name = AL["Baron Aquanis"],
-			npcID = 202699,
-			Level = GetForVersion(28,24),
-			DisplayIDs = {{110}},
-			[NORMAL_DIFF] = {
-				{ 1,  211454 }, -- Strange Water Globe
-				{ 2,  211852 }, -- Handwraps of Befouled Water
-				{ 3,  209423 }, -- Flowing Scarf
-				{ 4,  209421 }, -- Cord of Aquanis
-				{ 5,  209828 }, -- Sub-Zero Pauldrons
-				{ 6,  209422 }, -- High Tide Choker
-				{ 7,  209825 }, -- Droplet Choker
-				{ 8,  204807 }, -- Fathomblade
-				{ 9,  204804 }, -- Hydraxian Bangles
-				{ 10,  209676 }, -- Shoulderguards of Crushing Depths
-				{ 11,  209590 }, -- Cracked Water Globe
-				{ 12,  209677 }, -- Loop of Swift Currents
-			},
-		},
-		{ -- BFDGhamoora
-			name = AL["Ghamoo-ra"],
-			npcID = 201722,
-			Level = GetForVersion(25,23),
-			DisplayIDs = {{5027}},
-			[NORMAL_DIFF] = {
-				{ 1,  209436 }, -- Chipped Bite of Serra'kis
-				{ 2,  209830 }, -- Ironhide Arbalest
-				{ 3,  209418 }, -- Adamantine Tortoise Armor
-				{ 4,  209824 }, -- Shimmering Shoulderpads
-				{ 5,  209523 }, -- Shimmering Thresher Cape
-				{ 6,  209432 }, -- Ghamoo-ra's Cinch
-				{ 7,  209678 }, -- Mantle of the Thresher Slayer
-				{ 8,  209424 }, -- Shell Plate Barrier
-				{ 9,  209675 }, -- Clamweave Tunic
-				{ 10,  209524 }, -- Bindings of Serra'kis
-			},
-		},
-		{ -- BFDLadySarevess
-			name = AL["Lady Sarevess"],
-			npcID = 204068,
-			Level = GetForVersion(25,23),
-			DisplayIDs = {{4979}},
-			[NORMAL_DIFF] = {
-				{ 1,  209566 }, -- Leggings of the Faithful
-				{ 2,  211789 }, -- Artemis Cowl
-				{ 3,  211842 }, -- Rakkamar's Tattered Thinking Cap
-				{ 4,  209680 }, -- Waterproof Scarf
-				{ 5,  209525 }, -- Honed Darkwater Talwar
-				{ 6,  209565 }, -- Band of Deep Places
-				{ 7,  211843 }, -- Mask of Scorn
-				{ 8,  209563 }, -- Naga Heartrender
-				{ 9,  209564 }, -- Guardian's Trident
-				{ 10,  209527 }, -- Naga Battle Gauntlets
-				{ 11,  209822 }, -- Strength of Purpose
-				{ 12,  209679 }, -- Azshari Novice's Shoulderpads
-				{ 13,  209823 }, -- Signet of Beasts
-			},
-		},
-		{ -- BFDGelihast
-			name = AL["Gelihast"],
-			npcID = 204921,
-			Level = GetForVersion(26,24),
-			DisplayIDs = {{1773}},
-			[NORMAL_DIFF] = {
-				{ 1,  209569 }, -- Murloc Hide Kneeboots
-				{ 2,  209559 }, -- Twilight Sage's Walking Stick
-				{ 3,  209568 }, -- Algae Gauntlets
-				{ 4,  209820 }, -- Black Shroud Choker
-				{ 5,  209573 }, -- Wrathful Spire
-				{ 6,  209567 }, -- Coral Reef Axe
-				{ 7,  209571 }, -- Deadlight
-				{ 8,  209670 }, -- Skinwalkers
-				{ 9,  209570 }, -- Tome of Cavern Lore
-				{ 10,  209821 }, -- Ring of Shadowsight
-				{ 11,  209572 }, -- Black Boiled Leathers
-				{ 12,  209681 }, -- Black Murloc Egg
-				{ 13,  211491 }, -- Bottomless Murloc Skin Bag
-				{ 16,  211505 }, -- Twilight Avenger's Helm
-				{ 17,  211504 }, -- Twilight Avenger's Chain
-				{ 18,  211506 }, -- Twilight Avenger's Boots
-				{ 20,  211507 }, -- Twilight Elementalist's Cowl
-				{ 21,  211509 }, -- Twilight Elementalist's Robe
-				{ 22,  211508 }, -- Twilight Elementalist's Footpads
-				{ 24,  211510 }, -- Twilight Slayer's Cowl
-				{ 25,  211512 }, -- Twilight Slayer's Tunic 
-				{ 26,  211511 }, -- Twilight Slayer's Footpads
-				{ 28,  209683 }, -- Twilight Invoker's Shawl
-				{ 29,  209671 }, -- Twilight Invoker's Robes
-				{ 30,  209669 }, -- Twilight Invoker's Shoes
-			},
-		},
-		{ -- BFDOldSerrakis
-			name = AL["Lorgus Jett"],
-			npcID = 207356,
-			Level = GetForVersion(26,24),
-			DisplayIDs = {{1816}},
-			[NORMAL_DIFF] = {
-				{ 1,  209560 }, -- Hammer of Righteous Judgement
-				{ 2,  209576 }, -- Mind-Expanding Mushroom
-				{ 3,  209818 }, -- Sun-Touched Crescent
-				{ 4,  209581 }, -- Silver Hand Sabatons
-				{ 5,  209578 }, -- Glowing Leather Bands
-				{ 6,  209682 }, -- Sturdy Hood
-				{ 7,  209574 }, -- Discarded Tenets of the Silver Hand
-				{ 8,  209577 }, -- Fist of the Wild
-				{ 9,  209575 }, -- Carved Driftwood Icon
-				{ 10,  209579 }, -- Crashing Thunder
-				{ 16,  211505 }, -- Twilight Avenger's Helm
-				{ 17,  211504 }, -- Twilight Avenger's Chain
-				{ 18,  211506 }, -- Twilight Avenger's Boots
-				{ 20,  211507 }, -- Twilight Elementalist's Cowl
-				{ 21,  211509 }, -- Twilight Elementalist's Robe
-				{ 22,  211508 }, -- Twilight Elementalist's Footpads
-				{ 24,  211510 }, -- Twilight Slayer's Cowl
-				{ 25,  211512 }, -- Twilight Slayer's Tunic 
-				{ 26,  211511 }, -- Twilight Slayer's Footpads
-				{ 28,  209683 }, -- Twilight Invoker's Shawl
-				{ 29,  209671 }, -- Twilight Invoker's Robes
-				{ 30,  209669 }, -- Twilight Invoker's Shoes
-
-			},
-		},
-		{ -- BFDTwilightLordKelris
-			name = AL["Twilight Lord Kelris"],
-			npcID = 4832,
-			Level = GetForVersion(27,24),
-			DisplayIDs = {{4939}},
-			AtlasMapFile = {"CL_BlackfathomDeepsB", "CL_BlackfathomDeepsEnt"},
-			[NORMAL_DIFF] = {
-				{ 1,  209694 }, -- Blackfathom Ritual Dagger
-				{ 2,  209672 }, -- Black Fingerless Gloves
-				{ 3,  209686 }, -- Jagged Bone Necklace
-				{ 4,  209667 }, -- Gaze Dreamer Leggings
-				{ 5,  209668 }, -- Signet of the Twilight Lord
-				{ 6,  211455 }, -- Slick Fingerless Gloves
-				{ 7,  209817 }, -- Voidwalker Brooch
-				{ 8,  209674 }, -- Phoenix Ignition
-				{ 9,  211458 }, -- Tome of Shadow Warding
-				{ 10,  211457 }, -- Twilight Defender's Girdle
-				{ 11,  209673 }, -- Glowing Fetish Amulet
-				{ 12,  209816 }, -- Fetish of Mischief
-				{ 13,  209561 }, -- Rod of the Ancient Sleepwalker
-				{ 14,  211492 }, -- Kelris's Satchel
-				{ 16,  211505 }, -- Twilight Avenger's Helm
-				{ 17,  211504 }, -- Twilight Avenger's Chain
-				{ 18,  211506 }, -- Twilight Avenger's Boots
-				{ 20,  211507 }, -- Twilight Elementalist's Cowl
-				{ 21,  211509 }, -- Twilight Elementalist's Robe
-				{ 22,  211508 }, -- Twilight Elementalist's Footpads
-				{ 24,  211510 }, -- Twilight Slayer's Cowl
-				{ 25,  211512 }, -- Twilight Slayer's Tunic 
-				{ 26,  211511 }, -- Twilight Slayer's Footpads
-				{ 28,  209683 }, -- Twilight Invoker's Shawl
-				{ 29,  209671 }, -- Twilight Invoker's Robes
-				{ 30,  209669 }, -- Twilight Invoker's Shoes
-				
-			},
-		},
-		
-		{ -- BFDAkumai
-			name = AL["Aku'mai"],
-			npcID = 213334,
-			Level = GetForVersion(28,24),
-			DisplayIDs = {{2837}},
-			AtlasMapFile = {"CL_BlackfathomDeepsB", "CL_BlackfathomDeepsEnt"},
-			[NORMAL_DIFF] = {
-				{ 1,  209693 }, -- Perfect Blackfathom Pearl
-				{ 2,  211452 }, -- Perfect Blackfathom Pearl
-				{ 4,  209692 }, -- Sentinel Pauldrons
-				{ 5,  211456 }, -- Dagger of Willing Sacrifice
-				{ 6,  209685 }, -- Ancient Moss Cinch
-				{ 7,  209688 }, -- Bael Modan Blunderbuss
-				{ 8,  209687 }, -- Hydra Hide Cuirass
-				{ 9,  209690 }, -- Shadowscale Coif
-				{ 10,  209691 }, -- Vampiric Boot Knife
-				{ 11,  209580 }, -- Gusting Wind
-				{ 12,  209684 }, -- Soul Leech Pants
-				{ 13,  209689 }, -- Crabshell Waders
-				{ 14,  209534 }, -- Azshari Arbalest
-				{ 15,  209562 }, -- Deadly Strike of the Hydra
-				{ 16,  211505 }, -- Twilight Avenger's Helm
-				{ 17,  211504 }, -- Twilight Avenger's Chain
-				{ 18,  211506 }, -- Twilight Avenger's Boots
-				{ 20,  211507 }, -- Twilight Elementalist's Cowl
-				{ 21,  211509 }, -- Twilight Elementalist's Robe
-				{ 22,  211508 }, -- Twilight Elementalist's Footpads
-				{ 24,  211510 }, -- Twilight Slayer's Cowl
-				{ 25,  211512 }, -- Twilight Slayer's Tunic 
-				{ 26,  211511 }, -- Twilight Slayer's Footpads
-				{ 28,  209683 }, -- Twilight Invoker's Shawl
-				{ 29,  209671 }, -- Twilight Invoker's Robes
-				{ 30,  209669 }, -- Twilight Invoker's Shoes
-			},
-		},
-		{ -- BFDTrash
-			name = AL["Trash"],
-			ExtraList = true,
-			[NORMAL_DIFF] = {
-				{ 1,  1486 }, -- Tree Bark Jacket
-				{ 2,  3416 }, -- Martyr's Chain
-				{ 3,  1491 }, -- Ring of Precision
-				{ 4,  3414 }, -- Crested Scepter
-				{ 5,  1454 }, -- Axe of the Enforcer
-				{ 6,  1481 }, -- Grimclaw
-				{ 7,  2567 }, -- Evocator's Blade
-				{ 8,  3413 }, -- Doomspike
-				{ 9,  3417 }, -- Onyx Claymore
-				{ 10, 3415 }, -- Staff of the Friar
-				{ 11, 2271 }, -- Staff of the Blessed Seer
-			},
-		},
 	},
 }

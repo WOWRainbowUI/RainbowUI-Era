@@ -16,6 +16,14 @@ local RECIPE_PROF_TEXT = Profession.PROFESSION_TEXT
 local RECIPE, RECIPE_DATA = AtlasLoot:GetGameVersionDataTable()
 RECIPE_DATA.CLASSIC = {
 	-- [itemID] = { profession, profRank, creationSpell }
+	-- SoD
+	[210779] = {2,150,427063}, -- Pattern: Mantle of the Second War
+	[211247] = {8,125,428425}, -- Pattern: Phoenix Bindings
+	[211846] = {2,100,430397}, -- Plans: Blackfathom Sharpening Stone
+	[211849] = {10,100,430409}, -- Formula: Blackfathom Mana Oil
+	[210709] = {10,90,426607}, -- Recipe: Elixir of Coalesced Regret
+	[210178] = {9,135,424641}, -- Schematic: Shredder Autosalvage Unit
+	--Classic
 	[728] = {6,75,2543}, -- Recipe: Westfall Stew
 	[1251] = {1,1,746}, -- Linen Bandage
 	[2404] = {3,30,2156}, -- Deprecated Pattern: Light Winter Cloak
@@ -957,9 +965,7 @@ RECIPE_DATA.CLASSIC = {
 	[210779] = {2,150,427063}, -- Plans: Mantle of the Second War
 	[211849] = {10,100,430409}, -- Formula: Blackfathom Mana Oil
 	[210178] = {9,135,424641}, -- Schematic: Shredder Autosalvage Unit
-	[211247] = {8,125,428424}, -- Pattern: Phoenix Bindings
-	[215369] = {8,125,435841}, -- Pattern: Invoker's Cord
-	[215370] = {8,125,435848}, -- Pattern: Invoker's Mantle
+	[211247] = {8,125,428425}, -- Pattern: Phoenix Bindings
 }
 
 if AtlasLoot:GameVersion_GE(AtlasLoot.BC_VERSION_NUM) then

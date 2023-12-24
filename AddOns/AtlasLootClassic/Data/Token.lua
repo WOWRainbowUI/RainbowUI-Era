@@ -44,6 +44,12 @@ TOKEN_DATA.CLASSIC = {
 	-- [itemID] = { itemID or {itemID, count} }
 	-- optional: type=0 		-	select the desc from the TOKEN_TYPE_TEXT table
 	-- optional: itemID == 0 	-	creates a new line
+	
+	-- Season of Discovery - BFD
+	[211452] = { 211451, 211450, 211449, type = 3 }, -- Perfect Blackfathom Pearl
+	[211454] = { 16886, 16887, type = 3 }, --Strange Water Globe (Horde)
+	--[211818] = {type = 4 }, --Strange Water Globe (Alliance)
+	
 	-- Dire Maul books
 	[18401] = { 18348 },	-- Foror's Compendium of Dragon Slaying
 	[18362] = { 18469, type = "PRIEST" },	-- Holy Bologna: What the Light Won't Tell You
@@ -1049,8 +1055,8 @@ function Token.GetClassItemsForToken(tokenItemID, className)
 end
 
 -- TOKEN_TYPE_ADD_ITEM_DESCRIPTION
---[==[@debug@
+--@debug@
 function Token.GetFullTokenTable()
 	return TOKEN
 end
---@end-debug@]==]
+--@end-debug@

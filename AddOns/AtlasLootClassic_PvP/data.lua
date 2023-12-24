@@ -155,7 +155,6 @@ data["AlteracValley"] = {
 				{ 10, 19321 }, -- The Immovable Object
 				{ 11, 19324 }, -- The Lobotomizer
 				{ 12, 19323 }, -- The Unstoppable Force
-
 				{ 17,  19030 }, -- Stormpike Battle Charger
 			},
 			[HORDE_DIFF] = {
