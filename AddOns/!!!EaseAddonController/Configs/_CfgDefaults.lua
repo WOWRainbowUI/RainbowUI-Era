@@ -2,11 +2,26 @@ local _, U1 = ...
 
 local D = {}
 U1.CfgDefaults = D
-D["!!!SharedMedia"] = { 
+D["!!!gmFonts"] = {
 	defaultEnable = 1,
-	tags = { "MISC" },
-	title = "遊戲預設字體",
-	desc = "載入時會自動將遊戲預設的系統、聊天和傷害數字，更改為字體材質包中的字體。``每個插件仍可分別設定字體，不受影響。``要使用自己的字體，請看問與答`https://addons.miliui.com/wow/rainbowui#q157 ``|cffFF2D2D關閉此插件和 '遊戲介面字體' 插件便可以換回遊戲原本的字體。|r`",
+	tags = { "MISC" }, 
+	title = "遊戲字體",
+	desc = "載入時會自動將遊戲預設的系統、聊天、提示說明和傷害數字，更改為字體材質包中的字體。``可以在設定選項中調整視窗介面文字的字體和大小，其他地方的文字則是在每個插件中分別設定。例如聊天文字在 '聊天視窗美化' 插件設定、玩家和怪頭上的名字在 '威力血條' 設定...等等。``要使用自己的字體，請看問與答`https://addons.miliui.com/wow/rainbowui#q157 ``關閉此插件便可以換回遊戲原本的字體。`",
+	modifier = "彩虹ui",
+    {
+        text = "設定選項",
+        callback = function(cfg, v, loading) 
+			Settings.OpenToCategory("字體")
+		end,
+    },
+	{
+		type = "text",
+		text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",
+	},
+	{
+		type = "text",
+		text = "|cffFF2D2D特別注意：請不要選擇英文字體，會無法顯示中文字。|r",
+	},
 };
 D["!BugGrabber"] = { 
 	defaultEnable = 1,
@@ -1131,19 +1146,6 @@ D["Glass"] = {
 		type = "text",
 		text = "移動聊天視窗：右鍵點一下 '綜合' 標籤頁 > 解鎖視窗。\n\n聊天視窗大小：在設定選項中更改寬度和高度的數值。\n\n聊天文字大小：在設定選項 > 聊天內容，更改文字大小。\n\n複製聊天內容：按住 Ctrl 鍵點一下要複製的聊天視窗標籤頁，便可在新開的小視窗中拖曳滑鼠來選取文字，按 Ctrl+C 複製，然後按 Ctrl+V 貼上文字。\n\n複製聊天內容需要啟用 '功能百寶箱' 插件裡面的 '聊天功能 > 聊天視窗 > 最近聊天視窗' 選項。\n",
 	},
-};
-D["gmFonts"] = {
-	defaultEnable = 1,
-	tags = { "MISC" }, 
-	title = "遊戲介面字體",
-	desc = "更改整體遊戲介面預設的字體和大小。``只影響遊戲視窗和介面文字的字體和大小，每個插件仍可分別設定。``|cffFF2D2D特別注意：請不要選擇純英文字體，會無法顯示中文字。`",
-	modifier = "彩虹ui",
-    {
-        text = "設定選項",
-        callback = function(cfg, v, loading) 
-			Settings.OpenToCategory("字體")
-		end,
-    },
 };
 D["GTFO"] = {
 	defaultEnable = 1,
