@@ -30,7 +30,7 @@ function QuestieOptions:Initialize()
     coroutine.yield()
 
     LibStub("AceConfig-3.0"):RegisterOptionsTable("Questie", optionsTable)
-    AceConfigDialog:AddToBlizOptions("Questie", "Questie");
+    AceConfigDialog:AddToBlizOptions("Questie", l10n("Questie"));
 
     coroutine.yield()
 
@@ -137,7 +137,7 @@ _CreateOptionsTable = function()
     local advanced_tab = QuestieOptions.tabs.advanced:Initialize()
     coroutine.yield()
     return {
-        name = "Questie",
+        name = l10n("Questie Title"),
         handler = Questie,
         type = "group",
         childGroups = "tab",

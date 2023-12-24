@@ -274,10 +274,7 @@ function QuestieDebugOffer.LootWindow()
         local itemLink = GetLootSlotLink(i)
         local itemID = 0
         if itemLink then
-            local itemIdFromLink = GetItemInfoFromHyperlink(itemLink)
-            if itemIdFromLink then
-                itemID = itemIdFromLink
-            end
+            itemID = GetItemInfoFromHyperlink(itemLink)
         end
 
         local tripCode = filterItem(itemID, itemInfo, debugContainer)

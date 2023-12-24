@@ -417,7 +417,7 @@ _GetLanguages = function()
         ['deDE'] = 'Deutsch',
         ['ruRU'] = 'Русский',
         ['zhCN'] = '简体中文',
-        ['zhTW'] = '正體中文',
+        ['zhTW'] = '繁體中文',
         ['koKR'] = '한국어',
     }
     if QUESTIE_LOCALES_OVERRIDE ~= nil then

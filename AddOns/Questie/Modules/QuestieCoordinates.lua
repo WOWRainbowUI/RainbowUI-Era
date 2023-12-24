@@ -75,9 +75,9 @@ function QuestieCoords:WriteCoords()
         curY = (top - curY) / height * 100;
         local precision = "%.".. Questie.db.profile.mapCoordinatePrecision .."f";
 
-        local worldmapCoordsText = "Cursor: "..format(precision.. " X, ".. precision .." Y  ", curX, curY);
+        local worldmapCoordsText = "游標: "..format(precision.. " X, ".. precision .." Y  ", curX, curY);
 
-        worldmapCoordsText = worldmapCoordsText.."|  Player: "..format(precision.. " X , ".. precision .." Y", posX, posY);
+        worldmapCoordsText = worldmapCoordsText.."|  玩家: "..format(precision.. " X , ".. precision .." Y", posX, posY);
         -- Add text to world map
         mapTitleText:SetText(worldmapCoordsText)
     end

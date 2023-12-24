@@ -86,9 +86,9 @@ local minimapIconLocales = {
         ["esES"] = "Misión trivial",
         ["frFR"] = "Quêtes de bas niveau",
     },
-    ["Questie will open after combat ends."] = {
+	["Questie will open after combat ends."] = {
         ["ptBR"] = false,
-        ["ruRU"] = "Questie откроется по завершении боя.",
+        ["ruRU"] = false,
         ["deDE"] = false,
         ["koKR"] = false,
         ["esMX"] = "Questie abrirá cuando estés fuera de combate.",
