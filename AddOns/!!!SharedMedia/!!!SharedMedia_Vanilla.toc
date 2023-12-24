@@ -1,0 +1,21 @@
+## Interface: 11500
+## Title: SharedMedia
+## Notes: Inserts some media into LibSharedMedia's storage.
+## Version: 3.1.1-199
+## Author: Elkano
+## X-Category: Miscellaneous
+
+## X-Revision: 199
+## X-Date: 2023-01-05T13:30:01Z
+
+## OptionalDeps: LibStub, LibSharedMedia-3.0
+
+## Title-zhTW: |cffffffee[系統]|r 遊戲預設字體
+## Notes-zhTW: gmFonts |n|n更改遊戲預設的系統、聊天和傷害數字字體。
+## X-Category-zhTW: 進階
+
+#@no-lib-strip@
+embeds.xml
+#@end-no-lib-strip@
+
+SharedMedia.lua
