@@ -1,5 +1,5 @@
-### Changes in 100105.109-Release:
+### Changes in 100200.110-Release:
 
-- Changed: Update Interface version (retail)
-- Fixed: Not working with items in the reagent bag
+- Changed: Update Interface versions
+- Changed: Updated item databases
 
