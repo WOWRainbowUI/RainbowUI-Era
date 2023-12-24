@@ -866,8 +866,6 @@ D["EasyFrames"] = {
         text = "設定選項",
 		callback = function(cfg, v, loading) 
 			SlashCmdList["ACECONSOLE_EASYFRAMES"]("")
-			-- InterfaceOptionsFrame_OpenToCategory("隊伍")
-			-- InterfaceOptionsFrame_OpenToCategory("頭像-美化")
 		end,
     },
 	{
@@ -895,7 +893,7 @@ D["Engraver"] = {
 	modifier = "彩虹ui",
 	{
 		type = "text",
-        text = "設定選項: 右鍵點一鍵符文框架的標籤頁，或是從 Esc > 選項 > 插件 > 符文。",       
+        text = "套用符文: 點一下符文圖示。\n\n移動面板: 左鍵拖曳標籤頁，或右鍵拖曳符文圖示。\n\n設定選項: 右鍵點標籤頁，或是從 Esc > 選項 > 插件 > 符文。",       
 	},
 };
 D["EnableEquipmentSelect"] = {
