@@ -411,7 +411,6 @@ L["Vertical Groups"] = "垂直隊伍"
 L["Visibility"] = "顯示"
 L["Weak Purple Glow"] = "淡紫色發光"
 L["You must manually enable either the 'Party Frames' or 'Raid Frames' in Blizzard's 'HUD Edit Mode'."] = "必須在遊戲內建的 '編輯模式' 中手動啟用 '隊伍框架' 或 '團隊框架'。"
-L["Icon ID (Optional)"] = "圖示 ID (選擇性)"
 
 
 -- 自行加入

@@ -295,7 +295,7 @@ local unitFrameData = {
 	},
 }
 
-local customUF = { optionTable = { auto = L["Auto"], blizz = L["Blizzard"] }, enabledList = false }
+local customUF = { optionTable = { auto = L["Auto"], blizz = "Blizzard" }, enabledList = false }
 
 function E:SetActiveUnitFrameData()
 	if customUF.enabledList then
