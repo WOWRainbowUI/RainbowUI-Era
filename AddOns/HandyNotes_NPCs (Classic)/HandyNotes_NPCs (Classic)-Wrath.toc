@@ -1,0 +1,32 @@
+## Interface: 30403
+## Title: HandyNotes: NPCs (Classic)
+## Version: 1.33c
+## Notes: Shows locations of various npcs
+## Author: Cali
+## X-Curse-Project-ID: 340222
+## X-WoWI-ID: 25295
+## RequiredDeps: HandyNotes
+## OptionalDeps: LibStub, !LibUIDropDownMenu
+## SavedVariables: HandyNotes_NPCsClassicDB
+
+## Title-zhTW: |cff4DFF4D[地圖]|r 地圖標記-NPC
+## Notes-zhTW: HandyNotes: NPCs (Classic) |n|n在地圖上顯示經典時期 NPC 的位置。
+## X-Category-zhTW: 地圖
+## DefaultState: disabled
+
+libs\wrath\AceHook-3.0\AceHook-3.0.lua
+libs\wrath\LibUIDropDownMenu\LibUIDropDownMenu.xml
+libs\wrath\LibDataBroker-1.1\LibDataBroker-1.1.lua
+libs\wrath\LibDBIcon-1.0\LibDBIcon-1.0.lua
+libs\wrath\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
+libs\wrath\AceGUI-3.0-SharedMediaWidgets\widget.xml
+libs\wrath\LibQTip-1.0\LibQTip-1.0.lua
+locales\wrath\Locales.xml
+wrath\data.lua
+wrath\vendorData.lua
+wrath\itemData.lua
+wrath\weaponskills.lua
+wrath\HandyNotes_NPCs (Classic).lua
+wrath\options.lua
+wrath\search.lua
+wrath\altrecipes.lua
