@@ -1993,7 +1993,7 @@ D["SexyMap"] = {
 };
 D["SharedMedia"] = {
     defaultEnable = 1,
-	title = "共享媒體庫 (舊版)",
+	title = "(請刪除) 共享媒體庫",
 	desc = "這個插件已改名為 '彩虹字體材質包'，資料夾名稱也不同。``請刪除舊的資料夾 (AddOns 裡面的 SharedMedia) 以避免發生衝突。`",
 };
 D["SharedMedia_Rainbow"] = {
@@ -2329,6 +2329,19 @@ D["TinyChat"] = {
 	},
 };
 D["MerInspect"] = {
+    defaultEnable = 0,
+	tags = { "ITEM" },
+	title = "(請刪除) 裝備觀察",
+	desc = "這是舊的插件，已改用另一個裝備觀察插件。``請刪除舊的資料夾 (AddOns 裡面的 MerInspect) 以避免發生衝突。`",
+	modifier = "彩虹ui",
+	-- --icon = "Interface\\Icons\\inv_helmet_leather_raiddruid_q_01",
+	img = true,
+	{
+        text = "設定選項",
+        callback = function(cfg, v, loading) SlashCmdList["MerInspect"]("") end,
+    },
+};
+D["MerInspect-classic-era"] = {
     defaultEnable = 1,
 	tags = { "ITEM" },
 	title = "裝備觀察",
@@ -2351,7 +2364,7 @@ D["TinyInspect-Reforged"] = {
     defaultEnable = 0,
 	tags = { "ITEM" },
 	title = "(請刪除) 裝備觀察",
-	desc = "這是舊的插件，已改用另一個裝備觀察插件。``請刪除 AddOns 裡面的 TinyInspect-Reforged 資料夾。",
+	desc = "這是舊的插件，已改用另一個裝備觀察插件。``請刪除舊的資料夾 (AddOns 裡面的 TinyInspect-Reforged) 以避免發生衝突。",
 };
 D["TinyTooltip"] = {
     defaultEnable = 0,
