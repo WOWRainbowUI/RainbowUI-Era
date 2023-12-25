@@ -1,5 +1,5 @@
 <Bindings>
-  <Binding name="Open/Close LFGBulletinBoard" description="Opens/Closes LFGBulletinBoard Window" header="LFGBulletinBoardBinding" category="ADDONS">
+  <Binding name="打開/關閉組隊佈告欄" description="Opens/Closes LFGBulletinBoard Window" header="LFGBulletinBoardBinding" category="ADDONS">
     GroupBulletinBoard_Addon:ToggleWindow()
   </Binding>
 </Bindings>
