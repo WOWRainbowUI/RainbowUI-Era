@@ -266,10 +266,8 @@ L["Sold amount"] = "售出數量"
 L["SORTASC"] = "配方清單從最高 (頂部) 到最低 (底部) 遞減排序"
 L["SORTDESC"] = "配方清單從最低 (頂部) 到最高 (底部) 遞增排序"
 L["Sorting"] = "排序"
---[[Translation missing --]]
-L["SOUNDONEMPTYQUEUEDESC"] = "Play a sound when the queue is empty"
---[[Translation missing --]]
-L["SOUNDONEMPTYQUEUENAME"] = "Sound on Empty Queue"
+L["SOUNDONEMPTYQUEUEDESC"] = "排程全部完成時播放音效"
+L["SOUNDONEMPTYQUEUENAME"] = "排程完成音效"
 L["Source:"] = "來源:"
 L["STANDBYDESC"] = "切換待命模式開啟/關閉"
 L["STANDBYNAME"] = "待命"
