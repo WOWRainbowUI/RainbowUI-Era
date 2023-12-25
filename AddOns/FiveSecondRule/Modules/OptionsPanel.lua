@@ -16,34 +16,13 @@ OptionsPanelFrame:RegisterEvent("PLAYER_LOGIN")
 OptionsPanelFrame:SetScript("OnEvent",
     function(self, event, arg1, ...)
         if event == "PLAYER_LOGIN" then
-            -- print("player logged in")
             if not OptionsPanelFrame.optionsPanel then
                 OptionsPanelFrame.optionsPanel = OptionsPanelFrame:CreateGUI(ADDON_NAME, "5 秒回魔監控")
                 InterfaceOptions_AddCategory(OptionsPanelFrame.optionsPanel);
             end
-            InterfaceOptionsFrame:HookScript('OnShow', function(self)
-                self:SetScript('OnShow', nil)
-
-                -- print("show options")
-
-
-                if not OptionsPanelFrame.optionsPanel then
-                    OptionsPanelFrame.optionsPanel = OptionsPanelFrame:CreateGUI(ADDON_NAME, "5 秒回魔監控")
-                    InterfaceOptions_AddCategory(OptionsPanelFrame.optionsPanel);
-                end
-            end)
         end
     end
 );
-
-function FSR_OptionsPanelFrame_OnLoad(self)
-    -- print("show options")
-
-    if not OptionsPanelFrame.optionsPanel then
-        OptionsPanelFrame.optionsPanel = OptionsPanelFrame:CreateGUI(ADDON_NAME, "5 秒回魔監控")
-        InterfaceOptions_AddCategory(OptionsPanelFrame.optionsPanel);
-    end
-  end
 
 -- LOADING VALUES
 

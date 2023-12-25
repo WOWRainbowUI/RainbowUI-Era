@@ -48,9 +48,6 @@ do -- Private Scope
 
         TickBar:LoadSpells() -- LOCALIZATION
         FiveSecondRule:Refresh()
-
-        -- PrintHelp()
-
     end
 
     function IsWOTLK()
@@ -84,6 +81,7 @@ do -- Private Scope
     function onEvent(self, event, arg1, ...)
         if (select(2, UnitClass("player")) == "WARRIOR") then
             -- Disable the addon for warriors, since there is no reliable power or life to track in order to show power ticks.
+            print("5秒回魔監控已停用!")
             DisableAddon()
             return
         end
@@ -203,11 +201,6 @@ do -- Private Scope
         Init()
     end
 
-    function PrintHelp()
-        local colorHex = "2979ff"
-        print("|cff"..colorHex.."5 秒回魔監控已載入 - 指令為: /fsr")
-    end
-
     function PrintNotSupported()
         local colorHex = "ed2d2d"
         print("|cff"..colorHex.."5 秒回魔監控不支援這個遊戲版本")
@@ -219,7 +212,6 @@ do -- Private Scope
     FiveSecondRule.Unlock = Unlock
     FiveSecondRule.Lock = Lock
     FiveSecondRule.Reset = Reset
-    FiveSecondRule.PrintHelp = PrintHelp
     FiveSecondRule.Refresh = Refresh
     FiveSecondRule.GetPower = GetPower
     FiveSecondRule.GetPowerMax = GetPowerMax
