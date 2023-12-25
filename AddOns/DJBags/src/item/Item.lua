@@ -32,9 +32,9 @@ local function InitItem(self, bag, slot)
     self.quest = _G[self:GetName() .. "IconQuestTexture"]
     self.cooldown = _G[self:GetName() .. "Cooldown"]
     self.itemLevel = self:CreateFontString(self:GetName() .. 'ItemLevel', 'ARTWORK')
-	self.itemLevel:SetFont(STANDARD_TEXT_FONT, 14, "OUTLINE")
-	self.itemLevel:SetPoint('BOTTOMRIGHT', -2, 2)
-	self.Count:SetFont(STANDARD_TEXT_FONT, 14, "OUTLINE")
+	self.itemLevel:SetFont(STANDARD_TEXT_FONT, 12, "THICKOUTLINE")
+	self.itemLevel:SetPoint('TOP', 0, -2)
+	self.Count:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 
     if MSQ then
         local myGroup = MSQ:Group(ADDON_NAME)
