@@ -1,6 +1,6 @@
 ## Interface: 11500
 ## Author: Peter Getov
-## Version: 3.8.6
+## Version: 3.8.7
 ## Title: |cff00aeffCharacterStatsClassic|r
 ## Notes: Advanced Character Stats
 ## Title-zhTW: |cff0099FF[介面]|r 角色視窗詳細屬性
