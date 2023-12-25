@@ -41,8 +41,8 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     end
 
     local timerSlider = SpellActivationOverlayOptionsPanelSpellAlertTimerSlider;
-    timerSlider.Text:SetText("Spell Alert Progressive Timer");
-    _G[timerSlider:GetName().."Low"]:SetText(DISABLE);
+    timerSlider.Text:SetText("法術警告漸進計時");
+    _G[timerSlider:GetName().."Low"]:SetText(CLOSE);
     _G[timerSlider:GetName().."High"]:SetText(ENABLE);
     timerSlider:SetMinMaxValues(0, 1);
     timerSlider:SetValueStep(1);
