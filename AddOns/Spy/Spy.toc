@@ -1,6 +1,6 @@
 ﻿## Interface: 11500
 ## Title: Spy
-## Version: 1.2.5
+## Version: 1.2.6
 ## Notes: Detects and alerts you to the presence of nearby enemy players.
 ## Notes-zhCN: 检测并提醒您附近有敌方玩家。
 ## Title-zhTW: |cffFF0000[PvP]|r 偵測敵方玩家
