@@ -1,6 +1,7 @@
 ## Title: Easy Frames
 ## Interface: 11500
 ## Notes: Make your unit frames colored and glorious.
+## Version: 1.4.0-classic
 ## Author: Usoltsev
 ## SavedVariables: EasyFramesDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0
