@@ -1,9 +1,6 @@
 local addonName, addon = ...
 local E = addon:Eve()
 local _G = _G
-
-local GetCVarInfo = C_CVar.GetCVarInfo or GetCVarInfo -- 暫時修正
-
 local _SetCVar = SetCVar -- Keep a local copy of SetCVar so we don't call the hooked version
 local SetCVar = function(...) -- Suppress errors trying to set read-only cvars
 	-- Not ideal, but the api doesn't give us this information
@@ -12,7 +9,6 @@ local SetCVar = function(...) -- Suppress errors trying to set read-only cvars
 end
 
 local GetCVarInfo = addon.GetCVarInfo
-
 local function IsClassic()
     return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 end
