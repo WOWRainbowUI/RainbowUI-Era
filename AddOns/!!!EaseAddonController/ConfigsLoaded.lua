@@ -19,12 +19,14 @@ function U1ConfigsLoaded()
     wipe(U1.CURSE_TAGS) U1.CURSE_TAGS = nil
     wipe(U1.CurseAddOns) U1.CurseAddOns = nil
 
-    for name, reg in pairs(U1.CfgDefaults) do
-        if addonInfo[name:lower()] then
-            U1RegisterAddon(name, reg)
-        end
-    end
-    wipe(U1.CfgDefaults) U1.CfgDefaults = nil
+    if U1.CfgDefaults then -- 檢查有沒有預設設定檔
+		for name, reg in pairs(U1.CfgDefaults) do
+			if addonInfo[name:lower()] then
+				U1RegisterAddon(name, reg)
+			end
+		end
+		wipe(U1.CfgDefaults) U1.CfgDefaults = nil
+	end
 
     --- register addons with X-Category if UI163_USE_X_CATEGORIES = true
     for k,v in pairs(addonInfo) do
@@ -66,7 +68,7 @@ function U1ConfigsLoaded()
         -- we may hide some parent addons and load when their children is loaded.
         -- we register these addons by {hide=1,lod=1,protected=nil,} and Disable here to prevent Blizzard from loading them.
         if (v.lod and not v.realLOD) then
-            DisableAddOn(k)
+            EacDisableAddOn(k)
         end
 
         -- if parent addon is hidden, then set parent to nil and add parent in deps

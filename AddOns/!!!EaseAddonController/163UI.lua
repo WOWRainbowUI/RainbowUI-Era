@@ -23,10 +23,6 @@ CoreAddEvent("ADDON_SELECTED")
 CoreAddEvent("DB_LOADED")
 CoreAddEvent("INIT_COMPLETED")
 
--- BINDINGs labels
-BINDING_HEADER_EAC = L["Ease Addon Controller"]
-BINDING_NAME_RELOADUI = RELOADUI
-
 local defaultDB = {
     selectedTag = UI163_USER_MODE and "ALL" or "NETEASE",
     showOrigin = nil,               -- show addon directory name
@@ -83,6 +79,7 @@ local function getInitialAddonInfo()
             realDeps = realDeps,
             realOptDeps = realOptDeps,
             desc = notes,
+			icon = GetAddOnMetadata(i, "IconTexture"),
 
             installed = i,
             realLOD = IsAddOnLoadOnDemand(i),
@@ -998,7 +995,7 @@ function U1LoadAddOnBackend(name)
     if ii.conflicts then
         for _, other in ipairs(ii.conflicts) do
             if IsAddOnLoaded(other) then
-                DisableAddOn(name)
+                EacDisableAddOn(name)
                 return false, "Cannot be loaded together with -"..U1GetAddonTitle(other)
             end
         end
@@ -1017,7 +1014,7 @@ function U1LoadAddOnBackend(name)
         if type(deps) == "string" then deps = { deps }; end
         for _, dep in ipairs(deps) do
             if not IsAddOnLoaded(dep) and not loadPath[dep] then
-                if GetAddOnEnableState(U1PlayerName, dep) < 2 then EnableAddOn(dep) end
+                if GetAddOnEnableState(U1PlayerName, dep) < 2 then EacEnableAddOn(dep) end
                 local loaded = U1LoadAddOnBackend(dep);
                 if (not loaded) then
                     U1OutputAddonState(format(L["%%s load failed, error loading dependency [%s]"], dep), ii.name, true);
@@ -1038,7 +1035,7 @@ function U1LoadAddOnBackend(name)
     end
 
     --- childrens are not loaded here, they are load in ToggleAddon
-    if GetAddOnEnableState(U1PlayerName, name) < 2 then EnableAddOn(name) end
+    if GetAddOnEnableState(U1PlayerName, name) < 2 then EacEnableAddOn(name) end
 
     -- print("before", name, GetTime())
     capturing = name
@@ -1091,7 +1088,7 @@ function U1ToggleAddon(name, enabled, noset, deepToggleChildren, bundleSim)
 
     if not noset then
         db.addons[name] = enabled and 1 or 0;
-        if(enabled)then EnableAddOn(name); else DisableAddOn(name) end
+        if(enabled)then EacEnableAddOn(name); else EacDisableAddOn(name) end
     end
 
     if(IsAddOnLoaded(name)) then
@@ -1189,7 +1186,7 @@ do
     local funcOpenCategory = function(cfg, v, loading)
         local func = CoreIOF_OTC or InterfaceOptionsFrame_OpenToCategory
         func(gotOptionCategory[cfg._path])
-        if not InterfaceOptionsFrameAddOns:IsVisible() then
+        if not SettingsPanel.CategoryList:IsVisible() then -- 10.0 fix
             func(gotOptionCategory[cfg._path])
         end
     end
@@ -1255,7 +1252,7 @@ local function processDefaultEnable()
         if info.protected then
             db.addons[name] = 1
             if not info.originEnabled and not info.parent then
-                EnableAddOn(name)
+                EacEnableAddOn(name)
                 info.originEnabled = true
             end
         end
@@ -1272,9 +1269,9 @@ local function processDefaultEnable()
                 enabled = info.defaultEnable
                 if not info.lod and info.registered then
                     if not enabled and info.originEnabled then
-                        DisableAddOn(name)
+                        EacDisableAddOn(name)
                     elseif enabled and not info.originEnabled then
-                        EnableAddOn(name)
+                        EacEnableAddOn(name)
                     end
                 end
             else
@@ -1329,7 +1326,7 @@ function U1:ADDON_LOADED(event, name)
 		for name,info in pairs(addonInfo) do
 	        if(db.addons[name]==1) then
         	    if info.realLOD or info.protected then
-            	    EnableAddOn(name)
+            	    EacEnableAddOn(name)
 	            end
     	    end
 		end
@@ -1345,8 +1342,8 @@ function U1:ADDON_LOADED(event, name)
             end
             U1UpdateTags("LOADED", name)
         end
-        hooksecurefunc("EnableAddOn",  function(name) saveState(name, 1) end)
-        hooksecurefunc("DisableAddOn", function(name) saveState(name, 0) end)
+        hooksecurefunc(C_AddOns, "EnableAddOn",  function(name) saveState(name, 1) end)
+        hooksecurefunc(C_AddOns, "DisableAddOn", function(name) saveState(name, 0) end)
         CoreFireEvent("DB_LOADED");
         CoreCall("U1_CreateMinimapButton"); --must called after U1DB
 		-- EnableOrLoadDependencies
@@ -1395,7 +1392,7 @@ local function EnableOrLoad(name, info, realDeps, realOpts, loaded)
     if realDeps and tContains(realDeps, name) or realOpts and tContains(realOpts, name) then
         EnableOrLoadDependencies(name, info, loaded)
         --print("Real Enable", name)
-        EnableAddOn(name)
+        EacEnableAddOn(name)
     else
         --print("Real Load", name)
         U1LoadAddOn(name)

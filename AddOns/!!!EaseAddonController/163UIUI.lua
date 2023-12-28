@@ -204,11 +204,11 @@ function UUI.ClickAddonCheckBox(self, name, enable, subgroup)
         local other_loaded = false
         for _, other in ipairs(info.conflicts or _empty_table) do
             if IsAddOnLoaded(other) then
-                DisableAddOn(other)
+                EacDisableAddOn(other)
                 other_loaded = true
             end
         end
-        if other_loaded then EnableAddOn(name) return ReloadUI() end
+        if other_loaded then EacEnableAddOn(name) return ReloadUI() end
     end
 
     local needReload = U1ToggleAddon(name, enable, nil, deepToggleChildren);
@@ -222,7 +222,7 @@ end
 function UUI.SizeFitCols()
     local main = UUI();
     main:SetWidth(UUI.CalcWidth(main.center.cols));
-	local maxRows = math.floor((GetScreenHeight() - 50 - UUI.TOP_HEIGHT - 105) / (UUI.BUTTON_H + UUI.BUTTON_OFFSET))
+    local maxRows = math.floor((GetScreenHeight() - 50 - UUI.TOP_HEIGHT - 105) / (UUI.BUTTON_H + UUI.BUTTON_OFFSET))
     main:SetResizeBounds(UUI.CalcWidth(1), UUI.TOP_HEIGHT + (UUI.BUTTON_H + UUI.BUTTON_OFFSET)*3 + 110, UUI.CalcWidth(UUI.MAX_COL), UUI.TOP_HEIGHT + (UUI.BUTTON_H + UUI.BUTTON_OFFSET) * maxRows + 105)
 end
 function UUI.CalcWidth(cols)

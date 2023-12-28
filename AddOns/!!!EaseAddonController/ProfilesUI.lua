@@ -98,11 +98,11 @@ f.TitleText:SetText(L["Ease Addon Controller Profiles"])
 f.InsetBg:SetPoint("TOPLEFT", 4, -50)
 CoreUIMakeMovable(f)
 
-f:Button("$parentTab1", "TabButtonTemplate", "tab1"):BL(f.InsetBg, "TOPLEFT", 5, 0):SetText(L["Saved"]):SetID(1)
+f:Button("$parentTab1", "PanelTopTabButtonTemplate", "tab1"):BL(f.InsetBg, "TOPLEFT", 5, 0):SetText(L["Saved"]):SetID(1)
 :SetScript("OnClick", tabOnClick)
 PanelTemplates_TabResize(f.tab1, -10)
 
-f:Button("$parentTab2", "TabButtonTemplate", "tab2"):LEFT(f.tab1, "RIGHT", 0, 0):SetText(L["Auto"]):SetID(2)
+f:Button("$parentTab2", "PanelTopTabButtonTemplate", "tab2"):LEFT(f.tab1, "RIGHT", 0, 0):SetText(L["Auto"]):SetID(2)
 :SetScript("OnClick", tabOnClick)
 CoreUIEnableTooltip(f.tab2, "", L["EAC will automatically save profiles before logout, after login, or loading another profile."])
 PanelTemplates_TabResize(f.tab2, -10)
