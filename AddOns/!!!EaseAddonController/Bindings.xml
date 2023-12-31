@@ -1,5 +1,5 @@
 <Bindings>
-	<Binding name="RELOADUI" description="Reloads the UI." header="EAC" category="ADDONS">
+	<Binding name="EAC_RELOADUI" description="Reloads the UI." header="EAC" category="ADDONS">
 		ReloadUI()
 	</Binding>
 </Bindings>
