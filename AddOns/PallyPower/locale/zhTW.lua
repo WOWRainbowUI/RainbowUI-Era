@@ -18,7 +18,7 @@ L["[Enable/Disable] The Auto Buff Button"] = "[開啟/關閉] 自動增益按鈕
 L["[Enable/Disable] The Drag Handle"] = "[開啟/關閉] 拖曳定位點。"
 L["[Enable/Disable] The Seal Button"] = "[啟用/停用] 聖印按鈕"
 L["[Show/Hide] Minimap Icon"] = "[顯示/隱藏] 小地圖按鈕"
-L["[Show/Hide] The PallyPower Tooltips"] = "[顯示/隱藏] 聖騎威能滑鼠提示"
+L["[Show/Hide] The PallyPower Tooltips"] = "[顯示/隱藏] 聖騎威能浮動提示資訊"
 L["a Normal Blessing from:"] = "一個普通祝福來自；"
 L["Aura Button"] = "光環按鈕"
 L["Aura Tracker"] = "光環追蹤"
@@ -145,9 +145,9 @@ L["Select the Normal Blessing you wish to use to over-write the Main Tank: Druid
 L["Select the Normal Blessing you wish to use to over-write the Main Tank: Warriors / Death Knights."] = "選擇一個你想要覆蓋掉分配在主坦克上的普通祝福 : 戰士 / 死亡騎士。"
 L["Select the Normal Blessing you wish to use to over-write the Main Tank: Warriors."] = "選擇一個你想要覆蓋掉分配在主坦克上的普通祝福 : 戰士"
 L["Select the Seal you want to track"] = "選擇你要追蹤的聖印"
-L["Show Minimap Icon"] = "顯示小地圖圖標"
+L["Show Minimap Icon"] = "顯示小地圖按鈕"
 L["Show Pets"] = "顯示寵物"
-L["Show Tooltips"] = "顯示滑鼠提示"
+L["Show Tooltips"] = "顯示浮動提示資訊"
 L["SHOWPETS_OPTION_TOOLTIP_BCC"] = [=[如果你開啟此選項，寵物將會依附在玩家職業下面。
 
 |cffffff00注意；因為寵物分類的方式與強效祝福的方式不同。寵物則需要單獨施放祝福。 此外，術士的小鬼會自動隱藏，除非你按Shift切換。|r]=]
