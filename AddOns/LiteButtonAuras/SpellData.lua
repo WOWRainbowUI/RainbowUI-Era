@@ -34,7 +34,7 @@ LBA.Interrupts = {
     [ 15487] = true,    -- Silence (Priest)
     [  1766] = true,    -- Kick (Rogue)
     [ 57994] = true,    -- Wind Shear (Shaman)
-    [ 89808] = true,    -- Singe Magic (Warlock)
+    [ 19647] = true,    -- Spell Lock (Warlock Felhunter Pet)
     [  6552] = true,    -- Pummel (Warrior)
     [351338] = true,    -- Quell (Evoker)
 }
@@ -66,6 +66,18 @@ LBA.HostileDispels = {
 
 LBA.PlayerPetBuffs = {
     [   136] = true,                -- Mend Pet
+}
+
+LBA.Taunts = {
+    [   355] = true,                -- Taunt (Warrior)
+    [ 51399] = true,                -- Death Grip (Death Knight)
+    [ 56222] = true,                -- Dark Command (Death Knight)
+    [116189] = true,                -- Provoke (Monk)
+    [ 62124] = true,                -- Hand of Reckoning (Paladin)
+    [185245] = true,                -- Torment (Demon Hunter)
+    [  6795] = true,                -- Growl (Druid)
+    [ 17735] = true,                -- Suffering (Warlock Voidwalker Pet)
+    [  2649] = true,                -- Growl (Hunter Pet)
 }
 
 -- Where the totem name does not match the spell name. There's few enough
@@ -125,6 +137,7 @@ do
     AddSpellNames(LBA.Soothes)
     AddSpellNames(LBA.HostileDispels)
     AddSpellNames(LBA.PlayerPetBuffs)
+    AddSpellNames(LBA.Taunts)
 end
 
 --[==[@debug@

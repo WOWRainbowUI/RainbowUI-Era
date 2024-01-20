@@ -1,7 +1,10 @@
 # LiteButtonAuras
 
-## [10.2.0-4](https://github.com/xod-wow/LiteButtonAuras/tree/10.2.0-4) (2023-12-08)
-[Full Changelog](https://github.com/xod-wow/LiteButtonAuras/compare/10.2.0-3...10.2.0-4) [Previous Releases](https://github.com/xod-wow/LiteButtonAuras/releases)
+## [10.2.5-2](https://github.com/xod-wow/LiteButtonAuras/tree/10.2.5-2) (2024-01-18)
+[Full Changelog](https://github.com/xod-wow/LiteButtonAuras/compare/10.2.5-1...10.2.5-2) [Previous Releases](https://github.com/xod-wow/LiteButtonAuras/releases)
 
-- Add support for Button Forge  
-- Update classic ToC for 1.15.0  
+- Support new Dominos with its own ActionButtons  
+- Fix warlock interrupt spell  
+- Update README.md  
+    Fix typo  
+- Update README.md  

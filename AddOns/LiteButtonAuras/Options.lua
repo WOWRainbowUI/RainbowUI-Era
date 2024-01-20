@@ -7,6 +7,10 @@
 
 local _, LBA = ...
 
+local fontPath, fontSize, fontFlags = NumberFontNormal:GetFont()
+
+local defaultAdjust = ( WOW_PROJECT_ID == 1 and 5 or 2 )
+
 local defaults = {
     global = {
     },
@@ -29,10 +33,28 @@ local defaults = {
         showSuggestions = true,
         colorTimers = true,
         decimalTimers = true,
-        font = 'GameFontNormal', -- 更改預設值
+        timerAnchor = "BOTTOMLEFT",
+        timerAdjust = defaultAdjust,
+        stacksAnchor = "TOPLEFT",
+        stacksAdjust = defaultAdjust,
+        fontPath = fontPath,
+        fontSize = 14,
+        fontFlags = "THICKOUTLINE",
     },
     char = {
     },
+}
+
+LBA.anchorSettings = {
+    TOPLEFT     = { "TOPLEFT",       1, -1,     "LEFT" },
+    TOP         = { "TOP",           0, -1,     "MIDDLE" },
+    TOPRIGHT    = { "TOPRIGHT",     -1, -1,     "RIGHT" },
+    LEFT        = { "LEFT",          1,  0,     "LEFT", },
+    CENTER      = { "CENTER",        0,  0,     "MIDDLE" },
+    RIGHT       = { "RIGHT",        -1,  0,     "RIGHT" },
+    BOTTOMLEFT  = { "BOTTOMLEFT",    1,  1,     "LEFT" },
+    BOTTOM      = { "BOTTOM",        0,  1,     "MIDDLE" },
+    BOTTOMRIGHT = { "BOTTOMRIGHT",  -1,  1,     "RIGHT" },
 }
 
 local function IsTrue(x)
@@ -46,6 +68,21 @@ end
 
 function LBA.InitializeOptions()
     LBA.db = LibStub("AceDB-3.0"):New("LiteButtonAurasDB", defaults, true)
+    -- Migrations
+    for _, p in pairs(LBA.db.profiles) do
+        if p.font then
+            if type(p.font) == 'string' then
+                if _G[p.font] and _G[p.font].GetFont then
+                    p.fontPath, p.fontSize, p.fontFlags = _G[p.font]:GetFont()
+                    p.fontSize = math.floor(p.fontSize + 0.5)
+                end
+            elseif type(p.font) == 'table' then
+                p.fontPath, p.fontSize, p.fontFlags = unpack(p.font)
+                p.fontSize = math.floor(p.fontSize + 0.5)
+            end
+            p.font = nil
+        end
+    end
 end
 
 function LBA.SetOption(option, value, key)
@@ -57,7 +94,13 @@ function LBA.SetOption(option, value, key)
     if type(defaults[key][option]) == 'boolean' then
         LBA.db[key][option] = IsTrue(value)
     elseif type(defaults[key][option]) == 'number' then
-        LBA.db[key][option] = tonumber(value)
+        if tonumber(value) then
+            LBA.db[key][option] = tonumber(value)
+        end
+    elseif LBA.anchorSettings[defaults[key][option]] then
+        if  LBA.anchorSettings[value] then
+            LBA.db[key][option] = value
+        end
     else
         LBA.db[key][option] = value
     end
@@ -72,6 +115,7 @@ function LBA.AddAuraMap(auraSpell, abilitySpell)
     end
     tDeleteItem(LBA.db.profile.auraMap, false)
     LBA.UpdateAuraMap()
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.RemoveAuraMap(auraSpell, abilitySpell)
@@ -87,11 +131,13 @@ function LBA.RemoveAuraMap(auraSpell, abilitySpell)
         end
     end
     LBA.UpdateAuraMap()
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.DefaultAuraMap()
     LBA.db.profile.auraMap = CopyTable(defaults.profile.auraMap)
     LBA.UpdateAuraMap()
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.WipeAuraMap()
@@ -100,20 +146,58 @@ function LBA.WipeAuraMap()
         LBA.db.profile.auraMap[n] = { false }
     end
     LBA.UpdateAuraMap()
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.AddDenySpell(auraID)
     LBA.db.profile.denySpells[auraID] = true
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.RemoveDenySpell(auraID)
     LBA.db.profile.denySpells[auraID] = nil
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.DefaultDenySpells()
     LBA.db.profile.denySpells = CopyTable(defaults.profile.denySpells)
+    LBA.db.callbacks:Fire("OnModified")
 end
 
 function LBA.WipeDenySpells()
     table.wipe(LBA.db.profile.denySpells)
+    LBA.db.callbacks:Fire("OnModified")
 end
+
+function LBA.AuraMapString(aura, auraName, ability, abilityName)
+    local c = NORMAL_FONT_COLOR
+    return format(
+                "%s %d on %s %d",
+                c:WrapTextInColorCode(auraName),
+                aura,
+                c:WrapTextInColorCode(abilityName),
+                ability
+            )
+end
+
+function LBA.GetAuraMapList()
+    local out = { }
+    for aura, abilityTable in pairs(LBA.db.profile.auraMap) do
+        for _, ability in ipairs(abilityTable) do
+            if ability then -- false indicates default override
+                local auraName = GetSpellInfo(aura)
+                local abilityName = GetSpellInfo(ability)
+                if auraName and abilityName then
+                    table.insert(out, { aura, auraName, ability, abilityName })
+                end
+            end
+        end
+    end
+    sort(out, function (a, b) return a[2] < b[2] end)
+    return out
+end
+
+function LBA.ApplyDefaultSettings()
+    LBA.db:ResetProfile()
+end
+
