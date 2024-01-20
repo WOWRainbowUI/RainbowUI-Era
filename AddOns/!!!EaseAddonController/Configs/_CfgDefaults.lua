@@ -1365,26 +1365,12 @@ D["LiteButtonAuras"] = {
     defaultEnable = 1,
 	tags = { "ACTIONBAR" },
 	title = "光環時間 (快捷列)",
-	desc = "直接在快捷列的技能圖示上面顯示增益和減益效果的時間，方便監控。``對敵方目標施放的 DOT 會顯示紅色邊框，自己身上的 HOT/BUFF 會顯示綠色邊框。`",
+	desc = "直接在快捷列的技能圖示上面顯示你自己身上的增益效果，和你的當前目標身上的減益效果時間，方便監控。``對敵方目標施放的 DOT 會顯示紅色邊框，自己身上的 HOT/BUFF 會顯示綠色邊框。`",
+	icon = "Interface\\Icons\\achievement_guild_level10",
 	modifier = "彩虹ui",
 	{
-        text = "時間數字大小",
-		type = "spin",
-		range = {6, 60, 1},
-		default	= 16,
-        callback = function(cfg, v, loading) SlashCmdList["LiteButtonAuras"]("font default "..v.." THICKOUTLINE") end,
-    },
-	{
-        text = "/lba 指令說明",
-        callback = function(cfg, v, loading) SlashCmdList["LiteButtonAuras"]("help") end,
-    },
-	{
-        text = "光環設定說明",
-        callback = function(cfg, v, loading) SlashCmdList["LiteButtonAuras"]("aura help") end,
-    },
-	{
-        text = "不顯示時間設定說明",
-        callback = function(cfg, v, loading) SlashCmdList["LiteButtonAuras"]("deny help") end,
+        text = "設定選項",
+        callback = function(cfg, v, loading) Settings.OpenToCategory("光環時間") end,
     },
 };
 D["LootMonitor"] = {
