@@ -13,7 +13,7 @@ if GetLocale() ~= "zhTW" then return;end
 
 BINDING_NAME_ALARAIDTOOL_NEWWINDOW = "新增模擬器";
 BINDING_NAME_ALARAIDTOOL_QUERY = "查看目標天賦";
-BINDING_HEADER_ALATALENTEMU_HEADER = "<\124cff00ff00alaTalentEmu\124r>天賦模擬器";
+BINDING_HEADER_ALATALENTEMU_HEADER = "<|cff00ff00TalentEmu|r> 天賦模擬器";
 
 l10n.Locale = "zhTW";
 
@@ -57,7 +57,7 @@ l10n.SaveButton = "|cff00ff00左鍵|r儲存天賦設定\n|cff00ff00右鍵|r載�
 l10n.SendButton = "|cff00ff00左鍵|r發送天賦到聊天\n|cff00ff00右鍵|r查看最近聊天中的天賦";
 l10n.EquipmentFrameButton = "打開裝備查看";
 
-l10n.TalentFrameCallButton = "打開ala天賦模擬器";
+l10n.TalentFrameCallButton = "開啓天賦模擬器";
 l10n.TalentFrameCallButtonString = "模擬器";
 l10n.CurRank = "目前等級";
 l10n.NextRank = "下一等級";
