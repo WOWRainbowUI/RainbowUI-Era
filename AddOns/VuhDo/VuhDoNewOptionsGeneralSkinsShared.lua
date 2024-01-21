@@ -159,6 +159,8 @@ local VUHDO_DEFAULT_PROFILES = {
 				},
 				["HEALTH_BAR"] = {
 					["turnAxis"] = true,
+					["turnAxisOvershield"] = false,
+					["turnAxisHealAbsorb"] = false,
 					["vertical"] = true,
 					["invertGrowth"] = true,
 				},
@@ -252,6 +254,7 @@ local VUHDO_DEFAULT_PROFILES = {
 					},
 					["sort"] = 0,
 					["isReverse"] = false,
+					["isPetsLast"] = false,
 				},
 				["PANEL_COLOR"] = {
 					["BACK"] = {
@@ -865,6 +868,8 @@ local VUHDO_DEFAULT_PROFILES = {
 				},
 				["HEALTH_BAR"] = {
 					["turnAxis"] = false,
+					["turnAxisOvershield"] = false,
+					["turnAxisHealAbsorb"] = false,
 					["vertical"] = false,
 					["invertGrowth"] = false,
 				},
@@ -958,6 +963,7 @@ local VUHDO_DEFAULT_PROFILES = {
 					},
 					["sort"] = 0,
 					["isReverse"] = false,
+					["isPetsLast"] = false,
 				},
 				["TOOLTIP"] = {
 					["BACKGROUND"] = {
@@ -1127,6 +1133,7 @@ local VUHDO_DEFAULT_PROFILES = {
 					},
 					["sort"] = 0,
 					["isReverse"] = false,
+					["isPetsLast"] = false,
 				},
 				["TOOLTIP"] = {
 					["BACKGROUND"] = {
@@ -1295,6 +1302,7 @@ local VUHDO_DEFAULT_PROFILES = {
 					},
 					["sort"] = 0,
 					["isReverse"] = false,
+					["isPetsLast"] = false,
 				},
 				["TOOLTIP"] = {
 					["BACKGROUND"] = {
@@ -1463,6 +1471,7 @@ local VUHDO_DEFAULT_PROFILES = {
 					},
 					["sort"] = 0,
 					["isReverse"] = false,
+					["isPetsLast"] = false,
 				},
 				["TOOLTIP"] = {
 					["BACKGROUND"] = {

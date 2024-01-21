@@ -649,6 +649,7 @@ VUHDO_I18N_TT.K590 = "Show all incoming spell casts.";
 VUHDO_I18N_TT.K591 = "Filter to show only incoming spell casts from boss/NPC units.";
 VUHDO_I18N_TT.K592 = "Check this to show private aura icons on the health bar.";
 VUHDO_I18N_TT.K593 = "Select a size for your private aura icons.";
+VUHDO_I18N_TT.K594 = "Check to sort pet units last.";
 
 -- TBCC game version specific strings (tooltip IDs begin at K900)
 
@@ -1193,6 +1194,8 @@ VUHDO_I18N_X = "X";
 VUHDO_I18N_Y = "Y";
 
 VUHDO_I18N_PRIVATE_AURAS = "Private Auras";
+
+VUHDO_I18N_PETS_LAST = "Pets last";
 
 -- TBCC game version specific strings
 
