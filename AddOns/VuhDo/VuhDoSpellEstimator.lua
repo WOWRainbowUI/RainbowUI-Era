@@ -139,7 +139,9 @@ function VUHDO_initFromSpellbook()
 	end
 
 	VUHDO_initTalentSpellCaches();
+	VUHDO_initRuneSpellCaches();
 
 	VUHDO_setKnowsSwiftmend(VUHDO_isSpellKnown(VUHDO_SPELL_ID.SWIFTMEND));
 	VUHDO_setKnowsTrailOfLight(VUHDO_isTalentKnown(VUHDO_SPELL_ID.TRAIL_OF_LIGHT));
+
 end

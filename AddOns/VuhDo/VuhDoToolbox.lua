@@ -41,6 +41,18 @@ local pairs = pairs;
 local type = type;
 local abs = abs;
 
+local UnitAura = UnitAura or (C_UnitAuras and
+			(function(aUnit, anIndex, aFilter)
+				local tAuraData = C_UnitAuras.GetAuraDataByIndex(aUnit, anIndex, aFilter);
+
+				if not tAuraData then
+					return nil;
+				end
+
+				return AuraUtil.UnpackAuraData(tAuraData);
+			end)
+);
+
 -- Number of seconds into the future to look for incoming heals
 -- This ensures we only include the next incoming tick of HoTs
 local VUHDO_INCOMING_HEAL_WINDOW = 4;
@@ -53,6 +65,24 @@ local VUHDO_TALENT_CACHE_SPELL_ID = {
 local VUHDO_TALENT_CACHE_SPELL_NAME = {
 	-- [<spell name>] = <spell ID>,
 };
+
+local VUHDO_RUNE_CACHE_SPELL_ID = {
+	-- [<spell ID>] = <spell name>,
+};
+
+local VUHDO_RUNE_CACHE_SPELL_NAME = {
+	-- [<spell name>] = <spell ID>,
+};
+
+local VUHDO_RUNE_INVENTORY_SLOTS = {
+	[INVSLOT_CHEST] = true,
+	[INVSLOT_LEGS] = true,
+	[INVSLOT_HAND] = true,
+};
+
+local VUHDO_ACTION_CHEST_RUNE = "chest rune ability";
+local VUHDO_ACTION_LEGS_RUNE = "legs rune ability";
+local VUHDO_ACTION_HANDS_RUNE = "hands rune ability";
 
 local sEmpty = { };
 setmetatable(sEmpty, { __newindex = function(aTable, aKey, aValue) VUHDO_xMsg("WARNING: newindex on dummy array: ", aKey, aValue); end });
@@ -595,14 +625,18 @@ end
 
 --
 function VUHDO_isSpellKnown(aSpellName)
+	
 	if not aSpellName then
 		return false;
 	end
 
 	return (type(aSpellName) == "number" and IsSpellKnown(aSpellName))
+		or (type(aSpellName) == "number" and IsSpellKnownOrOverridesKnown(aSpellName))
 		or (type(aSpellName) == "number" and IsPlayerSpell(aSpellName))
 		or GetSpellBookItemInfo(aSpellName) ~= nil
-		or VUHDO_NAME_TO_SPELL[aSpellName] ~= nil and GetSpellBookItemInfo(VUHDO_NAME_TO_SPELL[aSpellName]);
+		or VUHDO_NAME_TO_SPELL[aSpellName] ~= nil and GetSpellBookItemInfo(VUHDO_NAME_TO_SPELL[aSpellName])
+		or VUHDO_isRuneSpellKnown(aSpellName);
+
 end
 
 
@@ -868,12 +902,15 @@ local tActionLowerName;
 local tIsMacroKnown;
 local tIsSpellKnown; 
 local tIsTalentKnown;
+local tIsHostileAction, tIsFriendlyAction;
 function VUHDO_isActionValid(anActionName, anIsCustom, anIsHostile)
 
 	if (anActionName or "") == "" then
 		return nil;
 	end
 
+	tIsHostileAction = false;
+	tIsFriendlyAction = false;
 	tActionLowerName = strlower(anActionName);
 
 	if anIsHostile then
@@ -882,7 +919,7 @@ function VUHDO_isActionValid(anActionName, anIsCustom, anIsHostile)
 		 or VUHDO_SPELL_KEY_TARGET == tActionLowerName 
 		 or VUHDO_SPELL_KEY_EXTRAACTIONBUTTON == tActionLowerName 
 		 or VUHDO_SPELL_KEY_MOUSELOOK == tActionLowerName) then
-			return VUHDO_I18N_COMMAND, 0.8, 1, 0.8, "CMD";
+			tIsHostileAction = true;
 		end
 	else
 		if VUHDO_SPELL_KEY_ASSIST == tActionLowerName 
@@ -892,12 +929,22 @@ function VUHDO_isActionValid(anActionName, anIsCustom, anIsHostile)
 		 or VUHDO_SPELL_KEY_TARGET == tActionLowerName 
 		 or VUHDO_SPELL_KEY_EXTRAACTIONBUTTON == tActionLowerName 
 		 or VUHDO_SPELL_KEY_MOUSELOOK == tActionLowerName 
-		 or VUHDO_SPELL_KEY_DROPDOWN == tActionLowerName then 
-			return VUHDO_I18N_COMMAND, 0.8, 1, 0.8, "CMD";
+		 or VUHDO_SPELL_KEY_DROPDOWN == tActionLowerName then
+			tIsFriendlyAction = true;
 		end
 	end
 
 	tIsMacroKnown = GetMacroIndexByName(anActionName) ~= 0;
+
+	if tIsHostileAction or tIsFriendlyAction then
+		if tIsMacroKnown then
+			VUHDO_Msg(format(VUHDO_I18N_AMBIGUOUS_MACRO, anActionName), 1, 0.3, 0.3);
+			return VUHDO_I18N_WARNING, 1, 0.3, 0.3, "WRN";
+		else
+			return VUHDO_I18N_COMMAND, 0.8, 1, 0.8, "CMD";
+		end
+	end
+
 	tIsSpellKnown = VUHDO_isSpellKnown(anActionName);
 
 	if not tIsSpellKnown then
@@ -1402,3 +1449,80 @@ function VUHDO_hasLFGRestrictions()
 
 end
 
+
+
+function VUHDO_initRuneSpellCaches()
+
+	if not C_Engraving then
+		return;
+	else
+		C_Engraving.RefreshRunesList();
+	end
+
+	twipe(VUHDO_RUNE_CACHE_SPELL_ID);
+	twipe(VUHDO_RUNE_CACHE_SPELL_NAME);
+
+	for tInventorySlotId, _ in pairs(VUHDO_RUNE_INVENTORY_SLOTS) do
+		local tRuneInfo = C_Engraving.GetRuneForEquipmentSlot(tInventorySlotId);
+
+		if tRuneInfo then
+			for _, tSpellId in ipairs(tRuneInfo.learnedAbilitySpellIDs) do
+				local tSpellName = GetSpellInfo(tSpellId);
+
+				if tSpellId then
+					VUHDO_RUNE_CACHE_SPELL_ID[tSpellId] = tSpellName;
+					VUHDO_RUNE_CACHE_SPELL_NAME[tSpellName] = tSpellId;
+				end
+			end
+		end
+	end
+
+end
+
+
+
+--
+function VUHDO_getRuneSpellId(aSpellName)
+
+	if type(aSpellName) == "number" then
+		return VUHDO_RUNE_CACHE_SPELL_ID[aSpellName] and aSpellName or nil;
+	else
+		return VUHDO_RUNE_CACHE_SPELL_NAME[aSpellName] or nil;
+	end
+
+end
+
+
+
+--
+local tActionLowerName;
+local function VUHDO_isRuneSlotAction(anActionName)
+
+	if anActionName then
+		tActionLowerName = strlower(anActionName);
+
+		if tActionLowerName == VUHDO_ACTION_CHEST_RUNE
+			or tActionLowerName == VUHDO_ACTION_LEGS_RUNE
+			or tActionLowerName == VUHDO_ACTION_HANDS_RUNE then
+			return true;
+		end
+	else
+		return false;
+	end
+
+end
+
+
+
+--
+function VUHDO_isRuneSpellKnown(aSpellName)
+
+	if VUHDO_getRuneSpellId(aSpellName) then
+		return true;
+	elseif VUHDO_isRuneSlotAction(aSpellName) then
+		return true;
+	else
+		return false;
+	end
+
+end
