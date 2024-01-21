@@ -31,7 +31,7 @@ ns.gemString = CreateAtlasMarkup(isClassic and "worldquest-icon-jewelcrafting" o
 ns.enchantString = RED_FONT_COLOR:WrapTextInColorCode("E")
 ns.Fonts = {
     ["無邊框"] = GameFontHighlightSmall,
-    ["一般"] = NumberFont_OutlineThick_Mono_Small, -- GameFontNormalOutline,
+    ["一般"] = GameFontNormalOutline,
     ["大"] = GameFontNormalLargeOutline,
     ["更大"] = GameFontNormalHugeOutline,
     ["小"] = NumberFontNormal,
@@ -132,7 +132,7 @@ local function PrepareItemButton(button)
     -- Apply appearance config:
     button.simpleilvl:ClearAllPoints()
     button.simpleilvl:SetPoint(db.position, unpack(ns.PositionOffsets[db.position]))
-    button.simpleilvl:SetFontObject(ns.Fonts[db.font] or NumberFont_OutlineThick_Mono_Small)
+    button.simpleilvl:SetFontObject(ns.Fonts[db.font] or GameFontNormalOutline)
     -- button.simpleilvl:SetJustifyH('RIGHT')
 
     button.simpleilvlup:ClearAllPoints()
@@ -234,7 +234,7 @@ local function AddBoundToButton(button, item)
     end
     if item and item:IsItemInPlayersControl() then
         local itemLocation = item:GetItemLocation()
-        if itemLocation and C_Item.IsBound(itemLocation) then
+        if itemLocation and C_Item.IsBound(itemLocation) and button.simpleilvlbound then -- 暫時修正
             button.simpleilvlbound:Show()
         end
     end
@@ -462,7 +462,7 @@ else
     end
     -- can't use ContainerFrameUtil_EnumerateContainerFrames because it depends on the combined bags setting
     hooksecurefunc(ContainerFrameCombinedBags, "UpdateItems", update)
-    for _, frame in ipairs(UIParent.ContainerFrames) do
+    for _, frame in ipairs((ContainerFrameContainer or UIParent).ContainerFrames) do
         hooksecurefunc(frame, "UpdateItems", update)
     end
 end
@@ -632,6 +632,7 @@ ns:RegisterAddonHook("LiteBag", function()
 end)
 
 -- Baganator
+--[[
 ns:RegisterAddonHook("Baganator", function()
     local suppress = {}
     local function check_baginator_config(value)
@@ -648,7 +649,7 @@ ns:RegisterAddonHook("Baganator", function()
         local bag = button.GetBagID and button:GetBagID() or button:GetParent():GetID()
         local slot = button:GetID()
         -- print("SetItemDetails", details.itemLink, bag, slot)
-        if bag and slot and bag ~= 0 and slot ~= 0 then
+        if bag and slot and slot ~= 0 then
             item = Item:CreateFromBagAndSlot(bag, slot)
         elseif details.itemLink then
             item = Item:CreateFromItemLink(details.itemLink)
@@ -684,7 +685,7 @@ ns:RegisterAddonHook("Baganator", function()
         hooksecurefunc(Baganator.UnifiedBags, "Initialize", baganator_hookmain)
     end
 end)
-
+--]]
 -- helper
 
 do
