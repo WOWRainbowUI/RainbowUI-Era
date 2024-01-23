@@ -1,13 +1,10 @@
-lightweight tag 47cf1ab6d3b0999ed17c2eacfcdbffaa1cf73b50 v1.11.6
+lightweight tag 2533f1a7ae53822849cb406593d5a8badc57cce8 v1.12.8
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Thu Dec 28 21:49:50 2023 -0500
+Date:	Sun Jan 21 04:51:31 2024 -0500
 
-commit 47cf1ab6d3b0999ed17c2eacfcdbffaa1cf73b50
+commit 2533f1a7ae53822849cb406593d5a8badc57cce8
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Thu Dec 28 21:49:50 2023 -0500
+Date:   Sun Jan 21 04:51:31 2024 -0500
 
-    Improved visual feedback
-    
-    Show All mode: Currently engraved runes now highlight green, inactive runes are shaded slightly darker
-    All modes: Rune blinks red when gear breaks
+    options filters list visuals updated
 
