@@ -548,7 +548,7 @@ function TravelModule:GetDefaultOptions()
   local firstItem = self:FindFirstOption()
   xb.db.char.portItem = xb.db.char.portItem or firstItem
   return 'travel', {
-    enabled = true
+    enabled = false
   }
 end
 

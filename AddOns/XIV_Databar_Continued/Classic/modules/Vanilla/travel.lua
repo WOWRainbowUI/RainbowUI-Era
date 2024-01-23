@@ -371,7 +371,7 @@ function TravelModule:Refresh()
     end
     if InCombatLockdown() then
         self.hearthText:SetText(GetBindLocation())
-		-- self.portText:SetText(xb.db.char.portItem.text)
+		-- self.portText:SetText(xb.db.char.portItem.text) -- 暫時修正
         self:SetHearthColor()
         self:SetPortColor()
         return
