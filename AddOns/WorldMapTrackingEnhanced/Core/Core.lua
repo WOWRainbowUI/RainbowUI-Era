@@ -1,4 +1,4 @@
--- $Id: Core.lua 154 2022-11-12 11:59:17Z arithmandar $
+-- $Id: Core.lua 166 2024-01-22 13:51:33Z arithmandar $
 -----------------------------------------------------------------------
 -- Upvalued Lua API.
 -----------------------------------------------------------------------
@@ -241,6 +241,11 @@ function WMTEButtonMixin:InitializeDropDown(frame, level)
 			info.value = "trivialQuests";
 			info.checked = self:IsTrackingFilter(Enum.MinimapTrackingFilter.TrivialQuests);
 			LibDD:UIDropDownMenu_AddButton(info);
+
+			info.text = CONTENT_TRACKING_MAP_TOGGLE;
+			info.value = "contentTrackingFilter";
+			info.checked = GetCVarBool("contentTrackingFilter");
+			LibDD:UIDropDownMenu_AddButton(info);
 		end
 		-- If we aren't on a map with world quests don't show the world quest reward filter options.
 		local mapID = WorldMapFrame:GetMapID()
@@ -437,9 +442,9 @@ local function createTrackingButton()
 			f:SetToplevel(true)
 			f:ClearAllPoints()
 			if (profile.showOnLeft) then
-				f:SetPoint("TOPLEFT", parent, "TOPLEFT", 12, -100) -- 更改放大鏡按鈕的位置
+				f:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, -70)
 			else
-				f:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -12, -100) -- 更改放大鏡按鈕的位置
+				f:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -8, -70)
 			end
 		else
 			parent = FilterButton:GetParent()
