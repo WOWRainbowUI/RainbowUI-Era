@@ -143,4 +143,4 @@ function FiltersMixin:ToggleRune(filterIndex, runeID, toggleState)
 end
 
 Addon.Filters = CreateFromMixins(FiltersMixin)
-Addon.Filters.NO_FILTER_DISPLAY_STRING = "(No Filter)"
+Addon.Filters.NO_FILTER_DISPLAY_STRING = "(不過濾)"
