@@ -1,5 +1,16 @@
 # Dominos Changelog
 
+## 10.2.8
+
+* Updated LibUIDropDownMenu to prevent an error with opening right click menus that contain well, dropdowns.
+
+## 10.2.7
+
+* Add profession quality indicators
+* Icon coloring is now configurable. Defaults have been reverted to those of the
+  base UI
+* Hid extraneous options from Classic builds
+
 ## 10.2.6
 
 * Resolve issues with focus, self, and mouseover cast not working
