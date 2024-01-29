@@ -3,7 +3,7 @@ if not Addon:IsBuild('retail', 'wrath') then
     return
 end
 
-local OverrideController = Addon:CreateHiddenFrame('Frame', nil, UIParent, 'SecureHandlerStateTemplate')
+local OverrideController = Addon:CreateHiddenFrame('Frame', nil, nil, 'SecureHandlerStateTemplate')
 
 local overrideBarStates = {
 	form = '[form]1;0',
