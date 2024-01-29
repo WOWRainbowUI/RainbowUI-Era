@@ -1,10 +1,12 @@
-lightweight tag 2fff5c95a95fe48364d1c0cb3ca0929630d90394 v1.12.9
+lightweight tag eed26e1c5b862859559ce183de263f674534a5a7 v1.12.13
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Tue Jan 23 03:46:28 2024 -0500
+Date:	Sun Jan 28 15:16:10 2024 -0500
 
-commit 2fff5c95a95fe48364d1c0cb3ca0929630d90394
+commit 7d17e51b479811ff524c77421a7bc71031a9ee4d
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Tue Jan 23 00:08:36 2024 -0500
+Date:   Sun Jan 28 15:15:28 2024 -0500
 
-    filter reordering
+    refactored EngraverLayoutDirections
+    
+    this fixes a layout inconsistency in the filter editor's slot labels.
 
