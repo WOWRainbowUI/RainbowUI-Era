@@ -31,7 +31,7 @@ function BG.ReceiveBiaoTiUI(FB, t, b, bb, i, ii)
     if b == 1 and i == 1 then
         local version = BG["ReceiveFrame" .. FB]:CreateFontString()
         if t == 1 then
-            version:SetPoint("TOPLEFT", BG.ReceiveMainFrame, "TOPLEFT", 13, -50)
+            version:SetPoint("TOPLEFT", BG.ReceiveMainFrame, "TOPLEFT", 13, -60)
         else
             version:SetPoint("TOPLEFT", frameright, "TOPLEFT", 100, 0)
         end
@@ -173,7 +173,7 @@ function BG.ReceiveJinEUI(FB, t, b, bb, i, ii)
     button:SetSize(80, 20)
     button:SetPoint("TOPLEFT", preWidget, "TOPRIGHT", 5, 0);
     button:SetFrameLevel(110)
-    button:SetNumeric(true)
+    -- button:SetNumeric(true)
     button:SetAutoFocus(false)
     button:Show()
     button:SetEnabled(false)

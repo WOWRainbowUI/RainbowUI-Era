@@ -17,11 +17,10 @@ local HopeMaxi = ADDONSELF.HopeMaxi
 
 local pt = print
 
-function BG.YongShiUI()
+function BG.YongShiUI(lastbt)
     local bt = CreateFrame("Button", nil, BG.FBMainFrame, "UIPanelButtonTemplate")
     bt:SetSize(90, BG.ButtonZhangDan:GetHeight())
-    bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -130, select(5, BG.ButtonZhangDan:GetPoint()))
-    -- bt:SetPoint("BOTTOM", BG.MainFrame, "BOTTOM", -80, 24)
+    bt:SetPoint("LEFT", lastbt, "RIGHT", 10, 0)
     bt:SetText(L["通报用时"])
     bt:Show()
     BG.ButtonYongShi = bt
@@ -86,8 +85,7 @@ function BG.YongShiUI()
         end
     end)
 
-    local numb
-    local timestart, timekill, time
+    local timestart
     -- 获取BOSS战ID+
     local f = CreateFrame("Frame")
     f:RegisterEvent("ENCOUNTER_START")
@@ -98,40 +96,31 @@ function BG.YongShiUI()
             timestart = GetTime()
         elseif even == "BOSS_KILL" then
             if timestart then
-                timekill = GetTime()
-                time = timekill - timestart
+                local time = GetTime() - timestart
                 local m, s = math.modf(time / 60)
                 s = string.format("%02d", s * 60)
                 time = m .. L["分"] .. s .. L["秒"]
 
+                local numb
                 if BG.Loot.encounterID[BG.FB2] then
                     for key, value in pairs(BG.Loot.encounterID[BG.FB2]) do
                         if tonumber(ID) == tonumber(key) then
                             numb = value
+                            break
                         end
                     end
                 end
-
                 if not numb then return end
 
                 local bosscolor = BG.Boss[BG.FB2]["boss" .. numb].color
                 local text = "|cff" .. bosscolor .. L["击杀用时："] .. time .. RR
                 BG.Frame[BG.FB2]["boss" .. numb]["time"]:SetText(text)
-
                 BiaoGe[BG.FB2]["boss" .. numb]["time"] = text
 
                 timestart = nil
-                timekill = nil
-                time = nil
             end
         end
     end)
-end
 
--- local frame = CreateFrame("Frame")
--- frame:RegisterEvent("ADDON_LOADED")
--- frame:SetScript("OnEvent", function(self, event, addonName)
---     if addonName == AddonName then
---         TongBaoUI()
---     end
--- end)
+    return bt
+end

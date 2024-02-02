@@ -34,6 +34,12 @@ do
     local alpha1 = 0.4
     local alpha2 = 1
 
+    function BG.Tooltip_SetItemByID(itemID)
+        BiaoGeFilterTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        BiaoGeFilterTooltip:ClearLines()
+        BiaoGeFilterTooltip:SetItemByID(itemID)
+    end
+
     local function Get_G_key(text)
         for k, v in pairs(BG.FilterClassItemDB.ShuXing) do
             if text == v.name then
@@ -43,24 +49,13 @@ do
         return "!!!!!!!!"
     end
     local function FilterTooltipText(itemID, EquipLoc)
-        BiaoGeFilterTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-        BiaoGeFilterTooltip:ClearLines()
-        BiaoGeFilterTooltip:SetItemByID(itemID)
+        BG.Tooltip_SetItemByID(itemID)
         local tab = {}
-        local t = 1
         local ii = 1
         while _G["BiaoGeFilterTooltipTextLeft" .. ii] do
             local tx = _G["BiaoGeFilterTooltipTextLeft" .. ii]:GetText()
             if tx and tx ~= "" and (not tx:find(WARDROBE_SETS)) and
                 (not tx:find(ITEM_MOD_FERAL_ATTACK_POWER:gsub("%%s", "(.+)"))) then -- 小德的武器词缀：在猎豹、熊等等攻击强度提高%s点
-                table.insert(tab, tx)
-            end
-            ii = ii + 1
-        end
-        local ii = 1
-        while _G["BiaoGeFilterTooltipTextRight" .. ii] do
-            local tx = _G["BiaoGeFilterTooltipTextRight" .. ii]:GetText()
-            if tx and tx ~= "" then
                 table.insert(tab, tx)
             end
             ii = ii + 1
@@ -100,8 +95,7 @@ do
         local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID
         if not num then return end
         for k, v in pairs(BiaoGe.FilterClassItemDB[RealmId][player][num].ShuXing) do
-            local text = Get_G_key(k):gsub("%%s", "(.+)")
-            text = text:gsub("%%c", "")
+            local text = Get_G_key(k):gsub("%%s", "(.+)"):gsub("%%c", "") -- 删除字符里的%s%c（主要是因为力量词缀）
             if strfind(TooltipText, text) then
                 return true
             end
@@ -149,11 +143,9 @@ do
         if FilterWeapon(typeID, EquipLoc, subclassID) then
             return true
         end
-        -- if not BG.IsVanilla() then
         if FilterShuXing(TooltipText) then
             return true
         end
-        -- end
         if FilterCLASS(TooltipText) then
             return true
         end
@@ -169,46 +161,38 @@ do
         local itemID = GetItemInfoInstant(text)
         local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID
 
-        local yes
-        local IsSP
-
         if itemID and num then
             local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID = GetItemInfo(itemID)
-            if not quality then return 1 end
-
+            -- if not quality then return 1 end
             if BG.FilterAll(itemID, typeID, EquipLoc, subclassID) then
                 bt:SetAlpha(alpha1)
                 return
             end
-
-            if EquipLoc == "INVTYPE_TRINKET" or EquipLoc == "INVTYPE_RELIC" then
-                IsSP = true
-            end
         end
-        if not yes then
-            bt:SetAlpha(alpha2)
-        end
-        if IsSP then
-            return 2
-        end
+        bt:SetAlpha(alpha2)
     end
 
     function BG.UpdateFilter(bt)
-        local yes = BG.FilterItem(bt)
-        if yes == 1 then -- 装备未缓存
-            C_Timer.After(0.01, function()
-                if BG.FilterItem(bt) == 2 then
-                    C_Timer.After(0.01, function()
-                        BG.FilterItem(bt)
-                    end)
-                end
-            end)
-            -- 如果是饰品需要多执行一次
-        elseif yes == 2 then -- 装备为饰品
-            C_Timer.After(0.01, function()
-                BG.FilterItem(bt)
-            end)
+        local text = bt:GetText()
+        local itemID = GetItemInfoInstant(text)
+        local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID
+        if not (itemID and num) then
+            bt:SetAlpha(alpha2)
+            return
         end
+
+        local item = Item:CreateFromItemID(itemID)
+        item:ContinueOnItemLoad(function()
+            if not BG.itemCaches[itemID] then
+                BG.Tooltip_SetItemByID(itemID)
+                BG.After(0.01, function()
+                    BG.FilterItem(bt)
+                    BG.itemCaches[itemID] = true
+                end)
+            else
+                BG.FilterItem(bt)
+            end
+        end)
     end
 
     function BG.UpdateAllFilter()
@@ -258,30 +242,20 @@ do
     end
 
     -- 拾取通知
-    function BG.LootFilterClassItem(link, BiaoGeFilterTooltip)
+    function BG.LootFilterClassItem(link)
         local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID
         if not num then return "" end
 
         local icon = AddTexture(BiaoGe.FilterClassItemDB[RealmId][player][num].Icon)
         local itemID = GetItemInfoInstant(link)
-        local yes
-        local IsSP
 
         if itemID then
             local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID = GetItemInfo(link)
-            if not quality then return 1 end
-
             if BG.FilterAll(itemID, typeID, EquipLoc, subclassID) then
                 return ""
             end
-
-            if EquipLoc == "INVTYPE_TRINKET" or EquipLoc == "INVTYPE_RELIC" then
-                IsSP = true
-            end
         end
-        if not yes then
-            return icon, IsSP
-        end
+        return icon
     end
 end
 
@@ -400,11 +374,15 @@ do
         end
         if not loots or #loots == 0 then return end
 
+        local MaxI = 10
+        -- 根据掉落总数改变按钮数量
+        if #loots > MaxI * 2 then
+            local a = format("%d", #loots / 2)
+            local b = #loots % 2
+            MaxI = a + b
+        end
         -- 背景框
-        local MaxI = 12
         local f = CreateFrame("Frame", nil, BG.MainFrame, "BackdropTemplate")
-        f:SetWidth(480)
-        f:SetHeight(20 + MaxI * 21)
         f:SetFrameLevel(120)
         f:SetBackdrop({
             bgFile = "Interface/ChatFrame/ChatFrameBackground",
@@ -415,26 +393,29 @@ do
         f:SetBackdropColor(0, 0, 0, 0.9)
         f:SetPoint("TOPLEFT", self, "BOTTOMLEFT", -9, 2)
         f:EnableMouse(true)
+        f:SetClampedToScreen(true)
         BG.FrameZhuangbeiList = f
         -- 提示文字
         local text = f:CreateFontString()
-        text:SetPoint("TOPLEFT", f, "BOTTOMLEFT", 3, 0)
+        text:SetPoint("TOP", f, "BOTTOM", 3, 0)
         text:SetFont(BIAOGE_TEXT_FONT, 14, "OUTLINE")
         if self.hopenandu then
-            text:SetText(BG.STC_b1(L["（SHIFT+点击发送装备，CTRL+点击查看该部位的其他可选装备）"]))
+            text:SetText(BG.STC_w1(L["（SHIFT+点击发送装备，CTRL+点击查看该部位的其他可选装备）"]))
         else
-            text:SetText(BG.STC_b1(L["（ALT+点击关注装备，SHIFT+点击发送装备，CTRL+点击查看该部位的其他可选装备）"]))
+            text:SetText(BG.STC_w1(L["（ALT+点击关注装备，SHIFT+点击发送装备，CTRL+点击查看该部位的其他可选装备）"]))
         end
         -- 下拉列表
         BG.ZhuangbeiList = {}
         local frameright
         local framedown
+        local btwidth = 230
+        local btheight = 20
         for t = 1, 2 do
             for i = 1, MaxI do
                 local n = (t - 1) * MaxI + i
 
                 local bt = CreateFrame("EditBox", nil, f, "InputBoxTemplate")
-                bt:SetSize(230, 20)
+                bt:SetSize(btwidth, btheight)
                 bt:SetFrameLevel(125)
                 bt:SetTextInsets(14, 0, 0, 0)
                 bt:SetAutoFocus(false)
@@ -459,7 +440,7 @@ do
                 bt.ds = bt:CreateTexture()
                 bt.ds:SetPoint("TOPLEFT", -4, -2)
                 bt.ds:SetPoint("BOTTOMRIGHT", 0, 0)
-                bt.ds:SetColorTexture(1, 1, 1, BG.OnEnterAlpha)
+                bt.ds:SetColorTexture(1, 1, 1, BG.onEnterAlpha)
                 bt.ds:Hide()
 
                 if bt.itemID then
@@ -473,6 +454,8 @@ do
 
                     if GetItemInfo(bt.itemID) then
                         SetButtonText(bt)
+                        -- else
+                        --     pt(bt.itemID) -- 测试新添加的装备ID是否有错误
                     end
                 end
 
@@ -526,6 +509,7 @@ do
                 end)
             end
         end
+        f:SetSize(btwidth * 2 + 10 + 10, (btheight + 2) * MaxI + 5 + 3)
     end
 end
 
@@ -554,7 +538,7 @@ function BG.BindOnEquip(bt, bindType, height)
     end
 end
 
-------------------创建：在按钮增加装等显示------------------
+------------------创建：装等------------------
 function BG.LevelText(bt, level, typeID)
     if bt.levelText then
         bt.levelText:Hide()
@@ -577,7 +561,7 @@ function BG.LevelText(bt, level, typeID)
     end
 end
 
-------------------创建：在按钮增加已掉落显示------------------
+------------------创建：已掉落------------------
 function BG.LootedText(bt)
     if bt.looted then
         return
@@ -593,7 +577,8 @@ function BG.LootedText(bt)
     f.text = f:CreateFontString()
     f.text:SetPoint("RIGHT")
     f.text:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-    f.text:SetTextColor(RGB(BG.g1))
+    f.text:SetTextColor(RGB(BG.dis))
+    -- f.text:SetTextColor(RGB(BG.g1))
     f.text:SetText(L["已掉落"])
     f:SetSize(f.text:GetWidth(), 15)
     bt.looted = f
@@ -714,7 +699,7 @@ function BG.SetListmaijia(maijia, focus, guolv)
     -- 背景框
     local frame = BG.MainFrame
     BG.FrameMaijiaList = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-    BG.FrameMaijiaList:SetWidth(300)
+    BG.FrameMaijiaList:SetWidth(395)
     BG.FrameMaijiaList:SetHeight(230)
     BG.FrameMaijiaList:SetFrameLevel(120)
     BG.FrameMaijiaList:SetBackdrop({
@@ -726,12 +711,13 @@ function BG.SetListmaijia(maijia, focus, guolv)
     BG.FrameMaijiaList:SetBackdropColor(0, 0, 0, 0.8)
     BG.FrameMaijiaList:SetPoint("TOPLEFT", maijia, "BOTTOMLEFT", -9, 2)
     BG.FrameMaijiaList:EnableMouse(true)
+    BG.FrameMaijiaList:SetClampedToScreen(true)
 
     -- 下拉列表
     local framedown
     local frameright = BG.FrameMaijiaList
     local raid = BG.PaiXuRaidRosterInfo(guolv)
-    for t = 1, 3 do
+    for t = 1, 4 do
         for i = 1, 10 do
             local button = CreateFrame("EditBox", nil, BG.FrameMaijiaList, "InputBoxTemplate")
             button:SetSize(90, 20)
@@ -773,7 +759,7 @@ function BG.SetListmaijia(maijia, focus, guolv)
             button.ds = button:CreateTexture()
             button.ds:SetPoint("TOPLEFT", -4, -2)
             button.ds:SetPoint("BOTTOMRIGHT", 0, 0)
-            button.ds:SetColorTexture(1, 1, 1, BG.OnEnterAlpha)
+            button.ds:SetColorTexture(1, 1, 1, BG.onEnterAlpha)
             button.ds:Hide()
 
             button:SetScript("OnMouseDown", function(self, enter)
@@ -814,6 +800,7 @@ function BG.SetListjine(jine, FB, b, i)
     BG.FrameJineList:SetBackdropColor(0, 0, 0, 0.8)
     BG.FrameJineList:SetPoint("TOPLEFT", jine, "BOTTOMLEFT", -9, 2)
     BG.FrameJineList:EnableMouse(true)
+    BG.FrameJineList:SetClampedToScreen(true)
 
     local text = BG.FrameJineList:CreateFontString()
     text:SetPoint("TOP", BG.FrameJineList, "TOP", 0, -10)
@@ -911,12 +898,12 @@ end
 ADDONSELF.FrameDongHua = FrameDongHua
 
 ------------------函数：清空表格------------------
-function BG.QingKong(type, FB)
+function BG.QingKong(_type, FB)
     if BG.DeBug and not FB then
         FB = BG.FB1
     end
     if not FB then return end
-    if type == "biaoge" then
+    if _type == "biaoge" then
         for b = 1, Maxb[FB] do
             for i = 1, Maxi[FB] + 10 do
                 -- 表格
@@ -968,7 +955,7 @@ function BG.QingKong(type, FB)
 
         local num -- 分钱人数
         if BG.IsVanilla() then
-            num = 10
+            num = BG.GetFBinfo(FB, "maxplayers") or 10
         else
             num = 25
             local nanduID = GetRaidDifficultyID()
@@ -987,7 +974,7 @@ function BG.QingKong(type, FB)
             BiaoGe[FB]["boss" .. Maxb[FB] + 2]["jine4"] = num
         end
         return num
-    elseif type == "hope" then
+    elseif _type == "hope" then
         for n = 1, 4 do
             for b = 1, Maxb[FB] - 1 do
                 for i = 1, HopeMaxi do
@@ -1345,20 +1332,20 @@ do
         end
     end
 
-    function BG.HideHilightBag()
+    function BG.Hide_AllHilight()
         for key, value in pairs(BG.LastBagItemFrame) do
             value:Hide()
         end
-        BG.LastBagItemFrame = {}
+        wipe(BG.LastBagItemFrame)
     end
 end
 
 ------------------创建按钮模板1------------------
 function BG.Create_Button1(parent)
     local bt = CreateFrame("Button", nil, parent)
-    bt:SetNormalFontObject(BG.FontBlue1)
-    bt:SetDisabledFontObject(BG.FontBlue1)
-    bt:SetHighlightFontObject(BG.FontBlue1)
+    bt:SetNormalFontObject(BG.FontBlue15)
+    bt:SetDisabledFontObject(BG.FontBlue15)
+    bt:SetHighlightFontObject(BG.FontBlue15)
 
     local texture2 = bt:CreateTexture(nil, "OVERLAY")
     texture2:SetBlendMode("ALPHAKEY")
@@ -1424,6 +1411,63 @@ function BG.TurntoItemLib(button)
     else
         UIErrorsFrame:AddMessage(L["这个物品不是装备"], RED_FONT_COLOR:GetRGB())
     end
+end
+
+------------------获取Auction插件里某个物品的历史价格------------------
+function BG.GetAuctionPrice(itemID, mod)
+    itemID = tostring(itemID)
+    local realmName = GetRealmName()
+    local faction = UnitFactionGroup("player")
+    if AUCTIONATOR_PRICE_DATABASE and AUCTIONATOR_PRICE_DATABASE[realmName .. " " .. faction] and
+        AUCTIONATOR_PRICE_DATABASE[realmName .. " " .. faction][itemID] then
+        local m = AUCTIONATOR_PRICE_DATABASE[realmName .. " " .. faction][itemID].m
+        if mod == "notsilver" then
+            m = m - (m % 10000)
+        elseif mod == "notcopper" then
+            m = m - (m % 100)
+        end
+
+        return GetMoneyString(m, true), m
+    else
+        return ""
+    end
+end
+
+------------------复原一个设置------------------
+function BG.Once(name, dt, func)
+    if BiaoGe and BiaoGe.options and BiaoGe.options.SearchHistory then
+        if not BiaoGe.options.SearchHistory[name .. dt] then
+            func()
+            BiaoGe.options.SearchHistory[name .. dt] = true
+        end
+    end
+end
+
+function BG.CreateScrollFrame(parent, w, h)
+    local f = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+    f:SetBackdrop({
+        bgFile = "Interface/ChatFrame/ChatFrameBackground",
+        edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+        edgeSize = 16,
+        insets = { left = 3, right = 3, top = 3, bottom = 3 }
+    })
+    f:SetBackdropColor(0, 0, 0, 0.9)
+    f:SetSize(w, h)
+    f:EnableMouse(true)
+    f:Hide()
+
+    local s = CreateFrame("ScrollFrame", nil, f, "UIPanelScrollFrameTemplate") -- 滚动
+    s:SetWidth(f:GetWidth() - 22)
+    s:SetHeight(f:GetHeight() - 9)
+    s:SetPoint("TOPLEFT", f, "TOPLEFT", 5, -5)
+    s.ScrollBar.scrollStep = BG.scrollStep
+
+    local child = CreateFrame("Frame", nil, f) -- 子框架
+    child:SetWidth(s:GetWidth())
+    child:SetHeight(s:GetHeight())
+    s:SetScrollChild(child)
+
+    return f, child
 end
 
 --[[

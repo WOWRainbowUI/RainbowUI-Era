@@ -70,17 +70,22 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             GameTooltip:Hide()
         end)
         f:SetScript("OnHyperlinkClick", function(self, link, text, button)
-            local _, p = strfind(link, "player")
-            local item = strfind(link, "item")
-            if p then
-                local len = strlen(link)
-                local player = strsub(link, p + 2, len)
+            if (strsub(link, 1, 6) == "player") then
+                local _, name, lineID, chatType = strsplit(":", link)
                 if button == "LeftButton" then
-                    ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
-                    local text = "/W " .. player .. " "
-                    ChatEdit_InsertLink(text)
+                    if IsShiftKeyDown() then
+                        ChatFrame_SendTell(name, ChatFrame1)
+                    else
+                        if BG.maijiaButton then
+                            BG.PlaySound(1)
+                            BG.maijiaButton:SetTextColor(GetClassRGB(name))
+                            BG.maijiaButton:SetText(name)
+                            BG.maijiaButton:SetCursorPosition(0)
+                        end
+                    end
+                elseif button == "RightButton" then
                 end
-            elseif item then
+            elseif (strsub(link, 1, 4) == "item") then
                 local name, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
                 if IsShiftKeyDown() then
                     ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
@@ -135,39 +140,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             self:GetParent():ScrollToBottom()
             hilighttexture:Hide()
         end)
-        BG.FramePaiMaiMsg2:SetScript("OnMouseWheel", function(self, delta, ...)
-            if delta == 1 then
-                if IsShiftKeyDown() then
-                    BG.FramePaiMaiMsg2:ScrollToTop()
-                elseif IsControlKeyDown() then
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                else
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                    BG.FramePaiMaiMsg2:ScrollUp()
-                end
-            elseif delta == -1 then
-                if IsShiftKeyDown() then
-                    BG.FramePaiMaiMsg2:ScrollToBottom()
-                    hilighttexture:Hide()
-                elseif IsControlKeyDown() then
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                else
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                    BG.FramePaiMaiMsg2:ScrollDown()
-                    if BG.FramePaiMaiMsg2:AtBottom() then
-                        hilighttexture:Hide()
-                    end
-                end
-            end
-        end)
+
         local bt = CreateFrame("Button", nil, BG.FramePaiMaiMsg2) -- 下滚
         bt:SetSize(30, 30)
         bt:SetPoint("BOTTOM", chatbt, "TOP", 0, -8)
@@ -195,11 +168,70 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             self:GetParent():ScrollUp()
             self:GetParent():ScrollUp()
         end)
+        -- 提示
+        local bt = CreateFrame("Button", nil, BG.FramePaiMaiMsg2)
+        bt:SetSize(25, 25)
+        bt:SetPoint("BOTTOM", chatbt, "TOP", 0, -5)
+        local tex = bt:CreateTexture()
+        tex:SetAllPoints()
+        tex:SetTexture(616343)
+        tex:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+        local tex2 = bt:CreateTexture()
+        tex2:SetAllPoints()
+        tex2:SetTexture(616343)
+        tex2:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+        bt:SetNormalTexture(tex)
+        bt:SetHighlightTexture(tex2)
+        bt:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 0)
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(L["拍卖聊天记录框"], 1, 1, 1)
+            GameTooltip:AddLine(L["|cffFFFFFF左键玩家名字：|r设置为买家"], 1, 0.82, 0, true)
+            GameTooltip:AddLine(L["|cffFFFFFFSHIFT+左键玩家名字：|r密语"], 1, 0.82, 0, true)
+            GameTooltip:AddLine(L["|cffFFFFFFCTRL+滚轮：|r快速滚动"], 1, 0.82, 0, true)
+            GameTooltip:AddLine(L["|cffFFFFFFSHIFT+滚轮：|r滚动到最前/最后"], 1, 0.82, 0, true)
+            GameTooltip:Show()
+        end)
+        BG.GameTooltip_Hide(bt)
+
+        BG.FramePaiMaiMsg2:SetScript("OnMouseWheel", function(self, delta, ...)
+            if delta == 1 then
+                if IsShiftKeyDown() then
+                    self:ScrollToTop()
+                elseif IsControlKeyDown() then
+                    self:ScrollUp()
+                    self:ScrollUp()
+                    self:ScrollUp()
+                    self:ScrollUp()
+                    self:ScrollUp()
+                else
+                    self:ScrollUp()
+                    self:ScrollUp()
+                end
+            elseif delta == -1 then
+                if IsShiftKeyDown() then
+                    self:ScrollToBottom()
+                    hilighttexture:Hide()
+                elseif IsControlKeyDown() then
+                    self:ScrollDown()
+                    self:ScrollDown()
+                    self:ScrollDown()
+                    self:ScrollDown()
+                    self:ScrollDown()
+                else
+                    self:ScrollDown()
+                    self:ScrollDown()
+                    if self:AtBottom() then
+                        hilighttexture:Hide()
+                    end
+                end
+            end
+        end)
     end
 
     -- 监控聊天事件
     do
-        local hei = {
+        local blacklist = {
             "spell",
             "achievement",
             "enchant",
@@ -214,74 +246,48 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             L["分钟"],
             L["时间"],
         }
-        local hei_leader = hei
+
+        local function AddMsg(text, playerName, lineID, ML)
+            if string.find(text, "%d+") or string.find(text, "[pP]") or ML then
+                local msg
+                local h, m = GetGameTime()
+                h = string.format("%02d", h)
+                m = string.format("%02d", m)
+                local time = "|cff" .. "808080" .. "(" .. h .. ":" .. m .. ")|r"
+                local nameLink = "|Hplayer:" .. playerName .. ":" .. lineID .. ":RAID:" .. "|h[" .. SetClassCFF(playerName) .. "]|h"
+                if ML then
+                    msg = time .. " " .. "|cffFF4500" .. nameLink .. "：" .. text .. RN -- 物品分配者聊天
+                else
+                    msg = time .. " " .. "|cffFF7F50" .. nameLink .. "：" .. text .. RN -- 团员聊天
+                end
+                BG.FramePaiMaiMsg2:AddMessage(msg)
+                if not BG.FramePaiMaiMsg2:AtBottom() then
+                    hilighttexture:Show()
+                end
+            end
+        end
 
         local f = CreateFrame("Frame")
         f:RegisterEvent("CHAT_MSG_RAID_WARNING")
         f:RegisterEvent("CHAT_MSG_RAID_LEADER")
-        f:SetScript("OnEvent", function(self, even, text, playerName, ...)
-            -- local text = string.lower(text)
-            local playerName = strsplit("-", playerName)
-            for key, value in pairs(hei_leader) do
-                if string.find(text, value) and not string.find(text, "item") then
+        f:RegisterEvent("CHAT_MSG_RAID")
+        f:SetScript("OnEvent", function(self, even, ...)
+            local msg, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid = ...
+            playerName = strsplit("-", playerName)
+            local ML
+            if even == "CHAT_MSG_RAID_WARNING" or even == "CHAT_MSG_RAID_LEADER" then
+                ML = true
+            elseif even == "CHAT_MSG_RAID" then
+                if playerName == BG.MasterLooter then
+                    ML = true
+                end
+            end
+            for key, text in pairs(blacklist) do
+                if string.find(msg, text) and not string.find(msg, "item:") then
                     return
                 end
             end
-            if string.find(text, "%d+") or string.find(text, "p") then
-                local msg
-                local h, m = GetGameTime()
-                h = string.format("%02d", h)
-                m = string.format("%02d", m)
-                local time = "|cff" .. "808080" .. "(" .. h .. ":" .. m .. ")|r"
-                playerName = "|Hplayer:" .. playerName .. "|h[" .. SetClassCFF(playerName) .. "]|h"
-                msg = time .. " " .. "|cffFF4500" .. playerName .. "：" .. text .. RN -- 团长聊天
-                BG.FramePaiMaiMsg2:AddMessage(msg)
-                if not BG.FramePaiMaiMsg2:AtBottom() then
-                    hilighttexture:Show()
-                end
-            end
-        end)
-
-
-        local f = CreateFrame("Frame")
-        f:RegisterEvent("CHAT_MSG_RAID")
-        f:SetScript("OnEvent", function(self, even, text, playerName, ...)
-            -- local text = string.lower(text)
-            local playerName = strsplit("-", playerName)
-            local ML
-            if playerName == BG.MasterLooter then
-                ML = true
-            end
-            if ML then
-                for key, value in pairs(hei_leader) do
-                    if string.find(text, value) then
-                        return
-                    end
-                end
-            else
-                for key, value in pairs(hei) do
-                    if string.find(text, value) then
-                        return
-                    end
-                end
-            end
-            if string.find(text, "%d+") or string.find(text, "p") or ML then
-                local msg
-                local h, m = GetGameTime()
-                h = string.format("%02d", h)
-                m = string.format("%02d", m)
-                local time = "|cff" .. "808080" .. "(" .. h .. ":" .. m .. ")|r"
-                playerName = "|Hplayer:" .. playerName .. "|h[" .. SetClassCFF(playerName) .. "]|h"
-                if ML then
-                    msg = time .. " " .. "|cffFF4500" .. playerName .. "：" .. text .. RN -- 物品分配者聊天
-                else
-                    msg = time .. " " .. "|cffFF7F50" .. playerName .. "：" .. text .. RN -- 团员聊天
-                end
-                BG.FramePaiMaiMsg2:AddMessage(msg)
-                if not BG.FramePaiMaiMsg2:AtBottom() then
-                    hilighttexture:Show()
-                end
-            end
+            AddMsg(msg, playerName, lineID, ML)
         end)
     end
 end)

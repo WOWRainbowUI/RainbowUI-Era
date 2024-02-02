@@ -190,7 +190,7 @@ function BG.HistoryJinEUI(FB, t, b, bb, i, ii)
     bt:SetSize(80, 20)
     bt:SetPoint("TOPLEFT", preWidget, "TOPRIGHT", 5, 0);
     bt:SetFrameLevel(110)
-    bt:SetNumeric(true)
+    -- bt:SetNumeric(true)
     bt:SetAutoFocus(false)
     bt:Show()
     bt:SetEnabled(false)

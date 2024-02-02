@@ -78,11 +78,10 @@ local function CreateListTable(type, tx)
 end
 
 
-function BG.XiaoFeiUI()
+function BG.XiaoFeiUI(lastbt)
     local bt = CreateFrame("Button", nil, BG.FBMainFrame, "UIPanelButtonTemplate")
     bt:SetSize(90, BG.ButtonZhangDan:GetHeight())
-    bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -330, select(5, BG.ButtonZhangDan:GetPoint()))
-    -- bt:SetPoint("BOTTOM", BG.MainFrame, "BOTTOM", 30, 55)
+    bt:SetPoint("LEFT", lastbt, "RIGHT", 10, 0)
     bt:SetText(L["通报消费"])
     bt:Show()
     BG.ButtonXiaoFei = bt
@@ -121,12 +120,6 @@ function BG.XiaoFeiUI()
             PlaySoundFile(BG.sound2, "Master")
         end
     end)
-end
 
--- local frame = CreateFrame("Frame")
--- frame:RegisterEvent("ADDON_LOADED")
--- frame:SetScript("OnEvent", function(self, event, addonName)
---     if addonName == AddonName then
---         TongBaoUI()
---     end
--- end)
+    return bt
+end

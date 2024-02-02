@@ -26,6 +26,8 @@ local HopeMaxb = ADDONSELF.HopeMaxb
 local HopeMaxi = ADDONSELF.HopeMaxi
 
 local pt = print
+local RealmId = GetRealmID()
+local player = UnitName("player")
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
@@ -69,40 +71,51 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             end
         end
 
-        -- local function abc(num, FB, b, i, Money, qiankuan, savemoney, saveqiankuan, qiankuantext, Items, items, first)
-        --     local returntext = ""
-        --     if num == 1 then
-        --         BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetText(Player)
-        --         BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetCursorPosition(0)
-        --         BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetTextColor(GetClassRGB(Player))
-        --         BiaoGe[FB]["boss" .. b]["maijia" .. i] = (Player)
-        --         BiaoGe[FB]["boss" .. b]["color" .. i] = { GetClassRGB(Player) }
+        local function CancelGuanZhuAndHope(itemID)
+            local _, link = GetItemInfo(itemID)
+            local haveguanzhu, havehope
+            local FB = BG.FB1
+            for b = 1, Maxb[FB] do
+                for i = 1, Maxi[FB] do
+                    local bt = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+                    if bt then
+                        local _itemID = GetItemID(bt:GetText())
+                        if _itemID == itemID then
+                            if BiaoGe[FB]["boss" .. b]["guanzhu" .. i] then
+                                BiaoGe[FB]["boss" .. b]["guanzhu" .. i] = nil
+                                BG.Frame[FB]["boss" .. b]["guanzhu" .. i]:Hide()
+                                haveguanzhu = true
+                            end
+                        end
+                    end
+                end
+            end
+            for n = 1, HopeMaxn[FB] do
+                for b = 1, HopeMaxb[FB] do
+                    for i = 1, HopeMaxi do
+                        local bt = BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]
+                        if bt then
+                            local _itemID = GetItemID(bt:GetText())
+                            if _itemID == itemID then
+                                bt:SetText("")
+                                BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] = nil
+                                havehope = true
+                            end
+                        end
+                    end
+                end
+            end
+            BG.UpdateItemLib_LeftHope(itemID, 0)
+            BG.UpdateItemLib_RightHope(itemID, 0)
 
-        --         if not savemoney then
-        --             BG.Frame[FB]["boss" .. b]["jine" .. i]:SetText(Money + qiankuan)
-        --             BiaoGe[FB]["boss" .. b]["jine" .. i] = (Money + qiankuan)
-        --             savemoney = true
-        --         else
-        --             BG.Frame[FB]["boss" .. b]["jine" .. i]:SetText(L["打包交易"])
-        --             BiaoGe[FB]["boss" .. b]["jine" .. i] = (L["打包交易"])
-        --         end
-        --     end
-        --     if not saveqiankuan then
-        --         if qiankuan ~= 0 and num == 1 then
-        --             BiaoGe[FB]["boss" .. b]["qiankuan" .. i] = qiankuan
-        --             BG.Frame[FB]["boss" .. b]["qiankuan" .. i]:Show()
-        --             saveqiankuan = true
-        --         end
-        --     end
-        --     if not first then
-        --         local Texture = select(10, GetItemInfo(Items[items]))
-        --         returntext = (format("|cff00BFFF" .. L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
-        --             (AddTexture(Texture) .. Items[items]), SetClassCFF(Player), "|cffFFD700", (Money + qiankuan), qiankuantext, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"]))
-        --         BG.tradeDropDown.DropDown:Hide()
-        --         first = true
-        --     end
-        --     return returntext
-        -- end
+            if haveguanzhu and havehope then
+                SendSystemMessage(format(L["|cff00BFFF<BiaoGe>|r 已自动取消%s的|cff00BFFF关注|r和|cff00FF00心愿|r。"], link))
+            elseif haveguanzhu then
+                SendSystemMessage(format(L["|cff00BFFF<BiaoGe>|r 已自动取消%s的|cff00BFFF关注|r。"], link))
+            elseif havehope then
+                SendSystemMessage(format(L["|cff00BFFF<BiaoGe>|r 已自动取消%s的|cff00FF00心愿|r。"], link))
+            end
+        end
 
         function BG.TradeText(num, target, player, targetmoney, playermoney, targetitems, playeritems)
             local FB = BG.FB1
@@ -141,54 +154,52 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
 
                 if (targetitems[1] and playeritems[1] and Money ~= 0) or (Items[1] and not Items2[1]) then
-                    local savemoney, saveqiankuan, first
+                    local first = true
                     for items = 1, #Items do
                         local done
                         for b = 1, Maxb[FB], 1 do
                             for i = 1, Maxi[FB], 1 do
-                                if BG.Frame[FB]["boss" .. b]["zhuangbei" .. i] then
-                                    if GetItemID(BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]:GetText()) == GetItemID(Items[items]) then
-                                        if BG.Frame[FB]["boss" .. b]["maijia" .. i]:GetText() == "" and BG.Frame[FB]["boss" .. b]["jine" .. i]:GetText() == "" then
-                                            if num == 1 then
-                                                BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetText(Player)
-                                                BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetCursorPosition(0)
-                                                BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetTextColor(GetClassRGB(Player))
-                                                BiaoGe[FB]["boss" .. b]["maijia" .. i] = (Player)
-                                                BiaoGe[FB]["boss" .. b]["color" .. i] = { GetClassRGB(Player) }
-
-                                                if not savemoney then
-                                                    BG.Frame[FB]["boss" .. b]["jine" .. i]:SetText(Money + qiankuan)
-                                                    BiaoGe[FB]["boss" .. b]["jine" .. i] = (Money + qiankuan)
-                                                    savemoney = true
-                                                else
-                                                    BG.Frame[FB]["boss" .. b]["jine" .. i]:SetText(L["打包交易"])
-                                                    BiaoGe[FB]["boss" .. b]["jine" .. i] = (L["打包交易"])
-                                                end
+                                local bt = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+                                if bt and GetItemID(bt:GetText()) == GetItemID(Items[items]) and
+                                    BG.Frame[FB]["boss" .. b]["maijia" .. i]:GetText() == "" and
+                                    BG.Frame[FB]["boss" .. b]["jine" .. i]:GetText() == "" then
+                                    if num == 1 then
+                                        BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetText(Player)
+                                        BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetCursorPosition(0)
+                                        BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetTextColor(GetClassRGB(Player))
+                                        BiaoGe[FB]["boss" .. b]["maijia" .. i] = (Player)
+                                        BiaoGe[FB]["boss" .. b]["color" .. i] = { GetClassRGB(Player) }
+                                        if first then
+                                            BG.Frame[FB]["boss" .. b]["jine" .. i]:SetText(Money + qiankuan)
+                                            BiaoGe[FB]["boss" .. b]["jine" .. i] = (Money + qiankuan)
+                                            if qiankuan ~= 0 then
+                                                BiaoGe[FB]["boss" .. b]["qiankuan" .. i] = qiankuan
+                                                BG.Frame[FB]["boss" .. b]["qiankuan" .. i]:Show()
                                             end
-                                            if not saveqiankuan then
-                                                if qiankuan ~= 0 and num == 1 then
-                                                    BiaoGe[FB]["boss" .. b]["qiankuan" .. i] = qiankuan
-                                                    BG.Frame[FB]["boss" .. b]["qiankuan" .. i]:Show()
-                                                    saveqiankuan = true
-                                                end
-                                            end
-                                            if not first then
-                                                local Texture = select(10, GetItemInfo(Items[items]))
-                                                returntext = (format("|cff00BFFF" .. L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
-                                                    (AddTexture(Texture) .. Items[items]), SetClassCFF(Player), "|cffFFD700", (Money + qiankuan), qiankuantext, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"]))
-                                                BG.tradeDropDown.DropDown:Hide()
-                                                -- return returntext
-                                                first = true
-                                            end
-                                            done = true
-                                            break
+                                        else
+                                            BG.Frame[FB]["boss" .. b]["jine" .. i]:SetText(L["打包交易"])
+                                            BiaoGe[FB]["boss" .. b]["jine" .. i] = (L["打包交易"])
+                                        end
+                                        -- 取消关注
+                                        if Player == UnitName("player") then
+                                            local itemID = GetItemID(bt:GetText())
+                                            CancelGuanZhuAndHope(itemID)
                                         end
                                     end
+                                    if first then
+                                        local Texture = select(10, GetItemInfo(Items[items]))
+                                        returntext = (format("|cff00BFFF" ..
+                                            L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
+                                            (AddTexture(Texture) .. Items[items]), SetClassCFF(Player), "|cffFFD700",
+                                            (Money + qiankuan), qiankuantext, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"]))
+                                        BG.tradeDropDown.DropDown:Hide()
+                                    end
+                                    first = nil
+                                    done = true
+                                    break
                                 end
                             end
-                            if done then
-                                break
-                            end
+                            if done then break end
                         end
                     end
                     if returntext ~= "" then
@@ -214,11 +225,12 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                                         BiaoGe[FB]["boss" .. b]["maijia" .. i] = (Player)
                                         BiaoGe[FB]["boss" .. b]["color" .. i] = { GetClassRGB(Player) }
                                         BiaoGe[FB]["boss" .. b]["jine" .. i] = (Money + qiankuan)
+                                        if qiankuan ~= 0 then
+                                            BiaoGe[FB]["boss" .. b]["qiankuan" .. i] = qiankuan
+                                            BG.Frame[FB]["boss" .. b]["qiankuan" .. i]:Show()
+                                        end
                                     end
-                                    if qiankuan ~= 0 and num == 1 then
-                                        BiaoGe[FB]["boss" .. b]["qiankuan" .. i] = qiankuan
-                                        BG.Frame[FB]["boss" .. b]["qiankuan" .. i]:Show()
-                                    end
+
                                     local Texture = select(10, GetItemInfo(Items[1]))
                                     returntext = (format("|cff00BFFF" .. L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
                                         (AddTexture(Texture) .. Items[1]), SetClassCFF(Player), "|cffFFD700", (Money + qiankuan), qiankuantext, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"]))
@@ -325,9 +337,9 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         frame:SetBackdrop({
             bgFile = "Interface/ChatFrame/ChatFrameBackground",
             edgeFile = "Interface/ChatFrame/ChatFrameBackground",
-            edgeSize = 2,
+            edgeSize = 1,
         })
-        frame:SetBackdropColor(0, 0, 0, 0.8)
+        frame:SetBackdropColor(0, 0, 0, 0.7)
         frame:SetBackdropBorderColor(0, 0, 0, 1)
         frame:SetSize(200, 200)
         frame:SetPoint("BOTTOMLEFT", TradeFrame, "BOTTOMRIGHT", 0, 0)

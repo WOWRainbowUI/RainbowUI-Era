@@ -97,7 +97,7 @@ function BG.FilterClassItemUI()
             BG.UpdateAllFilter()
             LibBG:CloseDropDownMenus()
         else
-            if _G.L_DropDownList1 and _G.L_DropDownList1:IsVisible() then
+            if BG.DropDownListIsVisible(self) then
                 _G.L_DropDownList1:Hide()
             else
                 local shunxu = {
@@ -714,9 +714,9 @@ function BG.FilterClassItemUI()
     -- 重置
     local bt = CreateFrame("Button", nil, BG.FilterClassItemMainFrame)
     do
-        bt:SetNormalFontObject(BG.FontRed1)
-        bt:SetDisabledFontObject(BG.FontDisabled)
-        bt:SetHighlightFontObject(BG.FontHilight)
+        bt:SetNormalFontObject(BG.FontRed15)
+        bt:SetDisabledFontObject(BG.FontDis15)
+        bt:SetHighlightFontObject(BG.FontWhite15)
         bt:SetSize(60, 30)
         bt:SetPoint("TOPLEFT", 5, -40)
         bt:SetText(L["重置"])
@@ -733,7 +733,7 @@ function BG.FilterClassItemUI()
         end)
         BG.GameTooltip_Hide(bt)
         bt:SetScript("OnClick", function(self)
-            if _G.L_DropDownList1 and _G.L_DropDownList1:IsVisible() then
+            if BG.DropDownListIsVisible(self) then
                 _G.L_DropDownList1:Hide()
             else
                 local channelTypeMenu = {

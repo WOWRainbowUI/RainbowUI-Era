@@ -22,6 +22,9 @@ local FrameHide = ADDONSELF.FrameHide
 
 local pt = print
 
+local dangqianTbl = { "当前表格", "當前表格" }
+local historyTbl = { "历史表格", "歷史表格" }
+
 function BG.ReceiveUI()
     ------------------把分享表格文字转换为链接------------------
     do
@@ -115,7 +118,6 @@ function BG.ReceiveUI()
             if prefix ~= "BiaoGe" then return end
             local sendername = strsplit("-", sender)
             local playername = UnitName("player")
-            -- if sendername == playername then return end
             local type, FB, historyname = strsplit("-", msg)
             local yes
             for key, _FB in pairs(BG.FBtable) do
@@ -129,13 +131,14 @@ function BG.ReceiveUI()
             BG.SendBiaoGe = {}
             BG.SendBiaoGe.FB = FB
 
-            if type == L["当前表格"] then
+            if BG.FindTableString(type, dangqianTbl) then
                 local DT = tonumber(date("%y%m%d%H%M%S"))
                 local DTcn = date(L["%m月%d日%H:%M:%S\n"])
-                local tx = " " .. BG.FBcn(FB) .. " " .. playername
-
+                local biaoti = format(L["%s%s %s人 工资:%s"], DTcn, BG.GetFBinfo(FB, "localName"),
+                    BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine" .. 4]:GetText(),
+                    BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine" .. 5]:GetText())
                 BG.SendBiaoGe.DT = DT
-                BG.SendBiaoGe.BiaoTi = DTcn .. tx
+                BG.SendBiaoGe.BiaoTi = biaoti
 
                 for b = 1, Maxb[FB] + 2 do
                     BG.SendBiaoGe["boss" .. b] = {}
@@ -155,18 +158,15 @@ function BG.ReceiveUI()
                         BG.SendBiaoGe["boss" .. b]["time"] = BG.Frame[FB]["boss" .. b]["time"]:GetText()
                     end
                 end
-            end
-
-            if type == L["历史表格"] and historyname then
+            elseif BG.FindTableString(type, historyTbl) and historyname then
                 local DT
                 for key, value in pairs(BiaoGe.HistoryList[FB]) do
                     local t = string.gsub(BiaoGe.HistoryList[FB][key][2], "\n", "")
                     if historyname == t then
                         DT = tonumber(BiaoGe.HistoryList[FB][key][1])
                         BG.SendBiaoGe.DT = DT
-                        local DTcn = strsplit("\n", BiaoGe.HistoryList[FB][key][2]) .. "\n"
-                        local tx = " " .. BG.FBcn(FB) .. " " .. playername
-                        BG.SendBiaoGe.BiaoTi = DTcn .. tx
+                        BG.SendBiaoGe.BiaoTi = BiaoGe.HistoryList[FB][key][2]
+                        break
                     end
                 end
                 if not BG.SendBiaoGe.DT then return end
@@ -274,7 +274,6 @@ function BG.ReceiveUI()
             if prefix ~= "BiaoGe" then return end
             local sendername = strsplit("-", sender)
             local playername = UnitName("player")
-            -- if sendername == playername then return end
             local Receive = { strsplit("-", msg) }
             if Receive[1] ~= "BG" then return end
             for index, value in ipairs(Receive) do
@@ -349,8 +348,7 @@ function BG.ReceiveUI()
                     end
                     BG["ReceiveFrame" .. FB]:Show()
 
-                    local t = string.gsub(BiaoTi, "\n", "")
-                    BG.ReceiveMainFrameTitle:SetText(t)
+                    BG.ReceiveMainFrameTitle:SetText(BiaoTi)
                     BG.ReceiveMainFrametext:SetText("")
                 end
             end

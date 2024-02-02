@@ -58,8 +58,14 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             for name, ver in pairs(self.table) do
                 if v.name == name then
                     Ver = ver
+                    break
                 end
             end
+            local notVerTex = ""
+            if Ver == L["无"] then
+                notVerTex = AddTexture("interface/raidframe/readycheck-notready")
+            end
+
             local role = ""
             local y
             if v.rank == 2 then
@@ -71,7 +77,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 role = role .. AddTexture("interface/groupframe/ui-group-masterlooter", y)
             end
             local c1, c2, c3 = GetClassRGB(v.name)
-            GameTooltip:AddDoubleLine(v.name .. role, Ver, c1, c2, c3, 1, 1, 1)
+            GameTooltip:AddDoubleLine(notVerTex .. v.name .. role, Ver, c1, c2, c3, 1, 1, 1)
         end
         GameTooltip:Show()
     end
@@ -495,35 +501,37 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local addon = CreateFrame("Frame", nil, BG.MainFrame)
         do
             addon:SetSize(1, 20)
-            addon:SetPoint("LEFT", BG.ButtonToken, "RIGHT", 10, 0)
+            addon:SetPoint("LEFT", BG.ButtonOnLineCount, "RIGHT", 0, 0)
             addon:Hide()
             addon.title = L["BiaoGe版本"]
-            addon.title2 = L["插件版本：%s"]
+            addon.title2 = L["插件：%s"]
             addon.table = BG.raidBiaoGeVersion
             addon:SetScript("OnEnter", Addon_OnEnter)
             BG.GameTooltip_Hide(addon)
             addon.text = addon:CreateFontString()
             addon.text:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
-            addon.text:SetPoint("CENTER")
+            addon.text:SetPoint("LEFT")
             addon.text:SetTextColor(RGB(BG.g1))
+            BG.ButtonRaidVer = addon
         end
 
         -- 拍卖WA
         local auction = CreateFrame("Frame", nil, BG.MainFrame)
         do
             auction:SetSize(1, 20)
-            auction:SetPoint("LEFT", addon, "RIGHT", 10, 0)
+            auction:SetPoint("LEFT", addon, "RIGHT", 0, 0)
             auction:Hide()
             auction.title = L["拍卖WA版本"]
-            auction.title2 = L["拍卖版本：%s"]
+            auction.title2 = L["拍卖：%s"]
             auction.table = BG.raidAuctionVersion
             auction.IsAuciton = true
             auction:SetScript("OnEnter", Addon_OnEnter)
             BG.GameTooltip_Hide(auction)
             auction.text = auction:CreateFontString()
             auction.text:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
-            auction.text:SetPoint("CENTER")
+            auction.text:SetPoint("LEFT")
             auction.text:SetTextColor(RGB(BG.g1))
+            BG.ButtonRaidAuction = auction
         end
 
         local f = CreateFrame("Frame")
@@ -624,6 +632,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 s:SetWidth(f:GetWidth() - 10)
                 s:SetHeight(f:GetHeight() - 10)
                 s:SetPoint("CENTER")
+                s.ScrollBar.scrollStep = BG.scrollStep
                 s:SetScrollChild(edit)
                 edit:SetScript("OnEscapePressed", function()
                     f:Hide()
@@ -633,7 +642,8 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             BG.PlaySound(1)
         end
         local function OnEnter(self)
-            GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -self:GetWidth() * BiaoGe.options.scale, 0)
+            GameTooltip:SetOwner(self, "ANCHOR_NONE")
+            GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
             GameTooltip:ClearLines()
             GameTooltip:AddLine(self:GetText(), 1, 1, 1, true)
             GameTooltip:AddDoubleLine(L["拍卖WA版本"], BGA.ver)
@@ -649,9 +659,9 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local bt = CreateFrame("Button", nil, BG.MainFrame)
         bt:SetPoint("LEFT", BG.ButtonMove, "RIGHT", 15, 0)
         bt:SetNormalFontObject(BG.FontGreen15)
-        bt:SetDisabledFontObject(BG.FontDisabled)
-        bt:SetHighlightFontObject(BG.FontHilight)
-        bt:SetText(AddTexture("Interface\\GossipFrame\\AvailableQuestIcon") .. L["拍卖WA字符串"])
+        bt:SetDisabledFontObject(BG.FontDis15)
+        bt:SetHighlightFontObject(BG.FontWhite15)
+        bt:SetText(L["拍卖WA字符串"])
         bt:SetSize(bt:GetFontString():GetWidth(), 30)
         bt:SetScript("OnClick", OnClick)
         bt:SetScript("OnEnter", OnEnter)

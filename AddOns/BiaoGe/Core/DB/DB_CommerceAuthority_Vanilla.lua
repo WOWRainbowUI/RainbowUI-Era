@@ -1,4 +1,4 @@
-if not BG.IsVanilla() then return end
+if not BG.IsVanilla_Sod() then return end
 
 local _, ADDONSELF = ...
 
@@ -64,7 +64,12 @@ AddDB(211834, 5542, 211841, 200, 800, 3)
 AddDB(211827, 6339, 211841, 200, 800, 1)
 AddDB(211826, 15869, 211841, 200, 800, 14)
 
--- pt(GetItemInfo(211831))
+-- pt("|cffffffff|Hitem:211827::::::::::::::::::|h[测试物品]|h|r")
+-- pt("|cffffffff|Hitem:211828::::::::::::::::::|h[测试物品]|h|r")
+-- pt("|cffffffff|Hitem:211829::::::::::::::::::|h[测试物品]|h|r")
+-- pt("|cffffffff|Hitem:211830::::::::::::::::::|h[测试物品]|h|r")
+-- pt("|cffffffff|Hitem:211831::::::::::::::::::|h[测试物品]|h|r")
+-- pt("|cffffffff|Hitem:2319::::::::::::::::::|h[测试物品]|h|r")
 --[[
 /run print(GetItemInfo(211831))
  ]]

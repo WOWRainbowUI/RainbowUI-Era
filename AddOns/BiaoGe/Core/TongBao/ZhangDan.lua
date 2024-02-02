@@ -240,11 +240,18 @@ local function CreateListTable(type, tx)
 end
 
 
-function BG.ZhangDanUI()
+function BG.ZhangDanUI(lastbt)
     local bt = CreateFrame("Button", nil, BG.FBMainFrame, "UIPanelButtonTemplate")
     bt:SetSize(90, 30)
-    bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -530, 35)
-    -- bt:SetPoint("BOTTOM", BG.MainFrame, "BOTTOM", 140, 55)
+    if lastbt then
+        bt:SetPoint("LEFT", lastbt, "RIGHT", 10, 0)
+    else
+        if BG.IsVanilla() then
+            bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -430, 35)
+        else
+            bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -530, 35)
+        end
+    end
     bt:SetText(L["通报账单"])
     bt:Show()
     BG.ButtonZhangDan = bt
@@ -366,12 +373,6 @@ function BG.ZhangDanUI()
             OnEnter(bt)
         end
     end)
-end
 
--- local frame = CreateFrame("Frame")
--- frame:RegisterEvent("ADDON_LOADED")
--- frame:SetScript("OnEvent", function(self, event, addonName)
---     if addonName == AddonName then
---         ZhangDanUI()
---     end
--- end)
+    return bt
+end

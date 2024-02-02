@@ -32,19 +32,10 @@ function plugin:OnClick(button) --function plugin.OnClick(self, button)
 end
 
 function plugin:OnEnter(button)
-    -- if BG.IsVanilla() then
-    --     GameTooltip:SetOwner(self, "ANCHOR_BOTTOM", 0, 0)
-    --     GameTooltip:ClearLines()
-    --     GameTooltip:AddLine(BG.STC_b1(L["<BiaoGe> 金团表格"]), 1, 1, 1, true)
-    --     GameTooltip:AddLine(L["|cffFFFFFF左键：|r打开表格"], 1, 0.82, 0, true)
-    --     GameTooltip:AddLine(L["|cffFFFFFF右键：|r打开设置"], 1, 0.82, 0, true)
-    --     GameTooltip:Show()
-    -- else
     BG.SetFBCD("minimap")
     BG.FBCDFrame:ClearAllPoints()
     BG.FBCDFrame:SetPoint("TOPRIGHT", self, "BOTTOMLEFT", 0, 0)
     BG.FBCDFrame:Show()
-    -- end
 end
 
 function plugin:OnLeave(button)

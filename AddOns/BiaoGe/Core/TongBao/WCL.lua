@@ -204,12 +204,13 @@ local function WCLcolor(fenshu)
 end
 
 
-function BG.WCLUI()
+function BG.WCLUI(lastbt)
     local bt = CreateFrame("Button", nil, BG.FBMainFrame, "UIPanelButtonTemplate")
     bt:SetSize(90, BG.ButtonZhangDan:GetHeight())
-    bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -30, select(5, BG.ButtonZhangDan:GetPoint()))
+    bt:SetPoint("LEFT", lastbt, "RIGHT", 10, 0)
     bt:SetText(L["通报WCL"])
     BG.ButtonWCL = bt
+    if BG.IsVanilla() then bt:Hide() end
 
     local groupchange = true
     local f = CreateFrame("Frame")
@@ -281,15 +282,9 @@ function BG.WCLUI()
             PlaySoundFile(BG.sound2, "Master")
         end
     end)
-end
 
--- local frame = CreateFrame("Frame")
--- frame:RegisterEvent("ADDON_LOADED")
--- frame:SetScript("OnEvent", function(self, event, addonName)
---     if addonName == AddonName then
---         TongBaoUI()
---     end
--- end)
+    return bt
+end
 
 --AD：粉
 --LD：橙
