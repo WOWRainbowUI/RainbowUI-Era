@@ -17,14 +17,6 @@ local FrameHide = ADDONSELF.FrameHide
 local AddTexture = ADDONSELF.AddTexture
 local GetItemID = ADDONSELF.GetItemID
 
-local Width = ADDONSELF.Width
-local Height = ADDONSELF.Height
-local Maxb = ADDONSELF.Maxb
-local Maxi = ADDONSELF.Maxi
-local HopeMaxn = ADDONSELF.HopeMaxn
-local HopeMaxb = ADDONSELF.HopeMaxb
-local HopeMaxi = ADDONSELF.HopeMaxi
-
 local pt = print
 
 local YY = "BiaoGeYY"
@@ -310,6 +302,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             s:SetWidth(f:GetWidth() - 10)
             s:SetHeight(f:GetHeight() - 10)
             s:SetPoint("CENTER")
+            s.ScrollBar.scrollStep = BG.scrollStep
             s:SetScrollChild(edit)
             BG.YYMainFrame.new.scroll = s
 
@@ -426,8 +419,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             bt:SetSize(190, 20)
             bt:SetPoint("LEFT", BG.YYMainFrame.new.yy, "RIGHT", 10, 0)
             bt:SetNormalFontObject(BG.FontGreen15)
-            bt:SetDisabledFontObject(BG.FontDisabled)
-            bt:SetHighlightFontObject(BG.FontHilight)
+            bt:SetDisabledFontObject(BG.FontDis15)
+            bt:SetHighlightFontObject(BG.FontWhite15)
             bt:SetText(L["该YY已有评价，需要修改吗？"])
             bt:Hide()
             BG.YYMainFrame.new.buttonrepeat = bt
@@ -453,7 +446,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             insets = { left = 3, right = 3, top = 3, bottom = 3 }
         })
         f:SetBackdropColor(0, 0, 0, 0.4)
-        f:SetSize(BG.YYMainFrame.new:GetWidth(), 500)
+        f:SetSize(BG.YYMainFrame.new:GetWidth(), 470)
         f:SetPoint("TOPLEFT", BG.YYMainFrame.new, "BOTTOMLEFT", 0, -20)
         BG.YYMainFrame.my = f
 
@@ -520,6 +513,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         local s = CreateFrame("ScrollFrame", nil, BG.YYMainFrame.my, "UIPanelScrollFrameTemplate")
         s:SetPoint("TOPLEFT", BG.YYMainFrame.my, 0, -height - 10 - 3)
         s:SetPoint("BOTTOMRIGHT", BG.YYMainFrame.my, -27, 5)
+        s.ScrollBar.scrollStep = BG.scrollStep
         s:SetScrollChild(f)
 
         function Y.Pingjia(text)
@@ -729,7 +723,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             insets = { left = 3, right = 3, top = 3, bottom = 3 }
         })
         f:SetBackdropColor(0, 0, 0, 0.4)
-        f:SetSize(BG.YYMainFrame.new:GetWidth(), 700)
+        f:SetSize(BG.YYMainFrame.new:GetWidth(), 670)
         f:SetPoint("TOPLEFT", BG.YYMainFrame.new, "TOPRIGHT", 20, 0)
         BG.YYMainFrame.search = f
 
@@ -1134,6 +1128,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             local s = CreateFrame("ScrollFrame", nil, BG.YYMainFrame.result, "UIPanelScrollFrameTemplate")
             s:SetPoint("TOPLEFT", BG.YYMainFrame.result, 0, -height - 10 - 3)
             s:SetPoint("BOTTOMRIGHT", BG.YYMainFrame.result, -27, 5)
+            s.ScrollBar.scrollStep = BG.scrollStep
             s:SetScrollChild(f)
 
             local function OnEnter(self)
@@ -1903,8 +1898,15 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             end
         end
 
+        local function IsTheEndBoss(bossId)
+            for i, _bossId in ipairs(BG.TheEndBossID) do
+                if _bossId == bossId then
+                    return true
+                end
+            end
+        end
         BG.RegisterEvent("ENCOUNTER_END", function(self, _, bossId, _, _, _, success)
-            if bossId ~= BG.TheEndBossID or success ~= 1 or BiaoGe.YYdb.share ~= 1 then
+            if not IsTheEndBoss(bossId) or success ~= 1 or BiaoGe.YYdb.share ~= 1 then
                 return
             end
             if Y.IsLeader(UnitName("player")) then return end
@@ -1981,7 +1983,6 @@ end)
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("CHANNEL_UI_UPDATE")
-f:RegisterEvent("PLAYER_STARTED_MOVING")
 f:SetScript("OnEvent", function(self, even)
     if even == "CHANNEL_UI_UPDATE" then
         local i = 1
@@ -2002,12 +2003,6 @@ f:SetScript("OnEvent", function(self, even)
         if BiaoGe.YYdb.share ~= 1 then
             LeaveChannelByName(YY)
         end
-    elseif even == "PLAYER_STARTED_MOVING" then
-        if not BG.YYchannelId and BiaoGe.YYdb.share == 1 then
-            JoinPermanentChannel(YY, nil, 1)
-            SendSystemMessage(BG.STC_b1(L["<BiaoGe>"]) .. format(L["YY评价模块初始化成功，已自动加入%s频道，用于共享和查询YY大众评价。"], YY))
-        end
-        f:UnregisterEvent("PLAYER_STARTED_MOVING")
     end
 end)
 
@@ -2067,4 +2062,15 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
         end
     end
     BG.YYchannelId = nil
+
+    local first = true
+    BG.MainFrame:HookScript("OnShow", function(self)
+        if first then
+            first = nil
+            if not BG.YYchannelId and BiaoGe.YYdb.share == 1 then
+                JoinPermanentChannel(YY, nil, 1)
+                SendSystemMessage(BG.STC_b1(L["<BiaoGe>"]) .. format(L["YY评价模块初始化成功，已自动加入%s频道，用于共享和查询YY大众评价。"], YY))
+            end
+        end
+    end)
 end)

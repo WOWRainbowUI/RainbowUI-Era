@@ -29,12 +29,11 @@ local pt = print
 local RealmId = GetRealmID()
 local player = UnitName("player")
 
-local function BiaoGeUI()
-    ------------------主界面------------------
+BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
+    if addonName ~= AddonName then return end
+    ----------主界面----------
     do
         BG.MainFrame = CreateFrame("Frame", "BG.MainFrame", UIParent, "BasicFrameTemplate")
-        BG.MainFrame:SetWidth(Width["BG.MainFrame"])
-        BG.MainFrame:SetHeight(Height["BG.MainFrame"])
         BG.MainFrame:SetPoint("CENTER")
         BG.MainFrame:SetFrameLevel(100)
         BG.MainFrame:SetMovable(true)
@@ -90,7 +89,6 @@ local function BiaoGeUI()
                 BiaoGe.options.SearchHistory.firstOpenMainFrame = true
             end
         end)
-        tinsert(UISpecialFrames, "BG.MainFrame") -- 按ESC可关闭插件
 
         local f = CreateFrame("Frame", nil, BG.MainFrame)
         f:SetPoint("TOP", BG.MainFrame, "TOP", 0, 4)
@@ -104,7 +102,6 @@ local function BiaoGeUI()
 
         -- 说明书
         local frame = CreateFrame("Frame", nil, BG.MainFrame)
-        frame:SetSize(0, 30)
         frame:SetPoint("TOPLEFT", BG.MainFrame, "TOPLEFT", 5, 4)
         frame:SetHitRectInsets(0, 0, 0, 0)
         local fontString = frame:CreateFontString()
@@ -112,16 +109,17 @@ local function BiaoGeUI()
         fontString:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
         fontString:SetJustifyH("LEFT")
         fontString:SetText(L["<说明书与更新记录> "] .. BG.STC_g1(BG.ver))
-        frame:SetWidth(fontString:GetStringWidth())
+        frame:SetSize(fontString:GetStringWidth(), 30)
         BG.ShuoMingShu = frame
         BG.ShuoMingShuText = fontString
 
         local function OnEnter(self)
             self.OnEnter = true
-            GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -(frame:GetWidth() + 5) * BiaoGe.options.scale, 0)
+            GameTooltip:SetOwner(self, "ANCHOR_NONE")
+            GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
             GameTooltip:ClearLines()
             if IsAltKeyDown() then
-                GameTooltip:SetText(BG.upDateText)
+                GameTooltip:SetText(BG.updateText)
             else
                 GameTooltip:SetText(BG.instructionsText)
             end
@@ -143,23 +141,25 @@ local function BiaoGeUI()
         -- FB1 是UI当前选择的副本
         -- FB2 是玩家当前所处的副本
         if BiaoGe.FB then
-            BG.FB1 = BiaoGe.FB
+            local yes
+            for k, FB in pairs(BG.FBtable) do
+                if BiaoGe.FB == FB then
+                    BG.FB1 = BiaoGe.FB
+                    yes = true
+                    break
+                end
+            end
+            if not yes then
+                BiaoGe.FB = BG.FB1
+            end
         else
             BiaoGe.FB = BG.FB1
         end
         BG.MainFrame:SetHeight(Height[BG.FB1])
         BG.MainFrame:SetWidth(Width[BG.FB1])
-
-        if BG.IsVanilla() then
-            if not (C_Engraving and C_Engraving.IsEngravingEnabled()) then
-                local t = BG.MainFrame:CreateFontString()
-                t:SetPoint("TOPLEFT", 10, -30)
-                t:SetFont(BIAOGE_TEXT_FONT, 16, "OUTLINE")
-                t:SetText(BG.STC_r1(L["提醒：插件目前仅支持WLK和plus赛季服，传统60服暂不支持！"]))
-            end
-        end
     end
-    ------------------接收表格主界面------------------
+    tinsert(UISpecialFrames, "BG.MainFrame")
+    ----------接收表格主界面----------
     do
         BG.ReceiveMainFrame = CreateFrame("Frame", "BG.ReceiveFrame", UIParent, "BackdropTemplate")
         BG.ReceiveMainFrame:SetBackdrop({
@@ -168,9 +168,6 @@ local function BiaoGeUI()
             edgeSize = 2
         })
         BG.ReceiveMainFrame:SetBackdropColor(0, 0, 0, 0.9)
-        BG.ReceiveMainFrame:SetBackdropBorderColor(RGB("00BFFF"))
-        BG.ReceiveMainFrame:SetWidth(Width["BG.MainFrame"])
-        BG.ReceiveMainFrame:SetHeight(Height["BG.MainFrame"])
         BG.ReceiveMainFrame:SetPoint("CENTER")
         BG.ReceiveMainFrame:SetFrameLevel(100)
         BG.ReceiveMainFrame:SetMovable(true)
@@ -184,27 +181,54 @@ local function BiaoGeUI()
         end)
         tinsert(UISpecialFrames, "BG.ReceiveFrame") -- 按ESC可关闭插件
 
+        local _, class = UnitClass("player")
+        local r, g, b, cff = GetClassColor(class)
+        BG.ReceiveMainFrame:SetBackdropBorderColor(r, g, b)
+
         BG.ReceiveMainFrame.CloseButton = CreateFrame("Button", nil, BG.ReceiveMainFrame, "UIPanelCloseButton")
         BG.ReceiveMainFrame.CloseButton:SetPoint("TOPRIGHT", BG.ReceiveMainFrame, "TOPRIGHT", 0, 0)
         BG.ReceiveMainFrame.CloseButton:SetSize(40, 40)
 
         local TitleText = BG.ReceiveMainFrame:CreateFontString()
-        TitleText:SetPoint("TOP", BG.ReceiveMainFrame, "TOP", 0, -15)
+        TitleText:SetPoint("TOP", BG.ReceiveMainFrame, "TOP", 0, -10)
         TitleText:SetFont(BIAOGE_TEXT_FONT, 16, "OUTLINE")
         BG.ReceiveMainFrameTitle = TitleText
 
-        local bt = CreateFrame("Button", nil, BG.ReceiveMainFrame, "UIPanelButtonTemplate")
+        local l = BG.ReceiveMainFrame:CreateLine()
+        l:SetColorTexture(r, g, b)
+        l:SetStartPoint("BOTTOMLEFT", TitleText, -20, -2)
+        l:SetEndPoint("BOTTOMRIGHT", TitleText, 20, -2)
+        l:SetThickness(1.5)
+
+        local bt = CreateFrame("Button", nil, BG.ReceiveMainFrame, "BackdropTemplate")
+        bt:SetBackdrop({
+            bgFile = "Interface/ChatFrame/ChatFrameBackground",
+            edgeFile = "Interface/ChatFrame/ChatFrameBackground",
+            edgeSize = 1,
+        })
+        bt:SetBackdropColor(0, 0, 0, 0.5)
+        bt:SetBackdropBorderColor(r, g, b)
         bt:SetSize(120, 30)
         bt:SetPoint("BOTTOM", BG.ReceiveMainFrame, "BOTTOM", 0, 30)
+        bt:SetNormalFontObject(BG.FontWhite15)
         bt:SetText(L["保存至历史表格"])
-        -- 单击触发
+        local t = bt:GetFontString()
+        t:SetTextColor(r, g, b)
+        bt:SetScript("OnEnter", function(self)
+            t:SetTextColor(RGB("FFFFFF"))
+            bt:SetBackdropBorderColor(1, 1, 1, 1)
+        end)
+        bt:SetScript("OnLeave", function(self)
+            t:SetTextColor(r, g, b)
+            bt:SetBackdropBorderColor(r, g, b)
+        end)
         bt:SetScript("OnClick", function(self)
             local FB = BG.ReceiveBiaoGe.FB
             local DT = BG.ReceiveBiaoGe.DT
             local BiaoTi = BG.ReceiveBiaoGe.BiaoTi
             for key, value in pairs(BiaoGe.History[FB]) do
                 if tonumber(DT) == key then
-                    BG.ReceiveMainFrametext:SetText(BG.STC_r1(L["该表格已在你历史表格里"]))
+                    BG.ReceiveMainFrametext:SetText(BG.STC_r1(L["该表格已在你历史表格里"]) .. AddTexture("interface/raidframe/readycheck-notready"))
                     return
                 end
             end
@@ -229,16 +253,17 @@ local function BiaoGeUI()
             end
             local d = { DT, BiaoTi }
             table.insert(BiaoGe.HistoryList[FB], 1, d)
-            BG.History.HistoryButton:SetFormattedText(L["历史表格（共%d个）"], #BiaoGe.HistoryList[FB])
+            BG.UpdateHistoryButton()
             BG.CreatHistoryListButton(FB)
-            BG.ReceiveMainFrametext:SetText(BG.STC_b1(L["已保存至历史表格1"]))
+            BG.ReceiveMainFrametext:SetText(L["已保存至历史表格1"] .. AddTexture("interface/raidframe/readycheck-ready"))
 
             PlaySoundFile(BG.sound2, "Master")
         end)
 
         local text = BG.ReceiveMainFrame:CreateFontString()
         text:SetPoint("LEFT", bt, "RIGHT", 10, 0)
-        text:SetFont(BIAOGE_TEXT_FONT, 16, "OUTLINE")
+        text:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        text:SetTextColor(0, 1, 0)
         BG.ReceiveMainFrametext = text
 
         -- 二级
@@ -247,9 +272,10 @@ local function BiaoGeUI()
             BG["ReceiveFrame" .. FB]:Hide()
         end
     end
-    ------------------二级Frame------------------
+    ----------二级Frame----------
     do
-        BG.FBMainFrame = CreateFrame("Frame", "BG.FBMainFrame", BG.MainFrame) -- 当前表格
+        -- 当前表格
+        BG.FBMainFrame = CreateFrame("Frame", "BG.FBMainFrame", BG.MainFrame)
         do
             BG.FBMainFrame:Hide()
             for i, FB in ipairs(BG.FBtable) do
@@ -265,8 +291,10 @@ local function BiaoGeUI()
                 BiaoGe.lastFrame = "FB"
 
                 BG.HistoryMainFrame:Hide()
-                BG.Title:Show()
                 BG.History.List:Hide()
+                BG.History.List:SetParent(self)
+                BG.History.List:SetFrameLevel(BG.History.List.frameLevel)
+                BG.Title:SetParent(self)
 
                 BG.History.HistoryButton:SetParent(self)
                 BG.History.SaveButton:SetParent(self)
@@ -310,8 +338,8 @@ local function BiaoGeUI()
                 BG.FilterClassItemMainFrame.Buttons2:SetPoint("BOTTOMLEFT", BG.MainFrame, "BOTTOMLEFT", 410, 35)
             end)
         end
-
-        BG.HopeMainFrame = CreateFrame("Frame", "BG.HopeMainFrame", BG.MainFrame) -- 心愿清单
+        -- 心愿清单
+        BG.HopeMainFrame = CreateFrame("Frame", "BG.HopeMainFrame", BG.MainFrame)
         do
             BG.HopeMainFrame:Hide()
             for i, FB in ipairs(BG.FBtable) do
@@ -326,11 +354,11 @@ local function BiaoGeUI()
                     BG["HopeFrame" .. FB]:Hide()
                 end
                 BG["HopeFrame" .. FB]:Show()
+                -- BG.HopePlanMainFrame:Hide()
                 BiaoGe.lastFrame = "Hope"
 
                 BG.HistoryMainFrame:Hide()
-                BG.Title:Show()
-                BG.History.List:Hide()
+                BG.Title:SetParent(self)
 
                 BG.TabButtonsFB:Show()
                 for i, FB in ipairs(BG.FBtable) do
@@ -347,6 +375,9 @@ local function BiaoGeUI()
                 BG.FilterClassItemMainFrame:Hide()
                 BG.FilterClassItemMainFrame.Buttons2:ClearAllPoints()
                 BG.FilterClassItemMainFrame.Buttons2:SetPoint("BOTTOMLEFT", BG.MainFrame, "BOTTOMLEFT", 410, 35)
+
+                BG.ButtonImportHope:SetParent(self)
+                BG.ButtonExportHope:SetParent(self)
             end)
             -- 左下角文字介绍
             do
@@ -363,8 +394,8 @@ local function BiaoGeUI()
                 t:SetText(L["你可以设置一些装备，这些装备只要掉落就会提醒，并且自动关注团长拍卖"])
             end
         end
-
-        BG.ItemLibMainFrame = CreateFrame("Frame", "BG.ItemLibMainFrame", BG.MainFrame) -- 装备库
+        -- 装备库
+        BG.ItemLibMainFrame = CreateFrame("Frame", "BG.ItemLibMainFrame", BG.MainFrame)
         do
             BG.ItemLibMainFrame:Hide()
             BG.BackBiaoGe(BG.ItemLibMainFrame)
@@ -374,8 +405,7 @@ local function BiaoGeUI()
                 BiaoGe.lastFrame = "ItemLib"
 
                 BG.HistoryMainFrame:Hide()
-                BG.Title:Show()
-                BG.History.List:Hide()
+                BG.Title:SetParent(self)
 
                 BG.TabButtonsFB:Show()
                 for i, FB in ipairs(BG.FBtable) do
@@ -391,6 +421,9 @@ local function BiaoGeUI()
                 BG.FilterClassItemMainFrame:Hide()
                 BG.FilterClassItemMainFrame.Buttons2:ClearAllPoints()
                 BG.FilterClassItemMainFrame.Buttons2:SetPoint("TOP", BG.ItemLibMainFrame[1]["invtypeFrame"], "BOTTOM", 0, -10)
+
+                BG.ButtonImportHope:SetParent(self)
+                BG.ButtonExportHope:SetParent(self)
             end)
 
             -- 左下角文字介绍
@@ -414,8 +447,8 @@ local function BiaoGeUI()
                 t:SetText(L["（SHIFT+左键发送装备，ALT+左键设为心愿装备。部位按钮支持使用滚轮切换）"])
             end
         end
-
-        BG.DuiZhangMainFrame = CreateFrame("Frame", "BG.DuiZhangMainFrame", BG.MainFrame) -- 对账
+        -- 对账
+        BG.DuiZhangMainFrame = CreateFrame("Frame", "BG.DuiZhangMainFrame", BG.MainFrame)
         do
             BG.DuiZhangMainFrame:Hide()
             for i, FB in ipairs(BG.FBtable) do
@@ -436,8 +469,7 @@ local function BiaoGeUI()
                 BiaoGe.lastFrame = "DuiZhang"
 
                 BG.HistoryMainFrame:Hide()
-                BG.Title:Show()
-                BG.History.List:Hide()
+                BG.Title:SetParent(self)
 
                 BG.TabButtonsFB:Show()
                 for i, FB in ipairs(BG.FBtable) do
@@ -458,8 +490,8 @@ local function BiaoGeUI()
                 t:SetText(L["对账"])
             end
         end
-
-        BG.YYMainFrame = CreateFrame("Frame", "BG.YYMainFrame", BG.MainFrame) -- YY评价
+        -- YY评价
+        BG.YYMainFrame = CreateFrame("Frame", "BG.YYMainFrame", BG.MainFrame)
         do
             BG.YYMainFrame:Hide()
             BG.BackBiaoGe(BG.YYMainFrame)
@@ -469,8 +501,7 @@ local function BiaoGeUI()
                 BiaoGe.lastFrame = "YY"
 
                 BG.HistoryMainFrame:Hide()
-                BG.Title:Show()
-                BG.History.List:Hide()
+                BG.Title:SetParent(self)
 
                 BG.TabButtonsFB:Hide()
 
@@ -487,9 +518,9 @@ local function BiaoGeUI()
                 t:SetText(L["YY评价"])
             end
         end
-
+        -- 团本攻略
         if not BG.IsVanilla() then
-            BG.BossMainFrame = CreateFrame("Frame", "BG.HopeMainFrame", BG.MainFrame) -- 团本攻略
+            BG.BossMainFrame = CreateFrame("Frame", "BG.HopeMainFrame", BG.MainFrame)
             do
                 BG.BossMainFrame:Hide()
                 for i, FB in ipairs(BG.FBtable) do
@@ -504,11 +535,10 @@ local function BiaoGeUI()
                         BG["BossFrame" .. FB]:Hide()
                     end
                     BG["BossFrame" .. FB]:Show()
-                    BiaoGe.lastFrame = "BOSS"
+                    BiaoGe.lastFrame = "Boss"
 
                     BG.HistoryMainFrame:Hide()
-                    BG.Title:Show()
-                    BG.History.List:Hide()
+                    BG.Title:SetParent(self)
 
                     BG.TabButtonsFB:Show()
                     for i, FB in ipairs(BG.FBtable) do
@@ -530,8 +560,44 @@ local function BiaoGeUI()
                 end
             end
         end
+        -- 举报记录
+        local name = "ReportMainFrame"
+        BG[name] = CreateFrame("Frame", "BG." .. name, BG.MainFrame)
+        do
+            BG[name]:Hide()
+            BG.BackBiaoGe(BG[name])
+            BG[name]:SetScript("OnShow", function(self)
+                local FB = BG.FB1
+                FrameHide(0)
+                BiaoGe.lastFrame = "Report"
 
-        BG.HistoryMainFrame = CreateFrame("Frame", "BG.HistoryMainFrame", BG.MainFrame) -- 历史表格
+                BG.HistoryMainFrame:Hide()
+                BG.Title:SetParent(self)
+
+                BG.TabButtonsFB:Hide()
+
+                if not BG.IsVanilla() then
+                    BG.NanDuDropDown.DropDown:Hide()
+                end
+            end)
+
+            -- 左下角文字介绍
+            do
+                local t = BG[name]:CreateFontString()
+                t:SetPoint("BOTTOMLEFT", BG.MainFrame, "BOTTOMLEFT", 35, 45)
+                t:SetFont(BIAOGE_TEXT_FONT, 20, "OUTLINE")
+                t:SetTextColor(RGB(BG.g1))
+                t:SetText(L["举报记录："])
+                local tt = t
+                local t = BG[name]:CreateFontString()
+                t:SetPoint("LEFT", tt, "RIGHT", 0, 0)
+                t:SetFont(BIAOGE_TEXT_FONT, 14, "OUTLINE")
+                t:SetTextColor(RGB(BG.g2))
+                t:SetText(L["查看举报记录和追踪举报结果"])
+            end
+        end
+        -- 历史表格
+        BG.HistoryMainFrame = CreateFrame("Frame", "BG.HistoryMainFrame", BG.MainFrame)
         do
             BG.HistoryMainFrame:Hide()
             for i, FB in ipairs(BG.FBtable) do
@@ -546,8 +612,10 @@ local function BiaoGeUI()
                 BG["HistoryFrame" .. FB]:Show()
                 BG.FBMainFrame:Hide()
 
-                BG.Title:Hide()
                 BG.History.SaveButton:SetEnabled(false)
+
+                BG.History.List:SetParent(self)
+                BG.History.List:SetFrameLevel(BG.History.List.frameLevel)
 
                 BG.History.HistoryButton:SetParent(self)
                 BG.History.SaveButton:SetParent(self)
@@ -582,31 +650,54 @@ local function BiaoGeUI()
                 BG.FilterClassItemMainFrame:Hide()
             end)
         end
+
+        --[[         local name = "HopePlanMainFrame"
+        local name2 = name:gsub("Main", "")
+        BG[name] = CreateFrame("Frame", "BG." .. name, BG.MainFrame) -- 心愿方案
+        do
+            BG[name]:Hide()
+            for i, FB in ipairs(BG.FBtable) do
+                BG[name2 .. FB] = CreateFrame("Frame", "BG." .. name2 .. FB, BG[name])
+                BG[name2 .. FB]:Hide()
+            end
+            BG.BackBiaoGe(BG[name])
+            BG[name]:SetScript("OnShow", function(self)
+                local FB = BG.FB1
+                FrameHide(0)
+                for i, FB in ipairs(BG.FBtable) do
+                    BG[name2 .. FB]:Hide()
+                end
+                BG[name2 .. FB]:Show()
+                BG.HopeMainFrame:Hide()
+
+                for i, FB in ipairs(BG.FBtable) do
+                    BG["Button" .. FB]:SetEnabled(false)
+                end
+
+                BG.FilterClassItemMainFrame.Buttons2:SetParent(self)
+
+                BG.ButtonImportHope:SetParent(self)
+                BG.ButtonExportHope:SetParent(self)
+            end)
+        end ]]
     end
-    ------------------生成各副本UI------------------
+    ----------生成各副本UI----------
     do
-        if not BG.IsVanilla() then
-            BG.ICCUI("ICC")
-            BG.TOCUI("TOC")
-            BG.ULDUI("ULD")
-            BG.NAXXUI("NAXX")
-            -- 生成心愿UI
-            BG.HopeUI("ICC")
-            BG.HopeUI("TOC")
-            BG.HopeUI("ULD")
-            BG.HopeUI("NAXX")
-        else
-            BG.BDUI()
-            BG.HopeUI("BD")
+        for k, FB in pairs(BG.FBtable) do
+            BG.CreateFBUI(FB)
+            BG.HopeUI(FB)
         end
+        BG.CreateBossModel()
+        BG.HopeDaoChuUI()
 
         --通报UI
-        BG.ZhangDanUI()
-        BG.LiuPaiUI()
-        BG.QianKuanUI()
-        BG.WCLUI()
-        BG.XiaoFeiUI()
-        BG.YongShiUI()
+        local lastbt
+        lastbt = BG.ZhangDanUI(lastbt)
+        lastbt = BG.LiuPaiUI(lastbt)
+        lastbt = BG.XiaoFeiUI(lastbt)
+        lastbt = BG.QianKuanUI(lastbt)
+        lastbt = BG.YongShiUI(lastbt)
+        lastbt = BG.WCLUI(lastbt)
 
         BG.HistoryUI()
         BG.ReceiveUI()
@@ -615,15 +706,15 @@ local function BiaoGeUI()
         BG.FilterClassItemUI()
         BG.ItemLibUI()
     end
-    ------------------设置------------------
+    ----------设置----------
     do
         -- 设置
         do
             local bt = CreateFrame("Button", nil, BG.MainFrame)
             bt:SetPoint("TOPLEFT", BG.ShuoMingShu, "TOPRIGHT", 15, 0)
             bt:SetNormalFontObject(BG.FontGreen15)
-            bt:SetDisabledFontObject(BG.FontDisabled)
-            bt:SetHighlightFontObject(BG.FontHilight)
+            bt:SetDisabledFontObject(BG.FontDis15)
+            bt:SetHighlightFontObject(BG.FontWhite15)
             bt:SetText(L["设置"])
             bt:SetSize(bt:GetFontString():GetWidth(), 30)
             BG.ButtonSheZhi = bt
@@ -635,14 +726,15 @@ local function BiaoGeUI()
             end)
             bt:SetScript("OnEnter", function(self)
                 local text = L["快捷命令：/BGO"]
-                GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -self:GetWidth() * BiaoGe.options.scale, 0)
+                GameTooltip:SetOwner(self, "ANCHOR_NONE")
+                GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
                 GameTooltip:ClearLines()
                 GameTooltip:SetText(text)
             end)
             BG.GameTooltip_Hide(bt)
         end
 
-        --通知移动
+        -- 通知移动
         do
             -- 屏幕中央的退出按钮
             do
@@ -684,9 +776,12 @@ local function BiaoGeUI()
                     BG.HideMove()
                 end)
             end
+
             local itemID
-            if BG.IsVanilla() then
+            if BG.IsVanilla_Sod() then
                 itemID = 209562
+            elseif BG.IsVanilla_60() then
+                itemID = 19019
             else
                 itemID = 49623
             end
@@ -737,15 +832,8 @@ local function BiaoGeUI()
                             time_update = 4
                         end
                         local name, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(itemID)
-                        local FB
-                        local num
-                        if BG.IsVanilla() then
-                            FB = "BD"
-                            num = 7
-                        else
-                            FB = "ICC"
-                            num = 12
-                        end
+                        local FB = BG.FB1
+                        local num = Maxb[FB] - 2
                         f:SetScript("OnUpdate", function()
                             local time2 = GetTime()
                             if time2 - time1 >= time_update then
@@ -774,14 +862,15 @@ local function BiaoGeUI()
             local bt = CreateFrame("Button", nil, BG.MainFrame)
             bt:SetPoint("TOPLEFT", BG.ButtonSheZhi, "TOPRIGHT", 15, 0)
             bt:SetNormalFontObject(BG.FontGreen15)
-            bt:SetDisabledFontObject(BG.FontDisabled)
-            bt:SetHighlightFontObject(BG.FontHilight)
+            bt:SetDisabledFontObject(BG.FontDis15)
+            bt:SetHighlightFontObject(BG.FontWhite15)
             bt:SetText(L["通知移动"])
             bt:SetSize(bt:GetFontString():GetWidth(), 30)
             BG.ButtonMove = bt
             bt:SetScript("OnClick", BG.Move)
             bt:SetScript("OnEnter", function(self)
-                GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -self:GetWidth() * BiaoGe.options.scale, 0)
+                GameTooltip:SetOwner(self, "ANCHOR_NONE")
+                GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
                 GameTooltip:ClearLines()
                 GameTooltip:SetText(L["调整装备记录通知和交易通知的位置\n快捷命令：/BGM"])
             end)
@@ -790,8 +879,63 @@ local function BiaoGeUI()
             end)
             GetItemInfo(itemID) -- 提前缓存
         end
+
+        -- 工资抹零
+        do
+            local name = "moLing"
+
+            local FB = BG.FB1
+
+            local function OnClick(self)
+                if self:GetChecked() then
+                    BiaoGe.options[self.name] = 1
+                else
+                    BiaoGe.options[self.name] = 0
+                end
+                for i, FB in ipairs(BG.FBtable) do
+                    BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine5"]:SetText(BG.SumGZ())
+                    BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine5"]:SetCursorPosition(0)
+                end
+                PlaySound(BG.sound1, "Master")
+            end
+            local function OnEnter(self)
+                GameTooltip:SetOwner(self.Text, "ANCHOR_TOPLEFT", 0, 0)
+                GameTooltip:ClearLines()
+                GameTooltip:AddLine(self.Text:GetText(), 1, 1, 1, true)
+                GameTooltip:AddLine(L["抹去工资小数点"], 1, 0.82, 0, true)
+                GameTooltip:Show()
+            end
+            local function OnLeave(self)
+                GameTooltip:Hide()
+            end
+
+            local bt = CreateFrame("CheckButton", nil, BG.Frame[FB]["boss" .. Maxb[FB] + 2]["zhuangbei5"], "ChatConfigCheckButtonTemplate")
+            bt:SetSize(25, 25)
+            bt.Text:SetText(L["工资抹零"])
+            bt.Text:SetTextColor(RGB(BG.b1))
+            bt.Text:ClearAllPoints()
+            bt.Text:SetPoint("TOPLEFT", bt:GetParent(), "BOTTOMLEFT", 0, -5)
+            bt:SetPoint("LEFT", bt.Text, "RIGHT", 0, -1)
+            bt:SetHitRectInsets(-bt.Text:GetWidth(), 0, 0, 0)
+            bt.name = name
+            if BiaoGe.options[name] == 1 then
+                bt:SetChecked(true)
+            else
+                bt:SetChecked(false)
+            end
+            bt:SetScript("OnClick", OnClick)
+            bt:SetScript("OnEnter", OnEnter)
+            bt:SetScript("OnLeave", OnLeave)
+
+            function BG.UpdateMoLingButton()
+                local FB = BG.FB1
+                bt:SetParent(BG.Frame[FB]["boss" .. Maxb[FB] + 2]["zhuangbei5"])
+                bt.Text:ClearAllPoints()
+                bt.Text:SetPoint("TOPLEFT", bt:GetParent(), "BOTTOMLEFT", 0, -7)
+            end
+        end
     end
-    ------------------难度选择菜单------------------
+    ----------难度选择菜单----------
     do
         if not BG.IsVanilla() then
             local fbid, sound
@@ -913,10 +1057,12 @@ local function BiaoGeUI()
             end)
         end
     end
-    ------------------副本切换按钮------------------
+    ----------副本切换按钮----------
     do
         local buttonsWidth = 0
         local last
+        local itemLibCaches = {}
+        itemLibCaches[BG.FB1] = true
 
         function BG.ClickFBbutton(FB)
             if FB == BG.FB1 then return end
@@ -936,7 +1082,7 @@ local function BiaoGeUI()
                     BG["DuiZhangFrame" .. FB]:Hide()
                 end
                 BG["DuiZhangFrame" .. FB]:Show()
-            elseif BG.BossMainFrame:IsVisible() then
+            elseif BG.BossMainFrame and BG.BossMainFrame:IsVisible() then
                 for i, FB in ipairs(BG.FBtable) do
                     BG["BossFrame" .. FB]:Hide()
                 end
@@ -954,19 +1100,37 @@ local function BiaoGeUI()
             end)
             BG.FB1 = FB
             BiaoGe.FB = FB
-            BG.History.HistoryButton:SetFormattedText(L["历史表格（共%d个）"], #BiaoGe.HistoryList[FB])
+            BG.UpdateHistoryButton()
             BG.CreatHistoryListButton(FB)
             FrameDongHua(BG.MainFrame, Height[FB], Width[FB])
 
             BG.UpdateAllFilter()
             BG.UpdateHopeFrame_IsLooted_All()
 
-            BG.After(0.6, function()
-                BG.UpdateAllItemLib()
-                BG.UpdateItemLib_RightHope_Default("defaultHope")
+            -- 装备库
+            if not BG.IsVanilla_60() then
+                BG.After(0.6, function()
+                    if not itemLibCaches[FB] then
+                        BG.CheckItemCache() -- 向服务器申请缓存全部装备
+                        itemLibCaches[FB] = true
+                        BG.After(0.2, function()
+                            BG.UpdateAllItemLib()
+                            BG.UpdateItemLib_RightHope_All()
+                            BG.UpdateItemLib_RightHope_IsHaved_All()
+                            BG.UpdateItemLib_RightHope_IsLooted_All()
+                        end)
+                    else
+                        BG.UpdateAllItemLib()
+                        BG.UpdateItemLib_RightHope_All()
+                        BG.UpdateItemLib_RightHope_IsHaved_All()
+                        BG.UpdateItemLib_RightHope_IsLooted_All()
+                    end
+                end)
+            else
+                BG.UpdateItemLib_RightHope_All()
                 BG.UpdateItemLib_RightHope_IsHaved_All()
                 BG.UpdateItemLib_RightHope_IsLooted_All()
-            end)
+            end
 
             if BG.lastduizhangNum then
                 BG.DuiZhangSet(BG.lastduizhangNum)
@@ -975,14 +1139,16 @@ local function BiaoGeUI()
             if BG.HopeSenddropDown and BG.HopeSenddropDown[FB] then
                 LibBG:UIDropDownMenu_SetText(BG.HopeSenddropDown[FB], BG.HopeSendTable[BiaoGe["HopeSendChannel"]])
             end
+
+            BG.UpdateMoLingButton()
         end
 
         local function Create_FBButton(FB, fbID)
             local bt = CreateFrame("Button", nil, BG.TabButtonsFB)
             bt:SetHeight(bt:GetParent():GetHeight())
-            bt:SetNormalFontObject(BG.FontBlue1)
-            bt:SetDisabledFontObject(BG.FontWhile15)
-            bt:SetHighlightFontObject(BG.FontHilight)
+            bt:SetNormalFontObject(BG.FontBlue15)
+            bt:SetDisabledFontObject(BG.FontWhite15)
+            bt:SetHighlightFontObject(BG.FontWhite15)
             if not last then
                 bt:SetPoint("LEFT")
             else
@@ -1028,7 +1194,7 @@ local function BiaoGeUI()
         l:SetThickness(1.5)
         BG.LineFB = l
     end
-    ------------------模块切换按钮------------------
+    ----------模块切换按钮----------
     do
         BG.tabButtons = {}
 
@@ -1037,7 +1203,8 @@ local function BiaoGeUI()
         BG.ItemLibMainFrameTabNum = 2
         BG.DuiZhangMainFrameTabNum = 4
         BG.YYMainFrameTabNum = 5
-        BG.BossMainFrameTabNum = 6
+        BG.ReportMainFrameTabNum = 6
+        BG.BossMainFrameTabNum = 7
 
         function BG.ClickTabButton(tabButtons, num)
             for i, v in pairs(tabButtons) do
@@ -1045,11 +1212,6 @@ local function BiaoGeUI()
                     PanelTemplates_SelectTab(v.button)
                     _G[v.button:GetName() .. "Text"]:SetTextColor(RGB(BG.w1))
                     v.frame:Show()
-                    -- BG.tabButtonsHilight:SetParent(v.button)
-                    -- BG.tabButtonsHilight:ClearAllPoints()
-                    -- BG.tabButtonsHilight:SetPoint("TOPLEFT", 14, 0)
-                    -- BG.tabButtonsHilight:SetPoint("BOTTOMRIGHT", -14, 10)
-                    -- BG.tabButtonsHilight:Show()
                 else
                     PanelTemplates_DeselectTab(v.button)
                     _G[v.button:GetName() .. "Text"]:SetTextColor(RGB(BG.g1))
@@ -1064,9 +1226,13 @@ local function BiaoGeUI()
             _G[bt:GetName() .. "Text"]:SetTextColor(RGB(BG.g1))
             PanelTemplates_TabResize(bt, nil, width or 120)
             if num == 1 then
-                bt:SetPoint("TOPLEFT", BG.MainFrame, "BOTTOM", -330, 0)
+                if BG.IsVanilla() then
+                    bt:SetPoint("TOPLEFT", BG.MainFrame, "BOTTOM", -330, 0)
+                else
+                    bt:SetPoint("TOPLEFT", BG.MainFrame, "BOTTOM", -360, 0)
+                end
             else
-                bt:SetPoint("LEFT", BG.tabButtons[num - 1].button, "RIGHT", -10, 0)
+                bt:SetPoint("LEFT", BG.tabButtons[num - 1].button, "RIGHT", -15, 0)
             end
             BG.tabButtons[num] = {
                 button = bt,
@@ -1078,15 +1244,6 @@ local function BiaoGeUI()
                 BG.ClickTabButton(BG.tabButtons, num)
                 PlaySound(BG.sound1, "Master")
             end)
-
-            -- if not BG.tabButtonsHilight then
-            --     local texture = bt:CreateTexture(nil, "ARTWORK") -- 高亮材质
-            --     texture:SetTexture("interface/paperdollinfoframe/ui-character-tab-highlight")
-            --     texture:SetTexCoord(0, 1, 0.1, 0.9)
-            --     texture:Hide()
-            --     BG.tabButtonsHilight = texture
-            -- end
-
             return bt
         end
 
@@ -1145,7 +1302,7 @@ local function BiaoGeUI()
         bt:SetScript("OnMouseDown", function(self, enter)
             if enter == "RightButton" then
                 GameTooltip:Hide()
-                if _G.L_DropDownList1 and _G.L_DropDownList1:IsVisible() then
+                if BG.DropDownListIsVisible(self) then
                     _G.L_DropDownList1:Hide()
                 else
                     local YY = "BiaoGeYY"
@@ -1187,6 +1344,15 @@ local function BiaoGeUI()
             end
         end)
 
+        local bt = Create_TabButton(BG.ReportMainFrameTabNum, AddTexture("Interface\\GossipFrame\\AvailableQuestIcon") .. L["举报记录"], BG.ReportMainFrame)
+        bt:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(L["< 举报记录 >"], 1, 1, 1, true)
+            GameTooltip:AddLine(L["查看举报记录和追踪举报结果"], 1, 0.82, 0, true)
+            GameTooltip:Show()
+        end)
+
         if not BG.IsVanilla() then
             local bt = Create_TabButton(BG.BossMainFrameTabNum, L["团本攻略"], BG.BossMainFrame)
             bt:SetScript("OnEnter", function(self)
@@ -1197,6 +1363,8 @@ local function BiaoGeUI()
                 GameTooltip:Show()
             end)
         end
+
+
 
         --[[     if not BiaoGe.options.SearchHistory.tutorial231013 then
             local f = CreateFrame("Frame", nil, BG.MainFrame, "BackdropTemplate")
@@ -1247,7 +1415,7 @@ local function BiaoGeUI()
             end)
         end ]]
     end
-    ------------------定时获取当前副本和提示清空表格------------------
+    ----------定时获取当前副本----------
     do
         -- 获取当前副本
         local lastzoneId
@@ -1264,19 +1432,12 @@ local function BiaoGeUI()
             if lastzoneId ~= fbId then
                 if BG.FB2 then
                     BG.ClickFBbutton(BG.FB2)
-                    --[[                         if not BG.BiaoGeIsEmpty(BG.FB2) and BiaoGe.options["showQingKong"] == 1 then
-                            BG.JinBenQingKong.Button:SetFormattedText(L["要清空表格< %s >吗？"], BG.FB2)
-                            BG.JinBenQingKong.Button:Show()
-                            local starttime = GetTime()
-                            local duration = 8
-                            BG.BarDongHua(BG.JinBenQingKong.bar, starttime, duration)
-                        end ]]
                 end
             end
             lastzoneId = fbId
         end)
     end
-    ------------------高亮团长发出的装备------------------
+    ----------高亮团长发出的装备----------
     do
         local f = CreateFrame("Frame")
         f:RegisterEvent("CHAT_MSG_RAID_LEADER")
@@ -1370,7 +1531,7 @@ local function BiaoGeUI()
             end
         end)
     end
-    ------------------点击聊天添加装备------------------
+    ----------点击聊天添加装备----------
     do
         hooksecurefunc("SetItemRef", function(link)
             local item, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
@@ -1409,20 +1570,37 @@ local function BiaoGeUI()
             end
         end)
     end
-    ------------------时光徽章价格------------------
+    ----------时光徽章价格----------
     do
-        local t = BG.MainFrame:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
-        t:SetPoint("BOTTOMLEFT", 10, 7)
-        BG.ButtonToken = t
+        local function OnEnter(self)
+            GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(L["当前时光徽章"], 1, 1, 1, true)
+            GameTooltip:AddLine(self.currentPrice, 1, 0.82, 0, true)
+            GameTooltip:Show()
+        end
+
+        local f = CreateFrame("Frame", nil, BG.MainFrame)
+        f:SetSize(1, 20)
+        f:SetPoint("BOTTOMLEFT", 10, 2)
+        f.text = f:CreateFontString()
+        f.text:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
+        f.text:SetPoint("LEFT")
+        f.text:SetTextColor(1, 1, 1)
+        f:SetScript("OnEnter", OnEnter)
+        f:SetScript("OnLeave", GameTooltip_Hide)
+        BG.ButtonToken = f
 
         local function OnTokenMarketPriceUpdated(event, result)
             if C_WowTokenPublic.GetCurrentMarketPrice() then
                 local currentPrice = GetMoneyString(C_WowTokenPublic.GetCurrentMarketPrice(), false)
-                t:SetText(BG.STC_y1(L["当前时光徽章："]) .. currentPrice)
+                f.currentPrice = currentPrice
+                f.text:SetText(AddTexture(1120721) .. currentPrice)
             else
-                t:SetText(BG.STC_y1(L["当前时光徽章不可用"]))
+                f.currentPrice = L["不可用"]
+                f.text:SetText(AddTexture(1120721) .. BG.STC_dis(L["不可用"]))
             end
+            f:SetWidth(f.text:GetWidth() + 10)
         end
         local frame = CreateFrame("Frame")
         frame:RegisterEvent("TOKEN_MARKET_PRICE_UPDATED")
@@ -1440,7 +1618,103 @@ local function BiaoGeUI()
             C_WowTokenPublic.UpdateMarketPrice()
         end)
     end
-    ------------------离队入队染上职业颜色------------------
+    ----------在线玩家数----------
+    do
+        -- local World = "BiaoGeYY"
+        -- local World = LOOK_FOR_GROUP
+        local World = "大脚世界频道"
+
+        local function GetFactionName()
+            if UnitFactionGroup("player") == "Alliance" then
+                return FACTION_ALLIANCE
+            else
+                return FACTION_HORDE
+            end
+        end
+        local function OnEnter(self)
+            self.isOnEnter = true
+            GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(format(L["%s在线人数"], GetFactionName()), 1, 1, 1, true)
+            if self.count then
+                GameTooltip:AddLine(self.count .. L["人"] .. format(L["（获取时间：%s）"], self.time), 1, 0.82, 0, true)
+            else
+                GameTooltip:AddLine(L["未刷新"], 0.5, 0.5, 0.5, true)
+            end
+            GameTooltip:AddLine(L["<点击刷新>"], 0, 1, 0, true)
+
+            GameTooltip:AddLine(" ")
+            GameTooltip:AddLine(format(L["数据来源："]), 0.5, 0.5, 0.5, true)
+            GameTooltip:AddLine(format(L["%s在线人数"], World), 0.5, 0.5, 0.5, true)
+            GameTooltip:Show()
+        end
+        local function OnLeave(self)
+            self.isOnEnter = false
+            GameTooltip:Hide()
+        end
+
+        local f = CreateFrame("Button", nil, BG.MainFrame)
+        f:SetSize(1, 20)
+        f:SetPoint("LEFT", BG.ButtonToken, "RIGHT", 0, 0)
+        f:SetNormalFontObject(BG.FontWhite13)
+        f:SetText(AddTexture(135994) .. L["待刷新"])
+        f:GetFontString():SetPoint("LEFT")
+        f:SetWidth(f:GetFontString():GetWidth() + 10)
+        f:SetScript("OnEnter", OnEnter)
+        f:SetScript("OnLeave", OnLeave)
+        BG.ButtonOnLineCount = f
+
+        local function GetChannelMemberCount(channelName)
+            local yes
+            local channels = { GetChannelList() }
+            for i = 1, #channels, 3 do
+                if channels[i + 1] == channelName then
+                    yes = true
+                    break
+                end
+            end
+            if yes then
+                if ChannelFrame:IsShown() then
+                    HideUIPanel(ChannelFrame)
+                end
+                ChannelFrame.targetChannel = channelName
+                ShowUIPanel(ChannelFrame)
+            end
+        end
+        f:SetScript("OnClick", function()
+            GetChannelMemberCount(World)
+        end)
+        hooksecurefunc(ChannelFrame.ChannelList, 'AddChannelButtonInternal', function(_, bt, _, name, _, channelId)
+            if name == ChannelFrame.targetChannel then
+                BG.After(0.1, function()
+                    ChannelFrame.ChannelList:SetSelectedChannel(bt)
+                    BG.After(1, function()
+                        local _, _, _, _, count = GetChannelDisplayInfo(bt.channelID)
+                        if count then
+                            f.count = count
+                            local m, s = GetGameTime()
+                            s = format("%02d", s)
+                            f.time = m .. ":" .. s
+                            f:SetText(AddTexture(135994) .. count .. L["人"])
+                            f:GetFontString():SetPoint("LEFT")
+                            f:SetWidth(f:GetFontString():GetWidth() + 10)
+                            if f.isOnEnter then
+                                OnEnter(f)
+                            end
+                        end
+                        for k, bt in ipairs(ChannelFrame.ChannelList.buttons) do
+                            if bt.name == CHANNEL_CATEGORY_WORLD then
+                                ChannelFrame.ChannelList:SetSelectedChannel(bt)
+                            end
+                        end
+                    end)
+                end)
+                ChannelFrame.targetChannel = nil
+                HideUIPanel(ChannelFrame)
+            end
+        end)
+    end
+    ----------离队入队染上职业颜色----------
     do
         local last
         local lastraidjoinname
@@ -1519,15 +1793,14 @@ local function BiaoGeUI()
             end
         end)
     end
-    ------------------表格/背包高亮对应装备------------------
+    ----------表格/背包高亮对应装备----------
     do
         BG.LastBagItemFrame = {}
-        BG.BagAddon = ""
 
-        local function SetOnEnter(link)
+        local function HilightBiaoGe(link)
             if BiaoGe.options["HighOnterItem"] ~= 1 then return end
             if not BG.FBMainFrame:IsVisible() then return end
-            if not link then return end
+            if not GetItemID(link) then return end
             local FB = BG.FB1
             for b = 1, Maxb[FB], 1 do
                 for i = 1, Maxi[FB], 1 do
@@ -1553,43 +1826,31 @@ local function BiaoGeUI()
 
         local function NDuiOnEnter(self)
             local link = C_Container.GetContainerItemLink(self.bagId, self.slotId)
-            SetOnEnter(link)
+            HilightBiaoGe(link)
         end
 
         local function EUIOnEnter(self)
             local link = C_Container.GetContainerItemLink(self.BagID, self.SlotID)
-            SetOnEnter(link)
+            HilightBiaoGe(link)
         end
 
         local function OnEnter(self)
             local link = C_Container.GetContainerItemLink(self:GetParent():GetID(), self:GetID())
-            SetOnEnter(link)
+            HilightBiaoGe(link)
         end
         local function OnLeave(self)
-            for key, value in pairs(BG.LastBagItemFrame) do
-                value:Hide()
-            end
-            BG.LastBagItemFrame = {}
+            BG.Hide_AllHilight()
         end
 
         local function OnHyperlinkEnter(self, link)
-            if BiaoGe.options["HighOnterItem"] ~= 1 then return end
-            local _, link = GetItemInfo(link)
-            -- pt(link, GetItemID(link))
-            if BG.FBMainFrame:IsVisible() then
-                SetOnEnter(link)
-            end
+            HilightBiaoGe(link)
             BG.HilightBag(link)
-        end
-        local function OnHyperlinkLeave(self, link)
-            OnLeave()
-            BG.HideHilightBag()
         end
         local function ChatFrameOnHyperlink()
             local i = 1
             while _G["ChatFrame" .. i] do
                 _G["ChatFrame" .. i]:HookScript("OnHyperlinkEnter", OnHyperlinkEnter)
-                _G["ChatFrame" .. i]:HookScript("OnHyperlinkLeave", OnHyperlinkLeave)
+                _G["ChatFrame" .. i]:HookScript("OnHyperlinkLeave", OnLeave)
                 i = i + 1
             end
         end
@@ -1652,9 +1913,11 @@ local function BiaoGeUI()
             end
         end)
     end
-    ------------------一键分配装备给自己------------------
+    ----------一键分配装备给自己----------
     do
-        BG.RegisterEvent("PLAYER_LOGIN", function(self, even)
+        BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
+            if not (isLogin or isReload) then return end
+
             local function OnClick(self)
                 BG.PlaySound(1)
                 for ci = 1, GetNumGroupMembers() do
@@ -1662,29 +1925,10 @@ local function BiaoGeUI()
                         if LootSlotHasItem(li) and GetMasterLootCandidate(li, ci) == UnitName("player") then
                             local itemLink = GetLootSlotLink(li)
                             if itemLink then
-                                local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(itemLink)
-                                local itemID = GetItemInfoInstant(itemLink)
-
-                                if (BG.IsVanilla() and (quality == 3 or quality == 4) or (BG.DeBug or quality == 4)) and (typeID == 2 or typeID == 4) then -- 紫色装备
+                                local name, link, quality, level, _, _, _, itemStackCount, _, Texture,
+                                _, typeID, _, bindType = GetItemInfo(itemLink)
+                                if bindType ~= 4 and (itemStackCount == 1 or bindType ~= 1) then
                                     GiveMasterLoot(li, ci)
-                                elseif itemID == 45087 or itemID == 47556 or itemID == 49908 then                                                          -- 蓝色宝珠
-                                    GiveMasterLoot(li, ci)
-                                else                                                                                                                       -- 套装兑换物
-                                    local yes
-                                    for _, FB in pairs(BG.FBtable) do
-                                        if BG.Loot[FB].T then
-                                            for k, _itemID in pairs(BG.Loot[FB].T) do
-                                                if itemID == _itemID then
-                                                    GiveMasterLoot(li, ci)
-                                                    yes = true
-                                                    break
-                                                end
-                                            end
-                                            if yes then
-                                                break
-                                            end
-                                        end
-                                    end
                                 end
                             end
                         end
@@ -1703,41 +1947,18 @@ local function BiaoGeUI()
                 if self.dis then
                     GameTooltip:AddLine(L["你不是物品分配者，不能使用"], 1, 0, 0, true)
                 end
-                if BG.IsVanilla() then
-                    GameTooltip:AddLine(L["把全部掉落分配给自己，只对精良/史诗装备生效，其他类型的物品不会生效"], 1, 0.82, 0, true)
-                else
-                    GameTooltip:AddLine(L["把全部掉落分配给自己，只对史诗装备或套装兑换物生效，其他类型的物品不会生效（例如橙片、任务物品不会自动分配）"], 1, 0.82, 0, true)
-                end
-                GameTooltip:AddLine(BG.STC_dis(L["你可在插件设置-BiaoGe-其他功能里关闭这个功能"]), 1, 1, 1, true)
+                GameTooltip:AddLine(L["把全部可交易的物品分配给自己"], 1, 0.82, 0, true)
+                GameTooltip:AddLine(BG.STC_dis(L["你可在插件设置-BiaoGe-其他功能里关闭这个功能"]), 0.5, 0.5, 0.5, true)
 
                 local items = {}
                 for li = 1, GetNumLootItems() do
                     if LootSlotHasItem(li) then
                         local itemLink = GetLootSlotLink(li)
                         if itemLink then
-                            local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(itemLink)
-                            local itemID = GetItemInfoInstant(itemLink)
-
-                            if (BG.IsVanilla() and (quality == 3 or quality == 4) or (BG.DeBug or quality == 4)) and (typeID == 2 or typeID == 4) then -- 紫色装备
+                            local name, link, quality, level, _, _, _, itemStackCount, _, Texture,
+                            _, typeID, _, bindType = GetItemInfo(itemLink)
+                            if bindType ~= 4 and (itemStackCount == 1 or bindType ~= 1) then
                                 tinsert(items, AddTexture(Texture, -3) .. link .. "|cffFFFFFF(" .. level .. ")|r")
-                            elseif itemID == 45087 or itemID == 47556 or itemID == 49908 then                                                          -- 蓝色宝珠
-                                tinsert(items, AddTexture(Texture, -3) .. link .. "|cffFFFFFF(" .. level .. ")|r")
-                            else                                                                                                                       -- 套装兑换物
-                                local yes
-                                for _, FB in pairs(BG.FBtable) do
-                                    if BG.Loot[FB].T then
-                                        for k, _itemID in pairs(BG.Loot[FB].T) do
-                                            if itemID == _itemID then
-                                                tinsert(items, AddTexture(Texture, -3) .. link .. "|cffFFFFFF(" .. level .. ")|r")
-                                                yes = true
-                                                break
-                                            end
-                                        end
-                                        if yes then
-                                            break
-                                        end
-                                    end
-                                end
                             end
                         end
                     end
@@ -1770,8 +1991,8 @@ local function BiaoGeUI()
             })
             bt:SetBackdropBorderColor(0, 1, 0, 1)
             bt:SetNormalFontObject(BG.FontGreen15)
-            bt:SetDisabledFontObject(BG.FontDisabled)
-            bt:SetHighlightFontObject(BG.FontHilight)
+            bt:SetDisabledFontObject(BG.FontDis15)
+            bt:SetHighlightFontObject(BG.FontWhite15)
             bt:SetPoint("BOTTOM", parent, "TOP", 0, 0)
             bt:SetText(L["一键分配"])
             bt:SetSize(bt:GetFontString():GetWidth() + 10, 25)
@@ -1817,7 +2038,140 @@ local function BiaoGeUI()
             end
         end)
     end
-    ------------------清空表格------------------
+    ----------查询记录----------
+    do
+        BiaoGe.whoFrame = BiaoGe.whoFrame or {}
+        BiaoGe.whoFrame.history = BiaoGe.whoFrame.history or {}
+
+        local f = CreateFrame("Frame", nil, WhoFrame, "BackdropTemplate")
+        f:SetBackdrop({
+            bgFile = "Interface/ChatFrame/ChatFrameBackground",
+            edgeFile = "Interface/ChatFrame/ChatFrameBackground",
+            edgeSize = 1,
+            -- edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+            -- edgeSize = 16,
+            -- insets = { left = 3, right = 3, top = 3, bottom = 3 }
+        })
+        f:SetBackdropColor(0, 0, 0, 0.7)
+        f:SetBackdropBorderColor(0, 0, 0, 1)
+        f:SetPoint("BOTTOMLEFT", WhoFrameEditBoxInset, "BOTTOMRIGHT", 5, 0)
+        f:SetSize(100, FriendsFrame:GetHeight() - 80)
+        f:Hide()
+        local t = f:CreateFontString()
+        t:SetPoint("BOTTOM", f, "TOP", 0, 2)
+        t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        t:SetTextColor(RGB("FFFFFF"))
+        t:SetText(L["查询记录"])
+
+        -- 提示
+        local bt = CreateFrame("Button", nil, f)
+        bt:SetSize(30, 30)
+        bt:SetPoint("LEFT", t, "RIGHT", -5, 0)
+        local tex = bt:CreateTexture()
+        tex:SetAllPoints()
+        tex:SetTexture(616343)
+        bt:SetHighlightTexture(616343)
+        bt:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+            GameTooltip:ClearLines()
+            GameTooltip:AddLine(L["查询记录"], 1, 1, 1)
+            GameTooltip:AddLine(" ", 1, 0.82, 0, true)
+            GameTooltip:AddLine(L["你可在插件设置-BiaoGe-其他功能里关闭这个功能。"], 0.5, 0.5, 0.5, true)
+            GameTooltip:Show()
+        end)
+        BG.GameTooltip_Hide(bt)
+
+        local buttons = {}
+        local max = tonumber(format("%d", f:GetHeight() / 20))
+        local function CreateHistory()
+            for i, v in pairs(buttons) do
+                v:Hide()
+            end
+            wipe(buttons)
+
+            for i = #BiaoGe.whoFrame.history, 1, -1 do
+                if i > max then
+                    tremove(BiaoGe.whoFrame.history)
+                else
+                    break
+                end
+            end
+
+            for i, v in ipairs(BiaoGe.whoFrame.history) do
+                local bt = CreateFrame("Button", nil, f, "BackdropTemplate")
+                bt:SetNormalFontObject(BG.FontGold15)
+                bt:SetDisabledFontObject(BG.FontDis15)
+                bt:SetHighlightFontObject(BG.FontWhite15)
+                bt:SetSize(f:GetWidth() - 10, 20)
+                bt:RegisterForClicks("AnyUp")
+                if i == 1 then
+                    bt:SetPoint("BOTTOMLEFT", 8, 5)
+                else
+                    bt:SetPoint("BOTTOMLEFT", buttons[i - 1], "TOPLEFT", 0, 0)
+                end
+                bt:SetText(v)
+                local string = bt:GetFontString()
+                if string then
+                    string:SetWidth(bt:GetWidth() - 2)
+                    string:SetJustifyH("LEFT")
+                    string:SetWordWrap(false)
+                end
+                tinsert(buttons, bt)
+
+                bt:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+                    GameTooltip:ClearLines()
+                    GameTooltip:AddLine(self:GetText(), 1, 1, 1, true)
+                    GameTooltip:AddLine(L["|cffFFFFFF左键：|r搜索该记录"], 1, 0.82, 0)
+                    GameTooltip:AddLine(L["|cffFFFFFF右键：|r删除该记录"], 1, 0.82, 0)
+                    GameTooltip:Show()
+                end)
+                BG.GameTooltip_Hide(bt)
+                bt:SetScript("OnLeave", function(self)
+                    GameTooltip:Hide()
+                end)
+                bt:SetScript("OnClick", function(self, enter)
+                    if enter == "RightButton" then
+                        tremove(BiaoGe.whoFrame.history, i)
+                        CreateHistory()
+                    else
+                        WhoFrameEditBox:SetText(v)
+                        C_FriendList.SendWho(WhoFrameEditBox:GetText(), Enum.SocialWhoOrigin.Social)
+                    end
+                    PlaySound(BG.sound1, "Master")
+                end)
+            end
+        end
+        CreateHistory()
+
+        local function hookfunc()
+            local text = WhoFrameEditBox:GetText()
+            if text ~= "" then
+                for i = #BiaoGe.whoFrame.history, 1, -1 do
+                    if BiaoGe.whoFrame.history[i] == text then
+                        tremove(BiaoGe.whoFrame.history, i)
+                    end
+                end
+                tinsert(BiaoGe.whoFrame.history, 1, text)
+                CreateHistory()
+            end
+        end
+        WhoFrameWhoButton:HookScript("OnClick", function()
+            hookfunc()
+        end)
+        WhoFrameEditBox:HookScript("OnEnterPressed", function()
+            hookfunc()
+        end)
+
+        WhoFrame:HookScript("OnShow", function()
+            if BiaoGe.options["searchList"] == 1 then
+                f:Show()
+            else
+                f:Hide()
+            end
+        end)
+    end
+    ----------清空表格----------
     do
         -- 清空按钮
         do
@@ -1831,9 +2185,9 @@ local function BiaoGeUI()
                 local num = BG.QingKong("biaoge", BG.FB1)
                 local name = "autoQingKong"
                 if BiaoGe.options[name] == 1 then
-                    SendSystemMessage(BG.STC_b1(format(L["已清空表格< %s >，分钱人数已改为%s人"], BG.FBcn(BG.FB1), num)))
+                    SendSystemMessage(BG.STC_b1(format(L["已清空表格< %s >，分钱人数已改为%s人"], BG.GetFBinfo(BG.FB1, "localName"), num)))
                 else
-                    SendSystemMessage(BG.STC_b1(format(L["已清空表格< %s >"], BG.FBcn(BG.FB1))))
+                    SendSystemMessage(BG.STC_b1(format(L["已清空表格< %s >"], BG.GetFBinfo(BG.FB1, "localName"))))
                 end
                 FrameHide(0)
                 PlaySound(BG.sound1, "Master")
@@ -1847,70 +2201,6 @@ local function BiaoGeUI()
             end)
             BG.GameTooltip_Hide(bt)
         end
-        --[[        -- 进副本提示清空
-        do
-            BG.JinBenQingKong = {}
-            BG.JinBenQingKong.Button = CreateFrame("Button", nil, UIParent, "BackdropTemplate")
-            BG.JinBenQingKong.Button:SetBackdrop({
-                edgeFile = "Interface/ChatFrame/ChatFrameBackground",
-                edgeSize = 1
-            })
-            BG.JinBenQingKong.Button:SetBackdropBorderColor(0, 0.75, 1, 1)
-            BG.JinBenQingKong.Button:SetSize(300, 35)
-            BG.JinBenQingKong.Button:SetPoint("TOP", UIParent, "TOP", 0, -300)
-            BG.JinBenQingKong.Button:SetFrameLevel(200)
-            BG.JinBenQingKong.Button:SetToplevel(true)
-            BG.JinBenQingKong.Button:SetNormalFontObject(BG.FontBlue1)
-            BG.JinBenQingKong.Button:SetHighlightFontObject(BG.FontHilight)
-            BG.JinBenQingKong.Button:Hide()
-
-            -- 窗口变小动画
-            local s = CreateFrame("StatusBar", nil, BG.JinBenQingKong.Button)
-            s:SetAllPoints()
-            s:SetFrameLevel(s:GetParent():GetFrameLevel() - 5)
-            s:SetStatusBarTexture("Interface/ChatFrame/ChatFrameBackground")
-            s:SetStatusBarColor(0, 0.75, 1, 0.5)
-            s:SetMinMaxValues(0, 10000)
-            BG.JinBenQingKong.bar = s
-
-            function BG.BarDongHua(bar, starttime, duration)
-                bar:Show()
-                bar:SetScript("OnUpdate", function()
-                    local t = GetTime()
-                    local a = (starttime + duration - t) / duration
-                    local _, max = bar:GetMinMaxValues()
-                    local v = a * max
-                    bar:SetValue(v)
-                    if v <= 0 then
-                        bar:SetScript("OnUpdate", nil)
-                        bar:GetParent():Hide()
-                    end
-                end)
-            end
-
-            StaticPopupDialogs["QINGKONGBIAOGE"] = {
-                text = L["确认清空表格< %s >？"],
-                button1 = L["是"],
-                button2 = L["否"],
-                OnAccept = function()
-                    if BG.FB2 then
-                        local num = BG.QingKong("biaoge", BG.FB2)
-                        BG.JinBenQingKong.Button:Hide()
-                        PlaySoundFile(BG.sound_qingkong, "Master")
-                        SendSystemMessage(BG.STC_b1(format(L["已清空表格< %s >，分钱人数已改为%d人"], BG.FB2, num)))
-                    end
-                end,
-                OnCancel = function()
-                end,
-                timeout = 5,
-                whileDead = true,
-                hideOnEscape = true,
-            }
-
-            BG.JinBenQingKong.Button:SetScript("OnClick", function()
-                StaticPopup_Show("QINGKONGBIAOGE", BG.DeBug and BG.FB1 or BG.FB2)
-            end)
-        end ]]
 
         -- 自动清空表格
         do
@@ -1920,13 +2210,7 @@ local function BiaoGeUI()
                 BG.After(2, function()
                     local _, _, _, _, maxPlayers, _, _, instanceID = GetInstanceInfo()
 
-                    local FB
-                    for id, value in pairs(BG.FBIDtable) do -- 把副本ID转换为副本英文简写
-                        if instanceID == id then
-                            FB = value
-                            break
-                        end
-                    end
+                    local FB = BG.FBIDtable[instanceID]
                     if not FB then return end
 
                     local havedCD
@@ -1944,7 +2228,7 @@ local function BiaoGeUI()
                         local num = BG.QingKong("biaoge", FB)
                         local link = "|cffFFFF00|Hgarrmission:" .. "BiaoGe:" .. L["撤回清空"] .. ":" .. FB .. ":" .. time() ..
                             "|h[" .. L["撤回清空"] .. "]|h|r"
-                        SendSystemMessage(BG.STC_b1(format(L["<BiaoGe> 已自动清空表格< %s >，分钱人数已改为%s人。原表格数据已保存至历史表格1。"], BG.FBcn(FB), num)) .. link)
+                        SendSystemMessage(BG.STC_b1(format(L["<BiaoGe> 已自动清空表格< %s >，分钱人数已改为%s人。原表格数据已保存至历史表格1。"], BG.GetFBinfo(FB, "localName"), num)) .. link)
                         PlaySoundFile(BG.sound_qingkong, "Master")
                     end
                 end)
@@ -1976,7 +2260,7 @@ local function BiaoGeUI()
             -- 按钮触发
             bt:SetScript("OnClick", function()
                 BG.QingKong("hope", BG.FB1)
-                SendSystemMessage(BG.STC_g1(format(L["已清空心愿< %s >"], BG.FBcn(BG.FB1))))
+                SendSystemMessage(BG.STC_g1(format(L["已清空心愿< %s >"], BG.GetFBinfo(BG.FB1, "localName"))))
                 FrameHide(0)
                 PlaySound(BG.sound1, "Master")
             end)
@@ -1991,23 +2275,15 @@ local function BiaoGeUI()
         end
     end
 
-    ------------------初始显示------------------
+    ----------初始显示----------
     do
-        if BiaoGe.lastFrame == "DuiZhang" then
-            BG.ClickTabButton(BG.tabButtons, BG.DuiZhangMainFrameTabNum)
-        elseif BiaoGe.lastFrame == "Hope" then
-            BG.ClickTabButton(BG.tabButtons, BG.HopeMainFrameTabNum)
-        elseif BiaoGe.lastFrame == "ItemLib" then
-            BG.ClickTabButton(BG.tabButtons, BG.ItemLibMainFrameTabNum)
-        elseif BiaoGe.lastFrame == "YY" then
-            BG.ClickTabButton(BG.tabButtons, BG.YYMainFrameTabNum)
-        elseif BiaoGe.lastFrame == "BOSS" then
-            BG.ClickTabButton(BG.tabButtons, BG.BossMainFrameTabNum)
+        if BG[BiaoGe.lastFrame .. "MainFrameTabNum"] then
+            BG.ClickTabButton(BG.tabButtons, BG[BiaoGe.lastFrame .. "MainFrameTabNum"])
         else
             BG.ClickTabButton(BG.tabButtons, BG.FBMainFrameTabNum)
         end
     end
-    ------------------检查版本过期------------------
+    ----------检查版本过期----------
     do
         -- 把版本号转换为纯数字
         local function Verabc(ver)
@@ -2041,6 +2317,12 @@ local function BiaoGeUI()
             end
         end
 
+        local function IsBetaVer()
+            if strfind(strlower(BG.ver), "beta") then
+                return true
+            end
+        end
+
         local yes
         local frame = CreateFrame("Frame")
         frame:RegisterEvent("CHAT_MSG_ADDON")
@@ -2049,9 +2331,9 @@ local function BiaoGeUI()
             local sendername = strsplit("-", sender)
             local playername = UnitName("player")
             if sendername == playername then return end
-            if msg == "VersionCheck" then
+            if msg == "VersionCheck" and not IsBetaVer() then
                 C_ChatInfo.SendAddonMessage("BiaoGe", "MyVer-" .. BG.ver, channel)
-            elseif strfind(msg, "MyVer") then
+            elseif strfind(msg, "MyVer") and not IsBetaVer() then
                 if yes then return end
                 local _, version = strsplit("-", msg)
                 if VerGuoQi(BG.ver, version) then
@@ -2068,7 +2350,7 @@ local function BiaoGeUI()
             if not (isLogin or isReload) then return end
             -- 开始发送版本请求
             C_Timer.After(5, function()
-                if IsInGuild() then
+                if IsInGuild() and not IsBetaVer() then
                     C_ChatInfo.SendAddonMessage("BiaoGe", "VersionCheck", "GUILD")
                 end
             end)
@@ -2078,14 +2360,14 @@ local function BiaoGeUI()
             end)
         end)
     end
-end
+end)
 
-------------------刷新团队成员信息------------------
+----------刷新团队成员信息----------
 do
     BG.raidRosterInfo = {}
     BG.groupRosterInfo = {}
 
-    function BG.UpDateRaidRosterInfo()
+    function BG.UpdateRaidRosterInfo()
         wipe(BG.raidRosterInfo)
         wipe(BG.groupRosterInfo)
 
@@ -2139,14 +2421,14 @@ do
     f:RegisterEvent("PLAYER_ENTERING_WORLD")
     f:SetScript("OnEvent", function(self, even, ...)
         C_Timer.After(1, function()
-            BG.UpDateRaidRosterInfo()
+            BG.UpdateRaidRosterInfo()
         end)
     end)
     local f = CreateFrame("Frame")
     f:RegisterEvent("GROUP_ROSTER_UPDATE")
     f:SetScript("OnEvent", function(self, even, ...)
         C_Timer.After(0.5, function()
-            BG.UpDateRaidRosterInfo()
+            BG.UpdateRaidRosterInfo()
         end)
     end)
 
@@ -2160,29 +2442,18 @@ do
             max = #BG.groupRosterInfo
         end
         if tonumber(num) and tonumber(max) and tonumber(num) ~= tonumber(max) then
-            BG.UpDateRaidRosterInfo()
+            BG.UpdateRaidRosterInfo()
         end
     end)
 end
 
-------------------插件载入------------------
+----------其他----------
 do
-    local frame = CreateFrame("Frame")
-    frame:RegisterEvent("ADDON_LOADED")
-    frame:SetScript("OnEvent", function(self, event, addonName)
-        if addonName == AddonName then
-            BiaoGeUI()
-            C_Timer.After(1, function()
-                SendSystemMessage("|cff00BFFF" .. format(L["< BiaoGe > 金团表格载入成功。插件命令：%s或%s，小地图图标：%s"] .. RR, "/BiaoGe", "/GBG", L["星星"]))
-            end)
-        end
-    end)
-
     -- 游戏按键设置
     BINDING_HEADER_BIAOGE = L["BiaoGe金团表格"]
     BINDING_NAME_BIAOGE = L["显示/关闭表格"]
 
-    ------------------插件命令------------------
+    ----------插件命令----------
     SlashCmdList["BIAOGE"] = function()
         if BG.MainFrame and not BG.MainFrame:IsVisible() then
             BG.MainFrame:Show()
@@ -2218,154 +2489,3 @@ do
     end
     SLASH_BIAOGETEST21 = "/bgdebug2"
 end
---[[
-BG.RegisterEvent("PLAYER_TARGET_CHANGED", function()
-    if not UnitGUID("target") then return end
-    local guidtype, _, _, instanceID, zoneID = string.split("-", UnitGUID("target"))
-    if guidtype ~= "Creature" then return end
-   -- print(zoneID)
-    return zoneID
-end)
- ]]
-
--- hooksecurefunc("SendChatMessage", function(arg1, arg2, arg3, arg4, arg5)
---     pt("Chat", arg1, arg2, arg3, arg4, arg5)
--- end)
--- hooksecurefunc(C_ChatInfo, "SendAddonMessage", function(arg1, arg2, arg3, arg4, arg5)
---     pt("Addon", arg1, arg2, arg3, arg4, arg5)
--- end)
---[[
-/run SendChatMessage("1","RAID")
-/run  C_ChatInfo.SendAddonMessage("BiaoGeAuction","GetAuctioning","RAID")
- ]]
-
---[[ local targetitem = {
-    "护卫之弓", "斥候之刃", "军团士兵之剑", "顾问的木节法杖",
-    "义务符文", "完美贡献符文",
-}
-
-local targetitem = {
-    "侍从之弓", "哨兵之刃", "保护者之剑", "博学者法杖",
-    "斥候徽章", "战地治疗者披风", "顾问之戒", "军团士兵指环",
-    "义务符文", "完美贡献符文",
-}
-local function item()
-    for i = 200000, 230000 do
-        local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(i)
-        if name then
-            for k, itemname in pairs(targetitem) do
-                if name == itemname then
-                    print("ID:" .. i .. ",Name:" .. name .. ",Level:" .. level)
-                end
-            end
-        end
-    end
-end
-BG.RegisterEvent("PLAYER_ENTERING_WORLD", function()
-    item()
-    C_Timer.After(1, item)
-end) ]]
-
---[[
--- 快速更换符文
-local IsHooks = {}
-local IsOnClick
-
-local function GetHearderNum(skillLineAbilityID)
-    local categories = C_Engraving.GetRuneCategories(true, true);
-    for i, category in ipairs(categories) do
-        local runes = C_Engraving.GetRunesForCategory(category, true);
-        for _, rune in ipairs(runes) do
-            if rune.skillLineAbilityID == skillLineAbilityID then
-                return category
-            end
-        end
-    end
-end
-
-local function HookRuneClick()
-    local i = 1
-    while _G["EngravingFrameScrollFrameButton" .. i] do
-        if not IsHooks[i] then
-            local bt = _G["EngravingFrameScrollFrameButton" .. i]
-            bt:HookScript("OnClick", function(self)
-                if InCombatLockdown() then return end
-                if IsAltKeyDown() then
-                    pt(self.skillLineAbilityID)
-                    IsOnClick = true
-                    UseInventoryItem(GetHearderNum(self.skillLineAbilityID))
-                    C_Timer.After(1, function()
-                        IsOnClick = false
-                    end)
-                end
-            end)
-            IsHooks[i] = true
-        end
-        i = i + 1
-    end
-end
-
-hooksecurefunc("StaticPopup_Show", function(...)
-    if not IsOnClick then return end
-    local frameName = ...
-    if frameName == "REPLACE_ENCHANT" then
-        local text = REPLACE_ENCHANT:gsub("%%s", "(.+)"):gsub("%%s", "(.+)")
-        for i = 1, 10 do
-            if _G["StaticPopup" .. i .. "Text"] and _G["StaticPopup" .. i .. "Text"]:GetText() and
-                strmatch(_G["StaticPopup" .. i .. "Text"]:GetText(), text) then
-                StaticPopup_OnClick(_G["StaticPopup" .. i], 1)
-            end
-        end
-    end
-end)
-
-BG.RegisterEvent("ENGRAVING_MODE_CHANGED", function()
-    if EngravingFrameScrollFrame:IsVisible() then
-        HookRuneClick()
-    end
-end)
- ]]
-
--- BG.RegisterEvent("PLAYER_ENTERING_WORLD", function()
---     C_Engraving.RefreshRunesList()
---     C_Engraving.SetSearchFilter("")
-
---     local categories = C_Engraving.GetRuneCategories(true, true);
---     for i, category in ipairs(categories) do
---         local runes = C_Engraving.GetRunesForCategory(category, true);
---         for _, rune in ipairs(runes) do
---             pt(rune.skillLineAbilityID)
---         end
---     end
--- end)
-
-
-
--- local f = CreateFrame("Frame", nil, UIParent, "InsetFrameTemplate3")
--- f:SetSize(500, 300)
--- f:SetPoint("CENTER", nil, "CENTER", 0, 0)
--- local tex = UIParent:CreateTexture()
--- tex:SetPoint("CENTER")
--- tex:SetTexture(131089)
--- tex:SetTexCoord(0, 0.5, 0.5, 1)
-
--- hooksecurefunc("UnitPopup_ShowMenu", function(dropdownMenu, which, unit, name, userData)
--- end)
-
---[[
-/run C_ChatInfo.SendAddonMessage("WeakAuras", BG.TableToString({m = "dR",d = "2"}), "WHISPER","帕丨克-阿拉希盆地")
-/run C_ChatInfo.SendAddonMessage("WeakAuras", BG.TableToString({m = "dR",d = "2"}), "RAID")
- ]]
-
-
---[[
-/run for k, v in pairs(_G) do if type(k) == "string" and strfind(k,"HEALING") and type(v) == "string" then print(k, v) end end
-/dump GetSavedInstanceInfo(1)
- ]]
-
--- local name, link = GetItemInfo(5183)
--- if link then
---     for k, v in pairs(GetItemStats(link)) do
---         pt(k, v)
---     end
--- end

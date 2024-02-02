@@ -1,4 +1,4 @@
-if not BG.IsVanilla() then return end
+if not BG.IsVanilla_Sod() then return end
 
 local AddonName, ADDONSELF = ...
 
@@ -41,37 +41,75 @@ local function GetPrice(itemID)
     end
 end
 
-local function SetTooltipText(itemID, tooltip)
+local function UpdateLink(owneritemName, usetoitemID, tooltip)
+    local _owneritemName = tooltip:GetItem()
+    if owneritemName ~= _owneritemName then return end
+    local _, link = GetItemInfo(usetoitemID)
+    for i = 1, 30 do
+        local rightt = _G[tooltip:GetName() .. "TextRight" .. i]
+        local leftt = _G[tooltip:GetName() .. "TextLeft" .. i]
+        if rightt then
+            local righttext = rightt:GetText()
+            local lefttext = leftt:GetText()
+            if righttext == "Loading" and lefttext == L["可用于"] then
+                rightt:SetText(link)
+                return
+            end
+        end
+    end
+end
+local function UpdatePrice(owneritemName, needitemID, tooltip)
+    local _owneritemName = tooltip:GetItem()
+    if owneritemName ~= _owneritemName then return end
+
+    local name, link = GetItemInfo(needitemID)
+    for i = 1, 30 do
+        local rightt = _G[tooltip:GetName() .. "TextRight" .. i]
+        local leftt = _G[tooltip:GetName() .. "TextLeft" .. i]
+        if leftt and rightt then
+            local righttext = rightt:GetText()
+            local lefttext = leftt:GetText()
+            if righttext == "Loading" and lefttext == "Loading" then
+                leftt:SetText(name)
+                local money = GetPrice(needitemID)
+                if money then
+                    rightt:SetText(GetMoneyString(money, true))
+                else
+                    rightt:SetText(L["没有价格"])
+                end
+                return
+            end
+        end
+    end
+end
+
+local function SetTooltipText(itemID, itemName, tooltip)
     for _itemID, v in pairs(BG.CommerceAuthority) do
         _itemID = tonumber(_itemID)
         if _itemID == itemID then
-            tooltip:AddLine(" ", 1, 1, 1, true)
+            tooltip:AddLine(" ")
             if v.isfullitem then
                 tooltip:AddDoubleLine(L["声望奖励"], v.fullgive, 1, 0.82, 0, 1, 1, 1)
-                tooltip:Show()
             else
                 if v.usetoitem then
-                    local _, link = GetItemInfo(v.usetoitem)
-                    if link then
-                        tooltip:AddDoubleLine(L["可用于"], link, 1, 0.82, 0, 1, 1, 1)
-                        tooltip:AddDoubleLine(L["需要数量"], v.needcount, 1, 0.82, 0, 1, 1, 1)
-                    end
+                    tooltip:AddDoubleLine(L["可用于"], "Loading", 1, 0.82, 0, 1, 1, 1)
+                    tooltip:AddDoubleLine(L["需要数量"], v.needcount, 1, 0.82, 0, 1, 1, 1)
+                    local item = Item:CreateFromItemID(v.usetoitem)
+                    item:ContinueOnItemLoad(function()
+                        UpdateLink(itemName, v.usetoitem, tooltip)
+                    end)
                 end
                 if v.needitem and IsAddOnLoaded("Auctionator") then
-                    local name, link = GetItemInfo(v.needitem)
-                    if name then
-                        local money = GetPrice(v.needitem)
-                        if money then
-                            tooltip:AddDoubleLine(name, GetMoneyString(money, true), 1, 0.82, 0, 1, 1, 1)
-                        else
-                            tooltip:AddDoubleLine(name, L["没有价格"], 1, 0.82, 0, 1, 1, 1)
-                        end
-                    end
+                    tooltip:AddDoubleLine("Loading", "Loading", 1, 0.82, 0, 1, 1, 1)
+                    local item = Item:CreateFromItemID(v.needitem)
+                    item:ContinueOnItemLoad(function()
+                        UpdatePrice(itemName, v.needitem, tooltip)
+                    end)
                 end
                 tooltip:AddDoubleLine(L["空载时声望奖励"], v.emptygive, 1, 0.82, 0, 1, 1, 1)
                 tooltip:AddDoubleLine(L["补足时声望奖励"], v.fullgive, 1, 0.82, 0, 1, 1, 1)
-                tooltip:Show()
             end
+            tooltip:Show()
             return
         end
     end
@@ -79,21 +117,11 @@ end
 
 local function AddInfo(self)
     if BiaoGe.options["commerceAuthorityTooltip"] ~= 1 then return end
-    local _, link = self:GetItem()
+    local name, link = self:GetItem()
     if not link then return end
     local itemID = GetItemInfoInstant(link)
-    SetTooltipText(itemID, GameTooltip)
-end
-
-local function AddItemRefInfo(ItemRefLink)
-    if BiaoGe.options["commerceAuthorityTooltip"] ~= 1 then return end
-    if not ItemRefTooltip:IsVisible() then return end
-    local item, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(ItemRefLink)
-    if not link then return end
-    local itemID = GetItemInfoInstant(link)
-    SetTooltipText(itemID, ItemRefTooltip)
+    SetTooltipText(itemID, name, self)
 end
 
 GameTooltip:HookScript("OnTooltipSetItem", AddInfo)
-
-hooksecurefunc("SetItemRef", AddItemRefInfo)
+ItemRefTooltip:HookScript("OnTooltipSetItem", AddInfo)

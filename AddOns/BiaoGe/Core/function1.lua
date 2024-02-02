@@ -19,65 +19,42 @@ local RealmId = GetRealmID()
 local player = UnitName("player")
 BG.After = C_Timer.After
 
-------------------函数：是否空表------------------
-local function Size(t)
-    local s = 0
-    for k, v in pairs(t) do
-        if v ~= nil then s = s + 1 end
-    end
-    return s
-end
-ADDONSELF.Size = Size
 ------------------函数：第几个BOSS------------------
 local function BossNum(FB, b, t)
-    local back = 0
+    local tbl
     if FB == "ICC" then
-        if t == 1 then
-            t = 0
-        elseif t == 2 then
-            t = 8
-        elseif t == 3 then
-            t = 14
-        end
+        tbl = { 0, 8, 14 }
     elseif FB == "TOC" then
-        if t == 1 then
-            t = 0
-        elseif t == 2 then
-            t = 5
-        elseif t == 3 then
-            t = 8
-        end
+        tbl = { 0, 5, 8 }
     elseif FB == "ULD" then
-        if t == 1 then
-            t = 0
-        elseif t == 2 then
-            t = 7
-        elseif t == 3 then
-            t = 13
-        elseif t == 4 then
-            t = 18
-        end
-    elseif FB == "NAXX" then
-        if t == 1 then
-            t = 0
-        elseif t == 2 then
-            t = 6
-        elseif t == 3 then
-            t = 12
-        elseif t == 4 then
-            t = 16
-        end
+        tbl = { 0, 7, 13 }
+    elseif FB == "NAXX" and not BG.IsVanilla() then
+        tbl = { 0, 6, 12, 16 }
     elseif FB == "BD" then
-        if t == 1 then
-            t = 0
-        elseif t == 2 then
-            t = 5
-        elseif t == 3 then
-            t = 9
-        end
+        tbl = { 0, 5, 9 }
+    elseif FB == "Gno" then
+        tbl = { 0, 5, 8 }
+    elseif FB == "MC" then
+        tbl = { 0, 8, 12 }
+    elseif FB == "BWL" then
+        tbl = { 0, 5, 9 }
+    elseif FB == "ZUG" then
+        tbl = { 0, 6, 11 }
+    elseif FB == "AQL" then
+        tbl = { 0, 5, 8 }
+    elseif FB == "TAQ" then
+        tbl = { 0, 6, 10 }
+    elseif FB == "NAXX" and BG.IsVanilla() then
+        tbl = { 0, 6, 12, 16 }
     end
-    back = b + t
-    return back
+
+    local bb
+    if tbl[t + 1] then
+        bb = tbl[t + 1] - tbl[t]
+    else
+        bb = Maxb[FB] + 2 - tbl[t]
+    end
+    return b + tbl[t], bb
 end
 ADDONSELF.BossNum = BossNum
 
@@ -88,54 +65,38 @@ local function Round(number, decimal_places)
 end
 ADDONSELF.Round = Round
 
-------------------函数：把16进制颜色转换成0-1RGB------------------
-local function RGB(hex, Alpha)
-    local red = string.sub(hex, 1, 2)
-    local green = string.sub(hex, 3, 4)
-    local blue = string.sub(hex, 5, 6)
-
-    red = tonumber(red, 16) / 255
-    green = tonumber(green, 16) / 255
-    blue = tonumber(blue, 16) / 255
-
-    if Alpha then
-        return red, green, blue, Alpha
-    else
-        return red, green, blue
-    end
-end
-ADDONSELF.RGB = RGB
-
 ------------------函数：设置颜色（0-1代码变为16进制颜色）------------------
-local function RGB_16(name, c1, c2, c3)
-    local name = name
-    local c1, c2, c3 = c1, c2, c3
-    if not c1 then
-        c1, c2, c3 = name:GetTextColor()
+local function RGB_16(name, r, g, b)
+    if not r then
+        r, g, b = name:GetTextColor()
         name = name:GetText()
     end
-    if tonumber(c1) and name then
-        local r = string.format("%X", tonumber(c1) * 255)
-        if r and strlen(r) == 1 then
-            r = "0" .. r
-        end
-        local g = string.format("%X", tonumber(c2) * 255)
-        if g and strlen(g) == 1 then
-            g = "0" .. g
-        end
-        local b = string.format("%X", tonumber(c3) * 255)
-        if b and strlen(b) == 1 then
-            b = "0" .. b
-        end
-        local c = r .. g .. b
-        c = "|cff" .. c .. name .. "|r"
+
+    local r = string.format("%X", tonumber(r) * 255)
+    if r and strlen(r) == 1 then
+        r = "0" .. r
+    end
+    local g = string.format("%X", tonumber(g) * 255)
+    if g and strlen(g) == 1 then
+        g = "0" .. g
+    end
+    local b = string.format("%X", tonumber(b) * 255)
+    if b and strlen(b) == 1 then
+        b = "0" .. b
+    end
+    local c = r .. g .. b
+
+    if name then
+        local cffname = "|cff" .. c .. name .. "|r"
+        return cffname
+    else
         return c
     end
 end
 ADDONSELF.RGB_16 = RGB_16
 
 ------------------在文本里插入材质图标------------------
-local function AddTexture(Texture, y)
+local function AddTexture(Texture, y, coord)
     if not Texture then
         return ""
     end
@@ -144,7 +105,7 @@ local function AddTexture(Texture, y)
         y = "-0"
     end
     local tex = ""
-    local coord = ""
+    local coord = coord or ""
     if Texture == "MAINTANK" then       -- 主坦克
         tex = "132064"
     elseif Texture == "MAINASSIST" then -- 主助理
@@ -166,6 +127,24 @@ local function AddTexture(Texture, y)
     return t
 end
 ADDONSELF.AddTexture = AddTexture
+
+function BG.CreateRoundTexture(tex, parent, w, h)
+    local icon = CreateFrame("Frame", nil, parent or UIParent)
+    icon:SetPoint("CENTER")
+    icon:SetSize(w or 20, h or 20)
+
+    icon.tex = icon:CreateTexture(nil, "ARTWORK")
+    icon.tex:SetAllPoints()
+    icon.tex:SetTexture(tex)
+    icon.tex:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+
+    icon.masktex = icon:CreateMaskTexture()
+    icon.masktex:SetAllPoints()
+    icon.masktex:SetTexture("Interface/CharacterFrame/TempPortraitAlphaMaskSmall")
+
+    icon.tex:AddMaskTexture(icon.masktex)
+    return icon
+end
 
 ------------------获取文字（删掉材质）------------------
 local function GetText_T(bt)
@@ -228,7 +207,8 @@ end
 ------------------函数：仅提取链接文本------------------
 local function GetItemID(text)
     if not text then return end
-    local h_item = "|Hitem:(%d-):"
+    local h_item = "item:(%d-):"
+    -- local h_item = "|Hitem:(%d-):"
     local item = tonumber(strmatch(text, h_item))
     return item
 end
@@ -274,17 +254,45 @@ local function FrameHide(num)
     if BG.ButtonAucitonWA and BG.ButtonAucitonWA.frame then
         BG.ButtonAucitonWA.frame:Hide()
     end
+    if BG.frameExportHope then
+        BG.frameExportHope:Hide()
+    end
+    if BG.frameImportHope then
+        BG.frameImportHope:Hide()
+    end
 end
 ADDONSELF.FrameHide = FrameHide
 
-------------------把副本英文转换为中文------------------
-function BG.FBcn(FB)
-    for i, v in pairs(BG.FBtable2) do
-        if FB == v.FB then
-            return v.localName
+------------------获取FBtable2数据内容------------------
+--[[
+do
+    -- 获取副本本地化名称
+    function BG.GetFBinfo(FB,"localName")
+        for i, v in pairs(BG.FBtable2) do
+            if FB == v.FB then
+                return v.localName
+            end
         end
     end
-end
+
+    -- 获取副本最大玩家数量
+    function BG.GetFBinfo(FB,"maxplayers")
+        for i, v in ipairs(BG.FBtable2) do
+            if FB == v.FB then
+                return v.maxplayers
+            end
+        end
+    end
+
+    -- 获取副本所属阶段
+    function BG.GetFBinfo(FB,"phase")
+        for i, v in ipairs(BG.FBtable2) do
+            if FB == v.FB then
+                return v.phase
+            end
+        end
+    end
+end ]]
 
 ------------------当前表格是否空白------------------  -- true 是空白，false 不是空白
 function BG.BiaoGeIsEmpty(FB, _type)
@@ -390,11 +398,16 @@ end
 
 ------------------计时器------------------
 function BG.OnUpdateTime(func)
-    local UpdateFrame = CreateFrame("Frame")
-    UpdateFrame.timeElapsed = 0
-    UpdateFrame:SetScript("OnUpdate", func)
+    local updateFrame = CreateFrame("Frame")
+    updateFrame.timeElapsed = 0
+    updateFrame:SetScript("OnUpdate", func)
 end
 
+--[[
+BG.OnUpdateTime(function(self,elapsed)
+    self.timeElapsed=self.timeElapsed+elapsed
+end)
+ ]]
 ------------------设置按钮文本的宽度------------------
 function BG.SetButtonStringWidth(bt)
     local t = bt:GetFontString()
@@ -459,4 +472,24 @@ function BG.SetRaidTargetingIcons(type, name)
     else
         return RaidTargetingIcons[name].tex
     end
+end
+
+----------滚动到最末----------
+function BG.SetScrollBottom(scroll, child)
+    local offset = child:GetHeight() - scroll:GetHeight()
+    if offset > 0 then
+        scroll:SetVerticalScroll(offset)
+    end
+end
+
+----------右键菜单切换开/关----------
+function BG.DropDownListIsVisible(self)
+    local _, parent = _G.L_DropDownList1:GetPoint()
+    if parent == self and _G.L_DropDownList1:IsVisible() then
+        return true
+    end
+end
+
+function BG.BG()
+    return BG.STC_b1("<BiaoGe>")
 end

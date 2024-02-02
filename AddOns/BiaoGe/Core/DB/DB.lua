@@ -4,13 +4,6 @@ local L = ADDONSELF.L
 
 local pt = print
 
-local RR = "|r"
-ADDONSELF.RR = RR
-local NN = "\n"
-ADDONSELF.NN = NN
-local RN = "|r\n"
-ADDONSELF.RN = RN
-
 local LibBG = LibStub:GetLibrary("LibUIDropDownMenu-4.0") -- 调用库菜单UI
 ADDONSELF.LibBG = LibBG
 
@@ -24,23 +17,16 @@ local l = GetLocale()
 if (l == "koKR") then
     BIAOGE_TEXT_FONT = "Fonts\\2002.TTF";
 elseif (l == "zhCN") then
-    BIAOGE_TEXT_FONT = "Fonts\\ARKai_T.ttf";
+    BIAOGE_TEXT_FONT = "Fonts\\ARKai_T.TTF";
 elseif (l == "zhTW") then
-    BIAOGE_TEXT_FONT = "Fonts\\ARKai_T.ttf";
-    -- BIAOGE_TEXT_FONT = "Fonts\\blei00d.TTF";
+    -- BIAOGE_TEXT_FONT = "Fonts\\ARKai_T.TTF";
+    BIAOGE_TEXT_FONT = "Fonts\\blei00d.TTF";
 elseif (l == "ruRU") then
     BIAOGE_TEXT_FONT = "Fonts\\FRIZQT___CYR.TTF";
 else
     BIAOGE_TEXT_FONT = "Fonts\\FRIZQT__.TTF";
 end
 
-local function Size(t)
-    local s = 0;
-    for k, v in pairs(t) do
-        if v ~= nil then s = s + 1 end
-    end
-    return s;
-end
 local function RGB(hex)
     local red = string.sub(hex, 1, 2)
     local green = string.sub(hex, 3, 4)
@@ -55,52 +41,60 @@ end
 -- 全局变量
 BG = {}
 
--- 是否经典旧世版本
-function BG.IsVanilla()
-    if select(4, GetBuildInfo()) <= 20000 then
-        return true
-    end
-end
+BG.IsVanilla = ADDONSELF.IsVanilla
+BG.IsVanilla_Sod = ADDONSELF.IsVanilla_Sod
+BG.IsVanilla_60 = ADDONSELF.IsVanilla_60
+BG.IsAlliance = ADDONSELF.IsAlliance
+BG.IsHorde = ADDONSELF.IsHorde
 
 local RealmId = GetRealmID()
 local player = UnitName("player")
-local FB
 
+local vanillaAllFB = { "BD", "Gno", "NAXX", "TAQ", "AQL", "ZUG", "BWL", "MC", }
+BG.FBtable = {}
+BG.FBtable2 = {}
+BG.FBIDtable = {}
 do
-    if BG.IsVanilla() then
-        BG.FB1 = "BD"
-        BG.BDname = GetRealZoneText(48)
-        BG.TheEndBossID = 2891
+    function AddDB(FB, FBid, phase, maxplayers)
+        tinsert(BG.FBtable, FB)
+        tinsert(BG.FBtable2,
+            {
+                FB = FB,
+                ID = FBid,
+                localName = GetRealZoneText(FBid),
+                phase = phase,
+                maxplayers = maxplayers,
+            })
+        BG.FBIDtable[FBid] = FB
+    end
 
-        BG.FBtable = {
-            "BD",
-        }
-        BG.FBtable2 = {
-            { FB = "BD", ID = 48, localName = GetRealZoneText(48) },
-        }
-        BG.FBIDtable = {
-            [48] = "BD", -- 黑暗深渊
-        }
+    if BG.IsVanilla_Sod() then
+        BG.FB1 = "BD"
+        BG.fullLevel = 25
+        BG.TheEndBossID = { 2891 }
+        AddDB("BD", 48, "P1", 10)
+        AddDB("Gno", 90, "P2", 10)
+    elseif BG.IsVanilla_60() then
+        BG.FB1 = "MC"
+        BG.fullLevel = 60
+        BG.TheEndBossID = { 617, 1084, 617, 793, 723, 717, 1114 } --MC OL BWL ZUG AQL TAQ NAXX
+        AddDB("MC", 409, L["全阶段"], 40)
+        AddDB("BWL", 469, L["全阶段"], 40)
+        AddDB("ZUG", 309, L["全阶段"], 20)
+        AddDB("AQL", 509, L["全阶段"], 20)
+        AddDB("TAQ", 531, L["全阶段"], 40)
+        AddDB("NAXX", 533, L["全阶段"], 40)
+
+        BG.FBIDtable[249] = "MC" -- 奥妮克希亚的巢穴
     else
         BG.FB1 = "ICC"
-        BG.NAXXname = GetRealZoneText(533)
-        BG.ULDname = GetRealZoneText(603)
-        BG.TOCname = GetRealZoneText(649)
-        BG.ICCname = GetRealZoneText(631)
-        BG.TheEndBossID = 856
+        BG.fullLevel = 80
+        BG.TheEndBossID = { 856 }
+        AddDB("NAXX", 533, "P1")
+        AddDB("ULD", 603, "P2")
+        AddDB("TOC", 649, "P3")
+        AddDB("ICC", 631, "P4")
 
-        BG.FBtable = {
-            "NAXX",
-            "ULD",
-            "TOC",
-            "ICC",
-        }
-        BG.FBtable2 = {
-            { FB = "NAXX", ID = 533, localName = GetRealZoneText(533) },
-            { FB = "ULD", ID = 603, localName = GetRealZoneText(603) },
-            { FB = "TOC", ID = 649, localName = GetRealZoneText(649) },
-            { FB = "ICC", ID = 631, localName = GetRealZoneText(631) },
-        }
         BG.FBIDtable = {
             [533] = "NAXX", -- 纳克萨玛斯
             [615] = "NAXX", -- 黑曜石圣殿
@@ -112,24 +106,34 @@ do
             [724] = "ICC",  -- 红玉圣殿
         }
     end
-    FB = BG.FBtable
 
     BG.Movetable = {}
     BG.options = {}
+    BG.itemCaches = {}
     BG.dropDown = LibBG:Create_UIDropDownMenu(nil, UIParent)
 
-    BG.OnEnterAlpha = 0.1
-    BG.HighLightAlpha = 0.2
+    BG.onEnterAlpha = 0.1
+    BG.highLightAlpha = 0.2
+    BG.scrollStep = 80
 
     BG.ver = ADDONSELF.ver
     BG.instructionsText = ADDONSELF.instructionsText
-    BG.upDateText = ADDONSELF.upDateText
+    BG.updateText = ADDONSELF.updateText
+
+    ---------- 获取副本tbl某个value ----------
+    function BG.GetFBinfo(FB, info)
+        for i, v in ipairs(BG.FBtable2) do
+            if FB == v.FB then
+                return v[info]
+            end
+        end
+    end
 
     -- 表格
     do
         -- 表格UI
         BG.Frame = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             BG.Frame[value] = {}
             for b = 1, 22 do
                 BG.Frame[value]["boss" .. b] = {}
@@ -138,7 +142,7 @@ do
 
         -- 底色
         BG.FrameDs = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             for i = 1, 3, 1 do
                 BG.FrameDs[value .. i] = {}
                 for b = 1, 22 do
@@ -149,7 +153,7 @@ do
 
         -- 心愿UI
         BG.HopeFrame = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             BG.HopeFrame[value] = {}
             for n = 1, 4 do
                 BG.HopeFrame[value]["nandu" .. n] = {}
@@ -161,7 +165,7 @@ do
 
         -- 心愿底色
         BG.HopeFrameDs = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             for t = 1, 3, 1 do
                 BG.HopeFrameDs[value .. t] = {}
                 for n = 1, 4 do
@@ -175,7 +179,7 @@ do
 
         -- 历史UI
         BG.HistoryFrame = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             BG.HistoryFrame[value] = {}
             for b = 1, 22 do
                 BG.HistoryFrame[value]["boss" .. b] = {}
@@ -184,7 +188,7 @@ do
 
         -- 历史底色
         BG.HistoryFrameDs = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             for i = 1, 3, 1 do
                 BG.HistoryFrameDs[value .. i] = {}
                 for b = 1, 22 do
@@ -195,7 +199,7 @@ do
 
         -- 接收UI
         BG.ReceiveFrame = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             BG.ReceiveFrame[value] = {}
             for b = 1, 22 do
                 BG.ReceiveFrame[value]["boss" .. b] = {}
@@ -204,7 +208,7 @@ do
 
         -- 接收底色
         BG.ReceiveFrameDs = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             for i = 1, 3, 1 do
                 BG.ReceiveFrameDs[value .. i] = {}
                 for b = 1, 22 do
@@ -215,7 +219,7 @@ do
 
         -- 对账UI
         BG.DuiZhangFrame = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             BG.DuiZhangFrame[value] = {}
             for b = 1, 22 do
                 BG.DuiZhangFrame[value]["boss" .. b] = {}
@@ -224,7 +228,7 @@ do
 
         -- 对账底色
         BG.DuiZhangFrameDs = {}
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             for i = 1, 3, 1 do
                 BG.DuiZhangFrameDs[value .. i] = {}
                 for b = 1, 22 do
@@ -234,71 +238,85 @@ do
         end
     end
 
+    -- 掉落
+    do
+        BG.Loot = {}
+        for key, FB in pairs(BG.FBtable) do
+            BG.Loot[FB] = {
+                N = {},
+                N10 = {},
+                N25 = {},
+                H10 = {},
+                H25 = {},
+
+                DEATHKNIGHT = {},
+                PALADIN = {},
+                WARRIOR = {},
+                SHAMAN = {},
+                HUNTER = {},
+                DRUID = {},
+                ROGUE = {},
+                MAGE = {},
+                WARLOCK = {},
+                PRIEST = {},
+
+                Team = {},
+                World = {},
+                WorldBoss = {},
+                T = {},
+                Currency = {},
+                Faction = {},
+                Pvp = {},
+                Profession = {},
+                Quest = {},
+            }
+        end
+    end
+
     -- 字体
     do
-        BG.FontBlue1 = CreateFont("BG.FontBlue1")
-        BG.FontBlue1:SetTextColor(RGB("00BFFF"))
-        BG.FontBlue1:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        local function CreateMyFont(color, size, H)
+            local cff
+            if color == "Blue" then
+                cff = "00BFFF"
+            elseif color == "Green" then
+                cff = "00FF00"
+            elseif color == "Red" then
+                cff = "FF0000"
+            elseif color == "Fen" then
+                cff = "FF69B4"
+            elseif color == "Gold" then
+                cff = "FFD100"
+            elseif color == "White" then
+                cff = "FFFFFF"
+            elseif color == "Dis" then
+                cff = "808080"
+            end
+            BG["Font" .. color .. size] = CreateFont("BG.Font" .. color .. size)
+            BG["Font" .. color .. size]:SetTextColor(RGB(cff))
+            BG["Font" .. color .. size]:SetFont(BIAOGE_TEXT_FONT, size, "OUTLINE")
+        end
 
-        BG.FontBlue1Left = CreateFont("BG.FontBlue1Left")
-        BG.FontBlue1Left:SetTextColor(RGB("00BFFF"))
-        BG.FontBlue1Left:SetJustifyH("LEFT")
-        BG.FontBlue1Left:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        CreateMyFont("Blue", 13)
+        CreateMyFont("Blue", 15)
 
-        BG.FontGold1 = CreateFont("BG.FontGold1")
-        BG.FontGold1:SetTextColor(RGB("FFD100"))
-        BG.FontGold1:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        CreateMyFont("Green", 13)
+        CreateMyFont("Green", 15)
+        CreateMyFont("Green", 25)
 
-        local color = "Green15" -- BG.FontGreen15
-        BG["Font" .. color] = CreateFont("BG.Font" .. color)
-        BG["Font" .. color]:SetTextColor(RGB("00FF00"))
-        BG["Font" .. color]:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-        local color = "Green25" -- BG.FontGreen25
-        BG["Font" .. color] = CreateFont("BG.Font" .. color)
-        BG["Font" .. color]:SetTextColor(RGB("00FF00"))
-        BG["Font" .. color]:SetFont(BIAOGE_TEXT_FONT, 25, "OUTLINE")
+        CreateMyFont("Gold", 15)
 
-        BG.FontRed1 = CreateFont("BG.FontRed1")
-        BG.FontRed1:SetTextColor(RGB("FF0000"))
-        BG.FontRed1:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        CreateMyFont("Red", 15)
 
-        BG.FontRed2 = CreateFont("BG.FontRed2")
-        BG.FontRed2:SetTextColor(RGB("DC143C"))
-        BG.FontRed2:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        CreateMyFont("Fen", 15)
 
-        BG.FontFen1 = CreateFont("BG.FontFen1")
-        BG.FontFen1:SetTextColor(RGB("FF69B4"))
-        BG.FontFen1:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        CreateMyFont("White", 13)
+        CreateMyFont("White", 15)
+        CreateMyFont("White", 18)
+        CreateMyFont("White", 25)
 
-        local color = "While25" -- BG.FontWhile25
-        BG["Font" .. color] = CreateFont("BG.Font" .. color)
-        BG["Font" .. color]:SetTextColor(RGB("FFFFFF"))
-        BG["Font" .. color]:SetFont(BIAOGE_TEXT_FONT, 25, "OUTLINE")
-        local color = "While18" -- BG.FontWhile18
-        BG["Font" .. color] = CreateFont("BG.Font" .. color)
-        BG["Font" .. color]:SetTextColor(RGB("FFFFFF"))
-        BG["Font" .. color]:SetFont(BIAOGE_TEXT_FONT, 18, "OUTLINE")
-        local color = "While15" -- BG.FontWhile15
-        BG["Font" .. color] = CreateFont("BG.Font" .. color)
-        BG["Font" .. color]:SetTextColor(RGB("FFFFFF"))
-        BG["Font" .. color]:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-        local color = "While13" -- BG.FontWhile13
-        BG["Font" .. color] = CreateFont("BG.Font" .. color)
-        BG["Font" .. color]:SetTextColor(RGB("FFFFFF"))
-        BG["Font" .. color]:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
-
-        BG.FontHilight = CreateFont("BG.FontHilight")
-        BG.FontHilight:SetTextColor(RGB("FFFFFF"))
-        BG.FontHilight:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-
-        BG.FontHilightLeft = CreateFont("BG.FontHilightLeft")
-        BG.FontHilightLeft:SetTextColor(RGB("FFFFFF"))
-        BG.FontHilightLeft:SetJustifyH("LEFT")
-        BG.FontHilightLeft:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-
-        BG.FontDisabled = CreateFont("BG.FontDisabled")
-        BG.FontDisabled:SetTextColor(RGB("808080"))
-        BG.FontDisabled:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        CreateMyFont("Dis", 13)
+        CreateMyFont("Dis", 15)
     end
 
     -- 函数：给文本上颜色
@@ -398,6 +416,7 @@ do
     do
         BG.sound1 = SOUNDKIT.GS_TITLE_OPTION_OK -- 按键音效
         BG.sound2 = 569593                      -- 升级音效
+        BG.sound3 = SOUNDKIT.UI_TRANSMOG_APPLY  -- 确认框弹出音效
         BG.sound_paimai = "Interface\\AddOns\\BiaoGe\\Media\\sound\\paimai.mp3"
         BG.sound_hope = "Interface\\AddOns\\BiaoGe\\Media\\sound\\hope.mp3"
         BG.sound_qingkong = "Interface\\AddOns\\BiaoGe\\Media\\sound\\qingkong.mp3"
@@ -408,19 +427,26 @@ end
 
 -- 数据库（保存至本地）
 local function DataBase()
-    -- WLK和Plus数据库互通检测
+    -- 数据库冲突检测
     do
-        if BiaoGe and type(BiaoGe) == "table" then
+        if BiaoGe and type(BiaoGe) == "table" and BiaoGe.FB then
+            local checktbl
             if BG.IsVanilla() then
-                if BiaoGe.ICC then
-                    -- 如果是赛季服但数据库里有ICC表，就清空数据库
-                    BiaoGe = nil
-                end
+                checktbl = vanillaAllFB
             else
-                if BiaoGe.BD then
-                    -- 如果是WLK但数据库里有BD表，就清空数据库
-                    BiaoGe = nil
+                checktbl = BG.FBtable
+            end
+
+            local yes
+            for k, FB in pairs(checktbl) do
+                if BiaoGe.FB == FB then
+                    yes = true
+                    break
                 end
+            end
+            if not yes then
+                BiaoGe = nil
+                SendSystemMessage(BG.BG .. " " .. L["检测到配置文件错误，现已重置！"])
             end
         end
     end
@@ -440,10 +466,8 @@ local function DataBase()
         if not BiaoGe.duizhang then
             BiaoGe.duizhang = {}
         end
-        if not BiaoGe.BossFrame then
-            BiaoGe.BossFrame = {}
-        end
-        for index, value in ipairs(FB) do
+
+        for index, value in ipairs(BG.FBtable) do
             if not BiaoGe[value] then
                 BiaoGe[value] = {}
             end
@@ -457,7 +481,7 @@ local function DataBase()
         if not BiaoGe.HistoryList then
             BiaoGe.HistoryList = {}
         end
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             if not BiaoGe.HistoryList[value] then
                 BiaoGe.HistoryList[value] = {}
             end
@@ -466,15 +490,20 @@ local function DataBase()
         if not BiaoGe.History then
             BiaoGe.History = {}
         end
-        for index, value in ipairs(FB) do
+        for index, value in ipairs(BG.FBtable) do
             if not BiaoGe.History[value] then
                 BiaoGe.History[value] = {}
             end
         end
 
-        for index, value in ipairs(FB) do
-            if not BiaoGe.BossFrame[value] then
-                BiaoGe.BossFrame[value] = {}
+        if not BG.IsVanilla() then
+            if not BiaoGe.BossFrame then
+                BiaoGe.BossFrame = {}
+            end
+            for index, value in ipairs(BG.FBtable) do
+                if not BiaoGe.BossFrame[value] then
+                    BiaoGe.BossFrame[value] = {}
+                end
             end
         end
 
@@ -483,6 +512,11 @@ local function DataBase()
         end
         if not BiaoGe.options.SearchHistory then
             BiaoGe.options.SearchHistory = {}
+        end
+        local name = "moLing"
+        BG.options[name .. "reset"] = 1
+        if not BiaoGe.options[name] then
+            BiaoGe.options[name] = BG.options[name .. "reset"]
         end
 
         -- 高亮天赋装备
@@ -511,16 +545,16 @@ local function DataBase()
         if not BiaoGe.Hope[RealmId][player] then
             BiaoGe.Hope[RealmId][player] = {}
         end
-        for index, fb in ipairs(FB) do
-            if not BiaoGe.Hope[RealmId][player][fb] then
-                BiaoGe.Hope[RealmId][player][fb] = {}
+        for index, FB in ipairs(BG.FBtable) do
+            if not BiaoGe.Hope[RealmId][player][FB] then
+                BiaoGe.Hope[RealmId][player][FB] = {}
             end
             for n = 1, 4 do
-                if not BiaoGe.Hope[RealmId][player][fb]["nandu" .. n] then
-                    BiaoGe.Hope[RealmId][player][fb]["nandu" .. n] = {}
+                if not BiaoGe.Hope[RealmId][player][FB]["nandu" .. n] then
+                    BiaoGe.Hope[RealmId][player][FB]["nandu" .. n] = {}
                     for b = 1, 22 do
-                        if not BiaoGe.Hope[RealmId][player][fb]["nandu" .. n]["boss" .. b] then
-                            BiaoGe.Hope[RealmId][player][fb]["nandu" .. n]["boss" .. b] = {}
+                        if not BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b] then
+                            BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b] = {}
                         end
                     end
                 end
@@ -539,63 +573,67 @@ end
 do
     local Width = {}
     local Height = {}
+    local Maxt = {}
     local Maxb = {}
     local Maxi = {}
 
-    Width["BG.MainFrame"] = 1710
-    Width["ICC"] = 1290
-    Width["TOC"] = 1290
-    Width["ULD"] = 1290
-    Width["NAXX"] = 1710
-    Width["BD"] = 1290
-    ADDONSELF.Width = Width
-
-    Height["BG.MainFrame"] = 945
-    Height["ICC"] = 875
-    Height["TOC"] = 835
-    Height["ULD"] = 875
-    Height["NAXX"] = 945
-    Height["BD"] = 835
-    ADDONSELF.Height = Height
-
-    Maxb["ICC"] = 15
-    Maxb["TOC"] = 9
-    Maxb["ULD"] = 16
-    Maxb["NAXX"] = 19
-    Maxb["BD"] = 9
-    ADDONSELF.Maxb = Maxb
-
-    Maxi["ICC"] = 16
-    Maxi["TOC"] = 14
-    Maxi["ULD"] = 8
-    Maxi["NAXX"] = 11
-    Maxi["BD"] = 11
+    local function AddDB(FB, width, height, maxt, maxb, maxi)
+        Width[FB] = width
+        Height[FB] = height
+        Maxt[FB] = maxt
+        Maxb[FB] = maxb
+        Maxi[FB] = maxi
+    end
     BG.Maxi = 30
+    if BG.IsVanilla_Sod() then
+        AddDB("BD", 1290, 835, 3, 9, 11)
+        AddDB("Gno", 1290, 835, 3, 8, 11)
+    elseif BG.IsVanilla_60() then
+        AddDB("MC", 1290, 875, 3, 13, 15)
+        AddDB("BWL", 1290, 810, 3, 10, 15)
+        AddDB("ZUG", 1290, 810, 3, 12, 15)
+        AddDB("AQL", 1290, 810, 3, 8, 15)
+        AddDB("TAQ", 1290, 810, 3, 11, 15)
+        AddDB("NAXX", 1710, 810, 4, 17, 15)
+    else
+        AddDB("ICC", 1290, 875, 3, 15, 16)
+        AddDB("TOC", 1290, 835, 3, 9, 14)
+        AddDB("ULD", 1290, 875, 3, 16, 8)
+        AddDB("NAXX", 1710, 945, 4, 19, 11)
+    end
+    ADDONSELF.Width = Width
+    ADDONSELF.Height = Height
+    ADDONSELF.Maxt = Maxt
+    ADDONSELF.Maxb = Maxb
     ADDONSELF.Maxi = Maxi
 
+
     local HopeMaxi
-    if BG.IsVanilla() then
-        HopeMaxi = 4
-    else
-        HopeMaxi = 3
-    end
     local HopeMaxb = {}
     local HopeMaxn = {}
 
+    if BG.IsVanilla() then
+        HopeMaxi = 5
+    else
+        HopeMaxi = 3
+    end
     ADDONSELF.HopeMaxi = HopeMaxi
 
-    HopeMaxb["ICC"] = Maxb["ICC"] - 1
-    HopeMaxb["TOC"] = Maxb["TOC"] - 1
-    HopeMaxb["ULD"] = Maxb["ULD"] - 1
-    HopeMaxb["NAXX"] = Maxb["NAXX"] - 1
-    HopeMaxb["BD"] = Maxb["BD"] - 1
+    for _, FB in pairs(BG.FBtable) do
+        HopeMaxb[FB] = Maxb[FB] - 1
+    end
     ADDONSELF.HopeMaxb = HopeMaxb
 
-    HopeMaxn["ICC"] = 4
-    HopeMaxn["TOC"] = 4
-    HopeMaxn["ULD"] = 2
-    HopeMaxn["NAXX"] = 2
-    HopeMaxn["BD"] = 1
+    if BG.IsVanilla() then
+        for _, FB in pairs(BG.FBtable) do
+            HopeMaxn[FB] = 1
+        end
+    else
+        HopeMaxn["ICC"] = 4
+        HopeMaxn["TOC"] = 4
+        HopeMaxn["ULD"] = 2
+        HopeMaxn["NAXX"] = 2
+    end
     ADDONSELF.HopeMaxn = HopeMaxn
 end
 

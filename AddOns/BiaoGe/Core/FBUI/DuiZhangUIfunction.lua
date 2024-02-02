@@ -23,7 +23,7 @@ local preWidget
 local framedown
 local frameright
 local red, greed, blue = 1, 1, 1
-local touming1, touming2, touming3 = 0.1, 0.1, BG.HighLightAlpha
+local touming1, touming2, touming3 = 0.1, 0.1, BG.highLightAlpha
 
 ------------------标题------------------
 function BG.DuiZhangBiaoTiUI(FB, t, b, bb, i, ii)

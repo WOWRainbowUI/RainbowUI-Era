@@ -25,6 +25,9 @@ local player = UnitName("player")
 local _, class = UnitClass("player")
 local FB = BG.FB1
 
+local MAXBUTTONS = 20
+local BUTTONHEIGHT = 22
+
 local hards
 if BG.IsVanilla() then
     hards = { "N" }
@@ -38,14 +41,22 @@ local title_table = {
     { name = L["装备"], width = 180, color = "FFFFFF", JustifyH = "LEFT", type = "item" },
     { name = L["获取途径"], width = 180, color = "FFFFFF", JustifyH = "LEFT" },
 }
-local maxbutton = 20
-local buttonheight = 22
 local width = 20
 for i, v in ipairs(title_table) do
     width = width + v.width
 end
 BG.ItemLibFramewidth = width
 local maxhope
+
+-- 给获取途径排序
+local typeIDtbl = { "raid", "fb5", "quest", "T", "currency", "faction", "profession", "world", "worldboss", "pvp", }
+local function GetTypeID(type)
+    for i, v in ipairs(typeIDtbl) do
+        if type == v then
+            return i
+        end
+    end
+end
 
 local function CreateLine(parent, y, width, height, color, alpha)
     local l = parent:CreateLine()
@@ -75,7 +86,7 @@ local function FiltertHard(FB, hard, ii) -- 过滤不存在的副本难度
     if (FB == "ULD" and strfind(hard, "H"))
         or (FB == "NAXX" and strfind(hard, "H"))
         or (BG.Boss[FB]["boss" .. ii].name == L["奥\n妮\n克\n希\n亚"] and strfind(hard, "H"))
-        or (BG.Boss[FB]["boss" .. ii].name == L["海\n里\n昂"])
+    -- or (BG.Boss[FB]["boss" .. ii].name == L["海\n里\n昂"])
     then
         return true
     end
@@ -100,8 +111,27 @@ local function CheckHaved(itemID) -- 是否已经拥有该装备
         end
     end
 end
-local function FilterItem(itemID, EquipLocs, type, hard, ii, otherID)
-    local FB = BG.FB1
+local function AddPrice(itemID) -- 添加装备拍卖行价格
+    local m
+    if BG.IsVanilla() then
+        m = BG.GetAuctionPrice(itemID, "notcopper")
+    else
+        m = BG.GetAuctionPrice(itemID, "notsilver")
+    end
+    if m ~= "" then
+        return " |cffFFFFFF" .. m .. RR
+    else
+        return ""
+    end
+end
+local function GetFBtable() -- 对本阶段执行还是全阶段
+    if BG.IsVanilla_60() then
+        return BG.FBtable
+    else
+        return { BG.FB1 }
+    end
+end
+local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重点
     local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID, bindType = GetItemInfo(itemID)
     if not link then return end
     local yes
@@ -111,256 +141,310 @@ local function FilterItem(itemID, EquipLocs, type, hard, ii, otherID)
             break
         end
     end
-    if yes and (typeID == 2 or typeID == 4) then
-        if BG.FilterAll(itemID, typeID, EquipLoc, subclassID) then return end
-        if type == 1 then -- 副本掉落
-            local color = "|cff" .. "00BFFF"
-            if strfind(hard, "10") then
-                color = "|cff" .. "99CCFF"
-            end
+    if not (yes and (typeID == 2 or typeID == 4)) then return end
+    if BG.FilterAll(itemID, typeID, EquipLoc, subclassID) then return end
+    if type == "raid" then -- 团本掉落
+        local color = "|cff" .. "00BFFF"
+        if strfind(hard, "10") then
+            color = "|cff" .. "99CCFF"
+        end
 
-            local get
-            local bossname = BG.Boss[FB]["boss" .. ii].name2
+        local get
+        local bossname
+
+        if otherID and otherID ~= "other" then
+            bossname = otherID
+        else
+            bossname = BG.Boss[FB]["boss" .. ii].name2
             if bossname == L["杂项"] then
                 bossname = L["小怪"]
             end
-            if BG.IsVanilla() then
-                get = color .. BG[FB .. "name"] .. " " .. bossname
-            else
-                get = color .. FB .. " " .. hard .. " " .. bossname
-            end
+        end
+        if BG.IsVanilla() then
+            get = color .. BG.GetFBinfo(FB, "localName") .. " " .. bossname .. AddPrice(itemID)
+        else
+            get = color .. FB .. " " .. hard .. " " .. bossname .. AddPrice(itemID)
+        end
 
-            local h = 1 -- 难度：1是普通，2是困难
-            if strfind(hard, "H") then
-                h = 2
-            end
-            local players
-            if BG.IsVanilla() then
-                players = 10
-            else
-                players = tonumber(strmatch(hard, "%d+")) -- 副本规模10人/25人
-            end
+        -- 团本正常掉落
+        local isRaid
+        if not otherID then
+            isRaid = true
+        end
 
-            local hope
-            for n = 1, HopeMaxn[FB] do
-                for b = 1, HopeMaxb[FB] do
-                    for i = 1, HopeMaxi do
-                        if BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] then
-                            if itemID == GetItemID(BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:GetText()) then
-                                hope = true
-                            end
+        local players
+        if BG.IsVanilla() then
+            players = BG.GetFBinfo(FB, "maxplayers") or 10
+        else
+            players = tonumber(strmatch(hard, "%d+")) -- 副本规模10人/25人
+        end
+
+        local hope
+        for n = 1, HopeMaxn[FB] do
+            for b = 1, HopeMaxb[FB] do
+                for i = 1, HopeMaxi do
+                    if BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] then
+                        if itemID == GetItemID(BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:GetText()) then
+                            hope = true
                         end
                     end
                 end
             end
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                i = ii,
-                hard = h,
-                players = players,
-                hope = hope,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 2 then -- 套装
-            local get = BG.STC_g1(T[FB])
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 30,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 3 then -- 牌子
-            local name = C_CurrencyInfo.GetCurrencyInfo(otherID).name
-            local tex = C_CurrencyInfo.GetCurrencyInfo(otherID).iconFileID
-            local get = BG.STC_y1(AddTexture(tex) .. name)
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 6,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 4 then -- 声望
-            local tbl = {
-                FACTION_STANDING_LABEL4,
-                FACTION_STANDING_LABEL5,
-                FACTION_STANDING_LABEL6,
-                FACTION_STANDING_LABEL7,
-                FACTION_STANDING_LABEL8,
-            }
-            local faction, standingID = strsplit(":", otherID)
-            local standing = ""
-            if standingID then
-                standing = "-" .. tbl[tonumber(standingID)]
-            end
-
-            local name = REPUTATION .. ": " .. GetFactionInfoByID(faction) .. standing
-            local get = BG.STC_g2(name)
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 8,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 5 then -- 专业制造
-            local name = TRADE_SKILLS .. ": " .. L[otherID]
-            local get = BG.STC_y2(name)
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 6,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 6 then -- 任务
-            local FBname = otherID.FBname
-            local color = otherID.color
-            local players = otherID.players
-            local classID = otherID.classID
-            local faction = otherID.faction
-            local get
-
-            if faction == 1 then
-                faction = FACTION_ALLIANCE
-            elseif faction == 2 then
-                faction = FACTION_HORDE
-            else
-                faction = ""
-            end
-
-            if classID then
-                local className, classFile = GetClassInfo(classID)
-                local _, _, _, colorStr = GetClassColor(classFile)
-                get = "|cff" .. color .. FBname .. " |c" .. colorStr .. className .. BG.STC_y1(L["任务"]) .. RR
-            else
-                get = "|cff" .. color .. FBname .. " " .. BG.STC_y1(faction .. L["任务"]) .. RR
-            end
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                i = 0,
-                players = players,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 7 then -- 5人本
-            local FB_5, BossName = strsplit(":", otherID)
-            local get = "|cff99CCFF" .. FB_5 .. " " .. BossName .. RR
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 5,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 8 then -- 世界掉落
-            local get = "|cff" .. "DEB887" .. L["世界掉落"] .. RR
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 2,
-                haved = CheckHaved(itemID)
-            }
-            return a
-        elseif type == 9 then -- PVP
-            local faction, levelID = strsplit(":", otherID)
-            local tx
-            if faction == "Alliance" then
-                tx = "1"
-            elseif faction == "Horde" then
-                tx = "0"
-            end
-            local tbl = {
-                _G["PVP_RANK_5_" .. tx],
-                _G["PVP_RANK_6_" .. tx],
-                _G["PVP_RANK_7_" .. tx],
-                _G["PVP_RANK_8_" .. tx],
-                _G["PVP_RANK_9_" .. tx],
-                _G["PVP_RANK_10_" .. tx],
-                _G["PVP_RANK_11_" .. tx],
-                _G["PVP_RANK_12_" .. tx],
-                _G["PVP_RANK_13_" .. tx],
-                _G["PVP_RANK_14_" .. tx],
-                _G["PVP_RANK_15_" .. tx],
-                _G["PVP_RANK_16_" .. tx],
-                _G["PVP_RANK_17_" .. tx],
-                _G["PVP_RANK_18_" .. tx],
-            }
-
-            local standing = tbl[tonumber(levelID)]
-
-            local name = "PVP: " .. standing
-            local get = BG.STC_r2(name)
-
-            local a = {
-                itemID = itemID,
-                link = link,
-                level = level,
-                quality = quality,
-                texture = Texture,
-                get = get,
-                bindType = bindType,
-                players = 3,
-                haved = CheckHaved(itemID)
-            }
-            return a
         end
+
+        local a = {
+            FB = FB,
+            isRaid = isRaid,
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            i = ii,
+            hard = hard,
+            hardnum = GetHardNum(hard),
+            players = players,
+            type = GetTypeID(type),
+            type2 = FB,
+            hope = hope,
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "quest" then -- 任务
+        local FBname = otherID.FBname
+        local color = otherID.color
+        local players = otherID.players
+        local classID = otherID.classID
+        local faction = otherID.faction
+        local get
+
+        if FBname ~= "" then
+            FBname = FBname .. " "
+        end
+
+        -- 阵营
+        if faction == 1 then
+            faction = FACTION_ALLIANCE
+        elseif faction == 2 then
+            faction = FACTION_HORDE
+        else
+            faction = ""
+        end
+
+        -- 是否职业任务
+        if classID then
+            local className, classFile = GetClassInfo(classID)
+            local _, _, _, colorStr = GetClassColor(classFile)
+            get = "|cff" .. color .. FBname .. "|c" .. colorStr .. className .. BG.STC_y1(QUESTS_LABEL) .. RR .. AddPrice(itemID)
+        else
+            get = "|cff" .. color .. FBname .. BG.STC_y1(faction .. QUESTS_LABEL) .. RR .. AddPrice(itemID)
+        end
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            i = 0,
+            players = players,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == 'T' then -- 套装
+        local get = BG.STC_g1(T[FB]) .. AddPrice(itemID)
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "currency" then -- 牌子
+        local name = C_CurrencyInfo.GetCurrencyInfo(otherID).name
+        local tex = C_CurrencyInfo.GetCurrencyInfo(otherID).iconFileID
+        local get = BG.STC_y1(AddTexture(tex) .. name) .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "faction" then -- 声望
+        local tbl = {
+            FACTION_STANDING_LABEL4,
+            FACTION_STANDING_LABEL5,
+            FACTION_STANDING_LABEL6,
+            FACTION_STANDING_LABEL7,
+            FACTION_STANDING_LABEL8,
+        }
+        local faction, standingID = strsplit(":", otherID)
+        local standing = ""
+        if standingID then
+            standing = "-" .. tbl[tonumber(standingID)]
+        end
+
+        local name = REPUTATION .. ": " .. GetFactionInfoByID(faction) .. standing
+        local get = BG.STC_g2(name) .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "profession" then -- 专业制造
+        local icon = ""
+        if otherID == "锻造" then
+            icon = AddTexture(136241, nil, ":100:100:8:92:8:92")
+        elseif otherID == "制皮" then
+            icon = AddTexture(133611, nil, ":100:100:8:92:8:92")
+        elseif otherID == "裁缝" then
+            icon = AddTexture(136249, nil, ":100:100:8:92:8:92")
+        elseif otherID == "工程" then
+            icon = AddTexture(136243, nil, ":100:100:8:92:8:92")
+        end
+        local name = TRADE_SKILLS .. ": " .. L[otherID] .. icon
+        local get = BG.STC_y2(name) .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "fb5" then -- 5人本
+        local FB_5, BossName = strsplit(":", otherID)
+        local get = "|cff99CCFF" .. FB_5 .. " " .. BossName .. RR .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            type2 = FB_5,
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "world" then -- 世界掉落
+        local get = "|cff" .. "DEB887" .. L["世界掉落"] .. RR .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "worldboss" then -- 世界BOSS
+        local name = L["世界BOSS"] .. ": " .. L[otherID]
+        local get = "|cff" .. "FF6347" .. name .. RR .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
+    elseif type == "pvp" then -- PVP
+        local faction, levelID = strsplit(":", otherID)
+        local tx
+        if faction == "Alliance" then
+            tx = "1"
+        elseif faction == "Horde" then
+            tx = "0"
+        end
+        local tbl = {
+            _G["PVP_RANK_5_" .. tx],
+            _G["PVP_RANK_6_" .. tx],
+            _G["PVP_RANK_7_" .. tx],
+            _G["PVP_RANK_8_" .. tx],
+            _G["PVP_RANK_9_" .. tx],
+            _G["PVP_RANK_10_" .. tx],
+            _G["PVP_RANK_11_" .. tx],
+            _G["PVP_RANK_12_" .. tx],
+            _G["PVP_RANK_13_" .. tx],
+            _G["PVP_RANK_14_" .. tx],
+            _G["PVP_RANK_15_" .. tx],
+            _G["PVP_RANK_16_" .. tx],
+            _G["PVP_RANK_17_" .. tx],
+            _G["PVP_RANK_18_" .. tx],
+        }
+
+        local standing = tbl[tonumber(levelID)]
+        local newID
+        if tonumber(levelID) < 10 then
+            newID = "0" .. levelID
+        else
+            newID = levelID
+        end
+        local icon = AddTexture("interface/pvprankbadges/pvprank" .. newID) or ""
+
+        local name = "PVP: " .. standing .. icon
+        local get = "|cff" .. "EE82EE" .. name .. RR .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
     end
+    -- 团本 任务 套装 牌子 声望 专业 5人 世界掉落 世界boss PVP
 end
-local function Mode(count1, count2, tbl, EquipLocs, itemID, type, hard, ii, k)
+local function Mode(FB, count1, count2, tbl, EquipLocs, itemID, type, hard, ii, k)
     if EquipLocs then
-        local a = FilterItem(itemID, EquipLocs, type, hard, ii, k)
+        local a = FilterItem(FB, itemID, EquipLocs, type, hard, ii, k)
         if a then
             tinsert(tbl, a)
         end
@@ -369,84 +453,97 @@ local function Mode(count1, count2, tbl, EquipLocs, itemID, type, hard, ii, k)
         if GetItemInfo(itemID) then
             count2 = count2 + 1
         end
+
+        local item = Item:CreateFromItemID(itemID)
+        item:ContinueOnItemLoad(function()
+            BG.Tooltip_SetItemByID(itemID) -- 提前设置一次物品鼠标提示信息，避免绿字属性获取不了
+        end)
     end
     return count1, count2, tbl
 end
 local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物品是否缓存了，传入参数时是返回符合要求的物品table
     local tbl = {}
-    local FB = BG.FB1
     local count1 = 0
     local count2 = 0
-    for _, hard in ipairs(hards) do
-        if BG.Loot[FB][hard] then
-            local ii = 1
-            while BG.Loot[FB][hard]["boss" .. ii] do
-                if not FiltertHard(FB, hard, ii) then
-                    for i, itemID in ipairs(BG.Loot[FB][hard]["boss" .. ii]) do
-                        count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 1, hard, ii, k)
+    for _, FB in pairs(GetFBtable()) do
+        -- 团本
+        for _, hard in ipairs(hards) do
+            if BG.Loot[FB][hard] then
+                local ii = 1
+                while BG.Loot[FB][hard]["boss" .. ii] do
+                    if not FiltertHard(FB, hard, ii) then
+                        for i, itemID in ipairs(BG.Loot[FB][hard]["boss" .. ii]) do
+                            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "raid", hard, ii, k)
+                        end
+                        -- BOSS掉落后兑换的装备，这些装备不能设为心愿
+                        if BG.Loot[FB][hard]["boss" .. ii .. "other"] then
+                            for i, itemID in ipairs(BG.Loot[FB][hard]["boss" .. ii .. "other"]) do
+                                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "raid", hard, ii, "other")
+                            end
+                        end
                     end
-                    if BG.Loot[FB][hard]["boss" .. ii .. "other"] then -- 黑龙头
-                        for i, itemID in ipairs(BG.Loot[FB][hard]["boss" .. ii .. "other"]) do
-                            count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 1, hard, ii, k)
+                    ii = ii + 1
+                end
+                -- 团本任务奖励
+                if BG.Loot[FB][hard].Quest then
+                    for name, _ in pairs(BG.Loot[FB][hard].Quest) do
+                        for _, itemID in pairs(BG.Loot[FB][hard].Quest[name]) do
+                            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "raid", hard, ii, name)
                         end
                     end
                 end
-                ii = ii + 1
             end
         end
-    end
-
-    -- 5人本
-    for FB_5 in pairs(BG.Loot[FB].Team) do
-        for BossName, _ in pairs(BG.Loot[FB].Team[FB_5]) do
-            for _, itemID in pairs(BG.Loot[FB].Team[FB_5][BossName]) do
-                count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 7, hard, ii, FB_5 .. ":" .. BossName)
+        -- 5人本
+        for FB_5 in pairs(BG.Loot[FB].Team) do
+            for BossName, _ in pairs(BG.Loot[FB].Team[FB_5]) do
+                for _, itemID in pairs(BG.Loot[FB].Team[FB_5][BossName]) do
+                    count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "fb5", hard, ii, FB_5 .. ":" .. BossName)
+                end
             end
         end
-    end
-    -- 世界掉落
-    for i, itemID in ipairs(BG.Loot[FB].World) do
-        count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 8, hard, ii, k)
-    end
-    -- 套装
-    for i, itemID in ipairs(BG.Loot[FB][class]) do
-        count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 2, hard, ii, k)
-    end
-    -- 牌子装备
-    for k, v in pairs(BG.Loot[FB].Currency) do
-        for i, itemID in ipairs(BG.Loot[FB].Currency[k]) do
-            count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 3, hard, ii, k)
-        end
-    end
-    -- 声望装备
-    if BG.Loot[FB].Faction then
-        for k, v in pairs(BG.Loot[FB].Faction) do
-            for i, itemID in ipairs(BG.Loot[FB].Faction[k]) do
-                count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 4, hard, ii, k)
-            end
-        end
-    end
-    -- PVP
-    if BG.Loot[FB].Pvp then
-        for k, v in pairs(BG.Loot[FB].Pvp) do
-            for i, itemID in ipairs(BG.Loot[FB].Pvp[k]) do
-                count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 9, hard, ii, k)
-            end
-        end
-    end
-    -- 专业制造装备
-    if BG.Loot[FB].Profession then
-        for k, v in pairs(BG.Loot[FB].Profession) do
-            for i, itemID in ipairs(BG.Loot[FB].Profession[k]) do
-                count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 5, hard, ii, k)
-            end
-        end
-    end
-    -- 任务
-    if BG.Loot[FB].Quest then
+        -- 任务
         for k, v in pairs(BG.Loot[FB].Quest) do
             for i, itemID in ipairs(BG.Loot[FB].Quest[k].itemID) do
-                count1, count2, tbl = Mode(count1, count2, tbl, EquipLocs, itemID, 6, hard, ii, v)
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "quest", hard, ii, v)
+            end
+        end
+        -- 套装
+        for i, itemID in ipairs(BG.Loot[FB][class]) do
+            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "T", hard, ii, k)
+        end
+        -- 牌子装备
+        for k, v in pairs(BG.Loot[FB].Currency) do
+            for i, itemID in ipairs(BG.Loot[FB].Currency[k]) do
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "currency", hard, ii, k)
+            end
+        end
+        -- 声望装备
+        for k, v in pairs(BG.Loot[FB].Faction) do
+            for i, itemID in ipairs(BG.Loot[FB].Faction[k]) do
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "faction", hard, ii, k)
+            end
+        end
+        -- 专业制造
+        for k, v in pairs(BG.Loot[FB].Profession) do
+            for i, itemID in ipairs(BG.Loot[FB].Profession[k]) do
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "profession", hard, ii, k)
+            end
+        end
+        -- 世界掉落
+        for i, itemID in ipairs(BG.Loot[FB].World) do
+            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "world", hard, ii, k)
+        end
+        -- 世界BOSS
+        for k, v in pairs(BG.Loot[FB].WorldBoss) do
+            for i, itemID in ipairs(BG.Loot[FB].WorldBoss[k]) do
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "worldboss", hard, ii, k)
+            end
+        end
+        -- PVP
+        for k, v in pairs(BG.Loot[FB].Pvp) do
+            for i, itemID in ipairs(BG.Loot[FB].Pvp[k]) do
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "pvp", hard, ii, k)
             end
         end
     end
@@ -456,6 +553,185 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
     else
         return count1 == count2
     end
+end
+local function SortItemLibTable(tbl, isnewsorter)
+    sort(tbl, function(a, b)
+        if BiaoGe.ItemLib.itemLibOrderButtonId == 2 then -- 按装等排序
+            -- 装备等级
+            local key = "level"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] > b[key]
+                    else
+                        return b[key] > a[key]
+                    end
+                end
+            end
+            -- 装备品质
+            local key = "quality"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] > b[key]
+                    else
+                        return b[key] > a[key]
+                    end
+                end
+            end
+            -- 来源类型
+            local key = "type"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] < b[key]
+                end
+            end
+            -- 来源类型2（主要是5人本）
+            local key = "type2"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] < b[key]
+                    else
+                        return b[key] < a[key]
+                    end
+                end
+            end
+            -- 副本玩家最大数量
+            local key = "players"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] > b[key]
+                end
+            end
+        elseif BiaoGe.ItemLib.itemLibOrderButtonId == 3 then -- 按装备品质排序
+            -- 装备品质
+            local key = "quality"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] > b[key]
+                    else
+                        return b[key] > a[key]
+                    end
+                end
+            end
+            -- 装备等级
+            local key = "level"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] > b[key]
+                    else
+                        return b[key] > a[key]
+                    end
+                end
+            end
+            -- 来源类型
+            local key = "type"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] < b[key]
+                end
+            end
+            -- 来源类型2（主要是5人本）
+            local key = "type2"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] < b[key]
+                    else
+                        return b[key] < a[key]
+                    end
+                end
+            end
+            -- 副本玩家最大数量
+            local key = "players"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] > b[key]
+                end
+            end
+        elseif BiaoGe.ItemLib.itemLibOrderButtonId == 4 then -- 按获取途径排序
+            -- 来源类型
+            local key = "type"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] < b[key]
+                    else
+                        return b[key] < a[key]
+                    end
+                end
+            end
+            -- 来源类型2（主要是5人本）
+            local key = "type2"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    if BiaoGe.ItemLib.itemLibOrder == 1 then
+                        return a[key] < b[key]
+                    else
+                        return b[key] < a[key]
+                    end
+                end
+            end
+            -- 副本玩家最大数量
+            local key = "players"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] > b[key]
+                end
+            end
+            -- 装备等级
+            local key = "level"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] > b[key]
+                end
+            end
+            -- 装备品质
+            local key = "quality"
+            if a[key] and b[key] then
+                if a[key] ~= b[key] then
+                    return a[key] > b[key]
+                end
+            end
+        end
+        -- BOSS序号
+        local key = "i"
+        if a[key] and b[key] then
+            if a[key] ~= b[key] then
+                return a[key] > b[key]
+            end
+        end
+        -- 难度
+        local key = "hardnum"
+        if a[key] and b[key] then
+            if a[key] ~= b[key] then
+                return a[key] > b[key]
+            end
+        end
+        return false
+    end)
+
+    local sorter = BG.ItemLibMainFrame[1].sorter
+    local bt = BG.ItemLibMainFrame[1]["title" .. BiaoGe.ItemLib.itemLibOrderButtonId]
+    sorter:SetParent(bt)
+    sorter:ClearAllPoints()
+    if bt.textJustifyH == "CENTER" then
+        sorter:SetPoint("LEFT", bt, "CENTER", bt.textwidth / 2, 0)
+    else
+        sorter:SetPoint("LEFT", bt, "LEFT", bt.textwidth, 0)
+    end
+    if not isnewsorter then
+        if BiaoGe.ItemLib.itemLibOrder == 1 then
+            sorter:SetTexCoord(0, 0.5, 0, 1)
+        else
+            sorter:SetTexCoord(0, 0.5, 1, 0)
+        end
+    end
+
+    return tbl
 end
 local function GetItemLibTable(num, EquipLocs)
     local tbl = CheckItemCache(EquipLocs)
@@ -477,46 +753,10 @@ local function GetItemLibTable(num, EquipLocs)
     end
 
     -- 排序
-    sort(newtbl, function(a, b)
-        if a.level > b.level then
-            return true
-        elseif a.level < b.level then
-            return false
-        end
+    newtbl = SortItemLibTable(newtbl)
 
-        if a.quality > b.quality then
-            return true
-        elseif a.quality < b.quality then
-            return false
-        end
-
-        if a.players and b.players then
-            if a.players > b.players then
-                return true
-            elseif a.players < b.players then
-                return false
-            end
-        end
-
-        if a.i and b.i then
-            if a.i > b.i then
-                return true
-            elseif a.i < b.i then
-                return false
-            end
-        end
-
-        if a.hard and b.hard then
-            if a.hard > b.hard then
-                return true
-            elseif a.hard < b.hard then
-                return false
-            end
-        end
-
-        return false
-    end)
     BG.ItemLibMainFrame[num].count = #newtbl
+    BG.itemLibItemTbl = newtbl
     return newtbl
 end
 local function ShowHideScrollBar(num)
@@ -540,15 +780,20 @@ local function SetItemLib(num, itemtbale)
         end
     end
 
-    if #itemtbale > maxbutton then
+    if #itemtbale > MAXBUTTONS then
         ShowHideScrollBar(1)
     end
 
     for ii, vv in ipairs(itemtbale) do
         local right
+        local i_table = { ii, vv.level, (AddTexture(vv.texture) .. vv.link), vv.get }
         for i, v in ipairs(title_table) do
             local f = CreateFrame("Frame", nil, right or BG.ItemLibMainFrame[num])
-            f:SetSize(title_table[i].width, buttonheight)
+            if i == #title_table then
+                f:SetSize(title_table[i].width - 2, BUTTONHEIGHT)
+            else
+                f:SetSize(title_table[i].width, BUTTONHEIGHT)
+            end
             if ii == 1 and i == 1 then
                 f:SetPoint("TOPLEFT", BG.ItemLibMainFrame[num], 10, 0)
                 BG.ItemLibMainFrame[num]["button" .. ii] = f
@@ -568,8 +813,10 @@ local function SetItemLib(num, itemtbale)
             f.Text:SetJustifyH(title_table[i].JustifyH)
             f.Text:SetWidth(f:GetWidth())
             f.Text:SetWordWrap(false)
-            local i_table = { ii, vv.level, (AddTexture(vv.texture) .. vv.link), vv.get }
             f.Text:SetText(i_table[i])
+            if i == 1 then
+                f.Text:SetTextColor(RGB(BG.dis))
+            end
             if f.Text:GetStringWidth() > f.Text:GetWidth() or strfind(i_table[i], "\n") then
                 f.onenter = i_table[i]
             end
@@ -577,6 +824,10 @@ local function SetItemLib(num, itemtbale)
                 BG.ItemLibMainFrame[num]["button" .. ii].item = f
                 BG.ItemLibMainFrame[num]["button" .. ii].itemID = GetItemID(f.Text:GetText())
             end
+            if i == 4 then
+                BG.ItemLibMainFrame[num]["button" .. ii].get = f
+            end
+
             f:SetScript("OnMouseDown", function(self)
                 if IsShiftKeyDown() then
                     local f = GetCurrentKeyBoardFocus()
@@ -586,27 +837,9 @@ local function SetItemLib(num, itemtbale)
                     ChatEdit_InsertLink(vv.link)
                 elseif IsAltKeyDown() then
                     if BG.ItemLibMainFrame[num]["button" .. ii].item.hope:IsVisible() then return end
-                    local FB = BG.FB1
                     local itemID = GetItemInfoInstant(vv.link)
-                    local nandu, boss
-                    for _, hard in ipairs(hards) do
-                        if BG.Loot[FB][hard] then
-                            local ii = 1
-                            while BG.Loot[FB][hard]["boss" .. ii] do
-                                if not FiltertHard(FB, hard, ii) then
-                                    for i, id in ipairs(BG.Loot[FB][hard]["boss" .. ii]) do
-                                        if itemID == id then
-                                            nandu = GetHardNum(hard)
-                                            boss = ii
-                                        end
-                                    end
-                                end
-                                ii = ii + 1
-                            end
-                        end
-                    end
-
-                    if not (nandu and boss) then
+                    local nandu, boss, FB, isRaid = vv.hardnum, vv.i, vv.FB, vv.isRaid
+                    if not (isRaid and nandu and boss and FB) then
                         UIErrorsFrame:AddMessage(L["只能设置团本BOSS正常掉落的装备为心愿"], RED_FONT_COLOR:GetRGB())
                         return
                     end
@@ -616,7 +849,9 @@ local function SetItemLib(num, itemtbale)
                             BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:SetText(vv.link)
                             BiaoGe.Hope[RealmId][player][FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] = vv.link
                             BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
-                            BG.UpdateItemLib_RightHope(itemID, 1)
+                            if FB == BG.FB1 then
+                                BG.UpdateItemLib_RightHope(itemID, 1)
+                            end
                             return
                         end
                     end
@@ -633,6 +868,8 @@ local function SetItemLib(num, itemtbale)
                 end
                 local itemID = GetItemInfoInstant(vv.link)
                 GameTooltip:SetOwner(BG.ItemLibMainFrame["bg" .. num].tooltip, "ANCHOR_BOTTOMRIGHT", 0, 0)
+                -- GameTooltip:SetOwner(self, "ANCHOR_NONE")
+                -- GameTooltip:SetPoint("TOPLEFT", BG.ItemLibMainFrame["bg" .. num], "TOPRIGHT", 0, 0)
                 GameTooltip:ClearLines()
                 GameTooltip:SetItemByID(itemID)
                 GameTooltip:Show()
@@ -706,6 +943,10 @@ local function SetItemLib(num, itemtbale)
                     tex:Hide()
                 end
             end
+            if i == 4 then -- 已掉落
+                BG.LootedText(f)
+                BG.Update_IsLooted(f, vv.itemID)
+            end
         end
         -- 底色材质
         local f = BG.ItemLibMainFrame[num]["button" .. ii]
@@ -730,19 +971,7 @@ local function UpdateTiptext(num, itemtbale)
         BG.ItemLibMainFrame[num]["noItem"]:Hide()
     end
 
-    local p
-    if BG.IsVanilla() then
-        p = { BD = "P1" }
-    else
-        p = {
-            ICC = "P4",
-            TOC = "P3",
-            ULD = "P2",
-            NAXX = "P1",
-        }
-    end
-    local P = (p[FB])
-
+    local P = BG.GetFBinfo(FB, "phase")
     local B = ""
     for i, v in ipairs(BG.invtypetable) do
         if v.key[1] == BiaoGe["ItemLibInvType"][num][1] then
@@ -766,256 +995,306 @@ local function UpdateTiptext(num, itemtbale)
     BG.ItemLibMainFrame[num]["toptitle"]:SetText(BG.STC_b1(P .. "   " .. B .. "   " .. F .. "   " .. C))
 end
 local function UpdateItemLib(num, EquipLocs)
-    if CheckItemCache() then --已经缓存
-        local itemtbale = GetItemLibTable(num, EquipLocs)
-        SetItemLib(num, itemtbale)
-        UpdateTiptext(num, itemtbale)
-    else
-        BG.After(0.1, function() -- 再执行一次
-            local itemtbale = GetItemLibTable(num, EquipLocs)
-            SetItemLib(num, itemtbale)
-            UpdateTiptext(num, itemtbale)
-        end)
-    end
+    local itemtbale = GetItemLibTable(num, EquipLocs)
+    SetItemLib(num, itemtbale)
+    UpdateTiptext(num, itemtbale)
 end
 function BG.UpdateAllItemLib(num)
     local num = num or 1
     local EquipLocs = BiaoGe["ItemLibInvType"][num]
-    if EquipLocs[1] == "INVTYPE_TRINKET" or EquipLocs[1] == "INVTYPE_RELIC" then -- 如果是饰品或圣物
-        if CheckItemCache() then                                                 --已经缓存
-            CheckItemCache(EquipLocs)
-            BG.After(0.05, function()                                            -- 再执行一次
-                UpdateItemLib(num, EquipLocs)
-            end)
-        else
-            BG.After(0.1, function()      -- 再执行一次
-                CheckItemCache(EquipLocs)
-                BG.After(0.05, function() -- 再执行一次
-                    UpdateItemLib(num, EquipLocs)
-                end)
-            end)
-        end
-    else
-        UpdateItemLib(num, EquipLocs)
-    end
+    UpdateItemLib(num, EquipLocs)
 end
 
+BG.CheckItemCache = CheckItemCache
+
 -- 更新心愿装备
-local function GetEquipLocName(EquipLoc)
-    for i, v in ipairs(BG.invtypetable) do
-        for ii, _EquipLoc in ipairs(BG.invtypetable[i].key) do
-            if EquipLoc == _EquipLoc then
-                return v.name2
-            end
-        end
-    end
-end
-local function CheckIsSave_ItemLib_RightHope(itemID)
-    for i, v in ipairs(BG.invtypetable) do
-        local EquipLoc = v.name2
-        for i = 1, maxhope do
-            local hope = BG.ItemLibMainFrame.Hope[EquipLoc .. i]
-            local _itemID = GetItemID(hope:GetText())
-            if _itemID == itemID then
-                return true
-            end
-        end
-    end
-end
-function BG.UpdateItemLib_RightHope(itemID, ShoworHide)
-    local FB = BG.FB1
-    local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID, bindType = GetItemInfo(itemID)
-    local EquipLoc = GetEquipLocName(EquipLoc)
-    if not EquipLoc then return end
-    for i = 1, maxhope do
-        local hope = BG.ItemLibMainFrame.Hope[EquipLoc .. i]
-        if ShoworHide == 1 then
-            if not CheckIsSave_ItemLib_RightHope(itemID) then
-                if hope:GetText() == "" then
-                    hope:SetText(AddTexture(Texture) .. link)
-                    hope:SetCursorPosition(0)
-                    return
+do
+    local function GetEquipLocName(EquipLoc) -- 返回该装备部位对应的invtypetable名称
+        for i, v in ipairs(BG.invtypetable) do
+            for ii, _EquipLoc in ipairs(BG.invtypetable[i].key) do
+                if EquipLoc == _EquipLoc then
+                    return v.name2
                 end
             end
-        else
-            if GetItemID(hope:GetText()) == itemID then
+        end
+    end
+    local function CheckIsSave_ItemLib_RightHope(itemID)
+        for i, v in ipairs(BG.invtypetable) do
+            local EquipLoc = v.name2
+            for i = 1, maxhope do
+                local hope = BG.ItemLibMainFrame.Hope[EquipLoc .. i]
+                local _itemID = GetItemID(hope:GetText())
+                if _itemID == itemID then
+                    return true
+                end
+            end
+        end
+    end
+    function BG.UpdateItemLib_RightHope(itemID, ShoworHide) -- 更新心愿汇总，ShoworHide：1为添加装备，0为删除装备
+        local FB = BG.FB1
+        local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID, bindType = GetItemInfo(itemID)
+        local EquipLoc = GetEquipLocName(EquipLoc)
+        if not EquipLoc then return end
+        -- 只需历遍对应部位的心愿格子
+        for i = 1, maxhope do
+            local hope = BG.ItemLibMainFrame.Hope[EquipLoc .. i]
+            if ShoworHide == 1 then
+                if not CheckIsSave_ItemLib_RightHope(itemID) then
+                    if hope:GetText() == "" then
+                        hope:SetText(AddTexture(Texture) .. link)
+                        hope:SetCursorPosition(0)
+                        return
+                    end
+                end
+            else
+                if GetItemID(hope:GetText()) == itemID then
+                    hope:SetText("")
+                end
+            end
+        end
+    end
+
+    function BG.UpdateItemLib_LeftHope(itemID, ShoworHide)
+        local num = 1
+        local count = BG.ItemLibMainFrame[num].buttoncount
+        if count then
+            for ii = 1, count do
+                local _itemID = GetItemID(BG.ItemLibMainFrame[num]["button" .. ii].item.Text:GetText())
+                if itemID == _itemID then
+                    if ShoworHide == 1 then
+                        BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
+                    else
+                        BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Hide()
+                    end
+                end
+            end
+        end
+    end
+
+    function BG.UpdateItemLib_LeftHope_HideAll()
+        local num = 1
+        local count = BG.ItemLibMainFrame[num].buttoncount
+        if count then
+            for ii = 1, count do
+                BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Hide()
+            end
+        end
+    end
+
+    function BG.UpdateItemLib_RightHope_HideAll()
+        for i, v in ipairs(BG.invtypetable) do
+            local EquipLoc = v.name2
+            for i = 1, maxhope do
+                local hope = BG.ItemLibMainFrame.Hope[EquipLoc .. i]
                 hope:SetText("")
             end
         end
     end
-end
 
-function BG.UpdateItemLib_LeftHope(itemID, ShoworHide)
-    local num = 1
-    local count = BG.ItemLibMainFrame[num].buttoncount
-    if count then
-        for ii = 1, count do
-            local _itemID = GetItemID(BG.ItemLibMainFrame[num]["button" .. ii].item.Text:GetText())
-            if itemID == _itemID then
-                if ShoworHide == 1 then
-                    BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
-                else
-                    BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Hide()
-                end
-            end
-        end
-    end
-end
-
-function BG.UpdateItemLib_LeftHope_HideAll()
-    local num = 1
-    local count = BG.ItemLibMainFrame[num].buttoncount
-    if count then
-        for ii = 1, count do
-            BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Hide()
-        end
-    end
-end
-
-function BG.UpdateItemLib_RightHope_HideAll()
-    for i, v in ipairs(BG.invtypetable) do
-        local EquipLoc = v.name2
-        for i = 1, maxhope do
-            local hope = BG.ItemLibMainFrame.Hope[EquipLoc .. i]
-            hope:SetText("")
-        end
-    end
-end
-
-function BG.UpdateHopeFrame_Hope(itemID, ShoworHide)
-    local FB = BG.FB1
-    if ShoworHide == 0 then
-        for n = 1, HopeMaxn[FB] do
-            for b = 1, HopeMaxb[FB] do
-                for i = 1, HopeMaxi do
-                    if BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] then
-                        if itemID == GetItemID(BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:GetText()) then
-                            BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:SetText("")
-                            BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] = nil
+    function BG.UpdateHopeFrame_Hope(itemID, ShoworHide) -- 更新心愿清单，ShoworHide：1为添加装备，0为删除装备
+        for _, FB in pairs(GetFBtable()) do
+            if ShoworHide == 0 then
+                for n = 1, HopeMaxn[FB] do
+                    for b = 1, HopeMaxb[FB] do
+                        for i = 1, HopeMaxi do
+                            if BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] then
+                                if itemID == GetItemID(BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:GetText()) then
+                                    BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:SetText("")
+                                    BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] = nil
+                                end
+                            end
                         end
                     end
                 end
             end
         end
     end
-end
 
-function BG.UpdateItemLib_RightHope_Default(type)
-    local FB = BG.FB1
-    if type == "defaultHope" then
-        BG.UpdateItemLib_RightHope_HideAll()
-    end
-    for n = HopeMaxn[FB], 1, -1 do
-        for b = HopeMaxb[FB], 1, -1 do
-            for i = 1, HopeMaxi do
-                if BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] then
-                    local itemID = GetItemID(BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i])
-                    if itemID then
-                        BG.UpdateItemLib_RightHope(itemID, 1)
+    function BG.UpdateItemLib_LeftHope_All()
+        BG.UpdateItemLib_LeftHope_HideAll()
+        for _, FB in pairs(GetFBtable()) do
+            for n = HopeMaxn[FB], 1, -1 do
+                for b = HopeMaxb[FB], 1, -1 do
+                    for i = 1, HopeMaxi do
+                        local bt = BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]
+                        if bt then
+                            local itemID = GetItemID(bt)
+                            if itemID then
+                                BG.UpdateItemLib_LeftHope(itemID, 1)
+                            end
+                        end
                     end
                 end
             end
         end
     end
-end
 
-function BG.Update_IsHaved(bt)
-    local itemID = GetItemID(bt:GetText())
-    if itemID then
-        -- 历遍装备栏
-        local yes
-        for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
-            local _itemID = GetInventoryItemID("player", slot)
-            if itemID == _itemID then
-                bt.haved:Show()
-                yes = true
-                break
+    function BG.UpdateItemLib_RightHope_All()
+        local FB = BG.FB1
+        BG.UpdateItemLib_RightHope_HideAll()
+        for n = HopeMaxn[FB], 1, -1 do
+            for b = HopeMaxb[FB], 1, -1 do
+                for i = 1, HopeMaxi do
+                    local bt = BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]
+                    if bt then
+                        local itemID = GetItemID(bt)
+                        if itemID then
+                            BG.UpdateItemLib_RightHope(itemID, 1)
+                        end
+                    end
+                end
             end
         end
-        -- 历遍背包
-        if not yes then
-            for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-                local numSlots = C_Container.GetContainerNumSlots(bagID)
-                for slotIndex = 1, numSlots do
-                    local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
+    end
+
+    function BG.Update_IsHaved(bt)
+        local itemID = GetItemID(bt:GetText())
+        if itemID then
+            -- 历遍装备栏
+            local yes
+            for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
+                local _itemID = GetInventoryItemID("player", slot)
+                if itemID == _itemID then
+                    bt.haved:Show()
+                    yes = true
+                    break
+                end
+            end
+            -- 历遍背包
+            if not yes then
+                for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+                    local numSlots = C_Container.GetContainerNumSlots(bagID)
+                    for slotIndex = 1, numSlots do
+                        local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
+                        if itemID == _itemID then
+                            bt.haved:Show()
+                            yes = true
+                            break
+                        end
+                    end
+                    if yes then
+                        break
+                    end
+                end
+            end
+            if not yes then
+                bt.haved:Hide()
+            end
+        else
+            bt.haved:Hide()
+        end
+    end
+
+    function BG.UpdateItemLib_LeftLib_IsHaved_All()
+        local num = 1
+        local count = BG.ItemLibMainFrame[num].buttoncount
+        if count then
+            for i = 1, count do
+                local item = BG.ItemLibMainFrame[num]["button" .. i].item
+                local itemID = BG.ItemLibMainFrame[num]["button" .. i].itemID
+                -- 历遍装备栏
+                local yes
+                for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
+                    local _itemID = GetInventoryItemID("player", slot)
                     if itemID == _itemID then
-                        bt.haved:Show()
+                        item.haved:Show()
                         yes = true
                         break
                     end
                 end
-                if yes then
-                    break
+                -- 历遍背包
+                if not yes then
+                    for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+                        local numSlots = C_Container.GetContainerNumSlots(bagID)
+                        for slotIndex = 1, numSlots do
+                            local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
+                            if itemID == _itemID then
+                                item.haved:Show()
+                                yes = true
+                                break
+                            end
+                        end
+                        if yes then
+                            break
+                        end
+                    end
+                end
+                if not yes then
+                    item.haved:Hide()
                 end
             end
         end
-        if not yes then
-            bt.haved:Hide()
-        end
-    else
-        bt.haved:Hide()
     end
-end
 
-function BG.UpdateItemLib_RightHope_IsHaved_All()
-    if BG.ItemLibMainFrame:IsVisible() then
-        for k, bt in pairs(BG.ItemLibMainFrame.Hope) do
-            if type(bt) == "table" and bt.EquipLoc then
-                BG.Update_IsHaved(bt)
+    function BG.UpdateItemLib_RightHope_IsHaved_All()
+        if BG.ItemLibMainFrame:IsVisible() then
+            for k, bt in pairs(BG.ItemLibMainFrame.Hope) do
+                if type(bt) == "table" and bt.EquipLoc then
+                    BG.Update_IsHaved(bt)
+                end
             end
         end
     end
-end
 
-function BG.Update_IsLooted(bt)
-    local itemID = GetItemID(bt:GetText())
-    local yes
-    if itemID then
-        for b = 1, Maxb[FB] do
-            for i = 1, Maxi[FB] do
-                local zb = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
-                if zb then
-                    local _itemID = GetItemID(zb:GetText())
-                    if itemID == _itemID then
-                        bt.looted:Show()
-                        yes = true
-                        return
+    function BG.Update_IsLooted(bt, itemID)
+        local FB = BG.FB1
+        local itemID = itemID or GetItemID(bt:GetText())
+        if itemID then
+            for b = 1, Maxb[FB] do
+                for i = 1, Maxi[FB] do
+                    local zb = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+                    if zb then
+                        local _itemID = GetItemID(zb:GetText())
+                        if itemID == _itemID then
+                            bt.looted:Show()
+                            return
+                        end
                     end
                 end
             end
         end
-    end
-    if not yes then
         bt.looted:Hide()
     end
-end
 
-function BG.UpdateItemLib_RightHope_IsLooted_All()
-    if BG.ItemLibMainFrame:IsVisible() then
-        for k, bt in pairs(BG.ItemLibMainFrame.Hope) do
-            if type(bt) == "table" and bt.EquipLoc then
-                BG.Update_IsLooted(bt)
+    function BG.UpdateItemLib_LeftLib_IsLooted_All()
+        local num = 1
+        local count = BG.ItemLibMainFrame[num].buttoncount
+        if count then
+            for i = 1, count do
+                local get = BG.ItemLibMainFrame[num]["button" .. i].get
+                local itemID = BG.ItemLibMainFrame[num]["button" .. i].itemID
+                BG.Update_IsLooted(get, itemID)
             end
         end
     end
-end
 
-function BG.UpdateHopeFrame_IsLooted_All()
-    local FB = BG.FB1
-    if BG["HopeFrame" .. FB]:IsVisible() then
-        for n = 1, HopeMaxn[FB] do
-            for b = 1, HopeMaxb[FB] do
-                for i = 1, HopeMaxi do
-                    local hope = BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]
-                    if hope then
-                        BG.Update_IsLooted(hope)
-                    end
+    function BG.UpdateItemLib_RightHope_IsLooted_All()
+        if BG.ItemLibMainFrame:IsVisible() then
+            for k, bt in pairs(BG.ItemLibMainFrame.Hope) do
+                if type(bt) == "table" and bt.EquipLoc then
+                    BG.Update_IsLooted(bt)
                 end
             end
         end
-        for k, bt in pairs(BG.ItemLibMainFrame.Hope) do
-            if type(bt) == "table" and bt.EquipLoc then
-                BG.Update_IsLooted(bt)
+    end
+
+    function BG.UpdateHopeFrame_IsLooted_All()
+        local FB = BG.FB1
+        if BG["HopeFrame" .. FB]:IsVisible() then
+            for n = 1, HopeMaxn[FB] do
+                for b = 1, HopeMaxb[FB] do
+                    for i = 1, HopeMaxi do
+                        local hope = BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]
+                        if hope then
+                            BG.Update_IsLooted(hope)
+                        end
+                    end
+                end
+            end
+            for k, bt in pairs(BG.ItemLibMainFrame.Hope) do
+                if type(bt) == "table" and bt.EquipLoc then
+                    BG.Update_IsLooted(bt)
+                end
             end
         end
     end
@@ -1032,6 +1311,15 @@ function BG.ItemLibUI()
     end
     if not BiaoGe["ItemLibInvType"][num] then
         BiaoGe["ItemLibInvType"][num] = { "INVTYPE_HEAD" }
+    end
+    if not BiaoGe.ItemLib then
+        BiaoGe.ItemLib = {}
+    end
+    if not BiaoGe.ItemLib.itemLibOrderButtonId then
+        BiaoGe.ItemLib.itemLibOrderButtonId = 2
+    end
+    if not BiaoGe.ItemLib.itemLibOrder then
+        BiaoGe.ItemLib.itemLibOrder = 1
     end
 
     local width = BG.ItemLibFramewidth
@@ -1093,9 +1381,9 @@ function BG.ItemLibUI()
     end
     local function OnMouseWheel(self, delta)
         if delta == 1 then
-            self._type = "next"
-        else
             self._type = "prev"
+        else
+            self._type = "next"
         end
         Next_OnClick(self)
     end
@@ -1109,17 +1397,18 @@ function BG.ItemLibUI()
             insets = { left = 3, right = 3, top = 3, bottom = 3 }
         })
         f:SetBackdropColor(0, 0, 0, 0.4)
-        f:SetSize(width + 20, buttonheight * (maxbutton + 1) + 20)
+        f:SetSize(width + 20, BUTTONHEIGHT * (MAXBUTTONS + 1) + 20)
         f:SetPoint("TOPLEFT", BG.MainFrame, 30, -80)
         BG.ItemLibMainFrame.bg1 = f
-
-        local frame = CreateFrame("Frame", nil, f)
-        frame:SetSize(1, 1)
-        BG.ItemLibMainFrame[num] = frame
 
         local s = CreateFrame("ScrollFrame", nil, f, "UIPanelScrollFrameTemplate")
         s:SetPoint("TOPLEFT", 0, -35)
         s:SetPoint("BOTTOMRIGHT", -30, 5)
+        s.ScrollBar.scrollStep = BUTTONHEIGHT * 4
+
+        local frame = CreateFrame("Frame", nil, s)
+        frame:SetSize(1, 1)
+        BG.ItemLibMainFrame[num] = frame
         s:SetScrollChild(frame)
 
         -- 鼠标提示定位
@@ -1129,27 +1418,58 @@ function BG.ItemLibUI()
         f.tooltip = _f
 
         -- 标题
-        local right
+        local buttons = {}
         for i, v in ipairs(title_table) do
-            local f = CreateFrame("Frame", nil, f)
-            f:SetSize(title_table[i].width, buttonheight)
+            local bt = CreateFrame("Button", nil, f, "BackdropTemplate")
+            -- f:SetBackdrop({
+            --     bgFile = "Interface/ChatFrame/ChatFrameBackground",
+            -- })
+            bt:SetSize(title_table[i].width, BUTTONHEIGHT)
             if i == 1 then
-                f:SetPoint("TOPLEFT", 10, -10)
+                bt:SetPoint("TOPLEFT", 10, -10)
             else
-                f:SetPoint("LEFT", right, "RIGHT", 0, 0)
+                bt:SetPoint("LEFT", buttons[i - 1], "RIGHT", 0, 0)
             end
-            local t = f:CreateFontString()
-            t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-            t:SetPoint("CENTER")
-            t:SetText(title_table[i].name)
-            t:SetTextColor(RGB(title_table[i].color))
-            t:SetJustifyH(title_table[i].JustifyH)
-            t:SetWidth(f:GetWidth())
-            t:SetWordWrap(false)
-            right = f
-            BG.ItemLibMainFrame[num]["title" .. i] = f
+            bt:SetNormalFontObject(BG.FontWhite15)
+            bt:SetText(title_table[i].name)
+            bt.textwidth = bt:GetFontString():GetStringWidth()
+            bt.textJustifyH = title_table[i].JustifyH
+            bt.sortOrder = 1
+            bt.id = i
+            bt:SetHighlightTexture("Interface/PaperDollInfoFrame/UI-Character-Tab-Highlight")
+            bt:Disable()
+            if i ~= 1 then
+                bt:Enable()
+            end
+            BG.ItemLibMainFrame[num]["title" .. i] = bt
+            tinsert(buttons, bt)
+
+            bt.text = bt:GetFontString()
+            bt.text:SetTextColor(RGB(title_table[i].color))
+            bt.text:SetJustifyH(title_table[i].JustifyH)
+            bt.text:SetWidth(bt:GetWidth())
+            bt.text:SetWordWrap(false)
+            bt:SetScript("OnClick", function(self)
+                BG.PlaySound(1)
+                local isnewsorter
+                if BiaoGe.ItemLib.itemLibOrderButtonId ~= self.id then
+                    isnewsorter = true
+                end
+                if not isnewsorter then
+                    BiaoGe.ItemLib.itemLibOrder = BiaoGe.ItemLib.itemLibOrder == 1 and 0 or 1
+                end
+                BiaoGe.ItemLib.itemLibOrderButtonId = self.id
+
+                BG.itemLibItemTbl = SortItemLibTable(BG.itemLibItemTbl, isnewsorter)
+                SetItemLib(1, BG.itemLibItemTbl)
+            end)
         end
         CreateLine(BG.ItemLibMainFrame[num]["title1"], 0, width - 20)
+
+        local sorter = f:CreateTexture(nil, "OVERLAY")
+        sorter:SetSize(8, 8)
+        sorter:SetTexture("Interface/Buttons/ui-sortarrow")
+        BG.ItemLibMainFrame[num].sorter = sorter
 
         -- 头顶大标题
         local t = f:CreateFontString()
@@ -1212,16 +1532,16 @@ function BG.ItemLibUI()
         local l = 6
         for i, v in ipairs(BG.invtypetable) do
             local bt = CreateFrame("Button", nil, f)
-            bt:SetSize(80, buttonheight)
+            bt:SetSize(80, BUTTONHEIGHT)
             bt:SetNormalFontObject(BG.FontGreen15)
-            bt:SetDisabledFontObject(BG.FontWhile18)
-            bt:SetHighlightFontObject(BG.FontHilight)
+            bt:SetDisabledFontObject(BG.FontWhite18)
+            bt:SetHighlightFontObject(BG.FontWhite15)
             if i == 1 then
                 bt:SetPoint("TOPLEFT", 10, -10)
-                f:SetHeight(buttonheight + 20)
+                f:SetHeight(BUTTONHEIGHT + 20)
             elseif (i - 1) % l == 0 then
                 bt:SetPoint("TOPLEFT", BG.itemLib_Inv_Buttons[i - l], "BOTTOMLEFT", 0, 0)
-                f:SetHeight(buttonheight * ((i - 1) / l + 1) + 20)
+                f:SetHeight(BUTTONHEIGHT * ((i - 1) / l + 1) + 20)
             else
                 bt:SetPoint("LEFT", BG.itemLib_Inv_Buttons[i - 1], "RIGHT", 0, 0)
             end
@@ -1245,7 +1565,7 @@ function BG.ItemLibUI()
         end
 
         local bt = CreateFrame("Button", nil, f)
-        bt:SetSize(buttonheight + 5, buttonheight)
+        bt:SetSize(BUTTONHEIGHT + 5, BUTTONHEIGHT)
         bt:SetNormalTexture("interface/buttons/ui-spellbookicon-nextpage-up")
         bt:SetPushedTexture("interface/buttons/ui-spellbookicon-nextpage-down")
         bt:SetHighlightTexture("Interface/Buttons/UI-Common-MouseHilight")
@@ -1255,7 +1575,7 @@ function BG.ItemLibUI()
         bt:SetScript("OnClick", Next_OnClick)
 
         local bt = CreateFrame("Button", nil, f)
-        bt:SetSize(nextbt:GetWidth(), buttonheight)
+        bt:SetSize(nextbt:GetWidth(), BUTTONHEIGHT)
         bt:SetNormalTexture("interface/buttons/ui-spellbookicon-prevpage-up")
         bt:SetPushedTexture("interface/buttons/ui-spellbookicon-prevpage-down")
         bt:SetHighlightTexture("Interface/Buttons/UI-Common-MouseHilight")
@@ -1307,7 +1627,7 @@ function BG.ItemLibUI()
         local right
         for i, v in ipairs(title_table) do
             local f = CreateFrame("Frame", nil, f)
-            f:SetSize(title_table[i].width, buttonheight)
+            f:SetSize(title_table[i].width, BUTTONHEIGHT)
             if i == 1 then
                 f:SetPoint("TOPLEFT", 10, -10)
             elseif i == 2 then
@@ -1333,11 +1653,11 @@ function BG.ItemLibUI()
             for ii, vv in ipairs(title_table) do
                 if ii == 1 then
                     local bt = CreateFrame("Button", nil, f)
-                    bt:SetSize(title_table[ii].width, buttonheight + 4)
+                    bt:SetSize(title_table[ii].width, BUTTONHEIGHT + 4)
                     -- bt:SetSize(title_table[ii].width, buttonheight)
-                    bt:SetNormalFontObject(BG.FontGold1)
-                    bt:SetDisabledFontObject(BG.FontWhile15)
-                    bt:SetHighlightFontObject(BG.FontWhile15)
+                    bt:SetNormalFontObject(BG.FontGold15)
+                    bt:SetDisabledFontObject(BG.FontWhite15)
+                    bt:SetHighlightFontObject(BG.FontWhite15)
                     if i == 1 then
                         bt:SetPoint("TOPLEFT", 10, -32)
                     else
@@ -1368,7 +1688,7 @@ function BG.ItemLibUI()
                     bt:SetScript("OnMouseWheel", OnMouseWheel)
                 else
                     local edit = CreateFrame("EditBox", nil, f, "InputBoxTemplate")
-                    edit:SetSize(title_table[ii].width, buttonheight)
+                    edit:SetSize(title_table[ii].width, BUTTONHEIGHT)
                     edit:SetPoint("LEFT", right, "RIGHT", w_jiange, 0)
                     edit:SetAutoFocus(false)
                     edit:Disable()
@@ -1389,7 +1709,7 @@ function BG.ItemLibUI()
                     edit.ds = edit:CreateTexture()
                     edit.ds:SetPoint("TOPLEFT", -4, -2)
                     edit.ds:SetPoint("BOTTOMRIGHT", -1, 0)
-                    edit.ds:SetColorTexture(1, 1, 1, BG.OnEnterAlpha)
+                    edit.ds:SetColorTexture(1, 1, 1, BG.onEnterAlpha)
                     edit.ds:Hide()
 
                     edit:SetScript("OnTextChanged", function(self)
@@ -1455,61 +1775,28 @@ end
 
 BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
     if not (isLogin or isReload) then return end
-    BG.UpdateAllItemLib()
+    CheckItemCache() -- 向服务器申请缓存全部装备
 
     local yes = true
     BG.ItemLibMainFrame:HookScript("OnShow", function(self)
         if yes then
-            -- 心愿汇总初始化
-            BG.UpdateItemLib_RightHope_Default()
+            BG.UpdateAllItemLib()
             yes = nil
         end
+        -- 刷新心愿
+        if not yes then
+            BG.UpdateItemLib_LeftHope_All()
+        end
+        BG.UpdateItemLib_RightHope_All()
 
-        -- 更新是否已有装备
-        do
-            local num = 1
-            if BG.ItemLibMainFrame[num].count == 0 then return end
-            local count = BG.ItemLibMainFrame[num].buttoncount
-            if count then
-                for i = 1, count do
-                    local item = BG.ItemLibMainFrame[num]["button" .. i].item
-                    local itemID = BG.ItemLibMainFrame[num]["button" .. i].itemID
-                    -- 历遍装备栏
-                    local yes
-                    for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
-                        local _itemID = GetInventoryItemID("player", slot)
-                        if itemID == _itemID then
-                            item.haved:Show()
-                            yes = true
-                            break
-                        end
-                    end
-                    -- 历遍背包
-                    if not yes then
-                        for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-                            local numSlots = C_Container.GetContainerNumSlots(bagID)
-                            for slotIndex = 1, numSlots do
-                                local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
-                                if itemID == _itemID then
-                                    item.haved:Show()
-                                    yes = true
-                                    break
-                                end
-                            end
-                            if yes then
-                                break
-                            end
-                        end
-                    end
-                    if not yes then
-                        item.haved:Hide()
-                    end
-                end
-            end
-            BG.UpdateItemLib_RightHope_IsHaved_All()
+        -- 更新已拥有装备
+        if not yes then
+            BG.UpdateItemLib_LeftLib_IsHaved_All()
         end
 
         -- 更新已掉落
-        BG.UpdateItemLib_RightHope_IsLooted_All()
+        if not yes then
+            BG.UpdateItemLib_LeftLib_IsLooted_All()
+        end
     end)
 end)

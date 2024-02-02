@@ -20,6 +20,21 @@ local AddTexture = ADDONSELF.AddTexture
 
 local pt = print
 
+local BOSS_TEXT_FONT
+local l = GetLocale()
+if (l == "koKR") then
+    BOSS_TEXT_FONT = "Fonts\\2002.TTF";
+elseif (l == "zhCN") then
+    BOSS_TEXT_FONT = "Fonts\\ARKai_T.TTF";
+elseif (l == "zhTW") then
+    BOSS_TEXT_FONT = "Fonts\\ARKai_T.TTF";
+    -- BOSS_TEXT_FONT = "Fonts\\blei00d.TTF";
+elseif (l == "ruRU") then
+    BOSS_TEXT_FONT = "Fonts\\FRIZQT___CYR.TTF";
+else
+    BOSS_TEXT_FONT = "Fonts\\FRIZQT__.TTF";
+end
+
 local function P_color(text)
     if not text then return "" end
     text = "|cff" .. "00FF00" .. "(" .. text .. ")|r"
@@ -69,7 +84,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         f:SetPoint("TOPLEFT", BG.MainFrame, "TOPLEFT", 25, -80)
         frame.BossNameFrame = f
         local t = f:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, 15, "OUTLINE")
         t:SetTextColor(RGB(BG.y2))
         t:SetPoint("BOTTOM", f, "TOP", 0, 0)
         t:SetText(L["< BOSS >"])
@@ -88,7 +103,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         f:SetPoint("TOPLEFT", frame.BossNameFrame, "TOPRIGHT", 10, 0)
         frame.spellFramebg = f
         local t = f:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, 15, "OUTLINE")
         t:SetTextColor(RGB(BG.y2))
         t:SetPoint("BOTTOM", f, "TOP", 0, 0)
         t:SetText(L["< 技能应对 >"])
@@ -110,7 +125,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         BG.GameTooltip_Hide(bt)
 
         local t = f:CreateFontString(nil, "ARTWORK")
-        t:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, 13, "OUTLINE")
         t:SetPoint("TOP", f, "BOTTOM", 0, 0)
         t:SetTextColor(RGB(BG.dis))
         t:SetText(L["（SHIFT+点击技能可发送到聊天框）"])
@@ -128,7 +143,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         f:SetPoint("TOPLEFT", frame.spellFramebg, "TOPRIGHT", 10, 0)
         frame.classFramebg = f
         local t = f:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, 15, "OUTLINE")
         t:SetTextColor(RGB(BG.y2))
         t:SetPoint("BOTTOM", f, "TOP", 0, 0)
         t:SetText(L["< 职业职责 >"])
@@ -139,7 +154,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             local f = CreateFrame("Frame", nil, frame.classFramebg)
             f:SetPoint("TOPRIGHT", frame.classFramebg, "BOTTOMRIGHT", -5, 0)
             local t = f:CreateFontString(nil, "ARTWORK")
-            t:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
+            t:SetFont(BOSS_TEXT_FONT, 13, "OUTLINE")
             t:SetPoint("CENTER")
             t:SetJustifyH("RIGHT")
             t:SetTextColor(RGB(BG.dis))
@@ -225,6 +240,8 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             local s = CreateFrame("ScrollFrame", nil, frame, "UIPanelScrollFrameTemplate")
             s:SetPoint("TOPLEFT", frame.spellFramebg, "TOPLEFT", 0, -5)
             s:SetSize(frame.spellFramebg:GetWidth() - 28, frame.spellFramebg:GetHeight() - 10)
+            s.ScrollBar.scrollStep = BG.scrollStep
+
             s:SetScrollChild(f)
             frame["Boss" .. i].spellScrollFrame = s
 
@@ -236,6 +253,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             local s = CreateFrame("ScrollFrame", nil, frame, "UIPanelScrollFrameTemplate")
             s:SetPoint("TOPLEFT", frame.classFramebg, "TOPLEFT", 0, -5)
             s:SetSize(frame.classFramebg:GetWidth() - 28, frame.classFramebg:GetHeight() - 10)
+            s.ScrollBar.scrollStep = BG.scrollStep
             s:SetScrollChild(f)
             frame["Boss" .. i].classScrollFrame = s
 
@@ -280,7 +298,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         end
         frame["NPCname" .. NPCNum] = f
         local t = f:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, fontsize2, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, fontsize2, "OUTLINE")
         t:SetPoint("LEFT")
         if bossOnEnterText and bossOnEnterText ~= "" then
             t:SetText("[" .. bossName .. "]")
@@ -293,7 +311,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
         -- 阶段文字（P1、P2、全程）
         local p_t = f:CreateFontString()
-        p_t:SetFont(BIAOGE_TEXT_FONT, fontsize4, "OUTLINE")
+        p_t:SetFont(BOSS_TEXT_FONT, fontsize4, "OUTLINE")
         p_t:SetPoint("LEFT", t, "RIGHT", 3, 0)
         p_t:SetText(Pnum and P_color(Pnum) or "")
         frame["NPCnamePnum" .. NPCNum] = p_t
@@ -413,7 +431,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         frame["Spellname" .. SpellNum] = f
 
         local t = f:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, fontsize3, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, fontsize3, "OUTLINE")
         t:SetPoint("LEFT")
         local _, _, icon = GetSpellInfo(spellID)
         t:SetText(AddTexture(icon) .. GetSpellLink(spellID)
@@ -423,7 +441,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         f:SetWidth(w)
         -- 阶段文字（P1、P2、全程）
         local p_t = f:CreateFontString()
-        p_t:SetFont(BIAOGE_TEXT_FONT, fontsize4, "OUTLINE")
+        p_t:SetFont(BOSS_TEXT_FONT, fontsize4, "OUTLINE")
         p_t:SetPoint("LEFT", t, "RIGHT", 3, 0)
         p_t:SetText(Pnum and P_color(Pnum) or "")
         frame["SpellnamePnum" .. SpellNum] = p_t
@@ -482,7 +500,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local t = f:CreateFontString()
         t:SetPoint("TOPLEFT")
         t:SetWidth(frame:GetWidth() - 20)
-        t:SetFont(BIAOGE_TEXT_FONT, fontsize, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, fontsize, "OUTLINE")
         t:SetTextColor(RGB(BG.y2))
         t:SetJustifyH("LEFT")
         t:SetJustifyV("TOP")
@@ -495,7 +513,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             t = f:CreateFontString()
             t:SetPoint("TOPLEFT", info, "BOTTOMLEFT", 0, -5)
             t:SetWidth(frame:GetWidth() - 20)
-            t:SetFont(BIAOGE_TEXT_FONT, fontsize, "OUTLINE")
+            t:SetFont(BOSS_TEXT_FONT, fontsize, "OUTLINE")
             t:SetTextColor(RGB(BG.y2))
             t:SetJustifyH("LEFT")
             t:SetJustifyV("TOP")
@@ -592,7 +610,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         end
         frame["Classname" .. ClassNum] = f
         local t = f:CreateFontString()
-        t:SetFont(BIAOGE_TEXT_FONT, fontsize3, "OUTLINE")
+        t:SetFont(BOSS_TEXT_FONT, fontsize3, "OUTLINE")
         t:SetPoint("LEFT")
         t:SetText(classtable[ClassNum])
         t:SetTextColor(1, 1, 1)
@@ -640,7 +658,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local last
         for i, v in ipairs(donetable) do
             local t = f:CreateFontString()
-            t:SetFont(BIAOGE_TEXT_FONT, fontsize, "OUTLINE")
+            t:SetFont(BOSS_TEXT_FONT, fontsize, "OUTLINE")
             t:SetTextColor(RGB(BG.y2))
             if i == 1 then
                 t:SetPoint("TOPLEFT", f, "TOPLEFT", 30, -8)

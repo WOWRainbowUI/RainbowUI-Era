@@ -27,16 +27,21 @@ function BG.RoleOverviewUI()
     if not BiaoGe.FBCDchoice then
         if BG.IsVanilla() then
             BiaoGe.FBCDchoice = {
+                ["NAXX"] = 1,
+                ["TAQ"] = 1,
+                ["BWL"] = 1,
+                ["MC"] = 1,
+                ["AQL"] = 1,
+                ["ZUG"] = 1,
                 ["BD"] = 1,
+                ["huiguweek"] = 1,
             }
         else
             BiaoGe.FBCDchoice = {
                 ["25ICC"] = 1,
                 ["10ICC"] = 1,
-                ["25TOC"] = 1,
-                ["10TOC"] = 1,
-                ["25OL"] = 1,
-                ["10OL"] = 1,
+                ["25RS"] = 1,
+                ["10RS"] = 1,
                 ["25VOA"] = 1,
                 ["10VOA"] = 1,
                 ["gamma"] = 1,
@@ -45,12 +50,28 @@ function BG.RoleOverviewUI()
             }
         end
     end
-    if not BG.IsVanilla() then
-        if not BiaoGe.options.SearchHistory["FBCDchoice231023"] then
-            BiaoGe.FBCDchoice["gamma"] = 1
-            BiaoGe.FBCDchoice["heroe"] = 1
-            BiaoGe.FBCDchoice["week1"] = 1
-            BiaoGe.options.SearchHistory["FBCDchoice231023"] = true
+    do
+        if BG.IsVanilla() then
+            BG.Once("FBCDchoice", 240106, function()
+                -- 因为永久60，需要复原一下
+                BiaoGe.FBCDchoice = {
+                    ["NAXX"] = 1,
+                    ["TAQ"] = 1,
+                    ["BWL"] = 1,
+                    ["MC"] = 1,
+                    ["AQL"] = 1,
+                    ["ZUG"] = 1,
+                    ["BD"] = 1,
+                }
+            end)
+            BG.Once("FBCDchoice", 240113, function()
+                BiaoGe.FBCDchoice["huiguweek"] = 1
+            end)
+        else
+            BG.Once("FBCDchoice", 240111, function()
+                BiaoGe.FBCDchoice["25RS"] = 1
+                BiaoGe.FBCDchoice["10RS"] = 1
+            end)
         end
     end
 
@@ -74,14 +95,26 @@ function BG.RoleOverviewUI()
     end
 
     if BG.IsVanilla() then
-        BG.FBCDall_table = {
-            --CLASSIC
-            { name = "BD", color = "D3D3D3", fbId = 48, num = 10 },
-        }
-
         BG.MONEYall_table = {
             { name = L["金币"], color = "FFD700", id = "money", tex = 237618, width = 90 }, -- 金币
         }
+        if BG.IsVanilla_Sod() then
+            BG.FBCDall_table = {
+                { name = "BD", color = "00BFFF", fbId = 48, num = 10 },
+                -- 周常
+                { name = "huiguweek", name2 = L["灰谷周常"], color = "FF8C00", questID = "huiguweek" },
+            }
+        elseif BG.IsVanilla_60() then
+            BG.FBCDall_table = {
+                { name = "NAXX", color = "00BFFF", fbId = 533, num = 40 },
+                { name = "TAQ", color = "00BFFF", fbId = 531, num = 40 },
+                { name = "BWL", color = "00BFFF", fbId = 469, num = 40 },
+                { name = "MC", color = "00BFFF", fbId = 409, num = 40 },
+                { name = "AQL", color = "BA55D3", fbId = 509, num = 20 },
+                { name = "ZUG", color = "BA55D3", fbId = 309, num = 20 },
+
+            }
+        end
     else
         BG.FBCDall_table = {
             --WLK
@@ -226,7 +259,7 @@ function BG.RoleOverviewUI()
             for i, cd in pairs(BiaoGe.FBCD[RealmId][p]) do
                 if cd.resettime then
                     if cd.fbId == 309 or cd.fbId == 568 or cd.fbId == 509 then -- ZUG ZA AQL
-                        text3 = format("ZUG/ZA/AQL %s", SecondsToTime(cd.resettime, true, nil, 2))
+                        text3 = format(L["小团本 %s"], SecondsToTime(cd.resettime, true, nil, 2))
                     elseif cd.num ~= 5 then
                         text7 = SecondsToTime(cd.resettime, true, nil, 2)
                     end
@@ -336,17 +369,15 @@ function BG.RoleOverviewUI()
                             end
 
                             -- 日常
-                            if not BG.IsVanilla() then
-                                if BiaoGe.QuestCD[RealmId][p] then
-                                    for questID, v in pairs(BiaoGe.QuestCD[RealmId][p]) do
-                                        for ii, vv in ipairs(FBCDchoice_table) do -- 创建cd勾勾
-                                            if v.questID == vv.questID then
-                                                local tx = BG.FBCDFrame:CreateTexture(nil, "OVERLAY")
-                                                tx:SetSize(16, 16)
-                                                tx:SetPoint("TOP", BG.FBCDFrame, "TOPLEFT",
-                                                    (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2), (-8 - height * n))
-                                                tx:SetTexture("interface/raidframe/readycheck-ready")
-                                            end
+                            if BiaoGe.QuestCD[RealmId][p] then
+                                for questID, v in pairs(BiaoGe.QuestCD[RealmId][p]) do
+                                    for ii, vv in ipairs(FBCDchoice_table) do -- 创建cd勾勾
+                                        if v.questID == vv.questID then
+                                            local tx = BG.FBCDFrame:CreateTexture(nil, "OVERLAY")
+                                            tx:SetSize(16, 16)
+                                            tx:SetPoint("TOP", BG.FBCDFrame, "TOPLEFT",
+                                                (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2), (-8 - height * n))
+                                            tx:SetTexture("interface/raidframe/readycheck-ready")
                                         end
                                     end
                                 end
@@ -390,12 +421,11 @@ function BG.RoleOverviewUI()
         t:SetFont(BIAOGE_TEXT_FONT, fontsize2, "OUTLINE")
         t:SetPoint("TOPLEFT", 15, -10 - height * n)
         t:SetText(BG.STC_g1(L["< 角色货币总览 >"]))
-        -- t:SetText(BG.STC_g1(L["< 角色货币总览 >"]) .. minimapText)
         t:SetJustifyH("LEFT")
         t:SetWordWrap(false) -- 截断
         t:SetWidth(totalwidth - 20)
 
-        if BG.IsVanilla() then
+        if BG.IsVanilla_Sod() then
             local t_end = f:CreateFontString()
             t_end:SetFont(BIAOGE_TEXT_FONT, fontsize, "OUTLINE")
             t_end:SetPoint("TOPLEFT", t, "BOTTOMLEFT", 0, -3)
@@ -575,24 +605,12 @@ function BG.RoleOverviewUI()
         end
         local player = UnitName("player")
         local colorplayer = SetClassCFF(player, "player")
-        -- BiaoGe.FBCD[RealmId][player] = {
-        --     {
-        --         player = player,
-        --         colorplayer = colorplayer,
-        --     }
-        -- }
 
         function BG.UpdateFBCD()
             local time = time()
             local cd = {}
-            local level
-            if BG.IsVanilla() then
-                level = 25
-            else
-                level = 80
-            end
 
-            if UnitLevel("player") >= level then
+            if UnitLevel("player") >= BG.fullLevel then
                 for i = 1, GetNumSavedInstances() do
                     local name, lockoutId, resettime, difficultyId, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, numEncounters, encounterProgress, extendDisabled, instanceId =
                         GetSavedInstanceInfo(i)
@@ -618,7 +636,7 @@ function BG.RoleOverviewUI()
                         }
                     }
                 end
-            elseif UnitLevel("player") < level then
+            elseif UnitLevel("player") < BG.fullLevel then
                 BiaoGe.FBCD[RealmId][player] = nil
             end
 
@@ -974,188 +992,177 @@ function BG.RoleOverviewUI()
             --     pt(dungeonID)
             -- end)
         end
+    end
+    ------------------日常任务------------------
+    do
+        if not BiaoGe.QuestCD then
+            BiaoGe.QuestCD = {}
+        end
+        if not BiaoGe.QuestCD[RealmId] then
+            BiaoGe.QuestCD[RealmId] = {}
+        end
+        if not BiaoGe.QuestCD[RealmId][player] then
+            BiaoGe.QuestCD[RealmId][player] = {}
+        end
 
-        ------------------日常任务------------------
-        do
-            if not BiaoGe.QuestCD then
-                BiaoGe.QuestCD = {}
-            end
-            if not BiaoGe.QuestCD[RealmId] then
-                BiaoGe.QuestCD[RealmId] = {}
-            end
-            if not BiaoGe.QuestCD[RealmId][player] then
-                BiaoGe.QuestCD[RealmId][player] = {}
-            end
-            if UnitLevel("player") < 80 then
-                BiaoGe.FBCD[RealmId][player] = nil
-            end
-
-            BG.FBCDall_QuestIDtable = {
+        -- 日常
+        if not BG.IsVanilla() then
+            BG.dayQuests = {
                 { questID = 78752, name = L["伽马"], color = "FF8C00", },
                 { questID = 78753, name = L["英雄"], color = "FF8C00", },
-                { questID = "week1", name = L["周常"], color = "FF8C00", }
             }
+        end
 
-            -- 日常
-            local function UpdateDayQuest(questID)
-                local currentTimestamp = GetServerTime()
-                local tomorrow7amTimestamp
-                local today = date("*t", currentTimestamp)
-                -- 如果时间小于当天凌晨7点
-                if today.hour < 7 then
-                    today.hour = 7
-                    today.min = 0
-                    today.sec = 0
-                    tomorrow7amTimestamp = time(today)
-                else
-                    -- 获取明天凌晨7点的时间戳
-                    local tomorrow = date("*t", currentTimestamp + 86400) -- 加上一天的秒数
-                    tomorrow.hour = 7
-                    tomorrow.min = 0
-                    tomorrow.sec = 0
-                    tomorrow7amTimestamp = time(tomorrow)
-                end
-
-                -- 计算时间差
-                local secondsUntilNext7am = tomorrow7amTimestamp - currentTimestamp
-                local timestamp = currentTimestamp + secondsUntilNext7am
-
-                for i, v in pairs(BG.FBCDall_QuestIDtable) do
-                    if v.questID and v.questID == questID then
-                        local colorplayer = SetClassCFF(player, "player")
-                        local a = {
-                            player = player,
-                            colorplayer = colorplayer,
-                            questID = questID,
-                            resettime = secondsUntilNext7am,
-                            endtime = timestamp
-                        }
-                        BiaoGe.QuestCD[RealmId][player][questID] = a
+        local function UpdateDayQuest(questID)
+            if not BG.dayQuests then return end
+            for i, v in pairs(BG.dayQuests) do
+                if v.questID == questID then
+                    local currentTimestamp = GetServerTime()
+                    local tomorrow7amTimestamp
+                    local today = date("*t", currentTimestamp)
+                    -- 如果时间小于当天凌晨7点
+                    if today.hour < 7 then
+                        today.hour = 7
+                        today.min = 0
+                        today.sec = 0
+                        tomorrow7amTimestamp = time(today)
+                    else
+                        -- 获取明天凌晨7点的时间戳
+                        local tomorrow = date("*t", currentTimestamp + 86400) -- 加上一天的秒数
+                        tomorrow.hour = 7
+                        tomorrow.min = 0
+                        tomorrow.sec = 0
+                        tomorrow7amTimestamp = time(tomorrow)
                     end
+                    -- 计算时间差
+                    local secondsUntilNext7am = tomorrow7amTimestamp - currentTimestamp
+                    local timestamp = currentTimestamp + secondsUntilNext7am
+
+                    local colorplayer = SetClassCFF(player, "player")
+                    local a = {
+                        player = player,
+                        colorplayer = colorplayer,
+                        questID = questID,
+                        resettime = secondsUntilNext7am,
+                        endtime = timestamp
+                    }
+                    BiaoGe.QuestCD[RealmId][player][questID] = a
+                    return
                 end
             end
+        end
 
-            -- 周常
+        -- 周常
+        if BG.IsVanilla_Sod() then
             BG.weekQuests = {
-                24579,
-                24580,
-                24581,
-                24582,
-                24583,
-                24584,
-                24585,
-                24586,
-                24587,
-                24588,
-                24589,
-                24590,
+                huiguweek = { 79098, 79090, },
             }
-            -- for i, id in ipairs(BG.weekQuests) do
-            --     pt("|cffff8040|Hquest:" .. id .. ":80|h[One of the People]|h|r")
-            -- end
-            -- /script DEFAULT_CHAT_FRAME:AddMessage("\124cffffff00\124Hquest:24584:80\124h[Arugal's Folly]\124h\124r")
+        elseif not BG.IsVanilla_60() then
+            BG.weekQuests = {
+                week1 = { 24579, 24580, 24581, 24582, 24583, 24584, 24585, 24586, 24587, 24588, 24589, 24590, },
+            }
+        end
 
-            local function UpdateWeekQuest(questID, Region)
-                local resetDay = 2
-                if Region == "CN" then
-                    resetDay = 4
-                end
-
-                local currentTimestamp = GetServerTime()
-                local nextThursdayTimestamp
-                local currentWeekday = date("%w", currentTimestamp)
-                local daysToThursday = resetDay - currentWeekday
-
-                local today = date("*t", currentTimestamp)
-                -- 如果时间小于当天凌晨7点
-                if daysToThursday == 0 and today.hour < 7 then
-                    today.hour = 7
-                    today.min = 0
-                    today.sec = 0
-                    nextThursdayTimestamp = time(today)
-                else
-                    if daysToThursday <= 0 then
-                        daysToThursday = daysToThursday + 7
-                    end
-                    nextThursdayTimestamp = currentTimestamp + daysToThursday * 86400
-
-                    local nextThursdayDateTable = date("*t", nextThursdayTimestamp)
-                    nextThursdayDateTable.hour = 7
-                    nextThursdayDateTable.min = 0
-                    nextThursdayDateTable.sec = 0
-                    nextThursdayTimestamp = time(nextThursdayDateTable)
-                end
-
-                -- 计算时间差
-                local secondsToNextThursday = nextThursdayTimestamp - currentTimestamp
-                local timestamp = currentTimestamp + secondsToNextThursday
-
-                for i, _questID in pairs(BG.weekQuests) do
+        local function UpdateWeekQuest(questID, Region)
+            if not BG.weekQuests then return end
+            for k, v in pairs(BG.weekQuests) do
+                for i, _questID in pairs(BG.weekQuests[k]) do
                     if _questID == questID then
+                        local resetDay = 2
+                        if Region == "CN" then
+                            resetDay = 4
+                        end
+
+                        local currentTimestamp = GetServerTime()
+                        local nextThursdayTimestamp
+                        local currentWeekday = date("%w", currentTimestamp)
+                        local daysToThursday = resetDay - currentWeekday
+
+                        local today = date("*t", currentTimestamp)
+                        -- 如果时间小于当天凌晨7点
+                        if daysToThursday == 0 and today.hour < 7 then
+                            today.hour = 7
+                            today.min = 0
+                            today.sec = 0
+                            nextThursdayTimestamp = time(today)
+                        else
+                            if daysToThursday <= 0 then
+                                daysToThursday = daysToThursday + 7
+                            end
+                            nextThursdayTimestamp = currentTimestamp + daysToThursday * 86400
+
+                            local nextThursdayDateTable = date("*t", nextThursdayTimestamp)
+                            nextThursdayDateTable.hour = 7
+                            nextThursdayDateTable.min = 0
+                            nextThursdayDateTable.sec = 0
+                            nextThursdayTimestamp = time(nextThursdayDateTable)
+                        end
+                        -- 计算时间差
+                        local secondsToNextThursday = nextThursdayTimestamp - currentTimestamp
+                        local timestamp = currentTimestamp + secondsToNextThursday
+
                         local colorplayer = SetClassCFF(player, "player")
                         local a = {
                             player = player,
                             colorplayer = colorplayer,
-                            questID = "week1",
+                            questID = k,
                             resettime = secondsToNextThursday,
                             endtime = timestamp
                         }
-                        BiaoGe.QuestCD[RealmId][player].week1 = a
-                        break
+                        BiaoGe.QuestCD[RealmId][player][k] = a
+                        return
                     end
                 end
             end
+        end
 
+        -- 交任务时触发
+        BG.RegisterEvent("QUEST_TURNED_IN", function(self, even, questID)
+            UpdateDayQuest(questID)
 
-            -- 交任务时触发
-            BG.RegisterEvent("QUEST_TURNED_IN", function(self, even, questID)
-                UpdateDayQuest(questID)
+            if BG.IsCN() then
+                UpdateWeekQuest(questID, "CN")
+            else
+                UpdateWeekQuest(questID, "US")
+            end
+        end)
 
-                if BG.IsCN() then
-                    UpdateWeekQuest(questID, "CN")
-                else
-                    UpdateWeekQuest(questID, "US")
-                end
-
-                -- 刷新
-                BG.UpdateFBCD_5M()
-            end)
-
-            -- 检查全部角色的任务重置cd是否到期（第二天凌晨7点）
-            BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even)
-                if not BiaoGe.options.SearchHistory["quest231018_" .. RealmId .. player] then
-                    for id in pairs(GetQuestsCompleted()) do
-                        for key, questID in pairs(BG.weekQuests) do
-                            if id == questID then
-                                if BG.IsCN() then
-                                    UpdateWeekQuest(questID, "CN")
-                                else
-                                    UpdateWeekQuest(questID, "US")
+        -- 检查全部角色的任务重置cd是否到期（第二天凌晨7点）
+        BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even)
+            if BG.IsVanilla_Sod() then
+                BG.Once("QuestCD", 240113, function()
+                    for questID in pairs(GetQuestsCompleted()) do
+                        for k, v in pairs(BG.weekQuests) do
+                            for i, _questID in pairs(BG.weekQuests[k]) do
+                                if _questID == questID then
+                                    if BG.IsCN() then
+                                        UpdateWeekQuest(questID, "CN")
+                                    else
+                                        UpdateWeekQuest(questID, "US")
+                                    end
                                 end
                             end
                         end
                     end
-                    BiaoGe.options.SearchHistory["quest231018_" .. RealmId .. player] = true
-                end
+                end)
+            end
 
-                local time = GetServerTime()
-                for p, _ in pairs(BiaoGe.QuestCD[RealmId]) do
-                    for questID, v in pairs(BiaoGe.QuestCD[RealmId][p]) do
-                        local yes
-                        if time >= v.endtime then
-                            BiaoGe.QuestCD[RealmId][p][questID] = nil
-                        elseif time < v.endtime then
-                            v.resettime = v.endtime - time
-                            yes = true
-                        end
-                        if not yes then
-                            BiaoGe.QuestCD[RealmId][p][questID] = nil
-                        end
+            local time = GetServerTime()
+            for p, _ in pairs(BiaoGe.QuestCD[RealmId]) do
+                for questID, v in pairs(BiaoGe.QuestCD[RealmId][p]) do
+                    local yes
+                    if time >= v.endtime then
+                        BiaoGe.QuestCD[RealmId][p][questID] = nil
+                    elseif time < v.endtime then
+                        v.resettime = v.endtime - time
+                        yes = true
+                    end
+                    if not yes then
+                        BiaoGe.QuestCD[RealmId][p][questID] = nil
                     end
                 end
-                BG.UpdateFBCD_5M()
-            end)
-        end
+            end
+        end)
     end
     ------------------获取货币信息------------------
     do
@@ -1221,7 +1228,7 @@ function BG.RoleOverviewUI()
             BG.ButtonMoney:SetText(text)
             BG.ButtonMoney.text = BG.ButtonMoney:GetFontString()
             BG.ButtonMoney.text:SetPoint("BOTTOMRIGHT", BG.ButtonMoney, "BOTTOMRIGHT", -30, 3)
-            BG.ButtonMoney:SetWidth(BG.ButtonMoney.text:GetWidth())
+            BG.ButtonMoney:SetWidth(BG.ButtonMoney.text:GetWidth() + 30)
             BG.ButtonMoney.tex:SetWidth(BG.ButtonMoney.text:GetWidth() + 100)
         end
 
@@ -1229,7 +1236,7 @@ function BG.RoleOverviewUI()
             local f = CreateFrame("Button", nil, BG.MainFrame)
             f:SetSize(0, 22)
             f:SetPoint("BOTTOMRIGHT", -3, 3)
-            f:SetNormalFontObject(BG.FontWhile13)
+            f:SetNormalFontObject(BG.FontWhite13)
             BG.ButtonMoney = f
 
             f.tex = f:CreateTexture()

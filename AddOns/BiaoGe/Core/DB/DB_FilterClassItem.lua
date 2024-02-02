@@ -137,14 +137,12 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     ------------------装备词缀------------------
     if BG.IsVanilla() then
         BG.FilterClassItemDB.ShuXing = {
-            { name = "力量", value = ITEM_MOD_STRENGTH }, --%c%d 力量
+            { name = "力量", value = ITEM_MOD_STRENGTH }, --%c%s 力量
             -- { name = "力量", value = ITEM_MOD_STRENGTH_SHORT },
             { name = "敏捷", value = SPEC_FRAME_PRIMARY_STAT_AGILITY },
             { name = "智力", value = ITEM_MOD_INTELLECT_SHORT },
             { name = "精神", value = ITEM_MOD_SPIRIT_SHORT },
             { name = "5回法力值", value = ITEM_MOD_MANA_REGENERATION },
-            { name = "命中", value = L["击中"] },
-            { name = "暴击", value = ITEM_MOD_CRIT_RATING_SHORT },
             { name = "防御", value = STAT_CATEGORY_DEFENSE },
             { name = "招架", value = STAT_PARRY },
             { name = "躲闪", value = STAT_DODGE },
@@ -152,23 +150,28 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             { name = "攻击强度", value = ITEM_MOD_ATTACK_POWER_SHORT },
             { name = "武器技能", value = COMBAT_RATING_NAME1 },
             { name = "击中时可能", value = ITEM_SPELL_TRIGGER_ONPROC },
+            { name = "物理命中", value = L["你击中目标"] },
+            { name = "物理暴击", value = L["你造成爆击"] },
+            { name = "法术命中", value = L["你的法术击中"] },
+            { name = "法术暴击", value = L["你的法术造成爆击"] },
+            { name = "法术伤害", value = STAT_SPELLDAMAGE },
             { name = "法术强度", value = L["所有法术和魔法效果所造成的伤害和治疗效果"] },
             { name = "特定法术强度", value = L["法术和效果所造成的伤害"] },
             { name = "治疗强度", value = L["法术所造成的治疗效果"] },
         }
 
-        local t1 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", } -- FZ, FQ
-        local t3 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "格挡值", "武器技能", } -- 熊T
+        local t1 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "法术命中", "法术暴击", "法术伤害", } -- FZ, FQ
+        local t3 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "格挡值", "武器技能", "法术命中", "法术暴击", "法术伤害", } -- 熊T
 
-        local dps1 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", } -- KBZ/CJQ
-        local dps2 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", } -- DZ
+        local dps1 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", "法术命中", "法术暴击", "法术伤害", } -- KBZ/CJQ
+        local dps2 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", "法术命中", "法术暴击", "法术伤害", } -- DZ
         local dps3 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", } -- ZQS
-        local dps4 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", } -- LR
-        local dps5 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", "武器技能", } -- 猫
+        local dps4 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", "法术命中", "法术暴击", "法术伤害", } -- LR
+        local dps5 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "招架", "躲闪", "防御", "格挡值", "武器技能", "法术命中", "法术暴击", "法术伤害", } -- 猫
 
-        local fx1 = { "招架", "躲闪", "防御", "格挡值", "攻击强度", "武器技能", "击中时可能", "治疗强度", } -- 法系dps
+        local fx1 = { "招架", "躲闪", "防御", "格挡值", "攻击强度", "武器技能", "击中时可能", "治疗强度", "物理命中", "物理暴击", } -- 法系dps
 
-        local n1 = { "命中", "招架", "躲闪", "防御", "格挡值", "攻击强度", "武器技能", "击中时可能", "特定法术强度", } -- 治疗
+        local n1 = { "招架", "躲闪", "防御", "格挡值", "攻击强度", "武器技能", "击中时可能", "特定法术强度", "物理命中", "物理暴击", "法术命中", } -- 治疗
 
         BG.FilterClassItem_Default.ShuXing = {
             ["WARRIOR" .. "1"] = t1,   -- FZ
@@ -349,7 +352,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             ["DRUID" .. "3"]   = { G["单手斧"], G["双手斧"], G["弓"], G["枪"], G["单手剑"], G["双手剑"], G["单手锤"], G["拳套"], G["匕首"], G["长柄武器"], G["投掷武器"], G["弩"], G["魔杖"] }, -- 猫D
             ["DRUID" .. "4"]   = { G["单手斧"], G["双手斧"], G["弓"], G["枪"], G["单手剑"], G["双手剑"], G["拳套"], G["双手锤"], G["长柄武器"], G["投掷武器"], G["弩"], G["魔杖"] }, -- ND
 
-            ["ROGUE" .. "1"]   = { G["双手斧"], G["双手锤"], G["长柄武器"], G["双手剑"], G["法杖"], G["魔杖"], }, -- DZ
+            ["ROGUE" .. "1"]   = { G["单手斧"], G["双手斧"], G["双手锤"], G["长柄武器"], G["双手剑"], G["法杖"], G["魔杖"], }, -- DZ
 
             ["WARLOCK" .. "1"] = { G["单手斧"], G["双手斧"], G["弓"], G["枪"], G["单手锤"], G["双手锤"], G["长柄武器"], G["双手剑"], G["拳套"], G["投掷武器"], G["弩"] }, -- SS
 

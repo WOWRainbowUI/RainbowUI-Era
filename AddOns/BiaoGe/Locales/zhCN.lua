@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.7.3b"
+ADDONSELF.ver = "v1.7.9b"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -20,18 +20,14 @@ do --简体说明书
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
     text = text .. "-BUG反馈：邮箱buick_hbj@163.com，Q群322785325\n\n"
 
-    update = update .. "|cff00FF00" .. "12月20日更新1.7.3b版本" .. "|r\n"
-    update = update .. [[-通报历史价格功能已被删除，现在CTRL+点击装备会跳转至装备库查看该部位的所有可选装备]] .. "\n"
-    update = update .. [[-<赛季服>如果你安装了Auctionator插件，[遭劫货物]的提示工具中会显示所需货物的拍卖行价格]] .. "\n"
-    update = update .. [[-<赛季服>附魔分解材料现在不再自动记入表格]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月31日更新1.7.9b版本" .. "|r\n"
+    update = update .. [[-修复了繁体端关于一键举报功能的报错]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月17日更新1.7.3版本" .. "|r\n"
-    update = update .. [[-拍卖WA字符串更新至v1.1：调整了动态加价幅度以适配赛季服]] .. "\n"
-    update = update .. [[-修复报错]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "12月15日更新1.7.2版本" .. "|r\n"
-    update = update .. [[-<赛季服>在贸易局声望的遭劫货物提示工具中增加具体的声望奖励]] .. "\n"
-    update = update .. [[-<赛季服>装备过滤词缀增加"击中时可能"（法系职业默认勾选）]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月27日更新1.7.9版本" .. "|r\n"
+    update = update .. [[-新增模块：举报记录（查看举报记录和追踪举报结果）]] .. "\n"
+    update = update .. [[-修复了导入心愿时，第10个及以上boss的心愿会导入错误的问题]] .. "\n"
+    update = update .. [[-<WLK>添加了海里昂的成就参考ID到密语模板里]] .. "\n"
+    update = update .. [[-<60服>不再自动记录NAXX小怪掉落的布甲等碎片]] .. "\n\n"
 
     -- update = update .. "|cff00FF00" .. "" .. "|r\n"
     -- update = update .. [[]] .. "\n"
@@ -45,53 +41,46 @@ end
 do --简体更新内容
     local update = "|cff00BFFF< 主要更新记录 >|r\n\n" .. update
 
-    update = update .. "|cff00FF00" .. "12月13日更新1.7.1f版本" .. "|r\n"
-    update = update .. [[-在装备库增加一个部位上下切换按钮（同时也支持使用滚轮切换）]] .. "\n"
-    update = update .. [[-修复繁体端错误]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月20日更新1.7.8版本" .. "|r\n"
+    update = update .. [[-装备库现在可以按其他进行排序]] .. "\n"
+    update = update .. [[-重做历史表格改名功能]] .. "\n"
+    update = update .. [[-修复一些文本错误]] .. "\n"
+    update = update .. [[-<赛季服>更新P2装备库]] .. "\n"
+    update = update .. [[-<赛季/60服>心愿清单的格子增加至5个]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月12日更新1.7.1e版本" .. "|r\n"
-    update = update .. [[-装备过滤词缀现在会忽略套装效果文本]] .. "\n"
-    update = update .. [[-<赛季服>现在如果检测到你的配置文件是WLK版的，则自动重置配置文件]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月16日更新1.7.7版本" .. "|r\n"
+    update = update .. [[-在心愿清单中增加<导出心愿>和<导入心愿>功能]] .. "\n"
+    update = update .. [[-表格设置增加选项<拍卖聊天记录总是保持在最新位置>]] .. "\n"
+    update = update .. [[-现在点击拍卖聊天记录框的玩家名字时，不再是密语，而是设置他为买家]] .. "\n"
+    update = update .. [[-查看在线人数改为手动刷新，避免可能出现掉线的情况]] .. "\n"
+    update = update .. [[-优化一键分配，现在会识别更多可交易的物品]] .. "\n"
+    update = update .. [[-<赛季服>增加灰谷周常完成总览]] .. "\n"
+    update = update .. [[-<60服>不再自动记录安其拉副本掉落的蓝色坐骑和雕像]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月10日更新1.7.1d版本" .. "|r\n"
-    update = update .. [[-<赛季服>修复报错]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月12日更新1.7.6版本" .. "|r\n"
+    update = update .. [[-新增显示联盟/部落当前在线人数]] .. "\n"
+    update = update .. [[-在查询名单列表界面中增加<全部举报>按钮（把当前名单里的全部玩家举报为自动脚本）]] .. "\n"
+    update = update .. [[-在查询名单列表界面中增加<历史搜索记录>]] .. "\n"
+    update = update .. [[-当交易自动记账后，如果你刚买到的装备是你的关注或心愿，则自动取消关注或取消心愿]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月9日更新1.7.1c版本" .. "|r\n"
-    update = update .. [[-装备库的圣物分类现在合并到远程分类里]] .. "\n"
-    update = update .. [[-<赛季服>装备库添加声望装备和PVP装备]] .. "\n"
-    update = update .. [[-<赛季服>更新黑暗深渊掉落]] .. "\n"
-    update = update .. [[-<赛季服>装备过滤方案现在可以过滤特定词缀了]] .. "\n"
-    update = update .. [[-<赛季服>角色团本总览现在可以生效了]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月10日更新1.7.5b版本" .. "|r\n"
+    update = update .. [[-买家下拉列表的格子增加至40个]] .. "\n"
+    update = update .. [[-<WLK>装备库现在会显示海里昂的装备]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月7日更新1.7.1b版本" .. "|r\n"
-    update = update .. [[-再次修复自动清空表格的问题（这次应该没问题了）]] .. "\n"
-    update = update .. [[-修复了撤回清空时可能会丢失数据的问题]] .. "\n"
-    update = update .. [[-<赛季服>修复了在黑暗深渊不会自动记录装备的问题]] .. "\n"
-    update = update .. [[-<赛季服>修复了在黑暗深渊不会自动清空表格的问题]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月6日更新1.7.5版本" .. "|r\n"
+    update = update .. [[-插件现在支持永久60服，每个团本都已添加表格]] .. "\n"
+    update = update .. [[-优化可堆叠物品的记录方式]] .. "\n"
+    update = update .. [[-繁体端的字体用回<blei00d.TTF>，以解决界面显示错误的问题]] .. "\n"
+    update = update .. [[-<赛季/60服>装备过滤词缀删除"击中"、"暴击"，增加"你击中目标"、"你造成爆击"、"你的法术击中"、"你的法术造成爆击"、"法术伤害"]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月6日更新1.7.1版本" .. "|r\n"
-    update = update .. [[-插件现在支持Plus赛季服]] .. "\n"
-    update = update .. [[-修复一些小问题]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月1日更新1.7.4c版本" .. "|r\n"
+    update = update .. [[-在聊天频道的玩家右键菜单里增加<一键举报骚扰>和<一键举报RMT>按钮]] .. "\n"
+    update = update .. [[-增加工资抹零选项]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "12月2日更新1.7.0版本" .. "|r\n"
-    update = update .. [[-全新的拍卖系统]] .. "\n"
-    update = update .. [[-由于热键冲突，之前的拍卖倒数功能已删除]] .. "\n"
-    update = update .. [[-修复了退出BiaoGeYY频道后，下次登录时又会自动加入的问题]] .. "\n"
-    update = update .. [[-再次修复在有副本进度的情况下，错误地自动清空表格的问题]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "1月1日更新1.7.4b版本" .. "|r\n"
+    update = update .. [[-一键举报脚本按钮现在也会显示在队员/团员框体的右键菜单里（坐飞机顺手来个举报岂不美哉？）]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "11月28日更新1.6.8d版本" .. "|r\n"
-    update = update .. [[-一键分配功能现在支持ElvUI了]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "11月27日更新1.6.8c版本" .. "|r\n"
-    update = update .. [[-修复了在有副本进度时，偶尔会错误地自动清空表格的问题]] .. "\n"
-    update = update .. [[-修复了一键分配的一个小问题]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "11月26日更新1.6.8b版本" .. "|r\n"
-    update = update .. [[-在战利品拾取界面增加一键分配功能]] .. "\n"
-    update = update .. [[-指定灵魂烘炉改为指定伽马灵魂烘炉]] .. "\n"
-    update = update .. [[-修复了在交易装备时会把该装备记录到表格里的问题]] .. "\n\n"
-
-    ADDONSELF.upDateText = update
+    ADDONSELF.updateText = update
 end
 
 local L = setmetatable({}, {
@@ -105,12 +94,130 @@ ADDONSELF.L = L
 local L = {}
 
 do
+    L["一键举报脚本"] = true
+
+    L["本次一共举报|cff00BFFF%s|r个脚本。第一次举报的|cff00FF00%s|r个，曾举报的|cffFF0000%s|r个。"] = true
+    L["举报记录"] = true
+    L["举报记录："] = true
+    L["< 举报记录 >"] = true
+    L["查看举报记录和追踪举报结果"] = true
+    L["举报时间"] = true
+    L["服务器"] = true
+    L["举报类型"] = true
+    L["举报项目"] = true
+    L["举报细节"] = true
+    L["举报次数"] = true
+    L["已封号"] = true
+    L["操作"] = true
+    L["确定清空全部举报记录？"] = true
+    L["已清空全部举报记录，一共 %s 个。"] = true
+    L["清空记录"] = true
+    L["一键清空全部举报记录。"] = true
+    L["已封号："] = true
+    L["未封号："] = true
+    L["举报合计："] = true
+    L["%s：已被封号"] = true
+    L["%s：未被封号"] = true
+    L["|cff00ff00查：|r查询该玩家是否已被封号"] = true
+    L["|cffff0000删：|r删除该条举报记录"] = true
+    L["查"] = true
+    L["删"] = true
+
+
+    L["不能使用该名字，因为跟其他历史表格重名！"] = true
+    L["检测到配置文件错误，现已重置！"] = true
+
+    L["灰谷周常"] = true
+    L["把全部可交易的物品分配给自己"] = true
+    L["心愿清单是空的"] = true
+    L["心愿清单导入成功：%s，一共导入%s件装备。"] = true
+    L["导入心愿"] = true
+    L["导出心愿"] = true
+    L["（获取时间：%s）"] = true
+    L["未刷新"] = true
+    L["<点击刷新>"] = true
+    L["待刷新"] = true
+    L["拍卖聊天记录总是保持在最新位置"] = true
+    L["每次打开拍卖聊天记录框时，自动回到最新的聊天位置。"] = true
+    L["拍卖聊天记录框"] = true
+    L["|cffFFFFFF左键玩家名字：|r设置为买家"] = true
+    L["|cffFFFFFFSHIFT+左键玩家名字：|r密语"] = true
+    L["|cffFFFFFFCTRL+滚轮：|r快速滚动"] = true
+    L["|cffFFFFFFSHIFT+滚轮：|r滚动到最前/最后"] = true
+
+
+    L["当前时光徽章"] = true
+    L["不可用"] = true
+    L["数据来源："] = true
+    L["%s在线人数"] = true
+    L["本次一共举报 |cff00FF00%s|r 个脚本。艾泽拉斯感谢你！"] = true
+    L["当前名单为空，或者新名单正在等待服务器响应。你可以尝试点击刷新按钮，直到新名单出现。"] = true
+    L["全部举报"] = true
+    L["把当前名单里的全部玩家举报为自动脚本。"] = true
+    L["在查询名单列表界面中增加全部举报按钮。"] = true
+    L["你可在插件设置-BiaoGe-其他功能里关闭这个功能。"] = true
+    L["查询记录"] = true
+    L["|cff00BFFF<BiaoGe>|r 已自动取消%s的|cff00BFFF关注|r和|cff00FF00心愿|r。"] = true
+    L["|cff00BFFF<BiaoGe>|r 已自动取消%s的|cff00BFFF关注|r。"] = true
+    L["|cff00BFFF<BiaoGe>|r 已自动取消%s的|cff00FF00心愿|r。"] = true
+
+
+    L["全阶段"] = true
+    L["工程"] = true
+    L["团本*"] = true
+    L["小团本 %s"] = true
+    L["你击中目标"] = true
+    L["你造成爆击"] = true
+    L["你的法术击中"] = true
+    L["你的法术造成爆击"] = true
+    L["当前没有满级角色"] = true
+
+
+    L["恶意骚扰"] = true
+    L["自动脚本"] = true
+    L["已举报<%s>为%s。"] = true
+    L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n快捷命令：/BGReport\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"] = true
+    L["一键举报RMT"] = true
+    L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"] = true
+    L["一键举报骚扰"] = true
+    L["在聊天频道的玩家右键菜单里增加一键举报骚扰和一键举报RMT按钮。"] = true
+    L["抹去工资小数点"] = true
+    L["工资抹零"] = true
+
+
+    L["选择举报理由：作弊\n选择举报项目：外挂\n填写举报细节：自动脚本 自動腳本 Automatic Scripting\n\n快捷命令：/BGReport\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"] = true
+    L["|cffFFFFFF左键：|r搜索该记录"] = true
+    L["|cffFFFFFF右键：|r删除该记录"] = true
+    L["一键举报"] = true
+    L["在目标玩家的右键菜单里增加一键举报脚本按钮。快捷命令：/BGReport。"] = true
+    L["多个关键词搜索"] = true
+    L["搜索框支持多个关键词搜索，每个关键词用空格隔开。"] = true
+    L["已举报<%s>。"] = true
+    L["自动帮你选择并填写举报内容"] = true
+    L["该目标类型不是玩家。"] = true
+    L["你没有目标。"] = true
+    L["集结号增强|cff808080（该功能由BiaoGe插件提供）|r"] = true
+    L["不自动退出集结号频道"] = true
+    L["这样你可以一直同步集结号的组队消息，让你随时打开集结号都能查看全部活动。"] = true
+    L["历史搜索记录"] = true
+    L["给集结号的搜索框增加一个历史搜索记录，提高你搜索的效率。"] = true
+    L["按队伍人数排序"] = true
+    L["集结号活动可以按队伍人数排序。"] = true
+
+
+    L["预设装等、自定义文本，当你点击集结号活动密语时会自动添加该内容。"] = true
+    L["预设成就、装等、自定义文本，当你点击集结号活动密语时会自动添加该内容。"] = true
+    L["按住SHIFT+点击密语时不会添加。"] = true
+    L["聊天频道玩家的右键菜单里增加密语模板按钮。"] = true
+    L["聊天输入框的右键菜单里增加密语模板按钮。"] = true
+
+
     L["提醒：插件目前仅支持WLK和plus赛季服，传统60服暂不支持！"] = true
     L["没有价格"] = true
     L["这个物品不是装备"] = true
     L["（SHIFT+点击发送装备，CTRL+点击查看该部位的其他可选装备）"] = true
     L["（ALT+点击关注装备，SHIFT+点击发送装备，CTRL+点击查看该部位的其他可选装备）"] = true
-    L["在贸易局声望的遭劫货物提示工具中增加具体的声望奖励。如果你安装了Auctionator插件，还会显示所需货物的拍卖行价格"] = true
+    L["在贸易局声望的遭劫货物提示工具中增加具体的声望奖励。如果你安装了Auctionator插件，还会显示所需货物的拍卖行价格。"] = true
 
 
     L["声望奖励"] = true
@@ -134,7 +241,7 @@ do
 
     L["副本: "] = true
     L["只能设置团本BOSS正常掉落的装备为心愿"] = true
-    L["点击按钮后会把全部掉落分配给自己，只对精良/史诗装备生效，其他分类的物品不会生效"] = true
+    L["点击按钮后会把全部掉落分配给自己，只对精良/史诗装备生效，其他分类的物品不会生效。"] = true
     L["把全部掉落分配给自己，只对精良/史诗装备生效，其他类型的物品不会生效"] = true
     L["<BiaoGe> 金团表格"] = true
     L["|cffFFFFFF左键：|r打开表格"] = true
@@ -143,9 +250,9 @@ do
 
 
     L["BiaoGe版本"] = true
-    L["插件版本：%s"] = true
+    L["插件：%s"] = true
     L["拍卖WA版本"] = true
-    L["拍卖版本：%s"] = true
+    L["拍卖：%s"] = true
     L["需全团安装拍卖WA，没安装的人将会看不到拍卖窗口"] = true
     L["|cffFFD100起拍价|r"] = true
     L["|cffFFD100拍卖时长(秒)"] = true
@@ -180,12 +287,12 @@ do
     L["当鼠标悬停在聊天框装备时，高亮表格和背包里对应的装备。"] = true
     L["（背包系统支持原生背包、NDui背包、ElvUI背包、大脚背包）"] = true
     L["退队/入队玩家上色"] = true
-    L["在退队/入队的系统消息里，给该玩家名字加上职业色并设置为链接"] = true
+    L["在退队/入队的系统消息里，给该玩家名字加上职业色并设置为链接。"] = true
     L["一键指定%s"] = true
-    L["在地下城和团队副本界面增加一键指定%s按钮"] = true
+    L["在地下城和团队副本界面增加一键指定%s按钮。"] = true
     L["队长模式一键自动分配"] = true
     L["队长分配模式时，在战利品界面增加一键分配按钮。"] = true
-    L["点击按钮后会把全部掉落分配给自己，只对史诗装备或套装兑换物生效，其他分类的物品不会生效（例如橙片、任务物品等不会自动分配）"] = true
+    L["点击按钮后会把全部掉落分配给自己，只对史诗装备或套装兑换物生效，其他分类的物品不会生效（例如橙片、任务物品等不会自动分配）。"] = true
 
 
     L["|cffffffff< 进本自动清空表格 >|r\n\n当你进入一个新CD团本时，表格会自动清空，原表格数据会保存至历史表格1"] = true
@@ -724,7 +831,7 @@ do
     L["<说明书与更新记录> "] = true
     L["保存至历史表格"] = true
     L["该表格已在你历史表格里"] = true
-    L["历史表格（共%d个）"] = true
+    L["历史表格（%d个）"] = true
     L["已保存至历史表格1"] = true
     L["设置"] = true
     L["当前难度:"] = true
@@ -734,8 +841,6 @@ do
     L["10人|cffFF0000英雄|r"] = true
     L["25人|cffFF0000英雄|r"] = true
     L["确认切换难度为< %s >？"] = true
-    L["是"] = true
-    L["否"] = true
     L["心愿清单"] = true
     L["清空当前表格"] = true
     L["关闭心愿清单"] = true
@@ -837,7 +942,7 @@ do
     L["保存表格"] = true
     L["把当前表格保存至历史表格"] = true
     L["%m月%d日%H:%M:%S\n"] = true
-    L["%s %s %s人 工资:%s"] = true
+    L["%s%s %s人 工资:%s"] = true
     L["分享表格"] = true
     L["把当前表格发给别人，类似发WA那样"] = true
     L["当前表格-"] = true
@@ -985,8 +1090,6 @@ do
 end
 
 
-
-
 -- BOSS名字
 do
     L["你\n漏\n记\n的\n装\n备"] = true
@@ -1085,6 +1188,94 @@ do
     L["狼王南杜斯"] = true
     L["大法师阿鲁高"] = true
     L["布鲁高·铁拳"] = true
+
+    L["格\n鲁\n比\n斯"] = true
+    L["粘\n性\n辐\n射\n尘"] = true
+    L["电\n刑\n器\n6\n0\n0\n0\n型"] = true
+    L["群\n体\n打\n击\n者"] = true
+    L["黑\n铁\n大\n师"] = true
+    L["瑟\n玛\n普\n拉\n格"] = true
+
+    L["亡语者贾格巴"] = true
+    L["主宰拉姆塔斯"] = true
+    L["暴怒的阿迦赛罗斯"] = true
+    L["盲眼猎手"] = true
+    L["卡尔加·刺肋"] = true
+    L["唤地者哈穆加"] = true
+    L["审讯员韦沙斯"] = true
+    L["永醒的艾希尔"] = true
+    L["死灵勇士"] = true
+    L["铁脊死灵"] = true
+    L["血法师萨尔诺斯"] = true
+    L["驯犬者洛克希"] = true
+    L["奥法师杜安"] = true
+    L["赫洛德"] = true
+    L["莫格莱尼"] = true
+    L["怀特迈恩"] = true
+    L["图特卡什"] = true
+    L["火眼莫德雷斯"] = true
+    L["暴食者"] = true
+    L["拉戈斯诺特"] = true
+    L["寒冰之王亚门纳尔"] = true
+    L["腐烂的普雷莫尔"] = true
+
+
+    -- 永久60
+    L["鲁\n西\n弗\n隆"] = true
+    L["玛\n格\n曼\n达"] = true
+    L["基\n赫\n纳\n斯"] = true
+    L["加\n尔"] = true
+    L["沙\n斯\n拉\n尔"] = true
+    L["迦\n顿\n男\n爵"] = true
+    L["古\n雷\n曼\n格"] = true
+    L["萨\n弗\n隆\n先\n驱\n者"] = true
+    L["埃\n克\n索\n图\n斯"] = true
+    L["拉\n格\n纳\n罗\n斯"] = true
+    L["奥\n妮\n克\n希\n亚"] = true
+
+    L["狂\n野\n的\n拉\n佐\n格\n尔"] = true
+    L["堕\n落\n的\n瓦\n拉\n斯\n塔\n兹"] = true
+    L["勒\n什\n雷\n尔"] = true
+    L["费\n尔\n默"] = true
+    L["埃\n博\n诺\n克"] = true
+    L["弗\n莱\n格\n尔"] = true
+    L["克\n洛\n玛\n古\n斯"] = true
+    L["奈\n法\n利\n安"] = true
+
+    L["耶\n克\n里\n克"] = true
+    L["温\n诺\n希\n斯"] = true
+    L["玛\n尔\n里"] = true
+    L["血\n领\n主\n曼\n多\n基\n尔"] = true
+    L["疯\n狂\n之\n缘"] = true
+    L["加\n兹\n兰\n卡"] = true
+    L["塞\n卡\n尔"] = true
+    L["娅\n尔\n罗"] = true
+    L["妖\n术\n师\n金\n度"] = true
+    L["哈\n卡"] = true
+
+    L["库\n林\n纳\n克\n斯"] = true
+    L["拉\n贾\n克\n斯\n将\n军"] = true
+    L["莫\n阿\n姆"] = true
+    L["吞\n咽\n者\n布\n鲁"] = true
+    L["狩\n猎\n者\n阿\n亚\n米\n斯"] = true
+    L["无\n疤\n者\n奥\n斯\n里\n安"] = true
+
+    L["预\n言\n者\n斯\n克\n拉\n姆"] = true
+    L["安\n其\n拉\n三\n宝"] = true
+    L["沙\n尔\n图\n拉"] = true
+    L["顽\n强\n的\n范\n克\n瑞\n斯"] = true
+    L["维\n希\n度\n斯"] = true
+    L["哈\n霍\n兰\n公\n主"] = true
+    L["双\n子\n皇\n帝"] = true
+    L["奥\n罗"] = true
+    L["克\n苏\n恩"] = true
+
+    L["艾索雷葛斯"] = true
+    L["卡扎克"] = true
+    L["莱索恩"] = true
+    L["艾莫莉丝"] = true
+    L["泰拉尔"] = true
+    L["伊森德雷"] = true
 
     -- L[] = true
     -- L[] = true

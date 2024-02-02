@@ -100,11 +100,10 @@ local function CreateListTable(type, tx)
 end
 
 
-function BG.QianKuanUI()
+function BG.QianKuanUI(lastbt)
     local bt = CreateFrame("Button", nil, BG.FBMainFrame, "UIPanelButtonTemplate")
     bt:SetSize(90, BG.ButtonZhangDan:GetHeight())
-    bt:SetPoint("BOTTOMRIGHT", BG.MainFrame, "BOTTOMRIGHT", -230, select(5, BG.ButtonZhangDan:GetPoint()))
-    -- bt:SetPoint("BOTTOM", BG.MainFrame, "BOTTOM", 30, 24)
+    bt:SetPoint("LEFT", lastbt, "RIGHT", 10, 0)
     bt:SetText(L["通报欠款"])
     bt:Show()
     BG.ButtonQianKuan = bt
@@ -143,4 +142,6 @@ function BG.QianKuanUI()
             PlaySoundFile(BG.sound2, "Master")
         end
     end)
+
+    return bt
 end
