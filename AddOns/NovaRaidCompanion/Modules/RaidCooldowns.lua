@@ -31,7 +31,7 @@ local GetPlayerInfoByGUID = GetPlayerInfoByGUID;
 local GetTalentInfo = GetTalentInfo;
 local soulstoneDuration = 1800;
 local showDead;
-if (not NRC.isTBc and not NRC.isClassic) then
+if (NRC.isWrath) then
 	soulstoneDuration = 900;
 end
 NRC.cooldownList = {};

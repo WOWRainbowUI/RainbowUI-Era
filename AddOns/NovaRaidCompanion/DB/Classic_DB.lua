@@ -498,31 +498,31 @@ NRC.battleElixirs = {
 		name = "Elixir of Giant Growth",
 		icon = 136101,
 		desc = "+8 Strength",
-		maxRank = true,
+		maxRankSodPhases = {1}, --8.
 	},
 	[3166] = {
 		name = "Elixir of Wisdom",
 		icon = 134721,
 		desc = "+6 Intellect",
-		maxRank = true,
+		maxRankSodPhases = {1}, --10.
 	},
 	[7844] = {
 		name = "Elixir of Firepower",
 		icon = 134813,
 		desc = "Increase spell fire damage by up to 10",
-		maxRank = true,
+		maxRankSodPhases = {1}, --18.
 	},
 	[3160] = {
 		name = "Elixir of Lesser Agility",
 		icon = 134873,
 		desc = "+8 Agility",
-		maxRank = true,
+		maxRankSodPhases = {1}, --18.
 	},
 	[3164] = {
 		name = "Elixir of Ogre's Strength",
 		icon = 134838,
 		desc = "+8 Strength",
-		maxRank = true,
+		maxRankSodPhases = {1}, --20.
 	},
 	[11328] = {
 		name = "Elixir of Agility",
@@ -533,61 +533,73 @@ NRC.battleElixirs = {
 		name = "Elixir of Frost Power",
 		icon = 134714,
 		desc = "Increase spell frost damage by up to 15",
+		maxRankSodPhases = {2}, --28.
 	},
 	[11390] = {
 		name = "Arcane Elixir",
 		icon = 134810,
 		desc = "Increase spell damage by up to 20",
+		maxRankSodPhases = {2}, --37.
 	},
 	[11396] = {
 		name = "Elixir of Greater Intellect",
 		icon = 134721,
 		desc = "+25 Intellect",
+		maxRankSodPhases = {2}, --37.
 	},
 	[11405] = {
 		name = "Elixir of Giants",
 		icon = 134841,
 		desc = "+25 Strength",
+		maxRankSodPhases = {2}, --38.
 	},
 	[11334] = {
 		name = "Elixir of Greater Agility",
 		icon = 134873,
 		desc = "+25 Agility",
+		maxRankSodPhases = {2}, --38.
 	},
 	[11406] = {
 		name = "Elixir of Demonslaying",
 		icon = 135957,
 		desc = "Increase attack power by 265 against demons",
+		maxRank = true,
 	},
 	[26276] = {
 		name = "Elixir of Greater Firepower",
 		icon = 134840,
 		desc = "Increase spell fire damage by up to 40",
+		maxRank = true,
 	},
 	[11474] = {
 		name = "Elixir of Shadow Power",
 		icon = 134826,
 		desc = "Increase spell shadow damage by up to 40",
+		maxRank = true,
 	},
 	[24363] = {
 		name = "Mageblood Potion",
 		icon = 134825,
 		desc = "+12 MP5",
+		maxRank = true,
 	},
 	[17535] = {
 		name = "Elixir of the Sages",
 		icon = 134809,
 		desc = "+18 Intellect, +18 Spirit",
+		maxRank = true,
 	},
 	[10693] = {
 		name = "Gizzard Gum",
 		icon = 135818,
 		desc = "+25 Spirit",
+		maxRank = true,
 	},
 	[17537] = {
 		name = "Elixir of Brute Force",
 		icon = 134820,
 		desc = "+18 Strength, +18 Stamina",
+		maxRank = true,
 	},
 	[10669] = {
 		name = "Ground Scorpok Assay",
@@ -610,7 +622,7 @@ NRC.battleElixirs = {
 	[13452] = {
 		name = "Elixir of the Mongoose",
 		icon = 134812,
-		desc = "+25 Agility",
+		desc = "+25 Agility and 2% Crit",
 		maxRank = true,
 	},
 	[17539] = {
@@ -631,7 +643,7 @@ NRC.guardianElixirs = {
 		name = "Strong Troll's Blood Potion",
 		icon = 134859,
 		desc = "Regenerate 6 health every 5 seconds",
-		maxRank = true,
+		maxRankSodPhases = {1}, --15.
 	},
 	[673] = {
 		name = "Elixir of Minor Defense",
@@ -642,49 +654,54 @@ NRC.guardianElixirs = {
 		name = "Elixir of Minor Fortitude",
 		icon = 134824,
 		desc = "+27 Health",
-		maxRank = true,
 	},
 	[3220] = {
 		name = "Elixir of Defense",
 		icon = 134866,
 		desc = "+150 Armor",
-		maxRank = true,
+		maxRankSodPhases = {1}, --16.
 	},
 	[3693] = {
 		name = "Elixir of Fortitude",
 		icon = 134824,
 		desc = "+120 Health",
-		maxRank = true,
+		maxRankSodPhases = {1}, --25.
 	},
 	[3223] = {
 		name = "Mighty Troll's Blood Potion",
 		icon = 134859,
 		desc = "Regenerate 12 health every 5 seconds",
+		maxRankSodPhases = {2, 3}, --26.
 	},
 	[11349] = {
 		name = "Elixir of Greater Defense",
 		icon = 134866,
 		desc = "+250 Armor",
+		maxRankSodPhases = {2}, --29.
 	},
 	[11348] = {
 		name = "Elixir of Superior Defense",
 		icon = 134866,
 		desc = "+450 Armor",
+		maxRank = true,
 	},
 	[10668] = {
 		name = "Lung Juice Cocktail",
 		icon = 136075,
 		desc = "+25 Stamina",
+		maxRank = true,
 	},
 	[10692] = {
 		name = "Cerebral Cortex Compound",
 		icon = 135988,
 		desc = "+25 Intellect",
+		maxRank = true,
 	},
 	[24361] = {
 		name = "Major Troll's Blood Potion",
 		icon = 134859,
 		desc = "Regenerate 20 health every 5 seconds",
+		maxRank = true,
 	},
 };
 
@@ -693,6 +710,8 @@ NRC.zanza = {
 };
 
 NRC.foods = {
+	--minlevel numbers are off.  "Food" may list minlevel 35, but one of the used by food items may have a minlevel 20.
+	--"Well Fed" doesn't have any minlevel.
 	[19705] = {
 		name = "Well Fed",
 		icon = 136000,
@@ -712,7 +731,7 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+8 Spirit, +8 Stamina",
-		maxRank = true,
+		maxRankSodPhases = {1}, --20.
 	},
 	[19710] = {
 		name = "Well Fed",
@@ -744,6 +763,42 @@ NRC.foods = {
 		icon = 136000,
 		desc = "+6 MP5",
 	},
+	[18191] = {
+		name = "Increased Stamina",
+		icon = 132584,
+		desc = "+10 Stamina",
+		maxRankSodPhases = {2}, --35.
+	},
+	[18192] = {
+		name = "Increased Agility",
+		icon = 132953,
+		desc = "+10 Agility",
+		maxRankSodPhases = {2}, --35.
+	},
+	[18193] = {
+		name = "Increased Spirit",
+		icon = 132335,
+		desc = "+10 Spirit",
+		maxRankSodPhases = {2}, --35.
+	},
+	[18222] = {
+		name = "Health Regeneration",
+		icon = 132917,
+		desc = "Regenerate 6 Health every 5 seconds",
+		maxRankSodPhases = {2}, --35.
+	},
+	[18194] = {
+		name = "Mana Regeneration",
+		icon = 136053,
+		desc = "Regenerate 8 Mana every 5 seconds",
+		maxRankSodPhases = {2}, --35.
+	},
+	[22730] = {
+		name = "Increased Intellect",
+		icon = 134340,
+		desc = "+10 Intellect",
+		maxRankSodPhases = {2}, --55.
+	},--
 };
 
 NRC.scrolls = {

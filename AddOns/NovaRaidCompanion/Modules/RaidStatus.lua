@@ -828,6 +828,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 		end
 		columCount = #data.columns;
 	end
+	local usingCache = NRC.raidStatusCache;
 	local showSwipe = NRC.config.raidStatusBuffSwipe;
 	if (data) then
 		local columnCount, maxColumnCount = 0, raidStatusFrame.maxColumnCount;
@@ -928,7 +929,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -976,7 +977,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1003,7 +1004,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1028,7 +1029,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1053,7 +1054,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1078,7 +1079,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1103,7 +1104,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1460,7 +1461,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 					else
 						stopCooldownSwipe(frame.texture2);
 					end
-					if (scrollBuffs[1]) then
+					if (scrollBuffs[3]) then			
 						updateCooldownSwipe(frame.texture3, scrollBuffs[3].endTime, scrollBuffs[3].duration);
 					else
 						stopCooldownSwipe(frame.texture3);
@@ -1853,7 +1854,7 @@ function NRC:raidStatusSortMultipleIcons(frame, spellData, maxPossible, checkMax
 		frame:SetBackdropColor(1, 0, 0, 0.25);
 		frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 		frame.red = true;
-	elseif (checkDuration and lowDurationFound) then
+	elseif (checkDuration and lowDurationFound and not NRC.raidStatusCache) then
 		frame:SetBackdropColor(1, 1, 0, 0.25);
 		frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 		frame.red = true;
