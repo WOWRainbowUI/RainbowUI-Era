@@ -1,19 +1,5 @@
 local addonName, Addon = ...
 
-EngraverFrameMixin = {};
-EngraverCategoryFrameBaseMixin = {};
-EngraverCategoryFrameShowAllMixin = {}
-EngraverCategoryFramePopUpMenuMixin = {}
-EngraverRuneButtonMixin = {}
-EngraverNoRunesFrameMixin = {};
-
-local EngraverDisplayModes = {
-	{ text = "Show All", mixin = EngraverCategoryFrameShowAllMixin },
-	{ text = "Pop-up Menu", mixin = EngraverCategoryFramePopUpMenuMixin }
-}
-Addon.EngraverDisplayModes = EngraverDisplayModes
-Addon.GetCurrentDisplayMode = function() return EngraverDisplayModes[EngraverOptions.DisplayMode+1] end
-
 local EngraverLayoutDirections = {
 	{ 
 		text 					= "Left to Right",
@@ -89,6 +75,8 @@ Addon.GetCurrentLayoutDirection = function() return EngraverLayoutDirections[Eng
 -- EngraverFrame --
 -------------------
 
+EngraverFrameMixin = {};
+
 function EngraverFrameMixin:OnLoad()
 	self.categoryFramePool = CreateFramePool("Frame", self, "EngraverCategoryFrameTemplate",  function(framePool, frame)
 		FramePool_HideAndClearAnchors(framePool, frame);
@@ -127,7 +115,7 @@ end
 
 function EngraverFrameMixin:RegisterOptionChangedCallbacks()
 	function register(optionName, callback)
-		EngraverOptionsCallbackRegistry:RegisterCallback(optionName, function(_, newValue) if not InCombatLockdown() then callback(self, newValue) end end, self)
+		EngraverOptionsCallbackRegistry:RegisterCallback(optionName, function(_, newValue) callback(self, newValue) end , self)
 	end
 	register("UIScale", self.SetScaleAdjustLocation)
 	register("DisplayMode", self.UpdateLayout)
@@ -141,26 +129,24 @@ function EngraverFrameMixin:RegisterOptionChangedCallbacks()
 end
 	
 function EngraverFrameMixin:LoadCategories()
-	if not InCombatLockdown() then
-		self:ResetCategories()
-		C_Engraving:ClearAllCategoryFilters();
-		C_Engraving.RefreshRunesList();
-		self.categories = C_Engraving.GetRuneCategories(false, false);
-		if #self.categories > 0 then
-			for c, category in ipairs(self.categories) do
-				local runes = Addon.Filters:GetFilteredRunesForCategory(category, false)
-				if #runes > 0 then
-					local categoryFrame = self.categoryFramePool:Acquire()
-					categoryFrame:Show()
-					self.equipmentSlotFrameMap[category] = categoryFrame
-					local knownRunes = C_Engraving.GetRunesForCategory(category, true);	
-					categoryFrame:SetCategory(category, runes, knownRunes)
-					categoryFrame:SetDisplayMode(Addon.GetCurrentDisplayMode().mixin)
-				end
+	self:ResetCategories()
+	C_Engraving:ClearAllCategoryFilters();
+	C_Engraving.RefreshRunesList();
+	self.categories = C_Engraving.GetRuneCategories(false, false);
+	if #self.categories > 0 then
+		for c, category in ipairs(self.categories) do
+			local runes = Addon.Filters:GetFilteredRunesForCategory(category, false)
+			if #runes > 0 then
+				local categoryFrame = self.categoryFramePool:Acquire()
+				categoryFrame:Show()
+				self.equipmentSlotFrameMap[category] = categoryFrame
+				local knownRunes = C_Engraving.GetRunesForCategory(category, true);	
+				categoryFrame:SetCategory(category, runes, knownRunes)
+				categoryFrame:SetDisplayMode(Addon.GetCurrentDisplayMode().mixin)
 			end
 		end
-		self:UpdateLayout()
 	end
+	self:UpdateLayout()
 end
 
 function EngraverFrameMixin:ResetCategories()
@@ -174,15 +160,27 @@ function EngraverFrameMixin:ResetCategories()
 	self.categoryFramePool:ReleaseAll()
 end
 
+function EngraverFrameMixin:GetNumVisibleCategories()
+	local numCategories = 0
+	for category, categoryFrame in pairs(self.equipmentSlotFrameMap) do
+		if #categoryFrame.runeButtons > 0 then
+			numCategories = numCategories + 1
+		end
+	end
+	return numCategories
+end
+
 function EngraverFrameMixin:UpdateLayout(...)
-	if not InCombatLockdown() and self.categories ~= nil then
-		if EngraverOptions.LayoutDirection == EngraverLayout.LeftToRight or EngraverOptions.LayoutDirection == EngraverLayout.RightToLeft then
-			self:SetSize(40, 40 * #self.categories)
+	self:UpdateVisibilityMode()
+	if self.categories ~= nil then
+		local layoutDirection = Addon.GetCurrentLayoutDirection()
+		local numCategories = self:GetNumVisibleCategories()
+		if layoutDirection.swapTabDimensions then
+			self:SetSize(40, 40 * numCategories)
 		else
-			self:SetSize(40 * #self.categories, 40)
+			self:SetSize(40 * numCategories, 40)
 		end
 		self:SetScale(EngraverOptions.UIScale or 1.0)
-		local layoutDirection = Addon.GetCurrentLayoutDirection()
 		if self.equipmentSlotFrameMap then
 			local displayMode = Addon.GetCurrentDisplayMode()
 			local prevCategoryFrame = nil
@@ -219,29 +217,17 @@ end
 
 function EngraverFrameMixin:UpdateFilterButtonsLayout(layoutData)
 	-- visibility
-	UnregisterStateDriver(self.filterRightButton, "visibility")
-	UnregisterStateDriver(self.filterLeftButton, "visibility")
-	UnregisterStateDriver(self.filterUpButton, "visibility")
-	UnregisterStateDriver(self.filterDownButton, "visibility")
 	local show = not EngraverOptions.HideDragTab and EngraverOptions.ShowFilterSelector
 	if layoutData.swapTabDimensions then
 		self.filterRightButton:SetShown(false)
 		self.filterLeftButton:SetShown(false)
 		self.filterUpButton:SetShown(show)
 		self.filterDownButton:SetShown(show)
-		if show then
-			RegisterStateDriver(self.filterUpButton, "visibility", "[combat]hide;show")
-			RegisterStateDriver(self.filterDownButton, "visibility", "[combat]hide;show")
-		end
 	else
 		self.filterRightButton:SetShown(show)
 		self.filterLeftButton:SetShown(show)
 		self.filterUpButton:SetShown(false)
 		self.filterDownButton:SetShown(false)
-		if show then
-			RegisterStateDriver(self.filterRightButton, "visibility", "[combat]hide;show")
-			RegisterStateDriver(self.filterLeftButton, "visibility", "[combat]hide;show")
-		end
 	end
 	-- anchors
 	local filterButtonOffsetX, filterButtonOffsetY = layoutData.filterButtonOffset:GetXY()
@@ -293,19 +279,25 @@ do
 	PaperDollFrame:HookScript("OnHide", HandleSyncCharacterPane)
 
 	function EngraverFrameMixin:UpdateVisibilityMode()
-		UnregisterStateDriver(self, "visibility")  
-		if EngraverOptions.VisibilityMode == "ShowAlways" then
-			EngraverFrame:Show()
-		elseif EngraverOptions.VisibilityMode == "HideInCombat" then
-			RegisterStateDriver(self, "visibility", "[combat]hide;show")
+		if not InCombatLockdown() then
+			UnregisterStateDriver(self, "visibility")  
+			if EngraverOptions.VisibilityMode == "ShowAlways" then
+				self:Show()
+			elseif EngraverOptions.VisibilityMode == "HideInCombat" then
+				RegisterStateDriver(self, "visibility", "[combat]hide;show")
+			elseif EngraverOptions.VisibilityMode == "HoldKeybind" then
+				self:Hide()
+			end
+			HandleSyncCharacterPane()
 		end
-		HandleSyncCharacterPane()
 	end
 end
 
 -----------------------
 -- CategoryFrameBase --
 -----------------------
+
+EngraverCategoryFrameBaseMixin = {};
 
 function EngraverCategoryFrameBaseMixin:OnLoad()
 	self.runeButtonPool = CreateFramePool("Button", self, "EngraverRuneButtonTemplate")
@@ -330,23 +322,41 @@ function EngraverCategoryFrameBaseMixin:SetRunes(runes, knownRunes)
 	end
 end
 
-function EngraverCategoryFrameBaseMixin:LoadEmptyRuneButton()
-	if self.emptyRuneButton then
-		-- TODO figure out how to get slotName from slotId using API or maybe a constant somewhere
-		local tempSlotsMap = {
-			[INVSLOT_CHEST] = "CHESTSLOT",
-			[INVSLOT_LEGS] = "LEGSSLOT",
-			[INVSLOT_HAND] = "HANDSSLOT"
-		}
-		if self.category then
-			local slotName = tempSlotsMap[self.category]
-			if slotName then
-				local id, textureName, checkRelic = GetInventorySlotInfo(slotName);
-				self:SetID(id);
-				self.emptyRuneButton.icon:SetTexture(textureName);
+do
+	-- TODO figure out how to get slotName from slotId using API or maybe a constant somewhere
+	local slotNames = {
+		"HEADSLOT",
+		"NECKSLOT",
+		"SHOULDERSLOT",
+		"SHIRTSLOT",
+		"CHESTSLOT",
+		"WAISTSLOT",
+		"LEGSSLOT",
+		"FEETSLOT",
+		"WRISTSLOT",
+		"HANDSSLOT",
+		"FINGER0SLOT",
+		"FINGER1SLOT",
+		"TRINKET0SLOT",
+		"TRINKET1SLOT",
+		"BACKSLOT",
+		"MAINHANDSLOT",
+		"SECONDARYHANDSLOT",
+		"RANGEDSLOT",
+		"TABARDSLOT"
+	}
+	function EngraverCategoryFrameBaseMixin:LoadEmptyRuneButton()
+		if self.emptyRuneButton then
+			if self.category then
+				local slotName = slotNames[self.category]
+				if slotName then
+					local id, textureName, checkRelic = GetInventorySlotInfo(slotName);
+					self:SetID(id);
+					self.emptyRuneButton.icon:SetTexture(textureName);
+				end
 			end
+			self.emptyRuneButton:RegisterForClicks("LeftButtonUp", "RightButtonDown", "RightButtonUp")
 		end
-		self.emptyRuneButton:RegisterForClicks("LeftButtonUp", "RightButtonDown", "RightButtonUp")
 	end
 end
 
@@ -374,9 +384,6 @@ function EngraverCategoryFrameBaseMixin:UpdateCategoryLayout(layoutDirection)
 	if self.activeButton then
 		local isBroken = GetInventoryItemBroken("player", self.category)
 		self.activeButton:SetBlinking(isBroken, 1.0, 0.0, 0.0)
-	end
-	if self.UpdateCategoryLayoutImpl then
-		self:UpdateCategoryLayoutImpl(layoutDirection) -- implemented by "subclasses"/mixins
 	end
 end
 
@@ -408,7 +415,10 @@ end
 -- CategoryFrameShowAll --
 --------------------------
 
-function EngraverCategoryFrameShowAllMixin:UpdateCategoryLayoutImpl(layoutDirection)
+EngraverCategoryFrameShowAllMixin = {}
+
+function EngraverCategoryFrameShowAllMixin:UpdateCategoryLayout(layoutDirection)
+	EngraverCategoryFrameBaseMixin.UpdateCategoryLayout(self, layoutDirection)
 	-- update position of each button and highlight the active one
 	if self.runeButtons then
 		for r, runeButton in ipairs(self.runeButtons) do
@@ -454,6 +464,8 @@ end
 -- CategoryFramePopUpMenu --
 ----------------------------
 
+EngraverCategoryFramePopUpMenuMixin = {}
+
 function EngraverCategoryFramePopUpMenuMixin:AreAnyRunesKnown()
 	for r, runeButton in ipairs(self.runeButtons) do
 		if runeButton.isKnown then
@@ -463,7 +475,8 @@ function EngraverCategoryFramePopUpMenuMixin:AreAnyRunesKnown()
 	return false
 end
 
-function EngraverCategoryFramePopUpMenuMixin:UpdateCategoryLayoutImpl(layoutDirection)
+function EngraverCategoryFramePopUpMenuMixin:UpdateCategoryLayout(layoutDirection)
+	EngraverCategoryFrameBaseMixin.UpdateCategoryLayout(self, layoutDirection)
 	-- update visibility and position of each button
 	if self.emptyRuneButton then
 		self.emptyRuneButton:Hide()
@@ -486,7 +499,6 @@ function EngraverCategoryFramePopUpMenuMixin:UpdateCategoryLayoutImpl(layoutDire
 				local prevButton = self.activeButton
 				for r, runeButton in ipairs(self.inactiveButtons) do
 					runeButton:SetShown(showInactives)
-					RegisterStateDriver(runeButton, "visibility", "[combat]hide")
 					runeButton:ClearAllPoints()
 					runeButton:SetPoint(layoutDirection.runePoint, prevButton, layoutDirection.runeRelativePoint)
 					prevButton = runeButton
@@ -522,7 +534,6 @@ function EngraverCategoryFramePopUpMenuMixin:TearDownDisplayMode()
 		for r, runeButton in ipairs(self.runeButtons) do
 			runeButton:UnregisterCallback("PostOnEnter", self)
 			runeButton:UnregisterCallback("PostOnLeave", self)
-			UnregisterStateDriver(runeButton, "visibility")
 		end
 	end
 end
@@ -550,10 +561,8 @@ function EngraverCategoryFramePopUpMenuMixin:IsMouseOverAnyButtons()
 end
 
 function EngraverCategoryFramePopUpMenuMixin:SetInactiveButtonsShown(isShown)
-	if not InCombatLockdown() then
-		for r, runeButton in ipairs(self.inactiveButtons) do
-			runeButton:SetShown(isShown)
-		end
+	for r, runeButton in ipairs(self.inactiveButtons) do
+		runeButton:SetShown(isShown)
 	end
 end
 
@@ -588,6 +597,8 @@ end
 ----------------
 -- RuneButton --
 ----------------
+
+EngraverRuneButtonMixin = {}
 
 function EngraverRuneButtonMixin:OnLoad()
 	self.Border:SetVertexColor(0.0, 1.0, 0.0);
@@ -634,7 +645,7 @@ function EngraverRuneButtonMixin:OnClick()
 end
 
 function EngraverRuneButtonMixin:TryEngrave()
-	if self.category and self.skillLineAbilityID and not InCombatLockdown() then
+	if self.category and self.skillLineAbilityID then
 		if not C_Engraving.IsRuneEquipped(self.skillLineAbilityID) then
 			local itemId, unknown = GetInventoryItemID("player", self.category)
 			if itemId then
@@ -696,14 +707,12 @@ end
 EngraverDragTabMixin = {}
 
 function EngraverDragTabMixin:OnMouseDown(button)
-	if not InCombatLockdown() then
-		if button == "RightButton" then
-			Settings.OpenToCategory(addonName);
-		elseif button == "LeftButton" then
-			local parent = self:GetParent()
-			if parent and parent.StartMoving then
-				parent:StartMoving();
-			end
+	if button == "RightButton" then
+		Settings.OpenToCategory(addonName);
+	elseif button == "LeftButton" then
+		local parent = self:GetParent()
+		if parent and parent.StartMoving then
+			parent:StartMoving();
 		end
 	end
 end
@@ -740,11 +749,9 @@ function EngraverFilterButtonMixin:OnButtonStateChanged()
 end
 
 function EngraverFilterButtonMixin:OnClick()
-	if not InCombatLockdown() then
-		if self.direction > 0 then
-			Addon.Filters:SetCurrentFilterNext()
-		else
-			Addon.Filters:SetCurrentFilterPrev()
-		end
+	if self.direction > 0 then
+		Addon.Filters:SetCurrentFilterNext()
+	else
+		Addon.Filters:SetCurrentFilterPrev()
 	end
 end

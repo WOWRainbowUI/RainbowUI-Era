@@ -1,12 +1,10 @@
-lightweight tag eed26e1c5b862859559ce183de263f674534a5a7 v1.12.13
+lightweight tag 06bf81d11986aac8114249dbb542d843ed98d879 v1.12.15
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Sun Jan 28 15:16:10 2024 -0500
+Date:	Thu Feb 1 14:30:56 2024 -0500
 
-commit 7d17e51b479811ff524c77421a7bc71031a9ee4d
+commit 06bf81d11986aac8114249dbb542d843ed98d879
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Sun Jan 28 15:15:28 2024 -0500
+Date:   Thu Feb 1 14:30:56 2024 -0500
 
-    refactored EngraverLayoutDirections
-    
-    this fixes a layout inconsistency in the filter editor's slot labels.
+    update MasqueAdapter for 7d17e51 refactor
 
