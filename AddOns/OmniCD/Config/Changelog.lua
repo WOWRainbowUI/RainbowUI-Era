@@ -18,27 +18,14 @@ v3.4.3.2773
 
 ]=]
 else E.changelog = [=[
-v10.2.0.2775
-	Berserk (Druid, Feral) spell-type fixed to 'Offensive'. This also fixes highlighting.
+v10.2.5.2781
+	Fixed option panel color picker for 10.2.5
+	Fixed option panel nil err (iss#672)
+	Added option to use class colors on icon names
 
-v10.2.0.2774
-	Added option to force disable talent-abilities by spec/zone. (e.g. disable Avenging Wrath for Prot/Ret in raids)
-	Updated Thief's Bargain CDR to 20% (December 5, 2023).
-	Updated Time Stop, Chrono Loop's CD to 45 sec (November 14, 2023).
-	Added trinkets: Fyrakk's Tainted Rageheart, Prophetic Stonescales.
-	All healing potions have been merged to 'Refreshing Healing Potion' and it's icon will change to whichever potion was used last.
-	Fixed Withering Healing Potion icons.
-	Fixed Arcane Surge not highlighting.
-	Unsynced unit CDR fixes:
-	Fixed Tirion's Devotion for Holy Paladins.
-	Fixed Shining Righteousness counting towards Holy Power spent.
-	Fixed Shield of Righteousness for Holy Paladins not counting towards Holy Power spent.
-
-v10.2.0.2773
-	Fixed incorrect sorting when a unit dies or resurrects on ver.2772
-	Added Dreamwalker's Healing Potion, Potion of Withering Dream, Potion of Withering Vitality (merged).
-	Added option to change icon texture for 'Trinket, Main Hand, Consumables' spell type.
-	Cell support update (test func removed)
+	January 23. 2024 Hotfixes
+	  Fury, PvP only
+	    Anger Management now reduces Recklessness and Ravager’s cooldown by 1 second per 15 rage spent (was 20 rage).
 
 ]=]
 end

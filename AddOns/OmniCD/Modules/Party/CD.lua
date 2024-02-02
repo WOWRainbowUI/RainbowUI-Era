@@ -2,7 +2,7 @@ local E = select(2, ...):unpack()
 local P, CM, CD = E.Party, E.Comm, E.Cooldowns
 
 local pairs, type, tostring, tonumber, unpack, tinsert, wipe, strmatch, format, min, max, abs = pairs, type, tostring, tonumber, unpack, table.insert, table.wipe, string.match, string.format, math.min, math.max, math.abs
-local GetTime, GetSpellTexture, UnitBuff, UniDebuff, UnitTokenFromGUID, UnitHealth, UnitHealthMax, UnitLevel, UnitChannelInfo, UnitAffectingCombat = GetTime, GetSpellTexture, UnitBuff, UniDebuff, UnitTokenFromGUID, UnitHealth, UnitHealthMax, UnitLevel, UnitChannelInfo, UnitAffectingCombat
+local GetTime, GetSpellTexture, UnitBuff, UnitTokenFromGUID, UnitHealth, UnitHealthMax, UnitLevel, UnitChannelInfo, UnitAffectingCombat = GetTime, GetSpellTexture, UnitBuff, UnitTokenFromGUID, UnitHealth, UnitHealthMax, UnitLevel, UnitChannelInfo, UnitAffectingCombat
 local C_Timer_After, C_Timer_NewTicker = C_Timer.After, C_Timer.NewTicker
 local band = bit.band
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
@@ -317,7 +317,7 @@ local function ProcessSpell(spellID, guid)
 		local now = GetTime()
 		for i = 1, #shared, 2 do
 			local sharedID = shared[i]
-			if ( sharedID ~= 336126 or not E.HEALER_SPEC[info.spec] ) then
+
 				local sharedCD = shared[i+1]
 				local sharedIcon = info.spellIcons[sharedID]
 				if sharedIcon then
@@ -329,7 +329,7 @@ local function ProcessSpell(spellID, guid)
 						break
 					end
 				end
-			end
+
 		end
 		return
 	end
@@ -806,11 +806,20 @@ local runicPowerSpenders = {
 
 registeredEvents['SPELL_AURA_APPLIED'][194844] = function(info)
 	local unit = info.unit
-	for i = 1, 50 do
-		local _,_,_,_, duration, _,_,_,_, id = UnitBuff(unit, i)
-		if not id then return end
-		if id == 194844 and duration > 0 then
-			info.auras.bonestormConsumedRP = duration * 10
+	if AuraUtil and AuraUtil.ForEachAura then
+		AuraUtil.ForEachAura(unit, "HELPFUL", nil, function(_,_,_,_, duration,_,_,_,_, id)
+			if id == 194844 and duration > 0 then
+				info.auras.bonestormConsumedRP = duration * 10
+				return true
+			end
+		end)
+	else
+		for i = 1, 50 do
+			local _,_,_,_, duration, _,_,_,_, id = UnitBuff(unit, i)
+			if not id then return end
+			if id == 194844 and duration > 0 then
+				info.auras.bonestormConsumedRP = duration * 10
+			end
 		end
 	end
 end
@@ -960,6 +969,7 @@ local demonHunterSigils = {
 	[207684] = 207685,
 	[202137] = 204490,
 	[202138] = 204843,
+	[390163] = 389860,
 }
 
 local function ReduceSigilsCD(info, _,_,_,_,_,_,_,_,_,_, timestamp)
@@ -977,7 +987,12 @@ local function ReduceSigilsCD(info, _,_,_,_,_,_,_,_,_,_, timestamp)
 end
 
 for _, auraID in pairs(demonHunterSigils) do
-	registeredEvents['SPELL_AURA_APPLIED'][auraID] = ReduceSigilsCD
+	if ( auraID == 389860 or auraID == 204598 ) then
+		registeredEvents['SPELL_DAMAGE'][auraID] = ReduceSigilsCD
+	else
+		registeredEvents['SPELL_AURA_APPLIED'][auraID] = ReduceSigilsCD
+		registeredEvents['SPELL_AURA_REFRESH'][auraID] = ReduceSigilsCD
+	end
 end
 
 
@@ -1888,11 +1903,20 @@ registeredEvents['SPELL_CAST_SUCCESS'][30455] = function(info, _,_, destGUID)
 		else
 			local unit = UnitTokenFromGUID(destGUID)
 			if unit then
-				for i = 1, 50 do
-					local _,_,_,_,_,_,_,_,_, id = UnitDebuff(unit, i)
-					if not id then return end
-					if frozenDebuffs[id] then
-						return ConsumedProcCharge(info, true)
+				if AuraUtil and AuraUtil.ForEachAura then
+					AuraUtil.ForEachAura(unit, "HARMFUL", nil, function(_,_,_,_,_,_,_,_,_, id)
+						if frozenDebuffs[id] then
+							ConsumedProcCharge(info, true)
+							return true
+						end
+					end)
+				else
+					for i = 1, 50 do
+						local _,_,_,_,_,_,_,_,_, id = UnitDebuff(unit, i)
+						if not id then return end
+						if frozenDebuffs[id] then
+							return ConsumedProcCharge(info, true)
+						end
 					end
 				end
 			end
@@ -4465,7 +4489,7 @@ local rageSpenders = {
 	[394062] = { 3.0, { 401150, 871 } },
 	[190456] = { 3.5, { 401150, 871 } },
 	[6572]	 = { 2.0, { 401150, 871}, { 390675, 1 }, { "hasRevenge", 0 } },
-	[1680]	 = { { [73]=3, ["d"]=2.0 }, { 262161, 167105, 227847, 401150, 871 }, { 385512, 1.0, 383082, .001 }	},
+	[1680]	 = { { [73]=3, ["d"]=2.0 }, { 262161, 167105, 227847, 401150, 871 }, { 385512, 1.0, 383082, .001 } },
 	[163201] = { { [73]=4, ["d"]=2.0 }, { 262161, 167105, 227847, 401150, 871 }, nil, { "SuddenDeath", 0 } },
 	[281000] = { { [73]=4, ["d"]=2.0 }, { 262161, 167105, 227847, 401150, 871 }, nil, { "SuddenDeath", 0 } },
 	[1464]	 = { { [73]=2, ["d"]=1.0 }, { 262161, 167105, 227847, 401150, 871, 1719, 228920 }, { 383082, .5 } },
@@ -4475,12 +4499,15 @@ local rageSpenders = {
 }
 
 for id, t in pairs(rageSpenders) do
+	local duration, target, modif, aura = t[1], t[2], t[3], t[4]
 	registeredEvents['SPELL_CAST_SUCCESS'][id] = function(info)
 		if not info.talentData[152278] then return end
-		local duration, target, modif, aura = t[1], t[2], t[3], t[4]
 		local rCD = aura and info.auras[ aura[1] ] and aura[2]
 		if rCD == 0 then return end
 		rCD = (type(duration) == "table" and (duration[info.spec] or duration.d) or duration) + (rCD or 0)
+		if info.spec == 72 and P.isPvP then
+			rCD = rCD * 1.33
+		end
 		if modif then
 			for i = 1, #modif, 2 do
 				local tal, rrCD = modif[i], modif[i+1]
@@ -5570,7 +5597,7 @@ setmetatable(registeredHostileEvents, nil)
 function P:SetDisabledColorScheme(destInfo)
 	if not destInfo.isDisabledColor then
 		destInfo.isDisabledColor = true
-		for _, icon in pairs(destInfo.spellIcons) do
+		for id, icon in pairs(destInfo.spellIcons) do
 			local statusBar = icon.statusBar
 			if statusBar then
 				if icon.active then
@@ -5584,6 +5611,10 @@ function P:SetDisabledColorScheme(destInfo)
 			end
 			icon.icon:SetDesaturated(true)
 			icon.icon:SetVertexColor(0.3, 0.3, 0.3)
+
+			if ( E.summonedBuffDuration[id] and destInfo.glowIcons[id] ) then
+				self:RemoveHighlight(icon)
+			end
 		end
 		for key, frame in pairs(P.extraBars) do
 			if frame.shouldRearrangeInterrupts then
