@@ -12,10 +12,22 @@ EngraverOptionsCallbackRegistry = CreateFromMixins(CallbackRegistryMixin)
 EngraverOptionsCallbackRegistry:OnLoad()
 EngraverOptionsCallbackRegistry:SetUndefinedEventsAllowed(true)
 
+local EngraverDisplayModes = {
+	{ text = "Show All", mixin = EngraverCategoryFrameShowAllMixin },
+	{ text = "Pop-up Menu", mixin = EngraverCategoryFramePopUpMenuMixin }
+}
+Addon.EngraverDisplayModes = EngraverDisplayModes
+Addon.GetCurrentDisplayMode = function() return EngraverDisplayModes[EngraverOptions.DisplayMode+1] end
+
+local ENGRAVER_SHOW_HIDE = "Show/Hide Engraver" -- TODO localization
+_G.BINDING_NAME_ENGRAVER_SHOW_HIDE = ENGRAVER_SHOW_HIDE
+
 Addon.EngraverVisibilityModes = {
 	["ShowAlways"] = { text = "總是顯示", tooltip = "永遠都能看見一鍵符文。" },
 	["HideInCombat"] = { text = "戰鬥中隱藏", tooltip = "戰鬥開始/結束時隱藏/顯示。" },
 	["SyncCharacterPane"] = { text = "與角色面板同步", tooltip = "打開/關閉角色面板時顯示/隱藏。" },
+	["ToggleKeybind"] = { text = "切換快速鍵", tooltip = string.format("按下 %q 按鍵綁定時切換顯示。", ENGRAVER_SHOW_HIDE) },
+	["HoldKeybind"] = { text = "按住快速鍵", tooltip = string.format("只有按住 %q 按鍵綁定不放時才顯示。", ENGRAVER_SHOW_HIDE) },
 }
 
 local DefaultEngraverOptions = {
@@ -50,6 +62,7 @@ function EngraverOptionsFrameMixin:InitSettingsList()
 	self.settingsList.Header.DefaultsButton:SetScript("OnClick", function(button, buttonName, down)
 		ShowAppropriateDialog("GAME_SETTINGS_APPLY_DEFAULTS");
 	end);
+	self.settingsList.Header.KeybindsButton = CreateFrame("Button", nil, self.settingsList.Header, "EngraverKeybindsButtonTemplate")
 	self.settingsList.ScrollBox:SetScript("OnMouseWheel", function(scrollBox, delta)
 		if not KeybindListener:OnForwardMouseWheel(delta) then
 			ScrollControllerMixin.OnMouseWheel(scrollBox, delta);
