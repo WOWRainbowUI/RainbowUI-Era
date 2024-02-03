@@ -17,8 +17,8 @@ L['Activity Comment'] = '活動說明'
 L['Manage Activity'] = '管理活動'
 L['Choice Activity...'] = '選擇活動類型...'
 L['Choice Mode...'] = '選擇活動模式...'
-L['Create Activity'] = '創建活動'
-L['Search Activity'] = '查找活動'
+L['Create Activity'] = '建立活動'
+L['Search Activity'] = '尋找活動'
 L['Close Activity'] = '解散活動'
 L['Update Activity'] = '更新活動'
 L['Members'] = '隊伍人數'
@@ -27,8 +27,8 @@ L['Encounter'] = '冒險指南'
 L['Recent members'] = '最近隊友'
 L['Instance Name'] = '副本名稱'
 L['Invite All'] = '全部邀請'
-L['職責攻略'] = true
-L['技能'] = true
+L['职责攻略'] = '職責攻略'
+L['技能'] = '技能'
 L['Challenge'] = '挑戰活動'
 
 L['Help'] = '幫助'
@@ -70,39 +70,39 @@ L['<Right-Click> Open activity menu'] = '<右鍵>打開活動菜單'
 L['(Include channel message)'] = '(包含頻道聊天)'
 L['Applicanted'] = '已申請'
 
-L['|cff00ffff%s|r instance already exists, continue to create?'] = '|cff00ffff%s|r進度已存在，繼續創建？'
+L['|cff00ffff%s|r instance already exists, continue to create?'] = '|cff00ffff%s|r進度已存在，是否要繼續建立?'
 L['Update activity success.'] = '更新活動成功。'
-L['Create acitivty success.'] = '創建活動成功。'
+L['Create acitivty success.'] = '建立活動成功。'
 L['Activity closed.'] = '活動已解散。'
 L['There are no activity, please try searching.'] =
-    '當前沒有集結號活動，\n請嘗試在上方搜索框中直接搜索關鍵字。'
+    '當前沒有集結號活動，\n請嘗試在上方搜尋框中直接搜尋關鍵字。'
 L['Receiving active data, please wait patiently'] = '正在接收活動數據，請耐心等待 ...'
 
 L['Applicant Count'] = '申請人數'
 L['Application Count'] = '申請中活動'
 L['Activity Count'] = '活動總數'
 
-L['Toggle MeetingHorn'] = '打開/關閉集結號'
-L['Toggle MeetingHorn key binding'] = '打開/關閉集結號快捷鍵'
-L['按鍵已綁定到|cffffd100%s|r，你確定要覆蓋嗎？'] = true
+L['Toggle MeetingHorn'] = '顯示/隱藏集結號'
+L['Toggle MeetingHorn key binding'] = '顯示/隱藏集結號的按鍵綁定'
+L['按键已绑定到|cffffd100%s|r，你确定要覆盖吗？'] = '按鍵已綁定到|cffffd100%s|r，是否確定要覆蓋?'
 
-L['Options'] = '設置'
-L['啟用關鍵字過濾'] = true
-L['關鍵字過濾'] = true
-L['導入'] = true
-L['導出'] = true
-L['導入關鍵字'] = true
-L['導出關鍵字'] = true
-L['請輸入需要屏蔽的關鍵字'] = true
-L['匹配?'] = true
-L['添加失敗，關鍵字錯誤。'] = true
-L['添加失敗，關鍵字“%s”已存在。'] = true
-L['添加成功，關鍵字“%s”已添加。'] = true
-L['刪除失敗，關鍵字錯誤。'] = true
-L['刪除失敗，關鍵字“%s”不存在。'] = true
-L['刪除成功，關鍵字“%s”已刪除。'] = true
+L['Options'] = '設定選項'
+L['启用关键字过滤'] = '啟用關鍵字過濾'
+L['关键字过滤'] = '關鍵字過濾'
+L['导入'] = '匯入'
+L['导出'] = '匯出'
+L['导入关键字'] = '匯入關鍵字'
+L['导出关键字'] = '匯出關鍵字'
+L['请输入需要屏蔽的关键字'] = '請輸入需要屏蔽的關鍵字'
+L['匹配?'] = '匹配?'
+L['添加失败，关键字错误。'] = '添加失敗，關鍵字錯誤。'
+L['添加失败，关键字“%s”已存在。'] = '添加失敗，關鍵字“%s”已存在。'
+L['添加成功，关键字“%s”已添加。'] = '添加成功，關鍵字“%s”已添加。'
+L['删除失败，关键字错误。'] = '刪除失敗，關鍵字錯誤。'
+L['删除失败，关键字“%s”不存在。'] = '刪除失敗，關鍵字“%s”不存在。'
+L['删除成功，关键字“%s”已删除。'] = '刪除成功，關鍵字“%s”已刪除。'
 
-L['Show data broker'] = '顯示懸浮窗'
+L['Show data broker'] = '顯示畫面上方的浮動資訊'
 L['Hide activity in chat frame'] = '隱藏聊天窗口內的集結號活動'
 
 L.HELP_COMMENT = [[|cffffd100使用說明|r
@@ -190,31 +190,31 @@ L.TIP_SUMMARY = [[1. 盡量和熟悉的團長一起遊戲。
 
 L.TIP_TITLE = [[溫馨提示：]]
 
-L['瑪丁雷少校'] = true
-L['暴風城的城民和盟友們'] = true
-L['看看強大的聯盟吧'] = true
-L['艾法希比元帥'] = true
-L['聯盟的人民們'] = true
-L['興奮起來'] = true
-L['倫薩克'] = true
-L['部落的人民，奧格瑞瑪的居民'] = true
-L['在屠龍大軍的戰鬥號角聲中精神抖擻地前進吧'] = true
-L['薩魯法爾大王'] = true
-L['奈法利安被殺掉了'] = true
-L['為他的勝利而狂歡吧'] = true
-L['薩爾'] = true
-L['奈法利安被殺掉了'] = true
-L['為他的勝利而狂歡吧'] = true
-L['為你們的英雄而歡慶'] = true
-L['沐浴在我的力量中吧'] = true
+L['玛丁雷少校'] = '瑪丁雷少校'
+L['暴风城的城民和盟友们'] = '暴風城的城民和盟友們'
+L['看看强大的联盟吧'] = '看看強大的聯盟吧'
+L['艾法希比元帅'] = '艾法希比元帥'
+L['联盟的人民们'] = '聯盟的人民們'
+L['兴奋起来'] = '興奮起來'
+L['伦萨克'] = '倫薩克'
+L['部落的人民，奥格瑞玛的居民'] = '部落的人民，奧格瑞瑪的居民'
+L['在屠龙大军的战斗号角声中精神抖擞地前进吧'] = '在屠龍大軍的戰鬥號角聲中精神抖擻地前進吧'
+L['萨鲁法尔大王'] = '薩魯法爾大王'
+L['奈法利安被杀掉了'] = '奈法利安被殺掉了'
+L['为他的胜利而狂欢吧'] = '為他的勝利而狂歡吧'
+L['萨尔'] = '薩爾'
+L['奈法利安被杀掉了'] = '奈法利安被殺掉了'
+L['为他的胜利而狂欢吧'] = '為他的勝利而狂歡吧'
+L['为你们的英雄而欢庆'] = '為你們的英雄而歡慶'
+L['沐浴在我的力量中吧'] = '沐浴在我的力量中吧'
 
-L['二維碼尺寸過小'] = true
-L['加載中'] = true
+L['二维码尺寸过小'] = "QR Code 太小"
+L['加载中'] = "載入中"
 
-L['歡迎來到%s，打開集結號查看|cff47e53d|Hmeetinghornencounter:%s|h[Boss擊殺攻略]|r。'] = true
-L['你在與[%s]的戰鬥中陣亡，|cff00ffff|Hmeetinghornencounter:%s:%s:%s|h[點擊查看Boss攻略]|h|r。'] = true
-L['近戰輸出者預警'] = true
-L['遠程輸出者預警'] = true
+L['欢迎来到%s，打开集结号查看|cff47e53d|Hmeetinghornencounter:%s|h[Boss击杀攻略]|r。'] = '歡迎來到%s，打開集結號查看|cff47e53d|Hmeetinghornencounter:%s|h[Boss擊殺攻略]|r。'
+L['你在与[%s]的战斗中阵亡，|cff00ffff|Hmeetinghornencounter:%s:%s:%s|h[点击查看Boss攻略]|h|r。'] = '你在與[%s]的戰鬥中陣亡，|cff00ffff|Hmeetinghornencounter:%s:%s:%s|h[點擊查看Boss攻略]|h|r。'
+L['近战输出者预警'] = '近戰輸出者預警'
+L['远程输出者预警'] = '遠程輸出者預警'
 
 L['INVALID_GUID'] = '角色ID錯誤'
 L['NO_ACTIVE_ACTIVITY '] = '當前沒有挑戰任務'
@@ -236,3 +236,6 @@ L['Activities List'] = '活動列表'
 L['Current Activity'] = '當前活動'
 L['Last Activity'] = '往期活動'
 L['Last Activity %s'] = '往期活動%s'
+
+-- 自行加入
+L['好团长'] = '好團長'

@@ -236,3 +236,6 @@ L['Activities List'] = '活动列表'
 L['Current Activity'] = '当前活动'
 L['Last Activity'] = '往期活动'
 L['Last Activity %s'] = '往期活动%s'
+
+-- 自行加入
+L['好团长'] = true
