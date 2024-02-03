@@ -8,7 +8,7 @@
 
 -- BINDINGs labels
 BINDING_HEADER_ACE3 = "Ace3"
-BINDING_NAME_RELOADUI = "ReloadUI"
+BINDING_NAME_RELOADUI = RELOADUI
 --
 
 local gui = LibStub("AceGUI-3.0")

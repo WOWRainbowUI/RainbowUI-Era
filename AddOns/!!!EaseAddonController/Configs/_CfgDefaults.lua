@@ -1485,6 +1485,16 @@ D["MeepMerp"] = {
         text = "自訂音效：將聲音檔案 (MP3 或 OGG) 複製到 AddOns\\MeepMerp 資料夾裡面，然後用記事本編輯 MeepMerp.lua，將音效檔案位置和檔名那一行裡面的 Bonk.ogg 修改為新的聲音檔案名稱，要記得加上副檔名 .mp3 或 .ogg。\n\n更改完成後要重新啟動遊戲才會生效，重新載入無效。\n",
     },
 };
+D["MeetingHorn"] = {
+	defaultEnable = 0,
+	tags = { "BOSSRAID" },
+	title = "集結號",
+	desc = "隊伍搜尋器的一種。`",
+	{
+		type = "text",
+        text = "點小地圖按鈕打開主視窗。\n",
+    },
+};
 D["MissingRaidBuffs"] = {
     defaultEnable = 0,
 	tags = { "BOSSRAID" },
