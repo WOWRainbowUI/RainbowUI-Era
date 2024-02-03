@@ -444,7 +444,7 @@ local function createTrackingButton()
 			if (profile.showOnLeft) then
 				f:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, -70)
 			else
-				f:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -8, -70)
+				f:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -80, -52) -- 自行修改按鈕位置
 			end
 		else
 			parent = FilterButton:GetParent()
