@@ -1,4 +1,6 @@
-[Full Changelog](https://github.com/enderneko/Cell/compare/r211-release...e2b743e3c200d2198f22daac5842f2fe4d1e27a7)
+[Full Changelog](https://github.com/enderneko/Cell/compare/r219-release...d1cd3d33c1c475ea2aa95560f69289cf6a95ca88)
 
-- Fix newly created indicator issue
-- Update texture of overShieldGlow and overAbsorbGlow
+- Update Cell.GetUnitFrame
+- Update range checker
+- Fix secure buttons
+- Update zhTW

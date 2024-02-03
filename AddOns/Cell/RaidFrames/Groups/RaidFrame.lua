@@ -174,7 +174,7 @@ local function RaidFrame_UpdateLayout(layout, which)
     -- arena pets
     if Cell.vars.inBattleground == 5 and layout["pet"]["partyEnabled"] then
         for i, arenaPet in ipairs(arenaPetButtons) do
-            RegisterAttributeDriver(arenaPet, "state-visibility", "[@raidpet"..i..", exists] show; hide")
+            RegisterAttributeDriver(arenaPet, "state-visibility", "[@raidpet"..i..", exists] show;hide")
         end
     else
         for i, arenaPet in ipairs(arenaPetButtons) do
@@ -220,7 +220,7 @@ local function RaidFrame_UpdateLayout(layout, which)
                 if not which or which == "barOrientation" then
                     B:SetOrientation(b, layout["barOrientation"][1], layout["barOrientation"][2])
                 end
-                if not which or which == "powerFilter" or which == "groupFilter" or which == "barOrientation" then
+                if not which or which == "main-power" or which == "groupFilter" or which == "barOrientation" or which == "powerFilter" then
                     B:SetPowerSize(b, layout["main"]["powerSize"])
                 end
             end
