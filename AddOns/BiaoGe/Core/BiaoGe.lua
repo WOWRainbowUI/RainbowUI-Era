@@ -2277,7 +2277,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
     ----------初始显示----------
     do
-        if BG[BiaoGe.lastFrame .. "MainFrameTabNum"] then
+        if BiaoGe.lastFrame and BG[BiaoGe.lastFrame .. "MainFrameTabNum"] then -- 暫時修正
             BG.ClickTabButton(BG.tabButtons, BG[BiaoGe.lastFrame .. "MainFrameTabNum"])
         else
             BG.ClickTabButton(BG.tabButtons, BG.FBMainFrameTabNum)
