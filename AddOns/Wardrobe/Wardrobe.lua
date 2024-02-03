@@ -168,8 +168,8 @@ GameTooltip:HookScript("OnTooltipSetItem", Wardrobe.OnTooltipSetItem)
 GameTooltip:HookScript("OnTooltipCleared", Wardrobe.OnTooltipCleared)
 
 Wardrobe.UI.OpenWardrobeButton = CreateFrame("BUTTON", "Wardrobe_OpenButton", PaperDollFrame) --, "UIPanelSquareButton") -- "UIPanelButtonTemplate")
-Wardrobe.UI.OpenWardrobeButton:SetPoint("TOPRIGHT", -70, -35)
-Wardrobe.UI.OpenWardrobeButton:SetSize(40, 35)
+Wardrobe.UI.OpenWardrobeButton:SetPoint("TOPRIGHT", -71, -39) -- 按鈕位置
+Wardrobe.UI.OpenWardrobeButton:SetSize(40, 32)
 Wardrobe.UI.OpenWardrobeButton.Texture = Wardrobe.UI.OpenWardrobeButton:CreateTexture("$parent_Texture", "OVERLAY")
 Wardrobe.UI.OpenWardrobeButton.Texture:SetAllPoints(Wardrobe.UI.OpenWardrobeButton)
 Wardrobe.UI.OpenWardrobeButton.Texture:SetTexture("interface/paperdollinfoframe/ui-gearmanager-button")
