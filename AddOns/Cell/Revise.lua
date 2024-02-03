@@ -2497,6 +2497,118 @@ function F:Revise()
             CellDB["debuffTypeColor"]["Bleed"] = {r=1, g=0.2, b=0.6}
         end
     end
+   
+    -- r213-release
+    if CellDB["revise"] and dbRevision < 213 then
+        if Cell.isRetail then
+            for spec, t in pairs(CellDB["quickAssist"]) do
+                if not t["filters"] then
+                    t["filters"] = t["layout"]["filters"]
+                    t["filters"]["active"] = nil
+                    t["filters"][6] = F:Copy(t["filters"][5])
+                    t["filters"][7] = F:Copy(t["filters"][5])
+                    t["layout"]["filters"] = nil
+                end
+                if not t["filterAutoSwitch"] then
+                    t["filterAutoSwitch"] = {
+                        ["party"] = 1,
+                        ["raid"] = 1,
+                        ["mythic"] = 1,
+                        ["arena"] = 1,
+                        ["battleground"] = 1,
+                    }
+                end
+                for _, ft in pairs(t["filters"]) do
+                    if ft[1] == "name" then
+                        ft[3] = false
+                    end
+                end
+            end
+        end
+    end
+
+    -- r215-release
+    if CellDB["revise"] and dbRevision < 215 then
+        for _, layout in pairs(CellDB["layouts"]) do
+            -- add color for tankActiveMitigation
+            local index = Cell.defaults.indicatorIndices.tankActiveMitigation
+            if index and type(layout["indicators"][index]["color"]) ~= "table" then
+                layout["indicators"][index]["color"] = {"class_color", {0.25, 1, 0}}
+            end
+
+            -- rename nameColor to color
+            index = Cell.defaults.indicatorIndices.nameText
+            if type(layout["indicators"][index]["color"]) ~= "table" then
+                layout["indicators"][index]["color"] = layout["indicators"][index]["nameColor"]
+                if layout["indicators"][index]["color"][1] == "custom" then
+                    layout["indicators"][index]["color"][1] = "custom_color"
+                end
+                layout["indicators"][index]["nameColor"] = nil
+            end
+        end
+
+        -- set alwaysUpdateDebuffs default to true
+        if not CellDB["general"]["alwaysUpdateDebuffs"] then
+            CellDB["general"]["alwaysUpdateDebuffs"] = true
+        end
+    end
+
+    -- r217-release
+    if CellDB["revise"] and dbRevision < 217 then
+        for _, layout in pairs(CellDB["layouts"]) do
+            for _, i in pairs(layout["indicators"]) do
+                if i.indicatorName == "externalCooldowns" or i.indicatorName == "defensiveCooldowns" or i.indicatorName == "allCooldowns" or i.indicatorName == "debuffs"
+                    or i.type == "icon" or i.type == "icons" then
+                    
+                    -- add showAnimation option
+                    if type(i.showAnimation) ~= "boolean" then
+                        i.showAnimation = true
+                    end
+                    
+                    -- update showDuration
+                    if i.showDuration == 0 then
+                        i.showDuration = true
+                    end
+                end
+            end
+        end
+
+        if Cell.isRetail then
+            for spec, t in pairs(CellDB["quickAssist"]) do
+                -- update showDuration
+                if t["spells"]["mine"]["icon"]["showDuration"] == 0 then
+                    t["spells"]["mine"]["icon"]["showDuration"] = true
+                end
+                if t["spells"]["offensives"]["icon"]["showDuration"] == 0 then
+                    t["spells"]["offensives"]["icon"]["showDuration"] = true
+                end
+                -- add showAnimation
+                if type(t["spells"]["mine"]["icon"]["showAnimation"]) ~= "boolean" then
+                    t["spells"]["mine"]["icon"]["showAnimation"] = true
+                end
+                if type(t["spells"]["offensives"]["icon"]["showAnimation"]) ~= "boolean" then
+                    t["spells"]["offensives"]["icon"]["showAnimation"] = true
+                end
+            end
+        end
+    end
+
+    -- r218-release
+    if CellDB["revise"] and dbRevision < 218 then
+        for _, layout in pairs(CellDB["layouts"]) do
+            -- fix role order option
+            if not layout["main"]["roleOrder"] then
+                layout["main"]["roleOrder"] = {"TANK", "HEALER", "DAMAGER"}
+            end
+        end
+    end
+    
+    -- r219-release
+    if CellDB["revise"] and dbRevision < 219 then
+        if not CellDB["appearance"]["gradientColors"] then
+            CellDB["appearance"]["gradientColors"] = {{1,0,0}, {1,0.7,0}, {0.7,1,0}}
+        end
+    end
 
     -- ----------------------------------------------------------------------- --
     --            update from old versions, validate all indicators            --

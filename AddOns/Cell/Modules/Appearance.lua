@@ -254,6 +254,7 @@ local function CreatePreviewIcons()
         barIcon2.preview.elapsedTime = 0
         barIcon2:SetCooldown(GetTime(), 13, nil, 136085, 0)
     end)
+    barIcon2:ShowAnimation(true)
     barIcon2:Show()
 
     barIcon1 = I:CreateAura_BarIcon("CellAppearancePreviewIcon3", previewIconsBG)
@@ -261,6 +262,7 @@ local function CreatePreviewIcons()
     P:Size(barIcon1, 22, 22)
     barIcon1:SetPoint("BOTTOMRIGHT", barIcon2, "BOTTOMLEFT", P:Scale(-1), 0)
     barIcon1:ShowDuration(true)
+    barIcon1:ShowAnimation(true)
     SetOnUpdate(barIcon1, "", 132155, 5)
     barIcon1:Show()
 
@@ -312,6 +314,9 @@ local function CreatePreviewButtons()
 
     previewButton.widget.healthBar:SetMinMaxSmoothedValue(0, 100)
     previewButton.widget.healthBar:SetMinMaxValues(0, 100)
+
+    previewButton.widget.powerBar:SetMinMaxValues(0, 1)
+    previewButton.widget.powerBar:SetValue(1)
     
     local previewButtonBG = Cell:CreateFrame("CellAppearancePreviewButtonBG", appearanceTab)
     previewButtonBG:SetPoint("TOPLEFT", previewButton, 0, 20)
@@ -331,6 +336,9 @@ local function CreatePreviewButtons()
     previewButton2:SetScript("OnLeave", nil)
     previewButton2:SetScript("OnUpdate", nil)
     previewButton2:Show()
+
+    previewButton2.widget.powerBar:SetMinMaxValues(0, 1)
+    previewButton2.widget.powerBar:SetValue(1)
 
     local previewButtonBG2 = Cell:CreateFrame("CellAppearancePreviewButtonBG2", appearanceTab)
     previewButtonBG2:SetPoint("TOPLEFT", previewButton2, 0, 20)
@@ -500,6 +508,7 @@ end
 -- unitbutton
 -------------------------------------------------
 local textureDropdown, barColorDropdown, barColorPicker, fullColorCB, fullColorPicker, lossColorDropdown, lossColorPicker, deathColorCB, deathColorPicker, powerColorDropdown, powerColorPicker, barAnimationDropdown, targetColorPicker, mouseoverColorPicker, highlightSize
+local gradientColorCB1, gradientColorCB2, gradientColorCB3
 local barAlpha, lossAlpha, bgAlpha, oorAlpha, predCB, useLibCB, absorbCB, shieldCB, oversCB
 local predCustomCB, predColorPicker, absorbColorPicker, shieldColorPicker
 local iconOptionsBtn, iconOptionsFrame, iconAnimationDropdown, durationRoundUpCB, durationDecimalText1, durationDecimalText2, durationDecimalDropdown, durationColorCB, durationNormalCP, durationPercentCP, durationSecondCP, durationPercentDD, durationSecondEB, durationSecondText
@@ -1021,6 +1030,35 @@ local function CreateUnitButtonStylePane()
     barAnimationText:SetPoint("BOTTOMLEFT", barAnimationDropdown, "TOPLEFT", 0, 1)
     barAnimationText:SetText(L["Bar Animation"])
     
+    -- gradient colors
+    gradientColorCB1 = Cell:CreateColorPicker(unitButtonPane, nil, false, function(r, g, b)
+        CellDB["appearance"]["gradientColors"][1][1] = r
+        CellDB["appearance"]["gradientColors"][1][2] = g
+        CellDB["appearance"]["gradientColors"][1][3] = b
+        Cell:Fire("UpdateAppearance", "color")
+    end)
+    gradientColorCB1:SetPoint("TOPLEFT", barAnimationDropdown, "BOTTOMLEFT", 0, -30)
+    
+    gradientColorCB2 = Cell:CreateColorPicker(unitButtonPane, nil, false, function(r, g, b)
+        CellDB["appearance"]["gradientColors"][2][1] = r
+        CellDB["appearance"]["gradientColors"][2][2] = g
+        CellDB["appearance"]["gradientColors"][2][3] = b
+        Cell:Fire("UpdateAppearance", "color")
+    end)
+    gradientColorCB2:SetPoint("TOPLEFT", gradientColorCB1, "TOPRIGHT", 5, 0)
+    
+    gradientColorCB3 = Cell:CreateColorPicker(unitButtonPane, nil, false, function(r, g, b)
+        CellDB["appearance"]["gradientColors"][3][1] = r
+        CellDB["appearance"]["gradientColors"][3][2] = g
+        CellDB["appearance"]["gradientColors"][3][3] = b
+        Cell:Fire("UpdateAppearance", "color")
+    end)
+    gradientColorCB3:SetPoint("TOPLEFT", gradientColorCB2, "TOPRIGHT", 5, 0)
+
+    local gradientColorsText = unitButtonPane:CreateFontString(nil, "OVERLAY", "CELL_FONT_WIDGET")
+    gradientColorsText:SetPoint("BOTTOMLEFT", gradientColorCB1, "TOPLEFT", 0, 1)
+    gradientColorsText:SetText(L["Gradient Colors"])
+
     -- target highlight
     targetColorPicker = Cell:CreateColorPicker(unitButtonPane, L["Target Highlight Color"], true, function(r, g, b, a)
         CellDB["appearance"]["targetColor"][1] = r
@@ -1029,7 +1067,7 @@ local function CreateUnitButtonStylePane()
         CellDB["appearance"]["targetColor"][4] = a
         Cell:Fire("UpdateAppearance", "highlightColor")
     end)
-    targetColorPicker:SetPoint("TOPLEFT", barAnimationDropdown, "BOTTOMLEFT", 0, -30)
+    targetColorPicker:SetPoint("TOPLEFT", gradientColorCB1, "BOTTOMLEFT", 0, -15)
     
     -- mouseover highlight
     mouseoverColorPicker = Cell:CreateColorPicker(unitButtonPane, L["Mouseover Highlight Color"], true, function(r, g, b, a)
@@ -1271,6 +1309,11 @@ LoadButtonStyle = function()
     powerColorPicker:SetEnabled(CellDB["appearance"]["powerColor"][1] == "custom")
 
     barAnimationDropdown:SetSelected(L[CellDB["appearance"]["barAnimation"]])
+
+    local c = CellDB["appearance"]["gradientColors"]
+    gradientColorCB1:SetColor(c[1][1], c[1][2], c[1][3])
+    gradientColorCB2:SetColor(c[2][1], c[2][2], c[2][3])
+    gradientColorCB3:SetColor(c[3][1], c[3][2], c[3][3])
 
     targetColorPicker:SetColor(CellDB["appearance"]["targetColor"])
     mouseoverColorPicker:SetColor(CellDB["appearance"]["mouseoverColor"])

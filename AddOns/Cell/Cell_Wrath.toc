@@ -1,6 +1,6 @@
 ## Interface: 30403
 ## Title: Cell
-## Version: r212-release
+## Version: r220-release
 ## Author: enderneko
 ## X-Flavor: Wrath
 ## SavedVariables: CellDB
@@ -38,7 +38,7 @@ Indicators\TargetCounter.lua
 Indicators\TargetedSpells.lua
 Indicators\Consumables.lua
 Indicators\Custom_Classic.lua
-Indicators\PatronIcon.lua
+Indicators\Patron.lua
 
 RaidFrames\MainFrame.lua
 
