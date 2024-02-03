@@ -909,7 +909,7 @@ D["EasyFrames"] = {
 };
 D["Engraver"] = {
 	defaultEnable = 0,
-	tags = { "ENHANCEMENT" }, 
+	tags = { "ACTIONBAR" }, 
 	title = "一鍵符文",
 	desc = "探索賽季專用的插件。在畫面上顯示你所擁有的符文，點一下立即套用，不用再打開角色視窗。`",
 	modifier = "彩虹ui",
