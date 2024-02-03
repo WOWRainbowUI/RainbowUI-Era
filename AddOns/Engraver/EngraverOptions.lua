@@ -13,21 +13,21 @@ EngraverOptionsCallbackRegistry:OnLoad()
 EngraverOptionsCallbackRegistry:SetUndefinedEventsAllowed(true)
 
 local EngraverDisplayModes = {
-	{ text = "Show All", mixin = EngraverCategoryFrameShowAllMixin },
-	{ text = "Pop-up Menu", mixin = EngraverCategoryFramePopUpMenuMixin }
+	{ text = "全部顯示", mixin = EngraverCategoryFrameShowAllMixin },
+	{ text = "彈出選單", mixin = EngraverCategoryFramePopUpMenuMixin }
 }
 Addon.EngraverDisplayModes = EngraverDisplayModes
 Addon.GetCurrentDisplayMode = function() return EngraverDisplayModes[EngraverOptions.DisplayMode+1] end
 
-local ENGRAVER_SHOW_HIDE = "Show/Hide Engraver" -- TODO localization
+local ENGRAVER_SHOW_HIDE = "顯示/隱藏一鍵符文" -- TODO localization
 _G.BINDING_NAME_ENGRAVER_SHOW_HIDE = ENGRAVER_SHOW_HIDE
 
 Addon.EngraverVisibilityModes = {
 	["ShowAlways"] = { text = "總是顯示", tooltip = "永遠都能看見一鍵符文。" },
 	["HideInCombat"] = { text = "戰鬥中隱藏", tooltip = "戰鬥開始/結束時隱藏/顯示。" },
 	["SyncCharacterPane"] = { text = "與角色面板同步", tooltip = "打開/關閉角色面板時顯示/隱藏。" },
-	["ToggleKeybind"] = { text = "切換快速鍵", tooltip = string.format("按下 %q 按鍵綁定時切換顯示。", ENGRAVER_SHOW_HIDE) },
-	["HoldKeybind"] = { text = "按住快速鍵", tooltip = string.format("只有按住 %q 按鍵綁定不放時才顯示。", ENGRAVER_SHOW_HIDE) },
+	["ToggleKeybind"] = { text = "切換快速鍵", tooltip = string.format("按下 %q 的按鍵綁定時切換顯示。", ENGRAVER_SHOW_HIDE) },
+	["HoldKeybind"] = { text = "按住快速鍵", tooltip = string.format("只有按住不放 %q 的按鍵綁定時才顯示。", ENGRAVER_SHOW_HIDE) },
 }
 
 local DefaultEngraverOptions = {
@@ -119,7 +119,7 @@ function EngraverOptionsFrameMixin:CreateSettingsInitializers()
 		AddInitializer(self, Settings.CreateDropDownInitializer(setting, options, tooltip))
 	end -- LayoutDirection
 	do -- VisibilityMode
-		local variable, name, tooltip = "VisibilityMode", "顯示時機", "何時要顯示/隱藏一鍵符文。";
+		local variable, name, tooltip = "VisibilityMode", "何時顯示", "何時要顯示/隱藏一鍵符文。";
 		local setting = AddEngraverOptionsSetting(self, variable, name, Settings.VarType.Number)
 		local options = function()
 			local container = Settings.CreateControlTextContainer();

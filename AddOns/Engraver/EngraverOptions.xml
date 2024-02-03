@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<Script file="EngraverOptionsFilterControl.lua"/>
 	<Script file="EngraverOptions.lua"/>
-	<Button name="EngraverKeybindsButtonTemplate" text="Keybinds" inherits="UIPanelButtonTemplate" virtual="true">
+	<Button name="EngraverKeybindsButtonTemplate" text="按鍵綁定" inherits="UIPanelButtonTemplate" virtual="true">
 		<Size x="96" y="22"/>
 		<Scripts>
 			<OnLoad>
