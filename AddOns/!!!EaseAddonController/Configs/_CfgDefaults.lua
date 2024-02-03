@@ -618,6 +618,12 @@ D["ClassicCastbars"] = {
         callback = function(cfg, v, loading) SlashCmdList["CLASSICCASTBARS"]("") end,
     },
 };
+D["ClassicSpellActivations"] = {
+	defaultEnable = 1,
+	tags = { "ACTIONBAR" },
+	title = "技能發光 (快捷列)",
+	desc = "技能觸發時快捷列上的技能圖示會發光。``目前支援戰士、聖騎士、盜賊、獵人和術士的特定幾個技能。`|r",
+};
 D["ColorPickerPlus"] = {
 	defaultEnable = 1,
 	tags = { "ENHANCEMENT" },
