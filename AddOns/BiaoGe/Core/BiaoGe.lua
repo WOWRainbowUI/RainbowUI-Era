@@ -720,7 +720,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             BG.ButtonSheZhi = bt
 
             bt:SetScript("OnClick", function(self)
-                InterfaceOptionsFrame_OpenToCategory("|cff00BFFFBiaoGe|r")
+                InterfaceOptionsFrame_OpenToCategory(L["BiaoGe"] or "|cff00BFFFBiaoGe|r")
                 BG.MainFrame:Hide()
                 PlaySound(BG.sound1, "Master")
             end)
@@ -2472,7 +2472,7 @@ do
 
     -- 设置
     SlashCmdList["BIAOGEOPTIONS"] = function()
-        InterfaceOptionsFrame_OpenToCategory("|cff00BFFFBiaoGe|r")
+        InterfaceOptionsFrame_OpenToCategory(L["BiaoGe"] or "|cff00BFFFBiaoGe|r")
         BG.MainFrame:Hide()
     end
     SLASH_BIAOGEOPTIONS1 = "/bgo"
