@@ -1,6 +1,6 @@
 ﻿-- Pawn by Vger-Azjol-Nerub
 -- www.vgermods.com
--- © 2006-2023 Travis Spomer.  This mod is released under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 license.
+-- © 2006-2024 Travis Spomer.  This mod is released under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 license.
 -- See Readme.htm for more information.
 --
 -- User interface code
@@ -807,7 +807,6 @@ function PawnUIFrame_StatsList_SelectStat(Index)
 		end
 		local WeaponSet = PawnGetWeaponSetForStat(ThisStat)
 		if WeaponSet then PawnUIFrame_NoUpgradesCheck:SetChecked(not PawnGetShowUpgradesForWeapons(PawnUICurrentScale, WeaponSet)) end
-		PawnUIFrame_FollowSpecializationCheck:SetChecked(PawnGetUpgradesFollowSpecialization(PawnUICurrentScale))
 		if WeaponSet == 1 then
 			PawnUIFrame_NoUpgradesCheck_Label:SetText(PawnLocal.UI.ValuesDoNotShowUpgradesFor1H)
 		elseif WeaponSet == 2 then
@@ -818,11 +817,6 @@ function PawnUIFrame_StatsList_SelectStat(Index)
 		else
 			PawnUIFrame_NoUpgradesCheck:Show()
 		end
-		if (PawnArmorSpecializationLevel ~= nil) and (ThisStat == "IsCloth" or ThisStat == "IsLeather" or ThisStat == "IsMail" or ThisStat == "IsPlate") then
-			PawnUIFrame_FollowSpecializationCheck:Show()
-		else
-			PawnUIFrame_FollowSpecializationCheck:Hide()
-		end
 	elseif PawnUICurrentScale == PawnLocal.NoScale then
 		-- They don't have any scales.
 		PawnUIFrame_DescriptionLabel:SetText(PawnLocal.NoScalesDescription)
@@ -832,7 +826,6 @@ function PawnUIFrame_StatsList_SelectStat(Index)
 		PawnUIFrame_ClearValueButton:Hide()
 		PawnUIFrame_IgnoreStatCheck:Hide()
 		PawnUIFrame_NoUpgradesCheck:Hide()
-		PawnUIFrame_FollowSpecializationCheck:Hide()
 	else
 		-- They haven't selected a stat.
 		PawnUIFrame_DescriptionLabel:SetText(PawnLocal.NoStatDescription)
@@ -842,7 +835,6 @@ function PawnUIFrame_StatsList_SelectStat(Index)
 		PawnUIFrame_ClearValueButton:Hide()
 		PawnUIFrame_IgnoreStatCheck:Hide()
 		PawnUIFrame_NoUpgradesCheck:Hide()
-		PawnUIFrame_FollowSpecializationCheck:Hide()
 	end
 
 end
@@ -872,10 +864,6 @@ function PawnUIFrame_NoUpgradesCheck_OnClick()
 	if not WeaponSet then VgerCore.Fail("Couldn't find the weapon set to enable or disable.") return end
 
 	PawnSetShowUpgradesForWeapons(PawnUICurrentScale, WeaponSet, not PawnUIFrame_NoUpgradesCheck:GetChecked())
-end
-
-function PawnUIFrame_FollowSpecializationCheck_OnClick()
-	PawnSetUpgradesFollowSpecialization(PawnUICurrentScale, PawnUIFrame_FollowSpecializationCheck:GetChecked())
 end
 
 function PawnUIFrame_StatValueBox_OnTextChanged()
@@ -926,14 +914,24 @@ function PawnUIFrame_GetCurrentScaleColor()
 end
 
 function PawnUIFrame_ScaleColorSwatch_OnClick()
-	-- Get the color of the current scale.
-	local r, g, b = PawnUIFrame_GetCurrentScaleColor()
-	ColorPickerFrame.func = PawnUIFrame_ScaleColorSwatch_OnChange
-	ColorPickerFrame.cancelFunc = PawnUIFrame_ScaleColorSwatch_OnCancel
-	ColorPickerFrame.previousValues = { r, g, b }
-	ColorPickerFrame.hasOpacity = false
-	ColorPickerFrame:SetColorRGB(r, g, b)
-	ShowUIPanel(ColorPickerFrame)
+	local info = {}
+	info.swatchFunc = PawnUIFrame_ScaleColorSwatch_OnChange
+	info.hasOpacity = false
+	info.r, info.g, info.b = PawnUIFrame_GetCurrentScaleColor()
+	info.cancelFunc = PawnUIFrame_ScaleColorSwatch_OnCancel
+
+	 if ColorPickerFrame.SetupColorPickerAndShow then
+		-- Dragonflight 10.2.5 and later
+		ColorPickerFrame:SetupColorPickerAndShow(info)
+	 else
+		-- Classic
+		ColorPickerFrame.func = info.swatchFunc
+		ColorPickerFrame.cancelFunc = info.cancelFunc
+		ColorPickerFrame.previousValues = { r  = info.r, g = info.g, b = info.b }
+		ColorPickerFrame.hasOpacity = info.hasOpacity
+		ColorPickerFrame:SetColorRGB(info.r, info.g, info.b)
+		ShowUIPanel(ColorPickerFrame)
+	 end
 end
 
 function PawnUIFrame_ScaleColorSwatch_OnChange()
@@ -941,9 +939,15 @@ function PawnUIFrame_ScaleColorSwatch_OnChange()
 	PawnUIFrame_ScaleColorSwatch_SetColor(r, g, b)
 end
 
-function PawnUIFrame_ScaleColorSwatch_OnCancel(rgb)
-	---@diagnostic disable-next-line: deprecated
-	local r, g, b = unpack(rgb)
+function PawnUIFrame_ScaleColorSwatch_OnCancel()
+	local r, g, b
+	if ColorPickerFrame.GetPreviousValues then
+		-- Dragonflight 10.2.5 and later
+		r, g, b = ColorPickerFrame:GetPreviousValues()
+	else
+		-- Classic
+		r, g, b = ColorPicker_GetPreviousValues()
+	end
 	PawnUIFrame_ScaleColorSwatch_SetColor(r, g, b)
 end
 
