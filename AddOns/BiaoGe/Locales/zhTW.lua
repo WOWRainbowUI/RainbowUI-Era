@@ -18,6 +18,9 @@ do --繁体说明书
     text = text .. "|cffFFFFFF-更多功能介紹可在設置裡查看|r\n\n"
     text = text .. "-BUG反饋：郵箱buick_hbj@163.com，Q群322785325\n\n"
 
+    update = update .. "|cff00FF00" .. "2月5日更新1.7.9c版本" .. "|r\n"
+    update = update .. [[-<賽季伺服器>添加諾莫瑞根BOSS戰ID，使P2的表格能正確生效]] .. "\n\n"
+
     update = update .. "|cff00FF00" .. "1月31日更新1.7.9b版本" .. "|r\n"
     update = update .. [[-修復了繁體端關於一鍵舉報功能的報錯]] .. "\n\n"
 
@@ -1184,6 +1187,8 @@ do
     L["群\n体\n打\n击\n者"] = "群\n體\n打\n擊\n者"
     L["黑\n铁\n大\n师"] = "黑\n鐵\n大\n師"
     L["瑟\n玛\n普\n拉\n格"] = "瑟\n瑪\n普\n拉\n格"
+    L["机\n械\n动\n物\n园"] = "機\n械\n動\n物\n園"
+
 
     L["亡语者贾格巴"] = "亡語者賈格巴"
     L["主宰拉姆塔斯"] = "主宰拉姆塔斯"

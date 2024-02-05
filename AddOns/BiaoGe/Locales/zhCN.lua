@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.7.9b"
+ADDONSELF.ver = "v1.7.9c"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -19,6 +19,9 @@ do --简体说明书
     text = text .. "|cffFFFFFF-交换格子：|rCTRL+ALT+点击格子1，再点格子2，可交换两行全部内容\n"
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
     text = text .. "-BUG反馈：邮箱buick_hbj@163.com，Q群322785325\n\n"
+
+    update = update .. "|cff00FF00" .. "2月5日更新1.7.9c版本" .. "|r\n"
+    update = update .. [[-<赛季服>添加诺莫瑞根BOSS战ID，使P2的表格能正确生效]] .. "\n\n"
 
     update = update .. "|cff00FF00" .. "1月31日更新1.7.9b版本" .. "|r\n"
     update = update .. [[-修复了繁体端关于一键举报功能的报错]] .. "\n\n"
@@ -1195,6 +1198,7 @@ do
     L["群\n体\n打\n击\n者"] = true
     L["黑\n铁\n大\n师"] = true
     L["瑟\n玛\n普\n拉\n格"] = true
+    L["机\n械\n动\n物\n园"] = true
 
     L["亡语者贾格巴"] = true
     L["主宰拉姆塔斯"] = true
