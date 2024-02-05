@@ -1,375 +1,20 @@
 
---local pointer to details object
 local Details = _G.Details
-local debugmode = false --print debug lines
-local verbosemode = false --auto open the chart panel
-local _
+local DF = _G.DetailsFramework
 local addonName, Details222 = ...
+local _
+local Loc = _G.LibStub("AceLocale-3.0"):GetLocale("Details")
 
-local detailsFramework = DetailsFramework
+local debugmode = false
+local verbosemode = false
 
-local Loc = _G.LibStub("AceLocale-3.0"):GetLocale( "Details" )
+local CreateFrame = CreateFrame
+local UIParent = UIParent
 
---constants
-local CONST_USE_PLAYER_EDPS = false
+local mythicDungeonCharts = Details222.MythicPlus.Charts.Listener
 
---Generate damage chart for mythic dungeon runs
-
---[=[
-The chart table needs to be stored saparated from the combat
-Should the chart data be volatile?
-
---]=]
-
-local mythicDungeonCharts = Details:CreateEventListener()
-_G.DetailsMythicDungeonChartHandler = mythicDungeonCharts
-
---DetailsMythicDungeonChartHandler.ChartTable.Players["playername"].ChartData = {max_value = 0}
-
-function mythicDungeonCharts:Debug(...)
-	if (debugmode or verbosemode) then
-		print("Details! DungeonCharts: ", ...)
-	end
-end
-
-local addPlayerDamage = function(unitCleuName)
-	--get the player data
-	local playerData = mythicDungeonCharts.ChartTable.Players[unitCleuName]
-
-	--if this is the first tick for the player, ignore the damage done on this tick
-	--this is done to prevent a tick tick with all the damage the player did on the previous segment
-	local bIsFirstTick = false
-
-	--check if the player data doesn't exists
-	if (not playerData) then
-		playerData = {
-			Name = detailsFramework:RemoveRealmName(unitCleuName),
-			ChartData = {max_value = 0},
-			Class = select(2, UnitClass(Details:Ambiguate(unitCleuName))),
-
-			--spec zero for now, need to retrive later during combat
-			Spec = 0,
-
-			--last damage to calc difference
-			LastDamage = 0,
-
-			--if started a new combat, need to reset the lastdamage
-			LastCombatID = -1,
-		}
-
-		mythicDungeonCharts.ChartTable.Players[unitCleuName] = playerData
-		bIsFirstTick = true
-	end
-
-	--get the current combat
-	local currentCombat = Details:GetCombat(DETAILS_SEGMENTID_CURRENT)
-	if (currentCombat) then
-		local isOverallSegment = false
-
-		local mythicDungeonInfo = currentCombat.is_mythic_dungeon
-		if (mythicDungeonInfo) then
-			if (mythicDungeonInfo.TrashOverallSegment or mythicDungeonInfo.OverallSegment) then
-				isOverallSegment = true
-			end
-		end
-
-		if (not isOverallSegment) then
-			--check if the combat has changed
-			local segmentId = currentCombat.combat_id
-			if (segmentId ~= playerData.LastCombatID) then
-				playerData.LastDamage = 0
-				playerData.LastCombatID = segmentId
-
-				--mythicDungeonCharts:Debug("Combat changed for player", unitCleuName)
-			end
-
-			local actorTable = currentCombat:GetActor(DETAILS_ATTRIBUTE_DAMAGE, unitCleuName)
-			if (actorTable) then
-				--update the player spec
-				playerData.Spec = actorTable.spec
-
-				if (bIsFirstTick) then
-					--ignore previous damage
-					playerData.LastDamage = actorTable.total
-				end
-
-				--get the damage done
-				local damageDone = actorTable.total
-
-				--check which data is used, dps or damage done
-				if (CONST_USE_PLAYER_EDPS) then
-					local eDps = damageDone / currentCombat:GetCombatTime()
-
-					--add the damage to the chart table
-					table.insert(playerData.ChartData, eDps)
-					--mythicDungeonCharts:Debug("Added dps for " , unitCleuName, ":", eDps)
-
-					if (eDps > playerData.ChartData.max_value) then
-						playerData.ChartData.max_value = eDps
-					end
-				else
-					--calc the difference and add to the table
-					local damageDiff = floor(damageDone - playerData.LastDamage)
-					playerData.LastDamage = damageDone
-
-					--add the damage to the chart table
-					table.insert(playerData.ChartData, damageDiff)
-					--mythicDungeonCharts:Debug("Added damage for " , unitCleuName, ":", damageDiff)
-
-					if (damageDiff > playerData.ChartData.max_value) then
-						playerData.ChartData.max_value = damageDiff
-					end
-				end
-			else
-				--player still didn't made anything on this combat, so just add zero
-				table.insert(playerData.ChartData, 0)
-			end
-		end
-	end
-end
-
-local tickerCallback = function(tickerObject)
-	--check if is inside the dungeon
-	local inInstance = IsInInstance()
-	if (not inInstance) then
-		mythicDungeonCharts:OnEndMythicDungeon()
-		return
-	end
-
-	--check if still running the dungeon
-	if (not mythicDungeonCharts.ChartTable or not mythicDungeonCharts.ChartTable.Running) then
-		tickerObject:Cancel()
-		return
-	end
-
-	--tick damage
-	local totalPlayers = GetNumGroupMembers()
-	for i = 1, totalPlayers-1 do
-		---@type cleuname
-		local cleuName = Details:GetFullName("party" .. i)
-		if (cleuName) then
-			addPlayerDamage(cleuName)
-		end
-	end
-
-	addPlayerDamage(Details:GetFullName("player"))
-end
-
-function mythicDungeonCharts:OnBossDefeated()
-	local currentCombat = Details:GetCurrentCombat()
-	local segmentType = currentCombat:GetCombatType()
-	local bossInfo = currentCombat:GetBossInfo()
-	local mythicLevel = C_ChallengeMode and C_ChallengeMode.GetActiveKeystoneInfo()
-
-	if (mythicLevel and mythicLevel > 0) then
-		if (mythicDungeonCharts.ChartTable and mythicDungeonCharts.ChartTable.Running and bossInfo) then
-
-			local copiedBossInfo = Details:GetFramework().table.copy({}, bossInfo)
-			table.insert(mythicDungeonCharts.ChartTable.BossDefeated, {time() - mythicDungeonCharts.ChartTable.StartTime, copiedBossInfo, currentCombat:GetCombatTime()})
-			mythicDungeonCharts:Debug("Boss defeated, time saved", currentCombat:GetCombatTime())
-		else
-			if (mythicDungeonCharts.ChartTable and mythicDungeonCharts.ChartTable.EndTime ~= -1) then
-				local now = time()
-				--check if the dungeon just ended
-				if (mythicDungeonCharts.ChartTable.EndTime + 2 >= now) then
-
-					if (bossInfo) then
-						local copiedBossInfo = Details:GetFramework().table.copy({}, bossInfo)
-						table.insert(mythicDungeonCharts.ChartTable.BossDefeated, {time() - mythicDungeonCharts.ChartTable.StartTime, copiedBossInfo, currentCombat:GetCombatTime()})
-						mythicDungeonCharts:Debug("Boss defeated, time saved, but used time aproximation:", mythicDungeonCharts.ChartTable.EndTime + 2, now, currentCombat:GetCombatTime())
-					end
-				end
-			else
-				mythicDungeonCharts:Debug("Boss defeated, but no chart capture is running")
-			end
-		end
-	else
-		mythicDungeonCharts:Debug("Boss defeated, but isn't a mythic dungeon boss fight")
-	end
-end
-
-function mythicDungeonCharts:OnStartMythicDungeon()
-	if (not Details.mythic_plus.show_damage_graphic) then
-		mythicDungeonCharts:Debug("Dungeon started, no capturing mythic dungeon chart data, disabled on profile")
-		if (verbosemode) then
-			mythicDungeonCharts:Debug("OnStartMythicDungeon() not allowed")
-		end
-		return
-	else
-		mythicDungeonCharts:Debug("Dungeon started, new capture started")
-	end
-
-	mythicDungeonCharts.ChartTable = {
-		Running = true,
-		Players = {},
-		ElapsedTime = 0,
-		StartTime = time(),
-		EndTime = -1,
-		DungeonName = "",
-
-		--store when each boss got defeated in comparison with the StartTime
-		BossDefeated = {},
-	}
-
-	mythicDungeonCharts.ChartTable.Ticker = C_Timer.NewTicker(1, tickerCallback)
-
-	--save the chart for development
-	if (debugmode) then
-		Details.mythic_plus.last_mythicrun_chart = mythicDungeonCharts.ChartTable
-	end
-
-	if (verbosemode) then
-		mythicDungeonCharts:Debug("OnStartMythicDungeon() success")
-	end
-end
-
-function mythicDungeonCharts:OnEndMythicDungeon()
-	if (mythicDungeonCharts.ChartTable and mythicDungeonCharts.ChartTable.Running) then
-
-		--stop capturinfg
-		mythicDungeonCharts.ChartTable.Running = false
-		mythicDungeonCharts.ChartTable.ElapsedTime = time() - mythicDungeonCharts.ChartTable.StartTime
-		mythicDungeonCharts.ChartTable.EndTime = time()
-		mythicDungeonCharts.ChartTable.Ticker:Cancel()
-
-		local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize = GetInstanceInfo()
-		mythicDungeonCharts.ChartTable.DungeonName = name
-
-		--check if is inside the dungeon
-		--many players just leave the dungeon in order the re-enter and start the run again, the chart window is showing in these cases data to an imcomplete run.
-		local isInsideDungeon = IsInInstance()
-		if (not isInsideDungeon) then
-			mythicDungeonCharts:Debug("OnEndMythicDungeon() player wasn't inside the dungeon.")
-			return
-		end
-
-		mythicDungeonCharts:Debug("Dungeon ended successfully, chart data capture stopped, scheduling to open the window.")
-
-		--the run is valid, schedule to open the chart window
-		Details.mythic_plus.delay_to_show_graphic = 5
-		C_Timer.After(Details.mythic_plus.delay_to_show_graphic or 5, mythicDungeonCharts.ShowReadyPanel)
-
-		if (verbosemode) then
-			mythicDungeonCharts:Debug("OnEndMythicDungeon() success!")
-		end
-	else
-		mythicDungeonCharts:Debug("Dungeon ended, no chart data was running")
-		if (verbosemode) then
-			mythicDungeonCharts:Debug("OnEndMythicDungeon() fail")
-		end
-	end
-end
-
-mythicDungeonCharts:RegisterEvent("COMBAT_MYTHICDUNGEON_START", "OnStartMythicDungeon")
-mythicDungeonCharts:RegisterEvent("COMBAT_MYTHICDUNGEON_END", "OnEndMythicDungeon")
-mythicDungeonCharts:RegisterEvent("COMBAT_BOSS_DEFEATED", "OnBossDefeated")
-
--- /run _G.DetailsMythicDungeonChartHandler.ShowChart(); DetailsMythicDungeonChartFrame.ShowChartFrame()
--- /run _G.DetailsMythicDungeonChartHandler.ShowReadyPanel()
-
---show a small panel telling the chart is ready to show
-function mythicDungeonCharts.ShowReadyPanel()
-	--check if is enabled
-	if (not Details.mythic_plus.show_damage_graphic) then
-		return
-	end
-
-	--create the panel
-	if (not mythicDungeonCharts.ReadyFrame) then
-		mythicDungeonCharts.ReadyFrame = CreateFrame("frame", "DetailsMythicDungeonReadyFrame", UIParent, "BackdropTemplate")
-		local readyFrame = mythicDungeonCharts.ReadyFrame
-
-		local textColor = {1, 0.8196, 0, 1}
-		local textSize = 11
-
-		local roundedCornerTemplate = {
-			roundness = 6,
-			color = {.1, .1, .1, 0.98},
-			border_color = {.05, .05, .05, 0.834},
-		}
-
-		detailsFramework:AddRoundedCornersToFrame(readyFrame, roundedCornerTemplate)
-
-		local titleLabel = DetailsFramework:CreateLabel(readyFrame, Loc["Details! Mythic Run Completed!"], 12, "yellow")
-		titleLabel:SetPoint("top", readyFrame, "top", 0, -7)
-		titleLabel.textcolor = textColor
-
-		local closeButton = detailsFramework:CreateCloseButton(readyFrame, "$parentCloseButton")
-		closeButton:SetPoint("topright", readyFrame, "topright", -2, -2)
-		closeButton:SetScale(1.4)
-		closeButton:SetAlpha(0.823)
-
-		readyFrame:SetSize(255, 120)
-		readyFrame:SetPoint("center", UIParent, "center", 300, 0)
-		readyFrame:SetFrameStrata("LOW")
-		readyFrame:EnableMouse(true)
-		readyFrame:SetMovable(true)
-		--DetailsFramework:ApplyStandardBackdrop(readyFrame)
-		--DetailsFramework:CreateTitleBar (readyFrame, "Details! Mythic Run Completed!")
-
-		readyFrame:Hide()
-
-		--register to libwindow
-		local LibWindow = LibStub("LibWindow-1.1")
-		LibWindow.RegisterConfig(readyFrame, Details.mythic_plus.mythicrun_chart_frame_ready)
-		LibWindow.RestorePosition(readyFrame)
-		LibWindow.MakeDraggable(readyFrame)
-		LibWindow.SavePosition(readyFrame)
-
-		--show button
-		---@type df_button
-		readyFrame.ShowButton = DetailsFramework:CreateButton(readyFrame, function() mythicDungeonCharts.ShowChart(); readyFrame:Hide() end, 80, 20, "Show Damage Graphic")
-		readyFrame.ShowButton:SetTemplate(DetailsFramework:GetTemplate("button", "DETAILS_PLUGIN_BUTTON_TEMPLATE"))
-		readyFrame.ShowButton:SetPoint("topleft", readyFrame, "topleft", 5, -30)
-		readyFrame.ShowButton:SetIcon([[Interface\AddOns\Details\images\icons2.png]], 16, 16, "overlay", {42/512, 75/512, 153/512, 187/512}, {.7, .7, .7, 1}, nil, 0, 0)
-		readyFrame.ShowButton.textcolor = textColor
-
-		--discart button
-		--readyFrame.DiscartButton = DetailsFramework:CreateButton(readyFrame, function() readyFrame:Hide() end, 80, 20, Loc ["STRING_DISCARD"])
-		--readyFrame.DiscartButton:SetTemplate(DetailsFramework:GetTemplate("button", "DETAILS_PLUGIN_BUTTON_TEMPLATE"))
-		--readyFrame.DiscartButton:SetPoint("right", readyFrame.ShowButton, "left", -5, 0)
-
-		--disable feature check box (dont show this again)
-		local on_switch_enable = function(self, _, value)
-			Details.mythic_plus.show_damage_graphic = not value
-		end
-
-		local notAgainSwitch, notAgainLabel = DetailsFramework:CreateSwitch(readyFrame, on_switch_enable, not Details.mythic_plus.show_damage_graphic, _, _, _, _, _, _, _, _, _, Loc ["STRING_MINITUTORIAL_BOOKMARK4"], DetailsFramework:GetTemplate("switch", "OPTIONS_CHECKBOX_BRIGHT_TEMPLATE"), "GameFontHighlightLeft")
-		notAgainSwitch:ClearAllPoints()
-		notAgainLabel:SetPoint("left", notAgainSwitch, "right", 2, 0)
-		notAgainSwitch:SetPoint("bottomleft", readyFrame, "bottomleft", 5, 5)
-		notAgainSwitch:SetAsCheckBox()
-		notAgainLabel.textSize = textSize
-
-		
-
-		local timeNotInCombatLabel = DetailsFramework:CreateLabel(readyFrame, "Time not in combat:", textSize, "orangered")
-		timeNotInCombatLabel:SetPoint("bottomleft", notAgainSwitch, "topleft", 0, 7)
-		local timeNotInCombatAmount = DetailsFramework:CreateLabel(readyFrame, "00:00", textSize, "orangered")
-		timeNotInCombatAmount:SetPoint("left", timeNotInCombatLabel, "left", 130, 0)
-
-		local elapsedTimeLabel = DetailsFramework:CreateLabel(readyFrame, "Run Time:", textSize, textColor)
-		elapsedTimeLabel:SetPoint("bottomleft", timeNotInCombatLabel, "topleft", 0, 5)
-		local elapsedTimeAmount = DetailsFramework:CreateLabel(readyFrame, "00:00", textSize, textColor)
-		elapsedTimeAmount:SetPoint("left", elapsedTimeLabel, "left", 130, 0)
-
-		readyFrame.TimeNotInCombatAmountLabel = timeNotInCombatAmount
-		readyFrame.ElapsedTimeAmountLabel = elapsedTimeAmount
-	end
-
-	mythicDungeonCharts.ReadyFrame:Show()
-
-	--update the run time and time not in combat
-	local elapsedTime = Details222.MythicPlus.time or 1507
-	mythicDungeonCharts.ReadyFrame.ElapsedTimeAmountLabel.text = DetailsFramework:IntegerToTimer(elapsedTime)
-
-	local overallMythicDungeonCombat = Details:GetCurrentCombat()
-	if (overallMythicDungeonCombat:GetCombatType() == DETAILS_SEGMENTTYPE_MYTHICDUNGEON_OVERALL) then
-		local combatTime = overallMythicDungeonCombat:GetCombatTime()
-		local notInCombat = elapsedTime - combatTime
-		mythicDungeonCharts.ReadyFrame.TimeNotInCombatAmountLabel.text = DetailsFramework:IntegerToTimer(notInCombat) .. " (" .. math.floor(notInCombat / elapsedTime * 100) .. "%)"
-	end
-end
+-- /run _G.DetailsMythicDungeonChartHandler.ShowEndOfMythicPlusPanel()
+-- /run _G.DetailsMythicDungeonChartHandler.ShowChart()
 
 function mythicDungeonCharts.ShowChart()
 	if (not mythicDungeonCharts.Frame) then
@@ -407,7 +52,7 @@ function mythicDungeonCharts.ShowChart()
 			titlebar:SetBackdropBorderColor(0, 0, 0, 1)
 
 			--title
-			local titleLabel = Details.gump:NewLabel(titlebar, titlebar, nil, "titulo", Loc["STRING_OPTIONS_PLUGINS"], "GameFontHighlightLeft", 16, {227/255, 186/255, 4/255})
+			local titleLabel = Details.gump:NewLabel(titlebar, titlebar, nil, "titulo", "Plugins", "GameFontHighlightLeft", 16, {227/255, 186/255, 4/255})
 			titleLabel:SetPoint("center", titlebar , "center")
 			titleLabel:SetPoint("top", titlebar , "top", 0, -5)
 			dungeonChartFrame.TitleText = titleLabel
@@ -716,7 +361,7 @@ function mythicDungeonCharts.ShowChart()
 	local phrase = Loc["Details!: Average Dps for "]
 
 	mythicDungeonCharts.Frame.ChartFrame:SetTitle("")
-	Details:GetFramework():SetFontSize(mythicDungeonCharts.Frame.ChartFrame.chart_title, 14)
+	Details:GetFramework():SetFontSize(mythicDungeonCharts.Frame.ChartFrame.chart_title, 16)
 
 	mythicDungeonCharts.Frame.TitleText:SetText(mythicDungeonCharts.ChartTable.DungeonName and phrase .. mythicDungeonCharts.ChartTable.DungeonName or phrase)
 
@@ -887,7 +532,6 @@ function mythicDungeonCharts:CustomDrawLine (C, sx, sy, ex, ey, w, color, layer,
 	return T
 end
 
-
 mythicDungeonCharts.ClassColors = {
 	["HUNTER1"] = { r = 0.67, g = 0.83, b = 0.45, colorStr = "ffabd473" },
 	["HUNTER2"] = { r = 0.47, g = 0.63, b = 0.25, colorStr = "ffabd473" },
@@ -945,9 +589,3 @@ mythicDungeonCharts.ClassColors = {
 if (debugmode) then
 	--C_Timer.After(1, mythicDungeonCharts.ShowChart)
 end
-
-Details222.MythicPlus = {
-	IsMythicPlus = function()
-		return C_ChallengeMode and C_ChallengeMode.GetActiveKeystoneInfo() and true or false
-	end,
-}

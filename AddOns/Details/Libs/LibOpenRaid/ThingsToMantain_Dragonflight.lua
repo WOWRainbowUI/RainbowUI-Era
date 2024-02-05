@@ -217,6 +217,7 @@ do
 		}
 
 		LIB_OPEN_RAID_ALL_POTIONS = {
+			[415569] = 1, --Dreamwalker's Healing Potion
 			[370511] = 1, --Refreshing Healing Potion
 			[371039] = 1, --Potion of Withering Vitality
 			[370607] = 1, --Aerated Mana Potion
@@ -229,6 +230,7 @@ do
 
 		--spellId of healing from potions
 		LIB_OPEN_RAID_HEALING_POTIONS = {
+			[415569] = 1, --Dreamwalker's Healing Potion
 			[370511] = 1, --Refreshing Healing Potion
 			[371039] = 1, --Potion of Withering Vitality
 			[6262] = 1, --Warlock's Healthstone
@@ -374,6 +376,7 @@ do
 			[115750] = {cooldown = 90,	duration = 6,	specs = {65, 66, 70},	talent = false,	charges = 1,	class = "PALADIN",	type = 8}, --Blinding Light
 			[231895] = {cooldown = 120,	duration = 25,	specs = {70},				talent = false,	charges = 1,	class = "PALADIN",	type = 1}, --Crusade
 			[498] = {cooldown = 60,	duration = 8,	specs = {65},				talent = false,	charges = 1,	class = "PALADIN",	type = 2}, --Divine Protection
+			[403876] = {cooldown = 60,	duration = 8,	specs = {65},				talent = false,	charges = 1,	class = "PALADIN",	type = 2}, --Divine Protection Retribution
 			[642] = {cooldown = 300,	duration = 8,	specs = {65, 66, 70},	talent = false,	charges = 1,	class = "PALADIN",	type = 2}, --Divine Shield
 			[205191] = {cooldown = 60,	duration = 10,	specs = {70},				talent = false,	charges = 1,	class = "PALADIN",	type = 2}, --Eye for an Eye
 			[86659] = {cooldown = 300,	duration = 8,	specs = {66},				talent = false,	charges = 1,	class = "PALADIN",	type = 2}, --Guardian of Ancient Kings

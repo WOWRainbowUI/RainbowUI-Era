@@ -1869,7 +1869,7 @@ local MIN_ILEVEL_TO_STORE = 50
 local LOOP_TIME = 7
 
 function _detalhes:IlvlFromNetwork (player, realm, core, serialNumber, itemLevel, talentsSelected, currentSpec)
-	if (_detalhes.debug) then
+	if (_detalhes.debug and false) then
 		local talents = "Invalid Talents"
 		if (type(talentsSelected) == "table") then
 			talents = ""
@@ -1877,7 +1877,7 @@ function _detalhes:IlvlFromNetwork (player, realm, core, serialNumber, itemLevel
 				talents = talents .. talentsSelected [i] .. ","
 			end
 		end
-		_detalhes:Msg("(debug) Received PlayerInfo Data: " .. (player or "Invalid Player Name") .. " | " .. (itemLevel or "Invalid Item Level") .. " | " .. (currentSpec or "Invalid Spec") .. " | " .. talents  .. " | " .. (serialNumber or "Invalid Serial"))
+		Details222.DebugMsg("Received PlayerInfo Data: " .. (player or "Invalid Player Name") .. " | " .. (itemLevel or "Invalid Item Level") .. " | " .. (currentSpec or "Invalid Spec") .. " | " .. talents  .. " | " .. (serialNumber or "Invalid Serial"))
 	end
 
 	if (not player) then
@@ -3151,7 +3151,7 @@ hooksecurefunc("ChatFrame_DisplayTimePlayed", function()
 			local levelText = TIME_PLAYED_LEVEL and TIME_PLAYED_LEVEL:gsub("%%s", "") or ""
 			for fontString in ChatFrame1.fontStringPool:EnumerateActive() do
 				if (fontString:GetText() and fontString:GetText():find(levelText)) then
-					print(Details.GetPlayTimeOnClassString() .. " (/details playedclass)")
+					print(Details.GetPlayTimeOnClassString() .. " (不顯示此訊息請輸入 /details playedclass)")
 					break
 				end
 			end

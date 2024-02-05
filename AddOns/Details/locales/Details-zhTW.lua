@@ -329,7 +329,7 @@ L["STRING_MEMORY_ALERT_TEXT3"] = "然而，如果你想要知道|cFFFF8800哪個
 L["STRING_MEMORY_ALERT_TITLE"] = "請仔細閱讀!"
 L["STRING_MENU_CLOSE_INSTANCE"] = "關閉這個視窗"
 L["STRING_MENU_CLOSE_INSTANCE_DESC"] = "被關閉的視窗只是閒置，隨時都可以使用視窗控制選單重新打開。"
-L["STRING_MENU_CLOSE_INSTANCE_DESC2"] = "要永久刪除視窗，請看設定選項中的其他。"
+L["STRING_MENU_CLOSE_INSTANCE_DESC2"] = "要永久移除視窗，請到設定選項視窗 > 視窗內容 > 刪除。"
 L["STRING_MENU_INSTANCE_CONTROL"] = "視窗控制"
 L["STRING_MINIMAP_TOOLTIP1"] = "|cFFCFCFCF左鍵|r: 設定選項"
 L["STRING_MINIMAP_TOOLTIP11"] = "|cFFCFCFCF左鍵|r: 清空所有戰鬥記錄"
@@ -792,16 +792,14 @@ L["STRING_OPTIONS_MENU_ATTRIBUTE_ANCHORY_DESC"] = "調整屬性文字在 Y 軸�
 L["STRING_OPTIONS_MENU_ATTRIBUTE_ENABLED_DESC"] = "啟動會顯示出目前顯示在視窗中的顯示名稱。"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_ENCOUNTERTIMER"] = "首領戰計時器"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_ENCOUNTERTIMER_DESC"] = "啟用時，文字的左側會顯示碼表計時。"
---[[Translation missing --]]
-L["STRING_OPTIONS_MENU_ATTRIBUTE_FONT"] = ""
+L["STRING_OPTIONS_MENU_ATTRIBUTE_FONT"] = "-"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_FONT_DESC"] = "選擇屬性文字的字體。"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_SHADOW_DESC"] = "啟用或停用文字陰影。"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_SIDE"] = "對齊上方"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_SIDE_DESC"] = "選擇文字所在的位置。"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_TEXTCOLOR"] = "文字顏色"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_TEXTCOLOR_DESC"] = "更改屬性文字的顏色。"
---[[Translation missing --]]
-L["STRING_OPTIONS_MENU_ATTRIBUTE_TEXTSIZE"] = ""
+L["STRING_OPTIONS_MENU_ATTRIBUTE_TEXTSIZE"] = "-"
 L["STRING_OPTIONS_MENU_ATTRIBUTE_TEXTSIZE_DESC"] = "調整屬性文字的大小。"
 L["STRING_OPTIONS_MENU_ATTRIBUTESETTINGS_ANCHOR"] = "設定:"
 L["STRING_OPTIONS_MENU_AUTOHIDE_DESC"] = "滑鼠移出視窗時自動隱藏按鈕，當滑鼠再次指向視窗、與之互動時則顯示按鈕。"
@@ -1237,12 +1235,10 @@ L["STRING_OPTIONS_TOOLTIPS_BORDER_SIZE_DESC"] = "更改邊框大小。"
 L["STRING_OPTIONS_TOOLTIPS_BORDER_TEXTURE_DESC"] = "修改邊框材質檔案。"
 L["STRING_OPTIONS_TOOLTIPS_FONTCOLOR"] = "文字顏色"
 L["STRING_OPTIONS_TOOLTIPS_FONTCOLOR_DESC"] = "更改浮動提示資訊文字使用的顏色。"
---[[Translation missing --]]
-L["STRING_OPTIONS_TOOLTIPS_FONTFACE"] = ""
+L["STRING_OPTIONS_TOOLTIPS_FONTFACE"] = "-"
 L["STRING_OPTIONS_TOOLTIPS_FONTFACE_DESC"] = "選擇浮動提示資訊文字使用的字體。"
 L["STRING_OPTIONS_TOOLTIPS_FONTSHADOW_DESC"] = "啟用或停用文字陰影。"
---[[Translation missing --]]
-L["STRING_OPTIONS_TOOLTIPS_FONTSIZE"] = ""
+L["STRING_OPTIONS_TOOLTIPS_FONTSIZE"] = "-"
 L["STRING_OPTIONS_TOOLTIPS_FONTSIZE_DESC"] = "加大或減小浮動提示資訊文字的大小。"
 L["STRING_OPTIONS_TOOLTIPS_IGNORESUBWALLPAPER"] = "子選單背景圖"
 L["STRING_OPTIONS_TOOLTIPS_IGNORESUBWALLPAPER_DESC"] = "啟用時，某些選單的子選單會使用專屬的背景圖案。"
@@ -1771,8 +1767,6 @@ L["Unknown"] = "未知"
 -- L["m "] = " 分 "
 -- L["s"] = " 秒"
 L["Wipe has been called by your raid leader."] = "RL 說要 RE 了。"
-L["|cFFFFFF00you might find differences on damage done, this is due to a bug in the game client, nothing related to Details! itself ("] = "|cFFFFFF00如果你發現造成傷害不同，這是因為遊戲本身的 bug，和 Details! 無關 ("
-L["|cFFFFFF00you may find differences on damage done, this is due to a bug in the game client, nothing related to Details! itself ("] = "|cFFFFFF00如果你發現造成傷害不同，這是因為遊戲本身的 bug，和 Details! 無關 ("
 
 -- core\plugins.lua 更改字體大小
 L["Details version is out of date."] = "Details! 版本已過期。"
@@ -1891,7 +1885,6 @@ L["Group Frames"] = "將框架組成群組"
 -- L["Width"] = "寬度"
 -- L["Height"] = "高度"
 L["Lines Per Column"] = "各自獨立一行"
-L["A cooldown tracker on Details!?\nWhat's next, a Caw counter for Elwynn Forest?"] = "Details 有技能冷卻追蹤?\n那接下來會是什麼，艾爾文森林的乳牛牧場?"
 L["This is a concept of a cooldown tracker using the new library 'Open Raid' which uses comms to update cooldown timers.\nThe code to implement is so small that can fit inside a weakaura\nIf you're a coder, the implementation is on Details/frames/window_cdtracker.lua"] = "這是一種新的技能冷卻追蹤概念，使用新的函式庫 'Open Raid'，透過彼此通訊來更新冷卻時間。\n程式碼非常小，小可以塞到 WA 技能提醒裡面，如果你會寫程式，寫法在 Details/frames/window_cdtracker.lua。"
 L["Crowd Control"] = "控場"
 L["Example: Incapacitaion Roar."] = "例如: 癱瘓咆哮。"
@@ -2043,12 +2036,13 @@ L["|TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:14:12:0:1:512:512:8:70:328:409|
 L["M+ Score:"] = "M+ 分數:"
 L["Remove Common Segments"] = "移除一般戰鬥記錄"
 L["Reset, but keep Mythic+ Overall Segments"] = "重置，但是保留 M+ 整體戰鬥記錄"
+L["Remove Battleground Segments"] = "移除戰場戰鬥記錄"
 
 -- frames\window_news.lua
 L["Auto Open on New Changes"] = "有新的改動時自動打開"
 
 -- frames\window_options2.lua 更改字體大小
-L["Options"] = "設定選項" -- 前面已有 ["STRING_INTERFACE_OPENOPTIONS"]
+L["Options"] = "選項" -- 前面已有 ["STRING_INTERFACE_OPENOPTIONS"]
 L[" unknown"] = " 未知"
 L["Editing Group"] = "編輯群組"
 L["Character\nPosition"] = "角色\n位置"
@@ -2167,6 +2161,7 @@ L["Real Time"] = "即時"
 -- L["Select Profile"] = "選擇設定檔"
 -- L["Not Installed"] = "未安裝"
 -- L["Height"] = "高度"
+-- L["Options"] = "選項"
 L["Immersion"] = "沉浸式體驗"
 L["Show pets when solo"] = "單人時顯示寵物"
 L["Click Through Only in Combat"] = "只有戰鬥中時要點擊穿透"
@@ -2324,6 +2319,8 @@ L["Use Total Combat Time"] = "使用總共戰鬥時間"
 L["The overall segment for the Mythic+ run will use 'totalDamage / totalCombatTime' to calculate DPS."] = "M+ 的整體戰鬥記錄使用 '總共輸出傷害 / 總共戰鬥時間' 來計算 DPS。"
 L["Use Run Time"] = "使用通關時間"
 L["The overall segment for the Mythic+ run will use 'totalDamage / runTime' to calculate DPS."] = "M+ 的整體戰鬥記錄使用 '總共輸出傷害 / 通關時間' 來計算 DPS。"
+L["Enable"] = "啟用"
+L["Disable"] = "停用"
 
 -- frames\window_plater.lua 更改字體大小
 -- 要加上 local Loc = _G.LibStub("AceLocale-3.0"):GetLocale("Details")
@@ -2367,7 +2364,7 @@ L["See how much damage the enemy is taking in real time!"] = "立馬知道敵人
 L["Plater isn't installed! you may download it from the Curseforge app."] = "Plater 血條插件尚未安裝! 可以從 CurseForge 網站或使用 Curseforge app 下載。"
 
 -- frames\window_breakdown\window_playerbreakdown.lua 更改字體大小
-L["Details! Damage Meter | Use '/details stats' for statistics"] = "Details! Damage Meter | 輸入 '/details stats' 顯示統計資料"
+L["Details! Damage Meter | Click 'Options' button for settings."] = "Details! Damage Meter | 點一下 '選項' 按鈕進行設定。"
 
 -- frames\window_breakdown\window_playerbreakdown_auras.lua
 -- 要加上 local Loc = _G.LibStub("AceLocale-3.0"):GetLocale("Details")
@@ -2628,6 +2625,23 @@ L["No Aura Addon selected. Addons currently supported: WeakAuras 2."] = "沒有�
 -- frames\window_welcome.lua 更改字體大小
 -- L["wait... "] = "請稍等... " -- 前面已有
 
+-- frames\window_mythicplus\window_chart.lua 更改字體大小
+-- 要加上 local Loc = _G.LibStub("AceLocale-3.0"):GetLocale("Details")
+-- L["Enabled"] = "啟用" -- 前面已有
+L["Dungeon Run Chart"] = "地城攻略圖表"
+L["Show this chart at the end of a mythic dungeon run.\n\nIf disabled, you can reactivate it again at the options panel > streamer settings."] = "打完傳奇地城後顯示這個圖表。\n\n停用時，可以從選項面板 > streamer settings 將它再次啟用。"
+L["Show Boss"] = "顯示首領"
+L["Details!: Average Dps for "] = "Details!: 平均 DPS - "
+
+-- frames\window_mythicplus\window_end_of_run.lua 更改字體大小
+L["Details! Mythic Run Completed!"] = "Details! 傳奇地城通關!"
+L["Show Damage Graphic"] = "顯示傷害圖表"
+L["Time not in combat:"] = "沒有戰鬥的時間:"
+L["Run Time:"] = "通關時間:"
+L["You are seeing this because it's a 28 or above. Under development."] = "看到這段訊息表示這是 28 層或以上，相關功能仍在開發中。"
+L["Show Breakdown"] = "顯示分析"
+L["Unknown for this run"] = "此次通關未知"
+
 -- functions\deathmenu.lua 更改字體大小
 -- 要加上 local Loc = _G.LibStub("AceLocale-3.0"):GetLocale("Details")
 L["you can disable this at /details > Raid Tools"] = "可以在 /details > 團隊工具，停用。"
@@ -2652,16 +2666,8 @@ L["Advanced Death Logs plugin is disabled or not installed, check the Addon Cont
 L["Spells"] = "法術"
 L["Open your player Details! breakdown."] = "打開 Details! 玩家分析。"
 
--- functions\dungeon.lua 更改字體大小
--- L["Enabled"] = "啟用" -- 前面已有
-L["Dungeon Run Chart"] = "地城攻略圖表"
-L["Show this chart at the end of a mythic dungeon run.\n\nIf disabled, you can reactivate it again at the options panel > streamer settings."] = "打完傳奇地城後顯示這個圖表。\n\n停用時，可以從選項面板 > streamer settings 將它再次啟用。"
-L["Show Boss"] = "顯示首領"
-L["Details!: Average Dps for "] = "Details!: 平均 DPS - "
-L["Details! Mythic Run Completed!"] = "Details! 傳奇地城通關!"
-
--- functions\mythicdungeon.lua
-L["the overall data has been reset."] = "已重置整體資料。"
+-- functions\mythicdungeon\mythicdungeon.lua
+L["the overall data has been reset."] = "已重置整場資料。"
 
 -- functions\profiles.lua 更改字體大小
 L["Profile Not Found."] = "沒有找到設定檔。"
@@ -2940,7 +2946,7 @@ L["total lines:"] = "總行數:"
 -- L["High"] = "高"
 -- L["Dialog"] = "對話框 (最高)"
 -- L["Details! Team"] = "Details! 團隊"
-L["Details! Streamer: Action Tracker"] = "Details! 實況主: 技能追蹤"
+L["Details! Streamer: Action Tracker"] = "Details! 直播工具: 技能追蹤"
 L["|cFFFF7700Left Click|r: Open Options\n|cFFFF7700Right Click|r: Lock the Frame\n|cFFFF7700Slash Command|r: /streamer"] = "|cFFFF7700左鍵|r: 設定選項\n|cFFFF7700右鍵|r: 鎖定框架\n|cFFFF7700指令|r: /streamer"
 L["|cFFFF7700Left Click|r: Open Options\n|cFFFF7700Slash Command|r: /streamer"] = "|cFFFF7700左鍵|r: 設定選項\n|cFFFF7700指令|r: /streamer"
 L["Locked"] = "鎖定"
@@ -3004,6 +3010,12 @@ L["Use Square Mode"] = "使用方格模式"
 L["You need to /reload after change."] = "更改後必須重新載入介面。"
 L["Square Amount"] = "方格數量"
 L["Square Size"] = "方格大小"
+L["Square Direction"] = "方格方向"
+L["Disable Plugin"] = "停用外掛"
+L["Enable Plugin"] = "啟用外掛"
+L["Start Plugin"] = "啟動外掛"
+L["Scale"] = "縮放大小"
+L["Select Mode (test casting some spells)"] = "選擇呈現模式 (施放些法術來測試)"
 
 -- Details_Vanguard.lua
 L["Show debuffs on each tanks in the raid, also shows incoming heal and damage and the last hits you took."] = "顯示團隊中每個坦克的減益，同時也會顯示即將治療、傷害和最後承受的攻擊。"
