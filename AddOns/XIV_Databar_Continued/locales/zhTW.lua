@@ -11,10 +11,9 @@ L['M'] = "百萬"; -- short for 1000000
 L['B'] = "十億"; -- short for 1000000000
 L['L'] = "本地"; -- For the local ping
 L['W'] = "世界"; -- For the world ping
-L['w'] = "萬";
-L['e'] = "億";
-L['c'] = "兆";
-
+L['w'] = "萬";	-- short for 10000, used in zhCN and zhTW
+L['e'] = "億"; -- short for 100000000
+L['c'] = "兆"; -- short for 1000000000000
 
 -- General
 L["Positioning"] = "位置";
@@ -25,8 +24,10 @@ L['Bar Color'] = "資訊列顏色";
 L['Use Class Color for Bar'] = "使用職業顏色";
 L["Miscellaneous"] = "其他";
 L['Hide Bar in combat'] = "戰鬥中隱藏";
-L['Bar Padding'] = "資訊列內距 (縮放大小)";
+L['Bar Padding'] = "資訊列內距";
 L['Module Spacing'] = "模組間距";
+L['Bar Margin'] = "資訊列間距";
+L["Leftmost and rightmost margin of the bar modules"] = "資訊列模組最左邊和最右邊的間距";
 L['Hide order hall bar'] = "隱藏職業大廳列";
 L['Use ElvUI for tooltips'] = "使用ElvUI浮動提示";
 
@@ -152,8 +153,14 @@ L['Remaining'] = "還需要";
 L['Available Ranks'] = "神兵武器等級";
 L['Artifact Knowledge'] = "神兵知識等級";
 
--- 自行加入
-L["XIV Bar Continued"] = "資訊列";
+-- Travel
+L['Use Random Hearthstone'] = "使用隨機爐石";
+L['Empty Hearthstones List'] = "如果下方的清單是空的，請在初始載入後幾秒再重新載入介面 (暴雪使用非同步的方式載入物品資訊，這是目前唯一的解決方法)。"
+L['Hearthstones Select'] = "選擇爐石";
+L['Hearthstones Select Desc'] = "選擇要使用哪個爐石 (如果選擇了多個爐石，請勾選 \"使用隨機爐石\" 選項)";
+
+-- Additional
+L["XIV Bar Continued"] = "資訊列";  -- used for config menu
 L['Profiles'] = "設定檔";
 L['Money'] = "金錢"
 L['Enable in combat'] = "戰鬥中可使用"
@@ -174,7 +181,6 @@ L['Call of Duty: MW2'] = "決勝時刻: 現代戰爭2"
 L['Call of Duty: BOCW'] = "決勝時刻: 黑色行動冷戰"
 L['Call of Duty: Vanguard'] = "決勝時刻: 先鋒"
 L["Hide when in flight"] = "使用鳥點飛行時隱藏"
-L["BFA"] = "《決戰艾澤拉斯》"
 L["Classic"] = "《經典版》"
 L['Warcraft 3 Reforged'] = "魔獸爭霸III: 淬鍊重生"
 L['Diablo II: Resurrected'] = "暗黑破壞神II: 獄火重生"
@@ -185,4 +191,4 @@ L['Call of Duty: Modern Warfare II'] = "決勝時刻: 現代戰爭II 2022"
 L["Diablo 4"] = "暗黑破壞神IV"
 L["Blizzard Arcade Collection"] = "暴雪遊樂場典藏系列"
 L["Crash Bandicoot 4"] = "袋狼大進擊4"
-L["Hide Friends Playing Other Games"] = "隱藏其他遊戲好友";
+L["Hide Friends Playing Other Games"] = "隱藏其他遊戲好友"; -- used for the friend list function I added myself

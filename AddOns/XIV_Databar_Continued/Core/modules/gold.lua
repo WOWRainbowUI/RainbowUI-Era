@@ -357,7 +357,7 @@ function GoldModule:GetDefaultOptions()
     return 'gold', {
         enabled = true,
         showSmallCoins = false,
-        showFreeBagSpace = true,
+        showFreeBagSpace = false,
         shortThousands = false
     }
 end

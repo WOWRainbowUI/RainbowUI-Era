@@ -24,6 +24,8 @@ L["Miscellaneous"] = true;
 L['Hide Bar in combat'] = true;
 L['Bar Padding'] = true;
 L['Module Spacing'] = true;
+L['Bar Margin'] = true;
+L["Leftmost and rightmost margin of the bar modules"] = true;
 L['Hide order hall bar'] = true;
 L['Use ElvUI for tooltips'] = true;
 
@@ -149,6 +151,12 @@ L['Open Artifact'] = true;
 L['Remaining'] = true;
 L['Available Ranks'] = true;
 L['Artifact Knowledge'] = true;
+
+-- Travel
+L['Use Random Hearthstone'] = true;
+L['Empty Hearthstones List'] = "If you see an empty list, /reload your UI a few seconds after the initial loading (Blizzard is loading items informations asynchronously so that's the only solution for now)."
+L['Hearthstones Select'] = true;
+L['Hearthstones Select Desc'] = "Select which hearthstones to use (be careful if you select multiple hearthstones, you might want to check the 'Hearthstones Select' option)";
 
 -- 自行加入
 L["XIV Bar Continued"] = true;

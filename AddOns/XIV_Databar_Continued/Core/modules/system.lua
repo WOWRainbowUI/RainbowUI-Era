@@ -309,7 +309,7 @@ end
 
 function SystemModule:GetDefaultOptions()
     return 'system', {
-        enabled = true,
+        enabled = false,
         showTooltip = true,
         showWorld = true,
         addonsToShow = 10,

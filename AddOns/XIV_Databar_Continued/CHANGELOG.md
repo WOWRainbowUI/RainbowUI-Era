@@ -1,11 +1,13 @@
 # XIV_Databar Continued
 
-## [2.3.23](https://github.com/ZelionGG/XIV_Databar-Continued/tree/v2.3.23) (2024-01-21)
+## [2.6.1](https://github.com/ZelionGG/XIV_Databar-Continued/tree/v2.6) (2024-02-05)
 
-[Full Changelog](https://github.com/ZelionGG/XIV_Databar-Continued/compare/v2.3.22...v2.3.23) [Previous Releases](https://github.com/ZelionGG/XIV_Databar-Continued/releases)
+[Full Changelog](https://github.com/ZelionGG/XIV_Databar-Continued/compare/v2.6...v2.6.1) [Previous Releases](https://github.com/ZelionGG/XIV_Databar-Continued/releases)
 
-##### _Retail :_
-- TOC update for Retail 10.2.5.
+### _Global :_
 
-##### _Classic :_
-- TOC update for Classic 1.15.
+- Added Chinese (Taiwan) Localization (credits to [class2u](https://github.com/class2u)).
+
+### _Retail :_
+
+- Fixed crashes happening with 2.6 release of the addon and the hearthstones selector.
