@@ -618,6 +618,24 @@ D["ClassicCastbars"] = {
         callback = function(cfg, v, loading) SlashCmdList["CLASSICCASTBARS"]("") end,
     },
 };
+D["ClassicCalendar"] = {
+	defaultEnable = 1,
+	tags = { "BOSSRAID" },
+	title = "行事曆",
+	desc = "在經典版中提供和正式服相同的行事曆的功能。`|r",
+	{
+        text = "打開行事曆",
+        callback = function(cfg, v, loading) SlashCmdList["CALENDAR"]("") end,
+    },
+	{
+        text = "設定選項",
+        callback = function(cfg, v, loading) SlashCmdList["CCCONFIG"]("") end,
+    },
+	{
+        type = "text",
+		text = "點小地圖上的行事曆按鈕，或是點畫面正下方的時間，也可以打開行事曆。",
+    },
+};
 D["ClassicSpellActivations"] = {
 	defaultEnable = 1,
 	tags = { "ACTIONBAR" },
