@@ -121,7 +121,7 @@ kNewFeatures =  -- For flagging new features in the UI.
 
 -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --
 -- Default (Preset) Constants:
-kDefaultModelID = 1417024 -- 彩虹
+kDefaultModelID = 166498  -- "Electric, Blue & Long"
 kDefaultConfig =
 {
     ShapeFileName = nil,

@@ -623,6 +623,8 @@ D["ClassicCalendar"] = {
 	tags = { "BOSSRAID" },
 	title = "行事曆",
 	desc = "在經典版中提供和正式服相同的行事曆的功能。`|r",
+	author = "Toxiix, LoveDiodes",
+	modifier = "彩虹ui",
 	{
         text = "打開行事曆",
         callback = function(cfg, v, loading) SlashCmdList["CALENDAR"]("") end,
@@ -700,6 +702,25 @@ D["CopyAnything"] = {
 	{
 		type = "text",
 		text = "|cffFF2D2D小技巧：滑鼠指向文字後，連按兩次 Ctrl+C 會直接快速複製整段文字。|r\n",
+	},
+};
+D["CursorTrail"] = {
+    defaultEnable = 0,
+	tags = { "ENHANCEMENT" },
+	title = "鼠之軌跡",
+	desc = "移動滑鼠時會出現漂亮的彩虹，讓你能夠輕鬆的找到滑鼠游標在哪裡。``有多種滑鼠圖形和軌跡特效可供選擇。`",
+	modifier = "彩虹ui",
+	{
+        text = "設定選項",
+        callback = function(cfg, v, loading) SlashCmdList["CursorTrail"]("") end,
+    },
+	{
+		type = "text",
+        text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",       
+	},
+	{
+		type = "text",
+        text = "設定是每個角色分開儲存的，若要共用需使用 /ct 相關指命，詳細請在設定選項中按 '設定檔' 按鈕來查看。",       
 	},
 };
 D["DBM-StatusBarTimers"] = {
@@ -1125,28 +1146,6 @@ D["GladiatorlosSA2"] = {
 	{
 		type = "text",
         text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",       
-	},
-};
-D["GroupCalendar"] = {
-	defaultEnable = 0,
-	tags = { "BOSSRAID" },
-	title = "公會行事曆",
-	desc = "公會活動專用的行事曆，公會會長或授權的人員可以用來建立和管理活動，公會成員則能瀏覽和主動報名公會的活動。``可以和 '行事曆和副本進度' 插件同時使用。``|cffFF2D2D注意：必須是同一個公會，並且都有載入這個插件，才能瀏覽和報名活動。|r`",
-	author = "LantisNT, saruman2340",
-    {
-        text = "顯示公會行事曆",
-        callback = function(cfg, v, loading) SlashCmdList["CALENDAR"]("") end,
-    },
-	{
-        text = "設定選項",
-        callback = function(cfg, v, loading) 
-			InterfaceOptionsFrame_OpenToCategory("公會行事曆")
-			InterfaceOptionsFrame_OpenToCategory("公會行事曆")
-		end,
-    },
-	{
-		type = "text",
-		text = "點小地圖按鈕的 '公會行事曆' 按鈕也可以開啟主視窗。\n",
 	},
 };
 D["GladiusEx"] = {
