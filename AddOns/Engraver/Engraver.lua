@@ -174,11 +174,11 @@ function EngraverFrameMixin:UpdateLayout(...)
 	self:UpdateVisibilityMode()
 	if self.categories ~= nil then
 		local layoutDirection = Addon.GetCurrentLayoutDirection()
-		local numCategories = self:GetNumVisibleCategories()
+		local sizeMultiplier = max(1, self:GetNumVisibleCategories())
 		if layoutDirection.swapTabDimensions then
-			self:SetSize(40, 40 * numCategories)
+			self:SetSize(40, 40 * sizeMultiplier)
 		else
-			self:SetSize(40 * numCategories, 40)
+			self:SetSize(40 * sizeMultiplier, 40)
 		end
 		self:SetScale(EngraverOptions.UIScale or 1.0)
 		if self.equipmentSlotFrameMap then
@@ -547,12 +547,12 @@ function EngraverCategoryFramePopUpMenuMixin:OnRuneButtonPostLeave()
 end
 
 function EngraverCategoryFramePopUpMenuMixin:IsMouseOverAnyButtons()
-	if self.emptyRuneButton and self.emptyRuneButton:IsShown() and self.emptyRuneButton:IsMouseOver() then
+	if self.emptyRuneButton and self.emptyRuneButton:IsShown() and self.emptyRuneButton:IsMouseMotionFocus() then
 		return true
 	end
 	if self.runeButtons then
 		for r, runeButton in ipairs(self.runeButtons) do
-			if runeButton:IsMouseOver() then
+			if runeButton:IsMouseMotionFocus() then
 				return true
 			end
 		end
@@ -624,10 +624,12 @@ function EngraverRuneButtonMixin:ResetColors()
 	self.SpellHighlightTexture:SetVertexColor(1.0, 1.0, 1.0);
 	if self.isKnown then
 		self.icon:SetVertexColor(1.0, 1.0, 1.0);
+		self.icon:SetDesaturated(false)
 		self.NormalTexture:SetVertexColor(1.0, 1.0, 1.0);
 	else
-		self.icon:SetVertexColor(0.2, 0.0, 0.0);
-		self.NormalTexture:SetVertexColor(0.2, 0.0, 0.0);
+		self.icon:SetDesaturated(true)
+		self.icon:SetVertexColor(0.2, 0.2, 0.2);
+		self.NormalTexture:SetVertexColor(0.2, 0.2, 0.2);
 	end
 end
 
