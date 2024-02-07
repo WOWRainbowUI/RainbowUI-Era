@@ -1,5 +1,22 @@
 # tullaRange release notes
 
+## 10.2.3
+
+* Update TOCs for 1.15.1
+* Fixed an issue causing the options menu sliders to not render properly in Classic
+
+## 10.2.2
+
+* Update TOCs for 10.2.5
+
+## 10.2.1
+
+* Update TOCs for 3.4.3 and 1.15.0
+
+## 10.2.0
+
+* Update TOCs for 10.2.0
+
 ## 10.1.8
 
 * Revert TOC back to 3.4.2
