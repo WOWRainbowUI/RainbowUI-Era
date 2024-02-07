@@ -1,6 +1,6 @@
-## Interface: 11500
+## Interface: 11501
 ## X-Max-Interface: 100205
-## X-Min-Interface: 11500
+## X-Min-Interface: 11501
 
 ## Title: Decursive |cffff00ff -Ace3-|r
 ## Notes: Afflictions display and cleaning for solo, group and raid with advanced filtering and priority system.

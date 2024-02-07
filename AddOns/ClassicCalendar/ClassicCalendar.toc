@@ -1,4 +1,4 @@
-## Interface: 11500
+## Interface: 11501
 ## Title: Classic Calendar
 ## Version: 0.4.3beta
 ## SavedVariables: CCConfig

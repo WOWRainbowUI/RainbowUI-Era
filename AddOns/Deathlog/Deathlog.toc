@@ -1,4 +1,4 @@
-## Interface: 11500
+## Interface: 11501
 ## Title: Deathlog
 ## Notes: Only for Hardcore on classic era servers.
 ## Author: Yazpad

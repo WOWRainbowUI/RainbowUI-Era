@@ -1,4 +1,4 @@
-## Interface: 11500
+## Interface: 11501
 ## Version: v10.2.4
 ## Title: SexyMap
 ## Notes: Spice up your minimap with some sexy options.
