@@ -3,8 +3,7 @@
 
                                                 Runes
 
-                                     v1.11 - 25th December 2023
-									 
+                                      v1.32 - 3rd February 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -16,8 +15,9 @@ ns.db = {}
 -- From Data.lua
 ns.points = {}
 ns.textures = {}
-ns.texturesNum = {}
 ns.scaling = {}
+ns.texturesNum = ""
+ns.texturesNumCode = {}
 ns.scalingNum = 0
 -- Pink theme
 ns.colour = {}
@@ -26,12 +26,16 @@ ns.colour.highlight = "\124cFFFF69B4" -- Hot Pink
 ns.colour.plaintext = "\124cFFFFB2D0" -- Powder Pink
 
 local defaults = { profile = { iconScale = 2.5, iconAlpha = 1, showCoords = false,
-								hideIfRuneLearnt = true, iconChoice = 15 } }
+								hideIfRuneLearnt = true, iconChoice = 15,
+								icon1 = 5, icon2 = 5, icon3 = 5, icon4 = 5, icon5 = 5,
+								icon6 = 5, icon7 = 5, icon8 = 5, icon9 = 5, icon10 = 5, 
+								icon11 = 5, icon12 = 5 } }
 local continents = {}
 local pluginHandler = {}
 
 -- Upvalues
 local GameTooltip = _G.GameTooltip
+local GetRunesForCategory = C_Engraving.GetRunesForCategory
 local IsKnownRuneSpell = C_Engraving.IsKnownRuneSpell
 local IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local LibStub = _G.LibStub
@@ -40,10 +44,19 @@ local UnitLevel = UnitLevel
 local formatt, ipairs, next, type = format, ipairs, next, type
 local HandyNotes = _G.HandyNotes
 
-ns.name = UnitName( "player" ) or "角色"
+ns.name = UnitName( "player" ) or "Character"
 ns.faction = UnitFactionGroup( "player" )
+
 ns.classLocal, ns.class = UnitClass( "player" )
 ns.raceList = { "Human", "Orc", "Dwarf", "Night Elf", "Undead", "Tauren", "Gnome", "Troll" }
+ns.slotList = { "Head", "Neck", "Shoulders", "Shirt", "Chest", "Waist", "Legs", "Feet",
+				"Wrist", "Hands", "Ring 1", "Ring 2", "Trinket 1", "Trinket 2", "Back",
+				"Main Hand", "Off Hand", "Ranged", "Tabard" }
+ns.slotColour = { "\124cFFFFFF00", "\124cFFFFD700", "\124cFFFFA500", "\124cFFFFFFFF", "\124cFF0000FF", 
+						"\124cFF3CB371", "\124cFF4169E1", "\124cFF008000", "\124cFF00FF00", "\124cFF87CEFA",
+						"\124cFF00FFFF", "\124cFFFFFFFF", "\124cFF7FFFD4", "\124cFFFFFFFF", "\124cFFFFFFFF", 
+						"\124cFF008B8B", "\124cFFFFFFFF", "\124cFFFFFFFF", "\124cFFFFFFFF" }
+
 ns.race = ns.raceList[ select( 3, UnitRace( "player" ) ) ]
 ns.colour.class = "\124c" ..select( 4, GetClassColor( ns.class ) )
 
@@ -52,9 +65,8 @@ continents[ 1415 ] = true -- Eastern Kingdoms
 
 local function ShowPinForThisClassQuest( quests, level, forceCheck )
 
+	if level then if level > ( UnitLevel( "player" ) + 1 ) then return false end end
 	if forceCheck == false and ns.db.hideIfRuneLearnt == false then return true end
-	
-	if level > ( UnitLevel( "player" ) + 1 ) then return false end
 
 	if not HandyNotes_RunesDB then return true end -- too soon for the server
 	if HandyNotes_RunesDB.questsDone == nil then HandyNotes_RunesDB.questsDone = {} end
@@ -94,7 +106,7 @@ local function ShowPinForThisClassQuest( quests, level, forceCheck )
 	end
 end
 
-local function ShowPinForThisClassSpell( spell, forceCheck )
+local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language spell from the Data file
 
 	if forceCheck == false and ns.db.hideIfRuneLearnt == false then return true end
 
@@ -103,19 +115,20 @@ local function ShowPinForThisClassSpell( spell, forceCheck )
 	if HandyNotes_RunesDB.runesKnown[ ns.class ] == nil then HandyNotes_RunesDB.runesKnown[ ns.class ] = {} end
 	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells == nil then HandyNotes_RunesDB.runesKnown[ ns.class ].spells = {} end
 
-	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ spell ] then
+	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ ns.L[ spell ] ] then
 		return false
 	end
 	if not ns.runeCategories then
-		ns.runeCategories = C_Engraving.GetRuneCategories( false, false ) -- returns 5, 7, 10
+		C_Engraving.RefreshRunesList()
+		ns.runeCategories = C_Engraving.GetRuneCategories( false, false ) -- returns 5, 7, 10 as of 1.15.0 (Chest/Legs/Hands)
 		if ns.runeCategories == nil then return true end -- too soon for the server
+		if #ns.runeCategories == 0 then return true end -- too soon for the server
 	end
-
 	for _,cat in ipairs( ns.runeCategories ) do
-		local engravingData = C_Engraving.GetRunesForCategory( cat, true )
+		local engravingData = GetRunesForCategory( cat, true )
 		for _,ed in ipairs( engravingData ) do
-			if ed.name == spell then
-				HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ spell ] = true
+			if ed.name == ns.L[ spell ] then -- It appears that ed.name is localised
+				HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ ns.L[ spell ] ] = true
 				return false
 			end
 		end
@@ -138,11 +151,13 @@ function pluginHandler:OnEnter(mapFile, coord)
 		for k,v in pairs( ns.runes ) do
 			if k == ns.class then
 				local completed;
-				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." 快速開始 - " ..ns.name )
+				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." QUICK START for " ..ns.name )
 				for r,s in ipairs( v.spells ) do	
 					completed = not ShowPinForThisClassSpell( s, true )
-					GameTooltip:AddDoubleLine( ns.colour.prefix ..s .."   (" ..v[s].level .."+)",
-							( completed == true ) and "\124cFF00FF00已完成" or "\124cFFFF0000未完成" )
+					GameTooltip:AddDoubleLine( ns.colour.prefix ..r .. ".  " ..ns.L[ s ] .."   (" ..v[s].level .."+)",
+							( ( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
+													or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
+							.."     " ..ns.slotColour[ v[s].slot ] ..ns.slotList[ v[s].slot ] )
 					GameTooltip:AddLine( ns.colour.highlight ..v[s].rune )
 					GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
 				end
@@ -153,14 +168,14 @@ function pluginHandler:OnEnter(mapFile, coord)
 		
 		for i,v in ipairs( pin.class ) do
 
-			if ns.class == v then
+			if ( ns.class == v ) or ( v == "ALL" ) then
 			
-				-- Data will be typical spells or the new levelled quests type (currently only for priests)
+				-- Data will be typical rune spells or the new levelled quests type
 			
 				if not pin.level then			
 					if previousEntry == true then GameTooltip:AddLine( "\n" ) end
 					previousEntry = true
-					GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.spell[ i ] ..ns.colour.highlight .."\n(" 
+					GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ pin.spell[ i ] ] ..ns.colour.highlight .."\n(" 
 												..ns.runes[ v ][ pin.spell[ i ] ].rune ..")",
 												ns.colour.class ..ns.classLocal )
 					GameTooltip:AddLine( ns.colour.highlight ..pin.name .."\n" )
@@ -190,8 +205,8 @@ function pluginHandler:OnEnter(mapFile, coord)
 							spaceBeforeQuests = true
 							completed = IsQuestFlaggedCompleted( w )
 							GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames[ j ],
-									( completed == true ) and ( "\124cFF00FF00" .."已完成" .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" .."未完成" .." (" ..ns.name ..")" ) )
+									( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] .." (" ..ns.name ..")" )
+									or ( "\124cFFFF0000" ..ns.L["Not Completed"] .." (" ..ns.name ..")" ) )
 						end
 					else
 						if pin.level then
@@ -204,12 +219,16 @@ function pluginHandler:OnEnter(mapFile, coord)
 						GameTooltip:AddLine( "\n" )
 						completed = IsQuestFlaggedCompleted( quests )
 						GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames,
-								( completed == true ) and ( "\124cFF00FF00" .."已完成" .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" .."未完成" .." (" ..ns.name ..")" ) )
+								( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] .." (" ..ns.name ..")" ) 
+									or ( "\124cFFFF0000" ..ns.L["Not Completed"] .." (" ..ns.name ..")" ) )
 					end
 				end
 				
-				if pin.level and ( previousEntry == true ) or not pin.level then
+				if pin.level and ( ( previousEntry == true ) or ( pin.quest == nil ) ) or not pin.level then
+					if previousEntry == false then
+						GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.name, 
+								ns.colour.highlight .."Level = " ..pin.level )
+					end
 					if pin.tip then
 						-- Table or string
 						if type( pin.tip ) == "table" then
@@ -224,7 +243,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 					
 					if pin.guide then
 						-- Single guide for all classes is permitted. Always a table
-						GameTooltip:AddLine( "\n" ..ns.colour.highlight .."指南\n\n" ..ns.colour.plaintext
+						GameTooltip:AddLine( "\n" ..ns.colour.highlight ..L["Guide"].."\n\n" ..ns.colour.plaintext
 									..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
 					end
 				end
@@ -249,7 +268,6 @@ do
 	local function iterator(t, prev)
 		if not t then return end
 		local coord, pin = next(t, prev)
-		
 
 		while coord do		
 			if pin == "Quick Start" then
@@ -261,29 +279,42 @@ do
 				end
 			else
 				-- class and spell are aways 1:1 with indexing/existence
-				-- BUT... I added level 17 priest help and that has no spell
+				-- BUT... I added quest help with no spells
 				for i,v in ipairs( pin.class ) do
-					if ns.class == v then
-						if pin.faction then
-							if pin.faction == ns.faction then
-								if pin.spell then
-									if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
-										return coord, nil, ns.texturesNum[ ns.runes[ v ][ pin.spell[ i ] ].icon ],
+					if ( ns.class == v ) or ( v == "ALL" ) then
+						if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
+							if pin.spell then
+								-- Note that if here then by design I don't check for player level
+								-- This so that players can see all "upcoming" spells/runes
+								-- pin.spell is English language
+								if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+									if pin.alsoTestQuest then
+										-- Added to support Mage book partial completion. Maybe other stuff in the future
+										-- Terrible field name. Can't think of better tbh
+										if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
+											return coord, nil, ns.texturesNum ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) .."-" 
+												..ns.texturesNumCode[ ns.db[ "icon" ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) ] ],
+												ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
+										end
+									else
+										return coord, nil, ns.texturesNum ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) .."-" 
+											..ns.texturesNumCode[ ns.db[ "icon" ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) ] ],
 											ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
 									end
-								else
+								end
+							elseif pin.quest then
+								-- Quests that are separate from runes. Priest L17 quest comes to mind
+								if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
+									return coord, nil, ns.textures[ ns.db.iconChoice ],
+										ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
+								end
+							elseif pin.level then
+								-- Void Touched gear guide, for example
+								if pin.level <= ( UnitLevel( "player" ) + 1 ) then
 									return coord, nil, ns.textures[ ns.db.iconChoice ],
 										ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
 								end
 							end
-						elseif pin.spell then
-							if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
-								return coord, nil, ns.texturesNum[ ns.runes[ v ][ pin.spell[ i ] ].icon ],
-									ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
-							end
-						elseif ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
-							return coord, nil, ns.textures[ ns.db.iconChoice ],
-								ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
 						end
 					end
 				end
@@ -299,8 +330,8 @@ end
 -- Interface -> Addons -> Handy Notes -> Plugins -> Runes options
 ns.options = {
 	type = "group",
-	name = "符文",
-	desc = "探索賽季的所有符文",
+	name = L["Runes"],
+	desc = ns.L["AddOn Description"],
 	get = function(info) return ns.db[info[#info]] end,
 	set = function(info, v)
 		ns.db[info[#info]] = v
@@ -309,59 +340,169 @@ ns.options = {
 	args = {
 		options = {
 			type = "group",
-			name = " 選項",
+			name = " " ..ns.L["Options"],
 			inline = true,
 			args = {
 				iconScale = {
 					type = "range",
-					name = "圖示大小",
-					desc = "地圖圖示的大小",
+					name = ns.L["Map Pin Size"],
+					desc = ns.L["The Map Pin Size"],
 					min = 1, max = 4, step = 0.1,
 					arg = "iconScale",
 					order = 1,
 				},
 				iconAlpha = {
 					type = "range",
-					name = "圖示透明度",
-					desc = "地圖圖示的透明度",
+					name = ns.L["Map Pin Alpha"],
+					desc = ns.L["The alpha transparency of the map pins"],
 					min = 0, max = 1, step = 0.01,
 					arg = "iconAlpha",
 					order = 2,
 				},
 				showCoords = {
 					type = "toggle",
-					name = "顯示座標",
-					desc = "顯示座標說明\n"
+					name = ns.L["Show Coordinates"],
+					desc = ns.L["Show Coordinates Description"] 
 							..ns.colour.highlight .."(xx.xx,yy.yy)",
 					width = "full",
 					arg = "showCoords",
 					order = 3,
 				},
-				showOnlyMyClass = {
-					name = "只顯示我的職業",
-					desc = "此選項目前還沒有作用",
+				hideIfRuneLearnt = {
+					name = ns.L["Hide if the rune spell was learnt"],
+					desc = ns.L["Will also hide copmpleted Icy Veins books (Mages)"],
 					type = "toggle",
 					width = "full",
-					arg = "showOnlyMyClass",
+					arg = "hideIfRuneLearnt",
 					order = 4,
 				},
 			},
 		},
 		icon = {
 			type = "group",
-			name = "圖示選項",
+			name = ns.L["Map Pin Selections"],
 			inline = true,
 			args = {
+				icon1 = {
+					type = "range",
+					name = ns.L["Icon"].. " 1",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon1",
+					order = 5,
+				},
+				icon2 = {
+					type = "range",
+					name = ns.L["Icon"].. " 2",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon2",
+					order = 6,
+				},
+				icon3 = {
+					type = "range",
+					name = ns.L["Icon"].. " 3",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon3",
+					order = 7,
+				},
+				icon4 = {
+					type = "range",
+					name = ns.L["Icon"].. " 4",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon4",
+					order = 8,
+				},
+				icon5 = {
+					type = "range",
+					name = ns.L["Icon"].. " 5",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon5",
+					order = 9,
+				},
+				icon6 = {
+					type = "range",
+					name = ns.L["Icon"].. " 6",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon6",
+					order = 10,
+				},
+				icon7 = {
+					type = "range",
+					name = ns.L["Icon"].. " 7",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon7",
+					order = 11,
+				},
+				icon8 = {
+					type = "range",
+					name = ns.L["Icon"].. " 8",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon8",
+					order = 12,
+				},
+				icon9 = {
+					type = "range",
+					name = ns.L["Icon"].. " 9",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon9",
+					order = 13,
+				},
+				icon10 = {
+					type = "range",
+					name = ns.L["Icon"].. " 10",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon10",
+					order = 14,
+				},
+				icon11 = {
+					type = "range",
+					name = ns.L["Icon"].. " 11",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon11",
+					order = 15,
+				},
+				icon12 = {
+					type = "range",
+					name = ns.L["Icon"].. " 12",
+					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
+							.."\n4 = Red on Black\n5 = Yellow on Black"],
+					min = 1, max = 5, step = 1,
+					arg = "icon12",
+					order = 16,
+				},
 				iconChoice = {
 					type = "range",
-					name = "選擇圖示",
-					desc = "White\n2 = 紫色\n3 = 紅色\n4 = 黃色\n5 = 綠色\n6 = 灰色"
-							.."\n7 = 法力球\n8 = 鏡像\n9 = 猛禽蛋\n10 = 星星"
-							.."\n11 = 齒輪\n12 = 雪花\n13 = 鑽石\n14 = 螺絲"
-							.."\n15 = 符文\n16 = 祕法符文\n17 = 惡魔符文\n18 = 任務符文",
+					name = ns.L["Quick Start / Summary"],					
+					desc = "1 = " ..ns.L["White"] .."\n2 = " ..ns.L["Purple"] .."\n3 = " ..ns.L["Red"] .."\n4 = " 
+							..ns.L["Yellow"] .."\n5 = " ..ns.L["Green"] .."\n6 = " ..ns.L["Grey"] .."\n7 = " ..ns.L["Mana Orb"]
+							.."\n8 = " ..ns.L["Phasing"] .."\n9 = " ..ns.L["Raptor egg"] .."\n10 = " ..ns.L["Stars"]
+							.."\n11 = " ..ns.L["Cogwheel"] .."\n12 = " ..ns.L["Frost"] .."\n13 = " ..ns.L["Diamond"]
+							.."\n14 = " ..ns.L["Screw"] .."\n15 = " ..ns.L["Mjolnir"] .."\n16 = " ..ns.L["Arcane"] 
+							.."\n17= " ..ns.L["Demonic"] .."\n18 = " ..ns.L["Duty"],
 					min = 1, max = 18, step = 1,
 					arg = "iconChoice",
-					order = 5,
+					order = 17,
 				},
 			},
 		},
@@ -386,21 +527,10 @@ function pluginHandler:OnEnable()
 							ns.points[continentMapID][HandyNotes:getCoord(cx, cy)] = pin
 						end
 					end
+					-- Very basic delimiting which doesn't require saved player options and also will never change
 					for i,v in ipairs( pin.class ) do
-						if ns.class == v then
-							if pin.faction then
-								if pin.faction == ns.faction then
-									if pin.level then
-										AddToContinent()
-									elseif ShowPinForThisClassSpell( pin.spell[ i ], false ) then
-										AddToContinent()
-									end
-								end
-							elseif pin.level then
-								if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
-									AddToContinent()
-								end
-							elseif ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+						if ( ns.class == v ) or ( v == "ALL" ) then
+							if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
 								AddToContinent()
 							end
 						end
@@ -409,7 +539,7 @@ function pluginHandler:OnEnable()
 			end
 		end
 	end
-	HandyNotes:RegisterPluginDB("Runes", pluginHandler, ns.options)
+	HandyNotes:RegisterPluginDB(L["Runes"], pluginHandler, ns.options)
 	ns.db = LibStub("AceDB-3.0"):New("HandyNotes_RunesDB", defaults, "Default").profile
 	pluginHandler:Refresh()
 end
