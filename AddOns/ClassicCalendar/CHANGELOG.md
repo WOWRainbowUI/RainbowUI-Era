@@ -1,6 +1,6 @@
 # Classic Calendar
 
-## [v0.4.3beta](https://github.com/birkholz/ClassicCalendar/tree/v0.4.3beta) (2024-02-06)
-[Full Changelog](https://github.com/birkholz/ClassicCalendar/compare/v0.4.2beta...v0.4.3beta) [Previous Releases](https://github.com/birkholz/ClassicCalendar/releases)
+## [v0.4.5beta](https://github.com/birkholz/ClassicCalendar/tree/v0.4.5beta) (2024-02-07)
+[Full Changelog](https://github.com/birkholz/ClassicCalendar/compare/v0.4.4beta...v0.4.5beta) [Previous Releases](https://github.com/birkholz/ClassicCalendar/releases)
 
-- Adjusted DMF start/end times  
+- Fix bug with viewing locked events  
