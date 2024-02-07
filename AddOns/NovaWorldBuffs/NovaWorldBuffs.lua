@@ -161,13 +161,13 @@ function NWB:printBuffTimers(isLogon)
 	local msg;
 	if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 		if (NWB.data.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
-			msg = L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - NWB.data.rendTimer), true) .. ".";
+			msg = L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - NWB.data.rendTimer), true) .. "。";
 			if (NWB.db.global.showTimeStamp) then
 				local timeStamp = NWB:getTimeFormat(NWB.data.rendTimer + NWB.db.global.rendRespawnTime);
 				msg = msg .. " (" .. timeStamp .. ")";
 			end
 		else
-			msg = L["rend"] .. ": " .. L["noCurrentTimer"] .. ".";
+			msg = L["rend"] .. ": " .. L["noCurrentTimer"] .. "。";
 		end
 		if ((not isLogon or NWB.db.global.logonRend) and not NWB.isLayered) then
 			NWB:print("|HNWBCustomLink:timers|h" .. msg .. "|h");
@@ -192,13 +192,13 @@ function NWB:printBuffTimers(isLogon)
 			end
 		end
 	elseif (NWB.data.onyTimer > (GetServerTime() - NWB.db.global.onyRespawnTime)) then
-		msg = L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - NWB.data.onyTimer), true) .. ".";
+		msg = L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - NWB.data.onyTimer), true) .. "。";
 		if (NWB.db.global.showTimeStamp) then
 			local timeStamp = NWB:getTimeFormat(NWB.data.onyTimer + NWB.db.global.onyRespawnTime);
 			msg = msg .. " (" .. timeStamp .. ")";
 		end
 	else
-		msg = L["onyxia"] .. ": " .. L["noCurrentTimer"] .. ".";
+		msg = L["onyxia"] .. ": " .. L["noCurrentTimer"] .. "。";
 	end
 	if ((not isLogon or NWB.db.global.logonOny) and not NWB.isLayered) then
 		NWB:print("|HNWBCustomLink:timers|h" .. msg .. "|h");
@@ -222,13 +222,13 @@ function NWB:printBuffTimers(isLogon)
 			end
 		end
 	elseif (NWB.data.nefTimer > (GetServerTime() - NWB.db.global.nefRespawnTime)) then
-		msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - NWB.data.nefTimer), true) .. ".";
+		msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - NWB.data.nefTimer), true) .. "。";
 		if (NWB.db.global.showTimeStamp) then
 			local timeStamp = NWB:getTimeFormat(NWB.data.nefTimer + NWB.db.global.nefRespawnTime);
 			msg = msg .. " (" .. timeStamp .. ")";
 		end
 	else
-		msg = L["nefarian"] .. ": " .. L["noCurrentTimer"] .. ".";
+		msg = L["nefarian"] .. ": " .. L["noCurrentTimer"] .. "。";
 	end
 	if ((not isLogon or NWB.db.global.logonNef) and not NWB.isLayered) then
 		NWB:print("|HNWBCustomLink:timers|h" .. msg .. "|h");
@@ -671,7 +671,7 @@ function NWB:ticker()
 								NWB.data.layers[layer]["terokTowers10"] = nil;
 								local layer = NWB:GetLayerNum(layer);
 								local layerMsg = " (" .. L["Layer"] .. " " .. layer .. ")";
-								local msg = string.format(L["terokkarWarning"], L["10 minutes"]) .. layerMsg .. ".";
+								local msg = string.format(L["terokkarWarning"], L["10 minutes"]) .. layerMsg .. "。";
 								if (NWB.db.global.terokkarChat10) then
 									NWB:print(msg);
 								end
@@ -729,7 +729,7 @@ function NWB:ticker()
 						local secondsLeft = endTime - GetServerTime();
 						if (secondsLeft <= 630 and secondsLeft >= 570) then
 							NWB.data["terokTowers10"] = nil;
-							local msg = string.format(L["terokkarWarning"], L["10 minutes"]) .. ".";
+							local msg = string.format(L["terokkarWarning"], L["10 minutes"]) .. "。";
 							if (NWB.db.global.terokkarChat10) then
 								NWB:print(msg);
 							end
@@ -802,8 +802,8 @@ function NWB:ticker()
 				NWB.data.wintergrasp10 = nil;
 				--local layer = NWB:GetLayerNum(layer);
 				--local layerMsg = " (Layer " .. layer .. ")";
-				--local msg = string.format(L["wintergraspWarning"], "10 minutes") .. layerMsg .. ".";
-				local msg = string.format(L["wintergraspWarning"], "10 minutes") .. ".";
+				--local msg = string.format(L["wintergraspWarning"], "10 minutes") .. layerMsg .. "。";
+				local msg = string.format(L["wintergraspWarning"], "10 minutes") .. "。";
 				if (NWB.db.global.wintergraspChat10) then
 					NWB:print(msg);
 				end
@@ -934,7 +934,7 @@ function NWB:doWarning(type, num, secondsLeft, layer)
 		--If npc killed timestamp is newer than last set time then don't send any warnings.
 		return;	
 	end
-	local period = ".";
+	local period = "。";
 	if (LOCALE_zhCN or LOCALE_zhTW) then
 		period = "。";
 	end
@@ -2123,7 +2123,7 @@ function NWB:combatLogEventUnfiltered(...)
 				local _, _, _, destHex = GetClassColor("WARRIOR");
 				local destWho = "|c" .. destHex .. destName .. "|r"
 				local spell = "|cff71d5ff[" .. extraSpellName .. "]|r";
-				NWB:print(sourceWho .. NWB.chatColor .. " dispelled " .. destWho .. " " .. spell .. NWB.chatColor .. ".");
+				NWB:print(sourceWho .. NWB.chatColor .. " dispelled " .. destWho .. " " .. spell .. NWB.chatColor .. "。");
 				NWB:playSound("soundsDispelsAll", "dispelsAll");
 			end
 			return;
@@ -2160,18 +2160,18 @@ function NWB:combatLogEventUnfiltered(...)
 			end
 			if (destName == UnitName("player")) then
 				if (NWB.db.global.dispelsMine and NWB.db.global.dispelsMineWBOnly and dispellableWorldBuffs[spellName]) then
-					NWB:print(sourceWho .. NWB.chatColor .. " dispelled your " .. spell .. NWB.chatColor .. ".");
+					NWB:print(sourceWho .. NWB.chatColor .. " dispelled your " .. spell .. NWB.chatColor .. "。");
 					NWB:playSound("soundsDispelsMine", "dispelsMine");
 				elseif (NWB.db.global.dispelsMine) then
-					NWB:print(sourceWho .. NWB.chatColor .. " dispelled your " .. spell .. NWB.chatColor .. ".");
+					NWB:print(sourceWho .. NWB.chatColor .. " dispelled your " .. spell .. NWB.chatColor .. "。");
 					NWB:playSound("soundsDispelsMine", "dispelsMine");
 				end
 			else
 				if (NWB.db.global.dispelsAll and NWB.db.global.dispelsAllWBOnly and dispellableWorldBuffs[spellName]) then
-					NWB:print(sourceWho .. NWB.chatColor .. " dispelled " .. destWho .. " " .. spell .. NWB.chatColor .. ".");
+					NWB:print(sourceWho .. NWB.chatColor .. " dispelled " .. destWho .. " " .. spell .. NWB.chatColor .. "。");
 					NWB:playSound("soundsDispelsAll", "dispelsAll");
 				elseif (NWB.db.global.dispelsAll) then
-					NWB:print(sourceWho .. NWB.chatColor .. " dispelled " .. destWho .. " " .. spell .. NWB.chatColor .. ".");
+					NWB:print(sourceWho .. NWB.chatColor .. " dispelled " .. destWho .. " " .. spell .. NWB.chatColor .. "。");
 					NWB:playSound("soundsDispelsAll", "dispelsAll");
 				end
 			end
@@ -4891,7 +4891,7 @@ function SlashCmdList.NOVALUACMD(msg, editBox, msg2)
 			print("Lua errors disabled.")
 		end
 	else
-		print("Valid args are \"on\" and \"off\".");
+		print("Valid args are \"on\" and \"off\"。");
 	end
 end
 
@@ -4926,38 +4926,38 @@ if (NWB.isTBC) then
 			else
 				completedString = "|cFFFF2222Not Completed|r";
 			end
-			print("|cFF9CD6DEHellfire Towers: " .. completedString .. ".");
+			print("|cFF9CD6DEHellfire Towers: " .. completedString .. "。");
 			if (C_QuestLog.IsQuestFlaggedCompleted(11506)) then
 				completedString = "|cFF00C800Completed|r";
 			else
 				completedString = "|cFFFF2222Not Completed|r";
 			end
-			print("|cFF9CD6DETerokkar Towers: " .. completedString .. ".");
+			print("|cFF9CD6DETerokkar Towers: " .. completedString .. "。");
 			if (C_QuestLog.IsQuestFlaggedCompleted(11503)) then
 				completedString = "|cFF00C800Completed|r";
 			else
 				completedString = "|cFFFF2222Not Completed|r";
 			end
-			print("|cFF9CD6DENagrand Halaa: " .. completedString .. ".");
+			print("|cFF9CD6DENagrand Halaa: " .. completedString .. "。");
 		else
 			if (C_QuestLog.IsQuestFlaggedCompleted(10106)) then
 				completedString = "|cFF00C800Completed|r";
 			else
 				completedString = "|cFFFF2222Not Completed|r";
 			end
-			print("|cFF9CD6DEHellfire Towers: " .. completedString .. ".");
+			print("|cFF9CD6DEHellfire Towers: " .. completedString .. "。");
 			if (C_QuestLog.IsQuestFlaggedCompleted(11505)) then
 				completedString = "|cFF00C800Completed|r";
 			else
 				completedString = "|cFFFF2222Not Completed|r";
 			end
-			print("|cFF9CD6DETerokkar Towers: " .. completedString .. ".");
+			print("|cFF9CD6DETerokkar Towers: " .. completedString .. "。");
 			if (C_QuestLog.IsQuestFlaggedCompleted(11502)) then
 				completedString = "|cFF00C800Completed|r";
 			else
 				completedString = "|cFFFF2222Not Completed|r";
 			end
-			print("|cFF9CD6DENagrand Halaa: " .. completedString .. ".");
+			print("|cFF9CD6DENagrand Halaa: " .. completedString .. "。");
 		end
 	end
 end
@@ -5199,7 +5199,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 		return;
 	end
 	tooltip:ClearLines();
-	tooltip:AddLine("NovaWorldBuffs");
+	tooltip:AddLine(L["Nova World Buffs"]);
 	local layerBuffSpells = NWB.layerBuffSpells;
 	if (NWB.isLayered) then
 		local msg = "";
@@ -5235,13 +5235,13 @@ function NWB:updateMinimapButton(tooltip, frame)
 					and not (NWB.isSOD and UnitLevel("player") < NWB.db.global.disableOnlyNefRendBelowMaxLevelNum)) then
 				if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 					if (v.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
-						msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. ".";
+						msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(v.rendTimer + NWB.db.global.rendRespawnTime);
 							msg = msg .. " (" .. timeStamp .. ")";
 						end
 					else
-						msg = msg .. L["rend"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. L["rend"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
@@ -5265,13 +5265,13 @@ function NWB:updateMinimapButton(tooltip, frame)
 						end
 					end
 				elseif (v.onyTimer > (GetServerTime() - NWB.db.global.onyRespawnTime)) then
-					msg = msg .. L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - v.onyTimer), true) .. ".";
+					msg = msg .. L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - v.onyTimer), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(v.onyTimer + NWB.db.global.onyRespawnTime);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
-					msg = msg .. L["onyxia"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. L["onyxia"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				tooltip:AddLine(NWB.chatColor .. msg);
 				msg = "";
@@ -5294,13 +5294,13 @@ function NWB:updateMinimapButton(tooltip, frame)
 						end
 					end
 				elseif (v.nefTimer > (GetServerTime() - NWB.db.global.nefRespawnTime)) then
-					msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - v.nefTimer), true) .. ".";
+					msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - v.nefTimer), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(v.nefTimer + NWB.db.global.nefRespawnTime);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
-					msg = msg .. L["nefarian"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. L["nefarian"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				tooltip:AddLine(NWB.chatColor .. msg);
 			end
@@ -5340,7 +5340,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 							--5387
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						end
-						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(secondsLeft, true) .. ".";
+						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(secondsLeft, true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -5348,12 +5348,12 @@ function NWB:updateMinimapButton(tooltip, frame)
 						tooltip:AddLine(NWB.chatColor .. msg);
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 						tooltip:AddLine(NWB.chatColor .. msg);
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
 			end
@@ -5395,7 +5395,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 							--5387
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						end
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -5406,7 +5406,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 						local endTime = GetServerTime() + secondsLeft;
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -5414,12 +5414,12 @@ function NWB:updateMinimapButton(tooltip, frame)
 						tooltip:AddLine(NWB.chatColor .. msg);
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 						tooltip:AddLine(NWB.chatColor .. msg);
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
 			end]]
@@ -5471,7 +5471,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 							--5387
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						end
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -5482,7 +5482,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 						local endTime = GetServerTime() + secondsLeft;
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -5490,12 +5490,12 @@ function NWB:updateMinimapButton(tooltip, frame)
 						tooltip:AddLine(NWB.chatColor .. msg);
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 						tooltip:AddLine(NWB.chatColor .. msg);
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
 			end]]
@@ -5506,13 +5506,13 @@ function NWB:updateMinimapButton(tooltip, frame)
 				and not (NWB.db.global.disableBuffTimersMaxBuffLevel and UnitLevel("player") > 64))) then
 			if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 				if (NWB.data.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
-					msg = L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - NWB.data.rendTimer), true) .. ".";
+					msg = L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - NWB.data.rendTimer), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(NWB.data.rendTimer + NWB.db.global.rendRespawnTime);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
-					msg = L["rend"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = L["rend"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				tooltip:AddLine(NWB.chatColor .. msg);
 			end
@@ -5535,13 +5535,13 @@ function NWB:updateMinimapButton(tooltip, frame)
 					end
 				end
 			elseif (NWB.data.onyTimer > (GetServerTime() - NWB.db.global.onyRespawnTime)) then
-				msg = L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - NWB.data.onyTimer), true) .. ".";
+				msg = L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - NWB.data.onyTimer), true) .. "。";
 				if (NWB.db.global.showTimeStamp) then
 					local timeStamp = NWB:getTimeFormat(NWB.data.onyTimer + NWB.db.global.onyRespawnTime);
 					msg = msg .. " (" .. timeStamp .. ")";
 				end
 			else
-				msg = L["onyxia"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = L["onyxia"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			tooltip:AddLine(NWB.chatColor .. msg);
 			if ((NWB.data.nefNpcDied > NWB.data.nefTimer) and
@@ -5563,13 +5563,13 @@ function NWB:updateMinimapButton(tooltip, frame)
 					end
 				end
 			elseif (NWB.data.nefTimer > (GetServerTime() - NWB.db.global.nefRespawnTime)) then
-				msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - NWB.data.nefTimer), true) .. ".";
+				msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - NWB.data.nefTimer), true) .. "。";
 				if (NWB.db.global.showTimeStamp) then
 					local timeStamp = NWB:getTimeFormat(NWB.data.nefTimer + NWB.db.global.nefRespawnTime);
 					msg = msg .. " (" .. timeStamp .. ")";
 				end
 			else
-				msg = L["nefarian"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = L["nefarian"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			tooltip:AddLine(NWB.chatColor .. msg);
 		end
@@ -5607,7 +5607,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 						--5387
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					end
-					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
@@ -5615,12 +5615,12 @@ function NWB:updateMinimapButton(tooltip, frame)
 					tooltip:AddLine(NWB.chatColor .. msg);
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
 			else
 				texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-				msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				tooltip:AddLine(NWB.chatColor .. msg);
 			end
 		end
@@ -5662,7 +5662,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 						--5387
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					end
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
@@ -5673,7 +5673,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 					local endTime = GetServerTime() + secondsLeft;
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
@@ -5681,12 +5681,12 @@ function NWB:updateMinimapButton(tooltip, frame)
 					tooltip:AddLine(NWB.chatColor .. msg);
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
 			else
 				texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-				msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				tooltip:AddLine(NWB.chatColor .. msg);
 			end
 		end]]
@@ -5744,7 +5744,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 						--5387
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					end
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
@@ -5755,7 +5755,7 @@ function NWB:updateMinimapButton(tooltip, frame)
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 					local endTime = GetServerTime() + secondsLeft;
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
@@ -5763,12 +5763,12 @@ function NWB:updateMinimapButton(tooltip, frame)
 					tooltip:AddLine(NWB.chatColor .. msg);]]
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					tooltip:AddLine(NWB.chatColor .. msg);
 				end
 			else
 				texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-				msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				tooltip:AddLine(NWB.chatColor .. msg);
 			end
 		end
@@ -5821,27 +5821,27 @@ function NWB:updateMinimapButton(tooltip, frame)
 		local completedQuests = {};
 		if (NWB.faction == "Horde") then
 			if (C_QuestLog.IsQuestFlaggedCompleted(10110)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11506)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11503)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. "。");
 			end
 			--Wintergrasp.
 			--if (C_QuestLog.IsQuestFlaggedCompleted(13183)) then
-			--	table.insert(completedQuests, "|cFF9CD6DE" .. L["Victory in Wintergrasp"] .. ":  |cFF00C800Completed|r" .. ".");
+			--	table.insert(completedQuests, "|cFF9CD6DE" .. L["Victory in Wintergrasp"] .. ":  |cFF00C800Completed|r" .. "。");
 			--end
 		else
 			if (C_QuestLog.IsQuestFlaggedCompleted(10106)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11505)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11502)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. "。");
 			end
 		end
 		if (next(completedQuests)) then
@@ -6112,7 +6112,7 @@ function SlashCmdList.NWBSFCMD(msg, editBox)
   		end
 	end
 	if (not found) then
-		string = string .. " " .. L["noActiveTimers"] .. ".";
+		string = string .. " " .. L["noActiveTimers"] .. "。";
 	end
 	if (msg ~= nil and msg ~= "") then
 		NWB:print(string .. layerMsg, msg);
@@ -10466,7 +10466,7 @@ function NWB:createNewLayer(zoneID, GUID, isFromNpc)
 			NWB.data.layersDisabled[zoneID] = nil;
 			NWB:recalclayerFrame();
 			NWB:refreshWorldbuffMarkers();
-			NWB:print("Detected valid layer that you have disabled, re-enabling layer ID " .. zoneID .. ".");
+			NWB:print("Detected valid layer that you have disabled, re-enabling layer ID " .. zoneID .. "。");
 		end
 		NWB:debug("created new layer", zoneID);
 		NWB:createWorldbuffMarkers();
@@ -10777,13 +10777,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 			local msg = "";
 			if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 				if (v.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
-					msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. ".";
+					msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(v.rendTimer + NWB.db.global.rendRespawnTime, nil, nil, forceServerTime, suffixST);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
-					msg = msg .. L["rend"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. L["rend"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
 				text = text .. msg .. "\n";
@@ -10808,13 +10808,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 					end
 				end
 			elseif (v.onyTimer > (GetServerTime() - NWB.db.global.onyRespawnTime)) then
-				msg = msg .. L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - v.onyTimer), true) .. ".";
+				msg = msg .. L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - v.onyTimer), true) .. "。";
 				if (NWB.db.global.showTimeStamp) then
 					local timeStamp = NWB:getTimeFormat(v.onyTimer + NWB.db.global.onyRespawnTime, nil, nil, forceServerTime, suffixST);
 					msg = msg .. " (" .. timeStamp .. ")";
 				end
 			else
-				msg = msg .. L["onyxia"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. L["onyxia"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
 			text = text .. msg .. "\n";
@@ -10838,13 +10838,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 					end
 				end
 			elseif (v.nefTimer > (GetServerTime() - NWB.db.global.nefRespawnTime)) then
-				msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - v.nefTimer), true) .. ".";
+				msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - v.nefTimer), true) .. "。";
 				if (NWB.db.global.showTimeStamp) then
 					local timeStamp = NWB:getTimeFormat(v.nefTimer + NWB.db.global.nefRespawnTime, nil, nil, forceServerTime, suffixST);
 					msg = msg .. " (" .. timeStamp .. ")";
 				end
 			else
-				msg = msg .. L["nefarian"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. L["nefarian"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
 			text = text .. msg .. "\n";
@@ -10882,18 +10882,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						end
 						local endTime = NWB:getTerokEndTime(v.terokTowers, v.terokTowersTime);
-						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
 						end
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				text = text .. msg .. "\n";
 			end
@@ -10932,7 +10932,7 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						end
 						local endTime = NWB:getWintergraspEndTime(wintergrasp, wintergraspTime);
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -10942,18 +10942,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 						local endTime = GetServerTime() + secondsLeft;
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
 						end]]
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				text = text .. msg .. "\n";
 			end
@@ -10988,13 +10988,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 				local msg = "|cFF989898";
 				if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 					if (v.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
-						msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. ".";
+						msg = msg .. L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - v.rendTimer), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(v.rendTimer + NWB.db.global.rendRespawnTime, nil, nil, forceServerTime, suffixST);
 							msg = msg .. " (" .. timeStamp .. ")";
 						end
 					else
-						msg = msg .. L["rend"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. L["rend"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 					--NWBlayerFrame.EditBox:Insert(msg .. "\n");
 					text = text .. msg .. "\n";
@@ -11019,13 +11019,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 						end
 					end
 				elseif (v.onyTimer > (GetServerTime() - NWB.db.global.onyRespawnTime)) then
-					msg = msg .. L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - v.onyTimer), true) .. ".";
+					msg = msg .. L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - v.onyTimer), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(v.onyTimer + NWB.db.global.onyRespawnTime, nil, nil, forceServerTime, suffixST);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
-					msg = msg .. L["onyxia"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. L["onyxia"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				--NWBlayerFrame.EditBox:Insert(msg .. "\n");
 				text = text .. msg .. "\n";
@@ -11049,13 +11049,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 						end
 					end
 				elseif (v.nefTimer > (GetServerTime() - NWB.db.global.nefRespawnTime)) then
-					msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - v.nefTimer), true) .. ".";
+					msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - v.nefTimer), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(v.nefTimer + NWB.db.global.nefRespawnTime, nil, nil, forceServerTime, suffixST);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
-					msg = msg .. L["nefarian"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. L["nefarian"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				--NWBlayerFrame.EditBox:Insert(msg .. "\n");
 				text = text .. msg .. "\n";
@@ -11093,18 +11093,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 								texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 							end
 							local endTime = NWB:getTerokEndTime(v.terokTowers, v.terokTowersTime);
-							msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+							msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 							if (NWB.db.global.showTimeStamp) then
 								local timeStamp = NWB:getTimeFormat(endTime);
 								msg = msg .. " (" .. timeStamp .. ")";
 							end
 						else
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-							msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+							msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 						end
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 					text = text .. msg .. "\n";
 				end
@@ -11143,7 +11143,7 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 								texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 							end
 							local endTime = NWB:getWintergraspEndTime(wintergrasp, wintergraspTime);
-							msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+							msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 							if (NWB.db.global.showTimeStamp) then
 								local timeStamp = NWB:getTimeFormat(endTime);
 								msg = msg .. " (" .. timeStamp .. ")";
@@ -11153,18 +11153,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 							local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 							local endTime = GetServerTime() + secondsLeft;
-							msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+							msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 							if (NWB.db.global.showTimeStamp) then
 								local timeStamp = NWB:getTimeFormat(endTime);
 								msg = msg .. " (" .. timeStamp .. ")";
 							end]]
 						else
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-							msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+							msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 						end
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 					text = text .. msg .. "\n";
 				end
@@ -11182,13 +11182,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 		text = text .. "\n";
 		if (NWB.faction == "Horde" or NWB.db.global.allianceEnableRend) then
 			if (NWB.data.rendTimer > (GetServerTime() - NWB.db.global.rendRespawnTime)) then
-				msg = L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - NWB.data.rendTimer), true) .. ".";
+				msg = L["rend"] .. ": " .. NWB:getTimeString(NWB.db.global.rendRespawnTime - (GetServerTime() - NWB.data.rendTimer), true) .. "。";
 				if (NWB.db.global.showTimeStamp) then
 					local timeStamp = NWB:getTimeFormat(NWB.data.rendTimer + NWB.db.global.rendRespawnTime, nil, nil, forceServerTime, suffixST);
 					msg = msg .. " (" .. timeStamp .. ")";
 				end
 			else
-				msg = L["rend"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = L["rend"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			if ((not isLogon or NWB.db.global.logonRend) and not NWB.isLayered) then
 				--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
@@ -11214,13 +11214,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 				end
 			end
 		elseif (NWB.data.onyTimer > (GetServerTime() - NWB.db.global.onyRespawnTime)) then
-			msg = L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - NWB.data.onyTimer), true) .. ".";
+			msg = L["onyxia"] .. ": " .. NWB:getTimeString(NWB.db.global.onyRespawnTime - (GetServerTime() - NWB.data.onyTimer), true) .. "。";
 			if (NWB.db.global.showTimeStamp) then
 				local timeStamp = NWB:getTimeFormat(NWB.data.onyTimer + NWB.db.global.onyRespawnTime, nil, nil, forceServerTime, suffixST);
 				msg = msg .. " (" .. timeStamp .. ")";
 			end
 		else
-			msg = L["onyxia"] .. ": " .. L["noCurrentTimer"] .. ".";
+			msg = L["onyxia"] .. ": " .. L["noCurrentTimer"] .. "。";
 		end
 		if ((not isLogon or NWB.db.global.logonOny) and not NWB.isLayered) then
 			--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
@@ -11245,13 +11245,13 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 				end
 			end
 		elseif (NWB.data.nefTimer > (GetServerTime() - NWB.db.global.nefRespawnTime)) then
-			msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - NWB.data.nefTimer), true) .. ".";
+			msg = L["nefarian"] .. ": " .. NWB:getTimeString(NWB.db.global.nefRespawnTime - (GetServerTime() - NWB.data.nefTimer), true) .. "。";
 			if (NWB.db.global.showTimeStamp) then
 				local timeStamp = NWB:getTimeFormat(NWB.data.nefTimer + NWB.db.global.nefRespawnTime, nil, nil, forceServerTime, suffixST);
 				msg = msg .. " (" .. timeStamp .. ")";
 			end
 		else
-			msg = L["nefarian"] .. ": " .. L["noCurrentTimer"] .. ".";
+			msg = L["nefarian"] .. ": " .. L["noCurrentTimer"] .. "。";
 		end
 		if ((not isLogon or NWB.db.global.logonNef) and not NWB.isLayered) then
 			--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
@@ -11290,18 +11290,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 						--5387
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					end
-					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 			else
 				texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-				msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. texture .. L["terokkarTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			if ((not isLogon or NWB.db.global.logonNef) and not NWB.isLayered) then
 				--NWBlayerFrame.EditBox:Insert(NWB.chatColor .. msg .. "\n");
@@ -11343,7 +11343,7 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					end
 					local endTime = NWB:getWintergraspEndTime(wintergrasp, wintergraspTime);
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
@@ -11353,18 +11353,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 					local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 					local endTime = GetServerTime() + secondsLeft;
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 					if (NWB.db.global.showTimeStamp) then
 						local timeStamp = NWB:getTimeFormat(endTime);
 						msg = msg .. " (" .. timeStamp .. ")";
 					end]]
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 			else
 				texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-				msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+				msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 			end
 			text = text .. msg .. "\n";
 		end
@@ -11407,23 +11407,23 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 		local completedQuests = {};
 		if (NWB.faction == "Horde") then
 			if (C_QuestLog.IsQuestFlaggedCompleted(10110)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11506)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11503)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. "。");
 			end
 		else
 			if (C_QuestLog.IsQuestFlaggedCompleted(10106)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Hellfire Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11505)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Terokkar Towers"] .. ": |cFF00C800Completed|r" .. "。");
 			end
 			if (C_QuestLog.IsQuestFlaggedCompleted(11502)) then
-				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. ".");
+				table.insert(completedQuests, "|cFF9CD6DE" .. L["Nagrand Halaa"] .. ":  |cFF00C800Completed|r" .. "。");
 			end
 		end
 		text = text .. "\n\n" .. NWB.chatColor .. L["Completed PvP dailies"] .. ":|r";
@@ -11481,7 +11481,7 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 							texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						end
 						local endTime = NWB:getWintergraspEndTime(wintergrasp, wintergraspTime);
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
@@ -11491,18 +11491,18 @@ function NWB:recalclayerFrame(isLogon, copyPaste)
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
 						local secondsLeft = 10800 - math.abs(math.fmod(secondsLeft, 10800));
 						local endTime = GetServerTime() + secondsLeft;
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. NWB:getTimeString(endTime - GetServerTime(), true) .. "。";
 						if (NWB.db.global.showTimeStamp) then
 							local timeStamp = NWB:getTimeFormat(endTime);
 							msg = msg .. " (" .. timeStamp .. ")";
 						end]]
 					else
 						texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+						msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 					end
 				else
 					texture = "|TInterface\\worldstateframe\\neutraltower.blp:12:12:-2:0:32:32:1:18:1:18|t";
-					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. ".";
+					msg = msg .. texture .. L["wintergraspTimer"] .. ": " .. L["noCurrentTimer"] .. "。";
 				end
 				text = msg .. text;
 				NWBlayerFrame.EditBox:Insert(NWB.chatColor .. text);
@@ -13307,7 +13307,7 @@ function NWB:takeTaxiNode(node)
 			TakeTaxiNode(i);
 		end
 	end
-	NWB:print("Auto Taking flight path to " .. nodeName .. ".");
+	NWB:print("Auto Taking flight path to " .. nodeName .. "。");
 end
 
 --Get flight path name from nodeID.
@@ -13709,7 +13709,7 @@ function NWB:doHandIn(id, layer, sender)
 		elseif (id == "8183") then
 			lastZanHandIn = GetTime();
 		end
-		msg = msg .. " quest handed in by " .. sender .. ".";
+		msg = msg .. " quest handed in by " .. sender .. "。";
 		if (NWB.db.global.middleHandInMsg) then
 			if (NWB.db.global.middleHandInMsgWhenOnCooldown or not onCooldown) then
 				NWB:middleScreenMsg("questHandIn", msg, nil, 5);

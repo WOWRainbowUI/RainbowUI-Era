@@ -514,8 +514,8 @@ L["dispelsAllWBOnlyDesc"] = "只會顯示在你身邊被驅散的世界增益，
 L["soundsDispelsAllTitle"] = "其他人的增益驅散音效";
 L["soundsDispelsAllDesc"] = "其他人增益被驅散時要撥放什麼音效";
 
-L["middleHideBattlegroundsTitle"] = "在戰場時隱藏。";
-L["middleHideBattlegroundsDesc"] = "在戰場時隱藏螢幕中間的警告?";
+L["middleHideBattlegroundsTitle"] = "在戰場時隱藏";
+L["middleHideBattlegroundsDesc"] = "在戰場時隱藏螢幕中間的警告訊息。";
 
 L["soundsDisableInBattlegroundsTitle"] = "在戰場時關閉。";
 L["soundsDisableInBattlegroundsDesc"] = "在戰場時關閉音效。";
@@ -959,9 +959,23 @@ L["|cFF9CD6DEControl Left-Click|r Guild Layers"] = "|cFF9CD6DEctrl+左鍵|r 公�
 L["10 minutes"] = "10分鐘"
 L["|CffDEDE42Shift Left-Click to send timers to guild chat.\nShift Right-Click to send timers to say."] = "|CffDEDE42Shift+左鍵點擊傳送計時到公會聊天。\nShift+右鍵點擊傳送到一般聊天。"
 L["Terokkar Towers\n|CffDEDE42Shift Left-Click to send timers to guild chat.\nShift Right-Click to send timers to say."] = "泰洛卡計時器|CffDEDE42Shift+左鍵點擊傳送計時到公會聊天。\nShift+右鍵點擊傳送到一般聊天。"
-L["[NWB] Terokkar Towers reset in "] = "[NWB]泰洛卡占塔重置於"																																	
-L["|cFF9CD6DELeft-Click|r Timers"] = "|cFF9CD6DE點擊左鍵|r 時間"
-L["|cFF9CD6DERight-Click|r Buffs"] = "|cFF9CD6DE點擊右鍵|r 增益"
-L["|cFF9CD6DEShift Left-Click|r Felwood Map"] = "|cFF9CD6DEShift+左鍵|r 費伍德地圖"
-L["|cFF9CD6DEShift Right-Click|r Config"] = "|cFF9CD6DEShift+右鍵 |r 設定"
-L["|cFF9CD6DEControl Left-Click|r Guild Layers"] = "|cFF9CD6DECtrl+左鍵|r 公會成員鏡像"
+L["[NWB] Terokkar Towers reset in "] = "[NWB]泰洛卡占塔重置於"
+
+L["minimapLayerFontTitle"] = "小地圖鏡像字體";
+L["minimapLayerFontDesc"] = "小地圖鏡像文字使用哪種字體。";
+
+L["minimapLayerFontSizeTitle"] = "小地圖鏡像文字大小";
+L["minimapLayerFontSizeDesc"] = "小地圖鏡像文字的大小。";
+
+L["wintergraspChat10Title"] = "冬握湖 10 分鐘";
+L["wintergraspChat10Desc"] = "當冬握湖靈魂塔剩下 10 分鐘時，顯示聊天訊息。";
+
+L["wintergraspMiddle10Title"] = "冬握湖 10 分鐘";
+L["wintergraspMiddle10Desc"] = "當冬握湖靈魂塔剩下 10 分鐘時，在畫面中間顯示一個團隊警告訊息。";
+
+L["Left-Click"] = "左鍵"
+L["Right-Click"] = "右鍵"
+L["Shift Left-Click"] = "Shift+左鍵"
+L["Shift Right-Click"] = "Shift+右鍵"
+L["Felwood Map"] = "費伍德地圖"
+L["Config"] = "設定選項"

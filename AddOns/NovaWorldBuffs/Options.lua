@@ -16,7 +16,7 @@ NWB.options = {
 	args = {
 		titleText = {
 			type = "description",
-			name = "        " .. NWB.prefixColor .. "NovaWorldBuffs (v" .. GetAddOnMetadata("NovaWorldBuffs", "Version") .. ")",
+			name = "        " .. NWB.prefixColor .. L["Nova World Buffs"] .." (v" .. GetAddOnMetadata("NovaWorldBuffs", "Version") .. ")",
 			fontSize = "large",
 			order = 1,
 		},
