@@ -1,3 +1,47 @@
+1.15.17 - 7th February 2023
+- Updated for game version 1.15.1.
+- For 'Enhance minimap' ('Interface'), updated tooltip positioning logic.  Added Wowhead Looter button.
+- For 'Recent chat window' ('Chat'), scroll speed is now based on font size.
+- Added flight times.
+
+1.15.16 - 3rd February 2023
+- The 'Enhance minimap' ('Interface') option is now able to display custom buttons correctly if Leatrix Plus is aware of them.
+- For 'Automate quests' ('Automation'), quests from Valadar Starsong and Fariel Starsong (Moonglade) will no longer be automated.
+- Added flight times.
+
+1.15.15 - 1st February 2024
+- Updated translations.
+
+1.15.14 - 31st January 2024
+- For 'Automate quests' ('Automation'), quests from supply officers (for supply shipments) will no longer be automated.
+- Added flight times.
+
+1.15.13 - 24th January 2024
+- For 'Show vendor price' ('System'), if the game reports that the price of 'Phoenix Bindings' is 40 silver, Leatrix Plus will show the correct price of 24 silver 81 copper.
+- Fixed ScrollFrameTemplate editbox widths.
+- Added flight times.
+
+1.15.12 - 17th January 2024
+- For 'Enhance minimap' ('Interface'), the minimum minimap scale is now 50% (was 100%).
+- For 'Hide chat buttons' ('Chat'), fixed an issue which caused a black border around chat tabs.
+- Updated scroll frame template and C_AddOns.
+- Added flight times.
+- Repackage following CurseForge backend issues.
+
+1.15.11 - 10th January 2024
+- Added a new command '/ltp quest wipe' which will clear the quest log.
+- Added flight times.
+
+1.15.10 - 3rd January 2024
+- Updated 'Automate gossip' ('Automation') for soft targeting.
+- For 'Enhance quest log', fixed a situational issue with quest prefix translations.
+- For the minimap button, holding CTRL and SHIFT will now toggle windowed mode.  Holding CTRL and ALT will toggle the Zygor addon (if installed).
+- Added flight times.
+
+1.15.09 - 27th December 2023
+- For 'Automate quests' ('Automation'), you are now able to accept quests with soft targeting even if you are hard targeting another unit.  Fixed an issue which caused automatic turn-in to fail for certain quests with no objectives.
+- Added flight times.
+
 1.15.08 - 20th December 2023
 - Added flight times.
 
