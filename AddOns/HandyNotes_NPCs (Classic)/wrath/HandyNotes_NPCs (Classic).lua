@@ -489,7 +489,7 @@ end
 function Addon:PLAYER_LOGIN()
  local options = {
  type = "group",
- name = "NPCs",
+ name = "NPC",
  desc = L["Locations of various npcs"],
  get = function(info) return db[info[#info]] end,
  set = function(info, v) db[info[#info]] = v Addon:CheckSettings() HandyNotes:SendMessage("HandyNotes_NotifyUpdate", "HandyNotes_NPCs") end,
@@ -784,7 +784,7 @@ function Addon:PLAYER_LOGIN()
  },
 }
 
- HandyNotes:RegisterPluginDB("HandyNotes_NPCs", pluginHandler, options)
+ HandyNotes:RegisterPluginDB("NPC", pluginHandler, options)
 
  
  local button = CreateFrame("Button", nil, WorldMapFrame, "UIPanelButtonTemplate")
@@ -795,7 +795,7 @@ function Addon:PLAYER_LOGIN()
  button:SetScript("OnDragStart", function(self, button) Addon:DragStart(self, button) end)
  button:SetScript("OnDragStop", function(self, button) Addon:DragStop(self, button) end)
  button:SetSize(50, 30)
- button:SetText("NPCs")
+ button:SetText("NPC")
  button:SetPoint("TOPRIGHT", WorldMapFrame, "TOPRIGHT", db.button.x, db.button.y)
  button:SetFrameStrata("FULLSCREEN_DIALOG")
  self.button = button
@@ -812,7 +812,7 @@ end
  
 	self.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("HandyNotes_NPCs", {
 		type = "launcher",
-		label = "NPCs",
+		label = "NPC",
 		icon = "Interface\\MINIMAP\\TRACKING\\None",
 		OnClick = function(clickedFrame, button)
 		if (button == "LeftButton") then

@@ -472,7 +472,7 @@ end
 function Addon:PLAYER_LOGIN()
  local options = {
  type = "group",
- name = "NPCs",
+ name = "NPC",
  desc = L["Locations of various npcs"],
  get = function(info) return db[info[#info]] end,
  set = function(info, v) db[info[#info]] = v Addon:CheckSettings() HandyNotes:SendMessage("HandyNotes_NotifyUpdate", "HandyNotes_NPCs") end,
@@ -767,7 +767,7 @@ function Addon:PLAYER_LOGIN()
  },
 }
 
- HandyNotes:RegisterPluginDB("HandyNotes_NPCs", pluginHandler, options)
+ HandyNotes:RegisterPluginDB("NPC", pluginHandler, options)
 
  
  local button = CreateFrame("Button", nil, WorldMapFrame, "UIPanelButtonTemplate")
@@ -795,7 +795,7 @@ end
  
 	self.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("HandyNotes_NPCs", {
 		type = "launcher",
-		label = "NPCs",
+		label = "NPC",
 		icon = "Interface\\MINIMAP\\TRACKING\\None",
 		OnClick = function(clickedFrame, button)
 		if (button == "LeftButton") then
