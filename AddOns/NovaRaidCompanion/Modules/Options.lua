@@ -76,7 +76,7 @@ NRC.options = {
 	args = {
 		titleText = {
 			type = "description",
-			name = "        " .. NRC.prefixColor .. "NovaRaidCompanion (v" .. GetAddOnMetadata("NovaRaidCompanion", "Version") .. ")",
+			name = "        " .. NRC.prefixColor .. L["NovaRaidCompanion "] .. " (v" .. GetAddOnMetadata("NovaRaidCompanion", "Version") .. ")",
 			fontSize = "large",
 			order = 1,
 		},
@@ -3534,7 +3534,7 @@ NRC.options = {
 			},
 		},
 		classWarrior = {
-			name = "   |cFFC69B6DWarrior",
+			name = "   |cFFC69B6D" .. L["Warrior"],
 			desc = "Warrior tools.",
 			type = "group",
 			order = 108,

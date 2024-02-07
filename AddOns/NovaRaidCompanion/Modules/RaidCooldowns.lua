@@ -316,7 +316,7 @@ function NRC:updateRaidCooldownFramesLayout()
 				frame.displayTab.top:SetBackdropColor(0, 0, 0, 0.8);
 			end
 			frame.displayTab:SetAlpha(0.4);
-			frame.displayTab.top.fs:SetText("|cFFDEDE42Cooldown List " .. i .. "|r");
+			frame.displayTab.top.fs:SetText(L["|cFFDEDE42Cooldown List "] .. i .. "|r");
 			frame.displayTab.top.fs2:SetText("|cFF9CD6DE" .. L["Drag Me"] .. "|r");
 			frame.displayTab.top:SetSize(100, 30);
 			

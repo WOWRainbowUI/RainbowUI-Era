@@ -813,7 +813,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 				raidStatusFrame.subFrames["a" .. i].updateTooltip(tooltipText);
 			end
 		end
-		local tooltipText = "Hold shift to drag";
+		local tooltipText = L["Hold Shift To Drag"];
 		--No tooltip for the last 2 slots near the close button.
 		for i = 1, slotCount - 2 do
 			if (raidStatusFrame.subFrames and raidStatusFrame.subFrames["a" .. i] and not data.columns[i].tooltip) then
@@ -1952,7 +1952,7 @@ function NRC:createRaidStatusData(updateLayout)
 		data.columns = {
 			--Column names, printed in first row (header).
 			[1] = {
-				name = "|cFFFF6900NRC Raid Status",
+				name = L["|cFFFF6900NRC Raid Status"],
 			},
 		};
 		slotCount = slotCount + 1;

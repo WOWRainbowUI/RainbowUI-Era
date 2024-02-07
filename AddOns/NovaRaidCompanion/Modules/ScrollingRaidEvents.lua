@@ -951,7 +951,7 @@ function NRC:sreUpdateFrameLocksLayout()
 				});
 				frame.displayTab.top:SetBackdropColor(0, 0, 0, 0.8);
 				frame.displayTab:SetAlpha(0.3);
-				frame.displayTab.top.fs:SetText("|cFFDEDE42NRC Scrolling Events|r");
+				frame.displayTab.top.fs:SetText(L["|cFFDEDE42NRC Scrolling Events|r"]);
 				frame.displayTab.top.fs2:SetText("|cFF9CD6DE" .. L["Drag Me"] .. "|r");
 				frame.displayTab.top:SetSize(120, 30);
 				--raidCooldowns:EnableMouse(true);
