@@ -141,7 +141,8 @@ function QuestieTBCNpcFixes:Load()
         [15895] = {
             [npcKeys.spawns] = {[1657]={{33.89,13.87}},[1497]={{65.62,36.0}},[1637]={{41.66,31.98}},[1638]={{71.12,28.2}},[1537]={{28.85,16.23}},[1519]={{23.22,53.24}}, -- original data
                                [zoneIDs.THE_EXODAR]={{74,57.5}}, -- correction
-                               [zoneIDs.SILVERMOON_CITY]={{73.1,82.6}}},
+                               [zoneIDs.SILVERMOON_CITY]={{73.1,82.6}},
+                               [zoneIDs.SHATTRATH_CITY]={{53.29,33.1},{48.14,36.87}}},
         },
         [15920] = {
             [npcKeys.waypoints] = {[zoneIDs.EVERSONG_WOODS]={{{30,58.6}}}},
@@ -209,6 +210,10 @@ function QuestieTBCNpcFixes:Load()
         },
         [17000] = {
             [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{40.22,31.09}}},
+        },
+        [17034] = {
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{28.62,81.7},{29.02,81.48},{25.66,76.92},{27.55,77.86},{26.41,75.21},{26.23,75.39},{25.73,75.04},{24.91,74.93},{26.39,74.26},{25.34,71.56}}},
+            [npcKeys.zoneID] = zoneIDs.HELLFIRE_PENINSULA,
         },
         [17076] = {
             [npcKeys.spawns] = {[zoneIDs.SILVERMOON_CITY]={{92.2,36.4}}},
@@ -363,6 +368,26 @@ function QuestieTBCNpcFixes:Load()
             [npcKeys.spawns] = {[zoneIDs.THE_BLACK_MORASS] = {{-1,-1}}},
             [npcKeys.zoneID] = zoneIDs.THE_BLACK_MORASS,
         },
+        [17910] = {
+            [npcKeys.spawns] = {[zoneIDs.STRATHOLME] = {{-1,-1}}},
+            [npcKeys.zoneID] = zoneIDs.STRATHOLME,
+        },
+        [17911] = {
+            [npcKeys.spawns] = {[zoneIDs.STRATHOLME] = {{-1,-1}}},
+            [npcKeys.zoneID] = zoneIDs.STRATHOLME,
+        },
+        [17912] = {
+            [npcKeys.spawns] = {[zoneIDs.STRATHOLME] = {{-1,-1}}},
+            [npcKeys.zoneID] = zoneIDs.STRATHOLME,
+        },
+        [17913] = {
+            [npcKeys.spawns] = {[zoneIDs.STRATHOLME] = {{-1,-1}}},
+            [npcKeys.zoneID] = zoneIDs.STRATHOLME,
+        },
+        [17914] = {
+            [npcKeys.spawns] = {[zoneIDs.STRATHOLME] = {{-1,-1}}},
+            [npcKeys.zoneID] = zoneIDs.STRATHOLME,
+        },
         [17923] = {
             [npcKeys.waypoints] = {[zoneIDs.ZANGARMARSH] = {{{19,62.4},{19,63.5},{19.2,64.6}}}},
         },
@@ -449,6 +474,14 @@ function QuestieTBCNpcFixes:Load()
         [18817] = {
             [npcKeys.spawns] = {[zoneIDs.NAGRAND] = {{41.2,44.2}}},
         },
+        [18849] = {
+            [npcKeys.name] = "Eastern Cannon",
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{60.7,51.78}}},
+        },
+        [19008] = {
+            [npcKeys.name] = "Western Cannon",
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{54.79,53.33}}},
+        },
         [19305] = {
             [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{13.64,39.12}}},
         },
@@ -508,6 +541,10 @@ function QuestieTBCNpcFixes:Load()
             [npcKeys.spawns] = {[zoneIDs.THE_MECHANAR] = {{-1,-1}}},
             [npcKeys.zoneID] = zoneIDs.THE_MECHANAR,
         },
+        [19862] = {
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{63.41,77.12}}},
+            [npcKeys.zoneID] = zoneIDs.HELLFIRE_PENINSULA,
+        },
         [19909] = {
             [npcKeys.friendlyToFaction] = "H",
         },
@@ -563,6 +600,30 @@ function QuestieTBCNpcFixes:Load()
         [20787] = {
             [npcKeys.spawns] = {[zoneIDs.NETHERSTORM] = {{53.3,41.43}}},
             [npcKeys.zoneID] = zoneIDs.NETHERSTORM,
+        },
+        [20813] = {
+            [npcKeys.name] = "Barracks",
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{69.49,76.36}}},
+            [npcKeys.zoneID] = zoneIDs.HELLFIRE_PENINSULA,
+        },
+        [20814] = {
+            [npcKeys.name] = "Stable",
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{68.53,73.68}}},
+            [npcKeys.zoneID] = zoneIDs.HELLFIRE_PENINSULA,
+        },
+        [20815] = {
+            [npcKeys.name] = "Eastern Hovel",
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{69.93,70.23}}},
+            [npcKeys.zoneID] = zoneIDs.HELLFIRE_PENINSULA,
+        },
+        [20816] = {
+            [npcKeys.name] = "Western Hovel",
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{67.23,76.31}}},
+            [npcKeys.zoneID] = zoneIDs.HELLFIRE_PENINSULA,
+        },
+        [20888] = {
+            [npcKeys.spawns] = {[zoneIDs.BLADES_EDGE_MOUNTAINS] = {{52.5,20.43},{52.68,20.25},{52.87,20.08},{49.62,21.42},{49.39,21.3},{49.15,21.13},{49.63,15.76},{49.48,15.54}}},
+            [npcKeys.zoneID] = zoneIDs.BLADES_EDGE_MOUNTAINS,
         },
         [20869] = {
             [npcKeys.spawns] = {[zoneIDs.THE_ARCATRAZ] = {{-1,-1}}},
@@ -633,6 +694,9 @@ function QuestieTBCNpcFixes:Load()
         [22059] = {
             [npcKeys.spawns] = {[zoneIDs.SHADOWMOON_VALLEY] = {{51.23,62.75},{52.45,59.19}}},
         },
+        [22258] = {
+            [npcKeys.spawns] = {[zoneIDs.HELLFIRE_PENINSULA] = {{44.07,51.04}}},
+        },
         [22275] = {
             [npcKeys.spawns] = {[zoneIDs.BLADES_EDGE_MOUNTAINS] = {{60.02,9.5},{27.4,68.56},{31.76,63.8},{33.41,51.84},{28.8,46.51},{64.67,10.89},{69.01,13.89}}},
         },
@@ -677,6 +741,22 @@ function QuestieTBCNpcFixes:Load()
             [npcKeys.spawns] = {[zoneIDs.SHATTRATH_CITY]={{75.23,48.0},},},
             [npcKeys.zoneID] = zoneIDs.SHATTRATH_CITY,
             [npcKeys.questEnds] = {10943,10950,10952,10962}, -- removed the horde starting quest
+        },
+        [22825] = {
+            [npcKeys.spawns] = {[zoneIDs.BLADES_EDGE_MOUNTAINS] = {{52.5,20.43},{52.68,20.25},{52.87,20.08},{49.62,21.42},{49.39,21.3},{49.15,21.13},{49.63,15.76},{49.48,15.54}}},
+            [npcKeys.zoneID] = zoneIDs.BLADES_EDGE_MOUNTAINS,
+        },
+        [22826] = {
+            [npcKeys.spawns] = {[zoneIDs.BLADES_EDGE_MOUNTAINS] = {{52.5,20.43},{52.68,20.25},{52.87,20.08},{49.62,21.42},{49.39,21.3},{49.15,21.13},{49.63,15.76},{49.48,15.54}}},
+            [npcKeys.zoneID] = zoneIDs.BLADES_EDGE_MOUNTAINS,
+        },
+        [22827] = {
+            [npcKeys.spawns] = {[zoneIDs.BLADES_EDGE_MOUNTAINS] = {{52.5,20.43},{52.68,20.25},{52.87,20.08},{49.62,21.42},{49.39,21.3},{49.15,21.13},{49.63,15.76},{49.48,15.54}}},
+            [npcKeys.zoneID] = zoneIDs.BLADES_EDGE_MOUNTAINS,
+        },
+        [22828] = {
+            [npcKeys.spawns] = {[zoneIDs.BLADES_EDGE_MOUNTAINS] = {{52.5,20.43},{52.68,20.25},{52.87,20.08},{49.62,21.42},{49.39,21.3},{49.15,21.13},{49.63,15.76},{49.48,15.54}}},
+            [npcKeys.zoneID] = zoneIDs.BLADES_EDGE_MOUNTAINS,
         },
         [22890] = {
             [npcKeys.spawns] = {[zoneIDs.SHADOW_LABYRINTH] = {{-1,-1}}},
