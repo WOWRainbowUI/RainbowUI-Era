@@ -124,6 +124,7 @@ function EngraverFrameMixin:RegisterOptionChangedCallbacks()
 	register("HideDragTab", self.UpdateLayout)
 	register("ShowFilterSelector", self.UpdateLayout)
 	register("HideSlotLabels", self.UpdateLayout)
+	register("HideUndiscoveredRunes", self.LoadCategories)
 	register("CurrentFilter", self.LoadCategories) -- index stored in EngraverOptions.CurrentFilter changed
 	register("FiltersChanged", self.LoadCategories) -- data inside EngraverFilters changed
 end
@@ -132,10 +133,10 @@ function EngraverFrameMixin:LoadCategories()
 	self:ResetCategories()
 	C_Engraving:ClearAllCategoryFilters();
 	C_Engraving.RefreshRunesList();
-	self.categories = C_Engraving.GetRuneCategories(false, false);
+	self.categories = C_Engraving.GetRuneCategories(false, EngraverOptions.HideUndiscoveredRunes or false);
 	if #self.categories > 0 then
 		for c, category in ipairs(self.categories) do
-			local runes = Addon.Filters:GetFilteredRunesForCategory(category, false)
+			local runes = Addon.Filters:GetFilteredRunesForCategory(category, EngraverOptions.HideUndiscoveredRunes or false)
 			if #runes > 0 then
 				local categoryFrame = self.categoryFramePool:Acquire()
 				categoryFrame:Show()
@@ -174,21 +175,23 @@ function EngraverFrameMixin:UpdateLayout(...)
 	self:UpdateVisibilityMode()
 	if self.categories ~= nil then
 		local layoutDirection = Addon.GetCurrentLayoutDirection()
-		local sizeMultiplier = max(1, self:GetNumVisibleCategories())
-		if layoutDirection.swapTabDimensions then
-			self:SetSize(40, 40 * sizeMultiplier)
-		else
-			self:SetSize(40 * sizeMultiplier, 40)
-		end
 		self:SetScale(EngraverOptions.UIScale or 1.0)
 		if self.equipmentSlotFrameMap then
 			local displayMode = Addon.GetCurrentDisplayMode()
 			local prevCategoryFrame = nil
 			for category, categoryFrame in pairs(self.equipmentSlotFrameMap) do
 				if categoryFrame then
+					categoryFrame:ClearAllPoints()
 					categoryFrame:SetDisplayMode(displayMode.mixin)
 					if prevCategoryFrame == nil then
-						categoryFrame:SetPoint(layoutDirection.categoryPoint)
+						categoryFrame:SetPoint("CENTER")
+						local numVisibleCategories = max(1, self:GetNumVisibleCategories())
+						local halfSpanDistance = 40 * (numVisibleCategories - 1) / 2
+						if layoutDirection.swapTabDimensions then
+							categoryFrame:AdjustPointsOffset(0, halfSpanDistance)
+						else
+							categoryFrame:AdjustPointsOffset(-halfSpanDistance, 0)
+						end
 					else
 						categoryFrame:SetPoint(layoutDirection.categoryPoint, prevCategoryFrame, layoutDirection.categoryRelativePoint)
 					end
