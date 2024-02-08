@@ -32,9 +32,9 @@ Addon.EngraverVisibilityModes = {
 
 local DefaultEngraverOptions = {
 	DisplayMode = 1,
-	LayoutDirection = 0,
-	VisibilityMode = "ShowAlways",
-	HideUndiscoveredRunes = false,
+	LayoutDirection = 1,
+	VisibilityMode = "HideInCombat",
+	HideUndiscoveredRunes = true, -- 更改預設值
 	HideTooltip = false,
 	HideDragTab = false,
 	ShowFilterSelector = false,
@@ -132,7 +132,7 @@ function EngraverOptionsFrameMixin:CreateSettingsInitializers()
 		AddInitializer(self, Settings.CreateDropDownInitializer(setting, options, tooltip))
 	end -- VisibilityMode
 	do -- HideUndiscoveredRunes
-		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "HideUndiscoveredRunes", "Hide Undiscovered Runes", Settings.VarType.Boolean), nil, "Spoiler safety - hides any runes that have not been discovered yet. They will still be hidden even if they pass the active filter."))
+		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "HideUndiscoveredRunes", "隱藏未發現的符文", Settings.VarType.Boolean), nil, "防止劇透 - 隱藏尚未被發現的任何符文。即使符合過濾方式，仍會保持隱藏。"))
 	end -- HideUndiscoveredRunes
 	do -- HideTooltip
 		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "HideTooltip", "隱藏浮動提示資訊", Settings.VarType.Boolean), nil, "滑鼠指向符文按鈕時不顯示浮動提示資訊。"))
