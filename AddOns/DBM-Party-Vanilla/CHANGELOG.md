@@ -1,20 +1,21 @@
-# <DBM Mod> Dungeons (Classic)
+# <DBM Mod> Dungeons (Vanilla)
 
-## [r112](https://github.com/DeadlyBossMods/DBM-Dungeons/tree/r112) (2023-12-21)
-[Full Changelog](https://github.com/DeadlyBossMods/DBM-Dungeons/compare/r111...r112) [Previous Releases](https://github.com/DeadlyBossMods/DBM-Dungeons/releases)
+## [r119](https://github.com/DeadlyBossMods/DBM-Dungeons/tree/r119) (2024-02-06)
+[Full Changelog](https://github.com/DeadlyBossMods/DBM-Dungeons/compare/r118...r119) [Previous Releases](https://github.com/DeadlyBossMods/DBM-Dungeons/releases)
 
-- Backup Stage 2 trigger for Chrono Lord Deios in case early push (less than 4 add deaths)  
-- throttle icy veins warning on lady nazjar  
-- fix bad copy/paste  
-- Add DHT RP timers for first and second boss  
-- Add everbloom RP timer for portal  
-- helps to actually comment out the comments  
-- Add RP timer after first boss in BRH  
-- acid barrage tweak  
-- Fix bad option localization.  
-- small timer tweak  
-- further refinements to crappy spell queuing in DHT  
-- improve debug  
-- Few minor everbloom tweaks  
-- shorten scan time on waycrest  
-- two nameplate timer updates for atal dazar trash  
+- bump classic era toc  
+- Fix a bug that caused problems timer to be broken entire expansion on morchie  
+- Per user request, add combat timer to Yalnu  
+- Fix some event registrations (#170)  
+- Drycode wracking pain target scanner with personal and target announce for Mythic and Mythic+  
+- tweaks to classic gnomer  
+- cleanup extra trivial checks that exist in core now  
+- Update koKR (#168)  
+    Co-authored-by: Artemis <QartemisT@gmail.com>  
+- note the last missing RP timer cause I keep forgetting to log  
+- Dawn of Infinite Update  
+     - Auto gossip option finally added for rift auto clicking  
+     - RP timer finally added to Tyr  
+     - Rp timer finally added to timelost battlefield  
+- Micro adjust many timers  
+- Add counts to primary abilities on kokia  

@@ -1,24 +1,42 @@
-# <DBM Mod> Azeroth (Classic)
+# <DBM Mod> Azeroth (Vanilla)
 
-## [1.15.5](https://github.com/DeadlyBossMods/DBM-Classic/tree/1.15.5) (2023-12-12)
-[Full Changelog](https://github.com/DeadlyBossMods/DBM-Classic/compare/1.15.4...1.15.5) [Previous Releases](https://github.com/DeadlyBossMods/DBM-Classic/releases)
+## [1.15.10](https://github.com/DeadlyBossMods/DBM-Classic/tree/1.15.10) (2024-02-06)
+[Full Changelog](https://github.com/DeadlyBossMods/DBM-Classic/compare/1.15.9...1.15.10) [Previous Releases](https://github.com/DeadlyBossMods/DBM-Classic/releases)
 
-- Prep classic version for tag  
+- bump classic era tocs  
+- bump classic era toc  
+- bump classic era toc  
+- Add basic style config and some style fixes (#409) The only potentially controversial thing here are spaces around string concat, it's currently rather inconsistent, so I just set it to \"foo .. bar\".  
+- Fix handling unknown mod loading errors (#411)  
+- Fix DisableAmbiance sound setting (#410)  
+- Add event param type annotations (#408)  
+- Register event SWING\_MISSED (#51)  
+- Update MekgineerThermaplugg.lua (#50) fix RegisterEvents  
+- bump alpha  
+- prep new tag for retail  
+- Update localization.ru.lua (#407)  
+- Add deDE locale for Gnomeregan (#49)  
+- fix typo (#48)  
+- Update localization.ru.lua (#406)  
+- Update localization.ru.lua (#405)  
+- reduce transparency of dropdown menus to make it easier to read options in them. With recent UI updates, background tect in many places changed from a softer yellow to a strong white, as a result it could be difficult to read dropdown items in sound and timer color menus. This balances that out.  
+- re-arrange, at least in the languages that actually have dropdown localizations  
+- I didn't like how unclear this is, so make it clearer that the default 4 sounds selected in sound drop downs, are the global sounds (as configured in the special announce panel)  
+- GUI: Hide boss preview when changing tabs.  
+- More GUI cleaning... Fixed a few bugs.  
+- Apply to correct OnShow :D  
+- Cleaner fix mayb?  
+- GUI: Fix quirky non-positioning issue when resizing WoW window?  
+- Abort skip if nil map ID. Closes https://github.com/DeadlyBossMods/DBM-Retail/issues/986  
 - bump alpha  
 - prep new retail tag  
-- Update commonlocal.cn.lua (#333)  
-- Update koKR (#331)  
-- Fix some of the bigger problems for LuaLS. (#332) This unlocks amazing LuaLS features like auto-complete and jump-to-definition for all fields in DBM, mods, timers, warnings etc :)  The main problem was that the DBM the DBM global was registered in a way it didn't understand (and hence it only saw about half the fields). Also, we had some cases of functions being tagged as optional for no good reason triggering a lot of nil check warnings.  It currently still reports around 600 problems or so, but a lot of these are just it being unhappy about us setting random fields in Frame objects which I guess we should disable.  
-- Re-enable item checks on hostile creatures in boss distance check code  
-- Add support for loading mods by MapID (#330)  
-- Fix ismythic check with recent change  
-- Allow anyone to set icons specifically in dungeons, instead of just party leader. This should solve many cases where no icons are set because person who was leader had no boss mod installed. Should make things like auto marking trio in waycrest more reliable  
-- Fix one failure condition for final scan not running and causing fallback filter target to work, is if by the time scan finished, bosses target went invalid, thus causing final scan to never schedule.  
-- hard wipe GUID period even if not elected icon setter (even though by code logic, if not elected, it would never get set in first place)  
-- Update localization.es.lua (#327)  
-- Update localization.tw.lua (#329)  
-- Temporarily revert last. It's far too spammy at present.  
-- Core: WBA: add SoD Boon of Blackfathom (#328)  
-- Update localization.es.lua (#39)  
-- Update localization.mx.lua (#38)  
-- bump classic alpha  
+- Menagerie notes First spell for thermaplugg  
+- Prep SoD Stage 2 raid  
+- Fix garrison logic in refactor. In instance should ignore garrisons, those should only be touched by \"anywhere\" power user option  
+- Auto name mods for raids dungeon and world bosses.  
+- fix encoding/renderring error  
+- More LuaLS annotations (#403)  
+- Merge pull request #47 from Elnarfim/master Update koKR (Vanilla)  
+- Make LuaLS happy (#46)  
+- Locale syncs: All core localizations finished.  
+- bump alpha  

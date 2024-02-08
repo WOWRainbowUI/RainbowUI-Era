@@ -1,7 +1,7 @@
-local mod	= DBM:NewMod("LadySarevessSoD", "DBM-Raids-Vanilla", 8)
+local mod	= DBM:NewMod("LadySarevessSoD", "DBM-Raids-Vanilla", 9)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20231210005857")
+mod:SetRevision("20240206211659")
 mod:SetCreatureID(204068)
 mod:SetEncounterID(2699)--2762 is likely 5 man version in instance type 201
 mod:SetHotfixNoticeRev(20231208000000)
@@ -46,7 +46,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpell(407794) then
 		timerTriplePunctureCD:Start(nil, args.sourceGUID)
 	elseif args:IsSpell(407653) then
-		timerForkedLightningCD:start()
+		timerForkedLightningCD:Start()
 	end
 end
 

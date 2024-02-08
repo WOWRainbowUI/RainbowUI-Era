@@ -5,10 +5,10 @@
 ## DefaultState: enabled
 ## RequiredDeps: DBM-Core
 ## Author: 安格斯
-## Version: 2.8.5-23-1209
+## Version: 2.9.0-24-0116
 ## IconTexture: Interface\AddOns\DBM-VPSaha\z_ags
 ## X-DBM-Voice: 1
 ## X-DBM-Voice-Name: 安格斯 (中文男音)
 ## X-DBM-Voice-ShortName: Saha
-## X-DBM-Voice-Version: 15
+## X-DBM-Voice-Version: 16
 ## X-DBM-Voice-HasCount: 1

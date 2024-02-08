@@ -1,8 +1,9 @@
-DBT = {
+---@class DBT
+local DBT = {
 	bars = {},
 	numBars = 0
 }
-local DBT = DBT
+_G.DBT = DBT
 
 local standardFont
 if LOCALE_koKR then
@@ -138,7 +139,23 @@ DBT.DefaultOptions = {
 	Skin = ""
 }
 
-local barPrototype, unusedBarObjects, barIsAnimating = {}, {}, false
+---@class DBTBar
+---@field frame Frame
+---@field timer number
+---@field totalTime number
+---@field moving "move"|"enlarge"|"nextEnlarge"|nil
+---@field lastUpdate number
+---@field colorType number
+---@field keep boolean?
+---@field isCooldown boolean?
+---@field huge boolean
+---@field small boolean?
+---@field fade boolean?
+---@field dummy boolean?
+---@field dummyEnlarge boolean? Hack used by GUI for large preview bars
+---@field alwaysHuge boolean?
+local barPrototype = {}
+local unusedBarObjects, barIsAnimating = {}, false
 local smallBars, largeBars = {}, {}
 
 local smallBarsAnchor, largeBarsAnchor = CreateFrame("Frame", nil, UIParent), CreateFrame("Frame", nil, UIParent)
@@ -173,7 +190,8 @@ do
 		if self.obj then
 			self.obj.curTime = GetTime()
 			self.obj.delta = self.obj.curTime - self.obj.lastUpdate
-			if barIsAnimating and self.obj.delta >= 0.01 or self.obj.delta >= 0.04 then
+			--Frequent updates when any bar is moving or large bars so they don't look janky. More efficient bars when non animating small bars
+			if (barIsAnimating or self.obj.enlarged) and self.obj.delta >= 0.01 or self.obj.delta >= 0.04 then
 				self.obj.lastUpdate = self.obj.curTime
 				self.obj:Update(self.obj.delta)
 			end
@@ -211,12 +229,15 @@ do
 	local fCounter = 1
 
 	local function createBarFrame(self)
+		---@class DBTBarFrame: Frame
 		local frame = CreateFrame("Frame", "DBT_Bar_" .. fCounter, smallBarsAnchor)
 		frame:SetSize(195, 20)
 		frame:SetScript("OnUpdate", onUpdate)
 		frame:SetScript("OnMouseDown", onMouseDown)
 		frame:SetScript("OnMouseUp", onMouseUp)
 		frame:SetScript("OnHide", onHide)
+		---@type DBTBar
+		frame.obj = nil
 		local bar = CreateFrame("StatusBar", "$parentBar", frame)
 		bar:SetPoint("CENTER", frame, "CENTER")
 		bar:SetSize(195, 20)
@@ -258,8 +279,8 @@ do
 			return
 		end
 		-- Most efficient place to block it, nil colorType instead of checking option every update
-		if not self.Options.ColorByType then
-			colorType = nil
+		if not self.Options.ColorByType or not colorType then
+			colorType = 0
 		end
 		local newBar = self:GetBar(id)
 		if newBar then -- Update an existing bar
@@ -302,6 +323,7 @@ do
 				newBar.alwaysHuge = nil
 			else -- Duplicate code ;(
 				local newFrame = createBarFrame(self)
+				---@class DBTBar
 				newBar = setmetatable({
 					frame = newFrame,
 					id = id,
@@ -322,7 +344,7 @@ do
 					countdown = countdown,
 					countdownMax = countdownMax,
 					isCooldown = isCooldown,
-					lastUpdate = GetTime()
+					lastUpdate = GetTime(),
 				}, mt)
 				newFrame.obj = newBar
 			end
@@ -356,8 +378,12 @@ do
 	local gsub = string.gsub
 
 	local function fixElv(optionName)
-		if DBT.Options[optionName]:lower():find("interface\\addons\\elvui\\media\\") then
-			DBT.Options[optionName] = gsub(DBT.Options[optionName], gsub("Interface\\AddOns\\ElvUI\\Media\\", "(%a)", function(v)
+		local value = DBT.Options[optionName]
+		if type(value) ~= "string" then
+			return
+		end
+		if value:lower():find("interface\\addons\\elvui\\media\\") then
+			DBT.Options[optionName] = gsub(value, gsub("Interface\\AddOns\\ElvUI\\Media\\", "(%a)", function(v)
 				return "[" .. v:upper() .. v:lower() .. "]"
 			end), "Interface\\AddOns\\ElvUI\\Core\\Media\\")
 		end
@@ -394,7 +420,7 @@ do
 
 	function DBT:CreateProfile(id)
 		if not id or id == "" or id:find(" ") then
-			self:AddMsg(DBM_CORE_L.PROFILE_CREATE_ERROR)
+			DBM:AddMsg(DBM_CORE_L.PROFILE_CREATE_ERROR)
 			return
 		end
 		local DBM_UsedProfile = DBM_UsedProfile or "Default"
@@ -559,6 +585,9 @@ do
 	function DBT:CreateDummyBar(colorType, inlineIcon, text)
 		dummyBars = dummyBars + 1
 		local dummy = self:CreateBar(25, "dummy" .. dummyBars, 136116, nil, true, nil, true, colorType, inlineIcon) -- "Interface\\Icons\\Spell_Nature_WispSplode"
+		if not dummy then
+			error("failed to create dummy bar")
+		end
 		dummy:SetText(text or "Dummy", inlineIcon)
 		dummy:Cancel()
 		self.bars[dummy] = true
@@ -581,6 +610,7 @@ function DBT:GetBarIterator()
 	return pairs(self.bars)
 end
 
+---@return DBTBar?
 function DBT:GetBar(id)
 	for bar in self:GetBarIterator() do
 		if id == bar.id then
@@ -603,7 +633,7 @@ function DBT:UpdateBar(id, elapsed, totalTime)
 	for bar in self:GetBarIterator() do
 		if id == bar.id then
 			bar:SetTimer(totalTime or bar.totalTime)
-			bar:SetElapsed(elapsed or self.totalTime - self.timer)
+			bar:SetElapsed(elapsed or bar.totalTime - bar.timer)
 			return true
 		end
 	end
@@ -1049,18 +1079,20 @@ function barPrototype:MoveToNextPosition()
 	local Enlarged = self.enlarged
 	local ExpandUpwards = Enlarged and DBT.Options.ExpandUpwardsLarge or not Enlarged and DBT.Options.ExpandUpwards
 	self.frame:ClearAllPoints()
+	local xOffset = Enlarged and DBT.Options.HugeBarXOffset or DBT.Options.BarXOffset
+	local yOffset = Enlarged and DBT.Options.HugeBarYOffset or DBT.Options.BarYOffset
 	if ExpandUpwards then
 		self.movePoint = "BOTTOM"
-		self.frame:SetPoint("BOTTOM", newAnchor, "BOTTOM", DBT.Options[Enlarged and "HugeBarXOffset" or "BarXOffset"], DBT.Options[Enlarged and "HugeBarYOffset" or "BarYOffset"])
+		self.frame:SetPoint("BOTTOM", newAnchor, "BOTTOM", xOffset, yOffset)
 	else
 		self.movePoint = "TOP"
-		self.frame:SetPoint("TOP", newAnchor, "TOP", DBT.Options[Enlarged and "HugeBarXOffset" or "BarXOffset"], -DBT.Options[Enlarged and "HugeBarYOffset" or "BarYOffset"])
+		self.frame:SetPoint("TOP", newAnchor, "TOP", xOffset, -yOffset)
 	end
 	local newX = self.frame:GetRight() - self.frame:GetWidth()/2
 	local newY = self.frame:GetTop()
 	if DBT.Options.BarStyle ~= "NoAnim" then
 		self.frame:ClearAllPoints()
-		self.frame:SetPoint(self.movePoint, newAnchor, self.moveRelPoint, -(newX - oldX), -(newY - oldY))
+		self.frame:SetPoint(self.movePoint, newAnchor, self.movePoint, -(newX - oldX), -(newY - oldY))
 		self.moving = "move"
 	end
 	self.moveAnchor = newAnchor
@@ -1075,12 +1107,14 @@ function barPrototype:Enlarge()
 	local Enlarged = self.enlarged
 	local ExpandUpwards = Enlarged and DBT.Options.ExpandUpwardsLarge or not Enlarged and DBT.Options.ExpandUpwards
 	self.frame:ClearAllPoints()
+	local xOffset = Enlarged and DBT.Options.HugeBarXOffset or DBT.Options.BarXOffset
+	local yOffset = Enlarged and DBT.Options.HugeBarYOffset or DBT.Options.BarYOffset
 	if ExpandUpwards then
 		self.movePoint = "BOTTOM"
-		self.frame:SetPoint("BOTTOM", largeBarsAnchor, "BOTTOM", DBT.Options[Enlarged and "HugeBarXOffset" or "BarXOffset"], DBT.Options[Enlarged and "HugeBarYOffset" or "BarYOffset"])
+		self.frame:SetPoint("BOTTOM", largeBarsAnchor, "BOTTOM", xOffset, yOffset)
 	else
 		self.movePoint = "TOP"
-		self.frame:SetPoint("TOP", largeBarsAnchor, "TOP", DBT.Options[Enlarged and "HugeBarXOffset" or "BarXOffset"], -DBT.Options[Enlarged and "HugeBarYOffset" or "BarYOffset"])
+		self.frame:SetPoint("TOP", largeBarsAnchor, "TOP", xOffset, -yOffset)
 	end
 	local newX = self.frame:GetRight() - self.frame:GetWidth()/2
 	local newY = self.frame:GetTop()

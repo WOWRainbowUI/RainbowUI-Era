@@ -5,10 +5,10 @@
 ## DefaultState: enabled
 ## RequiredDeps: DBM-Core
 ## Author: 安格斯
-## Version: 23-1209
+## Version: 24-0116
 ## IconTexture: Interface\AddOns\DBM-VPSahaJh\z_ags
 ## X-DBM-Voice: 1
 ## X-DBM-Voice-Name: 家豪 (中文男音)
 ## X-DBM-Voice-ShortName: SahaJh
-## X-DBM-Voice-Version: 15
+## X-DBM-Voice-Version: 16
 ## X-DBM-Voice-HasCount: 1
