@@ -493,7 +493,7 @@ function Stuf:LoadDefaults(db, restore, perchar, justboss)
 			buffgroup={
 					x=0, y=-30, w=20, h=20,
 					count=30, rows=2, cols=15,
-					timey=-10, countty=5, counttfontflags="OUTLINE", growth="LRTB", spacing=2, vspacing=5, },
+					timey=-10, countty=5, counttfontflags="OUTLINE", growth="LRTB", spacing=2, vspacing=5, showpie=true, },
 			debuffgroup={
 					x=0, y=-54, w=30, h=30,
 					count=10, rows=1, cols=10, 
@@ -1162,7 +1162,7 @@ local function set(info, r, g, b, a)
 	end
 end
 
-local hide={ name=_G.DISABLE or "Disable", type="toggle", set=set, get=get, order=1, }
+local hide={ name=L["Disable"], type="toggle", set=set, get=get, order=1, }
 local copy={ 
 	name=function(info)
 		local unit, object, setting = infobreakdown(info)

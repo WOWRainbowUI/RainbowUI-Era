@@ -287,6 +287,7 @@ StufOptionsLocalization = {
 ["Stuf"] = "Stuf頭像",
 ["Tar"] = "目標",
 [" of Tar"] = "的目標",
+["Disable"] = "關閉",
 
 pettarget = _G.PET.." ".._G.TARGET,
 party1 = _G.PARTY.." 1",
