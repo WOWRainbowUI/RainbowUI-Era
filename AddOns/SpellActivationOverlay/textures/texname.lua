@@ -110,11 +110,11 @@ function SAO.MarkTexture(self, texName)
     self.MarkedTextures[texName] = true;
     fullTextureName = texName;
   else
-    print(WrapTextInColorCode("SAO: Error: Unknown texture "..texName, "FFFF0000"));
+    -- print(WrapTextInColorCode("SAO: Error: Unknown texture "..texName, "FFFF0000")); -- 暫時修正
   end
 
   if fullTextureName and not GetFileIDFromPath(fullTextureName) then
-    print(WrapTextInColorCode("SAO: Error: Missing file for texture "..texName, "FFFF0000"));
+    -- print(WrapTextInColorCode("SAO: Error: Missing file for texture "..texName, "FFFF0000")); -- 暫時修正
   end
 end
 
