@@ -366,7 +366,8 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
                 local i_table = {
                     ii,
-                    strsub(date.year, 3) .. "/" .. date.month .. "/" .. date.day .. " " .. date.hour .. ":" .. date.min,
+                    strsub(date.year, 3) .. "/" .. date.month .. "/" .. date.day .. " " ..
+                    format("%02d", date.hour) .. ":" .. format("%02d", date.min),
                     "|c" .. cff .. BG.ReportTbl[ii].name .. RR,
                     BG.ReportTbl[ii].realm,
                     _G[C_ReportSystem.GetMajorCategoryString(BG.ReportTbl[ii].majorCategory)],

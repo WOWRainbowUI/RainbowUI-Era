@@ -439,8 +439,24 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             haved = CheckHaved(itemID)
         }
         return a
+    elseif type == "sod_pvp" then -- 赛季服特殊PVP事件
+        local name = otherID
+        local get = "|cff" .. "FF6347" .. name .. RR .. AddPrice(itemID)
+
+        local a = {
+            itemID = itemID,
+            link = link,
+            level = level,
+            quality = quality,
+            texture = Texture,
+            get = get,
+            bindType = bindType,
+            type = GetTypeID(type),
+            haved = CheckHaved(itemID)
+        }
+        return a
     end
-    -- 团本 任务 套装 牌子 声望 专业 5人 世界掉落 世界boss PVP
+    -- 团本 任务 套装 牌子 声望 专业 5人 世界掉落 世界boss PVP 赛季服特殊PVP事件
 end
 local function Mode(FB, count1, count2, tbl, EquipLocs, itemID, type, hard, ii, k)
     if EquipLocs then
@@ -452,6 +468,8 @@ local function Mode(FB, count1, count2, tbl, EquipLocs, itemID, type, hard, ii, 
         count1 = count1 + 1
         if GetItemInfo(itemID) then
             count2 = count2 + 1
+            -- else
+            --     pt(itemID) -- 用于查看哪些装备ID是错误的
         end
 
         local item = Item:CreateFromItemID(itemID)
@@ -545,6 +563,10 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
             for i, itemID in ipairs(BG.Loot[FB].Pvp[k]) do
                 count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "pvp", hard, ii, k)
             end
+        end
+        -- 赛季服特殊PVP事件
+        for i, itemID in ipairs(BG.Loot[FB].Sod_Pvp) do
+            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "sod_pvp", hard, ii, BG.Loot[FB].Sod_Pvp.get)
         end
     end
 
@@ -830,11 +852,15 @@ local function SetItemLib(num, itemtbale)
 
             f:SetScript("OnMouseDown", function(self)
                 if IsShiftKeyDown() then
-                    local f = GetCurrentKeyBoardFocus()
-                    if not f then
-                        ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
+                    if AuctionatorShoppingFrame and AuctionatorShoppingFrame:IsVisible() then
+                        ChatEdit_InsertLink(vv.link)
+                    else
+                        local f = GetCurrentKeyBoardFocus()
+                        if not f then
+                            ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
+                        end
+                        ChatEdit_InsertLink(vv.link)
                     end
-                    ChatEdit_InsertLink(vv.link)
                 elseif IsAltKeyDown() then
                     if BG.ItemLibMainFrame[num]["button" .. ii].item.hope:IsVisible() then return end
                     local itemID = GetItemInfoInstant(vv.link)

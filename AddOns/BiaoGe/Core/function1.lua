@@ -493,3 +493,12 @@ end
 function BG.BG()
     return BG.STC_b1("<BiaoGe>")
 end
+
+----------右键菜单切换开/关----------
+function BG.SetTextHighlightTexture(bt)
+    local tex = bt:CreateTexture()
+    tex:SetPoint("CENTER")
+    tex:SetSize(bt:GetWidth() + 12, bt:GetHeight() - 10)
+    tex:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Tab-Highlight")
+    bt:SetHighlightTexture(tex)
+end

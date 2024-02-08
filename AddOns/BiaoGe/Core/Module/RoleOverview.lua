@@ -33,6 +33,7 @@ function BG.RoleOverviewUI()
                 ["MC"] = 1,
                 ["AQL"] = 1,
                 ["ZUG"] = 1,
+                ["Gno"] = 1,
                 ["BD"] = 1,
                 ["huiguweek"] = 1,
             }
@@ -67,6 +68,9 @@ function BG.RoleOverviewUI()
             BG.Once("FBCDchoice", 240113, function()
                 BiaoGe.FBCDchoice["huiguweek"] = 1
             end)
+            BG.Once("FBCDchoice", 240208, function()
+                BiaoGe.FBCDchoice["Gno"] = 1
+            end)
         else
             BG.Once("FBCDchoice", 240111, function()
                 BiaoGe.FBCDchoice["25RS"] = 1
@@ -100,6 +104,7 @@ function BG.RoleOverviewUI()
         }
         if BG.IsVanilla_Sod() then
             BG.FBCDall_table = {
+                { name = "Gno", color = "00BFFF", fbId = 90, num = 10 },
                 { name = "BD", color = "00BFFF", fbId = 48, num = 10 },
                 -- 周常
                 { name = "huiguweek", name2 = L["灰谷周常"], color = "FF8C00", questID = "huiguweek" },

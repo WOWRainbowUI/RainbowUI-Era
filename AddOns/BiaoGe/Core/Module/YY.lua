@@ -1899,7 +1899,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         end
 
         local function IsTheEndBoss(bossId)
-            for i, _bossId in ipairs(BG.TheEndBossID) do
+            for i, _bossId in ipairs(BG.theEndBossID) do
                 if _bossId == bossId then
                     return true
                 end

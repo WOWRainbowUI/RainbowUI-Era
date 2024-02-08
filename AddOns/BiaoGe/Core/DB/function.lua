@@ -11,6 +11,8 @@ ADDONSELF.NN = NN
 local RN = "|r\n"
 ADDONSELF.RN = RN
 
+BG = {}
+
 ----------tbl元素个数----------
 local function Size(t)
     local s = 0
@@ -78,3 +80,7 @@ local function IsHorde()
     return UnitFactionGroup("player") == "Horde"
 end
 ADDONSELF.IsHorde = IsHorde
+
+function BG.Is11501()
+    if select(4, GetBuildInfo()) == 11501 then return true end
+end

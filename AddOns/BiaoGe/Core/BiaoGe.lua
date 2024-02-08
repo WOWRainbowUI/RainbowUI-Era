@@ -717,6 +717,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             bt:SetHighlightFontObject(BG.FontWhite15)
             bt:SetText(L["设置"])
             bt:SetSize(bt:GetFontString():GetWidth(), 30)
+            BG.SetTextHighlightTexture(bt)
             BG.ButtonSheZhi = bt
 
             bt:SetScript("OnClick", function(self)
@@ -866,6 +867,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             bt:SetHighlightFontObject(BG.FontWhite15)
             bt:SetText(L["通知移动"])
             bt:SetSize(bt:GetFontString():GetWidth(), 30)
+            BG.SetTextHighlightTexture(bt)
             BG.ButtonMove = bt
             bt:SetScript("OnClick", BG.Move)
             bt:SetScript("OnEnter", function(self)
@@ -1159,9 +1161,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             bt:SetWidth(t:GetStringWidth() + 20)
             buttonsWidth = buttonsWidth + bt:GetWidth()
             bt:GetParent():SetWidth(buttonsWidth)
-            local tex = bt:CreateTexture(nil, "ARTWORK") -- 高亮材质
-            tex:SetTexture("interface/paperdollinfoframe/ui-character-tab-highlight")
-            bt:SetHighlightTexture(tex)
+            bt:SetHighlightTexture("Interface/PaperDollInfoFrame/UI-Character-Tab-Highlight")
             last = bt
 
             bt:SetScript("OnClick", function(self)
@@ -2277,7 +2277,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
     ----------初始显示----------
     do
-        if BiaoGe.lastFrame and BG[BiaoGe.lastFrame .. "MainFrameTabNum"] then -- 暫時修正
+        if BiaoGe.lastFrame and BG[BiaoGe.lastFrame .. "MainFrameTabNum"] then
             BG.ClickTabButton(BG.tabButtons, BG[BiaoGe.lastFrame .. "MainFrameTabNum"])
         else
             BG.ClickTabButton(BG.tabButtons, BG.FBMainFrameTabNum)
