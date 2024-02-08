@@ -51,40 +51,48 @@ EngraverOptionsFilterEquipmentSlotsMixin = {}
 
 function EngraverOptionsFilterEquipmentSlotsMixin:OnLoad()
 	SettingsListElementMixin.OnLoad(self)
-	self.categoryFrames = {
-		[INVSLOT_CHEST]	=	self.chestFrame,
-		[INVSLOT_LEGS]	=	self.legsFrame,
-		[INVSLOT_HAND]	=	self.handsFrame
-	}
 	self:SetupCategoryFrames()
 	EngraverOptionsCallbackRegistry:RegisterCallback("FilterDeleted", self.OnFilterDeleted, self)
 	EngraverOptionsCallbackRegistry:RegisterCallback("HideSlotLabels", self.OnHideSlotLabelsChanged, self)
 end
 
-function EngraverOptionsFilterEquipmentSlotsMixin:SetupCategoryFrames()
-	for category, frame in pairs(self.categoryFrames) do
-		self:SetupCategoryFrame(category, frame)
+local function UpdateCategoryFrame(frame) 
+	frame:UpdateCategoryLayout(Addon.EngraverLayoutDirections[1])
+	for r, runeButton in ipairs(frame.runeButtons) do
+		runeButton:SetBlinking(false)
+		runeButton:SetEnabled(false)
+		runeButton.Border:SetShown(false)
+		runeButton.icon:SetDesaturated(true)
+		runeButton.icon:SetVertexColor(1.0, 1.0, 1.0)
+		runeButton.NormalTexture:SetVertexColor(1.0, 1.0, 1.0);
 	end
-	self:SetFilter(Addon.Filters:GetFilter(GetSelectedFilterIndex()))
 end
 
-function EngraverOptionsFilterEquipmentSlotsMixin:SetupCategoryFrame(category, frame)
-	local runes = C_Engraving.GetRunesForCategory(category, false);
-	if runes then
-		frame.category = category
-		frame.slotLabel:SetCategory(category)
-		frame:SetRunes(runes, runes)
-		frame:SetDisplayMode(EngraverCategoryFrameShowAllMixin)
-		frame:UpdateCategoryLayout(Addon.EngraverLayoutDirections[1])
-		for r, runeButton in ipairs(frame.runeButtons) do
-			runeButton:SetBlinking(false)
-			runeButton:SetEnabled(false)
-			runeButton.Border:SetShown(false)
-			runeButton.icon:SetDesaturated(true)
-			runeButton.icon:SetVertexColor(1.0, 1.0, 1.0)
-			runeButton.NormalTexture:SetVertexColor(1.0, 1.0, 1.0);
+function EngraverOptionsFilterEquipmentSlotsMixin:SetupCategoryFrames()
+	local categories = C_Engraving.GetRuneCategories(false, false);
+	self.categoryFrames = {}
+	if #categories > 0 then
+		local prevFrame = nil
+		for c, category in ipairs(categories) do
+			local runes = C_Engraving.GetRunesForCategory(category, false);
+			if runes then
+				local frame = CreateFrame("Frame", nil, self, "EngraverOptionsFilterCategoryFrameTemplate")
+				if prevFrame == nil then
+					frame:SetPoint("TOPLEFT")
+				else
+					frame:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT")
+				end
+				frame.category = category
+				frame.slotLabel:SetCategory(category)
+				frame:SetRunes(runes, runes)
+				frame:SetDisplayMode(EngraverCategoryFrameShowAllMixin)
+				UpdateCategoryFrame(frame)
+				self.categoryFrames[category] = frame
+				prevFrame = frame
+			end
 		end
 	end
+	self:SetFilter(Addon.Filters:GetFilter(GetSelectedFilterIndex()))
 end
 
 function EngraverOptionsFilterEquipmentSlotsMixin:SetFilter(filter)
@@ -105,23 +113,29 @@ function EngraverOptionsFilterEquipmentSlotsMixin:SetFilter(filter)
 end
 
 function EngraverOptionsFilterEquipmentSlotsMixin:OnFilterDeleted(filterIndex)
-	-- disable rune buttons if no filter is selected
 	if selectionBehavior:HasSelection() then
-		self:SetupCategoryFrames()
+		for _, frame in pairs(self.categoryFrames) do
+			UpdateCategoryFrame(frame)
+		end
 	end 
+	self:SetFilter(Addon.Filters:GetFilter(GetSelectedFilterIndex()))
 end
 
 function EngraverOptionsFilterEquipmentSlotsMixin:OnHideSlotLabelsChanged()
-	self:SetupCategoryFrames()
+	for _, frame in pairs(self.categoryFrames) do
+		UpdateCategoryFrame(frame)
+	end
+	self:SetFilter(Addon.Filters:GetFilter(GetSelectedFilterIndex()))
 end
 
 ------------------
 -- FilterEditor --
 ------------------
 
-EngraverOptionsFilterEditorMixin = CreateFromMixins(SettingsListElementMixin);
+EngraverOptionsFilterEditorMixin = CreateFromMixins(SettingsListElementMixin, EventFrameMixin);
 
 function EngraverOptionsFilterEditorMixin:OnLoad()
+	EventFrameMixin.OnLoad(self)
 	SettingsListElementMixin.OnLoad(self)
 	selectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, self.OnSelectedFilterChanged, self);
 	self.Tooltip:SetShown(false)

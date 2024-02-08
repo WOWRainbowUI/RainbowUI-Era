@@ -34,6 +34,7 @@ local DefaultEngraverOptions = {
 	DisplayMode = 1,
 	LayoutDirection = 0,
 	VisibilityMode = "ShowAlways",
+	HideUndiscoveredRunes = false,
 	HideTooltip = false,
 	HideDragTab = false,
 	ShowFilterSelector = false,
@@ -130,6 +131,9 @@ function EngraverOptionsFrameMixin:CreateSettingsInitializers()
 		end
 		AddInitializer(self, Settings.CreateDropDownInitializer(setting, options, tooltip))
 	end -- VisibilityMode
+	do -- HideUndiscoveredRunes
+		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "HideUndiscoveredRunes", "Hide Undiscovered Runes", Settings.VarType.Boolean), nil, "Spoiler safety - hides any runes that have not been discovered yet. They will still be hidden even if they pass the active filter."))
+	end -- HideUndiscoveredRunes
 	do -- HideTooltip
 		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "HideTooltip", "隱藏浮動提示資訊", Settings.VarType.Boolean), nil, "滑鼠指向符文按鈕時不顯示浮動提示資訊。"))
 	end -- HideTooltip
@@ -183,7 +187,9 @@ function EngraverOptionsFrameMixin:CreateSettingsInitializers()
 		AddInitializer(self, Settings.CreateElementInitializer("SettingsListSectionHeaderWithInfoTemplate", filtersHeaderData));
 	end -- FiltersHeader
 	do -- FilterEditor
-		table.insert(self.initializers, Settings.CreateElementInitializer("EngraverOptionsFilterEditorTemplate", { settings = {} } ));
+		local initializer = CreateFromMixins(SettingsListElementInitializer);
+		initializer:Init("EngraverOptionsFilterEditorTemplate", { settings = {} } );
+		table.insert(self.initializers, initializer);
 	end -- FilterEditor
 end
 
