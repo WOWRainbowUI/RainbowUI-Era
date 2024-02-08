@@ -107,8 +107,9 @@ local itemBlacklist = {
 }
 
 local itemWhitelist = {
-    208609, -- glade flower for druid living seed
-    206469, -- prairie flower for druid living seed
+    -- TODO: Add distance check for these
+    --208609, -- glade flower for druid living seed
+    --206469, -- prairie flower for druid living seed
 }
 
 local itemTripCodes = {
@@ -210,9 +211,10 @@ local function filterItem(itemID, itemInfo, containerGUID)
                     Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieDebugOffer] - ItemFilter - Object drop data for item " .. itemID .. " OK, ignoring")
                 end
             end
-        elseif containerType == "Item" then -- if container is an item
-            -- first check if container item is even in our DB
-            if not QuestieDB.QueryItemSingle(containerID, "name") then
+        elseif containerType == "Item" and containerID > 0 then -- if container is an item and there is an containerID for it
+            -- TODO: I am quite sure this case can never happen, because the containerID is always 0 for items. Is there a different way?
+            -- first check if container item is even in our DB.
+            if (not QuestieDB.QueryItemSingle(containerID, "name")) then
                 return itemTripCodes.ContainerMissingFromItemDB
             end
 
@@ -540,15 +542,8 @@ end
 -- generates dialog based on link clicked
 ---@param link string
 function QuestieDebugOffer.ShowOffer(link)
-    -- The questie.dev domain was purchased by Logon
-    local discordURL = "https://discord.gg/txNSuwyBQ8" -- redirect to #bug-reports
-    if Questie.IsWotlk then
-        discordURL = "https://questie.dev/wotlk" -- redirect to #wotlk-bug-reports
-    elseif Questie.IsSoD then
-        discordURL = "https://questie.dev/sod" -- redirect to #sod-bug-reports
-    elseif Questie.IsClassic then
-        discordURL = "https://questie.dev/era" -- redirect to #era-bug-reports
-    end
+    -- We also have access to the questie.dev domain (purchased by Logon)
+    local discordURL = "https://discord.gg/Q6j4qByndw" -- redirect to #bug-redirect
     local i = tonumber(string.sub(link,21))
     local popupText = DebugInformation[i]
 

@@ -24,8 +24,10 @@ function QuestieTBCQuestFixes:Load()
     local questKeys = QuestieDB.questKeys
     local raceIDs = QuestieDB.raceKeys
     local classIDs = QuestieDB.classKeys
+    local factionIDs = QuestieDB.factionIDs
     local zoneIDs = ZoneDB.zoneIDs
     local sortKeys = QuestieDB.sortKeys
+    local questFlags = QuestieDB.questFlags
     local profKeys = QuestieProfessions.professionKeys
     local specKeys = QuestieProfessions.specializationKeys
 
@@ -472,15 +474,44 @@ function QuestieTBCQuestFixes:Load()
         [7792] = {
             [questKeys.startedBy] = {{20604},nil,nil},
             [questKeys.finishedBy] = {{20604},nil},
-            [questKeys.reputationReward] = {{930,350}},
+            [questKeys.reputationReward] = {{factionIDs.EXODAR,350}},
+        },
+        [7795] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7791,7793,7794},
         },
         [7798] = {
             [questKeys.startedBy] = {{20604},nil,nil},
             [questKeys.finishedBy] = {{20604},nil},
-            [questKeys.reputationReward] = {{930,350}},
+            [questKeys.reputationReward] = {{factionIDs.EXODAR,350}},
         },
         [7800] = {
+            [questKeys.preQuestSingle] = {},
             [questKeys.preQuestGroup] = {7799,10352,10354},
+        },
+        [7805] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7802,7803,7804},
+        },
+        [7811] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7807,7808,7809},
+        },
+        [7818] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7813,7814,7817},
+        },
+        [7823] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7820,7821,7822},
+        },
+        [7824] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7826,7827,7831},
+        },
+        [7836] = {
+            [questKeys.preQuestSingle] = {},
+            [questKeys.preQuestGroup] = {7833,7834,7835},
         },
         [7863] = {
             [questKeys.requiredMinRep] = {890,3000},
@@ -935,6 +966,9 @@ function QuestieTBCQuestFixes:Load()
         [9360] = {
             [questKeys.startedBy] = {{15407},nil,{23249}},
         },
+        [9370] = {
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Place the Signaling Gem"), 0, {{"object", 181449}}}},
+        },
         [9375] = {
             [questKeys.triggerEnd] = {"Escort Wounded Blood Elf Pilgrim to Falcon Watch", {[zoneIDs.HELLFIRE_PENINSULA]={{27.09,61.92}}}},
         },
@@ -944,12 +978,16 @@ function QuestieTBCQuestFixes:Load()
         [9392] = {
             [questKeys.requiredRaces] = raceIDs.BLOOD_ELF,
         },
+        [9397] = {
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Disturb the nest"), 0, {{"object", 181582}}}},
+        },
         [9400] = {
             [questKeys.preQuestSingle] = {10124},
-            [questKeys.triggerEnd] = {"Find Krun Spinebreaker", {[zoneIDs.HELLFIRE_PENINSULA]={{33.59,43.62}}}},
+            [questKeys.triggerEnd] = nil,
+            [questKeys.objectives] = {{{17062,"Find Krun Spinebreaker"}}},
         },
         [9410] = {
-            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Use the Wolf Totem at the location where you found Krun Spinebreaker's body and follow the Ancestral Spirit Wolf."), 0, {{"object", 181630}}}},
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Use the Wolf Totem at the location where you found Krun Spinebreaker's body and follow the Ancestral Spirit Wolf."), 0, {{"monster", 17062}}}},
         },
         [9417] = {
             [questKeys.preQuestSingle] = {},
@@ -1012,11 +1050,14 @@ function QuestieTBCQuestFixes:Load()
         [9491] = {
             [questKeys.preQuestSingle] = {},
         },
-        [9494] = { 
+        [9494] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Gather a Fel Ember using Grand Warlock's Amulet"), 0, {{"object", 181679}}}},
         },
         [9498] = {
-            [questKeys.preQuestSingle] = {10123},
+            [questKeys.preQuestSingle] = {10124},
+        },
+        [9499] = {
+            [questKeys.preQuestSingle] = {10124},
         },
         [9500] = {
             [questKeys.questLevel] = -1,
@@ -1201,6 +1242,10 @@ function QuestieTBCQuestFixes:Load()
         },
         [9731] = {
             [questKeys.triggerEnd] = {"Drain Located", {[zoneIDs.ZANGARMARSH]={{50.44,40.91}}}},
+        },
+        [9737] = {
+            [questKeys.objectives] = {nil,nil,nil,nil,{{{17910,17911,17912,17913,17914},17910,"Remove Alonsus Chapel Protection"}}},
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Use the Extinguishing Mixture near the eternal flame"), 0, {{"object", 182068}}}},
         },
         [9738] = {
             [questKeys.preQuestSingle] = {},
@@ -1579,9 +1624,11 @@ function QuestieTBCQuestFixes:Load()
         },
         [10129] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_TALK, l10n("Speak with Wing Commander Brack"), 0, {{"monster", 19401}}}},
+            [questKeys.objectives] = {nil,{{183350,"Gateway Murketh Destroyed"},{183351,"Gateway Shaadraz Destroyed"}}},
         },
         [10146] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_TALK, l10n("Speak with Wing Commander Dabir'ee"), 0, {{"monster", 19409}}}},
+            [questKeys.objectives] = {nil,{{183350,"Gateway Murketh Destroyed"},{183351,"Gateway Shaadraz Destroyed"}}},
         },
         [10162] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_TALK, l10n("Speak with Wing Commander Brack"), 0, {{"monster", 19401}}}},
@@ -1645,6 +1692,9 @@ function QuestieTBCQuestFixes:Load()
         [10240] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Activate the rune"), 0, {{"object", 183947}}}},
         },
+        [10242] = {
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_TALK, l10n("Take a ride to Spinebreaker Post"), 0, {{"monster", 19401}}}},
+        },
         [10243] = {
             [questKeys.preQuestSingle] = {10241},
         },
@@ -1655,7 +1705,7 @@ function QuestieTBCQuestFixes:Load()
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Take control of the Scrap Reaver X6000."), 0, {{"monster", 19849}}}},
         },
         [10250] = {
-            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Blow the Unyielding Battle Horn near the Alliance Banner"), 0, {{"object", 184002 }}}},
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Blow the Unyielding Battle Horn near the Alliance Banner"), 0, {{"object", 184005}}}},
         },
         [10255] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Use the Cenarion Antidote on a Hulking Helboar"), 0, {{"monster", 16880}}}},
@@ -1768,12 +1818,12 @@ function QuestieTBCQuestFixes:Load()
         [10352] = {
             [questKeys.startedBy] = {{14725},nil,nil},
             [questKeys.finishedBy] = {{14725},nil},
-            [questKeys.reputationReward] = {{69,350}},
+            [questKeys.reputationReward] = {{factionIDs.DARNASSUS,350}},
         },
         [10354] = {
             [questKeys.startedBy] = {{14725},nil,nil},
             [questKeys.finishedBy] = {{14725},nil},
-            [questKeys.reputationReward] = {{69,350}},
+            [questKeys.reputationReward] = {{factionIDs.DARNASSUS,350}},
         },
         [10357] = {
             [questKeys.preQuestGroup] = {7792,7798,10356},
@@ -1814,11 +1864,17 @@ function QuestieTBCQuestFixes:Load()
         [10389] = {
             [questKeys.preQuestSingle] = {10392},
         },
+        [10392] = {
+            [questKeys.requiredSourceItems] = {29795},
+        },
         [10393] = {
             [questKeys.startedBy] = {{20798},nil,nil},
         },
         [10395] = {
             [questKeys.startedBy] = {{19298},nil,nil},
+        },
+        [10397] = {
+            [questKeys.requiredSourceItems] = {29795},
         },
         [10403] = {
             [questKeys.startedBy] = {{20677,20678,20679},nil,nil},
@@ -2227,6 +2283,11 @@ function QuestieTBCQuestFixes:Load()
         [10788] = {
             [questKeys.startedBy] = {{5675,5875},nil,nil},
         },
+        [10792] = {
+            [questKeys.sourceItemId] = 31347,
+            [questKeys.requiredSourceItems] = {31347,31346},
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Light the torches"), 0, {{"object", 185144}}}},
+        },
         [10793] = {
             [questKeys.startedBy] = {{21979},nil,{31345}},
         },
@@ -2341,6 +2402,12 @@ function QuestieTBCQuestFixes:Load()
         },
         [10887] = {
             [questKeys.extraObjectives] = {{{[zoneIDs.TEROKKAR_FOREST]={{33.77,51.61}}}, Questie.ICON_TYPE_EVENT, l10n("Help Akuno find his way to the Refugee Caravan in Terokkar Forest.")}},
+        },
+        [10891] = {
+            [questKeys.requiredSpell] = -16663,
+        },
+        [10892] = {
+            [questKeys.requiredSpell] = -16663,
         },
         [10896] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_SLAY, l10n("Kill Rotting Forest-Ragers and Infested Root-Walkers to spawn Wood Mites"), 0, {{"monster", 22307}, {"monster", 22095}}}},
@@ -2511,10 +2578,15 @@ function QuestieTBCQuestFixes:Load()
         },
         [10976] = {
             [questKeys.requiredMinRep] = {933,21000},
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Open the prison"), 0, {{"object", 185001}}}},
         },
         [10977] = {
-            [questKeys.triggerEnd] = {"Mana-Tombs Stasis Chamber Investigated", {[zoneIDs.TEROKKAR_FOREST]={{39.63,57.54}}}},
+            [questKeys.objectives] = {nil,{{185002,"Mana-Tombs Stasis Chamber Investigated"}}},
             [questKeys.requiredMinRep] = {933,21000},
+        },
+        [10981] = {
+            [questKeys.requiredMaxRep] = {},
+            [questKeys.exclusiveTo] = {10982},
         },
         [10984] = {
             [questKeys.exclusiveTo] = {10983,10989,11057},
@@ -2617,6 +2689,18 @@ function QuestieTBCQuestFixes:Load()
         },
         [11030] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_EVENT, l10n("Purchase 1 Unstable Flask of the Beast for the cost of 10 Apexis Shards"), 0, {{"object", 185920}}}},
+        },
+        [11031] = {
+            [questKeys.preQuestSingle] = {10725},
+        },
+        [11032] = {
+            [questKeys.preQuestSingle] = {10728},
+        },
+        [11033] = {
+            [questKeys.preQuestSingle] = {10727},
+        },
+        [11034] = {
+            [questKeys.preQuestSingle] = {10726},
         },
         [11035] = {
             [questKeys.requiredRaces] = raceIDs.NONE,
@@ -4797,7 +4881,7 @@ function QuestieTBCQuestFixes:Load()
                 [zoneIDs.ASHENVALE] = {{61.8,83.8}},
             }},
             [questKeys.zoneOrSort] = sortKeys.BATTLEGROUND,
-            [questKeys.questFlags] = 64,
+            [questKeys.questFlags] = questFlags.RAID,
             [questKeys.specialFlags] = 1,
         },
         -- Blood Elf Paladin Epic Mount quest
@@ -4899,7 +4983,7 @@ function QuestieTBCQuestFixes:Load()
             [questKeys.requiredClasses] = classIDs.PALADIN,
             [questKeys.objectivesText] = {"Use the Extinguishing Mixture near the eternal flame in the Alonsus Chapel to remove the Light's protection. Be prepared to fight anyone who may attempt to defend the chapel."},
             [questKeys.objectives] = {nil,nil,nil,nil,{{{17910,17911,17912,17913,17914},17910,"Remove Alonsus Chapel Protection"}}},
-            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Use the Extinguishing Mixture near the eternal flame in the Alonsus Chapel to remove the Light's protection."), 0, {{"object", 182068}}}},
+            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Use the Extinguishing Mixture near the eternal flame"), 0, {{"object", 182068}}}},
             [questKeys.sourceItemId] = 24287,
             [questKeys.preQuestSingle] = {64144},
             [questKeys.zoneOrSort] = sortKeys.PALADIN,
@@ -5266,4 +5350,27 @@ function _QuestieTBCQuestFixes:InsertMissingQuestIds()
     QuestieDB.questData[12407] = {} -- Candy Bucket
     QuestieDB.questData[12408] = {} -- Candy Bucket
     QuestieDB.questData[12409] = {} -- Candy Bucket
+end
+
+function QuestieTBCQuestFixes:LoadFactionFixes()
+    local questKeys = QuestieDB.questKeys
+    local raceIDs = QuestieDB.raceKeys
+
+    local questFixesHorde = {
+        [2861] = {
+            [questKeys.startedBy] = {{4568,5885,16651}}
+        },
+    }
+
+    local questFixesAlliance = {
+        [2861] = {
+            [questKeys.startedBy] = {{5144,5497,17514}}
+        },
+    }
+
+    if UnitFactionGroup("Player") == "Horde" then
+        return questFixesHorde
+    else
+        return questFixesAlliance
+    end
 end
