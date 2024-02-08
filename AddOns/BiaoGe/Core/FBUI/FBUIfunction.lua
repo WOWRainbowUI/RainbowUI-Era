@@ -348,13 +348,11 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
         local b = BossNum(FB, b, t)
         BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetFocus()
     end)
-    -- 按ENTER跳转下边
+    -- 按ENTER
     bt:SetScript("OnEnterPressed", function(self)
-        local b = BossNum(FB, b, t)
-        if BG.Frame[FB]["boss" .. b]["zhuangbei" .. i + 1] then
-            BG.Frame[FB]["boss" .. b]["zhuangbei" .. i + 1]:SetFocus()
-        elseif b + 1 ~= Maxb[FB] + 2 then
-            BG.Frame[FB]["boss" .. b + 1]["zhuangbei" .. 1]:SetFocus()
+        self:ClearFocus()
+        if BG.FrameZhuangbeiList then
+            BG.FrameZhuangbeiList:Hide()
         end
     end)
     -- 按箭头跳转
@@ -555,13 +553,11 @@ function BG.FBMaiJiaUI(FB, t, b, bb, i, ii)
         local b = BossNum(FB, b, t)
         BG.Frame[FB]["boss" .. b]["jine" .. i]:SetFocus()
     end)
-    -- 按ENTER跳转下边
+    -- 按ENTER
     bt:SetScript("OnEnterPressed", function(self)
-        local b = BossNum(FB, b, t)
-        if BG.Frame[FB]["boss" .. b]["maijia" .. i + 1] then
-            BG.Frame[FB]["boss" .. b]["maijia" .. i + 1]:SetFocus()
-        elseif b + 1 ~= Maxb[FB] + 2 then
-            BG.Frame[FB]["boss" .. b + 1]["maijia" .. 1]:SetFocus()
+        self:ClearFocus()
+        if BG.FrameMaijiaList then
+            BG.FrameMaijiaList:Hide()
         end
     end)
     -- 按箭头跳转
@@ -641,7 +637,9 @@ function BG.FBMaiJiaUI(FB, t, b, bb, i, ii)
     -- 按ESC退出
     bt:SetScript("OnEscapePressed", function(self)
         self:ClearFocus()
-        BG.FrameMaijiaList:Hide()
+        if BG.FrameMaijiaList then
+            BG.FrameMaijiaList:Hide()
+        end
     end)
 end
 
@@ -776,13 +774,11 @@ function BG.FBJinEUI(FB, t, b, bb, i, ii)
             BG.Frame[FB]["boss" .. b + 1]["zhuangbei" .. 1]:SetFocus()
         end
     end)
-    -- 按ENTER跳转下边
+    -- 按ENTER
     bt:SetScript("OnEnterPressed", function(self)
-        local b = BossNum(FB, b, t)
-        if BG.Frame[FB]["boss" .. b]["jine" .. i + 1] then
-            BG.Frame[FB]["boss" .. b]["jine" .. i + 1]:SetFocus()
-        elseif b + 1 ~= Maxb[FB] + 2 then
-            BG.Frame[FB]["boss" .. b + 1]["jine" .. 1]:SetFocus()
+        self:ClearFocus()
+        if BG.FrameJineList then
+            BG.FrameJineList:Hide()
         end
     end)
     -- 按ESC退出

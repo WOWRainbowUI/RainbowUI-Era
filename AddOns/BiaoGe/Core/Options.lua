@@ -1249,14 +1249,14 @@ local function OptionsUI()
             local height_jiange = 22
             local line_height = 4
 
-            if BG.IsVanilla() then
+            if BG.IsVanilla_Sod() then
                 --团本CD
                 local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
                 text:SetPoint("TOPLEFT", width, height)
                 text:SetText(BG.STC_b1(L["团本*"]))
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 1, 1, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(BG.FBCDall_table, 1, #BG.FBCDall_table - 1, width, height, 100, height_jiange)
 
                 height = height - height_jiange - height_jiange
                 local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -1264,7 +1264,26 @@ local function OptionsUI()
                 text:SetText("|cffFF8C00" .. (QUESTS_LABEL .. "*") .. RR)
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 2, #BG.FBCDall_table, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(BG.FBCDall_table, #BG.FBCDall_table, #BG.FBCDall_table, width, height, 100, height_jiange)
+
+                -- 货币
+                height = height - height_jiange - height_jiange
+                local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+                text:SetPoint("TOPLEFT", width, height)
+                text:SetText(BG.STC_y1(L["货币*"]))
+                height = height - height_jiange
+                local l = O.CreateLine(roleOverview, height + line_height)
+
+                height = CreateMONEYbutton(BG.MONEYall_table, 1, #BG.MONEYall_table, width, height, 65, height_jiange)
+                height = height - height_jiange
+            elseif BG.IsVanilla_60() then
+                --团本CD
+                local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+                text:SetPoint("TOPLEFT", width, height)
+                text:SetText(BG.STC_b1(L["团本*"]))
+                height = height - height_jiange
+                O.CreateLine(roleOverview, height + line_height)
+                height = CreateFBCDbutton(BG.FBCDall_table, 1, #BG.FBCDall_table, width, height, 100, height_jiange)
 
                 -- 货币
                 height = height - height_jiange - height_jiange

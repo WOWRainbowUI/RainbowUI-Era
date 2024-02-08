@@ -39,8 +39,6 @@ local function RGB(hex)
 end
 
 -- 全局变量
-BG = {}
-
 BG.IsVanilla = ADDONSELF.IsVanilla
 BG.IsVanilla_Sod = ADDONSELF.IsVanilla_Sod
 BG.IsVanilla_60 = ADDONSELF.IsVanilla_60
@@ -69,15 +67,15 @@ do
     end
 
     if BG.IsVanilla_Sod() then
-        BG.FB1 = "BD"
+        BG.FB1 = "Gno"
         BG.fullLevel = 25
-        BG.TheEndBossID = { 2891 }
+        BG.theEndBossID = { 2891, 2940 }
         AddDB("BD", 48, "P1", 10)
         AddDB("Gno", 90, "P2", 10)
     elseif BG.IsVanilla_60() then
         BG.FB1 = "MC"
         BG.fullLevel = 60
-        BG.TheEndBossID = { 617, 1084, 617, 793, 723, 717, 1114 } --MC OL BWL ZUG AQL TAQ NAXX
+        BG.theEndBossID = { 617, 1084, 617, 793, 723, 717, 1114 } --MC OL BWL ZUG AQL TAQ NAXX
         AddDB("MC", 409, L["全阶段"], 40)
         AddDB("BWL", 469, L["全阶段"], 40)
         AddDB("ZUG", 309, L["全阶段"], 20)
@@ -89,7 +87,7 @@ do
     else
         BG.FB1 = "ICC"
         BG.fullLevel = 80
-        BG.TheEndBossID = { 856 }
+        BG.theEndBossID = { 856 }
         AddDB("NAXX", 533, "P1")
         AddDB("ULD", 603, "P2")
         AddDB("TOC", 649, "P3")
@@ -260,15 +258,17 @@ do
                 WARLOCK = {},
                 PRIEST = {},
 
-                Team = {},
-                World = {},
-                WorldBoss = {},
-                T = {},
-                Currency = {},
-                Faction = {},
-                Pvp = {},
-                Profession = {},
-                Quest = {},
+                Team = {},       -- 5人本
+                World = {},      -- 世界掉落
+                WorldBoss = {},  -- 世界boss
+                T = {},          -- 职业套装
+                Currency = {},   -- 货币贷款（WLK）
+                Faction = {},    -- 声望
+                Pvp = {},        -- PVP
+                Profession = {}, -- 专业制造
+                Quest = {},      -- 任务
+
+                Sod_Pvp = {}
             }
         end
     end

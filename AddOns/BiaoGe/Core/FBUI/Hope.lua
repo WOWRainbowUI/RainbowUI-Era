@@ -316,24 +316,11 @@ function BG.HopeUI(FB)
                             BG.HopeFrame[FB]["nandu" .. nn]["boss" .. 1]["zhuangbei" .. 1]:SetFocus()
                         end
                     end)
-                    -- 按ENTER跳转下边
+                    -- 按ENTER
                     bt:SetScript("OnEnterPressed", function(self)
-                        if BG.HopeFrame[FB]["nandu" .. n]["boss" .. b + 1]["zhuangbei" .. i] then
-                            BG.HopeFrame[FB]["nandu" .. n]["boss" .. b + 1]["zhuangbei" .. i]:SetFocus()
-                        elseif n ~= HopeMaxn[FB] then
-                            local nn
-                            if n == 3 then
-                                nn = 2
-                            elseif n == 2 then
-                                nn = 4
-                            elseif n == 1 then
-                                if HopeMaxn[FB] > 2 then
-                                    nn = 3
-                                else
-                                    nn = 2
-                                end
-                            end
-                            BG.HopeFrame[FB]["nandu" .. nn]["boss" .. 1]["zhuangbei" .. i]:SetFocus()
+                        self:ClearFocus()
+                        if BG.FrameZhuangbeiList then
+                            BG.FrameZhuangbeiList:Hide()
                         end
                     end)
                     -- 按箭头跳转

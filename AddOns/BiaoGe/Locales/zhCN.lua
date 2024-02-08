@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.7.9c"
+ADDONSELF.ver = "v1.8.0"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -10,7 +10,7 @@ do --简体说明书
     text = "|cff00BFFF< 我是说明书 >|r\n\n"
     text = text .. "|cffFFFFFF-打开命令：|r/BiaoGe或/GBG，或游戏设置里绑定按键。小地图图标：" .. "|TInterface\\AddOns\\BiaoGe\\Media\\icon\\icon:0|t" .. "\n"
     text = text .. "|cffFFFFFF-快捷操作：|r点空白处取消光标，右键输入框清除内容\n"
-    text = text .. "|cffFFFFFF-跳转光标：|r按Tab、Enter、方向键跳转光标，ALT/CTRL/SHIFT+方向键跳转至下个BOSS\n"
+    text = text .. "|cffFFFFFF-跳转光标：|r按Tab、方向键跳转光标，ALT/CTRL/SHIFT+方向键跳转至下个BOSS\n"
     text = text .. "|cffFFFFFF-添加装备：|r从装备下拉列表里选择；或者从背包把装备拖进表格\n"
     text = text .. "|cffFFFFFF-发送装备：|rSHIFT+点击装备\n"
     text = text .. "|cffFFFFFF-关注装备：|rALT+点击装备，团长拍卖此装备时会提醒（当你是团员时）\n"
@@ -19,6 +19,11 @@ do --简体说明书
     text = text .. "|cffFFFFFF-交换格子：|rCTRL+ALT+点击格子1，再点格子2，可交换两行全部内容\n"
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
     text = text .. "-BUG反馈：邮箱buick_hbj@163.com，Q群322785325\n\n"
+
+    update = update .. "|cff00FF00" .. "2月8日更新1.8.0版本" .. "|r\n"
+    update = update .. [[-在表格格子里按下Enter键时，不再下跳光标，而是取消光标]] .. "\n"
+    update = update .. [[-<赛季服>P2装备库添加了部分新装备，且旧版装备替换为新版装备]] .. "\n"
+    update = update .. [[-<赛季服>角色团本总览添加新团本诺莫瑞根]] .. "\n\n"
 
     update = update .. "|cff00FF00" .. "2月5日更新1.7.9c版本" .. "|r\n"
     update = update .. [[-<赛季服>添加诺莫瑞根BOSS战ID，使P2的表格能正确生效]] .. "\n\n"
@@ -70,19 +75,6 @@ do --简体更新内容
     update = update .. [[-买家下拉列表的格子增加至40个]] .. "\n"
     update = update .. [[-<WLK>装备库现在会显示海里昂的装备]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "1月6日更新1.7.5版本" .. "|r\n"
-    update = update .. [[-插件现在支持永久60服，每个团本都已添加表格]] .. "\n"
-    update = update .. [[-优化可堆叠物品的记录方式]] .. "\n"
-    update = update .. [[-繁体端的字体用回<blei00d.TTF>，以解决界面显示错误的问题]] .. "\n"
-    update = update .. [[-<赛季/60服>装备过滤词缀删除"击中"、"暴击"，增加"你击中目标"、"你造成爆击"、"你的法术击中"、"你的法术造成爆击"、"法术伤害"]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "1月1日更新1.7.4c版本" .. "|r\n"
-    update = update .. [[-在聊天频道的玩家右键菜单里增加<一键举报骚扰>和<一键举报RMT>按钮]] .. "\n"
-    update = update .. [[-增加工资抹零选项]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "1月1日更新1.7.4b版本" .. "|r\n"
-    update = update .. [[-一键举报脚本按钮现在也会显示在队员/团员框体的右键菜单里（坐飞机顺手来个举报岂不美哉？）]] .. "\n\n"
-
     ADDONSELF.updateText = update
 end
 
@@ -97,6 +89,13 @@ ADDONSELF.L = L
 local L = {}
 
 do
+    L["荆棘谷血月活动"] = true
+    L["锻造"] = true
+    L["制皮"] = true
+    L["裁缝"] = true
+    L["工程"] = true
+
+
     L["一键举报脚本"] = true
 
     L["本次一共举报|cff00BFFF%s|r个脚本。第一次举报的|cff00FF00%s|r个，曾举报的|cffFF0000%s|r个。"] = true
@@ -1103,183 +1102,194 @@ do
     L["支\n\n出"] = true
     L["总\n览"] = true
 
-    L["玛\n洛\n加\n尔"] = true
-    L["亡\n语\n者\n女\n士"] = true
-    L["炮\n舰\n战"] = true
-    L["萨\n鲁\n法\n尔"] = true
-    L["烂\n肠"] = true
-    L["腐\n面"] = true
-    L["普\n崔\n塞\n德\n教\n授"] = true
-    L["鲜\n血\n议\n会"] = true
-    L["鲜\n血\n女\n王"] = true
-    L["踏\n梦\n者"] = true
-    L["辛\n达\n苟\n萨"] = true
-    L["巫\n妖\n王"] = true
-    L["海\n里\n昂"] = true
+    -- WLK
+    do
+        L["玛\n洛\n加\n尔"] = true
+        L["亡\n语\n者\n女\n士"] = true
+        L["炮\n舰\n战"] = true
+        L["萨\n鲁\n法\n尔"] = true
+        L["烂\n肠"] = true
+        L["腐\n面"] = true
+        L["普\n崔\n塞\n德\n教\n授"] = true
+        L["鲜\n血\n议\n会"] = true
+        L["鲜\n血\n女\n王"] = true
+        L["踏\n梦\n者"] = true
+        L["辛\n达\n苟\n萨"] = true
+        L["巫\n妖\n王"] = true
+        L["海\n里\n昂"] = true
 
-    L["诺\n森\n德\n猛\n兽"] = true
-    L["加\n拉\n克\n苏\n斯"] = true
-    L["阵\n营\n冠\n军"] = true
-    L["瓦\n克\n里\n双\n子"] = true
-    L["阿\n努\n巴\n拉\n克"] = true
-    L["嘉\n奖\n宝\n箱"] = true
-    L["奥\n妮\n克\n希\n亚"] = true
+        L["诺\n森\n德\n猛\n兽"] = true
+        L["加\n拉\n克\n苏\n斯"] = true
+        L["阵\n营\n冠\n军"] = true
+        L["瓦\n克\n里\n双\n子"] = true
+        L["阿\n努\n巴\n拉\n克"] = true
+        L["嘉\n奖\n宝\n箱"] = true
+        L["奥\n妮\n克\n希\n亚"] = true
 
-    L["烈\n焰\n巨\n兽"] = true
-    L["锋\n鳞"] = true
-    L["掌\n炉\n者"] = true
-    L["拆\n解\n者"] = true
-    L["钢\n铁\n议\n会"] = true
-    L["科\n隆\n加\n恩"] = true
-    L["欧\n尔\n利\n亚"] = true
-    L["霍\n迪\n尔"] = true
-    L["托\n里\n姆"] = true
-    L["弗\n蕾\n亚"] = true
-    L["米\n米\n尔\n隆"] = true
-    L["维\n扎\n克\n斯\n将\n军"] = true
-    L["尤\n格\n萨\n隆"] = true
-    L["奥\n尔\n加\n隆"] = true
+        L["烈\n焰\n巨\n兽"] = true
+        L["锋\n鳞"] = true
+        L["掌\n炉\n者"] = true
+        L["拆\n解\n者"] = true
+        L["钢\n铁\n议\n会"] = true
+        L["科\n隆\n加\n恩"] = true
+        L["欧\n尔\n利\n亚"] = true
+        L["霍\n迪\n尔"] = true
+        L["托\n里\n姆"] = true
+        L["弗\n蕾\n亚"] = true
+        L["米\n米\n尔\n隆"] = true
+        L["维\n扎\n克\n斯\n将\n军"] = true
+        L["尤\n格\n萨\n隆"] = true
+        L["奥\n尔\n加\n隆"] = true
 
-    L["阿\n努\n布\n雷\n坎"] = true
-    L["黑\n女\n巫\n法\n琳\n娜"] = true
-    L["迈\n克\n斯\n纳"] = true
-    L["瘟\n疫\n使\n者\n诺\n斯"] = true
-    L["肮\n脏\n的\n希\n尔\n盖"] = true
-    L["洛\n欧\n塞\n布"] = true
-    L["教\n官"] = true
-    L["收\n割\n者\n戈\n提\n克"] = true
-    L["天\n启\n四\n骑\n士"] = true
-    L["帕\n奇\n维\n克"] = true
-    L["格\n罗\n布\n鲁\n斯"] = true
-    L["格\n拉\n斯"] = true
-    L["塔\n迪\n乌\n斯"] = true
-    L["萨\n菲\n隆"] = true
-    L["克\n尔\n苏\n加\n德"] = true
-    L["萨\n塔\n里\n奥"] = true
-    L["玛\n里\n苟\n斯"] = true
-
-
-    -- 60级赛季服
-    L["阿\n奎\n尼\n斯\n男\n爵"] = true
-    L["加\n摩\n拉"] = true
-    L["萨\n利\n维\n丝"] = true
-    L["格\n里\n哈\n斯\n特"] = true
-    L["洛\n古\n斯\n·\n杰\n特"] = true
-    L["梦\n游\n者\n克\n尔\n里\n斯"] = true
-    L["阿\n库\n麦\n尔"] = true
-
-    L["矿工约翰森"] = true
-    L["斯尼德"] = true
-    L["基尔尼格"] = true
-    L["重锤先生"] = true
-    L["绿皮队长"] = true
-    L["艾德温·范克里夫"] = true
-    L["曲奇"] = true
-    L["考布莱恩"] = true
-    L["克雷什"] = true
-    L["皮萨斯"] = true
-    L["斯卡姆"] = true
-    L["瑟芬迪斯"] = true
-    L["永生者沃尔丹"] = true
-    L["吞噬者穆坦努斯"] = true
-    L["变异精灵龙"] = true
-    L["屠夫拉佐克劳"] = true
-    L["席瓦莱恩男爵"] = true
-    L["指挥官"] = true
-    L["盲眼守卫奥杜"] = true
-    L["幻影之甲"] = true
-    L["狼王南杜斯"] = true
-    L["大法师阿鲁高"] = true
-    L["布鲁高·铁拳"] = true
-
-    L["格\n鲁\n比\n斯"] = true
-    L["粘\n性\n辐\n射\n尘"] = true
-    L["电\n刑\n器\n6\n0\n0\n0\n型"] = true
-    L["群\n体\n打\n击\n者"] = true
-    L["黑\n铁\n大\n师"] = true
-    L["瑟\n玛\n普\n拉\n格"] = true
-    L["机\n械\n动\n物\n园"] = true
-
-    L["亡语者贾格巴"] = true
-    L["主宰拉姆塔斯"] = true
-    L["暴怒的阿迦赛罗斯"] = true
-    L["盲眼猎手"] = true
-    L["卡尔加·刺肋"] = true
-    L["唤地者哈穆加"] = true
-    L["审讯员韦沙斯"] = true
-    L["永醒的艾希尔"] = true
-    L["死灵勇士"] = true
-    L["铁脊死灵"] = true
-    L["血法师萨尔诺斯"] = true
-    L["驯犬者洛克希"] = true
-    L["奥法师杜安"] = true
-    L["赫洛德"] = true
-    L["莫格莱尼"] = true
-    L["怀特迈恩"] = true
-    L["图特卡什"] = true
-    L["火眼莫德雷斯"] = true
-    L["暴食者"] = true
-    L["拉戈斯诺特"] = true
-    L["寒冰之王亚门纳尔"] = true
-    L["腐烂的普雷莫尔"] = true
-
+        L["阿\n努\n布\n雷\n坎"] = true
+        L["黑\n女\n巫\n法\n琳\n娜"] = true
+        L["迈\n克\n斯\n纳"] = true
+        L["瘟\n疫\n使\n者\n诺\n斯"] = true
+        L["肮\n脏\n的\n希\n尔\n盖"] = true
+        L["洛\n欧\n塞\n布"] = true
+        L["教\n官"] = true
+        L["收\n割\n者\n戈\n提\n克"] = true
+        L["天\n启\n四\n骑\n士"] = true
+        L["帕\n奇\n维\n克"] = true
+        L["格\n罗\n布\n鲁\n斯"] = true
+        L["格\n拉\n斯"] = true
+        L["塔\n迪\n乌\n斯"] = true
+        L["萨\n菲\n隆"] = true
+        L["克\n尔\n苏\n加\n德"] = true
+        L["萨\n塔\n里\n奥"] = true
+        L["玛\n里\n苟\n斯"] = true
+    end
 
     -- 永久60
-    L["鲁\n西\n弗\n隆"] = true
-    L["玛\n格\n曼\n达"] = true
-    L["基\n赫\n纳\n斯"] = true
-    L["加\n尔"] = true
-    L["沙\n斯\n拉\n尔"] = true
-    L["迦\n顿\n男\n爵"] = true
-    L["古\n雷\n曼\n格"] = true
-    L["萨\n弗\n隆\n先\n驱\n者"] = true
-    L["埃\n克\n索\n图\n斯"] = true
-    L["拉\n格\n纳\n罗\n斯"] = true
-    L["奥\n妮\n克\n希\n亚"] = true
+    do
+        L["鲁\n西\n弗\n隆"] = true
+        L["玛\n格\n曼\n达"] = true
+        L["基\n赫\n纳\n斯"] = true
+        L["加\n尔"] = true
+        L["沙\n斯\n拉\n尔"] = true
+        L["迦\n顿\n男\n爵"] = true
+        L["古\n雷\n曼\n格"] = true
+        L["萨\n弗\n隆\n先\n驱\n者"] = true
+        L["埃\n克\n索\n图\n斯"] = true
+        L["拉\n格\n纳\n罗\n斯"] = true
+        L["奥\n妮\n克\n希\n亚"] = true
 
-    L["狂\n野\n的\n拉\n佐\n格\n尔"] = true
-    L["堕\n落\n的\n瓦\n拉\n斯\n塔\n兹"] = true
-    L["勒\n什\n雷\n尔"] = true
-    L["费\n尔\n默"] = true
-    L["埃\n博\n诺\n克"] = true
-    L["弗\n莱\n格\n尔"] = true
-    L["克\n洛\n玛\n古\n斯"] = true
-    L["奈\n法\n利\n安"] = true
+        L["狂\n野\n的\n拉\n佐\n格\n尔"] = true
+        L["堕\n落\n的\n瓦\n拉\n斯\n塔\n兹"] = true
+        L["勒\n什\n雷\n尔"] = true
+        L["费\n尔\n默"] = true
+        L["埃\n博\n诺\n克"] = true
+        L["弗\n莱\n格\n尔"] = true
+        L["克\n洛\n玛\n古\n斯"] = true
+        L["奈\n法\n利\n安"] = true
 
-    L["耶\n克\n里\n克"] = true
-    L["温\n诺\n希\n斯"] = true
-    L["玛\n尔\n里"] = true
-    L["血\n领\n主\n曼\n多\n基\n尔"] = true
-    L["疯\n狂\n之\n缘"] = true
-    L["加\n兹\n兰\n卡"] = true
-    L["塞\n卡\n尔"] = true
-    L["娅\n尔\n罗"] = true
-    L["妖\n术\n师\n金\n度"] = true
-    L["哈\n卡"] = true
+        L["耶\n克\n里\n克"] = true
+        L["温\n诺\n希\n斯"] = true
+        L["玛\n尔\n里"] = true
+        L["血\n领\n主\n曼\n多\n基\n尔"] = true
+        L["疯\n狂\n之\n缘"] = true
+        L["加\n兹\n兰\n卡"] = true
+        L["塞\n卡\n尔"] = true
+        L["娅\n尔\n罗"] = true
+        L["妖\n术\n师\n金\n度"] = true
+        L["哈\n卡"] = true
 
-    L["库\n林\n纳\n克\n斯"] = true
-    L["拉\n贾\n克\n斯\n将\n军"] = true
-    L["莫\n阿\n姆"] = true
-    L["吞\n咽\n者\n布\n鲁"] = true
-    L["狩\n猎\n者\n阿\n亚\n米\n斯"] = true
-    L["无\n疤\n者\n奥\n斯\n里\n安"] = true
+        L["库\n林\n纳\n克\n斯"] = true
+        L["拉\n贾\n克\n斯\n将\n军"] = true
+        L["莫\n阿\n姆"] = true
+        L["吞\n咽\n者\n布\n鲁"] = true
+        L["狩\n猎\n者\n阿\n亚\n米\n斯"] = true
+        L["无\n疤\n者\n奥\n斯\n里\n安"] = true
 
-    L["预\n言\n者\n斯\n克\n拉\n姆"] = true
-    L["安\n其\n拉\n三\n宝"] = true
-    L["沙\n尔\n图\n拉"] = true
-    L["顽\n强\n的\n范\n克\n瑞\n斯"] = true
-    L["维\n希\n度\n斯"] = true
-    L["哈\n霍\n兰\n公\n主"] = true
-    L["双\n子\n皇\n帝"] = true
-    L["奥\n罗"] = true
-    L["克\n苏\n恩"] = true
+        L["预\n言\n者\n斯\n克\n拉\n姆"] = true
+        L["安\n其\n拉\n三\n宝"] = true
+        L["沙\n尔\n图\n拉"] = true
+        L["顽\n强\n的\n范\n克\n瑞\n斯"] = true
+        L["维\n希\n度\n斯"] = true
+        L["哈\n霍\n兰\n公\n主"] = true
+        L["双\n子\n皇\n帝"] = true
+        L["奥\n罗"] = true
+        L["克\n苏\n恩"] = true
 
-    L["艾索雷葛斯"] = true
-    L["卡扎克"] = true
-    L["莱索恩"] = true
-    L["艾莫莉丝"] = true
-    L["泰拉尔"] = true
-    L["伊森德雷"] = true
+        L["艾索雷葛斯"] = true
+        L["卡扎克"] = true
+        L["莱索恩"] = true
+        L["艾莫莉丝"] = true
+        L["泰拉尔"] = true
+        L["伊森德雷"] = true
+    end
+
+    -- 60级赛季服
+    do
+        L["阿\n奎\n尼\n斯\n男\n爵"] = true
+        L["加\n摩\n拉"] = true
+        L["萨\n利\n维\n丝"] = true
+        L["格\n里\n哈\n斯\n特"] = true
+        L["洛\n古\n斯\n·\n杰\n特"] = true
+        L["梦\n游\n者\n克\n尔\n里\n斯"] = true
+        L["阿\n库\n麦\n尔"] = true
+
+        L["矿工约翰森"] = true
+        L["斯尼德"] = true
+        L["基尔尼格"] = true
+        L["重锤先生"] = true
+        L["绿皮队长"] = true
+        L["艾德温·范克里夫"] = true
+        L["曲奇"] = true
+        L["考布莱恩"] = true
+        L["克雷什"] = true
+        L["皮萨斯"] = true
+        L["斯卡姆"] = true
+        L["瑟芬迪斯"] = true
+        L["永生者沃尔丹"] = true
+        L["吞噬者穆坦努斯"] = true
+        L["变异精灵龙"] = true
+        L["屠夫拉佐克劳"] = true
+        L["席瓦莱恩男爵"] = true
+        L["指挥官"] = true
+        L["盲眼守卫奥杜"] = true
+        L["幻影之甲"] = true
+        L["狼王南杜斯"] = true
+        L["大法师阿鲁高"] = true
+        L["布鲁高·铁拳"] = true
+
+        L["格\n鲁\n比\n斯"] = true
+        L["粘\n性\n辐\n射\n尘"] = true
+        L["电\n刑\n器\n6\n0\n0\n0\n型"] = true
+        L["群\n体\n打\n击\n者"] = true
+        L["黑\n铁\n大\n师"] = true
+        L["瑟\n玛\n普\n拉\n格"] = true
+        L["机\n械\n动\n物\n园"] = true
+
+        L["亡语者贾格巴"] = true
+        L["主宰拉姆塔斯"] = true
+        L["暴怒的阿迦赛罗斯"] = true
+        L["盲眼猎手"] = true
+        L["卡尔加·刺肋"] = true
+        L["唤地者哈穆加"] = true
+        L["审讯员韦沙斯"] = true
+        L["永醒的艾希尔"] = true
+        L["死灵勇士"] = true
+        L["铁脊死灵"] = true
+        L["血法师萨尔诺斯"] = true
+        L["驯犬者洛克希"] = true
+        L["奥法师杜安"] = true
+        L["赫洛德"] = true
+        L["莫格莱尼"] = true
+        L["怀特迈恩"] = true
+        L["图特卡什"] = true
+        L["火眼莫德雷斯"] = true
+        L["暴食者"] = true
+        L["拉戈斯诺特"] = true
+        L["寒冰之王亚门纳尔"] = true
+        L["腐烂的普雷莫尔"] = true
+        L["埃瑞克"] = true
+        L["巴尔洛戈"] = true
+        L["奥拉夫"] = true
+        L["鲁维罗什"] = true
+        L["艾隆纳亚"] = true
+        L["石头看守者"] = true
+    end
 
     -- L[] = true
     -- L[] = true
