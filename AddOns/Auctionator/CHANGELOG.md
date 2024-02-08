@@ -1,9 +1,6 @@
 # Auctionator
 
-## [10.2.10](https://github.com/Auctionator/Auctionator/tree/10.2.10) (2023-12-23)
-[Full Changelog](https://github.com/Auctionator/Auctionator/compare/10.2.9...10.2.10) 
+## [10.2.23](https://github.com/Auctionator/Auctionator/tree/10.2.23) (2024-02-07)
+[Full Changelog](https://github.com/Auctionator/Auctionator/compare/10.2.22...10.2.23) 
 
-- Reword tooltip options  
-- Disable different item price matching on retail, leaving it classic only  
-- Classic: For equipment match prices using "of the" suffix (along with ilvl)  
-    This affects retail, but retail users shouldn't notice any difference  
+- Update toc for 1.15.1  
