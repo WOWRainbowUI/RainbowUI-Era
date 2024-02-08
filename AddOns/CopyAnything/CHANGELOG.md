@@ -1,7 +1,7 @@
 # Copy Anything
 
-## [v1.1.23](https://github.com/Oppzippy/CopyAnything/tree/v1.1.23) (2023-10-11)
-[Full Changelog](https://github.com/Oppzippy/CopyAnything/compare/v1.1.22...v1.1.23) [Previous Releases](https://github.com/Oppzippy/CopyAnything/releases)
+## [v1.1.26](https://github.com/Oppzippy/CopyAnything/tree/v1.1.26) (2024-02-07)
+[Full Changelog](https://github.com/Oppzippy/CopyAnything/compare/v1.1.25...v1.1.26) [Previous Releases](https://github.com/Oppzippy/CopyAnything/releases)
 
-- Update Interface version (#5)  
+- Update Interface version (#9)  
     Co-authored-by: Oppzippy <Oppzippy@users.noreply.github.com>  
