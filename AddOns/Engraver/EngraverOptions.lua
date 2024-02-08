@@ -32,7 +32,7 @@ Addon.EngraverVisibilityModes = {
 
 local DefaultEngraverOptions = {
 	DisplayMode = 1,
-	LayoutDirection = 1,
+	LayoutDirection = 3,
 	VisibilityMode = "HideInCombat",
 	HideUndiscoveredRunes = true, -- 更改預設值
 	HideTooltip = false,
