@@ -377,7 +377,7 @@ function GBB.Popup_Minimap(frame,notminimap)
 
 	GBB.PopupDynamic:AddItem(GBB.L["HeaderSettings"],false, GBB.Options.Open, 1)
 
-	GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2)
+	-- GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2) -- 不顯示巫妖王過濾
 
 
 	GBB.PopupDynamic:AddItem(GBB.L["PanelAbout"], false, GBB.Options.Open, 7)
@@ -601,7 +601,7 @@ function GBB.Init()
 	
 	GameTooltip:HookScript("OnTooltipSetUnit", hooked_createTooltip)
 		
-	print("|cFFFF1C1C Loaded: "..GetAddOnMetadata(TOCNAME, "Title") .." ".. GetAddOnMetadata(TOCNAME, "Version") .." by "..GetAddOnMetadata(TOCNAME, "Author"))
+	-- print("|cFFFF1C1C Loaded: "..GetAddOnMetadata(TOCNAME, "Title") .." ".. GetAddOnMetadata(TOCNAME, "Version") .." by "..GetAddOnMetadata(TOCNAME, "Author"))
 end
 
 
@@ -762,7 +762,7 @@ function GBB.OnUpdate(elapsed)
 		end;
 
 		if GBB.ElapsedSinceLfgUpdate > 18 and GBB.Tool.GetSelectedTab(GroupBulletinBoardFrame)==2 and GroupBulletinBoardFrame:IsVisible() then
-			LFGBrowseFrameRefreshButton:Click()
+			if LFGBrowseFrameRefreshButton then LFGBrowseFrameRefreshButton:Click() end -- 暫時修正
 			GBB.UpdateLfgTool()
 			GBB.ElapsedSinceLfgUpdate = 0
 		else

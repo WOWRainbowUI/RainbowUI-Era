@@ -132,7 +132,7 @@ local function createMenu(DungeonID,req)
 	GBB.PopupDynamic:AddItem("",true)
 	GBB.PopupDynamic:AddItem(GBB.L["HeaderSettings"],false, GBB.Options.Open, 1)
 
-	GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2)
+	-- GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2) -- 不顯示巫妖王過濾
 
 	GBB.PopupDynamic:AddItem(GBB.L["PanelAbout"], false, GBB.Options.Open, 7)
 	GBB.PopupDynamic:AddItem(GBB.L["BtnCancel"],false)
@@ -237,12 +237,12 @@ function GBB.UpdateLfgTool()
 end
 
 function GBB.UpdateLfgToolNoSearch()
-    if LFGBrowseFrame.CategoryDropDown.selectedValue == 120 then return end
-    if  LFGBrowseFrame.CategoryDropDown.selectedValue == nil then  
+    if LFGBrowseFrame and LFGBrowseFrame.CategoryDropDown.selectedValue == 120 then return end -- 暫時修正
+    if  LFGBrowseFrame and LFGBrowseFrame.CategoryDropDown.selectedValue == nil then  -- 暫時修正
         LFGBrowseFrame.CategoryDropDown.selectedValue = 2
     end
 
-if LFGBrowseFrame.searching then return end
+if LFGBrowseFrame and LFGBrowseFrame.searching then return end -- 暫時修正
 
     GBB.LfgRequestList = {}
     GBB.GetLfgList()

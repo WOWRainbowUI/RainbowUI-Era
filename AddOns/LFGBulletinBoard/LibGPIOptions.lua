@@ -653,8 +653,10 @@ end
 
 function Options.Open(panel)
 	if panel==nil or panel > #Options.Panel then panel = 1 end
-	InterfaceOptionsFrame_OpenToCategory(Options.Panel[#Options.Panel])
-	InterfaceOptionsFrame_OpenToCategory(Options.Panel[#Options.Panel])
-	InterfaceOptionsFrame_OpenToCategory(Options.Panel[panel])
+	-- InterfaceOptionsFrame_OpenToCategory(Options.Panel[#Options.Panel])
+	-- InterfaceOptionsFrame_OpenToCategory(Options.Panel[#Options.Panel])
+	-- InterfaceOptionsFrame_OpenToCategory(Options.Panel[panel])
+	-- Settings.OpenToCategory("副本-佈告欄")
+	Settings.OpenToCategory(Addon.L["CfgTitle"])
 end
 

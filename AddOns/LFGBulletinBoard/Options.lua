@@ -149,7 +149,7 @@ function GBB.OptionsInit ()
 	
 	
 	-- First panel - Settings
-	GBB.Options.AddPanel(GBB.Title,false,true)
+	GBB.Options.AddPanel(GBB.L["CfgTitle"],false,true)
 		
 	--GBB.Options.AddVersion('|cff00c0ff' .. GBB.Version .. '|r')
 	
@@ -225,7 +225,7 @@ function GBB.OptionsInit ()
 	GBB.Options.AddCategory(GBB.L["HeaderDungeon"])
 	GBB.Options.Indent(10)
 
-	local defaultChecked = true
+	local defaultChecked = true -- 更改預設值，要過濾經典時期副本
 
 	ChkBox_FilterDungeon={}
 	for index=1,GBB.DUNGEONBREAK do
@@ -301,14 +301,14 @@ function GBB.OptionsInit ()
 	TbcChkBox_FilterDungeon={}
 		
 	for index=GBB.TBCDUNGEONSTART,GBB.TBCDUNGEONBREAK do
-		TbcChkBox_FilterDungeon[index]=CheckBoxFilter(GBB.dungeonSort[index],true)
+		TbcChkBox_FilterDungeon[index]=CheckBoxFilter(GBB.dungeonSort[index],false) -- 更改預設值，不過濾TBC副本
 	end
 
 	GBB.Options.SetRightSide()
 	--GBB.Options.AddCategory("")
 	GBB.Options.Indent(10)	
 	for index=GBB.TBCDUNGEONBREAK+1,GBB.TBCMAXDUNGEON do
-		TbcChkBox_FilterDungeon[index]=CheckBoxFilter(GBB.dungeonSort[index],true)
+		TbcChkBox_FilterDungeon[index]=CheckBoxFilter(GBB.dungeonSort[index],false) -- 更改預設值，不過濾TBC副本
 	end
 
 	GBB.Options.InLine()
@@ -328,12 +328,12 @@ function GBB.OptionsInit ()
 	GBB.Options.Indent(10)
 	GBB.Options.InLine()
 	local locale = GetLocale()
-	CheckBox("TagsEnglish", locale == "enUS" or locale == "enGB")
+	CheckBox("TagsEnglish", locale == "enUS" or locale == "enGB" or locale == "zhTW" or locale == "zhCN") -- 更改預設值
 	CheckBox("TagsGerman", locale == "deDE")
 	CheckBox("TagsRussian", locale == "ruRU")
 	CheckBox("TagsFrench", locale == "frFR")
-	CheckBox("TagsZhtw",locale == "zhTW")
-	CheckBox("TagsZhcn",locale == "zhCN")
+	CheckBox("TagsZhtw",locale == "zhTW" or locale == "zhCN")
+	CheckBox("TagsZhcn",locale == "zhCN" or locale == "zhTW")
 
 	CheckBox("TagsCustom",true)
 	GBB.Options.EndInLine()
