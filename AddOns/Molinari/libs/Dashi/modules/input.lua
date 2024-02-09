@@ -1,7 +1,7 @@
 local addonName, addon = ...
 
 function addon:RegisterSlash(...)
-	local name = addonName .. 'Slash' -- .. math.random()
+	local name = addonName .. 'Slash' -- .. math.random() -- 暫時修正
 	local failed
 
 	local numArgs = select('#', ...)
