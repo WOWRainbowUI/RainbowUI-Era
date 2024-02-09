@@ -16,7 +16,7 @@ function GBB.GetDungeonNames()
 	local DefaultEnGB={
 		["RFC"] = 	"Ragefire Chasm",
 		["DM"] = 	"The Deadmines",
-		["WC"] = 	"Wailing Caverns",	
+		["WC"] = 	"Wailing Caverns",
 		["SFK"] = 	"Shadowfang Keep",
 		["STK"] = 	"The Stockade",
 		["BFD"] = 	"Blackfathom Deeps",
@@ -112,18 +112,339 @@ function GBB.GetDungeonNames()
 		["DEBUG"] = "DEBUG INFO",
 		["BAD"] =	"DEBUG BAD WORDS - REJECTED",
 		["BREW"] =  "Brewfest - Coren Direbrew",
-		["HOLLOW"] = "Hallow's End - Headless Horseman",
-
-		["GAMMA"] = "Gamma",
-		["N3"] = 	"New 3",
-		["DAILY"] = "Daily"
+		["HOLLOW"] =  "Hallow's End - Headless Horseman",
 		}
-		
-	local dungeonNamesLocales={ 
+
+	local dungeonNamesLocales={
+		deDE ={
+			["RFC"] = 	"Flammenschlund",
+			["DM"] = 	"Die Todesminen",
+			["WC"] = 	"Die Höhlen des Wehklagens",
+			["SFK"] = 	"Burg Schattenfang",
+			["STK"] = 	"Das Verlies",
+			["BFD"] = 	"Die Tiefschwarze Grotte",
+			["GNO"] = 	"Gnomeregan",
+			["RFK"] = 	"Kral der Klingenhauer",
+			["SM2"] =	"Scharlachrotes Kloster",
+			["SMG"] = 	"Scharlachrotes Kloster: Friedhof",
+			["SML"] = 	"Scharlachrotes Kloster: Bibliothek",
+			["SMA"] = 	"Scharlachrotes Kloster: Waffenkammer",
+			["SMC"] = 	"Scharlachrotes Kloster: Kathedrale",
+			["RFD"] = 	"Hügel der Klingenhauer",
+			["ULD"] = 	"Uldaman",
+			["ZF"] = 	"Zul'Farrak",
+			["MAR"] = 	"Maraudon",
+			["ST"] = 	"Der Tempel von Atal'Hakkar",
+			["BRD"] = 	"Die Schwarzfels-Tiefen",
+			["DM2"] = 	"Düsterbruch",
+			["DME"] = 	"Düsterbruch: Ost",
+			["DMN"] = 	"Düsterbruch: Nord",
+			["DMW"] = 	"Düsterbruch: West",
+			["STR"] = 	"Stratholme",
+			["SCH"] = 	"Scholomance",
+			["LBRS"] = 	"Die Untere Schwarzfelsspitze",
+			["UBRS"] = 	"Obere Schwarzfelsspitze (10)",
+			["RAMPS"] = "Höllenfeuerzitadelle: Höllenfeuerbollwerk",
+			["BF"] = 	"Höllenfeuerzitadelle: Der Blutkessel",
+			["SP"] = 	"Echsenkessel: Die Sklavenunterkünfte",
+			["UB"] = 	"Echsenkessel: Der Tiefensumpf",
+			["MT"] = 	"Auchindoun: Die Managruft",
+			["CRYPTS"] = "Auchindoun: Die Auchenaikrypta",
+			["SETH"] = 	"Auchindoun: Sethekkhallen",
+			["OHB"] = 	"Höhlen der Zeit: Flucht von Durnholde",
+			["MECH"] = 	"Festung der Stürme: Die Mechanar",
+			["BM"] = 	"Höhlen der Zeit: Der Schwarze Morast",
+			["MGT"] = 	"Die Terrasse der Magister",
+			["SH"] = 	"Höllenfeuerzitadelle: Die Zerschmetterten Hallen",
+			["BOT"] = 	"Festung der Stürme: Botanica",
+			["SL"] = 	"Auchindoun: Schattenlabyrinth",
+			["SV"] = 	"Echsenkessel: Die Dampfkammer",
+			["ARC"] = 	"Festung der Stürme: Die Arcatraz",
+			["KARA"] = 	"Karazhan",
+			["GL"] = 	"Gruuls Unterschlupf",
+			["MAG"] = 	"Höllenfeuerzitadelle: Magtheridons Kammer",
+			["SSC"] = 	"Echsenkessel: Höhle des Schlangenschreins",
+			["EYE"] = 	"Das Auge des Sturms",
+			["ZA"] = 	"Zul-Aman",
+			["HYJAL"] = "Schlacht um den Berg Hyjal",
+			["BT"] = 	"Der Schwarze Tempel",
+			["SWP"] = 	"Sonnenbrunnenplateau",
+			["ONY"] = 	"Onyxias Hort (40)",
+			["MC"] = 	"Geschmolzener Kern (40)",
+			["ZG"] = 	"Zul'Gurub (20)",
+			["AQ20"] = 	"Ruinen von Ahn'Qiraj (20)",
+			["BWL"] = 	"Pechschwingenhort (40)",
+			["AQ40"] = 	"Tempel von Ahn'Qiraj (40)",
+			["NAX"] = 	"Naxxramas (40)",
+			["WSG"] = 	"Warsongschlucht (PVP)",
+			["AV"] = 	"Alteractal (PVP)",
+			["AB"] = 	"Arathibecken (PVP)",
+			["EOTS"] =  "Auge des Sturms (PvP)",
+			["ARENA"] = "Arena (PvP)",
+			["MISC"] = 	"Verschiedenes",
+			["TRADE"] =	"Handel",
+
+		},
+		frFR ={
+    ["RFC"] = 	"Gouffre de Ragefeu",
+    ["DM"] = 	"Les Mortemines",
+    ["WC"] = 	"Cavernes des lamentations",
+    ["SFK"] = 	"Donjon d'Ombrecroc",
+    ["STK"] = 	"La Prison",
+    ["BFD"] = 	"Profondeurs de Brassenoire",
+    ["GNO"] = 	"Gnomeregan",
+    ["RFK"] = 	"Kraal de Tranchebauge",
+    ["SM2"] =	"Monastère écarlate",
+    ["SMG"] = 	"Monastère écarlate: Cimetière",
+    ["SML"] = 	"Monastère écarlate: Bibliothèque",
+    ["SMA"] = 	"Monastère écarlate: Armurerie",
+    ["SMC"] = 	"Monastère écarlate: Cathédrale",
+    ["RFD"] = 	"Souilles de Tranchebauge",
+    ["ULD"] = 	"Uldaman",
+    ["ZF"] = 	"Zul'Farrak",
+    ["MAR"] = 	"Maraudon",
+    ["ST"] = 	"Le temple d'Atal'Hakkar",
+    ["BRD"] = 	"Profondeurs de Blackrock",
+    ["DM2"] = 	"Hache-tripes",
+    ["DME"] = 	"Hache-tripes: Est",
+    ["DMN"] = 	"Hache-tripes: Nord",
+    ["DMW"] = 	"Hache-tripes: Ouest",
+    ["STR"] = 	"Stratholme",
+    ["SCH"] = 	"Scholomance",
+    ["LBRS"] = 	"Pic Blackrock",
+    ["UBRS"] = 	"Pic Blackrock (10)",
+    ["RAMPS"] = "Citadelle des Flammes Infernales: Remparts des Flammes infernales",
+    ["BF"] = 	"Citadelle des Flammes Infernales: La Fournaise du sang",
+    ["SP"] = 	"Réservoir de Glissecroc : Les enclos aux esclaves",
+    ["UB"] = 	"Réservoir de Glissecroc : La Basse-tourbière",
+    ["MT"] = 	"Auchindoun: Tombes-mana",
+    ["CRYPTS"] = "Auchindoun: Cryptes Auchenaï",
+    ["SETH"] = 	"Auchindoun: Les salles des Sethekk",
+    ["OHB"] = 	"Grottes du Temps: Contreforts de Hautebrande d'antan",
+    ["MECH"] = 	"Donjon de la Tempête: Le Méchanar",
+    ["BM"] = 	"Grottes du Temps: Le Noir Marécage",
+    ["MGT"] = 	"Terrasse des Magistères",
+    ["SH"] = 	"Citadelle des Flammes Infernales: Les Salles brisées",
+    ["BOT"] = 	"Donjon de la Tempête: Botanica",
+    ["SL"] = 	"Auchindoun: Labyrinthe des ombres",
+    ["SV"] = 	"Réservoir de Glissecroc : Le Caveau de la vapeur",
+    ["ARC"] = 	"Donjon de la Tempête: L'Arcatraz",
+    ["KARA"] = 	"Karazhan",
+    ["GL"] = 	"Repaire de Gruul",
+    ["MAG"] = 	"Citadelle des Flammes Infernales: Le repaire de Magtheridon",
+    ["SSC"] = 	"Réservoir de Glissecroc : Caverne du sanctuaire du Serpent",
+    ["EYE"] = 	"Donjon de la Tempête : L'Oeil",
+    ["ZA"] = 	"Zul-Aman",
+    ["HYJAL"] = "Sommet d'Hyjal",
+    ["BT"] = 	"Temple noir",
+    ["SWP"] = 	"Plateau du Puits de soleil",
+    ["ONY"] = 	"Repaire d'Onyxia (40)",
+    ["MC"] = 	"Cœur du Magma (40)",
+    ["ZG"] = 	"Zul'Gurub (20)",
+    ["AQ20"] = 	"Ruines d'Ahn'Qiraj (20)",
+    ["BWL"] = 	"Repaire de l'Aile noire (40)",
+    ["AQ40"] = 	"Ahn'Qiraj (40)",
+    ["NAX"] = 	"Naxxramas (40)",
+    ["ARENA"] = "Arène (PvP)",
+    ["AB"] = "Bassin d'Arathi (PvP)",
+    ["ANK"] = "Ahn'kahet, l'Ancien royaume",
+    ["AV"] = "Vallée d'Alterac (PvP)",
+    ["AZN"] = "Azjol-Nérub",
+    ["BREW"] = "Fete des brasseurs - Coren Navrebière",
+    ["CHAMP"] = "L'épreuve du champion",
+    ["COS"] = "L'Épuration de Stratholme",
+    ["DEBUG"] = "DEBUG",
+    ["DTK"] = "Donjon de Drak'Tharon",
+    ["EOE"] = "L'Oeil de l'éternité",
+    ["EOTS"] = "L'Oeil du cyclone (PvP)",
+    ["FOS"] = "La Forge des âmes",
+    ["GD"] = "Gundrak",
+    ["HOL"] = "Les salles de Foudre",
+    ["HOLLOW"] = "Sanssaint - Cavalier sans tête",
+    ["HOR"] = "Salles des Reflets",
+    ["HOS"] = "Les salles de Pierre",
+    ["MISC"] = "Divers",
+    ["NEX"] = "Le Nexus",
+    ["OCC"] = "L'Oculus",
+    ["OS"] = "Le sanctum Obsidien",
+    ["POS"] = "Fosse de Saron",
+    ["RS"] = "Le sanctum Rubis",
+    ["SOTA"] = "Rivage des Anciens (PvP)",
+    ["TOTC"] = "L'épreuve du croisé",
+    ["TRADE"] = "Commerce",
+    ["UK"] = "Donjon d'Utgarde",
+    ["ULDAR"] = "Ulduar",
+    ["UP"] = "Cime d'Utgarde",
+    ["VH"] = "Le fort Pourpre",
+    ["VOA"] = "Caveau d'Archavon",
+    ["WG"] = "Joug-d'hiver",
+    ["WSG"] = "Goulet des Chanteguerres (PvP)", 
+		},
+		esMX ={
+			["RFC"] = 	"Sima Ígnea",
+			["DM"] = 	"Las Minas de la Muerte",
+			["WC"] = 	"Cuevas de los Lamentos",
+			["SFK"] = 	"Castillo de Colmillo Oscuro",
+			["STK"] = 	"Las Mazmorras",
+			["BFD"] = 	"Cavernas de Brazanegra",
+			["GNO"] = 	"Gnomeregan",
+			["RFK"] = 	"Horado Rajacieno",
+			["SM2"] =	"Monasterio Escarlata",
+			["SMG"] = 	"Monasterio Escarlata: Friedhof",
+			["SML"] = 	"Monasterio Escarlata: Bibliothek",
+			["SMA"] = 	"Monasterio Escarlata: Waffenkammer",
+			["SMC"] = 	"Monasterio Escarlata: Kathedrale",
+			["RFD"] = 	"Zahúrda Rojocieno",
+			["ULD"] = 	"Uldaman",
+			["ZF"] = 	"Zul'Farrak",
+			["MAR"] = 	"Maraudon",
+			["ST"] = 	"El Templo de Atal'Hakkar",
+			["BRD"] = 	"Profundidades de Roca Negra	",
+			["DM2"] = 	"La Masacre",
+			["DME"] = 	"La Masacre: Ost",
+			["DMN"] = 	"La Masacre: Nord",
+			["DMW"] = 	"La Masacre: West",
+			["STR"] = 	"Stratholme",
+			["SCH"] = 	"Scholomance",
+			["LBRS"] = 	"Cumbre de Roca Negra",
+			["UBRS"] = 	"Cumbre de Roca Negra (10)",
+			["RAMPS"] = "Hellfire Citadel: Ramparts",
+			["BF"] = 	"Hellfire Citadel: Blood Furnace",
+			["SP"] = 	"Coilfang Reservoir: Slave Pens",
+			["UB"] = 	"Coilfang Reservoir: Underbog",
+			["MT"] = 	"Auchindoun: Mana Tombs",
+			["CRYPTS"] = "Auchindoun: Auchenai Crypts",
+			["SETH"] = 	"Auchindoun: Sethekk Halls",
+			["OHB"] = 	"Caverns of Time: Old Hillsbrad",
+			["MECH"] = 	"Tempest Keep: The Mechanar",
+			["BM"] = 	"Caverns of Time: Black Morass",
+			["MGT"] = 	"Magisters' Terrace",
+			["SH"] = 	"Hellfire Citadel: Shattered Halls",
+			["BOT"] = 	"Tempest Keep: Botanica",
+			["SL"] = 	"Auchindoun: Shadow Labyrinth",
+			["SV"] = 	"Coilfang Reservoir: Steamvault",
+			["ARC"] = 	"Tempest Keep: The Arcatraz",
+			["KARA"] = 	"Karazhan",
+			["GL"] = 	"Gruul's Lair",
+			["MAG"] = 	"Hellfire Citadel: Magtheridon's Lair",
+			["SSC"] = 	"Coilfang Reservoir: Serpentshrine Cavern",
+			["EYE"] = 	"The Eye",
+			["ZA"] = 	"Zul-Aman",
+			["HYJAL"] = "The Battle For Mount Hyjal",
+			["BT"] = 	"Black Temple",
+			["SWP"] = 	"Sunwell Plateau",
+			["ONY"] = 	"Guarida de Onyxia (40)",
+			["MC"] = 	"Núcleo de Magma (40)",
+			["ZG"] = 	"Zul'Gurub (20)",
+			["AQ20"] = 	"Ruinas de Ahn'Qiraj (20)",
+			["BWL"] = 	"Guarida Alanegra (40)",
+			["AQ40"] = 	"Ahn'Qiraj (40)",
+			["NAX"] = 	"Naxxramas (40)",
+			["ARENA"] = "Arena (PvP)",
+
+		},
+		ruRU = {
+			["AB"] = "Низина Арати (PvP)",
+			["ANK"] = "Ан'кахет: Старое Королевство",
+			["AQ20"] = "Руины Ан'Киража (20)",
+			["AQ40"] = "Ан'Кираж (40)",
+			["ARC"] = "Крепость Бурь: Аркатрац",
+			["ARENA"] = "Арена (PvP)",
+			["AV"] = "Альтеракская Долина (PvP)",
+			["AZN"] = "Азжол-Неруб",
+			["BAD"] = "ОТЛАДКА ПЛОХИЕ СЛОВА - ОТКЛОНЕН",
+			["BF"] = "Цитадель Адского Пламени: Кузня Крови",
+			["BFD"] = "Непроглядная Пучина",
+			["BM"] = "Пещеры Времени: Черные топи",
+			["BOT"] = "Крепость Бурь: Ботаника",
+			["BRD"] = "Глубины Черной горы",
+			["BREW"] = "Хмельной фестиваль - Корен Худовар",
+			["BT"] = "Черный Храм",
+			["BWL"] = "Логово Крыла Тьмы (40)",
+			["CHAMP"] = "Испытание Чемпиона",
+			["COS"] = "Очищение Стратхольма",
+			["CRYPTS"] = "Аукиндон: Аукенайские гробницы",
+			["DEBUG"] = "ИНФОРМАЦИЯ О ОТЛАДКАХ",
+			["DM"] = "Мертвые копи",
+			["DM2"] = "Забытый Город",
+			["DME"] = "Забытый Город: Восток",
+			["DMN"] = "Забытый Город: Север",
+			["DMW"] = "Забытый Город: Запад",
+			["DTK"] = "Крепость Драк'Тарон",
+			["EOE"] = "Око Вечности",
+			["EOTS"] = "Око Бури (PvP)",
+			["EYE"] = "Крепость Бурь: Око",
+			["FOS"] = "Кузня Душ",
+			["GD"] = "Гундрак",
+			["GL"] = "Логово Груула",
+			["GNO"] = "Гномреган",
+			["HOL"] = "Чертоги Молний",
+			["HOLLOW"] = "Тыквовин - Всадник без головы",
+			["HOR"] = "Залы Отражений",
+			["HOS"] = "Чертоги Камня",
+			["HYJAL"] = "Пещеры Времени: Вершина Хиджала",
+			["ICC"] = "Цитадель Ледяной Короны",
+			["KARA"] = "Каражан",
+			["LBRS"] = "Низ Вершины Черной горы",
+			["MAG"] = "Цитадель Адского Пламени: Логово Магтеридона",
+			["MAR"] = "Мародон",
+			["MC"] = "Огненные Недра (40)",
+			["MECH"] = "Крепость Бурь: Механар",
+			["MGT"] = "Терраса магистров",
+			["MISC"] = "Прочее",
+			["MT"] = "Аукиндон: Гробницы Маны",
+			["NAX"] = "Наксрамас (40)",
+			["NAXX"] = "Наксрамас",
+			["NEX"] = "Нексус",
+			["OCC"] = "Окулус",
+			["OHB"] = "Пещеры Времени: Старые предгорья Хилсбрада",
+			["ONY"] = "Логово Ониксии (40)",
+			["OS"] = "Обсидиановое святилище",
+			["POS"] = "Яма Сарона",
+			["RAMPS"] = "Цитадель Адского Пламени: Бастионы",
+			["RFC"] = "Огненная пропасть",
+			["RFD"] = "Курганы Иглошкурых",
+			["RFK"] = "Лабиринты Иглошкурых",
+			["RS"] = "Рубиновое Святилище",
+			["SCH"] = "Некроситет",
+			["SETH"] = "Аукиндон: Сетеккские залы",
+			["SFK"] = "Крепость Темного Клыка",
+			["SH"] = "Цитадель Адского Пламени: Разрушенные залы",
+			["SL"] = "Аукиндон: Темный лабиринт",
+			["SM2"] = "Монастырь Алого ордена",
+			["SMA"] = "Монастырь Алого ордена: Оружейная",
+			["SMC"] = "Монастырь Алого ордена: Собор",
+			["SMG"] = "Монастырь Алого ордена: Кладбище",
+			["SML"] = "Монастырь Алого ордена: Библиотека",
+			["SOTA"] = "Берег Древних (PvP)",
+			["SP"] = "Резервуар Кривого Клыка: Узилище",
+			["SSC"] = "Резервуар Кривого Клыка: Змеиное святилище",
+			["ST"] = "Затонувший Храм",
+			["STK"] = "Тюрьма",
+			["STR"] = "Стратхольм",
+			["SV"] = "Резервуар Кривого Клыка: Паровое подземелье",
+			["SWP"] = "Плато Солнечного Колодца",
+			["TOTC"] = "Испытание Крестоносца",
+			["TRADE"] = "Торговля",
+			["UB"] = "Резервуар Кривого Клыка: Нижетопь",
+			["UBRS"] = "Верх Вершины Черной горы (10)",
+			["UK"] = "Крепость Утгард",
+			["ULD"] = "Ульдаман",
+			["ULDAR"] = "Ульдуар",
+			["UP"] = "Вершина Утгард",
+			["VH"] = "Аметистовая крепость",
+			["VOA"] = "Склеп Аркавона",
+			["WC"] = "Пещеры Стенаний",
+			["WG"] = "Озеро ледяных оков (PvP)",
+			["WSG"] = "Ущелье Песни Войны (PvP)",
+			["ZA"] = "Зул'Аман",
+			["ZF"] = "Зул'Фаррак",
+			["ZG"] = "Зул'Гуруб (20)",
+		},
 		zhTW ={
 			["RFC"] = 	"怒焰裂谷",
 			["DM"] = 	"死亡礦坑",
-			["WC"] = 	"哀嚎洞穴",	
+			["WC"] = 	"哀嚎洞穴",
 			["SFK"] = 	"影牙城堡",
 			["STK"] = 	"監獄",
 			["BFD"] = 	"黑暗深淵",
@@ -148,12 +469,12 @@ function GBB.GetDungeonNames()
 			["SCH"] = 	"通靈學院",
 			["LBRS"] = 	"黑石塔下層",
 			["UBRS"] = 	"黑石塔上層 (10)",
-			["RAMPS"] = "地獄火壁壘",
+			["RAMPS"] = 	"地獄火壁壘",
 			["BF"] = 	"血熔爐",
 			["SP"] = 	"奴隸監獄",
 			["UB"] = 	"深幽泥沼",
 			["MT"] = 	"法力墓地",
-			["CRYPTS"] = "奧奇奈地穴",
+			["CRYPTS"] = 	"奧奇奈地穴",
 			["SETH"] = 	"塞司克大廳",
 			["OHB"] = 	"希爾斯布萊德丘陵舊址",
 			["MECH"] = 	"麥克納爾",
@@ -164,41 +485,13 @@ function GBB.GetDungeonNames()
 			["SL"] = 	"暗影迷宮",
 			["SV"] = 	"蒸氣洞穴",
 			["ARC"] = 	"亞克崔茲",
-			--
-			["ANK"] =	"安卡罕特：古王國",
-			["AZN"] =	"阿茲歐-奈幽",
-			["DTK"] =	"德拉克薩隆要塞",
-			["GD"] =	"剛德拉克",
-			["HOL"] =	"電光大廳",
-			["HOS"] =	"石之大廳",
-			["COS"] =	"斯坦索姆的抉擇",
-			["NEX"] =	"奧核之心",
-			["OCC"] =	"奧核之眼",
-			["VH"] =	"紫羅蘭堡",
-			["UK"] =	"俄特加德要塞",
-			["UP"] =	"俄特加德之巔",
-			["CHAMP"] =	"勇士試煉",
-			["FOS"] =	"眾魂熔爐",
-			["POS"] =	"薩倫之淵",
-			["HOR"] =	"倒影大廳",
-			["VOA"] =	"亞夏梵穹殿",
-			["NAXX"] =	"納克薩瑪斯",
-			["EOE"] =	"奧核之心: 永恆之眼",
-			["OS"] =	"黑曜聖所",
-			["ULDAR"] =	"奧杜亞",
-			["TOTC"] =	"十字軍試煉",
-			["ICC"] =	"冰冠城塞",
-			["RS"] =	"晶紅聖所",
-			["BREW"] =  "啤酒節 - 柯林．烈酒",
-			["SOTA"] =  "遠古灘頭 (PvP)",
-			["WG"]  =   "冬握湖 (PvP)",
 			["KARA"] = 	"卡拉贊 (10)",
 			["GL"] = 	"戈魯爾之巢 (25)",
 			["MAG"] = 	"瑪瑟里頓的巢穴 (25)",
 			["SSC"] = 	"毒蛇神殿洞穴 (25)",
 			["EYE"] = 	"風暴要塞 (25)",
 			["ZA"] = 	"祖阿曼 (10)",
-			["HYJAL"] = "海加爾山 (25)",
+			["HYJAL"] = 	"海加爾山 (25)",
 			["BT"] = 	"黑暗神廟 (25)",
 			["SWP"] = 	"太陽之井高地 (25)",
 			["ONY"] = 	"奧妮克希亞的巢穴 (40)",
@@ -212,12 +505,8 @@ function GBB.GetDungeonNames()
 			["AB"] = 	"阿拉希盆地 (PvP)",
 			["AV"] = 	"奧特蘭克山谷 (PvP)",
 			["EOTS"] = 	"暴風之眼 (PvP)",
-			["ARENA"] = "競技場 (PvP)",
 			["MISC"] = 	"未分類",
 			["TRADE"] =	"交易",
-			["GAMMA"] = "伽瑪系統",
-			["N3"] = 	"新三本",
-			["DAILY"] = "日常",
 		},
 		zhCN ={
 			["UK"] = 	"乌特加德城堡",
@@ -311,30 +600,27 @@ function GBB.GetDungeonNames()
 			["EOTS"] = 	"风暴之眼 (PvP)",
 			["MISC"] = 	"未分類",
 			["TRADE"] =	"交易",
-			["GAMMA"] = "防御系统伽玛",
-			["N3"] = "新三本",
-			["DAILY"] = "日常",
 		},
 	}
 
-	
-	
+
+
 	local dungeonNames = dungeonNamesLocales[GetLocale()] or {}
-	
+
 	if GroupBulletinBoardDB and GroupBulletinBoardDB.CustomLocalesDungeon and type(GroupBulletinBoardDB.CustomLocalesDungeon) == "table" then
 		for key,value in pairs(GroupBulletinBoardDB.CustomLocalesDungeon) do
 			if value~=nil and value ~="" then
 				dungeonNames[key.."_org"]=dungeonNames[key] or DefaultEnGB[key]
-				dungeonNames[key]=value				
+				dungeonNames[key]=value
 			end
 		end
 	end
-	
-	
+
+
 	setmetatable(dungeonNames, {__index = DefaultEnGB})
-	
+
 	dungeonNames["DEADMINES"]=dungeonNames["DM"]
-	
+
 	return dungeonNames
 end
 
@@ -355,8 +641,8 @@ GBB.VanillaDungeonLevels ={
 	["RFD"] = 	{40,50}, ["ULD"] = 	{42,52}, ["ZF"] = 	{44,54}, ["MAR"] = 	{46,55}, ["ST"] = 	{50,60}, ["BRD"] = 	{52,60},
 	["LBRS"] = 	{55,60}, ["DME"] = 	{58,60}, ["DMN"] = 	{58,60}, ["DMW"] = 	{58,60}, ["STR"] = 	{58,60}, ["SCH"] = 	{58,60},
 	["UBRS"] = 	{58,60}, ["MC"] = 	{60,60}, ["ZG"] = 	{60,60}, ["AQ20"]= 	{60,60}, ["BWL"] = {60,60},
-	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60}, 
-	["MISC"]= {0,100},  
+	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60},
+	["MISC"]= {0,100},
 	["DEBUG"] = {0,100}, ["BAD"] =	{0,100}, ["TRADE"]=	{0,100}, ["SM2"] =  {28,42}, ["DM2"] =	{58,60}, ["DEADMINES"]={18,23},
 }
 
@@ -366,17 +652,17 @@ GBB.PostTbcDungeonLevels = {
 	["RFD"] = 	{33,41}, ["ULD"] = 	{36,44}, ["ZF"] = 	{42,50}, ["MAR"] = 	{40,52}, ["ST"] = 	{45,54}, ["BRD"] = 	{48,60},
 	["LBRS"] = 	{54,60}, ["DME"] = 	{54,61}, ["DMN"] = 	{54,61}, ["DMW"] = 	{54,61}, ["STR"] = 	{56,61}, ["SCH"] = 	{56,61},
 	["UBRS"] = 	{53,61}, ["MC"] = 	{60,60}, ["ZG"] = 	{60,60}, ["AQ20"]= 	{60,60}, ["BWL"] = {60,60},
-	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60}, 
-	["MISC"]= {0,100},  
+	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60},
+	["MISC"]= {0,100},
 	["DEBUG"] = {0,100}, ["BAD"] =	{0,100}, ["TRADE"]=	{0,100}, ["SM2"] =  {28,42}, ["DM2"] =	{58,60}, ["DEADMINES"]={16,24},
 }
 
 
-GBB.TbcDungeonLevels = { 
+GBB.TbcDungeonLevels = {
 	["RAMPS"] =  {60,62}, 	["BF"] = 	 {61,63},     ["SP"] = 	 {62,64},    ["UB"] = 	 {63,65},     ["MT"] = 	 {64,66},     ["CRYPTS"] = {65,67},
-	["SETH"] =   {67,69},  	["OHB"] = 	 {66,68},     ["MECH"] =   {69,70},    ["BM"] =      {69,70},    ["MGT"] =	 {70,70},    ["SH"] =	 {70,70}, 
-	["BOT"] =    {70,70},    ["SL"] = 	 {70,70},    ["SV"] =     {70,70},   ["ARC"] = 	 {70,70},    ["KARA"] = 	 {70,70},    ["GL"] = 	 {70,70}, 
-	["MAG"] =    {70,70},    ["SSC"] =    {70,70}, 	["EYE"] =    {70,70},   ["ZA"] = 	 {70,70},    ["HYJAL"] =  {70,70}, 	["BT"] =     {70,70}, 
+	["SETH"] =   {67,69},  	["OHB"] = 	 {66,68},     ["MECH"] =   {69,70},    ["BM"] =      {69,70},    ["MGT"] =	 {70,70},    ["SH"] =	 {70,70},
+	["BOT"] =    {70,70},    ["SL"] = 	 {70,70},    ["SV"] =     {70,70},   ["ARC"] = 	 {70,70},    ["KARA"] = 	 {70,70},    ["GL"] = 	 {70,70},
+	["MAG"] =    {70,70},    ["SSC"] =    {70,70}, 	["EYE"] =    {70,70},   ["ZA"] = 	 {70,70},    ["HYJAL"] =  {70,70}, 	["BT"] =     {70,70},
 	["SWP"] =    {70,70},
 }
 
@@ -385,32 +671,32 @@ GBB.PvpLevels = {
 }
 
 GBB.WotlkDungeonLevels = {
-	["UK"] =    {68,80},    ["NEX"] =    {69,80},    ["AZN"] =    {70,80},    ["ANK"] =    {71,80},    ["DTK"] =    {72,80},    ["VH"] =    {73,80},    
-	["GD"] =    {74,80},    ["HOS"] =    {75,80},    ["HOL"] =    {76,80},    ["COS"] =    {78,80},    ["OCC"] =    {77,80},    ["UP"] =    {77,80},    
-	["FOS"] =    {80,80},   ["POS"] =    {80,80},    ["HOR"] =    {80,80},    ["CHAMP"] =  {78,80},    ["OS"] =     {80,80},    ["VOA"] =    {80,80},    
-	["EOE"] =    {80,80},   ["ULDAR"] =  {80,80},    ["TOTC"] =     {80,80},  ["RS"] =     {80,80},    ["ICC"] =    {80,80},    ["ONY"] =    {80,80},    
-	["NAXX"] =   {80,80},   ["BREW"] = {65,70},      ["HOLLOW"] = {65,70},    ["GAMMA"] = {80,80}, ["N3"] = {80,80}, ["DAILY"] = {80,80},
+	["UK"] =    {68,80},    ["NEX"] =    {69,80},    ["AZN"] =    {70,80},    ["ANK"] =    {71,80},    ["DTK"] =    {72,80},    ["VH"] =    {73,80},
+	["GD"] =    {74,80},    ["HOS"] =    {75,80},    ["HOL"] =    {76,80},    ["COS"] =    {78,80},    ["OCC"] =    {77,80},    ["UP"] =    {77,80},
+	["FOS"] =    {80,80},   ["POS"] =    {80,80},    ["HOR"] =    {80,80},    ["CHAMP"] =  {78,80},    ["OS"] =    {80,80},    ["VOA"] =    {80,80},
+	["EOE"] =    {80,80},   ["ULDAR"] =  {80,80},    ["TOTC"] =     {80,80},    ["RS"] =     {80,80},    ["ICC"] =    {80,80},    ["ONY"] =    {80,80},
+	["NAXX"] =   {80,80},   ["BREW"] = {65,70},      ["HOLLOW"] = {65,70},
 }
 
 GBB.WotlkDungeonNames = {
-	"UK", "NEX", "AZN", "ANK", "DTK", "VH", "GD", "HOS", "HOL", "COS", 
-	"OCC", "UP", "FOS", "POS", "HOR", "CHAMP", "OS", "VOA", "EOE", "ULDAR", 
-	"TOTC", "RS", "ICC", "ONY", "NAXX", "GAMMA", "N3", "DAILY",
+	"UK", "NEX", "AZN", "ANK", "DTK", "VH", "GD", "HOS", "HOL", "COS",
+	"OCC", "UP", "FOS", "POS", "HOR", "CHAMP", "OS", "VOA", "EOE", "ULDAR",
+	"TOTC", "RS", "ICC", "NAX"
 }
 
-GBB.TbcDungeonNames = { 
+GBB.TbcDungeonNames = {
 	"RAMPS", "BF", "SH", "MAG", "SP", "UB", "SV", "SSC", "MT", "CRYPTS",
 	"SETH", "SL", "OHB", "BM", "MECH", "BOT", "ARC", "EYE", "MGT", "KARA",
 	"GL", "ZA", "HYJAL", "BT", "SWP",
 }
 
-GBB.VanillDungeonNames  = { 
+GBB.VanillDungeonNames  = {
 	"RFC", "WC" , "DM" , "SFK", "STK", "BFD", "GNO",
-    "RFK", "SMG", "SML", "SMA", "SMC", "RFD", "ULD", 
-    "ZF", "MAR", "ST" , "BRD", "LBRS", "DME", "DMN", 
-    "DMW", "STR", "SCH", "UBRS", "MC", "ZG", 
-    "AQ20", "BWL", "AQ40", "NAX",
-}	
+    "RFK", "SMG", "SML", "SMA", "SMC", "RFD", "ULD",
+    "ZF", "MAR", "ST" , "BRD", "LBRS", "DME", "DMN",
+    "DMW", "STR", "SCH", "UBRS", "MC", "ZG",
+    "AQ20", "BWL", "AQ40", "NAXX", "ONY"
+}
 
 
 GBB.PvpNames = {
@@ -424,10 +710,10 @@ GBB.DebugNames = {
 }
 
 GBB.Raids = {
-	"ONY", "MC", "ZG", "AQ20", "BWL", "AQ40", "NAX", 
-	"KARA", "GL", "MAG", "SSC", "EYE", "ZA", "HYJAL", 
+	"ONY", "MC", "ZG", "AQ20", "BWL", "AQ40", "NAX",
+	"KARA", "GL", "MAG", "SSC", "EYE", "ZA", "HYJAL",
 	"BT", "SWP", "ARENA", "WSG", "AV", "AB", "EOTS",
-	"WG", "SOTA", "BREW", "HOLLOW", "OS", "VOA", "EOE", 
+	"WG", "SOTA", "BREW", "HOLLOW", "OS", "VOA", "EOE",
 	"ULDAR", "TOTC", "RS", "ICC", "NAXX",
 }
 
@@ -449,14 +735,14 @@ end
 
 -- Needed because Lua sucks, Blizzard switch to Python please
 -- Takes in a list of dungeon lists, it will then concatenate the lists into a single list
--- it will put the dungeons in an order and give them a value incremental value that can be used for sorting later 
+-- it will put the dungeons in an order and give them a value incremental value that can be used for sorting later
 -- ie one list "Foo" which contains "Bar" and "FooBar" and a second list "BarFoo" which contains "BarBar"
 -- the output would be single list with "Bar" = 1, "FooBar" = 2, "BarFoo" = 3, "BarBar" = 4
-local function ConcatenateLists(Names) 
+local function ConcatenateLists(Names)
 	local result = {}
 	local index = 1
-	for k, nameLists in pairs (Names) do 
-		for _, v in pairs(nameLists) do 
+	for k, nameLists in pairs (Names) do
+		for _, v in pairs(nameLists) do
 			result[v] = index
 			index = index + 1
 		end
@@ -472,7 +758,7 @@ function GBB.GetDungeonSort()
 			table.insert(GBB.DebugNames, 1, eventName)
 		end
     end
-	
+
 	local dungeonOrder = { GBB.VanillDungeonNames, GBB.PvpNames, GBB.Misc, GBB.TbcDungeonNames, GBB.WotlkDungeonNames, GBB.DebugNames}
 
 	-- Why does Lua not having a fucking size function

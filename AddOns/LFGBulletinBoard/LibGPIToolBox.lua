@@ -704,7 +704,7 @@ end
 local function mySlashs(msg)
 	if msg=="help" then
 		local colCmd="|cFFFF9C00"
-		print("|cFFFF1C1C"..GBB.L["Title"] .." ".. GetAddOnMetadata(TOCNAME, "Version") .." by "..GetAddOnMetadata(TOCNAME, "Author"))
+		print("|cFFFF1C1C"..GetAddOnMetadata(TOCNAME, "Title") .." ".. GetAddOnMetadata(TOCNAME, "Version") .." by "..GetAddOnMetadata(TOCNAME, "Author"))
 		print(GetAddOnMetadata(TOCNAME, "Notes"))		
 		if type(slashCmd)=="table" then
 			print("SlashCommand:",colCmd,slashUnpack(slashCmd,"|r, "..colCmd),"|r")

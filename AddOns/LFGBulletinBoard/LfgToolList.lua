@@ -128,10 +128,11 @@ local function createMenu(DungeonID,req)
 	GBB.PopupDynamic:AddItem("",true)
 	GBB.PopupDynamic:AddItem(GBB.L["CboxNotifySound"],false,GBB.DB,"NotifySound")
 	GBB.PopupDynamic:AddItem(GBB.L["CboxNotifyChat"],false,GBB.DB,"NotifyChat")
+	GBB.PopupDynamic:AddItem(GBB.L["CboxRemoveRealm"],false,GBB.DB,"RemoveRealm")
 	GBB.PopupDynamic:AddItem("",true)
 	GBB.PopupDynamic:AddItem(GBB.L["HeaderSettings"],false, GBB.Options.Open, 1)
 
-	-- GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2)  -- 不顯示巫妖王過濾
+	GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2)
 
 	GBB.PopupDynamic:AddItem(GBB.L["PanelAbout"], false, GBB.Options.Open, 7)
 	GBB.PopupDynamic:AddItem(GBB.L["BtnCancel"],false)
@@ -236,12 +237,12 @@ function GBB.UpdateLfgTool()
 end
 
 function GBB.UpdateLfgToolNoSearch()
-    if LFGBrowseFrame and LFGBrowseFrame.CategoryDropDown.selectedValue == 120 then return end -- 暫時修正
-    if  LFGBrowseFrame and LFGBrowseFrame.CategoryDropDown.selectedValue == nil then  -- 暫時修正
+    if LFGBrowseFrame.CategoryDropDown.selectedValue == 120 then return end
+    if  LFGBrowseFrame.CategoryDropDown.selectedValue == nil then  
         LFGBrowseFrame.CategoryDropDown.selectedValue = 2
     end
 
-if LFGBrowseFrame and LFGBrowseFrame.searching then return end -- 暫時修正
+if LFGBrowseFrame.searching then return end
 
     GBB.LfgRequestList = {}
     GBB.GetLfgList()
