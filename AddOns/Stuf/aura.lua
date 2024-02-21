@@ -621,9 +621,6 @@ do  -- Aura Icons --------------------------------------------------------------
 					elseif isbuff then
 						BuffFrame:Show()
 						BuffFrame:RegisterEvent("UNIT_AURA")
-					elseif isdebuff then
-						DebuffFrame:Show()
-						DebuffFrame:RegisterEvent("UNIT_AURA")
 					end
 				end
 				UpdateAura(unit, uf, nil, nil, nil, config)
@@ -704,9 +701,6 @@ do  -- Aura Icons --------------------------------------------------------------
 			end
 			f.secure:SetFrameLevel(f:GetFrameLevel() + 20)
 			f.secure:Show()
-		elseif isplayer and isdebuff then
-			DebuffFrame:Hide()
-			DebuffFrame:UnregisterEvent("UNIT_AURA")
 		end
 		f:Show()
 
