@@ -36,6 +36,7 @@ function BG.RoleOverviewUI()
                 ["Gno"] = 1,
                 ["BD"] = 1,
                 ["huiguweek"] = 1,
+                ["alchemy"] = 1,
             }
         else
             BiaoGe.FBCDchoice = {
@@ -71,6 +72,9 @@ function BG.RoleOverviewUI()
             BG.Once("FBCDchoice", 240208, function()
                 BiaoGe.FBCDchoice["Gno"] = 1
             end)
+            BG.Once("FBCDchoice", 240223, function()
+                BiaoGe.FBCDchoice["alchemy"] = 1
+            end)
         else
             BG.Once("FBCDchoice", 240111, function()
                 BiaoGe.FBCDchoice["25RS"] = 1
@@ -104,63 +108,64 @@ function BG.RoleOverviewUI()
         }
         if BG.IsVanilla_Sod() then
             BG.FBCDall_table = {
-                { name = "Gno", color = "00BFFF", fbId = 90, num = 10 },
-                { name = "BD", color = "00BFFF", fbId = 48, num = 10 },
+                { name = "Gno", color = "00BFFF", fbId = 90, num = 10, type = "fb" },
+                { name = "BD", color = "00BFFF", fbId = 48, num = 10, type = "fb" },
                 -- 周常
-                { name = "huiguweek", name2 = L["灰谷周常"], color = "FF8C00", questID = "huiguweek" },
+                { name = "huiguweek", name2 = L["灰谷周常"], color = "FF8C00", questID = "huiguweek", type = "quest" },
+                -- 专业
+                { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
             }
         elseif BG.IsVanilla_60() then
             BG.FBCDall_table = {
-                { name = "NAXX", color = "00BFFF", fbId = 533, num = 40 },
-                { name = "TAQ", color = "00BFFF", fbId = 531, num = 40 },
-                { name = "BWL", color = "00BFFF", fbId = 469, num = 40 },
-                { name = "MC", color = "00BFFF", fbId = 409, num = 40 },
-                { name = "AQL", color = "BA55D3", fbId = 509, num = 20 },
-                { name = "ZUG", color = "BA55D3", fbId = 309, num = 20 },
-
+                { name = "NAXX", color = "00BFFF", fbId = 533, num = 40, type = "fb" },
+                { name = "TAQ", color = "00BFFF", fbId = 531, num = 40, type = "fb" },
+                { name = "BWL", color = "00BFFF", fbId = 469, num = 40, type = "fb" },
+                { name = "MC", color = "00BFFF", fbId = 409, num = 40, type = "fb" },
+                { name = "AQL", color = "BA55D3", fbId = 509, num = 20, type = "fb" },
+                { name = "ZUG", color = "BA55D3", fbId = 309, num = 20, type = "fb" },
             }
         end
     else
         BG.FBCDall_table = {
             --WLK
-            { name = "25ICC", color = "9370DB", fbId = 631, num = 25 },
-            { name = "10ICC", color = "9370DB", fbId = 631, num = 10 },
-            { name = "25RS", color = "FF4500", fbId = 724, num = 25 },
-            { name = "10RS", color = "FF4500", fbId = 724, num = 10 },
-            { name = "25TOC", color = "FF69B4", fbId = 649, num = 25 },
-            { name = "10TOC", color = "FF69B4", fbId = 649, num = 10 },
-            { name = "25OL", color = "FFA500", fbId = 249, num = 25 },
-            { name = "10OL", color = "FFA500", fbId = 249, num = 10 },
-            { name = "25ULD", color = "00BFFF", fbId = 603, num = 25 },
-            { name = "10ULD", color = "00BFFF", fbId = 603, num = 10 },
-            { name = "25NAXX", color = "32CD32", fbId = 533, num = 25 },
-            { name = "10NAXX", color = "32CD32", fbId = 533, num = 10 },
-            { name = "25EOE", color = "1E90FF", fbId = 616, num = 25 },
-            { name = "10EOE", color = "1E90FF", fbId = 616, num = 10 },
-            { name = "25OS", color = "8B4513", fbId = 615, num = 25 },
-            { name = "10OS", color = "8B4513", fbId = 615, num = 10 },
-            { name = "25VOA", color = "FFFF00", fbId = 624, num = 25 },
-            { name = "10VOA", color = "FFFF00", fbId = 624, num = 10 },
+            { name = "25ICC", color = "9370DB", fbId = 631, num = 25, type = "fb" },
+            { name = "10ICC", color = "9370DB", fbId = 631, num = 10, type = "fb" },
+            { name = "25RS", color = "FF4500", fbId = 724, num = 25, type = "fb" },
+            { name = "10RS", color = "FF4500", fbId = 724, num = 10, type = "fb" },
+            { name = "25TOC", color = "FF69B4", fbId = 649, num = 25, type = "fb" },
+            { name = "10TOC", color = "FF69B4", fbId = 649, num = 10, type = "fb" },
+            { name = "25OL", color = "FFA500", fbId = 249, num = 25, type = "fb" },
+            { name = "10OL", color = "FFA500", fbId = 249, num = 10, type = "fb" },
+            { name = "25ULD", color = "00BFFF", fbId = 603, num = 25, type = "fb" },
+            { name = "10ULD", color = "00BFFF", fbId = 603, num = 10, type = "fb" },
+            { name = "25NAXX", color = "32CD32", fbId = 533, num = 25, type = "fb" },
+            { name = "10NAXX", color = "32CD32", fbId = 533, num = 10, type = "fb" },
+            { name = "25EOE", color = "1E90FF", fbId = 616, num = 25, type = "fb" },
+            { name = "10EOE", color = "1E90FF", fbId = 616, num = 10, type = "fb" },
+            { name = "25OS", color = "8B4513", fbId = 615, num = 25, type = "fb" },
+            { name = "10OS", color = "8B4513", fbId = 615, num = 10, type = "fb" },
+            { name = "25VOA", color = "FFFF00", fbId = 624, num = 25, type = "fb" },
+            { name = "10VOA", color = "FFFF00", fbId = 624, num = 10, type = "fb" },
             --TBC
-            { name = "SW", color = "D3D3D3", fbId = 580, num = 25 },
-            { name = "BT", color = "D3D3D3", fbId = 564, num = 25 },
-            { name = "HS", color = "D3D3D3", fbId = 534, num = 25 },
-            { name = "TK", color = "D3D3D3", fbId = 550, num = 25 },
-            { name = "SSC", color = "D3D3D3", fbId = 548, num = 25 },
-            { name = "GL", color = "D3D3D3", fbId = 565, num = 25 },
-            { name = "ML", color = "D3D3D3", fbId = 544, num = 25 },
-            { name = "ZA", color = "D3D3D3", fbId = 568, num = 10 },
-            { name = "KZ", color = "D3D3D3", fbId = 532, num = 10 },
+            { name = "SW", color = "D3D3D3", fbId = 580, num = 25, type = "fb" },
+            { name = "BT", color = "D3D3D3", fbId = 564, num = 25, type = "fb" },
+            { name = "HS", color = "D3D3D3", fbId = 534, num = 25, type = "fb" },
+            { name = "TK", color = "D3D3D3", fbId = 550, num = 25, type = "fb" },
+            { name = "SSC", color = "D3D3D3", fbId = 548, num = 25, type = "fb" },
+            { name = "GL", color = "D3D3D3", fbId = 565, num = 25, type = "fb" },
+            { name = "ML", color = "D3D3D3", fbId = 544, num = 25, type = "fb" },
+            { name = "ZA", color = "D3D3D3", fbId = 568, num = 10, type = "fb" },
+            { name = "KZ", color = "D3D3D3", fbId = 532, num = 10, type = "fb" },
             --CLASSIC
-            { name = "TAQ", color = "D3D3D3", fbId = 531, num = 40 },
-            { name = "AQL", color = "D3D3D3", fbId = 509, num = 20 },
-            { name = "BWL", color = "D3D3D3", fbId = 469, num = 40 },
-            { name = "MC", color = "D3D3D3", fbId = 409, num = 40 },
-            { name = "ZUG", color = "D3D3D3", fbId = 309, num = 20 },
+            { name = "TAQ", color = "D3D3D3", fbId = 531, num = 40, type = "fb" },
+            { name = "AQL", color = "D3D3D3", fbId = 509, num = 20, type = "fb" },
+            { name = "BWL", color = "D3D3D3", fbId = 469, num = 40, type = "fb" },
+            { name = "MC", color = "D3D3D3", fbId = 409, num = 40, type = "fb" },
+            { name = "ZUG", color = "D3D3D3", fbId = 309, num = 20, type = "fb" },
             -- 日常
-            { name = "week1", name2 = L["周常"], color = "FF8C00", questID = "week1" },
-            { name = "gamma", name2 = L["伽马"], color = "FF8C00", questID = 78752, },
-            { name = "heroe", name2 = L["英雄"], color = "FF8C00", questID = 78753, },
+            { name = "week1", name2 = L["周常"], color = "FF8C00", questID = "week1", type = "quest" },
+            { name = "gamma", name2 = L["伽马"], color = "FF8C00", questID = 78752, type = "quest" },
+            { name = "heroe", name2 = L["英雄"], color = "FF8C00", questID = 78753, type = "quest" },
         }
 
         BG.MONEYall_table = {
@@ -264,6 +269,7 @@ function BG.RoleOverviewUI()
             for i, cd in pairs(BiaoGe.FBCD[RealmId][p]) do
                 if cd.resettime then
                     if cd.fbId == 309 or cd.fbId == 568 or cd.fbId == 509 then -- ZUG ZA AQL
+                        -- or cd.fbId == 48 or cd.fbId == 90 then -- BD Gno
                         text3 = format(L["小团本 %s"], SecondsToTime(cd.resettime, true, nil, 2))
                     elseif cd.num ~= 5 then
                         text7 = SecondsToTime(cd.resettime, true, nil, 2)
@@ -306,7 +312,7 @@ function BG.RoleOverviewUI()
                 else
                     t:SetPoint("TOPLEFT", right, "TOPRIGHT", width_jiange, 0)
                 end
-                if v.questID then
+                if v.type and v.type ~= "fb" then
                     t:SetText("|cff" .. v.color .. v.name2 .. RR)
                 else
                     t:SetText("|cff" .. v.color .. v.name .. RR)
@@ -349,7 +355,8 @@ function BG.RoleOverviewUI()
                             -- 玩家名字
                             local t = BG.FBCDFrame:CreateFontString()
                             t:SetFont(BIAOGE_TEXT_FONT, fontsize, "OUTLINE")
-                            t:SetPoint("TOPLEFT", BG.FBCDFrame, "TOPLEFT", FBCDchoice_table[1].width, -10 - height * n)
+                            t:SetPoint("TOPLEFT", BG.FBCDFrame, "TOPLEFT",
+                                FBCDchoice_table[1].width, -10 - height * n)
                             for i, cd in pairs(BiaoGe.FBCD[RealmId][p]) do
                                 if type(cd) == "table" then
                                     local level = ""
@@ -367,7 +374,8 @@ function BG.RoleOverviewUI()
                                         local tx = BG.FBCDFrame:CreateTexture(nil, "OVERLAY")
                                         tx:SetSize(16, 16)
                                         tx:SetPoint("TOP", BG.FBCDFrame, "TOPLEFT",
-                                            (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2), (-8 - height * n))
+                                            (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2),
+                                            (-8 - height * n))
                                         tx:SetTexture("interface/raidframe/readycheck-ready")
                                     end
                                 end
@@ -381,8 +389,31 @@ function BG.RoleOverviewUI()
                                             local tx = BG.FBCDFrame:CreateTexture(nil, "OVERLAY")
                                             tx:SetSize(16, 16)
                                             tx:SetPoint("TOP", BG.FBCDFrame, "TOPLEFT",
-                                                (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2), (-8 - height * n))
+                                                (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2),
+                                                (-8 - height * n))
                                             tx:SetTexture("interface/raidframe/readycheck-ready")
+                                        end
+                                    end
+                                end
+                            end
+
+                            -- 专业
+                            if BiaoGe.tradeSkillCooldown[RealmId][p] then
+                                for profession, v in pairs(BiaoGe.tradeSkillCooldown[RealmId][p]) do
+                                    for ii, vv in ipairs(FBCDchoice_table) do -- 创建cd勾勾
+                                        if profession == vv.name then
+                                            local t = f:CreateFontString()
+                                            t:SetFont(BIAOGE_TEXT_FONT, fontsize, "OUTLINE")
+                                            t:SetPoint("TOP", BG.FBCDFrame, "TOPLEFT",
+                                                (FBCDchoice_table[ii].width + text_table[ii]:GetWidth() / 2),
+                                                (-8 - height * n))
+                                            if v.ready then
+                                                t:SetTextColor(RGB("00FF00"))
+                                                t:SetText(READY)
+                                            else
+                                                t:SetTextColor(RGB("FFD100"))
+                                                t:SetText(BG.SecondsToTime(v.resettime))
+                                            end
                                         end
                                     end
                                 end
@@ -682,7 +713,9 @@ function BG.RoleOverviewUI()
         f:RegisterEvent("ENCOUNTER_END")
         f:SetScript("OnEvent", function(self, even, bossId, _, _, _, success)
             if even ~= "ENCOUNTER_END" or (even == "ENCOUNTER_END" and success == 1) then
-                RequestRaidInfo()
+                BG.After(0.5, function()
+                    RequestRaidInfo()
+                end)
             end
         end)
 
@@ -692,7 +725,7 @@ function BG.RoleOverviewUI()
         f:RegisterEvent("UPDATE_INSTANCE_INFO")
         f:SetScript("OnEvent", function(self, even, bossId, _, _, _, success)
             if even ~= "ENCOUNTER_END" or (even == "ENCOUNTER_END" and success == 1) then
-                C_Timer.After(0.5, function()
+                BG.After(1, function()
                     BG.UpdateFBCD()
                     if not BG.IsVanilla() then
                         BG.UpdateFBCD_5M()
@@ -1372,20 +1405,119 @@ function BG.RoleOverviewUI()
             end)
         end)
     end
+
+    ------------------专业技能CD------------------
+    do
+        if BG.IsVanilla_Sod() then
+            if not BiaoGe.tradeSkillCooldown then
+                BiaoGe.tradeSkillCooldown = {}
+            end
+            if not BiaoGe.tradeSkillCooldown[RealmId] then
+                BiaoGe.tradeSkillCooldown[RealmId] = {}
+            end
+            if not BiaoGe.tradeSkillCooldown[RealmId][player] then
+                BiaoGe.tradeSkillCooldown[RealmId][player] = {}
+            end
+
+            local tbl = {
+                alchemy = {
+                    name = L["炼金转化"],
+                    name2 = L["炼金术"],
+                    spell = 17187 -- 转化奥金
+                },
+                tailor = {
+                    name = L["裁缝洗布"],
+                    name2 = L["裁缝"],
+                    spell = 18560 --月布
+                },
+                leatherworking = {
+                    name = L["制皮筛盐"],
+                    name2 = L["制皮"],
+                    spell = 19566 --筛盐
+                },
+            }
+
+            local function GetCooldown()
+                for profession, v in pairs(tbl) do
+                    local startTime, duration = GetSpellCooldown(v.spell)
+                    local cooldown = startTime + duration - GetTime()
+                    if cooldown > 0 then
+                        BiaoGe.tradeSkillCooldown[RealmId][player][profession] = {
+                            class = select(2, UnitClass("player")),
+                            resettime = cooldown,
+                            endtime = cooldown + time(),
+                            ready = nil,
+                        }
+                    end
+                end
+            end
+
+            local function UpdateProfessionCD()
+                for p, _ in pairs(BiaoGe.tradeSkillCooldown[RealmId]) do -- 检查其他角色cd是否到期
+                    local i = 3
+                    for profession, v in pairs(BiaoGe.tradeSkillCooldown[RealmId][p]) do
+                        if v.endtime then
+                            if time() >= v.endtime then
+                                v.resettime = nil
+                                v.endtime = nil
+                                v.ready = true
+                                local color
+                                if v.class then
+                                    color = select(4, GetClassColor(v.class))
+                                end
+                                local name = color and "|c" .. color .. p .. "|r: " or p .. ": "
+                                if p == UnitName("player") then
+                                    name = color and "|c" .. color .. L["我"] .. "|r: " or L["我"] .. ": "
+                                end
+                                BG.After(i, function()
+                                    SendSystemMessage(BG.BG() .. BG.STC_g1(format(L["%s%s已就绪！"],
+                                        name, tbl[profession].name)))
+                                    SendSystemMessage(BG.BG() .. BG.STC_g1(format(L["%s%s已就绪！"],
+                                        name, tbl[profession].name)))
+                                    SendSystemMessage(BG.BG() .. BG.STC_g1(format(L["%s%s已就绪！"],
+                                        name, tbl[profession].name)))
+                                    PlaySoundFile(BG["sound_" .. profession .. "Ready"], "Master")
+                                end)
+                                i = i + 3
+                            elseif time() < v.endtime then
+                                v.resettime = v.endtime - time()
+                            end
+                        end
+                    end
+                end
+            end
+
+            local _msg = TRADESKILL_LOG_FIRSTPERSON:gsub("%%s", "(.+)")
+            BG.RegisterEvent("CHAT_MSG_TRADESKILLS", function(self, even, msg)
+                if not strfind(msg, _msg) then return end
+                GetCooldown()
+            end)
+
+            BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
+                if not (isLogin or isReload) then return end
+                -- BG.Once("defaultProfessionCooldown", "", function()
+                GetCooldown()
+                -- end)
+                UpdateProfessionCD()
+            end)
+            C_Timer.NewTicker(60, function()
+                UpdateProfessionCD()
+            end)
+
+            BG.RegisterEvent("SKILL_LINES_CHANGED", function(self, even)
+                for profession, v in pairs(tbl) do
+                    local isLearned
+                    for i = 1, GetNumSkillLines() do
+                        if GetSkillLineInfo(i) == v.name2 then
+                            isLearned = true
+                            break
+                        end
+                    end
+                    if not isLearned then
+                        BiaoGe.tradeSkillCooldown[RealmId][player][profession] = nil
+                    end
+                end
+            end)
+        end
+    end
 end
-
---[[
-
-/run local real=GetRealmID() for p,_ in pairs(BiaoGe.QuestCD[real]) do for k,v in pairs(BiaoGe.QuestCD[real][p]) do local t = v.endtime print("角色："..v.player.."，".."任务ID："..v.questID.."，"..date("任务重置：%m月%d日%H时",t)) end end
-
-
-
-				{
-					["colorplayer"] = "|cffff7d0a玛丨西|r",
-					["player"] = "玛丨西",
-					["questID"] = 78752,
-					["resettime"] = 224808,
-					["endtime"] = 1698275102,
-				}, -- [1]
-
- ]]

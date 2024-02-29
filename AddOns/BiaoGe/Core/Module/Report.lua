@@ -52,7 +52,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             { name = L["举报项目"], width = 70, color = "FFFFFF", JustifyH = "CENTER" },
             { name = L["举报细节"], width = 70, color = "FFFFFF", JustifyH = "CENTER" },
             { name = L["举报次数"], width = 60, color = "FFFFFF", JustifyH = "CENTER" },
-            { name = L["已封号"], width = 50, color = "FFFFFF", JustifyH = "CENTER" },
+            { name = L["当前在线"], width = 60, color = "FFFFFF", JustifyH = "CENTER" },
             { name = L["操作"], width = 110, color = "FFFFFF", JustifyH = "CENTER" },
         }
         local WIDTH = 10 + 27
@@ -74,10 +74,11 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local titlebuttons = {}
         local buttons = {}
         local checkbuttons = {}
+        local ischecking
         BG.ReportTbl = {}
         R.deleteFriends = {}
         R.errorDelete = {}
-
+        R.Online = {}
         do
             f = CreateFrame("Frame", nil, BG.ReportMainFrame, "BackdropTemplate")
             f:SetBackdrop({
@@ -142,38 +143,16 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
             -- 统计数据
             do
-                f.Text1 = f:CreateFontString()
-                f.Text1:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-                f.Text1:SetPoint("TOPRIGHT", f, "BOTTOMRIGHT", -50, -10)
-                f.Text1:SetTextColor(1, 0.82, 0)
-                f.Text1:SetJustifyH("RIGHT")
-                f.Text1:SetText(L["已封号："])
-                f.Text1Count = f:CreateFontString()
-                f.Text1Count:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-                f.Text1Count:SetPoint("LEFT", f.Text1, "RIGHT", 5, 0)
-                f.Text1Count:SetTextColor(0, 1, 0)
-
-                f.Text2 = f:CreateFontString()
-                f.Text2:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-                f.Text2:SetPoint("TOPRIGHT", f.Text1, "BOTTOMRIGHT", 0, -5)
-                f.Text2:SetTextColor(1, 0.82, 0)
-                f.Text2:SetJustifyH("RIGHT")
-                f.Text2:SetText(L["未封号："])
-                f.Text2Count = f:CreateFontString()
-                f.Text2Count:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-                f.Text2Count:SetPoint("LEFT", f.Text2, "RIGHT", 5, 0)
-                f.Text2Count:SetTextColor(1, 0, 0)
-
-                f.Text3 = f:CreateFontString()
-                f.Text3:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-                f.Text3:SetPoint("TOPRIGHT", f.Text2, "BOTTOMRIGHT", 0, -5)
-                f.Text3:SetTextColor(1, 0.82, 0)
-                f.Text3:SetJustifyH("RIGHT")
-                f.Text3:SetText(L["举报合计："])
-                f.Text3Count = f:CreateFontString()
-                f.Text3Count:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
-                f.Text3Count:SetPoint("LEFT", f.Text3, "RIGHT", 5, 0)
-                f.Text3Count:SetTextColor(1, 1, 0)
+                f.reportCountText = f:CreateFontString()
+                f.reportCountText:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+                f.reportCountText:SetPoint("TOPRIGHT", f, "BOTTOMRIGHT", -50, -10)
+                f.reportCountText:SetTextColor(1, 0.82, 0)
+                f.reportCountText:SetJustifyH("RIGHT")
+                f.reportCountText:SetText(L["举报合计："])
+                f.reportCountTextCount = f:CreateFontString()
+                f.reportCountTextCount:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+                f.reportCountTextCount:SetPoint("LEFT", f.reportCountText, "RIGHT", 5, 0)
+                f.reportCountTextCount:SetTextColor(1, 1, 0)
             end
         end
 
@@ -271,15 +250,17 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                                 end
                             end
                         end
-                    elseif BiaoGe.Report.OrderButtonID == 9 then -- 按封号
-                        local key = "state"
-                        local a_key = a[key] or -1
-                        local b_key = b[key] or -1
-                        if a_key ~= b_key then
-                            if BiaoGe.Report.Order == 1 then
-                                return a_key > b_key
-                            else
-                                return b_key > a_key
+                    elseif BiaoGe.Report.OrderButtonID == 9 then -- 按在线
+                        local key = "name"
+                        if a[key] and b[key] then
+                            local a_online = R.Online[a[key]] or -1
+                            local b_online = R.Online[b[key]] or -1
+                            if a_online ~= b_online then
+                                if BiaoGe.Report.Order == 1 then
+                                    return a_online > b_online
+                                else
+                                    return b_online > a_online
+                                end
                             end
                         end
                     end
@@ -361,20 +342,23 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 local _, _, _, cff = GetClassColor(BG.ReportTbl[ii].class)
                 local minorCategory = ""
                 for i, v in ipairs(BG.ReportTbl[ii].minorCategoryFlags) do
-                    minorCategory = minorCategory .. _G[C_ReportSystem.GetMinorCategoryString(v)] .. "\n"
+                    if i ~= 1 then
+                        minorCategory = minorCategory .. "\n"
+                    end
+                    minorCategory = minorCategory .. _G[C_ReportSystem.GetMinorCategoryString(v)]
                 end
 
                 local i_table = {
-                    ii,
+                    ii,                                                                        -- 序号
                     strsub(date.year, 3) .. "/" .. date.month .. "/" .. date.day .. " " ..
-                    format("%02d", date.hour) .. ":" .. format("%02d", date.min),
-                    "|c" .. cff .. BG.ReportTbl[ii].name .. RR,
-                    BG.ReportTbl[ii].realm,
-                    _G[C_ReportSystem.GetMajorCategoryString(BG.ReportTbl[ii].majorCategory)],
-                    minorCategory,
-                    BG.ReportTbl[ii].comment,
-                    BG.ReportTbl[ii].count,
-                    StateTexture(BG.ReportTbl[ii].state) or "",
+                    format("%02d", date.hour) .. ":" .. format("%02d", date.min),              -- 举报时间
+                    "|c" .. cff .. BG.ReportTbl[ii].name .. RR,                                -- 名字
+                    BG.ReportTbl[ii].realm,                                                    -- 服务器
+                    _G[C_ReportSystem.GetMajorCategoryString(BG.ReportTbl[ii].majorCategory)], -- 举报类型
+                    minorCategory,                                                             -- 举报项目
+                    BG.ReportTbl[ii].comment,                                                  -- 举报细节
+                    BG.ReportTbl[ii].count,                                                    -- 举报次数
+                    StateTexture(R.Online[BG.ReportTbl[ii].name]) or "",                       -- 当前在线
                 }
                 return i_table
             end
@@ -394,15 +378,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     f.qingkongButton:Enable()
                 end
 
-                local good = 0
-                for i, v in ipairs(db) do
-                    if v.state == 1 then
-                        good = good + 1
-                    end
-                end
-                f.Text1Count:SetText(good)
-                f.Text2Count:SetText(#db - good)
-                f.Text3Count:SetText(#db)
+                f.reportCountTextCount:SetText(#db)
             end
 
             function R.UpdateButtons()
@@ -413,7 +389,8 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     for i = 1, #title_table - 1 do
                         if i_table then
                             buttons[ii][i].Text:SetText(i_table[i])
-                            if buttons[ii][i].Text:GetStringWidth() > buttons[ii][i].Text:GetWidth() + 1 then
+                            if (buttons[ii][i].Text:GetText() and strfind(buttons[ii][i].Text:GetText(), "\n")) or
+                                buttons[ii][i].Text:GetStringWidth() > buttons[ii][i].Text:GetWidth() + 1 then
                                 buttons[ii][i].onenter = i_table[i]
                             else
                                 buttons[ii][i].onenter = nil
@@ -423,6 +400,26 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                             buttons[ii][i].Text:SetText("")
                             buttons[ii][i].onenter = nil
                             buttons[ii][i]:Hide()
+                        end
+                    end
+
+                    local bt = checkbuttons[ii]
+                    if ischecking then
+                        bt.disable = true
+                        bt:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+                        bt.Text:SetTextColor(0.5, 0.5, 0.5)
+                    else
+                        if i_table[4] ~= GetRealmName() then
+                            bt:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+                            bt.Text:SetTextColor(0.5, 0.5, 0.5)
+                            bt.disable = true
+                        else
+                            bt:SetBackdropBorderColor(0, 1, 0, 0.5)
+                            bt.Text:SetTextColor(0, 1, 0)
+                            bt.disable = false
+                        end
+                        if bt.isOnEnter then
+                            bt:GetScript("OnEnter")(bt)
                         end
                     end
                 end
@@ -487,9 +484,9 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     bt:SetScript("OnEnter", function(self)
                         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
                         GameTooltip:ClearLines()
-                        GameTooltip:AddLine(L["已封号"], 1, 1, 1, true)
-                        GameTooltip:AddLine(format(L["%s：已被封号"], AddTexture("interface/raidframe/readycheck-ready")), 1, 0.82, 0, true)
-                        GameTooltip:AddLine(format(L["%s：未被封号"], AddTexture("interface/raidframe/readycheck-notready")), 1, 0.82, 0, true)
+                        GameTooltip:AddLine(self:GetText(), 1, 1, 1, true)
+                        GameTooltip:AddLine(format(L["%s：在线"], AddTexture("interface/raidframe/readycheck-ready")), 1, 0.82, 0, true)
+                        GameTooltip:AddLine(format(L["%s：不在线"], AddTexture("interface/raidframe/readycheck-notready")), 1, 0.82, 0, true)
                         GameTooltip:Show()
                     end)
                     bt:SetScript("OnLeave", GameTooltip_Hide)
@@ -501,8 +498,8 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     f:SetScript("OnEnter", function(self)
                         GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
                         GameTooltip:ClearLines()
-                        GameTooltip:AddLine(L["操作"], 1, 1, 1, true)
-                        GameTooltip:AddLine(L["|cff00ff00查：|r查询该玩家是否已被封号"], 1, 0.82, 0, true)
+                        GameTooltip:AddLine(bt:GetText(), 1, 1, 1, true)
+                        GameTooltip:AddLine(L["|cff00ff00查：|r查询该玩家当前是否在线，可辅助判断是否已被封号"], 1, 0.82, 0, true)
                         GameTooltip:AddLine(L["|cffff0000删：|r删除该条举报记录"], 1, 0.82, 0, true)
                         GameTooltip:Show()
                     end)
@@ -531,16 +528,29 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 R.lastDelete = tbl.name
                 C_FriendList.AddFriend(tbl.name)
                 C_FriendList.ShowFriends()
-                for i, bt in ipairs(self.checkbuttons) do
-                    bt:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
-                    bt.Text:SetTextColor(0.5, 0.5, 0.5)
-                    bt.disable = true
-                    BG.After(0.5, function()
-                        bt:SetBackdropBorderColor(0, 1, 0, 0.5)
-                        bt.Text:SetTextColor(0, 1, 0)
-                        bt.disable = false
-                    end)
-                end
+                ischecking = true
+                R.UpdateScrollFrame()
+                R.UpdateButtons()
+
+                BG.OnUpdateTime(function(self, elapsed)
+                    self.timeElapsed = self.timeElapsed + elapsed
+                    if not ischecking then
+                        self:SetScript("OnUpdate", nil)
+                        self:Hide()
+                        return
+                    end
+                    if self.timeElapsed > 0.5 then
+                        ischecking = false
+                        if R.Online[tbl.name] ~= 1 then
+                            R.Online[tbl.name] = 0
+                        end
+                        R.UpdateScrollFrame()
+                        R.UpdateButtons()
+                        self:SetScript("OnUpdate", nil)
+                        self:Hide()
+                        return
+                    end
+                end)
             end
             local function CheckOnMouseDown(self)
                 if self.disable then return end
@@ -548,12 +558,14 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 self.Text:SetPoint("CENTER", 1, -1)
             end
             local function CheckOnEnter(self)
+                self.isOnEnter = true
                 buttons[self.ID][1].ds:Show()
                 if self.disable then return end
                 self:SetBackdropBorderColor(1, 1, 1, 1)
                 self.Text:SetTextColor(1, 1, 1)
             end
             local function CheckOnLeave(self)
+                self.isOnEnter = false
                 buttons[self.ID][1].ds:Hide()
                 if self.disable then return end
                 self:SetBackdropBorderColor(0, 1, 0, 0.5)
@@ -606,6 +618,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", Filter)
 
             BG.RegisterEvent("CHAT_MSG_SYSTEM", function(self, even, msg)
+                local name = msg:match(ERR_FRIEND_ONLINE_SS:gsub("%%s", "(.+)"):gsub("%[", "%%["):gsub("%]", "%%]"))
                 if msg == ERR_FRIEND_ERROR then
                     for _, v in ipairs(db) do
                         if R.lastDelete == v.name then
@@ -613,26 +626,29 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                             return
                         end
                     end
+                elseif name then
+                    -- 如果当前在线
+                    for i, v in ipairs(db) do
+                        if name == v.name then
+                            R.Online[v.name] = 1
+                            ischecking = false
+                            R.UpdateScrollFrame()
+                            R.UpdateButtons()
+                            return
+                        end
+                    end
                 end
             end)
+            -- 删除好友
             BG.RegisterEvent("FRIENDLIST_UPDATE", function(self, even)
-                -- pt(GetTime(), even, C_FriendList.GetNumFriends())
-                -- BG.After(0.2, function()
                 for name in pairs(R.deleteFriends) do
                     -- 检查是否为未知好友
                     for errorName in pairs(R.errorDelete) do
                         -- pt(errorName)
                         if name == errorName then
-                            for _, v in ipairs(db) do
-                                if name == v.name then
-                                    v.state = 0
-                                    R.UpdateScrollFrame()
-                                    R.UpdateButtons()
-                                    break
-                                end
-                            end
                             local info = C_FriendList.GetFriendInfo(name)
                             if info then
+                                -- 删除好友
                                 C_FriendList.RemoveFriend(name)
                                 R.deleteFriends[name] = nil
                             end
@@ -642,33 +658,14 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
                     local info = C_FriendList.GetFriendInfo(name)
                     if info then
-                        -- 状态改为未封号
-                        for _, v in ipairs(db) do
-                            if name == v.name then
-                                v.state = 0
-                                R.UpdateScrollFrame()
-                                R.UpdateButtons()
-                                break
-                            end
-                        end
                         -- 删除好友
                         C_FriendList.RemoveFriend(name)
                         R.deleteFriends[name] = nil
-                    else
-                        -- 状态改为已封号
-                        for _, v in ipairs(db) do
-                            if name == v.name then
-                                v.state = 1
-                                R.UpdateScrollFrame()
-                                R.UpdateButtons()
-                                break
-                            end
-                        end
                     end
                 end
-                -- end)
             end)
 
+            local copyNameFrame
             for ii = 1, MAXBUTTONS do
                 buttons[ii] = {}
                 for i = 1, #title_table do
@@ -707,6 +704,66 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     f:SetScript("OnLeave", function(self)
                         GameTooltip:Hide()
                         buttons[ii][1].ds:Hide()
+                    end)
+                    f:SetScript("OnMouseUp", function(self, button)
+                        if button == "RightButton" then
+                            local value = floor(s.ScrollBar:GetValue()) or 0
+                            local tbl = BG.ReportTbl[ii + value]
+                            local _, _, _, cff = GetClassColor(tbl.class)
+
+                            local menu = {
+                                {
+                                    text = "|c" .. cff .. tbl.name .. RR,
+                                    isTitle = true,
+                                    notCheckable = true,
+                                },
+                                {
+                                    text = L["复制名字"],
+                                    notCheckable = true,
+                                    func = function()
+                                        if copyNameFrame and copyNameFrame:IsVisible() then
+                                            copyNameFrame:Hide()
+                                        end
+                                        local f = CreateFrame("Frame", nil, BG.MainFrame, "BackdropTemplate")
+                                        f:SetBackdrop({
+                                            bgFile = "Interface/ChatFrame/ChatFrameBackground",
+                                            edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+                                            edgeSize = 16,
+                                            insets = { left = 3, right = 3, top = 3, bottom = 3 }
+                                        })
+                                        f:SetBackdropColor(0, 0, 0, 0.8)
+                                        f:SetSize(150, 55)
+                                        f:SetPoint("LEFT", self, "RIGHT", 20, 0)
+                                        f:SetFrameLevel(130)
+                                        f:EnableMouse(true)
+                                        copyNameFrame = f
+                                        f.CloseButton = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+                                        f.CloseButton:SetPoint("TOPRIGHT", f, "TOPRIGHT", 2, 2)
+
+                                        local edit = CreateFrame("EditBox", nil, f, "InputBoxTemplate")
+                                        edit:SetSize(f:GetWidth() - 30, 20)
+                                        edit:SetPoint("BOTTOM", 0, 10)
+                                        edit:SetText(tbl.name)
+                                        edit:SetFocus()
+                                        edit:SetAutoFocus(true)
+                                        edit:SetScript("OnEditFocusGained", function(self)
+                                            self:HighlightText()
+                                        end)
+                                        edit:SetScript("OnEscapePressed", function(self)
+                                            f:Hide()
+                                        end)
+                                    end
+                                },
+                                {
+                                    text = CANCEL,
+                                    notCheckable = true,
+                                    func = function(self)
+                                        LibBG:CloseDropDownMenus()
+                                    end,
+                                }
+                            }
+                            LibBG:EasyMenu(menu, BG.dropDown, "cursor", 0, 0, "MENU", 2)
+                        end
                     end)
                 end
 
@@ -786,10 +843,15 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     do
         hooksecurefunc(C_ReportSystem, "SendReport", function(reportInfo, playerLocation)
             local whoIndex = playerLocation:GetWhoIndex()
-            local name = C_PlayerInfo.GetName(playerLocation) or whoPlayersName[whoIndex]
+            local name, realm
+            if playerLocation:GetGUID() then
+                name, realm = select(6, GetPlayerInfoByGUID(playerLocation:GetGUID()))
+            else
+                name = whoPlayersName[whoIndex]
+            end
+            if not realm or realm == "" then realm = GetRealmName() end
+            -- pt(name, realm)
             if not name then return end
-            local name, realm = strsplit("-", name)
-            if not realm then realm = GetRealmName() end
 
             local _, class = C_PlayerInfo.GetClass(playerLocation)
             if not class then
@@ -805,13 +867,16 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
 
             local count = 1
-            local state
             for i = #db, 1, -1 do
                 if name == db[i].name and realm == db[i].realm then
                     count = count + db[i].count
-                    state = db[i].state
                     tremove(db, i)
                 end
+            end
+
+            local state
+            if realm == GetRealmName() then
+                state = R.Online[name]
             end
 
             local a = {
@@ -857,17 +922,19 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 ToggleDropDownMenu(nil, nil, ReportFrameButton:GetParent())
                 UIDropDownMenuButton_OnClick(DropDownList1Button2)
                 if ReportFrame.Comment.EditBox then
-                    ReportFrame.Comment.EditBox:SetText("自动脚本\n自動腳本\nAutomatic Scripting")
+                    if rp.chattype == "jiaoben" then
+                        ReportFrame.Comment.EditBox:SetText("自动脚本\n自動腳本\nAutomatic Scripting")
+                    elseif rp.chattype == "guaji" then
+                        ReportFrame.Comment.EditBox:SetText("在战场挂机\n在戰場掛機\nBOTTING")
+                    end
                 end
             elseif reportInfo.reportType == 0 then
                 ToggleDropDownMenu(nil, nil, ReportFrameButton:GetParent())
                 UIDropDownMenuButton_OnClick(DropDownList1Button1)
-                if rp.chattype == "saorao" then
-                    if ReportFrame.Comment.EditBox then
+                if ReportFrame.Comment.EditBox then
+                    if rp.chattype == "saorao" then
                         ReportFrame.Comment.EditBox:SetText("恶意骚扰\n惡意騷擾\nMalicious harassment")
-                    end
-                elseif rp.chattype == "RMT" then
-                    if ReportFrame.Comment.EditBox then
+                    elseif rp.chattype == "RMT" then
                         ReportFrame.Comment.EditBox:SetText("RMT")
                     end
                 end
@@ -917,7 +984,10 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 SetCategoryButtonChecked(self, 256)
                 SetCategoryButtonChecked(self, 2)
                 return
-            else
+            elseif rp.chattype == "jiaoben" then
+                SetCategoryButtonChecked(self, 64)
+            elseif rp.chattype == "guaji" then
+                SetCategoryButtonChecked(self, 128)
                 SetCategoryButtonChecked(self, 64)
             end
         end)
@@ -929,14 +999,29 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 _type = L["恶意骚扰"]
             elseif rp.chattype == "RMT" then
                 _type = "RMT"
-            else
+            elseif rp.chattype == "jiaoben" then
                 _type = L["自动脚本"]
+            elseif rp.chattype == "guaji" then
+                _type = L["挂机"]
             end
-            local color = ""
+            local color = "|cff"
             if rp.targetClass then
                 color = "|c" .. select(4, GetClassColor(rp.targetClass))
             end
-            print(BG.STC_y1(format(L["已举报<%s>为%s。"], color .. rp.targetName .. RR, _type)))
+
+            local reportcount
+            for i, v in ipairs(db) do
+                if rp.targetName == v.name then
+                    reportcount = v.count
+                    break
+                end
+            end
+            local reportcounttext = ""
+            if reportcount then
+                reportcounttext = format(L["（曾举报%s次）"], reportcount)
+            end
+
+            print(BG.STC_y1(format(L["已举报<%s>为%s。"], color .. rp.targetName .. RR, _type) .. reportcounttext))
             HideUIPanel(ReportFrame)
         end)
         ReportFrame:HookScript("OnHide", function(self)
@@ -983,9 +1068,11 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 end
             end
             local function AddReportButton(buttontype, unittype, unitorname, dropdown)
-                local unitname, playerLocation
+                local unitname, unitrealm, playerLocation
                 if unittype == "unit" then
-                    unitname = UnitName(unitorname)
+                    unitname, unitrealm = UnitName(unitorname)
+                    if not unitrealm then unitrealm = GetRealmName() end
+                    unitname = unitname .. "-" .. unitrealm
                     playerLocation = PlayerLocation:CreateFromGUID(UnitGUID(unitorname))
                 elseif unittype == "name" then
                     unitname = unitorname
@@ -1004,7 +1091,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 local mybuttontext
                 local info = UIDropDownMenu_CreateInfo()
 
-                if buttontype == 1 then
+                if buttontype == "jiaoben" then
                     mybuttontext = L["一键举报脚本"]
                     info.text = mybuttontext
                     info.notCheckable = true
@@ -1013,9 +1100,10 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                         REPORTING_MAJOR_CATEGORY_CHEATING, REPORTING_MINOR_CATEGORY_HACKING, "自动脚本 自動腳本 Automatic Scripting")
                     info.func = function()
                         rp.yes = true
+                        rp.chattype = "jiaoben"
                         SetReport(Enum.ReportType.InWorld, unitname, playerLocation)
                     end
-                elseif buttontype == 2 then
+                elseif buttontype == "RMT" then
                     mybuttontext = L["一键举报RMT"]
                     info.text = mybuttontext
                     info.notCheckable = true
@@ -1032,7 +1120,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                         rp.chattype = "RMT"
                         SetReport(Enum.ReportType.Chat, unitname, playerLocation)
                     end
-                elseif buttontype == 3 then
+                elseif buttontype == "saorao" then
                     mybuttontext = L["一键举报骚扰"]
                     info.text = mybuttontext
                     info.notCheckable = true
@@ -1048,20 +1136,38 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                         rp.chattype = "saorao"
                         SetReport(Enum.ReportType.Chat, unitname, playerLocation)
                     end
+                elseif buttontype == "guaji" then
+                    mybuttontext = L["一键举报挂机"]
+                    info.text = mybuttontext
+                    info.notCheckable = true
+                    info.tooltipTitle = L["自动帮你选择并填写举报内容"]
+                    info.tooltipText = format(L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n快捷命令：/BGReport\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"],
+                        REPORTING_MAJOR_CATEGORY_CHEATING,
+                        REPORTING_MINOR_CATEGORY_HACKING .. " " .. REPORTING_MINOR_CATEGORY_BOTTING,
+                        "在战场挂机 在戰場掛機 BOTTING")
+                    info.func = function()
+                        rp.yes = true
+                        rp.chattype = "guaji"
+                        SetReport(Enum.ReportType.InWorld, unitname, playerLocation)
+                    end
                 end
                 UIDropDownMenu_AddButton(info)
                 UpdateButtons(mybuttontext, { REPORT_PLAYER, REPORT_FRIEND, IGNORE })
             end
             hooksecurefunc("UnitPopup_ShowMenu", function(dropdown, which, unit, name, userData)
                 -- pt(which, unit, name, userData)
+                if (BiaoGe.options["report"] ~= 1) then return end
+                if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
+
                 do
                     local _name, _realm
                     if unit then
-                        _name, _realm = UnitFullName(unit)
+                        _name, _realm = UnitName(unit)
                     else
                         _name, _realm = strsplit("-", name)
                     end
                     if not _realm then _realm = GetRealmName() end
+                    -- pt(name, _name, _realm)
                     for i, v in ipairs(db) do
                         if _name == v.name and _realm == v.realm then
                             local bt = _G.DropDownList1Button1
@@ -1071,14 +1177,18 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     end
                 end
 
-                if (BiaoGe.options["report"] ~= 1) then return end
-                if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
                 if which ~= "SELF" and which ~= "FRIEND" and unit and UnitIsPlayer(unit) then -- 头像右键菜单
-                    AddReportButton(1, "unit", unit, dropdown.whoIndex)
-                    AddReportButton(2, "unit", unit, dropdown.whoIndex)
+                    AddReportButton("jiaoben", "unit", unit, dropdown.whoIndex)
+                    local _, type = IsInInstance()
+                    if type == "pvp" then
+                        -- if type ~= "pvp" then
+                        AddReportButton("guaji", "unit", unit, dropdown.whoIndex)
+                    else
+                        AddReportButton("RMT", "unit", unit, dropdown.whoIndex)
+                    end
                 elseif which == "FRIEND" and not UnitIsUnit('player', Ambiguate(name, 'none')) then -- 聊天框玩家右键菜单
-                    AddReportButton(1, "name", name, dropdown)
-                    AddReportButton(2, "name", name, dropdown)
+                    AddReportButton("jiaoben", "name", name, dropdown)
+                    AddReportButton("RMT", "name", name, dropdown)
                 end
             end)
 
@@ -1114,6 +1224,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                         if not rp.yes then
                             if i <= numWhos then
                                 rp.yes = true
+                                rp.chattype = "jiaoben"
                                 local info = C_FriendList.GetWhoInfo(i)
                                 if info then
                                     local unitname = strsplit("-", info.fullName)
@@ -1205,6 +1316,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             if UnitExists("target") then
                 if UnitIsPlayer("target") then
                     rp.yes = true
+                    rp.chattype = "jiaoben"
                     local unitname = UnitName("target")
                     local playerLocation = PlayerLocation:CreateFromGUID(UnitGUID("target"))
                     SetReport(Enum.ReportType.InWorld, unitname, playerLocation)
@@ -1245,4 +1357,19 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end)
         end
     end
+
+    -- 悬停目标的提示工具里增加显示举报次数
+    GameTooltip:HookScript("OnTooltipSetUnit", function(self)
+        if not UnitIsPlayer("mouseover") then return end
+        local name, realm = UnitName("mouseover")
+        if not realm then realm = GetRealmName() end
+        -- pt(name, realm)
+        if name and realm then
+            for i, v in ipairs(db) do
+                if name == v.name and realm == v.realm then
+                    GameTooltip:AddLine(BG.STC_r1(format(L["（已举报%s次）"], v.count)))
+                end
+            end
+        end
+    end)
 end)

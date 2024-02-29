@@ -52,8 +52,9 @@ local vanillaAllFB = { "BD", "Gno", "NAXX", "TAQ", "AQL", "ZUG", "BWL", "MC", }
 BG.FBtable = {}
 BG.FBtable2 = {}
 BG.FBIDtable = {}
+BG.lootQuality = {}
 do
-    function AddDB(FB, FBid, phase, maxplayers)
+    function AddDB(FB, FBid, phase, maxplayers, lootQuality)
         tinsert(BG.FBtable, FB)
         tinsert(BG.FBtable2,
             {
@@ -64,22 +65,24 @@ do
                 maxplayers = maxplayers,
             })
         BG.FBIDtable[FBid] = FB
+        BG.lootQuality[FB] = lootQuality or 4
     end
 
     if BG.IsVanilla_Sod() then
         BG.FB1 = "Gno"
         BG.fullLevel = 25
         BG.theEndBossID = { 2891, 2940 }
-        AddDB("BD", 48, "P1", 10)
-        AddDB("Gno", 90, "P2", 10)
+        BG.Sod_10manRaidTbl = { 48, 90 }
+        AddDB("BD", 48, "P1", 10, 3)
+        AddDB("Gno", 90, "P2", 10, 3)
     elseif BG.IsVanilla_60() then
         BG.FB1 = "MC"
         BG.fullLevel = 60
         BG.theEndBossID = { 617, 1084, 617, 793, 723, 717, 1114 } --MC OL BWL ZUG AQL TAQ NAXX
         AddDB("MC", 409, L["全阶段"], 40)
         AddDB("BWL", 469, L["全阶段"], 40)
-        AddDB("ZUG", 309, L["全阶段"], 20)
-        AddDB("AQL", 509, L["全阶段"], 20)
+        AddDB("ZUG", 309, L["全阶段"], 20, 3)
+        AddDB("AQL", 509, L["全阶段"], 20, 3)
         AddDB("TAQ", 531, L["全阶段"], 40)
         AddDB("NAXX", 533, L["全阶段"], 40)
 
@@ -268,7 +271,9 @@ do
                 Profession = {}, -- 专业制造
                 Quest = {},      -- 任务
 
-                Sod_Pvp = {}
+                Sod_Pvp = {},    -- 赛季服PVP活动
+
+                ExchangeItems = {},
             }
         end
     end
@@ -421,6 +426,9 @@ do
         BG.sound_hope = "Interface\\AddOns\\BiaoGe\\Media\\sound\\hope.mp3"
         BG.sound_qingkong = "Interface\\AddOns\\BiaoGe\\Media\\sound\\qingkong.mp3"
         BG.sound_cehuiqingkong = "Interface\\AddOns\\BiaoGe\\Media\\sound\\cehuiqingkong.mp3"
+        BG.sound_alchemyReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\alchemyReady.mp3"
+        BG.sound_tailorReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\tailorReady.mp3"
+        BG.sound_leatherworkingReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\leatherworkingReady.mp3"
     end
 end
 

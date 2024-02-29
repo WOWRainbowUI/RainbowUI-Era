@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.8.0"
+ADDONSELF.ver = "v1.8.1c"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -20,22 +20,24 @@ do --简体说明书
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
     text = text .. "-BUG反馈：邮箱buick_hbj@163.com，Q群322785325\n\n"
 
-    update = update .. "|cff00FF00" .. "2月8日更新1.8.0版本" .. "|r\n"
-    update = update .. [[-在表格格子里按下Enter键时，不再下跳光标，而是取消光标]] .. "\n"
-    update = update .. [[-<赛季服>P2装备库添加了部分新装备，且旧版装备替换为新版装备]] .. "\n"
-    update = update .. [[-<赛季服>角色团本总览添加新团本诺莫瑞根]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月29日更新1.8.1c版本" .. "|r\n"
+    update = update .. [[-<赛季服>[遭劫货物]的鼠标提示工具，增加显示声望奖励最高可提升至哪个阶段]] .. "\n"
+    update = update .. [[-<赛季服>在专业技能制造面板和专业技能学习面板里，高亮与[遭劫货物]有关物品]] .. "\n"
+    update = update .. [[-<赛季服>更新[遭劫货物]的奖励金钱和所需材料数量]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "2月5日更新1.7.9c版本" .. "|r\n"
-    update = update .. [[-<赛季服>添加诺莫瑞根BOSS战ID，使P2的表格能正确生效]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月27日更新1.8.1b版本" .. "|r\n"
+    update = update .. [[-<赛季服>角色总览：增加<炼金转化CD>]] .. "\n"
+    update = update .. [[-<赛季服>现在CTRL+点击装备兑换物（例如：竭能胸甲）也可以跳转至装备库了]] .. "\n"
+    update = update .. [[-<赛季服>删除通报账单里的"金团"关键字]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "1月31日更新1.7.9b版本" .. "|r\n"
-    update = update .. [[-修复了繁体端关于一键举报功能的报错]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "1月27日更新1.7.9版本" .. "|r\n"
-    update = update .. [[-新增模块：举报记录（查看举报记录和追踪举报结果）]] .. "\n"
-    update = update .. [[-修复了导入心愿时，第10个及以上boss的心愿会导入错误的问题]] .. "\n"
-    update = update .. [[-<WLK>添加了海里昂的成就参考ID到密语模板里]] .. "\n"
-    update = update .. [[-<60服>不再自动记录NAXX小怪掉落的布甲等碎片]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月21日更新1.8.1版本" .. "|r\n"
+    update = update .. [[-举报记录：查询是否已被封号改为查询当前是否在线]] .. "\n"
+    update = update .. [[-举报记录：现在可以右键打开菜单复制其名字]] .. "\n"
+    update = update .. [[-一键举报：在战场时，现在可以右键对方头像/框体一键举报挂机]] .. "\n"
+    update = update .. [[-修复了可堆叠物品在记录进表格时，可能出现数量记录不正确的问题]] .. "\n"
+    update = update .. [[-<赛季服>新增功能：血月活动期间，自动施放尸体和对话自动复活（该功能默认关闭）]] .. "\n"
+    update = update .. [[-<赛季服>添加几件之前漏掉的P2团本掉落装备]] .. "\n"
+    update = update .. [[-<赛季服>装备库：添加P2的PVP军阶奖励装备]] .. "\n\n"
 
     -- update = update .. "|cff00FF00" .. "" .. "|r\n"
     -- update = update .. [[]] .. "\n"
@@ -49,31 +51,28 @@ end
 do --简体更新内容
     local update = "|cff00BFFF< 主要更新记录 >|r\n\n" .. update
 
-    update = update .. "|cff00FF00" .. "1月20日更新1.7.8版本" .. "|r\n"
-    update = update .. [[-装备库现在可以按其他进行排序]] .. "\n"
-    update = update .. [[-重做历史表格改名功能]] .. "\n"
-    update = update .. [[-修复一些文本错误]] .. "\n"
-    update = update .. [[-<赛季服>更新P2装备库]] .. "\n"
-    update = update .. [[-<赛季/60服>心愿清单的格子增加至5个]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月18日更新1.8.0d版本" .. "|r\n"
+    update = update .. [[-<赛季服>P2装备库：添加更多由专业制造的绿装]] .. "\n"
+    update = update .. [[-<赛季服>P2表格：尾王格子增加至10个]] .. "\n"
+    update = update .. [[-<赛季服>修复了进本不会自动清空P2表格的问题]] .. "\n"
+    update = update .. [[-<60服>40人团本不再记录世界掉落的蓝色品质装备]] .. "\n"
+    update = update .. [[-修复了装备过滤方案在更改顺序后，在下次载入时名称和图标错误的问题]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "1月16日更新1.7.7版本" .. "|r\n"
-    update = update .. [[-在心愿清单中增加<导出心愿>和<导入心愿>功能]] .. "\n"
-    update = update .. [[-表格设置增加选项<拍卖聊天记录总是保持在最新位置>]] .. "\n"
-    update = update .. [[-现在点击拍卖聊天记录框的玩家名字时，不再是密语，而是设置他为买家]] .. "\n"
-    update = update .. [[-查看在线人数改为手动刷新，避免可能出现掉线的情况]] .. "\n"
-    update = update .. [[-优化一键分配，现在会识别更多可交易的物品]] .. "\n"
-    update = update .. [[-<赛季服>增加灰谷周常完成总览]] .. "\n"
-    update = update .. [[-<60服>不再自动记录安其拉副本掉落的蓝色坐骑和雕像]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月15日更新1.8.0c版本" .. "|r\n"
+    update = update .. [[-集结号密语模板：活动的右键菜单里增加邀请按钮]] .. "\n"
+    update = update .. [[-<赛季服>更新P2团本掉落列表]] .. "\n"
+    update = update .. [[-<赛季服>P2表格里3号Boss跟4号位置调换]] .. "\n"
+    update = update .. [[-<赛季服>P2表格里尾王格子增加至8个（因为5号的装备可能会被记到尾王导致格子不够）]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "1月12日更新1.7.6版本" .. "|r\n"
-    update = update .. [[-新增显示联盟/部落当前在线人数]] .. "\n"
-    update = update .. [[-在查询名单列表界面中增加<全部举报>按钮（把当前名单里的全部玩家举报为自动脚本）]] .. "\n"
-    update = update .. [[-在查询名单列表界面中增加<历史搜索记录>]] .. "\n"
-    update = update .. [[-当交易自动记账后，如果你刚买到的装备是你的关注或心愿，则自动取消关注或取消心愿]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月13日更新1.8.0b版本" .. "|r\n"
+    update = update .. [[-装备库：现在CTRL+点击装备可以打开试衣间]] .. "\n"
+    update = update .. [[-<赛季服>更新P2遭劫货物声望奖励提示]] .. "\n"
+    update = update .. [[-<赛季服>装备库添加P2专业制造新紫装和团本任务奖励]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "1月10日更新1.7.5b版本" .. "|r\n"
-    update = update .. [[-买家下拉列表的格子增加至40个]] .. "\n"
-    update = update .. [[-<WLK>装备库现在会显示海里昂的装备]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "2月8日更新1.8.0版本" .. "|r\n"
+    update = update .. [[-在表格格子里按下Enter键时，不再下跳光标，而是取消光标]] .. "\n"
+    update = update .. [[-<赛季服>P2装备库添加了部分新装备，且旧版装备替换为新版装备]] .. "\n"
+    update = update .. [[-<赛季服>角色团本总览添加新团本诺莫瑞根]] .. "\n\n"
 
     ADDONSELF.updateText = update
 end
@@ -89,6 +88,43 @@ ADDONSELF.L = L
 local L = {}
 
 do
+    L["声望最高可提升至"] = true
+    L["(贸易局)"] = true
+
+
+    L["我"] = true
+    L["炼金术"] = true
+    L["炼金转化"] = true
+    L["裁缝洗布"] = true
+    L["裁缝"] = true
+    L["制皮筛盐"] = true
+    L["制皮"] = true
+    L["小时"] = true
+    L["分钟"] = true
+    L["秒"] = true
+    L["%s%s已就绪！"] = true
+
+
+    L["荆棘谷血月活动期间自动释放尸体和对话自动复活"] = true
+    L["挂机"] = true
+    L["一键举报挂机"] = true
+    L["当前在线"] = true
+    L["|cff00ff00查：|r查询该玩家当前是否在线，可辅助判断是否已被封号"] = true
+    L["（右键打开菜单，可以复制其名字）"] = true
+    L["在目标玩家/聊天频道玩家的右键菜单里增加一键举报脚本按钮。快捷命令：/BGReport。"] = true
+    L["在目标玩家/聊天频道玩家的右键菜单里增加一键举报RMT按钮。"] = true
+    L["在战场时，在目标玩家的右键菜单里增加一键举报挂机按钮。"] = true
+
+
+    L["（已举报%s次）"] = true
+    L["（曾举报%s次）"] = true
+
+    L["集结号活动的右键菜单里增加邀请按钮。"] = true
+
+    L["声望奖励"] = true
+    L["金钱奖励"] = true
+    L["|cff00BFFF由于该BOSS未有具体掉落列表，如果你想手动添加装备，可以使用以下方法：|r\n\n第一种：从背包把装备拖进表格\n\n第二种：先点击一个表格格子，然后SHIFT+点击聊天框/背包装备"] = true
+
     L["荆棘谷血月活动"] = true
     L["锻造"] = true
     L["制皮"] = true
@@ -231,7 +267,7 @@ do
     L["在贸易局声望的遭劫货物提示工具中增加具体的声望奖励"] = true
 
 
-    L["（SHIFT+左键发送装备，ALT+左键设为心愿装备。部位按钮支持使用滚轮切换）"] = true
+    L["（SHIFT+左键发送装备，ALT+左键设为心愿装备，CTRL+左键打开试衣间。部位按钮支持使用滚轮切换）"] = true
 
 
     L["击中"] = true
@@ -814,8 +850,6 @@ do
     L["|cffffffff< 小地图图标 >|r\n\n1、显示小地图图标"] = true
     L["小地图图标*"] = true
     L["人"] = true
-    L["删除角色"] = true
-    L["删除角色"] = true
     L["总览数据"] = true
     L["巫妖王之怒*"] = true
     L["燃烧的远征*"] = true
@@ -863,7 +897,6 @@ do
     L["< 角色货币总览 >"] = true
     L["金"] = true
     L["合计"] = true
-    L["删除角色"] = true
     L["总览数据"] = true
     L["你关注的装备开始拍卖了：%s（右键取消关注）"] = true
     L["已成功关注装备：%s。团长拍卖此装备时会提醒"] = true
@@ -990,7 +1023,7 @@ do
     L["频道：密语"] = true
     L["没有目标，无法通报"] = true
     L["————我的心愿————"] = true
-    L["——感谢使用金团表格——"] = true
+    L["——感谢使用BiaoGe插件——"] = true
     L["队伍"] = true
     L["公会"] = true
     L["团队"] = true
@@ -1036,7 +1069,7 @@ do
     L["< 支  出 >"] = true
     L["< 总  览 >"] = true
     L["< 工  资 >"] = true
-    L["———通报金团账单———"] = true
+    L["———通报账单———"] = true
     L["< 收 {rt1} 入 >"] = true
     L["< 支 {rt4} 出 >"] = true
     L["< 总 {rt3} 览 >"] = true
@@ -1072,6 +1105,7 @@ do
     L["欠"] = true
     L["人"] = true
     L["< 角色总览设置 >"] = true
+    L["删除某个角色"] = true
     L["删除角色"] = true
     L["巫妖王之怒"] = true
     L["燃烧的远征"] = true
@@ -1263,6 +1297,7 @@ do
 
         L["亡语者贾格巴"] = true
         L["主宰拉姆塔斯"] = true
+        L["刺鬃守卫"] = true
         L["暴怒的阿迦赛罗斯"] = true
         L["盲眼猎手"] = true
         L["卡尔加·刺肋"] = true
@@ -1275,6 +1310,7 @@ do
         L["驯犬者洛克希"] = true
         L["奥法师杜安"] = true
         L["赫洛德"] = true
+        L["法尔班克斯"] = true
         L["莫格莱尼"] = true
         L["怀特迈恩"] = true
         L["图特卡什"] = true

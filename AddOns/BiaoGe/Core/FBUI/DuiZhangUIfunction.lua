@@ -160,14 +160,17 @@ function BG.DuiZhangZhuangBeiUI(FB, t, b, bb, i, ii)
     button:SetScript("OnEnter", function(self)
         BG.DuiZhangFrameDs[FB .. 1]["boss" .. b]["ds" .. i]:Show()
         if not tonumber(self:GetText()) then
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
-            GameTooltip:ClearLines();
             local itemLink = button:GetText()
             local itemID = select(1, GetItemInfoInstant(itemLink))
             if itemID then
+                if BG.ButtonIsInRight(self) then
+                    GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
+                else
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+                end
+                GameTooltip:ClearLines()
                 GameTooltip:SetItemByID(itemID);
                 GameTooltip:Show()
-                -- BG.HistoryJine(FB,itemID)
             end
         end
     end)

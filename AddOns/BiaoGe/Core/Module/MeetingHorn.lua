@@ -378,6 +378,7 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
             GameTooltip:AddLine(L["按住SHIFT+点击密语时不会添加。"], 1, 0.82, 0, true)
             GameTooltip:AddLine(L["聊天频道玩家的右键菜单里增加密语模板按钮。"], 1, 0.82, 0, true)
             GameTooltip:AddLine(L["聊天输入框的右键菜单里增加密语模板按钮。"], 1, 0.82, 0, true)
+            GameTooltip:AddLine(L["集结号活动的右键菜单里增加邀请按钮。"], 1, 0.82, 0, true)
             GameTooltip:Show()
         end)
         BG.GameTooltip_Hide(bt)
@@ -816,7 +817,15 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
                                 end,
                             }
                         )
+                        local InviteUnit = InviteUnit or C_PartyInfo.InviteUnit
+                        tinsert(tbl, {
+                            text = INVITE,
+                            func = function()
+                                InviteUnit(activity:GetLeader())
+                            end,
+                        })
                     end
+
                     tinsert(tbl,
                         {
                             text = C_FriendList.IsIgnored(activity:GetLeader()) and IGNORE_REMOVE or IGNORE,
@@ -845,16 +854,6 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
                         local leader = activity:GetLeader()
                         local playerLocation = PlayerLocation:CreateFromGUID(activity.guid)
 
-                        --[[                         local chattype = "saorao"
-                        local mybuttontext = L["一键举报骚扰"]
-                        local tooltipText = format(L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"],
-                            REPORTING_MAJOR_CATEGORY_INAPPROPRIATE_COMMUNICATION,
-                            REPORTING_MINOR_CATEGORY_TEXT_CHAT .. " " ..
-                            REPORTING_MINOR_CATEGORY_SPAM .. " " ..
-                            REPORTING_MINOR_CATEGORY_ADVERTISEMENT,
-                            "恶意骚扰 惡意騷擾 Malicious harassment")
-                        tinsert(tbl, BG.AddReportButton(ReportType, chattype, leader, playerLocation, mybuttontext, tooltipText)) ]]
-
                         local chattype = "RMT"
                         local mybuttontext = L["一键举报RMT"]
                         local tooltipText = format(L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"],
@@ -866,6 +865,7 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
                             "RMT")
                         tinsert(tbl, BG.AddReportButton(ReportType, chattype, leader, playerLocation, mybuttontext, tooltipText))
 
+                        local chattype = "jiaoben"
                         local ReportType = Enum.ReportType.InWorld
                         local mybuttontext = L["一键举报脚本"]
                         local tooltipText = format(L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n快捷命令：/BGReport\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"],
@@ -1067,4 +1067,25 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
             return true
         end
     end
+
+    --[[     -- 把赛季服的团本人数改为10人
+    do
+        local Activity = MeetingHorn:GetClass('Activity')
+        function Activity:SetActivityId(id)
+            self.id = id
+            if BG.Sod_RaidTbl then
+                local data = ns.GetActivityData(id)
+                for i, fbID in ipairs(BG.Sod_RaidTbl) do
+                    if data.name == GetRealZoneText(fbID) then
+                    -- if data.name == "其它" then
+                        -- data.members = 2
+                        data.members = 10
+                        self.data = data
+                        return
+                    end
+                end
+            end
+            self.data = ns.GetActivityData(id)
+        end
+    end ]]
 end)

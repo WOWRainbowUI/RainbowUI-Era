@@ -39,7 +39,7 @@ local title_table = {
     { name = L["序号"], width = 35, color = "FFFFFF", JustifyH = "CENTER" },
     { name = L["等级"], width = 60, color = "FFFFFF", JustifyH = "CENTER" },
     { name = L["装备"], width = 180, color = "FFFFFF", JustifyH = "LEFT", type = "item" },
-    { name = L["获取途径"], width = 180, color = "FFFFFF", JustifyH = "LEFT" },
+    { name = L["获取途径"], width = 200, color = "FFFFFF", JustifyH = "LEFT" },
 }
 local width = 20
 for i, v in ipairs(title_table) do
@@ -49,7 +49,7 @@ BG.ItemLibFramewidth = width
 local maxhope
 
 -- 给获取途径排序
-local typeIDtbl = { "raid", "fb5", "quest", "T", "currency", "faction", "profession", "world", "worldboss", "pvp", }
+local typeIDtbl = { "raid", "fb5", "quest", "T", "currency", "faction", "profession", "world", "worldboss", "sod_pvp", "pvp", }
 local function GetTypeID(type)
     for i, v in ipairs(typeIDtbl) do
         if type == v then
@@ -131,6 +131,19 @@ local function GetFBtable() -- 对本阶段执行还是全阶段
         return { BG.FB1 }
     end
 end
+local function CheackExchangeItems(FB, itemID) -- 兑换物
+    for exitem, v in pairs(BG.Loot[FB].ExchangeItems) do
+        for _, _item in pairs(v) do
+            if itemID == _item then
+                local _, link = GetItemInfo(exitem)
+                if link then
+                    return " " .. link
+                end
+            end
+        end
+    end
+    return ""
+end
 local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重点
     local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID, bindType = GetItemInfo(itemID)
     if not link then return end
@@ -160,10 +173,14 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
                 bossname = L["小怪"]
             end
         end
+
+        -- 兑换物
+        local exchangeItems = CheackExchangeItems(FB, itemID)
+
         if BG.IsVanilla() then
-            get = color .. BG.GetFBinfo(FB, "localName") .. " " .. bossname .. AddPrice(itemID)
+            get = color .. BG.GetFBinfo(FB, "localName") .. " " .. bossname .. exchangeItems .. AddPrice(itemID)
         else
-            get = color .. FB .. " " .. hard .. " " .. bossname .. AddPrice(itemID)
+            get = color .. FB .. " " .. hard .. " " .. bossname .. exchangeItems .. AddPrice(itemID)
         end
 
         -- 团本正常掉落
@@ -233,13 +250,16 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             faction = ""
         end
 
+        -- 兑换物
+        local exchangeItems = CheackExchangeItems(FB, itemID)
+
         -- 是否职业任务
         if classID then
             local className, classFile = GetClassInfo(classID)
             local _, _, _, colorStr = GetClassColor(classFile)
-            get = "|cff" .. color .. FBname .. "|c" .. colorStr .. className .. BG.STC_y1(QUESTS_LABEL) .. RR .. AddPrice(itemID)
+            get = "|cff" .. color .. FBname .. "|c" .. colorStr .. className .. BG.STC_y1(QUESTS_LABEL) .. RR .. exchangeItems .. AddPrice(itemID)
         else
-            get = "|cff" .. color .. FBname .. BG.STC_y1(faction .. QUESTS_LABEL) .. RR .. AddPrice(itemID)
+            get = "|cff" .. color .. FBname .. BG.STC_y1(faction .. QUESTS_LABEL) .. RR .. exchangeItems .. AddPrice(itemID)
         end
 
         local a = {
@@ -313,6 +333,7 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             get = get,
             bindType = bindType,
             type = GetTypeID(type),
+            type2 = faction,
             haved = CheckHaved(itemID)
         }
         return a
@@ -339,6 +360,7 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             get = get,
             bindType = bindType,
             type = GetTypeID(type),
+            type2 = otherID,
             haved = CheckHaved(itemID)
         }
         return a
@@ -440,8 +462,8 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
         }
         return a
     elseif type == "sod_pvp" then -- 赛季服特殊PVP事件
-        local name = otherID
-        local get = "|cff" .. "FF6347" .. name .. RR .. AddPrice(itemID)
+        local name, count, icon = strsplit("-", otherID)
+        local get = "|cff" .. "FF6347" .. name .. RR .. " " .. count .. AddTexture(icon) .. RR .. AddPrice(itemID)
 
         local a = {
             itemID = itemID,
@@ -565,8 +587,8 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
             end
         end
         -- 赛季服特殊PVP事件
-        for i, itemID in ipairs(BG.Loot[FB].Sod_Pvp) do
-            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "sod_pvp", hard, ii, BG.Loot[FB].Sod_Pvp.get)
+        for itemID, currency in pairs(BG.Loot[FB].Sod_Pvp) do
+            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "sod_pvp", hard, ii, currency)
         end
     end
 
@@ -576,7 +598,7 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
         return count1 == count2
     end
 end
-local function SortItemLibTable(tbl, isnewsorter)
+local function SortItemLibTable(tbl, isnewsorter)        -- 排序
     sort(tbl, function(a, b)
         if BiaoGe.ItemLib.itemLibOrderButtonId == 2 then -- 按装等排序
             -- 装备等级
@@ -608,7 +630,7 @@ local function SortItemLibTable(tbl, isnewsorter)
                     return a[key] < b[key]
                 end
             end
-            -- 来源类型2（主要是5人本）
+            -- 来源类型2
             local key = "type2"
             if a[key] and b[key] then
                 if a[key] ~= b[key] then
@@ -656,7 +678,7 @@ local function SortItemLibTable(tbl, isnewsorter)
                     return a[key] < b[key]
                 end
             end
-            -- 来源类型2（主要是5人本）
+            -- 来源类型2
             local key = "type2"
             if a[key] and b[key] then
                 if a[key] ~= b[key] then
@@ -686,7 +708,7 @@ local function SortItemLibTable(tbl, isnewsorter)
                     end
                 end
             end
-            -- 来源类型2（主要是5人本）
+            -- 来源类型2
             local key = "type2"
             if a[key] and b[key] then
                 if a[key] ~= b[key] then
@@ -854,6 +876,8 @@ local function SetItemLib(num, itemtbale)
                 if IsShiftKeyDown() then
                     if AuctionatorShoppingFrame and AuctionatorShoppingFrame:IsVisible() then
                         ChatEdit_InsertLink(vv.link)
+                    elseif AuctionFrameBrowse and AuctionFrameBrowse:IsVisible() then
+                        ChatEdit_InsertLink(vv.link)
                     else
                         local f = GetCurrentKeyBoardFocus()
                         if not f then
@@ -882,6 +906,8 @@ local function SetItemLib(num, itemtbale)
                         end
                     end
                     UIErrorsFrame:AddMessage(L["不能设置为心愿，因为该BOSS的心愿格子已满"], RED_FONT_COLOR:GetRGB())
+                elseif IsControlKeyDown() then
+                    DressUpItemLink(vv.link)
                 end
             end)
 
@@ -889,13 +915,15 @@ local function SetItemLib(num, itemtbale)
                 if self.onenter and i ~= 3 then
                     BiaoGeFilterTooltip2:SetOwner(self, "ANCHOR_TOPRIGHT", 0, 0)
                     BiaoGeFilterTooltip2:ClearLines()
-                    BiaoGeFilterTooltip2:AddLine(self.onenter, 1, 1, 1, true)
+                    BiaoGeFilterTooltip2:AddLine(self.onenter, 1, 1, 1, false)
                     BiaoGeFilterTooltip2:Show()
                 end
                 local itemID = GetItemInfoInstant(vv.link)
-                GameTooltip:SetOwner(BG.ItemLibMainFrame["bg" .. num].tooltip, "ANCHOR_BOTTOMRIGHT", 0, 0)
-                -- GameTooltip:SetOwner(self, "ANCHOR_NONE")
-                -- GameTooltip:SetPoint("TOPLEFT", BG.ItemLibMainFrame["bg" .. num], "TOPRIGHT", 0, 0)
+                if BG.ButtonIsInRight(BG.MainFrame, 0.67) then
+                    GameTooltip:SetOwner(BG.ItemLibMainFrame["bg" .. num].tooltip2, "ANCHOR_BOTTOMLEFT", 0, 0)
+                else
+                    GameTooltip:SetOwner(BG.ItemLibMainFrame["bg" .. num].tooltip, "ANCHOR_BOTTOMRIGHT", 0, 0)
+                end
                 GameTooltip:ClearLines()
                 GameTooltip:SetItemByID(itemID)
                 GameTooltip:Show()
@@ -1342,7 +1370,7 @@ function BG.ItemLibUI()
         BiaoGe.ItemLib = {}
     end
     if not BiaoGe.ItemLib.itemLibOrderButtonId then
-        BiaoGe.ItemLib.itemLibOrderButtonId = 2
+        BiaoGe.ItemLib.itemLibOrderButtonId = 3
     end
     if not BiaoGe.ItemLib.itemLibOrder then
         BiaoGe.ItemLib.itemLibOrder = 1
@@ -1442,6 +1470,11 @@ function BG.ItemLibUI()
         _f:SetSize(1, 1)
         _f:SetPoint("TOPRIGHT", 0, 1)
         f.tooltip = _f
+
+        local _f = CreateFrame("Frame", nil, f)
+        _f:SetSize(1, 1)
+        _f:SetPoint("TOPLEFT", 0, 1)
+        f.tooltip2 = _f
 
         -- 标题
         local buttons = {}
@@ -1626,7 +1659,7 @@ function BG.ItemLibUI()
         })
         f:SetBackdropColor(0, 0, 0, 0.4)
         f:SetSize(width, BG.ItemLibMainFrame.bg1:GetHeight())
-        f:SetPoint("TOPLEFT", BG.ItemLibMainFrame.bg1, "TOPRIGHT", 50, 0)
+        f:SetPoint("TOPLEFT", BG.ItemLibMainFrame.bg1, "TOPRIGHT", 30, 0)
         BG.ItemLibMainFrame.Hope = f
 
         -- 头顶大标题
@@ -1774,13 +1807,23 @@ function BG.ItemLibUI()
                                 end
                                 ChatEdit_InsertLink(link)
                             end
+                        elseif IsControlKeyDown() then
+                            local itemID = GetItemInfoInstant(self:GetText())
+                            if itemID then
+                                local _, link = GetItemInfo(itemID)
+                                DressUpItemLink(link)
+                            end
                         end
                     end)
                     edit:SetScript("OnEnter", function(self)
                         local itemLink = self:GetText()
                         local itemID = GetItemInfoInstant(itemLink)
                         if itemID then
-                            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+                            if BG.ButtonIsInRight(self) then
+                                GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
+                            else
+                                GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+                            end
                             GameTooltip:ClearLines()
                             GameTooltip:SetItemByID(itemID)
                             GameTooltip:Show()

@@ -87,8 +87,7 @@ local function RGB_16(name, r, g, b)
     local c = r .. g .. b
 
     if name then
-        local cffname = "|cff" .. c .. name .. "|r"
-        return cffname
+        return "|cff" .. c .. name .. "|r"
     else
         return c
     end
@@ -406,6 +405,10 @@ end
 --[[
 BG.OnUpdateTime(function(self,elapsed)
     self.timeElapsed=self.timeElapsed+elapsed
+    if self.timeElapsed then
+        self:SetScript("OnUpdate",nil)
+        self:Hide()
+    end
 end)
  ]]
 ------------------设置按钮文本的宽度------------------
@@ -413,6 +416,12 @@ function BG.SetButtonStringWidth(bt)
     local t = bt:GetFontString()
     t:SetWidth(bt:GetWidth())
     t:SetWordWrap(false)
+end
+
+------------------按钮适应文本的宽度------------------
+function BG.SetButtonWidthForString(bt)
+    local t = bt:GetFontString()
+    bt:SetWidth(t:GetWidth())
 end
 
 ------------------菜单：点文本也能打开菜单------------------
@@ -490,15 +499,56 @@ function BG.DropDownListIsVisible(self)
     end
 end
 
+----------返回字符<BiaoGe>----------
 function BG.BG()
-    return BG.STC_b1("<BiaoGe>")
+    return BG.STC_b1("<BiaoGe> ")
 end
 
 ----------右键菜单切换开/关----------
 function BG.SetTextHighlightTexture(bt)
     local tex = bt:CreateTexture()
-    tex:SetPoint("CENTER")
-    tex:SetSize(bt:GetWidth() + 12, bt:GetHeight() - 10)
+    -- tex:SetPoint("CENTER")
+    -- tex:SetSize(bt:GetWidth() + 15, bt:GetHeight() - 10)
+    tex:SetPoint("TOPLEFT", bt, "TOPLEFT", -8, -5)
+    tex:SetPoint("BOTTOMRIGHT", bt, "BOTTOMRIGHT", 8, 5)
     tex:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Tab-Highlight")
     bt:SetHighlightTexture(tex)
+end
+
+----------鼠标/按钮是否在右边----------
+do
+    function BG.CursorIsInRight()
+        local uiScale = UIParent:GetEffectiveScale()
+        local w = floor(UIParent:GetRight())
+        local x, y = GetCursorPosition()
+        x, y = floor(x / uiScale), floor(y / uiScale)
+        if w * 0.67 < x then
+            return true
+        end
+    end
+
+    function BG.ButtonIsInRight(self, percent)
+        if not percent then percent = 0.6 end
+        if self:GetCenter() > UIParent:GetRight() * percent then
+            return true
+        end
+    end
+end
+
+----------把time转换为时或分----------
+function BG.SecondsToTime(second)
+    local h = floor(second / 3600)
+    if h >= 1 then
+        return h .. L["小时"]
+    end
+
+    local m = floor(second / 60)
+    if m >= 1 then
+        return m .. L["分钟"]
+    end
+
+    local s = floor(second)
+    if s then
+        return m .. L["秒"]
+    end
 end

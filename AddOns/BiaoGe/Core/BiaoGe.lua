@@ -284,6 +284,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
             BG.FBMainFrame:SetScript("OnShow", function(self)
                 local FB = BG.FB1
+                FrameHide(0)
                 for i, FB in ipairs(BG.FBtable) do
                     BG["Frame" .. FB]:Hide()
                 end
@@ -444,7 +445,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 t:SetPoint("LEFT", tt, "RIGHT", 0, 0)
                 t:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
                 -- t:SetTextColor(RGB(BG.dis))
-                t:SetText(L["（SHIFT+左键发送装备，ALT+左键设为心愿装备。部位按钮支持使用滚轮切换）"])
+                t:SetText(L["（SHIFT+左键发送装备，ALT+左键设为心愿装备，CTRL+左键打开试衣间。部位按钮支持使用滚轮切换）"])
             end
         end
         -- 对账
@@ -594,6 +595,11 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 t:SetFont(BIAOGE_TEXT_FONT, 14, "OUTLINE")
                 t:SetTextColor(RGB(BG.g2))
                 t:SetText(L["查看举报记录和追踪举报结果"])
+                local tt = t
+                local t = BG[name]:CreateFontString()
+                t:SetPoint("LEFT", tt, "RIGHT", 0, 0)
+                t:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
+                t:SetText(L["（右键打开菜单，可以复制其名字）"])
             end
         end
         -- 历史表格
@@ -1533,7 +1539,13 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     end
     ----------点击聊天添加装备----------
     do
-        hooksecurefunc("SetItemRef", function(link)
+        local cd
+        hooksecurefunc("ChatEdit_InsertLink", function(link)
+            if cd then return end
+            cd = true
+            BG.After(0.05, function()
+                cd = false
+            end)
             local item, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
             if not link then return end
             if BG.MainFrame:IsShown() and BG.lastfocuszhuangbei and BG.lastfocuszhuangbei:HasFocus() then
@@ -1549,6 +1561,10 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     end
                 end
             end
+        end)
+        hooksecurefunc("SetItemRef", function(link)
+            local item, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
+            if not link then return end
             if IsAltKeyDown() then
                 if BG.IsLeader then -- 开始拍卖
                     BG.StartAuction(link)
@@ -1800,28 +1816,9 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local function HilightBiaoGe(link)
             if BiaoGe.options["HighOnterItem"] ~= 1 then return end
             if not BG.FBMainFrame:IsVisible() then return end
-            if not GetItemID(link) then return end
-            local FB = BG.FB1
-            for b = 1, Maxb[FB], 1 do
-                for i = 1, Maxi[FB], 1 do
-                    local zb = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
-                    local jine = BG.Frame[FB]["boss" .. b]["jine" .. i]
-                    if zb then
-                        if GetItemID(link) == GetItemID(zb:GetText()) then
-                            local f = CreateFrame("Frame", nil, zb, "BackdropTemplate")
-                            f:SetBackdrop({
-                                edgeFile = "Interface/ChatFrame/ChatFrameBackground",
-                                edgeSize = 2,
-                            })
-                            f:SetBackdropBorderColor(1, 0, 0, 1)
-                            f:SetPoint("TOPLEFT", zb, "TOPLEFT", -4, -2)
-                            f:SetPoint("BOTTOMRIGHT", jine, "BOTTOMRIGHT", -2, 0)
-                            f:SetFrameLevel(112)
-                            tinsert(BG.LastBagItemFrame, f)
-                        end
-                    end
-                end
-            end
+            local itemID = GetItemID(link)
+            if not itemID then return end
+            BG.HilightBiaoGeSaveItems(BG.FB1, itemID)
         end
 
         local function NDuiOnEnter(self)
@@ -2038,6 +2035,89 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
         end)
     end
+    ----------血月活动期间自动释放尸体和对话自动复活----------
+    do
+        if BG.IsVanilla_Sod() then
+            local tbl = {
+                121411, -- 血月活动
+            }
+            BG.RegisterEvent("GOSSIP_SHOW", function(self, even)
+                if BiaoGe.options["xueyueAuto"] ~= 1 then return end
+                local info = C_GossipInfo.GetOptions()
+                for i, v in pairs(info) do
+                    for _, id in pairs(tbl) do
+                        if v.gossipOptionID == id then
+                            C_GossipInfo.SelectOption(v.gossipOptionID)
+                        end
+                    end
+                end
+            end)
+
+            local bt = CreateFrame("CheckButton", nil, UIParent, "ChatConfigCheckButtonTemplate")
+            bt:SetSize(30, 30)
+            bt.Text:SetText(BG.BG() .. L["荆棘谷血月活动期间自动释放尸体和对话自动复活"])
+            bt.Text:SetPoint("TOPLEFT", bt, "TOPRIGHT", 0, -5)
+            bt:SetHitRectInsets(0, 0, 0, 0)
+            bt.name = "xueyueAuto"
+            if BiaoGe.options["xueyueAuto"] == 1 then
+                bt:SetChecked(true)
+            else
+                bt:SetChecked(false)
+            end
+            bt:Hide()
+            bt:SetScript("OnShow", function(self)
+                if BiaoGe.options[self.name] == 1 then
+                    self:SetChecked(true)
+                else
+                    self:SetChecked(false)
+                end
+            end)
+            bt:SetScript("OnClick", function(self)
+                if self:GetChecked() then
+                    BiaoGe.options[self.name] = 1
+                else
+                    BiaoGe.options[self.name] = 0
+                end
+                PlaySound(BG.sound1, "Master")
+            end)
+
+            local wh = "DEATH"
+            -- local wh = "CONFIRM_DELETE_SELECTED_MACRO"
+            hooksecurefunc("StaticPopup_Show", function(whick)
+                -- pt("show", whick)
+                if whick == wh then
+                    local yes
+                    local i = 1
+                    while UnitAura("player", i) do
+                        local spellID = select(10, UnitAura("player", i))
+                        if spellID == 436097 then
+                            yes = true
+                            break
+                        end
+                        i = i + 1
+                    end
+                    if not yes then return end
+                    local _, dialog = StaticPopup_Visible(wh)
+                    if dialog then
+                        bt:ClearAllPoints()
+                        bt:SetPoint("TOPLEFT", dialog, "BOTTOMLEFT", 0, 0)
+                        bt.Text:SetWidth(StaticPopup1:GetWidth() - 50)
+                        bt:Show()
+                        if BiaoGe.options["xueyueAuto"] == 1 then
+                            dialog.button1:Click()
+                        end
+                    end
+                end
+            end)
+            hooksecurefunc("StaticPopup_Hide", function(whick)
+                if whick == wh then
+                    if bt then
+                        bt:Hide()
+                    end
+                end
+            end)
+        end
+    end
     ----------查询记录----------
     do
         BiaoGe.whoFrame = BiaoGe.whoFrame or {}
@@ -2204,25 +2284,26 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
 
         -- 自动清空表格
         do
-            BG.RegisterEvent("ZONE_CHANGED_NEW_AREA", function()
+            local f = CreateFrame("Frame")
+            f:RegisterEvent("ZONE_CHANGED")
+            f:RegisterEvent("ZONE_CHANGED_INDOORS")
+            f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+            f:SetScript("OnEvent", function(self, even, ...)
                 if BiaoGe.options["autoQingKong"] ~= 1 then return end
-
+                RequestRaidInfo()
                 BG.After(2, function()
+                    if not IsInInstance() then return end
                     local _, _, _, _, maxPlayers, _, _, instanceID = GetInstanceInfo()
-
                     local FB = BG.FBIDtable[instanceID]
                     if not FB then return end
-
-                    local havedCD
 
                     for i = 1, GetNumSavedInstances() do
                         local _, _, _, _, locked, _, _, _, _maxPlayers, _, _, _, _, _instanceID = GetSavedInstanceInfo(i)
                         if locked and (instanceID == _instanceID) and (maxPlayers == _maxPlayers) then
-                            havedCD = true
-                            break
+                            return
                         end
                     end
-                    if not havedCD and not BG.BiaoGeIsEmpty(FB, "onlyboss") then
+                    if not BG.BiaoGeIsEmpty(FB, "onlyboss") then
                         BG.ClickFBbutton(FB)
                         BG.SaveBiaoGe(FB)
                         local num = BG.QingKong("biaoge", FB)
@@ -2250,6 +2331,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 end
             end)
         end
+
         -- 清空心愿
         do
             local bt = CreateFrame("Button", nil, BG.HopeMainFrame, "UIPanelButtonTemplate")
@@ -2360,6 +2442,10 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end)
         end)
     end
+
+    -- C_Timer.After(1, function()
+    --     SendSystemMessage("|cff00BFFF" .. format(L["< BiaoGe > 金团表格载入成功。插件命令：%s或%s，小地图图标：%s"] .. RR, "/BiaoGe", "/GBG", L["星星"]))
+    -- end)
 end)
 
 ----------刷新团队成员信息----------

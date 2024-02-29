@@ -167,13 +167,14 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     f:RegisterEvent("ENCOUNTER_START")
     f:RegisterEvent("ENCOUNTER_END")
     f:SetScript("OnEvent", function(self, even, bossId, _, _, _, success)
+        -- pt(even, bossId, success)
         local FB = BG.FB2
         if not FB then return end
         if even == "ENCOUNTER_START" then
             start = true
-            for key, value in pairs(BG.Loot.encounterID[FB]) do
-                if bossId and tonumber(key) and (bossId == tonumber(key)) then
-                    numb = value
+            for _bossId, _numb in pairs(BG.Loot.encounterID[FB]) do
+                if bossId and (bossId == tonumber(_bossId)) then
+                    numb = _numb
                     lasttime = GetTime()
                     local text = BG.STC_g1(L["BOSS战开始"])
                     PrintLootBoss(FB, even, numb, text)
@@ -181,9 +182,9 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
         elseif even == "ENCOUNTER_END" and success == 1 then
-            for key, value in pairs(BG.Loot.encounterID[FB]) do
-                if bossId and tonumber(key) and (bossId == tonumber(key)) then
-                    numb = value
+            for _bossId, _numb in pairs(BG.Loot.encounterID[FB]) do
+                if bossId and (bossId == tonumber(_bossId)) then
+                    numb = _numb
                     lasttime = GetTime()
                     start = nil
                     local text = BG.STC_g1(L["BOSS击杀成功"])
@@ -215,7 +216,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     end)
 
     -- 记录物品进表格
-    local function AddLootItem(FB, numb, link, Texture, level, Hope)
+    local function AddLootItem(FB, numb, link, Texture, level, Hope, count)
         local itemID = GetItemInfoInstant(link)
         BG.Tooltip_SetItemByID(itemID)
 
@@ -226,12 +227,21 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 local zb1 = BG.Frame[FB]["boss" .. numb]["zhuangbei" .. (i + 1)]
                 local duizhangzb = BG.DuiZhangFrame[FB]["boss" .. numb]["zhuangbei" .. i]
                 if zb and zb:GetText() == "" then
-                    zb:SetText(link)
-                    duizhangzb:SetText(link)
-                    BiaoGe[FB]["boss" .. numb]["zhuangbei" .. i] = link
-                    BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
-                        format(L["已自动记入表格：%s%s(%s) => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
-                            level, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                    if count == 1 then
+                        zb:SetText(link)
+                        duizhangzb:SetText(link)
+                        BiaoGe[FB]["boss" .. numb]["zhuangbei" .. i] = link
+                        BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
+                            format(L["已自动记入表格：%s%s(%s) => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
+                                level, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                    else
+                        zb:SetText(link .. "x" .. count)
+                        duizhangzb:SetText(link .. "x" .. count)
+                        BiaoGe[FB]["boss" .. numb]["zhuangbei" .. i] = link .. "x" .. count
+                        BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
+                            format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
+                                level, count, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                    end
                     if Hope then
                         BiaoGe[FB]["boss" .. numb]["guanzhu" .. i] = true
                         BG.Frame[FB]["boss" .. numb]["guanzhu" .. i]:Show()
@@ -252,23 +262,23 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             end
         end)
     end
-    local function AddLootItem_stackCount(FB, numb, link, Texture, level, Hope)
+    local function AddLootItem_stackCount(FB, numb, link, Texture, level, Hope, count)
         local yes
         for b = 1, Maxb[FB] do
             for i = 1, Maxi[FB] do
-                local bt = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
-                if bt then
-                    if GetItemID(link) == GetItemID(bt:GetText()) then
-                        local count = tonumber(strmatch(bt:GetText(), "|h%[.*%]|h|r[*xX%s]-(%d+)")) or 1
-                        count = count + 1
-                        bt:SetText(link .. "x" .. count)
+                local zb = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+                local duizhangzb = BG.DuiZhangFrame[FB]["boss" .. b]["zhuangbei" .. i]
+                if zb then
+                    if GetItemID(link) == GetItemID(zb:GetText()) then
+                        count = count + (tonumber(strmatch(zb:GetText(), "|h%[.*%]|h|r[*xX%s]-(%d+)")) or 1)
+                        zb:SetText(link .. "x" .. count)
+                        duizhangzb:SetText(link .. "x" .. count)
                         BiaoGe[FB]["boss" .. b]["zhuangbei" .. i] = link .. "x" .. count
 
                         local icon = BG.LootFilterClassItem(link)
                         BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
                             format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
                                 level, count, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"], RR) .. icon)
-
                         return
                     end
                 end
@@ -277,7 +287,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         -- 如果表格里没这个物品，则记录到杂项里
         if not yes then
             local numb = Maxb[FB] - 1
-            AddLootItem(FB, numb, link, Texture, level, Hope)
+            AddLootItem(FB, numb, link, Texture, level, Hope, count)
         end
     end
 
@@ -349,14 +359,11 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
             if not Iswhitelist then
-                if BG.IsVanilla() then
-                    if quality < 3 then -- 过滤品质低于蓝色的装备
-                        return
-                    end
-                else
-                    if quality < 4 then -- 过滤品质低于紫色的装备
-                        return
-                    end
+                if quality < BG.lootQuality[FB] then
+                    return
+                end
+
+                if not BG.IsVanilla() then
                     if typeID == 9 or typeID == 10 or typeID == 3 then -- 过滤图纸、牌子、宝石
                         return
                     end
@@ -424,7 +431,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
 
         -- 可堆叠物品记录到杂项
         if stackCount ~= 1 then
-            AddLootItem_stackCount(FB, numb, link, Texture, level, Hope)
+            AddLootItem_stackCount(FB, numb, link, Texture, level, Hope, count)
             return
         end
 
@@ -432,13 +439,13 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         if BG.IsVanilla() then
             if typeID == 9 or typeID == 10 or typeID == 3 then
                 local numb = Maxb[FB] - 1
-                AddLootItem(FB, numb, link, Texture, level, Hope)
+                AddLootItem(FB, numb, link, Texture, level, Hope, count)
                 return
             end
             -- 安其拉徽记和武器记录到杂项
             if itemID == 21237 or itemID == 21232 then
                 local numb = Maxb[FB] - 1
-                AddLootItem(FB, numb, link, Texture, level, Hope)
+                AddLootItem(FB, numb, link, Texture, level, Hope, count)
                 return
             end
         end
@@ -456,7 +463,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 for index, value in ipairs(BG.Loot.TOC[H].boss6) do
                     if itemID == value then
                         local numb = 6
-                        AddLootItem(FB, numb, link, Texture, level, Hope)
+                        AddLootItem(FB, numb, link, Texture, level, Hope, count)
                         return
                     end
                 end
@@ -465,7 +472,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         -- 北伐奖章记录到杂项
         if itemID == 47242 then
             local numb = Maxb[FB] - 1
-            AddLootItem(FB, numb, link, Texture, level, Hope)
+            AddLootItem(FB, numb, link, Texture, level, Hope, count)
             return
         end
 
@@ -474,7 +481,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             for key, value in pairs(BG.Loot.ICC.H25.boss14) do
                 if itemID == value then
                     local numb = Maxb[FB] - 1
-                    AddLootItem(FB, numb, link, Texture, level, Hope)
+                    AddLootItem(FB, numb, link, Texture, level, Hope, count)
                     return
                 end
             end
@@ -485,7 +492,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             numb = Maxb[FB] - 1 -- 第一个boss前的小怪设为杂项
         end
 
-        AddLootItem(FB, numb, link, Texture, level, Hope)
+        AddLootItem(FB, numb, link, Texture, level, Hope, count)
         return
     end)
 end)

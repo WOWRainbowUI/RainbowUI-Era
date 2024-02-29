@@ -80,7 +80,6 @@ function BG.YongShiUI(lastbt)
                     SendChatMessage(text, "RAID")
                 end
             end
-            SendChatMessage(L["——感谢使用金团表格——"], "RAID")
             PlaySoundFile(BG.sound2, "Master")
         end
     end)

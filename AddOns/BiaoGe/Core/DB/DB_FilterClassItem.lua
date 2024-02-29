@@ -4,9 +4,6 @@ local L = ADDONSELF.L
 
 local pt = print
 
-local LibBG = LibStub:GetLibrary("LibUIDropDownMenu-4.0") -- 调用库菜单UI
-ADDONSELF.LibBG = LibBG
-
 local RealmId = GetRealmID()
 local player = UnitName("player")
 local _, class = UnitClass("player")
@@ -87,8 +84,10 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     }
 
     for i = 1, MaxFilter[class] do
-        BiaoGe.FilterClassItemDB[RealmId][player][i].Icon = BG.FilterClassItemDB.Icon[class .. i].icon
-        BiaoGe.FilterClassItemDB[RealmId][player][i].Name = BG.FilterClassItemDB.Icon[class .. i].name
+        if not BiaoGe.FilterClassItemDB[RealmId][player][i].Icon then
+            BiaoGe.FilterClassItemDB[RealmId][player][i].Icon = BG.FilterClassItemDB.Icon[class .. i].icon
+            BiaoGe.FilterClassItemDB[RealmId][player][i].Name = BG.FilterClassItemDB.Icon[class .. i].name
+        end
     end
 
     BG.FilterClassItemDB.NewIcon = {
@@ -152,12 +151,12 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             { name = "击中时可能", value = ITEM_SPELL_TRIGGER_ONPROC },
             { name = "物理命中", value = L["你击中目标"] },
             { name = "物理暴击", value = L["你造成爆击"] },
-            { name = "法术命中", value = L["你的法术击中"] },
-            { name = "法术暴击", value = L["你的法术造成爆击"] },
-            { name = "法术伤害", value = STAT_SPELLDAMAGE },
-            { name = "法术强度", value = L["所有法术和魔法效果所造成的伤害和治疗效果"] },
-            { name = "特定法术强度", value = L["法术和效果所造成的伤害"] },
-            { name = "治疗强度", value = L["法术所造成的治疗效果"] },
+            { name = "法术命中", value = L["你的法术击中"], nothave = { ITEM_SPELL_TRIGGER_ONPROC } },
+            { name = "法术暴击", value = L["你的法术造成爆击"], nothave = { ITEM_SPELL_TRIGGER_ONPROC } },
+            { name = "法术伤害", value = STAT_SPELLDAMAGE, nothave = { ITEM_SPELL_TRIGGER_ONPROC } },
+            { name = "法术强度", value = L["所有法术和魔法效果所造成的伤害和治疗效果"], nothave = { ITEM_SPELL_TRIGGER_ONPROC } },
+            { name = "特定法术强度", value = L["法术和效果所造成的伤害"], nothave = { ITEM_SPELL_TRIGGER_ONPROC } },
+            { name = "治疗强度", value = L["法术所造成的治疗效果"], nothave = { ITEM_SPELL_TRIGGER_ONPROC } },
         }
 
         local t1 = { "5回法力值", "法术强度", "特定法术强度", "治疗强度", "法术命中", "法术暴击", "法术伤害", } -- FZ, FQ
