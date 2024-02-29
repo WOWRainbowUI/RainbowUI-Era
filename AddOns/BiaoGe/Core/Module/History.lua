@@ -84,6 +84,7 @@ function BG.HistoryUI()
         bt:SetNormalFontObject(BG.FontGreen15)
         bt:SetDisabledFontObject(BG.FontDis15)
         bt:SetHighlightFontObject(BG.FontWhite15)
+        BG.SetTextHighlightTexture(bt)
         BG.History.HistoryButton = bt
         BG.UpdateHistoryButton()
         -- 单击触发
@@ -159,6 +160,7 @@ function BG.HistoryUI()
         bt:SetHighlightFontObject(BG.FontWhite15)
         bt:SetText(L["保存表格"])
         bt:SetSize(bt:GetFontString():GetWidth(), 30)
+        BG.SetTextHighlightTexture(bt)
         BG.History.SaveButton = bt
 
         bt:SetScript("OnEnter", function(self)
@@ -191,6 +193,7 @@ function BG.HistoryUI()
         bt:SetHighlightFontObject(BG.FontWhite15)
         bt:SetText(L["分享表格"])
         bt:SetSize(bt:GetFontString():GetWidth(), 30)
+        BG.SetTextHighlightTexture(bt)
         BG.History.SendButton = bt
 
         bt:SetScript("OnEnter", function(self)
@@ -272,6 +275,7 @@ function BG.HistoryUI()
         bt:SetHighlightFontObject(BG.FontWhite15)
         bt:SetText(L["导出表格"])
         bt:SetSize(bt:GetFontString():GetWidth(), 30)
+        BG.SetTextHighlightTexture(bt)
         BG.History.DaoChuButton = bt
 
         bt:SetScript("OnEnter", function(self)
@@ -381,6 +385,7 @@ function BG.HistoryUI()
         bt:SetHighlightFontObject(BG.FontWhite15)
         bt:SetText(L["应用表格"])
         bt:SetSize(bt:GetFontString():GetWidth(), 30)
+        BG.SetTextHighlightTexture(bt)
         BG.History.YongButton = bt
 
         bt:SetScript("OnEnter", function(self)
@@ -427,6 +432,7 @@ function BG.HistoryUI()
         bt:SetHighlightFontObject(BG.FontWhite15)
         bt:SetText(L["返回表格"])
         bt:SetSize(bt:GetFontString():GetWidth(), 30)
+        BG.SetTextHighlightTexture(bt)
         BG.History.EscButton = bt
 
         bt:SetScript("OnClick", function(self)
@@ -499,7 +505,7 @@ function BG.HistoryUI()
                 for i, v in ipairs(BiaoGe.HistoryList[FB]) do
                     if i ~= BG.History.GaiMingNum then
                         if v[2] == text then
-                            SendSystemMessage(BG.BG() .. " " .. BG.STC_r1(L["不能使用该名字，因为跟其他历史表格重名！"]))
+                            SendSystemMessage(BG.BG() .. BG.STC_r1(L["不能使用该名字，因为跟其他历史表格重名！"]))
                             return
                         end
                     end

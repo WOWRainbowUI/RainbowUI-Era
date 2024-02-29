@@ -214,7 +214,7 @@ function BG.HopeUI(FB)
                         if IsControlKeyDown() then
                             if self:GetText() ~= "" then
                                 self:SetEnabled(false)
-                                BG.TurntoItemLib(self)
+                                BG.GoToItemLib(self)
                             end
                             return
                         end
@@ -246,14 +246,17 @@ function BG.HopeUI(FB)
                     bt:SetScript("OnEnter", function(self)
                         BG.HopeFrameDs[FB .. 1]["nandu" .. n]["boss" .. b]["ds" .. i]:Show()
                         if not tonumber(self:GetText()) then
-                            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
-                            GameTooltip:ClearLines()
                             local itemLink = bt:GetText()
                             local itemID = select(1, GetItemInfoInstant(itemLink))
                             if itemID then
+                                if BG.ButtonIsInRight(self) then
+                                    GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
+                                else
+                                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+                                end
+                                GameTooltip:ClearLines()
                                 GameTooltip:SetItemByID(itemID)
                                 GameTooltip:Show()
-                                -- BG.HistoryJine(FB, itemID)
                                 local h = { FB, itemID }
                                 BG.HistoryJine(unpack(h))
                                 BG.HistoryMOD = h

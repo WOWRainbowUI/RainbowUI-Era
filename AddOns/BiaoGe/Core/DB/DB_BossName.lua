@@ -36,8 +36,8 @@ if BG.IsVanilla_Sod() then
     local boss = {
         { name = L["格\n鲁\n比\n斯"], color = "CB7F00" },
         { name = L["粘\n性\n辐\n射\n尘"], color = "90EE90" },
-        { name = L["电\n刑\n器\n6\n0\n0\n0\n型"], color = "9C98FF" },
         { name = L["群\n体\n打\n击\n者"], color = "FF6168" },
+        { name = L["电\n刑\n器\n6\n0\n0\n0\n型"], color = "9C98FF" },
         { name = L["机\n械\n动\n物\n园"], color = "A5A5A5" },
         { name = L["瑟\n玛\n普\n拉\n格"], color = "00BFFF" },
         { name = L["杂\n\n项"], color = "ffffff" },

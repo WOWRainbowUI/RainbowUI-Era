@@ -1044,15 +1044,16 @@ local function OptionsUI()
 
     -- 角色总览设置
     do
-        local function CreateFBCDbutton(FBCDall_table, n1, n2, width, height, width2, height_jiange)
+        local function CreateFBCDbutton(n1, n2, width, height, width2, height_jiange)
             local right
             local first
             for i = n1, n2 do
-                local name = FBCDall_table[i].name
-                local color = FBCDall_table[i].color
-                local fbId = FBCDall_table[i].fbId
-                local questID = FBCDall_table[i].questID
-                local maxplayers = FBCDall_table[i].num and (FBCDall_table[i].num .. L["人"]) or ""
+                local name = BG.FBCDall_table[i].name
+                local name2 = BG.FBCDall_table[i].name2
+                local color = BG.FBCDall_table[i].color
+                local fbId = BG.FBCDall_table[i].fbId
+                local type = BG.FBCDall_table[i].type
+                local maxplayers = BG.FBCDall_table[i].num and (BG.FBCDall_table[i].num .. L["人"]) or ""
 
                 local bt = CreateFrame("CheckButton", nil, roleOverview, "ChatConfigCheckButtonTemplate")
                 bt:SetSize(25, 25)
@@ -1068,8 +1069,8 @@ local function OptionsUI()
                     height = height - height_jiange
                 end
                 right = bt
-                if questID then
-                    bt.Text:SetText("|cff" .. color .. FBCDall_table[i].name2 .. RR)
+                if type ~= "fb" then
+                    bt.Text:SetText("|cff" .. color .. name2 .. RR)
                 else
                     bt.Text:SetText("|cff" .. color .. name .. RR)
                 end
@@ -1096,7 +1097,7 @@ local function OptionsUI()
                 -- 鼠标悬停提示
                 bt:SetScript("OnEnter", function(self)
                     local text = "|cff" .. color .. maxplayers .. GetRealZoneText(fbId) .. RR
-                    if questID then
+                    if type ~= "fb" then
                         text = self.Text:GetText()
                     end
                     GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
@@ -1109,14 +1110,14 @@ local function OptionsUI()
             end
             return height
         end
-        local function CreateMONEYbutton(MONEYall_table, n1, n2, width, height, width2, height_jiange)
+        local function CreateMONEYbutton(n1, n2, width, height, width2, height_jiange)
             local right
             local first
             for i = n1, n2 do
-                local name = MONEYall_table[i].name
-                local tex = MONEYall_table[i].tex
-                local color = MONEYall_table[i].color
-                local id = MONEYall_table[i].id
+                local name = BG.MONEYall_table[i].name
+                local tex = BG.MONEYall_table[i].tex
+                local color = BG.MONEYall_table[i].color
+                local id = BG.MONEYall_table[i].id
 
                 local bt = CreateFrame("CheckButton", nil, roleOverview, "ChatConfigCheckButtonTemplate")
                 bt:SetSize(25, 25)
@@ -1168,12 +1169,13 @@ local function OptionsUI()
 
         -- 删除按钮
         local bt = CreateFrame("Button", nil, roleOverview)
-        bt:SetSize(70, 22)
+        bt:SetHeight(22)
         bt:SetPoint("TOPRIGHT", BG.optionsBackground, -30, -15)
         bt:SetNormalFontObject(BG.FontRed15)
         bt:SetDisabledFontObject(BG.FontDis15)
         bt:SetHighlightFontObject(BG.FontWhite15)
-        bt:SetText(L["删除角色"])
+        bt:SetText(L["删除某个角色"])
+        BG.SetButtonWidthForString(bt)
         local dropDown = LibBG:Create_UIDropDownMenu(nil, roleOverview)
         LibBG:UIDropDownMenu_SetAnchor(dropDown, 0, 0, "TOPLEFT", bt, "TOPRIGHT")
         bt:SetScript("OnMouseUp", function(self)
@@ -1210,6 +1212,10 @@ local function OptionsUI()
                                     BiaoGe.Money[RealmId][p] = nil
                                     BiaoGe.FBCD[RealmId][p] = nil
                                     BiaoGe.PlayerItemsLevel[RealmId][p] = nil
+                                    BiaoGe.QuestCD[RealmId][p] = nil
+                                    if BiaoGe.tradeSkillCooldown and BiaoGe.tradeSkillCooldown[RealmId] then
+                                        BiaoGe.tradeSkillCooldown[RealmId][p] = nil
+                                    end
                                     for i = #BG.PlayerItemsLevel, 1, -1 do
                                         if BG.PlayerItemsLevel[i].player == p then
                                             tremove(BG.PlayerItemsLevel, i)
@@ -1256,15 +1262,25 @@ local function OptionsUI()
                 text:SetText(BG.STC_b1(L["团本*"]))
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 1, #BG.FBCDall_table - 1, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(1, #BG.FBCDall_table - 2, width, height, 100, height_jiange)
 
+                -- 任务
                 height = height - height_jiange - height_jiange
                 local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
                 text:SetPoint("TOPLEFT", width, height)
                 text:SetText("|cffFF8C00" .. (QUESTS_LABEL .. "*") .. RR)
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, #BG.FBCDall_table, #BG.FBCDall_table, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(#BG.FBCDall_table - 1, #BG.FBCDall_table - 1, width, height, 100, height_jiange)
+
+                -- 专业
+                height = height - height_jiange - height_jiange
+                local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+                text:SetPoint("TOPLEFT", width, height)
+                text:SetText("|cffADFF2F" .. (TRADE_SKILLS .. "*") .. RR)
+                height = height - height_jiange
+                O.CreateLine(roleOverview, height + line_height)
+                height = CreateFBCDbutton(#BG.FBCDall_table, #BG.FBCDall_table, width, height, 100, height_jiange)
 
                 -- 货币
                 height = height - height_jiange - height_jiange
@@ -1274,7 +1290,7 @@ local function OptionsUI()
                 height = height - height_jiange
                 local l = O.CreateLine(roleOverview, height + line_height)
 
-                height = CreateMONEYbutton(BG.MONEYall_table, 1, #BG.MONEYall_table, width, height, 65, height_jiange)
+                height = CreateMONEYbutton(1, #BG.MONEYall_table, width, height, 65, height_jiange)
                 height = height - height_jiange
             elseif BG.IsVanilla_60() then
                 --团本CD
@@ -1283,7 +1299,7 @@ local function OptionsUI()
                 text:SetText(BG.STC_b1(L["团本*"]))
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 1, #BG.FBCDall_table, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(1, #BG.FBCDall_table, width, height, 100, height_jiange)
 
                 -- 货币
                 height = height - height_jiange - height_jiange
@@ -1293,7 +1309,7 @@ local function OptionsUI()
                 height = height - height_jiange
                 local l = O.CreateLine(roleOverview, height + line_height)
 
-                height = CreateMONEYbutton(BG.MONEYall_table, 1, #BG.MONEYall_table, width, height, 65, height_jiange)
+                height = CreateMONEYbutton(1, #BG.MONEYall_table, width, height, 65, height_jiange)
                 height = height - height_jiange
             else
                 --团本CD
@@ -1302,7 +1318,7 @@ local function OptionsUI()
                 text:SetText(BG.STC_b1(L["巫妖王之怒*"]))
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 1, 18, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(1, 18, width, height, 100, height_jiange)
 
                 height = height - height_jiange - height_jiange
                 local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -1310,7 +1326,7 @@ local function OptionsUI()
                 text:SetText(BG.STC_r3(L["燃烧的远征*"]))
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 19, 27, width, height, 65, height_jiange)
+                height = CreateFBCDbutton(19, 27, width, height, 65, height_jiange)
 
                 height = height - height_jiange - height_jiange
                 local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -1318,7 +1334,7 @@ local function OptionsUI()
                 text:SetText(BG.STC_g2(L["经典旧世*"]))
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 28, 32, width, height, 65, height_jiange)
+                height = CreateFBCDbutton(28, 32, width, height, 65, height_jiange)
 
                 height = height - height_jiange - height_jiange
                 local text = roleOverview:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -1326,7 +1342,7 @@ local function OptionsUI()
                 text:SetText("|cffFF8C00" .. (QUESTS_LABEL .. "*") .. RR)
                 height = height - height_jiange
                 O.CreateLine(roleOverview, height + line_height)
-                height = CreateFBCDbutton(BG.FBCDall_table, 33, #BG.FBCDall_table, width, height, 100, height_jiange)
+                height = CreateFBCDbutton(33, #BG.FBCDall_table, width, height, 100, height_jiange)
 
                 -- 货币
                 height = height - height_jiange - height_jiange
@@ -1336,7 +1352,7 @@ local function OptionsUI()
                 height = height - height_jiange
                 local l = O.CreateLine(roleOverview, height + line_height)
 
-                height = CreateMONEYbutton(BG.MONEYall_table, 1, #BG.MONEYall_table, width, height, 65, height_jiange)
+                height = CreateMONEYbutton(1, #BG.MONEYall_table, width, height, 65, height_jiange)
                 height = height - height_jiange * 3
 
                 -- 5人本完成总览
@@ -1460,22 +1476,20 @@ local function OptionsUI()
             -- 贸易局
             if BG.IsVanilla_Sod() then
                 h = h + 30
-                do
-                    local name = "commerceAuthorityTooltip"
-                    BG.options[name .. "reset"] = 1
-                    if not BiaoGe.options[name] then
-                        BiaoGe.options[name] = BG.options[name .. "reset"]
-                    end
-                    local ontext = {
-                        L["贸易局的遭劫货物显示具体声望奖励"],
-                        L["在贸易局声望的遭劫货物提示工具中增加具体的声望奖励。如果你安装了Auctionator插件，还会显示所需货物的拍卖行价格。"],
-                    }
 
-                    local f = O.CreateCheckButton(name, L["贸易局的遭劫货物显示具体声望奖励"] .. "*", others, 15, height - h, ontext)
-                    BG.options["button" .. name] = f
+                local name = "commerceAuthorityTooltip"
+                BG.options[name .. "reset"] = 1
+                if not BiaoGe.options[name] then
+                    BiaoGe.options[name] = BG.options[name .. "reset"]
                 end
-            end
+                local ontext = {
+                    L["贸易局的遭劫货物显示具体声望奖励"],
+                    L["在贸易局声望的遭劫货物提示工具中增加具体的声望奖励。如果你安装了Auctionator插件，还会显示所需货物的拍卖行价格。"],
+                }
 
+                local f = O.CreateCheckButton(name, L["贸易局的遭劫货物显示具体声望奖励"] .. "*", others, 15, height - h, ontext)
+                BG.options["button" .. name] = f
+            end
             -- 一键举报脚本
             do
                 h = h + 30
@@ -1487,8 +1501,9 @@ local function OptionsUI()
                 end
                 local ontext = {
                     L["一键举报"],
-                    L["在目标玩家的右键菜单里增加一键举报脚本按钮。快捷命令：/BGReport。"],
-                    L["在聊天频道的玩家右键菜单里增加一键举报骚扰和一键举报RMT按钮。"],
+                    L["在目标玩家/聊天频道玩家的右键菜单里增加一键举报脚本按钮。快捷命令：/BGReport。"],
+                    L["在目标玩家/聊天频道玩家的右键菜单里增加一键举报RMT按钮。"],
+                    L["在战场时，在目标玩家的右键菜单里增加一键举报挂机按钮。"],
                     L["在查询名单列表界面中增加全部举报按钮。"],
                 }
                 local f = O.CreateCheckButton(name, L["一键举报"] .. "*", others, 15, height - h, ontext)
@@ -1510,6 +1525,29 @@ local function OptionsUI()
                 local f = O.CreateCheckButton(name, L["查询记录"] .. "*", others, 15, height - h, ontext)
                 BG.options["button" .. name] = f
             end
+            -- 血月活动期间自动释放尸体和自动对话复活
+            if BG.IsVanilla_Sod() then
+                h = h + 30
+
+                local name = "xueyueAuto"
+                BG.options[name .. "reset"] = 0
+                if not BiaoGe.options[name] then
+                    BiaoGe.options[name] = BG.options[name .. "reset"]
+                end
+                local ontext = {
+                    L["荆棘谷血月活动期间自动释放尸体和对话自动复活"],
+                }
+                local f = O.CreateCheckButton(name, L["荆棘谷血月活动期间自动释放尸体和对话自动复活"] .. "*", others, 15, height - h, ontext)
+                BG.options["button" .. name] = f
+                f:SetScript("OnShow", function(self)
+                    if BiaoGe.options[name] == 1 then
+                        self:SetChecked(true)
+                    else
+                        self:SetChecked(false)
+                    end
+                end)
+            end
+
             h = h + 45
         end
 
@@ -1628,6 +1666,7 @@ local function OptionsUI()
                         L["按住SHIFT+点击密语时不会添加。"],
                         L["聊天频道玩家的右键菜单里增加密语模板按钮。"],
                         L["聊天输入框的右键菜单里增加密语模板按钮。"],
+                        L["集结号活动的右键菜单里增加邀请按钮。"],
                     }
                 else
                     ontext = {
@@ -1636,6 +1675,7 @@ local function OptionsUI()
                         L["按住SHIFT+点击密语时不会添加。"],
                         L["聊天频道玩家的右键菜单里增加密语模板按钮。"],
                         L["聊天输入框的右键菜单里增加密语模板按钮。"],
+                        L["集结号活动的右键菜单里增加邀请按钮。"],
                     }
                 end
 
@@ -1750,6 +1790,7 @@ local function OptionsUI()
                             L["按住SHIFT+点击密语时不会添加。"],
                             L["聊天频道玩家的右键菜单里增加密语模板按钮。"],
                             L["聊天输入框的右键菜单里增加密语模板按钮。"],
+                            L["集结号活动的右键菜单里增加邀请按钮。"],
                         }
                     else
                         ontext = {
@@ -1758,6 +1799,7 @@ local function OptionsUI()
                             L["按住SHIFT+点击密语时不会添加。"],
                             L["聊天频道玩家的右键菜单里增加密语模板按钮。"],
                             L["聊天输入框的右键菜单里增加密语模板按钮。"],
+                            L["集结号活动的右键菜单里增加邀请按钮。"],
                         }
                     end
 

@@ -71,6 +71,36 @@ local function SumGZ()
 end
 BG.SumGZ = SumGZ
 
+local function HilightBiaoGeSaveItems(FB, itemID)
+    local tbl = {}
+    for b = 1, Maxb[FB], 1 do
+        for i = 1, Maxi[FB], 1 do
+            local zb = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+            local jine = BG.Frame[FB]["boss" .. b]["jine" .. i]
+            if zb then
+                if itemID == GetItemID(zb:GetText()) then
+                    tinsert(tbl, { zb = zb, jine = jine })
+                end
+            end
+        end
+    end
+    if #tbl > 1 then
+        for i, v in ipairs(tbl) do
+            local f = CreateFrame("Frame", nil, v.zb, "BackdropTemplate")
+            f:SetBackdrop({
+                edgeFile = "Interface/ChatFrame/ChatFrameBackground",
+                edgeSize = 2,
+            })
+            f:SetBackdropBorderColor(1, 0, 0, 1)
+            f:SetPoint("TOPLEFT", v.zb, "TOPLEFT", -4, -2)
+            f:SetPoint("BOTTOMRIGHT", v.jine, "BOTTOMRIGHT", -2, 0)
+            f:SetFrameLevel(112)
+            tinsert(BG.LastBagItemFrame, f)
+        end
+    end
+    tbl = nil
+end
+
 ------------------标题------------------
 function BG.FBBiaoTiUI(FB, t, b, bb, i, ii)
     local fontsize = 15
@@ -268,7 +298,7 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
         if IsControlKeyDown() then
             if self:GetText() ~= "" then
                 self:SetEnabled(false)
-                BG.TurntoItemLib(self)
+                BG.GoToItemLib(self)
             end
             return
         end
@@ -280,6 +310,9 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
                 self:SetText(itemLink)
                 self:ClearFocus()
                 ClearCursor()
+                if BG.FrameZhuangbeiList then
+                    BG.FrameZhuangbeiList:Hide()
+                end
                 return
             end
         end
@@ -294,16 +327,22 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
     bt:SetScript("OnEnter", function(self)
         BG.FrameDs[FB .. 1]["boss" .. BossNum(FB, b, t)]["ds" .. i]:Show()
         if not tonumber(self:GetText()) then
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
-            GameTooltip:ClearLines()
             local itemLink = bt:GetText()
             local itemID = select(1, GetItemInfoInstant(itemLink))
             if itemID then
+                if BG.ButtonIsInRight(self) then
+                    GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
+                else
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+                end
+                GameTooltip:ClearLines()
                 GameTooltip:SetItemByID(itemID)
                 GameTooltip:Show()
                 local h = { FB, itemID, true, BG.Frame[FB]["boss" .. BossNum(FB, b, t)]["jine" .. i]:GetText() }
                 BG.HistoryJine(unpack(h))
                 BG.HistoryMOD = h
+
+                HilightBiaoGeSaveItems(FB, itemID)
             end
             BG.HilightBag(itemLink)
         end

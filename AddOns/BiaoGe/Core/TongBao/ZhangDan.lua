@@ -276,7 +276,7 @@ function BG.ZhangDanUI(lastbt)
             -- 罚款
             tx = FaKuan(type, tx)
         else
-            local text = L["———通报金团账单———"]
+            local text = L["———通报账单———"]
             table.insert(tx, text)
             tx = CreateListTable(nil, tx)
         end
@@ -351,10 +351,10 @@ function BG.ZhangDanUI(lastbt)
                 -- 罚款
                 tx = FaKuan(type, tx)
             else
-                local text = L["———通报金团账单———"]
+                local text = L["———通报账单———"]
                 table.insert(tx, text)
                 tx = CreateListTable(true, tx)
-                local text = L["——感谢使用金团表格——"]
+                local text = L["——感谢使用BiaoGe插件——"]
                 table.insert(tx, text)
             end
 

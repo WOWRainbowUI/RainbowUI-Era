@@ -135,15 +135,18 @@ function BG.HistoryZhuangBeiUI(FB, t, b, bb, i, ii)
     bt:SetScript("OnEnter", function(self)
         BG.HistoryFrameDs[FB .. 1]["boss" .. BossNum(FB, b, t)]["ds" .. i]:Show()
         if not tonumber(self:GetText()) then
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0);
-            GameTooltip:ClearLines();
             local itemLink = bt:GetText()
             local itemID = select(1, GetItemInfoInstant(itemLink))
             if itemID then
+                if BG.ButtonIsInRight(self) then
+                    GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
+                else
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+                end
+                GameTooltip:ClearLines()
                 GameTooltip:SetItemByID(itemID);
                 GameTooltip:Show()
                 local h = { FB, itemID }
-                -- BG.HistoryJine(FB, itemID, true, BG.HistoryFrame[FB]["boss" .. BossNum(FB, b, t)]["jine" .. i]:GetText())
                 BG.HistoryJine(unpack(h))
                 BG.HistoryMOD = h
             end
