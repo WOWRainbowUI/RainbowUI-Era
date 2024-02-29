@@ -222,7 +222,9 @@ L["OPT_AMOUNT_AFFLIC_DESC"] = "設定即時清單最多顯示幾人。"
 L["OPT_ANCHOR_DESC"] = "顯示自訂視窗的文字定位點。"
 L["OPT_AUTOHIDEMFS"] = "隱藏迷你單位格子："
 L["OPT_AUTOHIDEMFS_DESC"] = "選擇何時自動隱藏迷你單位格子"
-L["OPT_BLACKLENTGH_DESC"] = "設定一個人停留在排除名單中的時間。設為 0 會完全停用排除名單。"
+L["OPT_BLACKLENTGH_DESC"] = [=[設定一個人停留在排除名單中的時間
+
+設為 0 會完全停用排除名單。]=]
 L["OPT_BLEED_EFFECT_BAD_SPELLID"] = "法術 ID 錯誤。只能輸入數字，並且和  wowhead.com 找到的法術 ID 相同。"
 L["OPT_BLEED_EFFECT_DESCRIPTION"] = "說明 (法術 ID: |cFF00C000%s|r)"
 L["OPT_BLEED_EFFECT_HOLDER"] = "流血效果管理"
@@ -428,6 +430,13 @@ L["OPT_NOSTARTMESSAGES"] = "停用歡迎訊息"
 L["OPT_NOSTARTMESSAGES_DESC"] = "移除每次登入時在聊天框架顯示的兩個一鍵驅散訊息。"
 L["OPT_OPTIONS_DISABLED_WHILE_IN_COMBAT"] = "此選項戰鬥中被停用。"
 L["OPT_PERFOPTIONWARNING"] = "警告：不要更改這些值，除非你確切知道你在做什麼。這些設置可以對遊戲性能影響很大。大多數用戶應當使用0.1和10的默認值。"
+L["OPT_PERIODICRESCAN"] = "負面效果定期完整掃描"
+L["OPT_PERIODICRESCAN_DESC"] = [=[設定整體單位週期性重新掃描增益和負面效果的延遲。
+設為 0 以停用。
+
+請注意，自魔獸 10.2.5 起，這種定期重新掃描會增加 Decursive 的記憶體使用量。]=]
+L["OPT_PERIODICRESCAN_REPORT"] = "定期掃描除錯報告"
+L["OPT_PERIODICRESCAN_REPORT_DESC"] = "如果定期掃描發現先前未透過事件偵測到的內容，則建立除錯報告。"
 L["OPT_PLAYSOUND_DESC"] = "有玩家中了負面效果時發出音效。"
 L["OPT_POISONCHECK_DESC"] = "選取後你可以看見並清除中毒的玩家。"
 L["OPT_PRINT_CUSTOM_DESC"] = "顯示到自訂的聊天視窗。"
