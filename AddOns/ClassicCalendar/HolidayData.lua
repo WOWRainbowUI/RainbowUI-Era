@@ -16,6 +16,8 @@ end
 local resetHour
 if region == "EU" then
 	resetHour = 5
+elseif region == "KR" then
+	resetHour = 6
 else
 	resetHour = 8
 end
@@ -264,7 +266,7 @@ local CLASSIC_CALENDAR_HOLIDAYS = {
 		-- startDate=GetLunarFestivalStart(currentCalendarTime.year),
 		-- endDate=GetLunarFestivalEnd(currentCalendarTime.year),
 		startDate={ year=2024, month=2, day=3, hour=resetHour, min=0 },
-		endDate={ year=2024, month=2, day=18, hour=resetHour, min=0 },
+		endDate={ year=2024, month=2, day=23, hour=resetHour, min=0 },
 		startTexture="Interface/Calendar/Holidays/Calendar_LunarFestivalStart",
 		ongoingTexture="Interface/Calendar/Holidays/Calendar_LunarFestivalOngoing",
 		endTexture="Interface/Calendar/Holidays/Calendar_LunarFestivalEnd",
@@ -304,7 +306,36 @@ local CLASSIC_CALENDAR_HOLIDAYS = {
 		endTexture="Interface/Calendar/Holidays/Calendar_Fireworks",
 		ZIndex=ZIndexes.low
 	},
-	-- Recurring events
+}
+
+local WeeklyHolidays = 	{
+	{
+		name=L.HolidayLocalization[localeString]["CalendarHolidays"]["StranglethornFishingExtravaganza"]["name"],
+		description=L.HolidayLocalization[localeString]["CalendarHolidays"]["StranglethornFishingExtravaganza"]["description"],
+		startDate={ year=2024, month=2, day=11, hour=14, min=0 },
+		endDate={ year=2024, month=2, day=11, hour=16, min=0 },
+		frequency=7,
+		CVar="calendarShowWeeklyHolidays",
+		startTexture="Interface/Calendar/Holidays/Calendar_FishingExtravaganza",
+		ongoingTexture="Interface/Calendar/Holidays/Calendar_FishingExtravaganza",
+		endTexture="Interface/Calendar/Holidays/Calendar_FishingExtravaganza",
+		ZIndex=ZIndexes.low
+	},
+}
+
+local SoDWeeklyHolidays = {
+	{
+		name=L.HolidayLocalization[localeString]["CalendarHolidays"]["StranglethornFishingExtravaganza"]["name"],
+		description=L.HolidayLocalization[localeString]["CalendarHolidays"]["StranglethornFishingExtravaganza"]["description"],
+		startDate={ year=2024, month=2, day=14, hour=19, min=0 },
+		endDate={ year=2024, month=2, day=14, hour=21, min=0 },
+		frequency=7,
+		CVar="calendarShowWeeklyHolidays",
+		startTexture="Interface/Calendar/Holidays/Calendar_FishingExtravaganza",
+		ongoingTexture="Interface/Calendar/Holidays/Calendar_FishingExtravaganza",
+		endTexture="Interface/Calendar/Holidays/Calendar_FishingExtravaganza",
+		ZIndex=ZIndexes.low
+	},
 	{
 		name=L.HolidayLocalization[localeString]["CalendarHolidays"]["StranglethornFishingExtravaganza"]["name"],
 		description=L.HolidayLocalization[localeString]["CalendarHolidays"]["StranglethornFishingExtravaganza"]["description"],
@@ -560,6 +591,17 @@ function GetClassicHolidays()
 		addHolidayToSchedule(holiday, holidaySchedule)
 	end
 
+	-- Weekly holidays
+	if isSoD then
+		for _, holiday in next, SoDWeeklyHolidays do
+			addHolidayToSchedule(holiday, holidaySchedule)
+		end
+	else
+		for _, holiday in next, WeeklyHolidays do
+			addHolidayToSchedule(holiday, holidaySchedule)
+		end
+	end
+
 	-- Darkmoon
 	for _, holiday in next, isSoD and DarkmoonHolidays or GetClassicDarkmoons() do
 		addHolidayToSchedule(holiday, holidaySchedule)
@@ -612,6 +654,7 @@ function GetClassicRaidResets()
 				frequency=3
 			},
 			-- First 2 Gnomer resets are weekly, before the 3-day reset starts
+			-- All 3-day reset raids reset at the same time
 			{
 				name=gnomerName,
 				firstReset = {
@@ -632,18 +675,33 @@ function GetClassicRaidResets()
 					hour=resetHour,
 					min=0
 				},
+				frequency=0
+			},
+			{
+				name=gnomerName,
+				firstReset = {
+					year=2024,
+					month=2,
+					day=22,
+					hour=resetHour,
+					min=0
+				},
 				frequency=3
 			}
 		}
 	else
 		local MCName, _ = L.RaidLocalization[localeString][136346]
-		local OnyName, _ = L.RaidLocalization[localeString][329121]
+		local OnyName, _ = L.RaidLocalization[localeString][136351]
 		local NaxxName, _ = L.RaidLocalization[localeString][136347]
 		local AQTempleName, _ = L.RaidLocalization[localeString][136321]
 		local AQRuinsName, _ = L.RaidLocalization[localeString][136320]
 		local BWLName, _ = L.RaidLocalization[localeString][136329]
 		local ZGName, _ = L.RaidLocalization[localeString][136369]
 		local UBRSName, _ = L.RaidLocalization[localeString][136327]
+		local regionHourAdjustment = 1
+		if region == "EU" then
+			regionHourAdjustment = -2
+		end
 		raidResets = {
 			{
 				name=MCName,
@@ -684,7 +742,7 @@ function GetClassicRaidResets()
 					year=2024,
 					month=1,
 					day=2,
-					hour=resetHour,
+					hour=resetHour + regionHourAdjustment,
 					min=0
 				},
 				frequency=3
@@ -706,7 +764,7 @@ function GetClassicRaidResets()
 					year=2024,
 					month=1,
 					day=2,
-					hour=resetHour,
+					hour=resetHour + regionHourAdjustment,
 					min=0
 				},
 				frequency=3
