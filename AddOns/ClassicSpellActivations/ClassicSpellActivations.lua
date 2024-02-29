@@ -95,6 +95,10 @@ AddSpellName("HealingTouchSoD", 25297, 9889, 9888, 9758, 8903, 6778, 5189, 5188,
 AddSpellName("HowlingBlast", 51411, 51410, 51409, 49184)
 AddSpellName("FrostStrike", 55268, 51419, 51418, 51417, 51416, 49143)
 
+AddSpellName("ChainLightning", 408484, 408482, 408481, 408479, 10605, 2860, 930, 421)
+AddSpellName("ChainHeal", 416246, 416245, 416244, 10623, 10622, 1064)
+AddSpellName("LavaBurst", 408490)
+
 
 local function OnAuraStateChange(conditionFunc, actions)
     local state = -1
@@ -269,7 +273,10 @@ end
 local runeSpells = {
     -- [403470] = 402927
     ["VictoryRush"] = 402927,
-    [402927] = 403470 -- spell ID = engraving ID
+    [402927] = 403470, -- spell ID = engraving ID
+    ["BloodSurgeSoD"] = 413380,
+    [413380] = 416004,
+    ["PowerSurgeSoD"] = 415100
 }
 
 
@@ -279,7 +286,13 @@ function ns.knownEngravedSpell(spellID)
 end
 
 function ns.findHighestRank(spellName)
-    if C_Engraving and runeSpells[spellName] then return runeSpells[spellName] end
+    if C_Engraving then
+        if runeSpells[spellName] then
+            return runeSpells[spellName]
+        elseif not reverseSpellRanks[spellName] then
+            return
+        end
+    end
     for _, spellID in ipairs(reverseSpellRanks[spellName]) do
         if IsPlayerSpell(spellID) then return spellID end
     end
@@ -514,6 +527,15 @@ local CheckBloodsurge = OnAuraStateChange(function() return FindAura("player", 4
         end
     end
 )
+local CheckBloodsurgeSoD = OnAuraStateChange(function() return FindAura("player", 413399, "HELPFUL") end,
+    function(present, duration)
+        if present then
+            f:Activate("Slam", "BloodSurgeSoD", duration, true)
+        else
+            f:Deactivate("Slam", "BloodSurgeSoD")
+        end
+    end
+)
 
 ns.configs.WARRIOR = function(self)
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -577,7 +599,8 @@ ns.configs.WARRIOR = function(self)
     local hasSuddenDeathTalent = IsPlayerSpell(29723) or IsPlayerSpell(29725) or IsPlayerSpell(29724)
     local hasSwordAndBoardTalent = IsPlayerSpell(46951) or IsPlayerSpell(46952) or IsPlayerSpell(46953)
     local hasBloodsurgeTalent = IsPlayerSpell(46913) or IsPlayerSpell(46914) or IsPlayerSpell(46915)
-    if hasTasteForBloodTalent or hasSuddenDeathTalent or hasSwordAndBoardTalent or hasBloodsurgeTalent then
+    local hasBloodsurgeEngraving = ns.findHighestRank("BloodSurgeSoD")
+    if hasTasteForBloodTalent or hasSuddenDeathTalent or hasSwordAndBoardTalent or hasBloodsurgeTalent or hasBloodsurgeEngraving then
         self:RegisterUnitEvent("UNIT_AURA", "player")
         self.UNIT_AURA = function(self, event, unit)
             if hasTasteForBloodTalent then
@@ -591,6 +614,9 @@ ns.configs.WARRIOR = function(self)
             end
             if hasBloodsurgeTalent then
             	CheckBloodsurge()
+            end
+            if hasBloodsurgeEngraving then  -- Season of Discovery
+                CheckBloodsurgeSoD()
             end
         end
     else
@@ -999,7 +1025,7 @@ end
 -----------------
 -- SHAMAN
 -----------------
-if APILevel == 2 then
+if APILevel <= 2 then
 
 local CheckShamanisticFocus = OnAuraStateChange(function() return FindAura("player", 43339, "HELPFUL") end,
     function(present, duration)
@@ -1015,15 +1041,33 @@ local CheckShamanisticFocus = OnAuraStateChange(function() return FindAura("play
     end
 )
 
+local CheckPowerSurge = OnAuraStateChange(function() return FindAura("player", 415105, "HELPFUL") end,
+    function(present, duration)
+        if present then
+            f:Activate("ChainLightning", "PowerSurge", duration, true)
+            f:Activate("ChainHeal", "PowerSurge", duration, true)
+            f:Activate("LavaBurst", "PowerSurge", duration, true)
+        else
+            f:Deactivate("ChainLightning", "PowerSurge")
+            f:Deactivate("ChainHeal", "PowerSurge")
+            f:Deactivate("LavaBurst", "PowerSurge")
+        end
+    end
+)
+
 ns.configs.SHAMAN = function(self)
     self:SetScript("OnUpdate", self.timerOnUpdate)
     local hasShamanisticFocusTalent = IsPlayerSpell(43338)
+    local hasPowerSurgeSoD = ns.findHighestRank("PowerSurgeSoD")
     if hasShamanisticFocusTalent then
         self:RegisterUnitEvent("UNIT_AURA", "player")
         self:SetScript("OnUpdate", self.timerOnUpdate)
         self.UNIT_AURA = function(self, event, unit)
             if hasShamanisticFocusTalent then
                 CheckShamanisticFocus()
+            end
+            if hasPowerSurgeSoD then
+                CheckPowerSurge()
             end
         end
     else
