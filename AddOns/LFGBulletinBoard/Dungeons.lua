@@ -16,7 +16,7 @@ function GBB.GetDungeonNames()
 	local DefaultEnGB={
 		["RFC"] = 	"Ragefire Chasm",
 		["DM"] = 	"The Deadmines",
-		["WC"] = 	"Wailing Caverns",	
+		["WC"] = 	"Wailing Caverns",
 		["SFK"] = 	"Shadowfang Keep",
 		["STK"] = 	"The Stockade",
 		["BFD"] = 	"Blackfathom Deeps",
@@ -112,18 +112,18 @@ function GBB.GetDungeonNames()
 		["DEBUG"] = "DEBUG INFO",
 		["BAD"] =	"DEBUG BAD WORDS - REJECTED",
 		["BREW"] =  "Brewfest - Coren Direbrew",
-		["HOLLOW"] = "Hallow's End - Headless Horseman",
-
+		["HOLLOW"] =  "Hallow's End - Headless Horseman",
+		["TRAVEL"] = "Travel services - Summons/Portals",
 		["GAMMA"] = "Gamma",
 		["N3"] = 	"New 3",
 		["DAILY"] = "Daily"
 		}
-		
-	local dungeonNamesLocales={ 
+
+	local dungeonNamesLocales={
 		zhTW ={
 			["RFC"] = 	"怒焰裂谷",
 			["DM"] = 	"死亡礦坑",
-			["WC"] = 	"哀嚎洞穴",	
+			["WC"] = 	"哀嚎洞穴",
 			["SFK"] = 	"影牙城堡",
 			["STK"] = 	"監獄",
 			["BFD"] = 	"黑暗深淵",
@@ -148,12 +148,12 @@ function GBB.GetDungeonNames()
 			["SCH"] = 	"通靈學院",
 			["LBRS"] = 	"黑石塔下層",
 			["UBRS"] = 	"黑石塔上層 (10)",
-			["RAMPS"] = "地獄火壁壘",
+			["RAMPS"] = 	"地獄火壁壘",
 			["BF"] = 	"血熔爐",
 			["SP"] = 	"奴隸監獄",
 			["UB"] = 	"深幽泥沼",
 			["MT"] = 	"法力墓地",
-			["CRYPTS"] = "奧奇奈地穴",
+			["CRYPTS"] = 	"奧奇奈地穴",
 			["SETH"] = 	"塞司克大廳",
 			["OHB"] = 	"希爾斯布萊德丘陵舊址",
 			["MECH"] = 	"麥克納爾",
@@ -191,14 +191,14 @@ function GBB.GetDungeonNames()
 			["RS"] =	"晶紅聖所",
 			["BREW"] =  "啤酒節 - 柯林．烈酒",
 			["SOTA"] =  "遠古灘頭 (PvP)",
-			["WG"]  =   "冬握湖 (PvP)",
+			["WG"]  =   "冬握湖 (PvP)",					 
 			["KARA"] = 	"卡拉贊 (10)",
 			["GL"] = 	"戈魯爾之巢 (25)",
 			["MAG"] = 	"瑪瑟里頓的巢穴 (25)",
 			["SSC"] = 	"毒蛇神殿洞穴 (25)",
 			["EYE"] = 	"風暴要塞 (25)",
 			["ZA"] = 	"祖阿曼 (10)",
-			["HYJAL"] = "海加爾山 (25)",
+			["HYJAL"] = 	"海加爾山 (25)",
 			["BT"] = 	"黑暗神廟 (25)",
 			["SWP"] = 	"太陽之井高地 (25)",
 			["ONY"] = 	"奧妮克希亞的巢穴 (40)",
@@ -215,6 +215,7 @@ function GBB.GetDungeonNames()
 			["ARENA"] = "競技場 (PvP)",
 			["MISC"] = 	"未分類",
 			["TRADE"] =	"交易",
+			["TRAVEL"] = "傳送服務",
 			["GAMMA"] = "伽瑪系統",
 			["N3"] = 	"新三本",
 			["DAILY"] = "日常",
@@ -311,30 +312,31 @@ function GBB.GetDungeonNames()
 			["EOTS"] = 	"风暴之眼 (PvP)",
 			["MISC"] = 	"未分類",
 			["TRADE"] =	"交易",
+			["TRAVEL"] = "传送服务",
 			["GAMMA"] = "防御系统伽玛",
 			["N3"] = "新三本",
 			["DAILY"] = "日常",
 		},
 	}
 
-	
-	
+
+
 	local dungeonNames = dungeonNamesLocales[GetLocale()] or {}
-	
+
 	if GroupBulletinBoardDB and GroupBulletinBoardDB.CustomLocalesDungeon and type(GroupBulletinBoardDB.CustomLocalesDungeon) == "table" then
 		for key,value in pairs(GroupBulletinBoardDB.CustomLocalesDungeon) do
 			if value~=nil and value ~="" then
 				dungeonNames[key.."_org"]=dungeonNames[key] or DefaultEnGB[key]
-				dungeonNames[key]=value				
+				dungeonNames[key]=value
 			end
 		end
 	end
-	
-	
+
+
 	setmetatable(dungeonNames, {__index = DefaultEnGB})
-	
+
 	dungeonNames["DEADMINES"]=dungeonNames["DM"]
-	
+
 	return dungeonNames
 end
 
@@ -355,8 +357,8 @@ GBB.VanillaDungeonLevels ={
 	["RFD"] = 	{40,50}, ["ULD"] = 	{42,52}, ["ZF"] = 	{44,54}, ["MAR"] = 	{46,55}, ["ST"] = 	{50,60}, ["BRD"] = 	{52,60},
 	["LBRS"] = 	{55,60}, ["DME"] = 	{58,60}, ["DMN"] = 	{58,60}, ["DMW"] = 	{58,60}, ["STR"] = 	{58,60}, ["SCH"] = 	{58,60},
 	["UBRS"] = 	{58,60}, ["MC"] = 	{60,60}, ["ZG"] = 	{60,60}, ["AQ20"]= 	{60,60}, ["BWL"] = {60,60},
-	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60}, 
-	["MISC"]= {0,100},  
+	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60},
+	["MISC"]=   {0,100}, ["TRAVEL"]={0,100},
 	["DEBUG"] = {0,100}, ["BAD"] =	{0,100}, ["TRADE"]=	{0,100}, ["SM2"] =  {28,42}, ["DM2"] =	{58,60}, ["DEADMINES"]={18,23},
 }
 
@@ -366,17 +368,17 @@ GBB.PostTbcDungeonLevels = {
 	["RFD"] = 	{33,41}, ["ULD"] = 	{36,44}, ["ZF"] = 	{42,50}, ["MAR"] = 	{40,52}, ["ST"] = 	{45,54}, ["BRD"] = 	{48,60},
 	["LBRS"] = 	{54,60}, ["DME"] = 	{54,61}, ["DMN"] = 	{54,61}, ["DMW"] = 	{54,61}, ["STR"] = 	{56,61}, ["SCH"] = 	{56,61},
 	["UBRS"] = 	{53,61}, ["MC"] = 	{60,60}, ["ZG"] = 	{60,60}, ["AQ20"]= 	{60,60}, ["BWL"] = {60,60},
-	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60}, 
-	["MISC"]= {0,100},  
+	["AQ40"] = 	{60,60}, ["NAX"] = 	{60,60},
+	["MISC"] =  {0,100}, ["TRAVEL"]={0,100},
 	["DEBUG"] = {0,100}, ["BAD"] =	{0,100}, ["TRADE"]=	{0,100}, ["SM2"] =  {28,42}, ["DM2"] =	{58,60}, ["DEADMINES"]={16,24},
 }
 
 
-GBB.TbcDungeonLevels = { 
+GBB.TbcDungeonLevels = {
 	["RAMPS"] =  {60,62}, 	["BF"] = 	 {61,63},     ["SP"] = 	 {62,64},    ["UB"] = 	 {63,65},     ["MT"] = 	 {64,66},     ["CRYPTS"] = {65,67},
-	["SETH"] =   {67,69},  	["OHB"] = 	 {66,68},     ["MECH"] =   {69,70},    ["BM"] =      {69,70},    ["MGT"] =	 {70,70},    ["SH"] =	 {70,70}, 
-	["BOT"] =    {70,70},    ["SL"] = 	 {70,70},    ["SV"] =     {70,70},   ["ARC"] = 	 {70,70},    ["KARA"] = 	 {70,70},    ["GL"] = 	 {70,70}, 
-	["MAG"] =    {70,70},    ["SSC"] =    {70,70}, 	["EYE"] =    {70,70},   ["ZA"] = 	 {70,70},    ["HYJAL"] =  {70,70}, 	["BT"] =     {70,70}, 
+	["SETH"] =   {67,69},  	["OHB"] = 	 {66,68},     ["MECH"] =   {69,70},    ["BM"] =      {69,70},    ["MGT"] =	 {70,70},    ["SH"] =	 {70,70},
+	["BOT"] =    {70,70},    ["SL"] = 	 {70,70},    ["SV"] =     {70,70},   ["ARC"] = 	 {70,70},    ["KARA"] = 	 {70,70},    ["GL"] = 	 {70,70},
+	["MAG"] =    {70,70},    ["SSC"] =    {70,70}, 	["EYE"] =    {70,70},   ["ZA"] = 	 {70,70},    ["HYJAL"] =  {70,70}, 	["BT"] =     {70,70},
 	["SWP"] =    {70,70},
 }
 
@@ -385,49 +387,49 @@ GBB.PvpLevels = {
 }
 
 GBB.WotlkDungeonLevels = {
-	["UK"] =    {68,80},    ["NEX"] =    {69,80},    ["AZN"] =    {70,80},    ["ANK"] =    {71,80},    ["DTK"] =    {72,80},    ["VH"] =    {73,80},    
-	["GD"] =    {74,80},    ["HOS"] =    {75,80},    ["HOL"] =    {76,80},    ["COS"] =    {78,80},    ["OCC"] =    {77,80},    ["UP"] =    {77,80},    
-	["FOS"] =    {80,80},   ["POS"] =    {80,80},    ["HOR"] =    {80,80},    ["CHAMP"] =  {78,80},    ["OS"] =     {80,80},    ["VOA"] =    {80,80},    
-	["EOE"] =    {80,80},   ["ULDAR"] =  {80,80},    ["TOTC"] =     {80,80},  ["RS"] =     {80,80},    ["ICC"] =    {80,80},    ["ONY"] =    {80,80},    
-	["NAXX"] =   {80,80},   ["BREW"] = {65,70},      ["HOLLOW"] = {65,70},    ["GAMMA"] = {80,80}, ["N3"] = {80,80}, ["DAILY"] = {80,80},
+	["UK"] =    {68,80},    ["NEX"] =    {69,80},    ["AZN"] =    {70,80},    ["ANK"] =    {71,80},    ["DTK"] =    {72,80},    ["VH"] =    {73,80},
+	["GD"] =    {74,80},    ["HOS"] =    {75,80},    ["HOL"] =    {76,80},    ["COS"] =    {78,80},    ["OCC"] =    {77,80},    ["UP"] =    {77,80},
+	["FOS"] =    {80,80},   ["POS"] =    {80,80},    ["HOR"] =    {80,80},    ["CHAMP"] =  {78,80},    ["OS"] =    {80,80},    ["VOA"] =    {80,80},
+	["EOE"] =    {80,80},   ["ULDAR"] =  {80,80},    ["TOTC"] =     {80,80},    ["RS"] =     {80,80},    ["ICC"] =    {80,80},    ["ONY"] =    {80,80},
+	["NAXX"] =   {80,80},   ["BREW"] = {65,70},      ["HOLLOW"] = {65,70}, ["GAMMA"] = {80,80}, ["N3"] = {80,80}, ["DAILY"] = {80,80},
 }
 
 GBB.WotlkDungeonNames = {
-	"UK", "NEX", "AZN", "ANK", "DTK", "VH", "GD", "HOS", "HOL", "COS", 
-	"OCC", "UP", "FOS", "POS", "HOR", "CHAMP", "OS", "VOA", "EOE", "ULDAR", 
+	"UK", "NEX", "AZN", "ANK", "DTK", "VH", "GD", "HOS", "HOL", "COS",
+	"OCC", "UP", "FOS", "POS", "HOR", "CHAMP", "OS", "VOA", "EOE", "ULDAR",
 	"TOTC", "RS", "ICC", "ONY", "NAXX", "GAMMA", "N3", "DAILY",
 }
 
-GBB.TbcDungeonNames = { 
+GBB.TbcDungeonNames = {
 	"RAMPS", "BF", "SH", "MAG", "SP", "UB", "SV", "SSC", "MT", "CRYPTS",
 	"SETH", "SL", "OHB", "BM", "MECH", "BOT", "ARC", "EYE", "MGT", "KARA",
 	"GL", "ZA", "HYJAL", "BT", "SWP",
 }
 
-GBB.VanillDungeonNames  = { 
+GBB.VanillDungeonNames  = {
 	"RFC", "WC" , "DM" , "SFK", "STK", "BFD", "GNO",
-    "RFK", "SMG", "SML", "SMA", "SMC", "RFD", "ULD", 
-    "ZF", "MAR", "ST" , "BRD", "LBRS", "DME", "DMN", 
-    "DMW", "STR", "SCH", "UBRS", "MC", "ZG", 
+    "RFK", "SMG", "SML", "SMA", "SMC", "RFD", "ULD",
+    "ZF", "MAR", "ST" , "BRD", "LBRS", "DME", "DMN",
+    "DMW", "STR", "SCH", "UBRS", "MC", "ZG",
     "AQ20", "BWL", "AQ40", "NAX",
-}	
+}
 
 
 GBB.PvpNames = {
 	"WSG", "AB", "AV", "EOTS", "WG", "SOTA", "ARENA",
 }
 
-GBB.Misc = {"MISC", "TRADE",}
+GBB.Misc = {"MISC", "TRADE", "TRAVEL"}
 
 GBB.DebugNames = {
 	"DEBUG", "BAD", "NIL",
 }
 
 GBB.Raids = {
-	"ONY", "MC", "ZG", "AQ20", "BWL", "AQ40", "NAX", 
-	"KARA", "GL", "MAG", "SSC", "EYE", "ZA", "HYJAL", 
+	"ONY", "MC", "ZG", "AQ20", "BWL", "AQ40", "NAX",
+	"KARA", "GL", "MAG", "SSC", "EYE", "ZA", "HYJAL",
 	"BT", "SWP", "ARENA", "WSG", "AV", "AB", "EOTS",
-	"WG", "SOTA", "BREW", "HOLLOW", "OS", "VOA", "EOE", 
+	"WG", "SOTA", "BREW", "HOLLOW", "OS", "VOA", "EOE",
 	"ULDAR", "TOTC", "RS", "ICC", "NAXX",
 }
 
@@ -449,19 +451,27 @@ end
 
 -- Needed because Lua sucks, Blizzard switch to Python please
 -- Takes in a list of dungeon lists, it will then concatenate the lists into a single list
--- it will put the dungeons in an order and give them a value incremental value that can be used for sorting later 
+-- it will put the dungeons in an order and give them a value incremental value that can be used for sorting later
 -- ie one list "Foo" which contains "Bar" and "FooBar" and a second list "BarFoo" which contains "BarBar"
 -- the output would be single list with "Bar" = 1, "FooBar" = 2, "BarFoo" = 3, "BarBar" = 4
-local function ConcatenateLists(Names) 
+local function ConcatenateLists(Names)
 	local result = {}
 	local index = 1
-	for k, nameLists in pairs (Names) do 
-		for _, v in pairs(nameLists) do 
+	for k, nameLists in pairs (Names) do
+		for _, v in pairs(nameLists) do
 			result[v] = index
 			index = index + 1
 		end
 	end
 	return result, index
+end
+
+local function GetSize(list)
+	local size = 0
+	for _, _ in pairs(list) do
+		size = size + 1
+	end
+	return size
 end
 
 function GBB.GetDungeonSort()
@@ -472,43 +482,27 @@ function GBB.GetDungeonSort()
 			table.insert(GBB.DebugNames, 1, eventName)
 		end
     end
-	
-	local dungeonOrder = { GBB.VanillDungeonNames, GBB.PvpNames, GBB.Misc, GBB.TbcDungeonNames, GBB.WotlkDungeonNames, GBB.DebugNames}
+
+	local dungeonOrder = { GBB.VanillDungeonNames, GBB.TbcDungeonNames, GBB.WotlkDungeonNames, GBB.PvpNames, GBB.Misc, GBB.DebugNames}
 
 	-- Why does Lua not having a fucking size function
-	 local vanillaDungeonSize = 0
-	 for _, _ in pairs(GBB.VanillDungeonNames) do
-		vanillaDungeonSize = vanillaDungeonSize + 1
-	 end
+	local vanillaDungeonSize = GetSize(GBB.VanillDungeonNames)
 
-	 local tbcDungeonSize = 0
-	 for _, _ in pairs(GBB.TbcDungeonNames) do
-		tbcDungeonSize = tbcDungeonSize + 1
-	 end
+	local tbcDungeonSize = GetSize(GBB.TbcDungeonNames)
 
-	local debugSize = 0
-	for _, _ in pairs(GBB.DebugNames) do
-		debugSize = debugSize+1
-	end
+	local debugSize = GetSize(GBB.DebugNames)
 
-	local pvpSize = 0
-	for _, _ in pairs(GBB.PvpNames) do
-		pvpSize = pvpSize+1
-	end
-
-	local miscSize = 0
-	for _, _ in pairs(GBB.Misc) do
-		miscSize = miscSize+1
-	end
 
 	local tmp_dsort, concatenatedSize = ConcatenateLists(dungeonOrder)
 	local dungeonSort = {}
 
-	GBB.MAXDUNGEON = vanillaDungeonSize + pvpSize + miscSize
-	GBB.TBCDUNGEONSTART = GBB.MAXDUNGEON + 1
-	GBB.TBCMAXDUNGEON = GBB.MAXDUNGEON  + tbcDungeonSize
+	GBB.TBCDUNGEONSTART = vanillaDungeonSize + 1
+	GBB.MAXDUNGEON = vanillaDungeonSize
+	GBB.TBCMAXDUNGEON = vanillaDungeonSize  + tbcDungeonSize
 	GBB.WOTLKDUNGEONSTART = GBB.TBCMAXDUNGEON + 1
-	GBB.WOTLKMAXDUNGEON = concatenatedSize - debugSize - 1
+	GBB.WOTLKMAXDUNGEON = GetSize(GBB.WotlkDungeonNames) + GBB.TBCMAXDUNGEON
+	GBB.ENDINGDUNGEONSTART = GBB.WOTLKMAXDUNGEON + 1
+	GBB.ENDINGDUNGEONEND = concatenatedSize - debugSize - 1
 
 	for dungeon,nb in pairs(tmp_dsort) do
 		dungeonSort[nb]=dungeon

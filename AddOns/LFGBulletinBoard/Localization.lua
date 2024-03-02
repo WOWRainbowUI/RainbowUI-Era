@@ -81,7 +81,8 @@ GBB.locales = {
 		["CboxEnableGuild"]="Add guild in player tooltip",
 		["CboxCombineSubDungeons"]="Combine sub-dungeons like Dire Maul (only new request)",
 		["CboxAdditionalInfo"]="Add more info to chat on /who and when somebody comes online",
-		
+		["CboxIsolateTravelServices"]="Prevent travel services from appearing in other categories",
+
 		["CboxNotfiyInnone"]="Enable on overworld",
 		["CboxNotfiyInpvp"]="Enable in battleground",
 		["CboxNotfiyInparty"]="Enable in dungeon",
@@ -218,6 +219,7 @@ GBB.locales = {
 		["CboxEnableGuild"]="新增公會於玩家提示",
 		["CboxCombineSubDungeons"]="合併次副本如 厄運之槌 (僅新尋求組隊生效)",
 		["CboxAdditionalInfo"]="當某人回到線上時新增更多資訊於聊天室窗於 /who",
+		["CboxIsolateTravelServices"]="避免傳送服務出現在其他分類中",
 		
 		["CboxNotfiyInnone"]="於 overworld 時啟用",
 		["CboxNotfiyInpvp"]="於戰場時啟用",
@@ -352,6 +354,7 @@ GBB.locales = {
 		["CboxEnableGuild"]="新增公会于玩家提示",
 		["CboxCombineSubDungeons"]="合并次副本如 厄运之槌 (仅新寻求组队生效)",
 		["CboxAdditionalInfo"]="当某人回到线上时新增更多资讯于聊天室窗于 /who",
+		["CboxIsolateTravelServices"]="避免传送服务出现在其他分类中",
 
 		["CboxNotfiyInnone"]="在 overworld 时启用",
 		["CboxNotfiyInpvp"]="在战场时启用",
