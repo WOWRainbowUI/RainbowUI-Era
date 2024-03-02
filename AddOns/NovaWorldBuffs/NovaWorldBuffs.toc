@@ -2,7 +2,7 @@
 ## Notes: World buff timers and pre warnings.
 ## Title: Nova World Buffs
 ## Author: Novaspark-Arugal OCE
-## Version: 2.66
+## Version: 2.68
 ## SavedVariables: NWBdatabase
 
 ## Title-zhTW: |cffFF7F00[團隊]|r Nova 世界增益監控
@@ -19,4 +19,7 @@ NWBData.lua
 NWBCreatures.lua
 NWBRealms.lua
 NWBGuildFilter.lua
+Modules\WeeklyReset.lua
 Modules\Ashenvale.lua
+Modules\Stranglethorn.lua
+Modules\Overlay.lua

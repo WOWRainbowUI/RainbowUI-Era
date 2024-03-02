@@ -32,6 +32,7 @@ L["Fengus' Ferocity"] = "芬古斯的狂暴";
 L["Mol'dar's Moxie"] = "摩爾達的勇氣";
 L["Boon of Blackfathom"] = "黑澗深淵的恩賜";
 L["Ashenvale Rallying Cry"] = "梣谷振奮咆哮";
+L["Spark of Inspiration"] = "鼓舞火花"; --Phase 2 SoD world buff.
 
 ---=====---
 ---Horde---
@@ -979,3 +980,6 @@ L["Shift Left-Click"] = "Shift+左鍵"
 L["Shift Right-Click"] = "Shift+右鍵"
 L["Felwood Map"] = "費伍德地圖"
 L["Config"] = "設定選項"
+
+L["Yes"] = "是"
+L["No"] = "否"
