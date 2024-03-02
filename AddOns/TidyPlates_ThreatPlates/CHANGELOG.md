@@ -1,4 +1,3 @@
-# 11.1.37 (2024-01-28)
+# 11.1.39 (2024-02-26)
 
-* Fixed a Lua error with Auras widget that occurred in arenas when auras had no duration time [GH-497].
-* Updated TOC version for Patch 10.2.5 for WoW Mainline.
+* Upgraded integrated library Ace3 r1320 to fix an issue with the color picker [Comment #7208]. 
