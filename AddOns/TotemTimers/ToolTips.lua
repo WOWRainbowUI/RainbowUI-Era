@@ -13,7 +13,7 @@ local b = 1
 local ElementColors = TotemTimers.ElementColors
 
 
-XiTimersTooltip = {}
+XiTimersTooltip = { r=r, g=g, b=b}
 
 function XiTimersTooltip:new(button)
     local o = {}
@@ -23,7 +23,7 @@ function XiTimersTooltip:new(button)
     return o
 end
 
-function XiTimersTooltip:SetText() GameTooltip:AddLine("test") end
+function XiTimersTooltip:SetText() end
 
 function XiTimersTooltip:Show()
     if not self.button then return end
@@ -145,8 +145,6 @@ end
 local WeaponTimerTooltip = XiTimersTooltip:new()
 TotemTimers.Tooltips.WeaponTimer = WeaponTimerTooltip
 
-WeaponTimerTooltip.new = ToolTipConstructor
-
 function WeaponTimerTooltip:SetText()
     local button = self.button
 
@@ -177,7 +175,7 @@ function WeaponTimerTooltip:SetText()
     local spell2 = button:GetAttribute("spell2")
     if spell2 then
         local spellname = GetSpellInfo(spell2)
-        if spellname then GameTooltip:AddLine(format(L["Rightclick to cast %s"], GetSpellInfo(spell2)),r,g,b,1) end
+        if spellname then GameTooltip:AddLine(format(L["Rightclick to cast %s"], spellname),r,g,b,1) end
     end
     --[[s = self:GetAttribute("spell2")
     if s then GameTooltip:AddLine(format(L["Rightclick to cast %s"],s),r,g,b,1)
