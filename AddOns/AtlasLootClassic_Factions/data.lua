@@ -487,7 +487,11 @@ data["AzerothCommerceAuthority"] = {
 			name = ALIL["Revered"],
 			[ALLIANCE_DIFF] = {
 				{ 1, "f2586rep7" },
-
+				{ 2, 217399 }, -- Recipe: Lesser Arcane Elixir
+				{ 3, 219021 }, -- Hefty Courier Pack
+				{ 16, 219135 }, -- Curiosity Pendant
+				{ 17, 219136 }, -- Tenacity Pendant
+				{ 18, 219137 }, -- Initiative Pendant
 			},
 		},
 		{ -- Honored
@@ -495,10 +499,12 @@ data["AzerothCommerceAuthority"] = {
 			[ALLIANCE_DIFF] = {
 				{ 1, "f2586rep6" },
 				{ 2, 211384 }, -- Sturdy Courier Bag
-				{ 3, 210779 }, -- Plans: Mantle of the Second War
-				{ 4, 211247 }, -- Pattern: Phoenix Bindings
-				{ 5, 210779 }, -- Plans: Mantle of the Second War
-				{ 6, 211247 }, -- Pattern: Phoenix Bindings
+				{ 4, 210779 }, -- Plans: Mantle of the Second War
+				{ 5, 211247 }, -- Pattern: Phoenix Bindings
+				{ 6, 212230 }, -- Schematic: Soul Vessel
+				{ 16, 219022 }, -- Hauler's Ring
+				{ 17, 219023 }, -- Clerk's Ring
+				{ 18, 219024 }, -- Messenger's Ring
 			},
 		},
 		{ -- Friendly
@@ -509,15 +515,16 @@ data["AzerothCommerceAuthority"] = {
 				{ 3, 212588 }, -- Provisioner's Gloves
 				{ 4, 212589 }, -- Courier Treads
 				{ 5, 212590 }, -- Hoist Strap
-				{ 17, 211387 }, -- Rune of Beckoning Light
-				{ 18, 211392 }, -- Rune of Everlasting Affliction
-				{ 19, 211391 }, -- Rune of Healing Rain
-				{ 20, 211385 }, -- Rune of Serpent Spread
-				{ 21, 211393 }, -- Rune of Single-Minded Fury
-				{ 22, 206992 }, -- Rune of Skull Bash
-				{ 23, 211390 }, -- Rune of Teasing
-				{ 24, 211386 }, -- Spell Notes: Arcane Surge
-				{ 25, 205950 }, -- Tenebrous Epiphany
+				{ 7, 211386 }, -- Spell Notes: Arcane Surge
+				{ 8, 211387 }, -- Rune of Beckoning Light
+				{ 9, 211392 }, -- Rune of Everlasting Affliction
+				{ 10, 211391 }, -- Rune of Healing Rain
+				{ 11, 211385 }, -- Rune of Serpent Spread
+				{ 12, 211393 }, -- Rune of Single-Minded Fury
+				{ 13, 206992 }, -- Rune of Skull Bash
+				{ 14, 211390 }, -- Rune of Teasing
+				{ 15, 205950 }, -- Tenebrous Epiphany
+
 			},
 		},
 	},
@@ -539,7 +546,11 @@ data["DurotarSupplyAndLogistics"] = {
 			name = ALIL["Revered"],
 			[HORDE_DIFF] = {
 				{ 1, "f2587rep7" },
-
+				{ 2, 217399 }, -- Recipe: Lesser Arcane Elixir
+				{ 3, 219021 }, -- Hefty Courier Pack
+				{ 16, 219135 }, -- Curiosity Pendant
+				{ 17, 219136 }, -- Tenacity Pendant
+				{ 18, 219137 }, -- Initiative Pendant
 			},
 		},
 		{ -- Honored
@@ -547,10 +558,12 @@ data["DurotarSupplyAndLogistics"] = {
 			[HORDE_DIFF] = {
 				{ 1, "f2587rep6" },
 				{ 2, 211384 }, -- Sturdy Courier Bag
-				{ 3, 210779 }, -- Plans: Mantle of the Second War
-				{ 4, 211247 }, -- Pattern: Phoenix Bindings
-				{ 5, 210779 }, -- Plans: Mantle of the Second War
-				{ 6, 211247 }, -- Pattern: Phoenix Bindings
+				{ 4, 210779 }, -- Plans: Mantle of the Second War
+				{ 5, 211247 }, -- Pattern: Phoenix Bindings
+				{ 6, 212230 }, -- Schematic: Soul Vessel
+				{ 16, 219022 }, -- Hauler's Ring
+				{ 17, 219023 }, -- Clerk's Ring
+				{ 18, 219024 }, -- Messenger's Ring
 			},
 		},
 		{ -- Friendly
@@ -561,15 +574,15 @@ data["DurotarSupplyAndLogistics"] = {
 				{ 3, 212588 }, -- Provisioner's Gloves
 				{ 4, 212589 }, -- Courier Treads
 				{ 5, 212590 }, -- Hoist Strap
-				{ 17, 211387 }, -- Rune of Beckoning Light
-				{ 18, 211392 }, -- Rune of Everlasting Affliction
-				{ 19, 211391 }, -- Rune of Healing Rain
-				{ 20, 211385 }, -- Rune of Serpent Spread
-				{ 21, 211393 }, -- Rune of Single-Minded Fury
-				{ 22, 206992 }, -- Rune of Skull Bash
-				{ 23, 211390 }, -- Rune of Teasing
-				{ 24, 211386 }, -- Spell Notes: Arcane Surge
-				{ 25, 205950 }, -- Tenebrous Epiphany
+				{ 7, 211386 }, -- Spell Notes: Arcane Surge
+				{ 8, 211387 }, -- Rune of Beckoning Light
+				{ 9, 211392 }, -- Rune of Everlasting Affliction
+				{ 10, 211391 }, -- Rune of Healing Rain
+				{ 11, 211385 }, -- Rune of Serpent Spread
+				{ 12, 211393 }, -- Rune of Single-Minded Fury
+				{ 13, 206992 }, -- Rune of Skull Bash
+				{ 14, 211390 }, -- Rune of Teasing
+				{ 15, 205950 }, -- Tenebrous Epiphany
 			},
 		},
 	},
