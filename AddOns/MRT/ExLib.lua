@@ -162,7 +162,7 @@ CheckButton	ExRTRadioButtonModernTemplate
 local GlobalAddonName, ExRT = ...
 local isExRT = GlobalAddonName == "MRT"
 
-local libVersion = 43
+local libVersion = 44
 
 if type(ELib)=='table' and type(ELib.V)=='number' and ELib.V > libVersion then return end
 
@@ -2730,6 +2730,14 @@ do
 		end
 		return self
 	end
+	local function Widget_AddRightText(self,text,size)
+		if self.rightText then
+			self.rightText:SetText(text)
+		else
+			self.rightText = ELib:Text(self,text,size or 11):Point("LEFT",self,"RIGHT",5,0):Left()
+		end
+		return self
+	end
 	local function Widget_AddLeftTop(self,text,size)
 		if self.leftText then
 			self.leftText:SetText(text)
@@ -2828,6 +2836,7 @@ do
 			'InsideIcon',Widget_InsideIcon,
 			'AddSearchIcon',Widget_AddSearchIcon,
 			'LeftText',Widget_AddLeftText,
+			'RightText',Widget_AddRightText,
 			'TopText',Widget_AddLeftTop,
 			'BackgroundText',Widget_AddBackgroundText,
 			'ColorBorder',Widget_ColorBorder,
@@ -4611,7 +4620,7 @@ function ELib.ScrollDropDown.OnButtonEnter(self)
 	end
 	if self.tooltip then
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:AddLine(self.tooltip)
+		GameTooltip:AddLine(type(self.tooltip)=="function" and self.tooltip() or self.tooltip)
 		GameTooltip:Show()
 	end
 	ELib.ScrollDropDown:CloseSecondLevel(self.Level)
