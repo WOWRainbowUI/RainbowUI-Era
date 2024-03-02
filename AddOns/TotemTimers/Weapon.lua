@@ -19,15 +19,18 @@ function TotemTimers.CreateWeaponTracker()
     weapon = XiTimers:new(2)
 
     weapon.button.icons[1]:SetTexture(SpellTextures[SpellIDs.RockbiterWeapon])
+    weapon.button.icons[2]:SetTexture(SpellTextures[SpellIDs.RockbiterWeapon])
 
     weapon.button.anchorframe = TotemTimers_TrackerFrame
     weapon.timeStyle = "blizz"
     weapon.button:SetAttribute("*type*", "spell")
     weapon.button:SetAttribute("ctrl-spell1", ATTRIBUTE_NOOP)
     weapon.Update = TotemTimers.WeaponUpdate
-    weapon.button:RegisterForClicks("LeftButtonUp", "RightButtonUp", "MiddleButtonUp")
+    weapon.button:RegisterForClicks("LeftButtonDown", "RightButtonDown", "MiddleButtonDown")
     weapon.timerBars[1]:SetMinMaxValues(0, 1800)
     weapon.flashall = true
+    weapon.warningPoint = 30
+
     weapon.Activate = function(self)
         XiTimers.Activate(self)
         if not TotemTimers.ActiveProfile.WeaponTracker then
@@ -45,6 +48,8 @@ function TotemTimers.CreateWeaponTracker()
             TotemTimers.ActiveProfile.LastWeaponEnchant = self:GetAttribute("spell1")
         elseif name == "spell2" or name == "spell3" then
             TotemTimers.ActiveProfile.LastWeaponEnchant2 = self:GetAttribute("spell2") or self:GetAttribute("spell3")
+        elseif name == "spell4" then
+            TotemTimers.ActiveProfile.LastWeaponEnchant3 = self:GetAttribute("spell4")
         elseif name == "doublespell2" then
             local ds2 = self:GetAttribute("doublespell2")
             if ds2 then
@@ -55,14 +60,23 @@ function TotemTimers.CreateWeaponTracker()
                     TotemTimers.ActiveProfile.LastWeaponEnchant = 5
                 elseif ds2 == SpellNames[SpellIDs.FrostbrandWeapon] then
                     TotemTimers.ActiveProfile.LastWeaponEnchant = 6
+                elseif ds2 == SpellNames[SpellIDs.RockbiterWeapon] then
+                    TotemTimers.ActiveProfile.LastWeaponEnchant = 8
                 end
             end
         end
         local spellType = name:sub(1, -2)
         for i=1,2 do
-            if not self.timer.timersRunning[i] then self.icons[i]:SetTexture(GetSpellTexture(self:GetAttribute(spellType..i))) end
+            if not self.timer.timersRunning[i] then
+            local spell = self:GetAttribute(spellType..i)
+                if not spell and i == 2 then spell = self:GetAttribute(spellType..1) end
+                if spell then
+                    self.icons[i]:SetTexture(GetSpellTexture(spell))
+                end
+            end
         end
     end
+
 
     weapon.button:SetAttribute("_onattributechanged", [[ if name == "spell1" or name == "doublespell1" or name == "doublespell2" or name == "spell2" or name == "spell3" then
                                                              control:CallMethod("SaveLastEnchant", name)
@@ -113,6 +127,18 @@ function TotemTimers.CreateWeaponTracker()
         self.running = 1
     end
     weapon.running = 1
+    weapon.slotChanged = {}
+
+    for i = 1,weapon.actionBar.numbuttons do
+        weapon.actionBar.buttons[i].useSpellNames = true
+    end
+    weapon.events = { "PLAYER_EQUIPMENT_CHANGED" }
+
+    weapon.button:SetScript("OnEvent", function(self, event, slot, ...)
+        if (slot == 16) then weapon.slotChanged[1] = true
+        elseif (slot == 17) then weapon.slotChanged[2] = true
+        end
+    end)
 
     TotemTimers.WeaponTracker = weapon
 end
@@ -162,19 +188,26 @@ local offMsg = ""
 
 local WeaponEnchants = TotemTimers.WeaponEnchants
 local GetWeaponEnchantInfo = GetWeaponEnchantInfo
+local weaponTextures = {}
 
-local handsToCheck = 1
+local maxDurations ={}
 
 function TotemTimers.WeaponUpdate(self, elapsed)
     local enchant, expiration, _, mainID, offenchant, offExpiration, _, offID = GetWeaponEnchantInfo()
-    local enchants = { { enchant, expiration, mainID }, { offenchant, offExpiration, offID } }
+    local enchants = { { enchant, expiration and expiration/1000 or 0, mainID }, { offenchant, offExpiration and offExpiration/1000 or 0, offID } }
 
-    for hand = 1,handsToCheck do
+    local hands = weapon.numtimers or 1
+    local showGlow = false
+    for hand = 1,hands do
         local checkEnchant = enchants[hand]
         if checkEnchant[1] then
-            if checkEnchant[2] / 1000 > self.timers[hand] then
+            if weapon.slotChanged[hand] or checkEnchant[2] > self.timers[hand] then
+                if not maxDurations[checkEnchant[3]] or maxDurations[checkEnchant[3]] < checkEnchant[2] then
+                    maxDurations[checkEnchant[3]] = checkEnchant[2]
+                end
+                weapon.slotChanged[hand] = false
                 local texture, spell
-                self:Start(hand, checkEnchant[2] / 1000, 1800)
+                self:Start(hand, checkEnchant[2], maxDurations[checkEnchant[3]])
                 if WeaponEnchants[checkEnchant[3]] then
                     texture = SpellTextures[WeaponEnchants[checkEnchant[3]]]
                     spell = SpellNames[WeaponEnchants[checkEnchant[3]]]
@@ -192,17 +225,27 @@ function TotemTimers.WeaponUpdate(self, elapsed)
             if checkEnchant[2] == 0 then
                 self:Stop(hand)
             else
-                self.timers[hand] = checkEnchant[2] / 1000
+                self.timers[hand] = checkEnchant[2]
             end
         elseif self.timers[hand] > 0 then
             self:Stop(hand)
         end
+        if InCombatLockdown() and self.timers[hand] < 30 then
+            showGlow = true
+        end
     end
+
+    if showGlow and TotemTimers.Specialization == 2 and TotemTimers.ActiveProfile.WeaponGlow then
+        ActionButton_ShowOverlayGlow(self.button)
+    else
+        ActionButton_HideOverlayGlow(self.button)
+    end
+
     XiTimers.Update(self, 0)
 end
 
 function TotemTimers.SetNumWeaponTimers()
-    handsToCheck = AvailableTalents.DualWield and 2 or 1
+    weapon.handsToCheck = AvailableTalents.DualWield and 2 or 1
     TotemTimers.SetDoubleTexture(weapon.button,  AvailableTalents.DualWield, true)
     weapon.numtimers = AvailableTalents.DualWield and 2 or 1
     weapon:SetTimerBarPos(weapon.timerBarPos)
