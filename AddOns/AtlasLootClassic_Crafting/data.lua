@@ -47,6 +47,15 @@ data["Alchemy"] = {
 	CorrespondingFields = private.ALCHEMY_LINK,
 	items = {
 		{
+			name = AL["SoD Exclusives"],
+			[NORMAL_DIFF] = {
+				{ 1, 426607 }, --Elixir of Coalesced Regret
+				{ 3, 435969 }, --Insulating Gniodine
+				{ 4, 435971 }, --Mildly Irradiated Rejuvenation Potion
+				{ 5, 439960 }, --Recipe: Lesser Arcane Elixir
+			},
+		},
+		{
 			name = AL["Flasks"],
 			[NORMAL_DIFF] = {
 				{ 1, 17635 }, --Flask of the Titans
@@ -214,6 +223,26 @@ data["Blacksmithing"] = {
 	TableType = PROF_ITTYPE,
 	CorrespondingFields = private.BLACKSMITHING_LINK,
 	items = {
+			{
+			name = AL["SoD Exclusives"],
+			[NORMAL_DIFF] = {
+				{ 1, 429348 }, --Shifting Silver Breastplate
+				{ 2, 430397 }, --Blackfathom Sharpening Stone
+				{ 3, 427063 }, --Mantle of the Second War
+				{ 5, 435910 }, --Low-Background Truesilver Plates
+				{ 6, 435906 }, --Reflective Truesilver Braincage
+				{ 7, 435908 }, --Tempered Interference-Negating Helmet
+				{ 16, "INV_Box_01", nil, AL["Updated in SoD"], nil },
+				{ 17, 439122 }, --Golden Scale Boots
+				{ 18, 439126 }, --Golden Scale Coif
+				{ 19, 439124 }, --Golden Scale Cuirass
+				{ 20, 439120 }, --Golden Scale Gauntlets
+				{ 21, 439132 }, --Golden Scale Leggings
+				{ 22, 439130 }, --Golden Scale Shoulders
+				{ 23, 439128 }, --Moonsteel Broadsword
+
+			},
+		},
 		{
 			name = AL["Weapons"].." - "..ALIL["Daggers"],
 			[NORMAL_DIFF] = {
@@ -571,6 +600,17 @@ data["Enchanting"] = {
 	CorrespondingFields = private.ENCHANTING_LINK,
 	items = {
 		{
+			name = AL["SoD Exclusives"],
+			[NORMAL_DIFF] = {
+				{ 1, 430409 }, --Brilliant Mana Oil / 310
+				{ 3, 435903 }, --Enchant Chest - Retricutioner
+				{ 4, 435481 }, -- Enchant Weapon - Dismantle
+				{ 5, 439156 }, -- Sigil of Innovation
+				{ 16, "INV_Box_01", nil, AL["Updated in SoD"], nil },
+				{ 17, 439134 }, -- Greater Mystic Wand
+			}
+		},
+		{
 			name = AL["Oil"],
 			[NORMAL_DIFF] = {
 				{ 1, 25130 }, --Brilliant Mana Oil / 310
@@ -786,6 +826,18 @@ data["Engineering"] = {
 	TableType = PROF_ITTYPE,
 	CorrespondingFields = private.ENGINEERING_LINK,
 	items = {
+			{
+			name = AL["SoD Exclusives"],
+			[NORMAL_DIFF] = {
+				{ 1, 424641 }, --Shredder Autosalvage Unit
+				{ 3, 435956 }, --Polished Truesilver Gears
+				{ 4, 431362 }, -- Soul Vessel
+				{ 5, 435966 }, -- Ez-Thro Radiation Bomb 
+				{ 6, 435964 }, -- High-Yield Radiation Bomb
+				{ 7, 435960 }, -- Hyperconductive Goldwrap
+				{ 8, 435958 }, -- Whirling Truesilver Gearwall
+			}
+		},
 		{
 			name = AL["Armor"],
 			[NORMAL_DIFF] = {
@@ -1012,6 +1064,30 @@ data["Tailoring"] = {
 	TableType = PROF_ITTYPE,
 	CorrespondingFields = private.TAILORING_LINK,
 	items = {
+		{
+			name = AL["SoD Exclusives"],
+			[NORMAL_DIFF] = {
+			{ 1, 429351 }, --Extraplanar Spidersilk Boots
+			{ 2, 428424 }, --Phoenix Bindings
+			{ 3, 435841 }, --Invoker's Cord
+			{ 4, 435848 }, --Invoker's Mantle
+			{ 6, 435827 }, -- Hyperconductive Arcano-Filament
+			{ 7, 435610 }, -- Gneuro-Linked Arcano-Filament Monocle
+			{ 16, "INV_Box_01", nil, AL["Updated in SoD"], nil },
+			{ 17, 439105 }, -- Big Voodoo Mask
+			{ 18, 439108 }, -- Big Voodoo Robe
+			{ 19, 439088 }, -- Black Mageweave Leggings
+			{ 20, 439086 }, -- Black Mageweave Vest
+			{ 21, 439097 }, -- Boots of the Enchanter
+			{ 22, 439098 }, -- Crimson Silk Belt
+			{ 23, 439085 }, -- Crimson Silk Robe
+			{ 24, 439093 }, -- Crimson Silk Shoulders
+			{ 25, 439091 }, -- Earthen Silk Belt
+			{ 26, 439100 }, -- Earthen Vest
+			{ 27, 439102 }, -- Enchanter's Cowl
+			{ 28, 439094 }, -- Long Silken Cloak
+			}
+		},
 		{
 			name = AL["Armor"].." - "..ALIL["Cloak"],
 			[NORMAL_DIFF] = {
@@ -1307,6 +1383,24 @@ data["Leatherworking"] = {
 	TableType = PROF_ITTYPE,
 	CorrespondingFields = private.LEATHERWORKING_LINK,
 	items = {
+			{
+			name = AL["SoD Exclusives"],
+			[NORMAL_DIFF] = {
+			{ 1, 429869 }, --Void-Touched Leather Gauntlets
+			{ 2, 429354 }, --Void-Touched Leather Gloves
+			{ 4, 435819 }, -- Faintly Glowing Leather
+			{ 5, 435904 }, -- Glowing Gneuro-Linked Cowl
+			{ 6, 435949 }, -- Glowing Hyperconductive Scale Coif
+			{ 7, 435951 }, -- Gneuro-Conductive Channeler's Hood
+			{ 8, 435953 }, -- Rad-Resistant Scale Hood
+			{ 16, "INV_Box_01", nil, AL["Updated in SoD"], nil },
+			{ 17, 439112 }, -- Guardian Belt
+			{ 18, 439110 }, -- Guardian Leather Bracers
+			{ 19, 439114 }, -- Guardian Pants
+			{ 20, 439116 }, -- Turtle Scale Breastplate
+			{ 21, 439118 }, -- Turtle Scale Gloves
+			}
+		},
 		{
 			name = AL["Armor"].." - "..ALIL["Cloak"],
 			[NORMAL_DIFF] = {

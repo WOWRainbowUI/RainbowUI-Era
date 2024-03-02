@@ -22,6 +22,7 @@ local NORMAL_DIFF = data:AddDifficulty(AL["Normal"], "n", 1, nil, true)
 local ALLIANCE_DIFF
 local HORDE_DIFF
 local LOAD_DIFF
+
 if UnitFactionGroup("player") == "Horde" then
 	HORDE_DIFF = data:AddDifficulty(FACTION_HORDE, "horde", nil, 1)
 	ALLIANCE_DIFF = data:AddDifficulty(FACTION_ALLIANCE, "alliance", nil, 1)
@@ -40,6 +41,7 @@ local QUEST_EXTRA_ITTYPE = data:AddExtraItemTableType("Quest")
 local PRICE_EXTRA_ITTYPE = data:AddExtraItemTableType("Price")
 local SET_EXTRA_ITTYPE = data:AddExtraItemTableType("Set")
 
+local SOD_CONTENT = data:AddContentType(AL["SoD Exclusives"], ATLASLOOT_RAID20_COLOR)
 local PVP_CONTENT = data:AddContentType(AL["Battlegrounds"], ATLASLOOT_PVP_COLOR)
 local GENERAL_CONTENT = data:AddContentType(GENERAL, ATLASLOOT_RAID40_COLOR)
 
@@ -946,6 +948,115 @@ data["Insignia"] = {
 				{ 6,  18853 }, -- Druid
 				{ 7,  18845 }, -- Shaman
 				{ 8,  18850 }, -- Mage
+			},
+		},
+		PVP_RANKS,
+	},
+}
+data["SoD Level 25"] = {
+	name = AL["SoD Level 25"],
+	ContentType = SOD_CONTENT,
+	LoadDifficulty = LOAD_DIFF,
+	ContentPhase = 1,
+	items = {
+		{
+			name = AL["Level 25"],
+			[HORDE_DIFF] = {
+				{ 1, "f889rep5" },
+				{ 2,  211500 }, --Resilient Cloth Headband
+				{ 3,  211857 }, --Resilient Leather Mask
+				{ 4,  211856 }, --Resilient Mail Coif
+				{ 5,  211499 }, --Trainee's Outrider Wolf
+				{ 7, "f889rep7" },
+				{ 8,  212584 }, --Advisor's Gnarled Staff
+				{ 9,  212585 }, --Outrider's Bow
+				{ 10,  212586 }, --Legionnaire's Sword
+				{ 11,  212587 }, --Scout's Blade
+				{ 16,  213088 }, --Sergeant's Cloak
+			},
+			[ALLIANCE_DIFF] = {
+				{ 1, "f890rep5" },
+				{ 2,  211500 }, --Resilient Cloth Headband
+				{ 3,  211857 }, --Resilient Leather Mask
+				{ 4,  211856 }, --Resilient Mail Coif
+				{ 5,  211498 }, --Trainee's Sentinel Nightsaber
+				{ 7, "f890rep7" },
+				{ 8,  212580 }, --Lorekeeper's Staff
+				{ 9,  212581 }, --Outrunner's Bow
+				{ 10,  212582 }, --Protector's Sword
+				{ 11,  212583 }, --Sentinel's Blade
+				{ 16,  213087 }, --Sergeant's Cloak
+			},
+		},
+		PVP_RANKS,
+	},
+}
+
+
+data["SoD Level 40"] = {
+	name = AL["SoD Level 40"],
+	ContentType = SOD_CONTENT,
+	LoadDifficulty = LOAD_DIFF,
+	ContentPhase = 1,
+	items = {
+		{
+		name = AL["STV Blood Moon"],
+			[NORMAL_DIFF] = {
+				{ 1, 216621 }, -- Blooddrenched Drape
+				{ 2, 216620 }, -- Bloodrot Cloak
+				{ 3, 216623 }, -- Cape of Hemostasis
+				{ 4, 216622 }, -- Coagulated Cloak
+				{ 5, 216570 }, -- Reins of the Golden Sabercat
+				{ 6, 216492 }, -- Whistle of the Mottled Blood Raptor
+			},
+		},
+		{
+		name = AL["STV Blood Moon Epics 1"],
+			[NORMAL_DIFF] = {
+				{ 1, "INV_Box_01", nil, AL["Druid"], nil },
+				{ 2, 216498 }, -- Enchanted Sanguine Grimoire 
+				{ 3, 216499 }, -- Bloodbark Crusher 
+				{ 4, 216500 }, -- Bloodbonded Grove Talisman
+				{ 6, "INV_Box_01", nil, AL["Hunter"], nil },
+				{ 7, 216513 }, -- Tigerblood Talisman
+				{ 8, 216514 }, -- Sanguine Quiver
+				{ 9, 216515 }, -- Sanguine Ammo Pouch
+				{ 10, 216516 }, -- Bloodlash Bow
+				{ 12, "INV_Box_01", nil, AL["Mage"], nil },
+				{ 13, 216510 }, -- Blood Resonance Circle 
+				{ 14, 216511 }, -- Emberblood Seal 
+				{ 15, 216512 }, -- Loop of Chilled Veins 
+				{ 16, "INV_Box_01", nil, AL["Paladin"], nil },
+				{ 17, 216504 }, -- Eclipsed Bloodlight Saber 
+				{ 18, 216505 }, -- Bloodlight Crusader's Radiance 
+				{ 19, 216506 }, -- Bloodlight Avenger's Edge 
+				{ 20, 216607 }, -- Bloodlight Offering 
+				{ 22, "INV_Box_01", nil, AL["Priest"], nil },
+				{ 23, 216517 }, -- Sanguine Sanctuary 
+				{ 24, 216518 }, -- Blood Covenant Seal
+				{ 25, 216519 }, -- Sanguine Shadow Band 
+			},
+		},
+		{
+		name = AL["STV Blood Moon Epics 2"],
+			[NORMAL_DIFF] = {
+				{ 1, "INV_Box_01", nil, AL["Rogue"], nil },
+				{ 2, 216520 }, -- Bloodharvest Blade
+				{ 3, 216521 }, -- Swift Sanguine Strikers
+				{ 4, 216522 }, -- Blood Spattered Stiletto 
+				{ 6, "INV_Box_01", nil, AL["Shaman"], nil },
+				{ 7, 216501 }, -- Bloodstorm Barrier
+				{ 8, 216502 }, -- Bloodstorm War Totem 
+				{ 9, 216503 }, -- Bloodstorm Jewel 
+				{ 10, 216615 }, -- Ancestral Bloodstorm Beacon 
+				{ 12, "INV_Box_01", nil, AL["Warlock"], nil },
+				{ 13, 216507 }, -- Umbral Bloodseal
+				{ 14, 216508 }, -- Infernal Bloodcoil Band
+				{ 15, 216509 }, -- Infernal Pact Essence 
+				{ 16, "INV_Box_01", nil, AL["Warrior"], nil },
+				{ 17, 216495 }, -- Sanguine Crusher 
+				{ 18, 216496 }, -- Sanguine Skullcrusher 
+				{ 19, 216497 }, -- Exsanguinar 
 			},
 		},
 		PVP_RANKS,
