@@ -14,10 +14,10 @@
 			end
 		end
 	</Binding>
-	<Binding name="ENGRAVER_NEXT_FILTER" category="Engraver">
+	<Binding name="ENGRAVER_NEXT_FILTER" category="ADDONS">
 		EngraverFilters_SetCurrentFilterNext()
 	</Binding>
-	<Binding name="ENGRAVER_PREV_FILTER" category="Engraver">
+	<Binding name="ENGRAVER_PREV_FILTER" category="ADDONS">
 		EngraverFilters_SetCurrentFilterPrev()
 	</Binding>
 </Bindings>
