@@ -160,6 +160,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
         end)
         hooksecurefunc("TradeSkillFrame_SetSelection", function()
+            if not TradeSkillFrame.selectedSkill then return end
             local link = GetTradeSkillItemLink(TradeSkillFrame.selectedSkill)
             if link then
                 local itemID = GetItemInfoInstant(link)
@@ -196,6 +197,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
         end)
         hooksecurefunc("ClassTrainer_SetSelection", function()
+            if not ClassTrainerFrame.selectedService then return end
             local serviceName = GetTrainerServiceInfo(ClassTrainerFrame.selectedService)
             for _itemID in pairs(BG.CommerceAuthority) do
                 local _name = GetItemInfo(_itemID)

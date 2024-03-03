@@ -1914,6 +1914,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     do
         BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
             if not (isLogin or isReload) then return end
+            local isOnter
 
             local function OnClick(self)
                 BG.PlaySound(1)
@@ -1934,6 +1935,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
 
             local function OnEnter(self)
+                isOnter = true
                 local bt = self.bt or self
                 if bt:IsEnabled() then
                     bt:SetBackdropBorderColor(1, 1, 1, 1)
@@ -1973,6 +1975,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
 
             local function OnLeave(self)
+                isOnter = false
                 local bt = self.bt or self
                 if bt:IsEnabled() then
                     bt:SetBackdropBorderColor(0, 1, 0, 1)
@@ -2012,6 +2015,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     disframe:Hide()
                     return
                 end
+                isOnter = false
 
                 local yes, type = IsInInstance()
                 if (BG.DeBug or yes) and GetLootMethod() == "master" then
@@ -2033,6 +2037,17 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             if ElvLootFrame then
                 ElvLootFrame:HookScript("OnShow", OnShow)
             end
+
+            -- 当物品被捡走时，刷新鼠标提示工具
+            BG.RegisterEvent("LOOT_SLOT_CLEARED", function(self, even)
+                if isOnter then
+                    if bt:IsEnabled() then
+                        OnEnter(bt)
+                    else
+                        OnEnter(disframe)
+                    end
+                end
+            end)
         end)
     end
     ----------血月活动期间自动释放尸体和对话自动复活----------

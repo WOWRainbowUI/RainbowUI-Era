@@ -32,8 +32,8 @@ local locales = {
     ["(%d+)金"] = { "(%d+)金", "(%d+)gold" },
     ["平均每人收入:"] = { "平均每人收入:", "Per Member credit:" },
     --金团表格
-    ["通报金团账单"] = { "通报金团账单", "通報金團帳單", "Announce Raid Ledger" },
-    ["感谢使用金团表格"] = { "感谢使用金团表格", "感謝使用金團表格", "Thank you for using the Raid Table" },
+    ["通报金团账单"] = { "—通报账单—", "—通报金团账单—", "—通報帳單—", "—通報金團帳單—", "—Announce Raid Ledger—" },
+    ["感谢使用金团表格"] = { "感谢使用BiaoGe插件", "感谢使用金团表格", "感謝使用BiaoGe插件", "感謝使用金團表格", "Thank you for using the Raid Table" },
     ["打包交易"] = { "打包交易", "打包交易", },
     --大脚金团助手
     ["事件：.-|c.-|Hitem.-|h|r"] = { "事件：.-|c.-|Hitem.-|h|r", },

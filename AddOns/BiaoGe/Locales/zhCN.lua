@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.8.1c"
+ADDONSELF.ver = "v1.8.1d"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -19,6 +19,15 @@ do --简体说明书
     text = text .. "|cffFFFFFF-交换格子：|rCTRL+ALT+点击格子1，再点格子2，可交换两行全部内容\n"
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
     text = text .. "-BUG反馈：邮箱buick_hbj@163.com，Q群322785325\n\n"
+
+    update = update .. "|cff00FF00" .. "3月1日更新v1.8.1d" .. "|r\n"
+    update = update .. [[-集结号多个关键词搜索：现在也可以使用"/"，表示"或"。]] .. "\n"
+    update = update .. [[比如搜索"诺莫瑞根/矮子"，则搜索包含"诺莫瑞根"或者"矮子"的活动。]] .. "\n"
+    update = update .. [[同理如果你是双修牧师，可以搜索"牧师/MS/暗牧/AM"。]] .. "\n"
+    update = update .. [[再搭配使用"空格"，比如搜索"诺莫瑞根/矮子 牧师/MS/暗牧/AM"，]] .. "\n"
+    update = update .. [[表示我想找诺莫瑞根或者矮子的活动，且该活动缺少任意牧师]] .. "\n"
+    update = update .. [[-优化<快速评价>功能]] .. "\n"
+    update = update .. [[-<赛季服>尝试修复炼金转化CD可能出现时间错误的问题]] .. "\n\n"
 
     update = update .. "|cff00FF00" .. "2月29日更新1.8.1c版本" .. "|r\n"
     update = update .. [[-<赛季服>[遭劫货物]的鼠标提示工具，增加显示声望奖励最高可提升至哪个阶段]] .. "\n"
@@ -88,6 +97,20 @@ ADDONSELF.L = L
 local L = {}
 
 do
+    L[ [[搜索框支持多个关键词搜索。]] ] = true
+    L[ [["空格"表示"且"，需同时满足全部关键词。比如你想搜索哪个诺莫瑞根活动里缺少治疗，可以搜索"诺莫瑞根 治疗"。]] ] = true
+    L[ [["/"表示"或"，满足其中一个关键词即可。比如你是双修牧师，可以搜索"牧师/MS/暗牧/AM"。]] ] = true
+    L[ [[如果把"空格"和"/"结合起来，比如搜索"诺莫瑞根/矮子 牧师/MS/暗牧/AM"，表示我想找诺莫瑞根或者矮子的活动，且该活动缺少任意牧师。]] ] = true
+    L["详细评价"] = true
+    L["在金团表格里写详细评价。"] = true
+    L["修改评价"] = true
+    L["该YY号已有评价，去金团表格里修改评价。"] = true
+    L["你已给该YY写过评价！"] = true
+    L["（曾评价为：|cff%s%s|r）"] = true
+    L["不能重复评价。如需修改评价，请点击<修改评价>按钮。"] = true
+    L["未填写YY，不能保存。"] = true
+
+
     L["声望最高可提升至"] = true
     L["(贸易局)"] = true
 

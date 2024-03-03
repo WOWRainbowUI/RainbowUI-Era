@@ -1571,78 +1571,88 @@ local function OptionsUI()
             O.CreateLine(others, height - h + line_height)
 
             -- 不自动退出集结号频道
+            local name1, ontext1, f1
             do
-                local name = "MeetingHorn_always"
-                BG.options[name .. "reset"] = 0
-                if not BiaoGe.options[name] then
-                    BiaoGe.options[name] = BG.options[name .. "reset"]
+                name1 = "MeetingHorn_always"
+                BG.options[name1 .. "reset"] = 0
+                if not BiaoGe.options[name1] then
+                    BiaoGe.options[name1] = BG.options[name1 .. "reset"]
                 end
-                local ontext = {
+                ontext1 = {
                     L["不自动退出集结号频道"],
                     L["这样你可以一直同步集结号的组队消息，让你随时打开集结号都能查看全部活动。"],
                 }
-                local f = O.CreateCheckButton(name, L["不自动退出集结号频道"] .. "*", others, 15, height - h, ontext)
-                BG.options["button" .. name] = f
-                Update_OnShow(f, name)
+                f1 = O.CreateCheckButton(name1, L["不自动退出集结号频道"] .. "*", others, 15, height - h, ontext1)
+                BG.options["button" .. name1] = f1
+                Update_OnShow(f1, name1)
             end
             h = h + 30
 
             -- 历史搜索记录
+            local name2, ontext2, f2
             do
-                local name = "MeetingHorn_history"
-                BG.options[name .. "reset"] = 0
-                if not BiaoGe.options[name] then
-                    BiaoGe.options[name] = BG.options[name .. "reset"]
+                name2 = "MeetingHorn_history"
+                BG.options[name2 .. "reset"] = 0
+                if not BiaoGe.options[name2] then
+                    BiaoGe.options[name2] = BG.options[name2 .. "reset"]
                 end
-                local ontext = {
+                ontext2 = {
                     L["历史搜索记录"],
                     L["给集结号的搜索框增加一个历史搜索记录，提高你搜索的效率。"],
                 }
-                local f = O.CreateCheckButton(name, L["历史搜索记录"] .. "*", others, 15, height - h, ontext)
-                BG.options["button" .. name] = f
-                Update_OnShow(f, name)
+                f2 = O.CreateCheckButton(name2, L["历史搜索记录"] .. "*", others, 15, height - h, ontext2)
+                BG.options["button" .. name2] = f2
+                Update_OnShow(f2, name2)
             end
             h = h + 30
 
             -- 多个关键词搜索
+            local name3, ontext3, f3
             do
-                local name = "MeetingHorn_search"
-                BG.options[name .. "reset"] = 0
-                if not BiaoGe.options[name] then
-                    BiaoGe.options[name] = BG.options[name .. "reset"]
+                name3 = "MeetingHorn_search"
+                BG.options[name3 .. "reset"] = 0
+                if not BiaoGe.options[name3] then
+                    BiaoGe.options[name3] = BG.options[name3 .. "reset"]
                 end
-                local ontext = {
+                ontext3 = {
                     L["多个关键词搜索"],
-                    L["搜索框支持多个关键词搜索，每个关键词用空格隔开。"],
+                    L[ [[搜索框支持多个关键词搜索。]] ],
+                    " ",
+                    L[ [["空格"表示"且"，需同时满足全部关键词。比如你想搜索哪个诺莫瑞根活动里缺少治疗，可以搜索"诺莫瑞根 治疗"。]] ],
+                    " ",
+                    L[ [["/"表示"或"，满足其中一个关键词即可。比如你是双修牧师，可以搜索"牧师/MS/暗牧/AM"。]] ],
+                    " ",
+                    L[ [[如果把"空格"和"/"结合起来，比如搜索"诺莫瑞根/矮子 牧师/MS/暗牧/AM"，表示我想找诺莫瑞根或者矮子的活动，且该活动缺少任意牧师。]] ],
                 }
-                local f = O.CreateCheckButton(name, L["多个关键词搜索"] .. "*", others, 15, height - h, ontext)
-                BG.options["button" .. name] = f
-                Update_OnShow(f, name)
+                f3 = O.CreateCheckButton(name3, L["多个关键词搜索"] .. "*", others, 15, height - h, ontext3)
+                BG.options["button" .. name3] = f3
+                Update_OnShow(f3, name3)
             end
             h = h + 30
 
             -- 按队伍人数排序
+            local name4, ontext4, f4
             do
-                local name = "MeetingHorn_members"
-                BG.options[name .. "reset"] = 0
-                if not BiaoGe.options[name] then
-                    BiaoGe.options[name] = BG.options[name .. "reset"]
+                name4 = "MeetingHorn_members"
+                BG.options[name4 .. "reset"] = 0
+                if not BiaoGe.options[name4] then
+                    BiaoGe.options[name4] = BG.options[name4 .. "reset"]
                 end
-                local ontext = {
+                ontext4 = {
                     L["按队伍人数排序"],
                     L["集结号活动可以按队伍人数排序。"],
                 }
-                local f = O.CreateCheckButton(name, L["按队伍人数排序"] .. "*", others, 15, height - h, ontext)
-                BG.options["button" .. name] = f
-                Update_OnShow(f, name)
-                f:HookScript("OnClick", function()
+                f4 = O.CreateCheckButton(name4, L["按队伍人数排序"] .. "*", others, 15, height - h, ontext4)
+                BG.options["button" .. name4] = f4
+                Update_OnShow(f4, name4)
+                f4:HookScript("OnClick", function(self)
                     local addonName = "MeetingHorn"
                     if not IsAddOnLoaded(addonName) then return end
 
                     local MeetingHorn = LibStub("AceAddon-3.0"):GetAddon(addonName)
                     local bt = MeetingHorn.MainPanel.Browser.Header3
 
-                    if f:GetChecked() then
+                    if self:GetChecked() then
                         bt:SetEnabled(true)
                     else
                         bt:SetEnabled(false)
@@ -1652,15 +1662,15 @@ local function OptionsUI()
             h = h + 30
 
             -- 密语模板
+            local name5, ontext5, f5
             do
-                local name = "MeetingHorn_whisper"
-                BG.options[name .. "reset"] = 0
-                if not BiaoGe.options[name] then
-                    BiaoGe.options[name] = BG.options[name .. "reset"]
+                name5 = "MeetingHorn_whisper"
+                BG.options[name5 .. "reset"] = 0
+                if not BiaoGe.options[name5] then
+                    BiaoGe.options[name5] = BG.options[name5 .. "reset"]
                 end
-                local ontext
                 if BG.IsVanilla() then
-                    ontext = {
+                    ontext5 = {
                         L["密语模板"],
                         L["预设装等、自定义文本，当你点击集结号活动密语时会自动添加该内容。"],
                         L["按住SHIFT+点击密语时不会添加。"],
@@ -1669,7 +1679,7 @@ local function OptionsUI()
                         L["集结号活动的右键菜单里增加邀请按钮。"],
                     }
                 else
-                    ontext = {
+                    ontext5 = {
                         L["密语模板"],
                         L["预设成就、装等、自定义文本，当你点击集结号活动密语时会自动添加该内容。"],
                         L["按住SHIFT+点击密语时不会添加。"],
@@ -1679,14 +1689,14 @@ local function OptionsUI()
                     }
                 end
 
-                local f = O.CreateCheckButton(name, L["密语模板"] .. "*", others, 15, height - h, ontext)
-                BG.options["button" .. name] = f
-                Update_OnShow(f, name)
-                f:HookScript("OnClick", function()
+                f5 = O.CreateCheckButton(name5, L["密语模板"] .. "*", others, 15, height - h, ontext5)
+                BG.options["button" .. name5] = f5
+                Update_OnShow(f5, name5)
+                f5:HookScript("OnClick", function(self)
                     local addonName = "MeetingHorn"
                     if not IsAddOnLoaded(addonName) then return end
 
-                    if f:GetChecked() then
+                    if self:GetChecked() then
                         BG.MeetingHorn.WhisperButton:Show()
                         BG.MeetingHorn.WhisperFrame:Show()
                         BiaoGe.MeetingHornWhisper.WhisperFrame = true
@@ -1724,99 +1734,34 @@ local function OptionsUI()
 
                 -- 不自动退出集结号频道
                 do
-                    local name = "MeetingHorn_always"
-                    local ontext = {
-                        L["不自动退出集结号频道"],
-                        L["这样你可以一直同步集结号的组队消息，让你随时打开集结号都能查看全部活动。"],
-                    }
-                    local f = O.CreateCheckButton(name, L["不自动退出集结号频道"] .. "*", others, 15, height - h, ontext)
-                    Update_OnShow(f, name)
+                    local f = O.CreateCheckButton(name1, L["不自动退出集结号频道"] .. "*", others, 15, height - h, ontext1)
+                    Update_OnShow(f, name1)
                 end
                 h = h + h_jiange
                 -- 历史搜索记录
                 do
-                    local name = "MeetingHorn_history"
-                    local ontext = {
-                        L["历史搜索记录"],
-                        L["给集结号的搜索框增加一个历史搜索记录，提高你搜索的效率。"],
-                    }
-                    local f = O.CreateCheckButton(name, L["历史搜索记录"] .. "*", others, 15, height - h, ontext)
-                    Update_OnShow(f, name)
+                    local f = O.CreateCheckButton(name2, L["历史搜索记录"] .. "*", others, 15, height - h, ontext2)
+                    Update_OnShow(f, name2)
                 end
                 h = h + h_jiange
                 -- 多个关键词搜索
                 do
-                    local name = "MeetingHorn_search"
-                    local ontext = {
-                        L["多个关键词搜索"],
-                        L["搜索框支持多个关键词搜索，每个关键词用空格隔开。"],
-                    }
-                    local f = O.CreateCheckButton(name, L["多个关键词搜索"] .. "*", others, 15, height - h, ontext)
-                    Update_OnShow(f, name)
+                    local f = O.CreateCheckButton(name3, L["多个关键词搜索"] .. "*", others, 15, height - h, ontext3)
+                    Update_OnShow(f, name3)
                 end
                 h = h + h_jiange
                 -- 按队伍人数排序
                 do
-                    local name = "MeetingHorn_members"
-                    local ontext = {
-                        L["按队伍人数排序"],
-                        L["集结号活动可以按队伍人数排序。"],
-                    }
-                    local f = O.CreateCheckButton(name, L["按队伍人数排序"] .. "*", others, 15, height - h, ontext)
-                    Update_OnShow(f, name)
-                    f:HookScript("OnClick", function()
-                        local addonName = "MeetingHorn"
-                        if not IsAddOnLoaded(addonName) then return end
-
-                        local MeetingHorn = LibStub("AceAddon-3.0"):GetAddon(addonName)
-                        local bt = MeetingHorn.MainPanel.Browser.Header3
-
-                        if f:GetChecked() then
-                            bt:SetEnabled(true)
-                        else
-                            bt:SetEnabled(false)
-                        end
-                    end)
+                    local f = O.CreateCheckButton(name4, L["按队伍人数排序"] .. "*", others, 15, height - h, ontext4)
+                    Update_OnShow(f, name4)
+                    f:HookScript("OnClick", f4:GetScript("OnClick"))
                 end
                 h = h + h_jiange
                 -- 密语模板
                 do
-                    local name = "MeetingHorn_whisper"
-                    local ontext
-                    if BG.IsVanilla() then
-                        ontext = {
-                            L["密语模板"],
-                            L["预设装等、自定义文本，当你点击集结号活动密语时会自动添加该内容。"],
-                            L["按住SHIFT+点击密语时不会添加。"],
-                            L["聊天频道玩家的右键菜单里增加密语模板按钮。"],
-                            L["聊天输入框的右键菜单里增加密语模板按钮。"],
-                            L["集结号活动的右键菜单里增加邀请按钮。"],
-                        }
-                    else
-                        ontext = {
-                            L["密语模板"],
-                            L["预设成就、装等、自定义文本，当你点击集结号活动密语时会自动添加该内容。"],
-                            L["按住SHIFT+点击密语时不会添加。"],
-                            L["聊天频道玩家的右键菜单里增加密语模板按钮。"],
-                            L["聊天输入框的右键菜单里增加密语模板按钮。"],
-                            L["集结号活动的右键菜单里增加邀请按钮。"],
-                        }
-                    end
-
-                    local f = O.CreateCheckButton(name, L["密语模板"] .. "*", others, 15, height - h, ontext)
-                    Update_OnShow(f, name)
-                    f:HookScript("OnClick", function()
-                        local addonName = "MeetingHorn"
-                        if not IsAddOnLoaded(addonName) then return end
-
-                        if f:GetChecked() then
-                            BG.MeetingHorn.WhisperButton:Show()
-                            BG.MeetingHorn.WhisperFrame:Show()
-                            BiaoGe.MeetingHornWhisper.WhisperFrame = true
-                        else
-                            BG.MeetingHorn.WhisperButton:Hide()
-                        end
-                    end)
+                    local f = O.CreateCheckButton(name5, L["密语模板"] .. "*", others, 15, height - h, ontext5)
+                    Update_OnShow(f, name5)
+                    f:HookScript("OnClick", f5:GetScript("OnClick"))
                 end
                 h = h + h_jiange
             end)
