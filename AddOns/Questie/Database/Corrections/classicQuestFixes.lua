@@ -206,6 +206,9 @@ function QuestieQuestFixes:Load()
         [420] = {
             [questKeys.exclusiveTo] = {287}, -- senir's observations part 2 becomes unavailable if you have completed frostmane hold
         },
+        [427] = {
+            [questKeys.preQuestSingle] = {},
+        },
         [428] = {
             [questKeys.exclusiveTo] = {429}, -- lost deathstalkers breadcrumb
         },
@@ -1025,6 +1028,12 @@ function QuestieQuestFixes:Load()
         [1718] = {
             [questKeys.startedBy] = {{3041,3354,4595,5113,5479},nil,nil}, -- #1034
         },
+        [1789] = {
+            [questKeys.exclusiveTo] = {1785},
+        },
+        [1790] = {
+            [questKeys.exclusiveTo] = {1788},
+        },
         [1793] = {
             [questKeys.exclusiveTo] = {1649},
             [questKeys.specialFlags] = 1,
@@ -1080,7 +1089,7 @@ function QuestieQuestFixes:Load()
             [questKeys.preQuestSingle] = {1947},
         },
         [1950] = {
-            [questKeys.triggerEnd] = {"Secret phrase found", {[zoneIDs.THOUSAND_NEEDLES]={{79.56,75.65}}}},
+            [questKeys.objectives] = {{{6626,"Secret phrase found"}}},
         },
         [1954] = {
             [questKeys.preQuestSingle] = {},
@@ -1182,16 +1191,25 @@ function QuestieQuestFixes:Load()
             [questKeys.objectives] = {{{7783,"Conversation with Loramus"}}},
         },
         [2755] = {
-            [questKeys.triggerEnd] = {"Omosh Dance of Joy Learned", {[zoneIDs.ORGRIMMAR]={{79.28,22.3}}}},
+            [questKeys.objectives] = {{{7790,"Omosh Dance of Joy Learned"}}},
         },
         [2765] = {
-            [questKeys.triggerEnd] = {"You Are The Big Winner", {[zoneIDs.STRANGLETHORN_VALE]={{50.58,20.54}}}},
+            [questKeys.objectives] = {{{7802,"You Are The Big Winner"}}},
         },
         [2767] = {
             [questKeys.triggerEnd] = {"Escort OOX-22/FE to the dock along the Forgotten Coast", {[zoneIDs.FERALAS]={{45.63,43.39}}}},
         },
         [2769] = {
             [questKeys.exclusiveTo] = {2770}, -- #2071
+        },
+        [2771] = {
+            [questKeys.preQuestSingle] = {2764},
+        },
+        [2772] = {
+            [questKeys.preQuestSingle] = {2764},
+        },
+        [2773] = {
+            [questKeys.preQuestSingle] = {2764},
         },
         [2781] = {
             [questKeys.startedBy] = {nil,{142122,150075},nil}, -- #1081
@@ -1232,7 +1250,7 @@ function QuestieQuestFixes:Load()
             [questKeys.zoneOrSort] = 440, -- #1780
         },
         [2904] = {
-            [questKeys.triggerEnd] = {"Kernobee Rescue", {[zoneIDs.DUN_MOROGH]={{17.67,39.15}}}},
+            [questKeys.triggerEnd] = {"Kernobee Rescue", {[zoneIDs.GNOMEREGAN]={{-1,-1}}}},
         },
         [2922] = {
             [questKeys.preQuestSingle] = {}, -- Save Techbot's Brain doesn't need the Tinkmaster Overspark breadcrumb #687
@@ -1250,12 +1268,13 @@ function QuestieQuestFixes:Load()
             [questKeys.nextQuestInChain] = 2926,
         },
         [2930] = {
-            [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Step 1: obtain the Yellow Punch Card. You need the White Punch Card."), 0, {{"object", 142345}}},
-                                           {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 2: obtain the Blue Punch Card. You need the Yellow Punch Card."), 0, {{"object", 142475}}},
-                                           {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 3: obtain the Red Punch Card. You need the Blue Punch Card."), 0, {{"object", 142476}}},
-                                           {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 4: obtain the Prismatic Punch Card. You need the Red Punch Card."), 0, {{"object", 142696}}},
+            [questKeys.extraObjectives] = {
+                {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 1: obtain the Yellow Punch Card. You need the White Punch Card."), 0, {{"object", 142345}}},
+                {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 2: obtain the Blue Punch Card. You need the Yellow Punch Card."), 0, {{"object", 142475}}},
+                {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 3: obtain the Red Punch Card. You need the Blue Punch Card."), 0, {{"object", 142476}}},
+                {nil, Questie.ICON_TYPE_OBJECT, l10n("Step 4: obtain the Prismatic Punch Card. You need the Red Punch Card."), 0, {{"object", 142696}}},
             },
-            [questKeys.requiredSourceItems] = {9280,9281,9282}, --{9279,9280,9281,9282}, removed white punch card (9279) from this list because then every NPC has a bag icon
+            [questKeys.requiredSourceItems] = {9279,9280,9281,9282},
         },
         [2931] = {
             [questKeys.exclusiveTo] = {2930},
@@ -1319,7 +1338,7 @@ function QuestieQuestFixes:Load()
             [questKeys.startedBy] = {{5833},nil,{10000}},
         },
         [3321] = {
-            [questKeys.triggerEnd] = {"Watch Trenton Work", {[zoneIDs.TANARIS]={{51.43,28.7}}}},
+            [questKeys.objectives] = {{{7804,"Watch Trenton Work"}}},
         },
         [3367] = {
             [questKeys.triggerEnd] = {"Dorius Escort", {[zoneIDs.SEARING_GORGE]={{74.47,19.44}}}},
@@ -1805,6 +1824,9 @@ function QuestieQuestFixes:Load()
             [questKeys.triggerEnd] = {"Destroy the command tent and plant the Scourge banner in the camp", {[zoneIDs.WESTERN_PLAGUELANDS]={{40.72,52.04}}}},
             [questKeys.preQuestSingle] = {},
         },
+        [5103] = {
+            [questKeys.requiredSourceItems] = {12812},
+        },
         [5122] = {
             [questKeys.specialFlags] = 1, -- #1140
         },
@@ -1816,7 +1838,7 @@ function QuestieQuestFixes:Load()
         },
         [5126] = {
             [questKeys.requiredClasses] = classIDs.WARRIOR + classIDs.PALADIN + classIDs.SHAMAN,
-            [questKeys.triggerEnd] = {"Listen to Lorax's Tale", {[zoneIDs.WINTERSPRING]={{63.82,73.79}}}},
+            [questKeys.objectives] = {{{10918,"Listen to Lorax's Tale"}}},
             [questKeys.zoneOrSort] = sortKeys.BLACKSMITHING,
         },
         [5149] = {
@@ -2576,6 +2598,9 @@ function QuestieQuestFixes:Load()
         [7541] = {
             [questKeys.questLevel] = 40, -- #1320
         },
+        [7604] = {
+            [questKeys.specialFlags] = 0,
+        },
         [7622] = {
             [questKeys.triggerEnd] = {"The Balance of Light and Shadow", {[zoneIDs.EASTERN_PLAGUELANDS]={{21.19,17.79}}}}, -- #2332
         },
@@ -2590,6 +2615,9 @@ function QuestieQuestFixes:Load()
         },
         [7640] = {
             [questKeys.extraObjectives] = {{nil, Questie.ICON_TYPE_OBJECT, l10n("Exorcise the spirits"), 0, {{"object", 179747}}}},
+        },
+        [7651] = {
+            [questKeys.specialFlags] = 0,
         },
         [7668] = { -- #1344
             [questKeys.name] = "The Darkreaver Menace",
