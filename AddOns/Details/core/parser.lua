@@ -5870,10 +5870,11 @@ local SPELL_POWER_PAIN = SPELL_POWER_PAIN or (PowerEnum and PowerEnum.Pain) or 1
 			Details222.MythicPlus.time = 0.1
 		end
 
-		if (level >= 28 or Details.user_is_patreon_supporter) then --debug
+		--if (level >= 28 or Details.user_is_patreon_supporter) then --debug
+		if (Details.mythic_plus.show_damage_graphic) then
 			C_Timer.After(0, function()
 				if (ChallengeModeCompleteBanner) then
-					ChallengeModeCompleteBanner.timeToHold = 0.1
+					ChallengeModeCompleteBanner.timeToHold = 0.01
 				end
 			end)
 		end
