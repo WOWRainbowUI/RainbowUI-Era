@@ -1,10 +1,10 @@
-lightweight tag a2df001621210c018fd3fa17e11940301725e188 v1.13.4
+lightweight tag 2dac4ffce2d1ebf03f39ebaeb78362b9c4dfa315 v1.13.12
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Wed Feb 7 15:37:30 2024 -0500
+Date:	Mon Feb 19 12:55:51 2024 -0500
 
-commit a2df001621210c018fd3fa17e11940301725e188
+commit 2dac4ffce2d1ebf03f39ebaeb78362b9c4dfa315
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Wed Feb 7 15:37:30 2024 -0500
+Date:   Mon Feb 19 12:55:51 2024 -0500
 
-    added HideUndiscoveredRunes option
+    ShowOnMouseOver VisibilityMode
 

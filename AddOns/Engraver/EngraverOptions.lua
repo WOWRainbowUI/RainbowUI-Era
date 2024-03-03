@@ -7,6 +7,12 @@ SlashCmdList.ENGRAVER = function(msg, editBox)
 	Settings.OpenToCategory("符文");
 end
 
+SLASH_ENGRAVER_RESET_POSITION1 = "/engraver_reset_position"
+SlashCmdList.ENGRAVER_RESET_POSITION = function(msg, editBox)
+	EngraverFrame:ClearAllPoints(); 
+	EngraverFrame:SetPoint("CENTER", UIParent, "CENTER");
+end
+
 EngraverOptions = {} -- SavedVariable
 EngraverOptionsCallbackRegistry = CreateFromMixins(CallbackRegistryMixin)
 EngraverOptionsCallbackRegistry:OnLoad()
@@ -20,7 +26,11 @@ Addon.EngraverDisplayModes = EngraverDisplayModes
 Addon.GetCurrentDisplayMode = function() return EngraverDisplayModes[EngraverOptions.DisplayMode+1] end
 
 local ENGRAVER_SHOW_HIDE = "顯示/隱藏一鍵符文" -- TODO localization
+local ENGRAVER_NEXT_FILTER = "啟用下一個過濾方式" -- TODO localization
+local ENGRAVER_PREV_FILTER = "啟用前一個過濾方式" -- TODO localization
 _G.BINDING_NAME_ENGRAVER_SHOW_HIDE = ENGRAVER_SHOW_HIDE
+_G.BINDING_NAME_ENGRAVER_NEXT_FILTER = ENGRAVER_NEXT_FILTER
+_G.BINDING_NAME_ENGRAVER_PREV_FILTER = ENGRAVER_PREV_FILTER
 
 Addon.EngraverVisibilityModes = {
 	["ShowAlways"] = { text = "總是顯示", tooltip = "永遠都能看見一鍵符文。" },
@@ -28,6 +38,7 @@ Addon.EngraverVisibilityModes = {
 	["SyncCharacterPane"] = { text = "與角色面板同步", tooltip = "打開/關閉角色面板時顯示/隱藏。" },
 	["ToggleKeybind"] = { text = "切換快速鍵", tooltip = string.format("按下 %q 的按鍵綁定時切換顯示。", ENGRAVER_SHOW_HIDE) },
 	["HoldKeybind"] = { text = "按住快速鍵", tooltip = string.format("只有按住不放 %q 的按鍵綁定時才顯示。", ENGRAVER_SHOW_HIDE) },
+	["ShowOnMouseOver"] = { text = "滑鼠指向時顯示", tooltip = "隱藏一鍵符文，只有滑鼠游標停留在上面時才顯示。" },
 }
 
 local DefaultEngraverOptions = {
@@ -41,6 +52,7 @@ local DefaultEngraverOptions = {
 	HideSlotLabels = false,
 	EnableRightClickDrag = false,
 	UIScale = 1.0,
+	PreventSpellPlacement = false,
 	CurrentFilter = 0
 }
 
@@ -158,10 +170,13 @@ function EngraverOptionsFrameMixin:CreateSettingsInitializers()
 	do -- UIScale
 		local variable, name, tooltip = "UIScale", "介面縮放", "調整一鍵符文使用介面的縮放大小。";
 		local setting = AddEngraverOptionsSetting(self, variable, name, Settings.VarType.Number)
-		local options = Settings.CreateSliderOptions(0.01, 2.5, 0.00) -- minValue, maxValue, step 
+		local options = Settings.CreateSliderOptions(0.01, 2.5, 0.01) -- minValue, maxValue, step 
 		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentage);
 		AddInitializer(self, Settings.CreateSliderInitializer(setting, options, tooltip))
 	end	-- UIScale
+	do -- PreventSpellPlacement
+		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "PreventSpellPlacement", "避免放置法術", Settings.VarType.Boolean), nil, "這將防止自動將法術放到快捷列中。"))
+	end -- PreventSpellPlacement
 	do -- FiltersHeader
 		local filtersHeaderData = { 
 			name = "過濾方式", 
