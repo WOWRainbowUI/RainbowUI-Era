@@ -398,7 +398,7 @@ function BG.RoleOverviewUI()
                             end
 
                             -- 专业
-                            if BiaoGe.tradeSkillCooldown[RealmId][p] then
+                            if BiaoGe.tradeSkillCooldown and BiaoGe.tradeSkillCooldown[RealmId][p] then
                                 for profession, v in pairs(BiaoGe.tradeSkillCooldown[RealmId][p]) do
                                     for ii, vv in ipairs(FBCDchoice_table) do -- 创建cd勾勾
                                         if profession == vv.name then
@@ -643,7 +643,8 @@ function BG.RoleOverviewUI()
         local colorplayer = SetClassCFF(player, "player")
 
         function BG.UpdateFBCD()
-            local time = time()
+            -- local time = time()
+            local time = GetServerTime()
             local cd = {}
 
             if UnitLevel("player") >= BG.fullLevel then
@@ -1438,6 +1439,7 @@ function BG.RoleOverviewUI()
             }
 
             local function GetCooldown()
+                local time = GetServerTime()
                 for profession, v in pairs(tbl) do
                     local startTime, duration = GetSpellCooldown(v.spell)
                     local cooldown = startTime + duration - GetTime()
@@ -1445,7 +1447,7 @@ function BG.RoleOverviewUI()
                         BiaoGe.tradeSkillCooldown[RealmId][player][profession] = {
                             class = select(2, UnitClass("player")),
                             resettime = cooldown,
-                            endtime = cooldown + time(),
+                            endtime = cooldown + time,
                             ready = nil,
                         }
                     end
@@ -1453,11 +1455,12 @@ function BG.RoleOverviewUI()
             end
 
             local function UpdateProfessionCD()
+                local time = GetServerTime()
                 for p, _ in pairs(BiaoGe.tradeSkillCooldown[RealmId]) do -- 检查其他角色cd是否到期
                     local i = 3
                     for profession, v in pairs(BiaoGe.tradeSkillCooldown[RealmId][p]) do
                         if v.endtime then
-                            if time() >= v.endtime then
+                            if time >= v.endtime then
                                 v.resettime = nil
                                 v.endtime = nil
                                 v.ready = true
@@ -1479,8 +1482,8 @@ function BG.RoleOverviewUI()
                                     PlaySoundFile(BG["sound_" .. profession .. "Ready"], "Master")
                                 end)
                                 i = i + 3
-                            elseif time() < v.endtime then
-                                v.resettime = v.endtime - time()
+                            elseif time < v.endtime then
+                                v.resettime = v.endtime - time
                             end
                         end
                     end

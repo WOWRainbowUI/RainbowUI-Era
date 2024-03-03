@@ -1048,10 +1048,13 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
                     local num = 0
                     local str = (self.data.nameLower or "") .. (self.data.shortNameLower or "") ..
                         (self.commentLower or "")
-                    for s in search:gmatch("%S+") do
+                    for s_and in search:gmatch("%S+") do
                         num = num + 1
-                        if str:find(s, nil, true) then
-                            yes = yes + 1
+                        for _, v in pairs({ strsplit("/", s_and) }) do
+                            if str:find(v, nil, true) then
+                                yes = yes + 1
+                                break
+                            end
                         end
                     end
                     if yes ~= num then

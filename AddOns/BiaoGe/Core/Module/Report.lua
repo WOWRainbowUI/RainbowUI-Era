@@ -1359,17 +1359,33 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     end
 
     -- 悬停目标的提示工具里增加显示举报次数
-    GameTooltip:HookScript("OnTooltipSetUnit", function(self)
-        if not UnitIsPlayer("mouseover") then return end
-        local name, realm = UnitName("mouseover")
+    local jiange
+    local function SetTooltip(unit)
+        local name, realm = UnitName(unit)
         if not realm then realm = GetRealmName() end
         -- pt(name, realm)
         if name and realm then
             for i, v in ipairs(db) do
                 if name == v.name and realm == v.realm then
                     GameTooltip:AddLine(BG.STC_r1(format(L["（已举报%s次）"], v.count)))
+                    GameTooltip:Show()
+                    return
                 end
             end
         end
+    end
+    GameTooltip:HookScript("OnTooltipSetUnit", function(self)
+        if not UnitIsPlayer("mouseover") then return end
+        if jiange then return end
+        jiange = true
+        BG.After(0, function() jiange = false end)
+        SetTooltip("mouseover")
+    end)
+
+    hooksecurefunc(GameTooltip, "SetUnit", function(self, unit)
+        if jiange then return end
+        jiange = true
+        BG.After(0, function() jiange = false end)
+        SetTooltip(unit)
     end)
 end)
