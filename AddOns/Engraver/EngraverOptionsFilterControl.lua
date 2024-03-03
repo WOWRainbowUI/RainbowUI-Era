@@ -57,7 +57,7 @@ function EngraverOptionsFilterEquipmentSlotsMixin:OnLoad()
 end
 
 local function UpdateCategoryFrame(frame) 
-	frame:UpdateCategoryLayout(Addon.EngraverLayoutDirections[1])
+	frame:UpdateCategoryLayout(Addon.EngraverLayoutDirections[2])
 	for r, runeButton in ipairs(frame.runeButtons) do
 		runeButton:SetBlinking(false)
 		runeButton:SetEnabled(false)
@@ -65,6 +65,7 @@ local function UpdateCategoryFrame(frame)
 		runeButton.icon:SetDesaturated(true)
 		runeButton.icon:SetVertexColor(1.0, 1.0, 1.0)
 		runeButton.NormalTexture:SetVertexColor(1.0, 1.0, 1.0);
+		runeButton:RegisterForClicks("LeftButtonDown","RightButtonDown")
 	end
 end
 
@@ -80,7 +81,7 @@ function EngraverOptionsFilterEquipmentSlotsMixin:SetupCategoryFrames()
 				if prevFrame == nil then
 					frame:SetPoint("TOPLEFT")
 				else
-					frame:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT")
+					frame:SetPoint("TOPLEFT", prevFrame, "TOPRIGHT")
 				end
 				frame.category = category
 				frame.slotLabel:SetCategory(category)

@@ -7,6 +7,12 @@ SlashCmdList.ENGRAVER = function(msg, editBox)
 	Settings.OpenToCategory(localAddonName);
 end
 
+SLASH_ENGRAVER_RESET_POSITION1 = "/engraver_reset_position"
+SlashCmdList.ENGRAVER_RESET_POSITION = function(msg, editBox)
+	EngraverFrame:ClearAllPoints(); 
+	EngraverFrame:SetPoint("CENTER", UIParent, "CENTER");
+end
+
 EngraverOptions = {} -- SavedVariable
 EngraverOptionsCallbackRegistry = CreateFromMixins(CallbackRegistryMixin)
 EngraverOptionsCallbackRegistry:OnLoad()
@@ -20,7 +26,11 @@ Addon.EngraverDisplayModes = EngraverDisplayModes
 Addon.GetCurrentDisplayMode = function() return EngraverDisplayModes[EngraverOptions.DisplayMode+1] end
 
 local ENGRAVER_SHOW_HIDE = "Show/Hide Engraver" -- TODO localization
+local ENGRAVER_NEXT_FILTER = "Activate Next Filter" -- TODO localization
+local ENGRAVER_PREV_FILTER = "Activate Previous Filter" -- TODO localization
 _G.BINDING_NAME_ENGRAVER_SHOW_HIDE = ENGRAVER_SHOW_HIDE
+_G.BINDING_NAME_ENGRAVER_NEXT_FILTER = ENGRAVER_NEXT_FILTER
+_G.BINDING_NAME_ENGRAVER_PREV_FILTER = ENGRAVER_PREV_FILTER
 
 Addon.EngraverVisibilityModes = {
 	["ShowAlways"] = { text = "Show Always", tooltip = "Engraver will always be visible." },
@@ -28,6 +38,7 @@ Addon.EngraverVisibilityModes = {
 	["SyncCharacterPane"] = { text = "Sync with Character Pane", tooltip = "Show/Hide when you open/close your Character Pane." },
 	["ToggleKeybind"] = { text = "Toggle Keybind", tooltip = string.format("Toggles visibility when you press the %q keybind.", ENGRAVER_SHOW_HIDE) },
 	["HoldKeybind"] = { text = "Hold Keybind", tooltip = string.format("Shows only when you press and hold the %q keybind.", ENGRAVER_SHOW_HIDE) },
+	["ShowOnMouseOver"] = { text = "Show On MouseOver", tooltip = "Hides the Engraver and only shows when you hold the cursor over it." },
 }
 
 local DefaultEngraverOptions = {
@@ -41,6 +52,7 @@ local DefaultEngraverOptions = {
 	HideSlotLabels = false,
 	EnableRightClickDrag = false,
 	UIScale = 1.0,
+	PreventSpellPlacement = false,
 	CurrentFilter = 0
 }
 
@@ -158,10 +170,13 @@ function EngraverOptionsFrameMixin:CreateSettingsInitializers()
 	do -- UIScale
 		local variable, name, tooltip = "UIScale", "UI Scale", "Adjusts the scale of the Engraver's user interface frame.";
 		local setting = AddEngraverOptionsSetting(self, variable, name, Settings.VarType.Number)
-		local options = Settings.CreateSliderOptions(0.01, 2.5, 0.00) -- minValue, maxValue, step 
+		local options = Settings.CreateSliderOptions(0.01, 2.5, 0.01) -- minValue, maxValue, step 
 		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, FormatPercentage);
 		AddInitializer(self, Settings.CreateSliderInitializer(setting, options, tooltip))
 	end	-- UIScale
+	do -- PreventSpellPlacement
+		AddInitializer(self, Settings.CreateCheckBoxInitializer(AddEngraverOptionsSetting(self, "PreventSpellPlacement", "Prevent Spell Placement", Settings.VarType.Boolean), nil, "This will prevent spells from automatically animating and flying-in to a slot on your action bars."))
+	end -- PreventSpellPlacement
 	do -- FiltersHeader
 		local filtersHeaderData = { 
 			name = "Filters", 

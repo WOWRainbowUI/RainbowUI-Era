@@ -78,9 +78,7 @@ Addon.GetCurrentLayoutDirection = function() return EngraverLayoutDirections[Eng
 EngraverFrameMixin = {};
 
 function EngraverFrameMixin:OnLoad()
-	self.categoryFramePool = CreateFramePool("Frame", self, "EngraverCategoryFrameTemplate",  function(framePool, frame)
-		FramePool_HideAndClearAnchors(framePool, frame);
-	end);
+	self:LoadCategoryPool()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self:RegisterEvent("RUNE_UPDATED");
 	self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
@@ -88,6 +86,24 @@ function EngraverFrameMixin:OnLoad()
 	self:RegisterEvent("NEW_RECIPE_LEARNED");
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 	self:RegisterForDrag("RightButton")
+end
+
+local function HookMouseOver_UpdateVisibilityModeAlpha(mouseOverFrame, engraverFrame)
+	mouseOverFrame:HookScript("OnEnter", function() engraverFrame:UpdateVisibilityModeAlpha() end)
+	mouseOverFrame:HookScript("OnLeave", function() engraverFrame:UpdateVisibilityModeAlpha() end)
+end
+
+function EngraverFrameMixin:LoadCategoryPool()
+	self.categoryFramePool = CreateFramePool("Frame", self, "EngraverCategoryFrameTemplate", nil, false, function(categoryFrame) 
+		-- categoryFrame frameInitFunc - drive updates for ShowOnMouseOver VisibilityMode
+		for i, child in ipairs({categoryFrame:GetChildren()}) do
+			HookMouseOver_UpdateVisibilityModeAlpha(child, self)
+		end
+		categoryFrame.runeButtonPool = CreateFramePool("Button", categoryFrame, "EngraverRuneButtonTemplate",  nil, false, function(runeButton)
+			-- runeButton frameInitFunc - drive updates for ShowOnMouseOver VisibilityMode
+			HookMouseOver_UpdateVisibilityModeAlpha(runeButton, self)
+		end)
+	end);
 end
 
 function EngraverFrameMixin:OnEvent(event, ...)
@@ -110,6 +126,9 @@ end
 function EngraverFrameMixin:Initialize()
 	self.equipmentSlotFrameMap = {}
 	self:RegisterOptionChangedCallbacks()
+	for i, child in ipairs({self:GetChildren()}) do
+		HookMouseOver_UpdateVisibilityModeAlpha(child, self)
+	end
 	self:LoadCategories()
 end
 
@@ -179,7 +198,8 @@ function EngraverFrameMixin:UpdateLayout(...)
 		if self.equipmentSlotFrameMap then
 			local displayMode = Addon.GetCurrentDisplayMode()
 			local prevCategoryFrame = nil
-			for category, categoryFrame in pairs(self.equipmentSlotFrameMap) do
+			for c, category in ipairs(self.categories) do
+				local categoryFrame = self.equipmentSlotFrameMap[category]
 				if categoryFrame then
 					categoryFrame:ClearAllPoints()
 					categoryFrame:SetDisplayMode(displayMode.mixin)
@@ -272,6 +292,23 @@ function EngraverFrameMixin:SetScaleAdjustLocation(scale)
 end
 
 do
+	local function isMouseOverAnyChildren(frame)
+		for i, child in ipairs({frame:GetChildren()}) do
+			if child:IsMouseMotionFocus() or isMouseOverAnyChildren(child) then
+				return true
+			end
+		end
+	end
+
+	function EngraverFrameMixin:UpdateVisibilityModeAlpha()
+		if EngraverOptions.VisibilityMode == "ShowOnMouseOver" then
+			local alpha = isMouseOverAnyChildren(self) and 1.0 or 0.0
+			self:SetAlpha(alpha)
+		else
+			self:SetAlpha(1.0)
+		end
+	end
+
 	local function HandleSyncCharacterPane()
 		if EngraverOptions.VisibilityMode == "SyncCharacterPane" then
 			EngraverFrame:SetShown(CharacterFrame:IsShown() and PaperDollFrame:IsShown()) 
@@ -292,6 +329,7 @@ do
 				self:Hide()
 			end
 			HandleSyncCharacterPane()
+			self:UpdateVisibilityModeAlpha()
 		end
 	end
 end
@@ -358,7 +396,7 @@ do
 					self.emptyRuneButton.icon:SetTexture(textureName);
 				end
 			end
-			self.emptyRuneButton:RegisterForClicks("LeftButtonUp", "RightButtonDown", "RightButtonUp")
+			self.emptyRuneButton:RegisterForClicks("AnyUp", "AnyDown")
 		end
 	end
 end
@@ -412,6 +450,20 @@ function EngraverCategoryFrameBaseMixin:SetDisplayMode(displayModeMixin)
 	if self.SetUpDisplayMode then
 		self:SetUpDisplayMode()
 	end
+end
+
+function EngraverCategoryFrameBaseMixin:IsMouseOverAnyButtons()
+	if self.emptyRuneButton and self.emptyRuneButton:IsShown() and self.emptyRuneButton:IsMouseMotionFocus() then
+		return true
+	end
+	if self.runeButtons then
+		for r, runeButton in ipairs(self.runeButtons) do
+			if runeButton:IsMouseMotionFocus() then
+				return true
+			end
+		end
+	end
+	return false
 end
 
 --------------------------
@@ -549,20 +601,6 @@ function EngraverCategoryFramePopUpMenuMixin:OnRuneButtonPostLeave()
 	self:SetInactiveButtonsShown(self:IsMouseOverAnyButtons())
 end
 
-function EngraverCategoryFramePopUpMenuMixin:IsMouseOverAnyButtons()
-	if self.emptyRuneButton and self.emptyRuneButton:IsShown() and self.emptyRuneButton:IsMouseMotionFocus() then
-		return true
-	end
-	if self.runeButtons then
-		for r, runeButton in ipairs(self.runeButtons) do
-			if runeButton:IsMouseMotionFocus() then
-				return true
-			end
-		end
-	end
-	return false
-end
-
 function EngraverCategoryFramePopUpMenuMixin:SetInactiveButtonsShown(isShown)
 	for r, runeButton in ipairs(self.inactiveButtons) do
 		runeButton:SetShown(isShown)
@@ -616,7 +654,7 @@ function EngraverRuneButtonMixin:SetRune(rune, category, isKnown)
 	self.tooltipName = rune.name;
 	self.skillLineAbilityID = rune.skillLineAbilityID;
 	self.isKnown = isKnown;
-	self:RegisterForClicks("LeftButtonUp", "RightButtonDown", "RightButtonUp")
+	self:RegisterForClicks("AnyUp", "AnyDown")
 	if self.icon then
 		self.icon:SetAllPoints()
 	end
@@ -638,14 +676,14 @@ end
 
 function EngraverRuneButtonMixin:OnClick()
 	local buttonClicked = GetMouseButtonClicked();
-	if buttonClicked == "LeftButton" then
-		self:TryEngrave()
-	elseif buttonClicked  == "RightButton" and EngraverOptions.EnableRightClickDrag then
-		if IsKeyDown(buttonClicked) then
+	if IsKeyDown(buttonClicked) then
+		if buttonClicked == "LeftButton"  then
+			self:TryEngrave()
+		elseif buttonClicked  == "RightButton" and EngraverOptions.EnableRightClickDrag then
 			EngraverFrame:StartMoving()
-		else
-			EngraverFrame:StopMovingOrSizing()
 		end
+	else
+		EngraverFrame:StopMovingOrSizing()
 	end
 end
 
