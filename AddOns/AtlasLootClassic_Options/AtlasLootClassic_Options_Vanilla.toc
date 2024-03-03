@@ -37,14 +37,6 @@
 embeds.xml
 
 Locales\constants.cn.lua
-Locales\constants.de.lua
-Locales\constants.es.lua
-Locales\constants.fr.lua
-Locales\constants.it.lua
-Locales\constants.kr.lua
-Locales\constants.mx.lua
-Locales\constants.pt.lua
-Locales\constants.ru.lua
 Locales\constants.tw.lua
 
 Core.lua

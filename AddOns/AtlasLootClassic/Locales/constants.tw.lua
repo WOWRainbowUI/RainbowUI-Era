@@ -193,3 +193,5 @@ AL["Vendor"] = "商人"
 AL["Wand"] = "魔杖"
 AL["Weapons"] = "武器"
 AL["Wintersaber Trainers"] = "冬刃豹訓練師"
+
+AL["SoD Raids"] = "探索賽季團隊"
