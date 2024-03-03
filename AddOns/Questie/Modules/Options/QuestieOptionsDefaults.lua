@@ -133,6 +133,12 @@ function QuestieOptionsDefaults:Load()
             showPvPQuests = true,
             showAQWarEffortQuests = false,
             showSoDRunes = false,
+            showRunesOfPhase = {
+                phase1 = false,
+                phase2 = false,
+                phase3 = false,
+                phase4 = false,
+            },
             showQuestsInNpcTooltip = true,
             trackerEnabled = false, -- 更改預設值
             ldbDisplayText = "Questie",
