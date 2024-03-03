@@ -15,6 +15,22 @@ Addon.callbacks = LibStub('CallbackHandler-1.0'):New(Addon)
 -- how many action buttons we support, and what button to map keybinding presses
 Addon.ACTION_BUTTON_COUNT = 14 * NUM_ACTIONBAR_BUTTONS
 
+local WOW_BUILD
+do
+    local l = LE_EXPANSION_LEVEL_CURRENT
+    if l == LE_EXPANSION_CLASSIC then
+        WOW_BUILD = 'classic'
+    elseif l == LE_EXPANSION_BURNING_CRUSADE then
+        WOW_BUILD = 'bcc'
+    elseif l == LE_EXPANSION_WRATH_OF_THE_LICH_KING then
+        WOW_BUILD = 'wrath'
+    elseif l == LE_EXPANSION_CATACLYSM then
+        WOW_BUILD = 'cata'
+    else
+        WOW_BUILD = 'retail'
+    end
+end
+
 --------------------------------------------------------------------------------
 -- Events
 --------------------------------------------------------------------------------
@@ -59,7 +75,7 @@ function Addon:OnUpgradeDatabase(oldVersion, newVersion)
 end
 
 function Addon:OnUpgradeAddon(oldVersion, newVersion)
-    self:Printf(L.Updated, ADDON_VERSION, self:GetWowBuild())
+    self:Printf(L.Updated, ADDON_VERSION, WOW_BUILD)
 end
 
 -- binding events
@@ -116,6 +132,12 @@ local initializedModules = {}
 -- Load is called when the addon is first enabled, and also whenever a profile
 -- is loaded
 function Addon:Load()
+    -- migrate from showgrid to showEmptyButtons
+    if self.db.profile.showgrid ~= nil then
+        self.db.profile.showEmptyButtons = self.db.profile.showgrid
+        self.db.profile.showgrid = nil
+    end
+
     self.callbacks:Fire('LAYOUT_LOADING')
 
     local function module_load(module, id)
@@ -219,6 +241,7 @@ function Addon:GetDatabaseDefaults()
             applyButtonTheme = true,
             sticky = true,
             linkedOpacity = false,
+            showEmptyButtons = false,
             showMacroText = true,
             showBindingText = true,
             showCounts = true,
@@ -234,54 +257,9 @@ function Addon:GetDatabaseDefaults()
                 rightClickUnit = "player"
             },
 
-            actionColors = {
-                ['**'] = {
-                    r = 1,
-                    g = 1,
-                    b = 1,
-                    a = 1,
-                    desaturate = false,
-                    enabled = true
-                },
-
-                oor = {
-                    r = 1,
-                    g = 0.5,
-                    b = 0.5,
-                },
-
-                oom = {
-                    r = 0.5,
-                    g = 0.5,
-                    b = 1
-                },
-
-                unusable = {
-                    r = 0.4,
-                    g = 0.4,
-                    b = 0.4
-                },
-            },
-
             alignmentGrid = {
                 enabled = not self:IsBuild("retail"),
                 size = 32
-            },
-
-            hotkeyColors = {
-                ['**'] = {
-                    r = 1,
-                    g = 1,
-                    b = 1,
-                    a = 1,
-                    enabled = true
-                },
-
-                oor = {
-                    r = 1,
-                    g = 0.12549,
-                    b = 0.12549
-                }
             },
 
             frames = {
@@ -486,32 +464,6 @@ function Addon:GetFrameSets(id)
     return self.db.profile.frames[tonumber(id) or id]
 end
 
--- configuration mode
-Addon.locked = true
-
-function Addon:SetLock(locked)
-    if InCombatLockdown() and (not locked) then
-        return
-    end
-
-    if locked and (not self:Locked()) then
-        self.locked = true
-        self.callbacks:Fire('CONFIG_MODE_DISABLED')
-    elseif (not locked) and self:Locked() then
-        self.locked = false
-        self:LoadConfigAddon()
-        self.callbacks:Fire('CONFIG_MODE_ENABLED')
-    end
-end
-
-function Addon:Locked()
-    return self.locked
-end
-
-function Addon:ToggleLockedFrames()
-    self:SetLock(not self:Locked())
-end
-
 -- binding mode
 function Addon:SetBindingMode(enable)
     if enable and (not self:IsBindingModeEnabled()) then
@@ -530,6 +482,28 @@ function Addon:ToggleBindingMode()
     self:SetBindingMode(not self:IsBindingModeEnabled())
 end
 
+--------------------------------------------------------------------------------
+-- frame commands
+--------------------------------------------------------------------------------
+
+-- sizing
+function Addon:SetNumBars(count)
+    count = Clamp(count, 1, self.ACTION_BUTTON_COUNT)
+
+    if count ~= self:NumBars() then
+        self.db.profile.ab.count = count
+        self.callbacks:Fire('ACTIONBAR_COUNT_UPDATED', count)
+    end
+end
+
+function Addon:SetNumButtons(count)
+    self:SetNumBars(self.ACTION_BUTTON_COUNT / count)
+end
+
+function Addon:NumBars()
+    return self.db.profile.ab.count
+end
+
 -- scale
 function Addon:ScaleFrames(...)
     local numArgs = select('#', ...)
@@ -538,30 +512,6 @@ function Addon:ScaleFrames(...)
     if scale and scale > 0 and scale <= 10 then
         for i = 1, numArgs - 1 do
             self.Frame:ForFrame(select(i, ...), 'SetFrameScale', scale)
-        end
-    end
-end
-
--- opacity
-function Addon:SetOpacityForFrames(...)
-    local numArgs = select('#', ...)
-    local alpha = tonumber(select(numArgs, ...))
-
-    if alpha and alpha >= 0 and alpha <= 1 then
-        for i = 1, numArgs - 1 do
-            self.Frame:ForFrame(select(i, ...), 'SetFrameAlpha', alpha)
-        end
-    end
-end
-
--- faded opacity
-function Addon:SetFadeForFrames(...)
-    local numArgs = select('#', ...)
-    local alpha = tonumber(select(numArgs, ...))
-
-    if alpha and alpha >= 0 and alpha <= 1 then
-        for i = 1, numArgs - 1 do
-            self.Frame:ForFrame(select(i, ...), 'SetFadeMultiplier', alpha)
         end
     end
 end
@@ -602,7 +552,6 @@ function Addon:SetPaddingForFrames(...)
     end
 end
 
--- visibility
 function Addon:ShowFrames(...)
     for i = 1, select('#', ...) do
         self.Frame:ForFrame(select(i, ...), 'ShowFrame')
@@ -621,7 +570,28 @@ function Addon:ToggleFrames(...)
     end
 end
 
--- clickthrough
+function Addon:SetOpacityForFrames(...)
+    local numArgs = select('#', ...)
+    local alpha = tonumber(select(numArgs, ...))
+
+    if alpha and alpha >= 0 and alpha <= 1 then
+        for i = 1, numArgs - 1 do
+            self.Frame:ForFrame(select(i, ...), 'SetFrameAlpha', alpha)
+        end
+    end
+end
+
+function Addon:SetFadeForFrames(...)
+    local numArgs = select('#', ...)
+    local alpha = tonumber(select(numArgs, ...))
+
+    if alpha and alpha >= 0 and alpha <= 1 then
+        for i = 1, numArgs - 1 do
+            self.Frame:ForFrame(select(i, ...), 'SetFadeMultiplier', alpha)
+        end
+    end
+end
+
 function Addon:SetClickThroughForFrames(...)
     local numArgs = select('#', ...)
     local enable = select(numArgs - 1, ...)
@@ -631,14 +601,111 @@ function Addon:SetClickThroughForFrames(...)
     end
 end
 
--- empty button display
-function Addon:SetShowGrid(enable)
-    self.db.profile.showgrid = enable and true
-    self.callbacks:Fire("SHOW_EMPTY_BUTTONS_CHANGED", self:ShowGrid())
+--------------------------------------------------------------------------------
+-- button features
+--------------------------------------------------------------------------------
+
+-- binding text
+function Addon:SetShowBindingText(enable)
+    enable = enable and true
+
+    self.db.profile.showBindingText = enable
+    self.Frame:ForEach('SetShowBindingText', enable)
 end
 
-function Addon:ShowGrid()
-    return self.db.profile.showgrid and true
+function Addon:ShowingBindingText()
+    return self.db.profile.showBindingText
+end
+
+-- show counts toggle
+function Addon:SetShowCounts(enable)
+    enable = enable and true
+
+    self.db.profile.showCounts = enable
+    self.Frame:ForEach('SetShowCounts', enable)
+end
+
+function Addon:ShowingCounts()
+    return self.db.profile.showCounts
+end
+
+-- equipped item borders
+function Addon:SetShowEquippedItemBorders(enable)
+    enable = enable and true
+
+    self.db.profile.showEquippedItemBorders = enable
+    self.Frame:ForEach('SetShowEquippedItemBorders', enable)
+end
+
+function Addon:ShowingEquippedItemBorders()
+    return self.db.profile.showEquippedItemBorders
+end
+
+-- empty button display
+function Addon:SetShowEmptyButtons(enable)
+    enable = enable and true
+
+    self.db.profile.showEmptyButtons = enable and true
+    self.Frame:ForEach('SetShowEmptyButtons', enable)
+end
+
+function Addon:ShowingEmptyButtons()
+    return self.db.profile.showEmptyButtons and true
+end
+
+-- macro text
+function Addon:SetShowMacroText(enable)
+    enable = enable and true
+
+    self.db.profile.showMacroText = enable
+    self.Frame:ForEach('SetShowMacroText', enable)
+end
+
+function Addon:ShowingMacroText()
+    return self.db.profile.showMacroText
+end
+
+-- spell animations
+function Addon:SetShowSpellAnimations(enable)
+    enable = enable and true
+
+    self.db.profile.showSpellAnimations = enable
+    self.callbacks:Fire("SHOW_SPELL_ANIMATIONS_CHANGED", enable)
+end
+
+function Addon:ShowingSpellAnimations()
+    return self.db.profile.showSpellAnimations
+end
+
+-- spell overlay glows
+function Addon:SetShowSpellGlows(enable)
+    enable = enable and true
+
+    self.db.profile.showSpellGlows = enable
+    self.callbacks:Fire("SHOW_SPELL_GLOWS_CHANGED", enable)
+end
+
+function Addon:ShowingSpellGlows()
+    return self.db.profile.showSpellGlows
+end
+
+-- tooltips
+function Addon:SetShowTooltips(enable)
+    self.db.profile.showTooltips = enable and true
+    self:GetModule('Tooltips'):SetShowTooltips(enable)
+end
+
+function Addon:ShowingTooltips()
+    return self.db.profile.showTooltips
+end
+
+function Addon:SetShowCombatTooltips(enable)
+    self.db.profile.showTooltipsCombat = enable and true
+    self:GetModule('Tooltips'):SetShowTooltipsInCombat(enable)
+end
+
+function Addon:ShowingTooltipsInCombat()
+    return self.db.profile.showTooltipsCombat
 end
 
 -- right click selfcast
@@ -651,65 +718,19 @@ function Addon:GetRightClickUnit()
     return self.db.profile.ab.rightClickUnit
 end
 
--- binding text
-function Addon:SetShowBindingText(enable)
-    self.db.profile.showBindingText = enable and true
-    self.Frame:ForEach('ForButtons', 'UpdateHotkeys')
+-- button theming toggle
+function Addon:SetThemeButtons(enable)
+    self.db.profile.applyButtonTheme = enable and true
+    self:GetModule('ButtonThemer'):Reskin()
 end
 
-function Addon:ShowBindingText()
-    return self.db.profile.showBindingText
+function Addon:ThemingButtons()
+    return self.db.profile.applyButtonTheme
 end
 
--- macro text
-function Addon:SetShowMacroText(enable)
-    self.db.profile.showMacroText = enable and true
-    self.Frame:ForEach('ForButtons', 'SetShowMacroText', enable)
-end
-
-function Addon:ShowMacroText()
-    return self.db.profile.showMacroText
-end
-
--- equipped item borders
-function Addon:SetShowEquippedItemBorders(enable)
-    self.db.profile.showEquippedItemBorders = enable and true
-    self.Frame:ForEach('ForButtons', 'SetShowEquippedItemBorders', enable)
-end
-
-function Addon:ShowEquippedItemBorders()
-    return self.db.profile.showEquippedItemBorders
-end
-
--- spell overlay glows
-function Addon:SetShowSpellGlows(enable)
-    self.db.profile.showSpellGlows = enable and true
-    self.callbacks:Fire("SHOW_SPELL_GLOWS_CHANGED", self:ShowingSpellGlows())
-end
-
-function Addon:ShowingSpellGlows()
-    return self.db.profile.showSpellGlows
-end
-
--- spell animations
-function Addon:SetShowSpellAnimations(enable)
-    self.db.profile.showSpellAnimations = enable and true
-    self.callbacks:Fire("SHOW_SPELL_ANIMATIONS_CHANGED", self:ShowingSpellAnimations())
-end
-
-function Addon:ShowingSpellAnimations()
-    return self.db.profile.showSpellAnimations
-end
-
--- override ui
-function Addon:SetUseOverrideUI(enable)
-    self.db.profile.useOverrideUI = enable and true
-    self.callbacks:Fire("USE_OVERRRIDE_UI_CHANGED", self:UsingOverrideUI())
-end
-
-function Addon:UsingOverrideUI()
-    return self.db.profile.useOverrideUI and self:IsBuild('retail', 'wrath')
-end
+--------------------------------------------------------------------------------
+-- override/vehicle ui
+--------------------------------------------------------------------------------
 
 -- override action bar selection
 function Addon:SetOverrideBar(id)
@@ -728,51 +749,43 @@ function Addon:GetOverrideBar()
     return self.Frame:Get(self.db.profile.possessBar)
 end
 
--- action bar counts
-function Addon:SetNumBars(count)
-    count = Clamp(count, 1, self.ACTION_BUTTON_COUNT)
+function Addon:SetUseOverrideUI(enable)
+    self.db.profile.useOverrideUI = enable and true
+    self.callbacks:Fire("USE_OVERRRIDE_UI_CHANGED", self:UsingOverrideUI())
+end
 
-    if count ~= self:NumBars() then
-        self.db.profile.ab.count = count
-        self.callbacks:Fire('ACTIONBAR_COUNT_UPDATED', count)
+function Addon:UsingOverrideUI()
+    return self.db.profile.useOverrideUI and self:IsBuild('retail', 'wrath')
+end
+
+--------------------------------------------------------------------------------
+-- configuration mode settings
+--------------------------------------------------------------------------------
+
+-- configuration mode toggle
+Addon.locked = true
+
+function Addon:SetLock(locked)
+    if InCombatLockdown() and (not locked) then
+        return
+    end
+
+    if locked and (not self:Locked()) then
+        self.locked = true
+        self.callbacks:Fire('CONFIG_MODE_DISABLED')
+    elseif (not locked) and self:Locked() then
+        self.locked = false
+        self:LoadConfigAddon()
+        self.callbacks:Fire('CONFIG_MODE_ENABLED')
     end
 end
 
-function Addon:SetNumButtons(count)
-    self:SetNumBars(self.ACTION_BUTTON_COUNT / count)
+function Addon:Locked()
+    return self.locked
 end
 
-function Addon:NumBars()
-    return self.db.profile.ab.count
-end
-
--- tooltips
-function Addon:ShowTooltips()
-    return self.db.profile.showTooltips
-end
-
-function Addon:SetShowTooltips(enable)
-    self.db.profile.showTooltips = enable and true
-    self:GetModule('Tooltips'):SetShowTooltips(enable)
-end
-
-function Addon:SetShowCombatTooltips(enable)
-    self.db.profile.showTooltipsCombat = enable and true
-    self:GetModule('Tooltips'):SetShowTooltipsInCombat(enable)
-end
-
-function Addon:ShowCombatTooltips()
-    return self.db.profile.showTooltipsCombat
-end
-
--- minimap button
-function Addon:SetShowMinimap(enable)
-    self.db.profile.minimap.hide = not enable
-    self:GetModule('Launcher'):Update()
-end
-
-function Addon:ShowingMinimap()
-    return not self.db.profile.minimap.hide
+function Addon:ToggleLockedFrames()
+    self:SetLock(not self:Locked())
 end
 
 -- sticky bars
@@ -789,6 +802,16 @@ function Addon:Sticky()
     return self.db.profile.sticky
 end
 
+-- minimap button
+function Addon:SetShowMinimap(enable)
+    self.db.profile.minimap.hide = not enable
+    self:GetModule('Launcher'):Update()
+end
+
+function Addon:ShowingMinimap()
+    return not self.db.profile.minimap.hide
+end
+
 -- linked opacity
 function Addon:SetLinkedOpacity(enable)
     self.db.profile.linkedOpacity = enable and true
@@ -801,26 +824,6 @@ function Addon:IsLinkedOpacityEnabled()
     return self.db.profile.linkedOpacity
 end
 
--- button theming toggle
-function Addon:ThemeButtons()
-    return self.db.profile.applyButtonTheme
-end
-
-function Addon:SetThemeButtons(enable)
-    self.db.profile.applyButtonTheme = enable and true
-    self:GetModule('ButtonThemer'):Reskin()
-end
-
--- show counts toggle
-function Addon:ShowCounts()
-    return self.db.profile.showCounts
-end
-
-function Addon:SetShowCounts(enable)
-    self.db.profile.showCounts = enable and true
-    self.Frame:ForEach('ForButtons', 'SetShowCountText', enable)
-end
-
 -- alignment grid
 function Addon:SetAlignmentGridEnabled(enable)
     self.db.profile.alignmentGrid.enabled = enable
@@ -831,6 +834,7 @@ function Addon:GetAlignmentGridEnabled()
     return self.db.profile.alignmentGrid.enabled and true
 end
 
+-- alignment grid - size
 function Addon:SetAlignmentGridSize(size)
     self.db.profile.alignmentGrid.size = tonumber(size)
     self.callbacks:Fire('ALIGNMENT_GRID_SIZE_CHANGED', self:GetAlignmentGridSize())
@@ -840,6 +844,7 @@ function Addon:GetAlignmentGridSize()
     return self.db.profile.alignmentGrid.size
 end
 
+-- alignment grid - scale
 function Addon:GetAlignmentGridScale()
     -- due to changes in Dominos_Config\overlay\ui.lua to
     -- function "DrawGrid", grid now displays with perfectly square subdivisions.
@@ -853,41 +858,12 @@ end
 
 -- display the current addon build being used
 function Addon:PrintVersion()
-    self:Printf('%s-%s', ADDON_VERSION, self:GetWowBuild())
-end
-
--- get the current World of Warcraft build being used
-function Addon:GetWowBuild()
-    local project = WOW_PROJECT_ID
-
-    if project == WOW_PROJECT_MAINLINE then
-        return 'retail'
-    end
-
-    if project == WOW_PROJECT_CLASSIC then
-        return 'classic'
-    end
-
-    local exLevel = LE_EXPANSION_LEVEL_CURRENT
-
-    if exLevel == LE_EXPANSION_WRATH_OF_THE_LICH_KING or exLevel == LE_EXPANSION_NORTHREND then
-        return 'wrath'
-    end
-
-    if exLevel == LE_EXPANSION_BURNING_CRUSADE then
-        return 'bcc'
-    end
-
-    if exLevel == LE_EXPANSION_CLASSIC then
-        return 'classic'
-    end
-
-    return 'unknown'
+    self:Printf('%s-%s', ADDON_VERSION, WOW_BUILD)
 end
 
 -- check if we're running the addon on one of a given set of wow versions
 function Addon:IsBuild(...)
-    local build = self:GetWowBuild()
+    local build = WOW_BUILD
 
     for i = 1, select('#', ...) do
         if build == select(i, ...):lower() then

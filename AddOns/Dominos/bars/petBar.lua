@@ -140,7 +140,7 @@ local function createPetActionButton(name, id)
     end)
 
     -- setup bindings
-    button.commandName = ("BONUSACTIONBUTTON%d"):format(id)
+    button:SetAttribute("commandName", "BONUSACTIONBUTTON" .. id)
     Addon.BindableButton:AddQuickBindingSupport(button)
 
     -- add support for mousewheel bindings
@@ -204,7 +204,7 @@ function PetBar:AcquireButton(index)
 end
 
 function PetBar:OnAttachButton(button)
-    button:UpdateHotkeys()
+    button.HotKey:SetAlpha(self:ShowingBindingText() and 1 or 0)
     button:UpdateShownInsecure()
 
     Addon:GetModule('ButtonThemer'):Register(button, L.PetBarDisplayName)
@@ -223,6 +223,52 @@ end
 
 function PetBar:KEYBOUND_DISABLED()
     self:ForButtons("UpdateShownInsecure")
+end
+
+-- binding text
+function PetBar:SetShowBindingText(show)
+    show = show and true
+
+    if show == Addon.db.profile.showBindingText then
+        self.sets.showBindingText = nil
+    else
+        self.sets.showBindingText = show
+    end
+
+    for _, button in pairs(self.buttons) do
+        button.HotKey:SetAlpha(show and 1 or 0)
+    end
+end
+
+function PetBar:ShowingBindingText()
+    local result = self.sets.showBindingText
+
+    if result == nil then
+        result = Addon.db.profile.showBindingText
+    end
+
+    return result
+end
+
+function PetBar:OnCreateMenu(menu)
+    local L = LibStub('AceLocale-3.0'):GetLocale('Dominos-Config')
+
+    local layoutPanel = menu:NewPanel(L.Layout)
+
+    layoutPanel:NewCheckButton {
+        name = L.ShowBindingText,
+        get = function()
+            return layoutPanel.owner:ShowingBindingText()
+        end,
+        set = function(_, enable)
+            layoutPanel.owner:SetShowBindingText(enable)
+        end
+    }
+
+    layoutPanel:AddLayoutOptions()
+
+    menu:AddFadingPanel()
+    menu:AddAdvancedPanel()
 end
 
 --------------------------------------------------------------------------------

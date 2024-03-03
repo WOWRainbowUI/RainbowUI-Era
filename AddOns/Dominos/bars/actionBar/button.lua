@@ -40,7 +40,6 @@ local function GetActionButtonCommand(id)
     end
 end
 
-
 function ActionButton:OnCreate(id)
     -- initialize secure state
     self:SetAttributeNoHandler("action", 0)
@@ -55,6 +54,15 @@ function ActionButton:OnCreate(id)
     self:RegisterForClicks("AnyUp", "AnyDown")
 
     -- secure handlers
+    self:SetAttributeNoHandler('_childupdate-offset', [[
+        local offset = message or 0
+        local id = self:GetAttribute('index') + offset
+
+        if self:GetAttribute('action') ~= id then
+            self:SetAttribute('action', id)
+        end
+    ]])
+
     self:SetAttributeNoHandler("SetShowGrid", [[
         local show, reason, force = ...
         local value = self:GetAttribute("showgrid")
@@ -96,8 +104,6 @@ function ActionButton:OnCreate(id)
     -- ...and the rest
     Addon.BindableButton:AddQuickBindingSupport(self)
     Addon.SpellFlyout:Register(self)
-
-    self:UpdateHotkeys()
 end
 
 function ActionButton:UpdateIcon()
@@ -129,6 +135,19 @@ end
 -- configuration
 --------------------------------------------------------------------------------
 
+function ActionButton:SetFlyoutDirectionInsecure(direction)
+    if InCombatLockdown() then return end
+
+    self:SetAttribute("flyoutDirection", direction)
+    self:UpdateFlyout()
+end
+
+-- the stock UI shows and hides hotkeys based on if there's a binding or not
+-- so we simply make our hotkeys transparent when we don't want them shown
+function ActionButton:SetShowBindingText(show)
+    self.HotKey:SetAlpha(show and 1 or 0)
+end
+
 -- we hide cooldowns when action buttons are transparent
 -- so that the sparks don't appear
 function ActionButton:SetShowCooldowns(show)
@@ -142,15 +161,8 @@ function ActionButton:SetShowCooldowns(show)
     end
 end
 
-function ActionButton:SetShowCountText(show)
+function ActionButton:SetShowCounts(show)
     self.Count:SetShown(show)
-end
-
-function ActionButton:SetFlyoutDirectionInsecure(direction)
-    if InCombatLockdown() then return end
-
-    self:SetAttribute("flyoutDirection", direction)
-    self:UpdateFlyout()
 end
 
 function ActionButton:SetShowEquippedItemBorders(show)
@@ -159,6 +171,10 @@ function ActionButton:SetShowEquippedItemBorders(show)
     if self.Border:GetParent() ~= parent then
         self.Border:SetParent(parent)
     end
+end
+
+function ActionButton:SetShowEmptyButtons(show, force)
+    self:SetShowGridInsecure(show, Addon.ActionButtons.ShowGridReasons.SHOW_EMPTY_BUTTONS_PER_BAR, force)
 end
 
 function ActionButton:SetShowGridInsecure(show, reason, force)

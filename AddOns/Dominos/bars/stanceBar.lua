@@ -34,7 +34,7 @@ end
 
 local function stanceButton_OnCreate(button)
     -- tag with the default stance button
-    button.commandName = ('SHAPESHIFTBUTTON%d'):format(button:GetID())
+    button:SetAttribute("commandName", "SHAPESHIFTBUTTON" .. button:GetID())
 
     -- turn off cooldown edges
     button.cooldown:SetDrawEdge(false)
@@ -96,8 +96,8 @@ function StanceBar:AcquireButton(index)
 end
 
 function StanceBar:OnAttachButton(button)
+    button.HotKey:SetAlpha(self:ShowingBindingText() and 1 or 0)
     button:Show()
-    button:UpdateHotkeys()
 
     Addon:GetModule('ButtonThemer'):Register(button, L.ClassBarDisplayName)
     Addon:GetModule('Tooltips'):Register(button)
@@ -133,6 +133,52 @@ function StanceBar:UpdateActions()
 
         button:SetChecked(isActive and true)
     end
+end
+
+-- binding text
+function StanceBar:SetShowBindingText(show)
+    show = show and true
+
+    if show == Addon.db.profile.showBindingText then
+        self.sets.showBindingText = nil
+    else
+        self.sets.showBindingText = show
+    end
+
+    for _, button in pairs(self.buttons) do
+        button.HotKey:SetAlpha(show and 1 or 0)
+    end
+end
+
+function StanceBar:ShowingBindingText()
+    local result = self.sets.showBindingText
+
+    if result == nil then
+        result = Addon.db.profile.showBindingText
+    end
+
+    return result
+end
+
+function StanceBar:OnCreateMenu(menu)
+    local L = LibStub('AceLocale-3.0'):GetLocale('Dominos-Config')
+
+    local layoutPanel = menu:NewPanel(L.Layout)
+
+    layoutPanel:NewCheckButton {
+        name = L.ShowBindingText,
+        get = function()
+            return layoutPanel.owner:ShowingBindingText()
+        end,
+        set = function(_, enable)
+            layoutPanel.owner:SetShowBindingText(enable)
+        end
+    }
+
+    layoutPanel:AddLayoutOptions()
+
+    menu:AddFadingPanel()
+    menu:AddAdvancedPanel()
 end
 
 -- export

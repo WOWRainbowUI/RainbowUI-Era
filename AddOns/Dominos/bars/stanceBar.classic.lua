@@ -36,7 +36,7 @@ local StanceButtons = setmetatable({}, {
         local button =  _G['StanceButton' .. id]
 
         if button then
-            button.commandName = ("SHAPESHIFTBUTTON%d"):format(id)
+            button:SetAttribute("commandName", "SHAPESHIFTBUTTON" .. id)
             Addon.BindableButton:AddQuickBindingSupport(button)
 
             self[id] = button
@@ -79,7 +79,7 @@ function StanceBar:AcquireButton(index)
 end
 
 function StanceBar:OnAttachButton(button)
-    button:UpdateHotkeys()
+    button.HotKey:SetAlpha(self:ShowingBindingText() and 1 or 0)
     button:Show()
 
     Addon:GetModule('ButtonThemer'):Register(button, L.ClassBarDisplayName)
@@ -89,6 +89,79 @@ end
 function StanceBar:OnDetachButton(button)
     Addon:GetModule('ButtonThemer'):Unregister(button, L.ClassBarDisplayName)
     Addon:GetModule('Tooltips'):Unregister(button)
+end
+
+StanceBar:Extend('OnAcquire', function(self) self:UpdateTransparent(true) end)
+
+function StanceBar:OnSetAlpha()
+    self:UpdateTransparent()
+end
+
+function StanceBar:UpdateTransparent(force)
+    local transparent = self:GetAlpha() == 0
+    if (self.transparent ~= transparent) or force then
+        self.transparent = transparent
+
+        if transparent then
+            for _, button in pairs(self.buttons) do
+                if button.cooldown:GetParent() ~= Addon.ShadowUIParent then
+                    button.cooldown:SetParent(Addon.ShadowUIParent)
+                end
+            end
+        else
+            for _, button in pairs(self.buttons) do
+                if button.cooldown:GetParent() ~= button then
+                    button.cooldown:SetParent(button)
+                end
+            end
+        end
+    end
+end
+
+-- binding text
+function StanceBar:SetShowBindingText(show)
+    show = show and true
+
+    if show == Addon.db.profile.showBindingText then
+        self.sets.showBindingText = nil
+    else
+        self.sets.showBindingText = show
+    end
+
+    for _, button in pairs(self.buttons) do
+        button.HotKey:SetAlpha(show and 1 or 0)
+    end
+end
+
+function StanceBar:ShowingBindingText()
+    local result = self.sets.showBindingText
+
+    if result == nil then
+        result = Addon.db.profile.showBindingText
+    end
+
+    return result
+end
+
+function StanceBar:OnCreateMenu(menu)
+    local L = LibStub('AceLocale-3.0'):GetLocale('Dominos-Config')
+
+    local layoutPanel = menu:NewPanel(L.Layout)
+
+    layoutPanel:NewCheckButton {
+        name = L.ShowBindingText,
+        get = function()
+            return layoutPanel.owner:ShowingBindingText()
+        end,
+        set = function(_, enable)
+            layoutPanel.owner:SetShowBindingText(enable)
+        end
+    }
+
+    layoutPanel:AddLayoutOptions()
+
+    menu:AddFadingPanel()
+    menu:AddAdvancedPanel()
 end
 
 -- export

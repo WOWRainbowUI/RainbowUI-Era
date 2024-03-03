@@ -1,5 +1,30 @@
 # Dominos Changelog
 
+## 10.2.21
+
+* Fix hotkey display issues
+* Fixed some inconsistencies when toggling the new per bar options
+* Renamed the `showgrid` profile value to `showEmptyButtons` to maintain consistency with per bar settings
+
+## 10.2.20
+
+* Added per bar toggles for bindings, macros, counts, and equipped item border visibility
+* Added the ability to configure the number of segments on progress bars
+
+## 10.2.19
+
+* (Classic) Update Shadowform and Metamorphosis conditionals to not check for a result from
+* (Classic) Add some workarounds to prevent cooldown flashes from showing up on the stance and pet bars when they're transparent but not hidden.
+
+## 10.2.18
+
+* Action Buttons that have been hidden by shrinking the size of the bar are now
+  simply hidden, instead of being completely detached from the bar. This should
+  allow them to still remain usable in macros or by pressing any associated
+  hotkeys.
+* Added a new Row Offset layout setting. This will indent each row of buttons
+  by the specified value.
+
 ## 10.2.17
 
 * Update TOC file versions for 1.15.1
