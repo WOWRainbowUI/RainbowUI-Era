@@ -1,5 +1,5 @@
 --- Kaliel's Tracker
---- Copyright (c) 2012-2023, Marouan Sabbagh <mar.sabbagh@gmail.com>
+--- Copyright (c) 2012-2024, Marouan Sabbagh <mar.sabbagh@gmail.com>
 --- All Rights Reserved.
 ---
 --- This file is part of addon Kaliel's Tracker.
@@ -7,8 +7,8 @@
 local addonName, addon = ...
 local KT = LibStub("AceAddon-3.0"):NewAddon(addon, addonName, "LibSink-2.0")
 KT:SetDefaultModuleState(false)
-KT.title = GetAddOnMetadata(addonName, "Title")
-KT.version = GetAddOnMetadata(addonName, "Version")
+KT.title = C_AddOns.GetAddOnMetadata(addonName, "Title")
+KT.version = C_AddOns.GetAddOnMetadata(addonName, "Version")
 KT.gameVersion = GetBuildInfo()
 KT.locale = GetLocale()
 
@@ -175,16 +175,6 @@ local function GetTaskTimeLeftData(questID)
 	return timeString, timeColor
 end
 
-local function ResetScale()
-	local parentScale = UIParent:GetScale()
-	-- UIParent 0.64 scale correction
-	if parentScale > 0.64 and parentScale < 0.65 then
-		local scale = KT.ConvertPixelsToUI(1, parentScale)
-		KTF:SetScale(scale)
-		KTF.Buttons:SetScale(scale)
-	end
-end
-
 -- Setup ---------------------------------------------------------------------------------------------------------------
 
 local function Init()
@@ -275,8 +265,6 @@ local function SetFrames()
 			KT.playerLevel = level
 		elseif event == "CVAR_UPDATE" then
 			AUTO_QUEST_WATCH = GetCVar("autoQuestWatch")
-		elseif event == "UI_SCALE_CHANGED" then
-			ResetScale()
 		end
 	end)
 	KTF:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -291,7 +279,6 @@ local function SetFrames()
 	KTF:RegisterEvent("UPDATE_BINDINGS")
 	KTF:RegisterEvent("PLAYER_LEVEL_UP")
 	KTF:RegisterEvent("CVAR_UPDATE")
-	KTF:RegisterEvent("UI_SCALE_CHANGED")
 
 	-- DropDown frame
 	KT.DropDown = MSA_DropDownMenu_Create(addonName.."DropDown", KTF)
@@ -398,8 +385,6 @@ local function SetFrames()
 	Buttons.num = 0
 	Buttons.reanchor = false
 	KTF.Buttons = Buttons
-
-	ResetScale()
 end
 
 -- Hooks ---------------------------------------------------------------------------------------------------------------
@@ -666,7 +651,7 @@ local function SetHooks()
 				local questLogIndex = GetQuestLogIndexByID(block.id)
 				local questTitle = KT.QuestUtils_GetQuestName(block.id)
 				local _, questDescription = GetQuestLogQuestText(questLogIndex)
-				local questZone = KT.QuestUtils_GetQuestZone(block.id)
+				local questZone = KT_GetQuestListInfo(block.id, true).zone
 				GameTooltip:AddLine(questTitle, nil, nil, nil, true)
 			    if questZone then
 				    GameTooltip:AddLine(questZone, OBJECTIVE_TRACKER_COLOR["Zone"].r, OBJECTIVE_TRACKER_COLOR["Zone"].g, OBJECTIVE_TRACKER_COLOR["Zone"].b, true)

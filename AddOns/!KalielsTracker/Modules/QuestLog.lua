@@ -1,5 +1,5 @@
 --- Kaliel's Tracker
---- Copyright (c) 2012-2023, Marouan Sabbagh <mar.sabbagh@gmail.com>
+--- Copyright (c) 2012-2024, Marouan Sabbagh <mar.sabbagh@gmail.com>
 --- All Rights Reserved.
 ---
 --- This file is part of addon Kaliel's Tracker.
@@ -45,22 +45,25 @@ local function RemoveQuestFromList(questID)
 end
 
 local function SetHooks()
-	-- Quest Log -------------------------------------------------------------------------------------------------------
-
-	QuestLogCollapseAllButton:Hide()
-	QuestLogCollapseAllButton_OnClick = function() end
-
+	-- QuestLogFrame.lua
 	function QuestLogTitleButton_OnClick(self, button)  -- R
-		if ( self.isHeader ) then
-			return;
-		end
 		local questName = self:GetText();
 		local questIndex = self:GetID() + FauxScrollFrame_GetOffset(QuestLogListScrollFrame);
 		local questID = GetQuestIDFromLogIndex(questIndex);
 		if ( IsModifiedClick("CHATLINK") and ChatEdit_GetActiveWindow() ) then
-			-- Trim leading whitespace and put it into chat
+			-- If header then return
+			if ( self.isHeader ) then
+				return;
+			end
+
+			-- Otherwise trim leading whitespace and put it into chat
 			ChatEdit_InsertLink("["..gsub(questName, " *(.*)", "%1").." ("..questID..")]")
 		elseif ( IsShiftKeyDown() ) then
+			-- If header then return
+			if ( self.isHeader ) then
+				return;
+			end
+
 			-- Shift-click toggles quest-watch on this quest.
 			if not db.filterAuto[1] then
 				if ( IsQuestWatched(questIndex) ) then
@@ -74,13 +77,6 @@ local function SetHooks()
 		QuestLog_Update();
 	end
 
-	-- Quest Watch -----------------------------------------------------------------------------------------------------
-
-	function IsQuestWatched(questLogIndex)  -- R
-		local questID = GetQuestIDFromLogIndex(questLogIndex)
-		return IsQuestInList(questID)
-	end
-
 	function AutoQuestWatch_Insert(questIndex, watchTimer)  -- R
 		if KT_GetNumQuestWatches() < KT.MAX_WATCHABLE_QUESTS then
 			local questID = GetQuestIDFromLogIndex(questIndex)
@@ -88,6 +84,12 @@ local function SetHooks()
 		end
 	end
 
+	function IsQuestWatched(questLogIndex)  -- R
+		local questID = GetQuestIDFromLogIndex(questLogIndex)
+		return IsQuestInList(questID)
+	end
+
+	-- Quest Watch
 	QuestWatch_OnLogin = function() end
 	QuestWatch_Update = function() end
 	AutoQuestWatch_CheckDeleted = function() end
