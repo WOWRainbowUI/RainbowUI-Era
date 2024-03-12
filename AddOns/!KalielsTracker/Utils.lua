@@ -1,5 +1,5 @@
 --- Kaliel's Tracker
---- Copyright (c) 2012-2023, Marouan Sabbagh <mar.sabbagh@gmail.com>
+--- Copyright (c) 2012-2024, Marouan Sabbagh <mar.sabbagh@gmail.com>
 --- All Rights Reserved.
 ---
 --- This file is part of addon Kaliel's Tracker.
@@ -76,6 +76,7 @@ function KT.QuestUtils_GetQuestName(questID)
 end
 
 function KT.QuestUtils_GetQuestZone(id)
+    ExpandQuestHeader(0)
     local numEntries, _ = GetNumQuestLogEntries()
     local headerName
     for i=1, numEntries do

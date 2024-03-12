@@ -1,5 +1,5 @@
 --- Kaliel's Tracker
---- Copyright (c) 2012-2023, Marouan Sabbagh <mar.sabbagh@gmail.com>
+--- Copyright (c) 2012-2024, Marouan Sabbagh <mar.sabbagh@gmail.com>
 --- All Rights Reserved.
 ---
 --- This file is part of addon Kaliel's Tracker.
@@ -35,7 +35,7 @@ local KTF = KT.frame
 
 local function AddonInfo(name)
 	local info = "Addon "..name
-	if IsAddOnLoaded(name) then
+	if C_AddOns.IsAddOnLoaded(name) then
 		info = info.." |cff00ff00is installed|r."
 	else
 		info = info.." |cffff0000is not installed|r."
@@ -247,15 +247,15 @@ local function SetupTutorials()
 		},
 		{	-- 9
 			text = cTitle.."         What's NEW|r\n\n"..
-					cTitle.."Version 1.5.0|r\n"..
-					"- ADDED - Support for WoW 1.14.4\n"..
-					"- FIXED - Quests - wrong max quest tracking limit\n"..
-					"- UPDATED - Addon support - Questie 8.10.5\n"..
-					"- UPDATED - Addon support - ElvUI 13.43, Tukui 20.40\n"..
-					"- UPDATED - Help - Supporters (Patreon)\n"..
+					cTitle.."Version 1.6.0|r\n"..
+					"- ADDED - Support for WoW 1.15.1\n"..
+					"- UPDATED - Deprecated functions in WoW 1.15.0\n"..
+					"- UPDATED - Addon support - Questie 9.4.9\n"..
+					"- UPDATED - Addon support - ElvUI 13.59, Tukui 20.41\n"..
+					"- UPDATED - Help - Active Patrons\n"..
 					"- UPDATED - Libs\n\n"..
 
-					cTitle.."WoW 1.14.4 - Known issues w/o solution|r\n"..
+					cTitle.."WoW 1.15.1 - Known issues w/o solution|r\n"..
 					"- Clicking on tracked quests has no response during combat.\n"..
 					"- Header button Q don't work during combat.\n\n"..
 
@@ -320,24 +320,16 @@ local function SetupTutorials()
 					"After 10 years of working on an addon, I started Patreon. It's created as\na compensation for the amount "..
 					"of time that addon development requires.\n\n"..
 					"                                    Many thanks to all supporters  |T"..helpPath.."help_patreon:16:16:0:0:256:32:157:173:0:16|t\n\n"..
-					cTitle.."Patrons|r\n"..
-					SetFormatedPatronName("Legendary", "FrankN'Furter")..
-					SetFormatedPatronName("Legendary", "Zayah", "Vek'nilash")..
+					cTitle.."Active Patrons|r\n"..
 					SetFormatedPatronName("Epic", "Haekwon", "Elune")..
-					SetFormatedPatronName("Epic", "Monty", "Winterhoof")..
-					SetFormatedPatronName("Epic", "Squishses", "Area 52")..
-					SetFormatedPatronName("Rare", "Liothen", "Emerald Dream")..
+					SetFormatedPatronName("Epic", "Liothen", "Emerald Dream")..
 					SetFormatedPatronName("Uncommon", "Anaara", "Auchindoun")..
 					SetFormatedPatronName("Uncommon", "Charles Howarth")..
-					SetFormatedPatronName("Uncommon", "Chris J")..
 					SetFormatedPatronName("Uncommon", "Flex (drantor)")..
-					SetFormatedPatronName("Uncommon", "Jason")..
-					SetFormatedPatronName("Uncommon", "Kevin Costa")..
-					SetFormatedPatronName("Uncommon", "Kyle Fuller")..
-					SetFormatedPatronName("Uncommon", "Pablo Sebastián Molina Silva")..
+					SetFormatedPatronName("Uncommon", "Jeffrey Hofer")..
+					SetFormatedPatronName("Uncommon", "Mystekal")..
 					SetFormatedPatronName("Uncommon", "Semy", "Ravencrest")..
 					SetFormatedPatronName("Uncommon", "Sopleb")..
-					SetFormatedPatronName("Uncommon", "Xeelee", "Razorfen")..
 					SetFormatedPatronName("Common", "Darren Divecha")..
 					"\n"..
 					cTitle.."Testers|r\n"..

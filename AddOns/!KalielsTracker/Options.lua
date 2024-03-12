@@ -1,5 +1,5 @@
 --- Kaliel's Tracker
---- Copyright (c) 2012-2023, Marouan Sabbagh <mar.sabbagh@gmail.com>
+--- Copyright (c) 2012-2024, Marouan Sabbagh <mar.sabbagh@gmail.com>
 --- All Rights Reserved.
 ---
 --- This file is part of addon Kaliel's Tracker.
@@ -17,9 +17,11 @@ local _DBG = function(...) if _DBG then _DBG("KT", ...) end end
 local floor = math.floor
 local fmod = math.fmod
 local format = string.format
+local gsub = string.gsub
 local ipairs = ipairs
 local pairs = pairs
 local strlen = string.len
+local strsplit = string.split
 local strsub = string.sub
 
 local db, dbChar
@@ -841,7 +843,7 @@ local options = {
 							name = "Masque",
 							type = "execute",
 							disabled = function()
-								return (not IsAddOnLoaded("Masque") or not db.addonMasque or not KT.AddonOthers:IsEnabled())
+								return (not C_AddOns.IsAddOnLoaded("Masque") or not db.addonMasque or not KT.AddonOthers:IsEnabled())
 							end,
 							func = function()
 								SlashCmdList["MASQUE"]()
@@ -1140,7 +1142,7 @@ local options = {
 							confirm = true,
 							confirmText = warning,
 							disabled = function()
-								return not IsAddOnLoaded("Questie")
+								return not C_AddOns.IsAddOnLoaded("Questie")
 							end,
 							set = function()
 								db.addonQuestie = not db.addonQuestie
@@ -1193,8 +1195,9 @@ function KT:CheckAddOn(addon, version, isUI)
 	local ver = isUI and "" or "---"
 	local result = false
 	local path
-	if IsAddOnLoaded(addon) then
-		local actualVersion = GetAddOnMetadata(addon, "Version") or "unknown"
+	if C_AddOns.IsAddOnLoaded(addon) then
+		local actualVersion = C_AddOns.GetAddOnMetadata(addon, "Version") or "unknown"
+		actualVersion = gsub(actualVersion, "(.*%S)%s+", "%1")
 		ver = isUI and "  -  " or ""
 		ver = (ver.."|cff%s"..actualVersion.."|r"):format(actualVersion == version and "00d200" or "ff0000")
 		result = true
