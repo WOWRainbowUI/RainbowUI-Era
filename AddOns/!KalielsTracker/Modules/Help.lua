@@ -316,9 +316,9 @@ local function SetupTutorials()
 		{	-- 1
 			text = cTitle.."         成為贊助者|r\n\n"..
 					"如果你喜歡 "..KT.title.."，請在 |cfff34a54Patreon|r 贊助我。\n\n"..
-					"在 CurseForge 的插件頁面點一下 |T"..helpPath.."help_patreon:20:154:1:0:256:32:0:156:0:20|t 按鈕。\n\n"..
-					"經過了 10 年的插件工作後，我啟用了 Patreon，當作是開發插件所需時間的補償。"..
-					"                                    非常感謝所有贊助者 |T"..helpPath.."help_patreon:16:16:0:0:256:32:157:173:0:16|t\n\n"..
+					"在 CurseForge 的插件頁面點一下  |T"..helpPath.."help_patreon:20:154:1:0:256:32:0:156:0:20|t  按鈕。\n\n"..
+					"經過了 10 年的插件工作後，我啟用了 Patreon，當作是開發插件所需時間的補償。\n\n"..
+					"                                    非常感謝所有贊助者  |T"..helpPath.."help_patreon:16:16:0:0:256:32:157:173:0:16|t\n\n"..
 					cTitle.."Active Patrons|r\n"..
 					SetFormatedPatronName("Epic", "Haekwon", "Elune")..
 					SetFormatedPatronName("Epic", "Liothen", "Emerald Dream")..
