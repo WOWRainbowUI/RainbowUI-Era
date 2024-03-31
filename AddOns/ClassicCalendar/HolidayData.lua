@@ -469,7 +469,7 @@ local SoDEvents = {
 		ZIndex=ZIndexes.highest
 	},
 	{
-		name="Phase 3 Launch",
+		name="第 3 階段上線",
 		description="Season of Discovery Phase 3 officially arrives with level 50, Nightmare Incursions, and the Sunken Temple 20 man raid!",
 		startDate={ year=2024, month=4, day=4, hour=14, min=0 },
 		endDate={ year=2024, month=4, day=4, hour=14, min=0 },
