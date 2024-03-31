@@ -1,6 +1,6 @@
 # Classic Calendar
 
-## [v0.5.2beta](https://github.com/birkholz/ClassicCalendar/tree/v0.5.2beta) (2024-02-23)
-[Full Changelog](https://github.com/birkholz/ClassicCalendar/compare/v0.5.1beta...v0.5.2beta) [Previous Releases](https://github.com/birkholz/ClassicCalendar/releases)
+## [v0.5.5beta](https://github.com/birkholz/ClassicCalendar/tree/v0.5.5beta) (2024-03-27)
+[Full Changelog](https://github.com/birkholz/ClassicCalendar/compare/v0.5.4beta...v0.5.5beta) [Previous Releases](https://github.com/birkholz/ClassicCalendar/releases)
 
-- End Lunar Festival 2024 today, cuz who knows what's going on at Blizzard  
+- Update phase 3 launch event description  
