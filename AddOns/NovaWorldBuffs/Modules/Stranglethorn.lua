@@ -16,14 +16,16 @@ function SlashCmdList.NWBASTVCMD(msg, editBox)
 	WorldMapFrame:SetMapID(1434);
 end
 
---This may need to adjusted for DST we'll see whe it ticks over.
+--These times are adjusted if DST is active in the getTimeLeft() func.
+local isUS;
 local region = GetCurrentRegion();
 if (region == 1 and string.match(NWB.realm, "(AU)")) then
 	--OCE.
-	calcStart = 1707260400; --Date and time (GMT): Tuesday, February 6, 2024 11:00:00 PM
+	calcStart = 1707267600; --Date and time (GMT): Wednesday, February 7, 2024 1:00:00 AM
 elseif (region == 1) then
 	--US.
-	calcStart = 1707260400; --OCE and US are the same? (unlike dmf)
+	isUS = true;
+	calcStart = 1707264000; --Date and time (GMT):Wednesday, February 7, 2024 12:00:00 AM; --OCE and US different.
 elseif (region == 2) then
 	--Korea.
 	calcStart = 1707256800; --Date and time (GMT): Tuesday, February 6, 2024 10:00:00 PM --KR starts 1h before OCE/US.
@@ -37,14 +39,20 @@ elseif (region == 5) then
 	--China.
 	calcStart = 1707260400; --CN same as OCE/US.
 end
+region = nil;
 calcStart = calcStart - 3600; --Stv runs 1 hour before ashenvale.
 
 local function getTimeLeft()
 	local timeLeft, type;
 	if (calcStart) then
-		local utc = time(date("*t"));
-		local secondsSinceFirstReset = utc - calcStart;
-		local timestamp = calcStart + ((math.floor(secondsSinceFirstReset / 10800) + 1) * 10800);
+		local start = calcStart;
+		local isDST = NWB:isDST();
+		if (isDST) then
+			start = start + 3600;
+		end
+		local utc = GetServerTime();
+		local secondsSinceFirstReset = utc - start;
+		local timestamp = start + ((math.floor(secondsSinceFirstReset / 10800) + 1) * 10800);
 		local timeLeft = timestamp - utc;
 		local realTimeLeft = timeLeft;
 		if (timeLeft > 9000) then
@@ -55,7 +63,7 @@ local function getTimeLeft()
 			NWB.stvRunning = true;
 		else
 			if (isBossShown) then
-				--NWB:updateStvBoss(nil, nil, nil, true);
+				NWB:updateStvBoss(nil, nil, nil, true);
 				isBossShown = nil;
 			end
 			NWB.stvRunning = false;
@@ -93,7 +101,7 @@ function NWB:getStranglethornTimeString(isShort, veryShort)
 			end
 		end
 	end
-	return text, timeLeft, timestamp, realTimeLeft;
+	return text, timeLeft, timestamp, realTimeLeft, type;
 end
 
 function NWB:addStranglethornMinimapString(tooltip, noTopSeperator, noBottomSeperator)
@@ -150,9 +158,13 @@ function NWB:checkStranglethornTimer()
 		if (NWB.db.global.guild10) then
 			local msg = string.format(L["stranglethornStartSoon"], "15 " .. L["minutes"]) .. ".";
 			if (IsInGuild()) then
-				NWB:sendGuildMsg(msg, "guild10", nil, "[NWB]", 2.67);
+				if (isUS) then
+					NWB:sendGuildMsg(msg, "guild10", nil, "[NWB]", 2.69);
+				else
+					NWB:sendGuildMsg(msg, "guild10", nil, "[NWB]", 2.67);
+				end
 			else
-				NWB:print(msg);
+				NWB:print(msg, nil, "[NWB]");
 			end
 		end
 	end
@@ -162,9 +174,13 @@ function NWB:checkStranglethornTimer()
 		--Just tie it to guild10 settings.
 		if (NWB.db.global.guild10) then
 			if (IsInGuild()) then
-				NWB:sendGuildMsg(msg, "guild10", nil, "[NWB]", 2.68);
+				if (isUS) then
+					NWB:sendGuildMsg(msg, "guild10", nil, "[NWB]", 2.69);
+				else
+					NWB:sendGuildMsg(msg, "guild10", nil, "[NWB]", 2.68);
+				end
 			else
-				NWB:print(msg);
+				NWB:print(msg, nil, "[NWB]");
 			end
 		end
 		if (NWB.db.global.sodMiddleScreenWarning) then
@@ -262,7 +278,7 @@ function NWB:createStranglethornMarker(type, data)
 					obj.timerFrame:SetHeight(obj.timerFrame.fs:GetStringHeight() + 12);
 				end
 			end)
-				obj.timerFrame:SetScript("OnEnter", function(self)
+			obj.timerFrame:SetScript("OnEnter", function(self)
 				obj.tooltip:Show();
 			end)
 			obj.timerFrame:SetScript("OnLeave", function(self)
@@ -329,19 +345,20 @@ function NWB:refreshStranglethornMarkers(updateOnly)
 	end
 	--If we're looking at the capital city map.
 	if (NWB.faction == "Horde" and WorldMapFrame and WorldMapFrame:GetMapID() == 1454) then
-		mapMarkerTypes = {
+		--This is now attached to the ashenvale city markers.
+		--[[mapMarkerTypes = {
 			["Alliance"] = {x = 15, y = 92, mapID = 1454, icon = "Interface\\worldstateframe\\alliancetower.blp"},
 			["Horde"] = {x = 20, y = 92, mapID = 1454, icon = "Interface\\worldstateframe\\hordetower.blp"},
 		};
 		_G["AllianceNWBStranglethornMap"].fsBottom:ClearAllPoints();
-		_G["AllianceNWBStranglethornMap"].fsBottom:SetPoint("BOTTOM", 28, -45);
+		_G["AllianceNWBStranglethornMap"].fsBottom:SetPoint("BOTTOM", 28, -45);]]
 	elseif (NWB.faction == "Alliance" and WorldMapFrame and WorldMapFrame:GetMapID() == 1453) then
-		mapMarkerTypes = {
+		--[[mapMarkerTypes = {
 			["Alliance"] = {x = 14, y = 92, mapID = 1453, icon = "Interface\\worldstateframe\\alliancetower.blp"},
 			["Horde"] = {x = 19, y = 92, mapID = 1453, icon = "Interface\\worldstateframe\\hordetower.blp"},
 		};
 		_G["AllianceNWBStranglethornMap"].fsBottom:ClearAllPoints();
-		_G["AllianceNWBStranglethornMap"].fsBottom:SetPoint("BOTTOM", 28, -45);
+		_G["AllianceNWBStranglethornMap"].fsBottom:SetPoint("BOTTOM", 28, -45);]]
 	else
 		mapMarkerTypes = {
 			["Alliance"] = {x = 78, y = 90, mapID = 1434, icon = "Interface\\worldstateframe\\alliancetower.blp"},
