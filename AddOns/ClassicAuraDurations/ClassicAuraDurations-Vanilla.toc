@@ -4,7 +4,7 @@
 ## Notes-zhTW: ClassicAuraDurations |n|n計算光環的持續時間，並且讓目標頭像下方和團隊框架上面的增益/減益效果圖示可以顯示倒數時間的轉圈動畫效果。|n|n要顯示倒數時間數字，需要同時載入冷卻時間插件。
 ## Author: d87
 ## SavedVariables: ClassicAuraDurationsDB
-## Version: 3.4.3
+## Version: 3.4.4
 
 ## X-WoWI-ID: 25006
 ## X-Curse-Project-ID: 323806
