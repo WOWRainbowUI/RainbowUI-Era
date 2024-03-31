@@ -438,31 +438,66 @@ local int, fort, spirit, shadow, motw, pal, weaponEnchants = {}, {}, {}, {}, {},
 for k, v in pairs(NRC.int) do
 	int[k] = v;
 end
-NRC.int = nil;
 for k, v in pairs(NRC.fort) do
 	fort[k] = v;
 end
-NRC.fort = nil;
 for k, v in pairs(NRC.spirit) do
 	spirit[k] = v;
 end
-NRC.spirit = nil;
 for k, v in pairs(NRC.shadow) do
 	shadow[k] = v;
 end
-NRC.shadow = nil;
 for k, v in pairs(NRC.motw) do
 	motw[k] = v;
 end
-NRC.motw = nil;
 for k, v in pairs(NRC.pal) do
 	pal[k] = v;
 end
-NRC.pal = nil;
 for k, v in pairs(NRC.tempEnchants) do
 	weaponEnchants[k] = v;
 end
-NRC.tempEnchants = nil;
+if (NRC.isSOD) then
+	--If it's sod we need to reload these buffs from db so the sod phase can be detectd properly and maxRank added.
+	--This is called after logon.
+	function NRC:logonUpdateRaidStatusDatabase()
+		for k, v in pairs(NRC.int) do
+			int[k] = v;
+		end
+		for k, v in pairs(NRC.fort) do
+			fort[k] = v;
+		end
+		for k, v in pairs(NRC.spirit) do
+			spirit[k] = v;
+		end
+		for k, v in pairs(NRC.shadow) do
+			shadow[k] = v;
+		end
+		for k, v in pairs(NRC.motw) do
+			motw[k] = v;
+		end
+		for k, v in pairs(NRC.pal) do
+			pal[k] = v;
+		end
+		for k, v in pairs(NRC.tempEnchants) do
+			weaponEnchants[k] = v;
+		end
+		NRC.int = nil;
+		NRC.fort = nil;
+		NRC.spirit = nil;
+		NRC.shadow = nil;
+		NRC.motw = nil;
+		NRC.pal = nil;
+		NRC.tempEnchants = nil;
+	end
+else
+	NRC.int = nil;
+	NRC.fort = nil;
+	NRC.spirit = nil;
+	NRC.shadow = nil;
+	NRC.motw = nil;
+	NRC.pal = nil;
+	NRC.tempEnchants = nil;
+end
 
 --These are actual "Food" buff you get while eating, these are from buff food so the raid status can display when a player is eating.
 local validFoods = {};
@@ -607,6 +642,9 @@ local function updateGridTooltip(frame, localBuffData, buffData)
 			if (remaining < lowDurationTime) then
 				tooltipText = tooltipText .. " |cFFFF0000Low Duration|r";
 			end
+		elseif (buffData.duration == 0) then
+			--An aura, no duration.
+			tooltipText = tooltipText .. "\nAura (No duration)|r";
 		else
 			tooltipText = tooltipText .. "\nDuration unknown (out of range?)|r";
 		end
@@ -669,7 +707,11 @@ local function getMultipleIconsTooltip(buffData)
 			if (remaining < lowDurationTime) then
 				tooltipText = tooltipText .. " |cFFFF0000Low Duration|r";
 			end
+		elseif (buffData.duration == 0) then
+			--An aura, no duration.
+			tooltipText = tooltipText .. "\nAura (No duration)|r";
 		else
+			NRC:debug(buffData)
 			tooltipText = tooltipText .. "\nDuration unknown (out of range?)|r";
 		end
 		--if (buffData.endTime) then
@@ -1004,7 +1046,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache and buffData.duration ~= 0) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1029,7 +1071,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache and buffData.duration ~= 0) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1054,7 +1096,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache and buffData.duration ~= 0) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1079,7 +1121,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache and buffData.duration ~= 0) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1104,7 +1146,7 @@ function NRC:updateRaidStatusFrames(updateLayout)
 								frame:SetBackdropColor(1, 0, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 0, 0, 0.7);
 								frame.red = true;
-							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache) then
+							elseif (buffData.endTime and buffData.endTime - GetServerTime() < lowDurationTime and not usingCache and buffData.duration ~= 0) then
 								frame:SetBackdropColor(1, 1, 0, 0.25);
 								frame:SetBackdropBorderColor(1, 1, 0, 0.7);
 								frame.red = true;
@@ -1771,7 +1813,7 @@ function NRC:raidStatusSortMultipleIcons(frame, spellData, maxPossible, checkMax
 		if (not spellData[1].maxRank) then
 			missingMaxRank = true;
 		end
-		if (spellData[1].endTime and spellData[1].endTime - GetServerTime() < lowDurationTime) then
+		if (spellData[1].endTime and spellData[1].endTime - GetServerTime() < lowDurationTime and spellData[1].duration ~= 0) then
 			lowDurationFound = true;
 		end
 	elseif (buffCount == 2) then
@@ -1793,7 +1835,7 @@ function NRC:raidStatusSortMultipleIcons(frame, spellData, maxPossible, checkMax
 		if (not spellData[1].maxRank or not spellData[2].maxRank) then
 			missingMaxRank = true;
 		end
-		if (spellData[2].endTime and spellData[2].endTime - GetServerTime() < lowDurationTime) then
+		if (spellData[2].endTime and spellData[2].endTime - GetServerTime() < lowDurationTime and spellData[2].duration ~= 0) then
 			lowDurationFound = true;
 		end
 	elseif (buffCount == 3) then
@@ -1818,7 +1860,7 @@ function NRC:raidStatusSortMultipleIcons(frame, spellData, maxPossible, checkMax
 		if (not spellData[1].maxRank or not spellData[2].maxRank or not spellData[3].maxRank) then
 			missingMaxRank = true;
 		end
-		if (spellData[3].endTime and spellData[3].endTime - GetServerTime() < lowDurationTime) then
+		if (spellData[3].endTime and spellData[3].endTime - GetServerTime() < lowDurationTime and spellData[3].duration ~= 0) then
 			lowDurationFound = true;
 		end
 	elseif (buffCount == 4) then
@@ -1846,7 +1888,7 @@ function NRC:raidStatusSortMultipleIcons(frame, spellData, maxPossible, checkMax
 		if (not spellData[1].maxRank or not spellData[2].maxRank or not spellData[3].maxRank or not spellData[4].maxRank) then
 			missingMaxRank = true;
 		end
-		if (spellData[4].endTime and spellData[4].endTime - GetServerTime() < lowDurationTime) then
+		if (spellData[4].endTime and spellData[4].endTime - GetServerTime() < lowDurationTime and spellData[4].duration ~= 0) then
 			lowDurationFound = true;
 		end
 	end
