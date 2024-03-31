@@ -1,3 +1,43 @@
+== v2.01 - 31st March 2024
+* Remove Cozy Sleeping bag (again)
+* Forgot to test for completion on the Continent maps
+
+== v2.00 - 30th March 2024
+* Complete rewrite of the pin generating / displaying engine
+* Continents now strictly show one pin per spell per zone
+* Lag caused by the old engine has been eliminated
+* Options panel redesigned
+
+== v1.38 - 20th March 2024
+* Fixed typo with the "Hide if learnt" option. Added text to say that Skill Books also included
+* Translations in the TOC file for the in game AddOn menus
+* Translated Runes. Doh!
+* formatt typo
+* Removed Cozy Sleeping Bag, Void-Touched - removed bloat. Now in my new Crates AddOn
+* Removed unnecessary code due to avove data being removed - removed bloat
+
+== v1.37 - 18th March 2024
+* Translation for "Skill Book" added
+* /runes in chat will take you to the Options panel (within the HandyNotes biome) for this AddOn
+* Priest level 17 quest now correctly flagged as 18 for Horde
+* The level 14 Cozy Sleeping Bag quest was added
+* Shared Pain typo as Sahred Pain - caused ABEND for all Horde Priests
+
+== v1.36 - 16th March 2024
+* Skill Books added
+* Small change to formatting for pins that serve more than one rune and for which more than one has quests
+
+== v1.35 - 14th March 2024
+* Localisations for all WoW Classic languages - options panel expanded
+* Fix for ABEND when the AddOn attempts to load non-rune quests
+* Small cosmetic change to Mage Books Tooltip formatting
+
+== v1.34 - 14th March 2024
+* Localisations for all WoW Classic languages - Phase 2 added
+
+== v1.33 - 12th March 2024
+* Numerous updates to include Phase 2
+
 == v1.32 - 3rd February 2024
 * Warlocks and Warriors for non-English clients
 

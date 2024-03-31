@@ -3,7 +3,7 @@
 
                                                 Runes
 
-                                      v1.32 - 3rd February 2024
+                                       v2.01 - 31st March 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -12,13 +12,16 @@
 
 local myName, ns = ...
 ns.db = {}
--- From Data.lua
+
+-- For Data.lua
 ns.points = {}
+ns.pointsBase = {}
 ns.textures = {}
 ns.scaling = {}
 ns.texturesNum = ""
 ns.texturesNumCode = {}
 ns.scalingNum = 0
+
 -- Pink theme
 ns.colour = {}
 ns.colour.prefix	= "\124cFFFF007F" -- Bright Pink
@@ -26,42 +29,53 @@ ns.colour.highlight = "\124cFFFF69B4" -- Hot Pink
 ns.colour.plaintext = "\124cFFFFB2D0" -- Powder Pink
 
 local defaults = { profile = { iconScale = 2.5, iconAlpha = 1, showCoords = false,
-								hideIfRuneLearnt = true, iconChoice = 15,
-								icon1 = 5, icon2 = 5, icon3 = 5, icon4 = 5, icon5 = 5,
-								icon6 = 5, icon7 = 5, icon8 = 5, icon9 = 5, icon10 = 5, 
-								icon11 = 5, icon12 = 5 } }
-local continents = {}
+								hideIfRuneLearnt = true, selfShow = true, skillBook1 = 16,
+								phase1 = 15, phase2 = 16, phase3 = 17,
+								rune101 = 6, rune102 = 6, rune103 = 6, rune104 = 6, rune105 = 6,
+								rune106 = 6, rune107 = 6, rune108 = 6, rune109 = 6, rune110 = 6, 
+								rune111 = 6, rune112 = 6, rune113 = 6, rune114 = 6, rune115 = 6, 
+								rune116 = 6, rune117 = 6, rune118 = 6, rune119 = 6, } }
 local pluginHandler = {}
 
 -- Upvalues
 local GameTooltip = _G.GameTooltip
+local GetMapChildrenInfo = C_Map.GetMapChildrenInfo
 local GetRunesForCategory = C_Engraving.GetRunesForCategory
 local IsKnownRuneSpell = C_Engraving.IsKnownRuneSpell
 local IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
 local LibStub = _G.LibStub
 local UIParent = _G.UIParent
 local UnitLevel = UnitLevel
-local formatt, ipairs, next, type = format, ipairs, next, type
+local format, ipairs, next, type = format, ipairs, next, type
 local HandyNotes = _G.HandyNotes
 
+-- Data Setup
 ns.name = UnitName( "player" ) or "Character"
 ns.faction = UnitFactionGroup( "player" )
-
 ns.classLocal, ns.class = UnitClass( "player" )
+
 ns.raceList = { "Human", "Orc", "Dwarf", "Night Elf", "Undead", "Tauren", "Gnome", "Troll" }
 ns.slotList = { "Head", "Neck", "Shoulders", "Shirt", "Chest", "Waist", "Legs", "Feet",
 				"Wrist", "Hands", "Ring 1", "Ring 2", "Trinket 1", "Trinket 2", "Back",
 				"Main Hand", "Off Hand", "Ranged", "Tabard" }
-ns.slotColour = { "\124cFFFFFF00", "\124cFFFFD700", "\124cFFFFA500", "\124cFFFFFFFF", "\124cFF0000FF", 
-						"\124cFF3CB371", "\124cFF4169E1", "\124cFF008000", "\124cFF00FF00", "\124cFF87CEFA",
-						"\124cFF00FFFF", "\124cFFFFFFFF", "\124cFF7FFFD4", "\124cFFFFFFFF", "\124cFFFFFFFF", 
-						"\124cFF008B8B", "\124cFFFFFFFF", "\124cFFFFFFFF", "\124cFFFFFFFF" }
+ns.slotColour = { "\124cFFFFFF00", "\124cFFFFFFFF", "\124cFFFFA500", "\124cFFFFFFFF", "\124cFF0000FF", 
+					"\124cFF3CB371", "\124cFF4169E1", "\124cFF008000", "\124cFF00FF00", "\124cFF87CEFA",
+					"\124cFF00FFFF", "\124cFFFFFFFF", "\124cFF7FFFD4", "\124cFFFFFFFF", "\124cFFFFD700", 
+					"\124cFF008B8B", "\124cFFFFFFFF", "\124cFFFFFFFF", "\124cFFFFFFFF" }
 
 ns.race = ns.raceList[ select( 3, UnitRace( "player" ) ) ]
 ns.colour.class = "\124c" ..select( 4, GetClassColor( ns.class ) )
 
-continents[ 1414 ] = true -- Kalimdor
-continents[ 1415 ] = true -- Eastern Kingdoms
+ns.continents = {}
+ns.continents[ 947 ] = true -- Azeroth
+ns.continents[ 1414 ] = true -- Kalimdor
+ns.continents[ 1415 ] = true -- Eastern Kingdoms
+
+ns.texturesNum = "Interface\\AddOns\\HandyNotes_Runes\\Textures\\"
+ns.texturesNumCode = { "", "Cy", "Gr", "Ma", "R", "Y" }
+ns.scalingNum = 0.4
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
 
 local function ShowPinForThisClassQuest( quests, level, forceCheck )
 
@@ -120,7 +134,8 @@ local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language
 	end
 	if not ns.runeCategories then
 		C_Engraving.RefreshRunesList()
-		ns.runeCategories = C_Engraving.GetRuneCategories( false, false ) -- returns 5, 7, 10 as of 1.15.0 (Chest/Legs/Hands)
+		ns.runeCategories = C_Engraving.GetRuneCategories( false, false )
+			-- returns 5, 7, 10 as of 1.15.0 (Chest/Legs/Hands); 6, 8 and even a 5 for 1.15.1
 		if ns.runeCategories == nil then return true end -- too soon for the server
 		if #ns.runeCategories == 0 then return true end -- too soon for the server
 	end
@@ -136,6 +151,8 @@ local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language
 	return true
 end
 
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
 function pluginHandler:OnEnter(mapFile, coord)
 	if self:GetCenter() > UIParent:GetCenter() then
 		GameTooltip:SetOwner(self, "ANCHOR_LEFT")
@@ -147,19 +164,32 @@ function pluginHandler:OnEnter(mapFile, coord)
 	local pin = ns.points[mapFile] and ns.points[mapFile][coord]
 	local previousEntry, spaceBeforeQuests = false, false
 	
-	if pin == "Quick Start" then	
+	if pin.qStart then
 		for k,v in pairs( ns.runes ) do
 			if k == ns.class then
 				local completed;
-				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." QUICK START for " ..ns.name )
-				for r,s in ipairs( v.spells ) do	
-					completed = not ShowPinForThisClassSpell( s, true )
-					GameTooltip:AddDoubleLine( ns.colour.prefix ..r .. ".  " ..ns.L[ s ] .."   (" ..v[s].level .."+)",
-							( ( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
-													or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
-							.."     " ..ns.slotColour[ v[s].slot ] ..ns.slotList[ v[s].slot ] )
-					GameTooltip:AddLine( ns.colour.highlight ..v[s].rune )
-					GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
+				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." Phase " ..pin.qStart .." for " ..ns.name )
+				for r,s in ipairs( v.spells ) do
+					if ( ( r < 13 ) and ( pin.qStart == 1 ) ) or ( ( r >= 13 ) and ( pin.qStart == 2 ) ) then
+						completed = not ShowPinForThisClassSpell( s, true )
+						GameTooltip:AddDoubleLine( ns.colour.prefix ..r .. ".  " ..ns.L[ s ] .."   (" ..v[s].level .."+)",
+								( ( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
+														or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
+								.."     " ..ns.slotColour[ v[s].slot ] ..ns.slotList[ v[s].slot ] )
+						GameTooltip:AddLine( ns.colour.highlight ..v[s].rune )
+						GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
+					end
+				end
+				if pin.qStart == 2 then
+					GameTooltip:AddLine( "\n" ..ns.colour.class .."Skill Books:" )
+					for _,s in ipairs( v.skillBooks ) do
+						completed = not ShowPinForThisClassSpell( s, true )
+						GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ s ],
+								( ( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
+														or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) ) )
+						GameTooltip:AddLine( ns.colour.highlight ..v[s].skillBook )
+						GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
+					end
 				end
 			end
 		end
@@ -176,8 +206,8 @@ function pluginHandler:OnEnter(mapFile, coord)
 					if previousEntry == true then GameTooltip:AddLine( "\n" ) end
 					previousEntry = true
 					GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ pin.spell[ i ] ] ..ns.colour.highlight .."\n(" 
-												..ns.runes[ v ][ pin.spell[ i ] ].rune ..")",
-												ns.colour.class ..ns.classLocal )
+								..(ns.runes[ v ][ pin.spell[ i ] ].rune or ns.runes[ v ][ pin.spell[ i ] ].skillBook ) ..")",
+								ns.colour.class ..ns.classLocal )
 					GameTooltip:AddLine( ns.colour.highlight ..pin.name .."\n" )
 				end
 				
@@ -208,6 +238,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 									( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] .." (" ..ns.name ..")" )
 									or ( "\124cFFFF0000" ..ns.L["Not Completed"] .." (" ..ns.name ..")" ) )
 						end
+						spaceBeforeQuests = false
 					else
 						if pin.level then
 							if previousEntry == false then
@@ -264,73 +295,188 @@ function pluginHandler:OnLeave()
 	GameTooltip:Hide()
 end
 
-do	
-	local function iterator(t, prev)
-		if not t then return end
-		local coord, pin = next(t, prev)
+-- ---------------------------------------------------------------------------------------------------------------------------------
 
-		while coord do		
-			if pin == "Quick Start" then
-				for k,v in pairs( ns.runes ) do
-					if k == ns.class then
-						return coord, nil, ns.textures[ ns.db.iconChoice ],
-							ns.db.iconScale * ns.scaling[ ns.db.iconChoice ] * 2, ns.db.iconAlpha
+ns.passed = {}
+
+local function CheckAndShow( coord, pin )
+
+	ns.passed.texture = nil
+	
+	if not pin.class then
+		print("Please report error: name="..(pin.name or "nil").." tip="..(pin.tip or "nil").." coord="..coord.." m="..ns.mapID)
+		return
+	end
+
+	for i,v in ipairs( pin.class ) do
+		if ( ns.class == v ) or ( v == "ALL" ) then
+			if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
+				if pin.skillBook then
+					-- Will have the spell field and follow the rune data rules, just isn't actually a rune
+					-- Intended for Season Two Spell Books, which result in a learnt spell - same as for a rune
+					if ShowPinForThisClassSpell( pin.spell[ i ], false ) and ns.db.skillBook1 > 1 then
+						ns.passed.texture = ns.textures[ ns.db.skillBook1 ]
+						ns.passed.scale = ns.db.iconScale * ns.scaling[ ns.db.skillBook1 ]
 					end
+				elseif pin.spell then
+					-- By design this must be a rune
+					-- Note that if here then by design I don't check for player level
+					-- This so that players can see all "upcoming" spells/runes
+					-- pin.spell is English language
+					ns.icon = ns.runes[ v ][ pin.spell[ i ] ].icon
+					ns.runeDB = ns.db[ "rune1" ..format( "%02d", ns.icon ) ]
+					if ( ns.runeDB > 1 ) and ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+						if pin.alsoTestQuest then
+							-- Added to support Mage book partial completion. Maybe other stuff in the future
+							-- Terrible field name. Can't think of better tbh
+							if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
+								ns.passed.texture = ns.texturesNum ..tostring( ns.icon ) .."-" 
+									..ns.texturesNumCode[ ns.runeDB ]
+								ns.passed.scale = ns.db.iconScale * ns.scalingNum
+							end
+						else
+							ns.passed.texture = ns.texturesNum ..tostring( ns.icon ) .."-" 
+								..ns.texturesNumCode[ ns.runeDB ]
+							ns.passed.scale = ns.db.iconScale * ns.scalingNum
+						end
+					end
+				else
+					print("Please report error: name="..(pin.name or "nil").." tip="..(pin.tip or "nil")..
+							" coord="..coord.." m="..ns.mapID)
 				end
-			else
-				-- class and spell are aways 1:1 with indexing/existence
-				-- BUT... I added quest help with no spells
-				for i,v in ipairs( pin.class ) do
-					if ( ns.class == v ) or ( v == "ALL" ) then
-						if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
-							if pin.spell then
-								-- Note that if here then by design I don't check for player level
-								-- This so that players can see all "upcoming" spells/runes
-								-- pin.spell is English language
-								if ShowPinForThisClassSpell( pin.spell[ i ], false ) then
-									if pin.alsoTestQuest then
-										-- Added to support Mage book partial completion. Maybe other stuff in the future
-										-- Terrible field name. Can't think of better tbh
-										if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
-											return coord, nil, ns.texturesNum ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) .."-" 
-												..ns.texturesNumCode[ ns.db[ "icon" ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) ] ],
-												ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
+			end
+		end
+	end
+end
+
+local function ShowDynamic( coord, pin )
+	if not ns.db then return end
+	if pin.qStart then
+		local phase = ns.db[ "phase" ..tostring( pin.qStart ) ]
+		ns.passed.texture = ns.textures[ phase ]
+		ns.passed.scale = ns.db.iconScale * ns.scaling[ phase ] * 2
+	elseif pin.skillBook then
+		ns.passed.texture = ns.textures[ ns.db.skillBook1 ]
+		ns.passed.scale = ns.db.iconScale * ns.scaling[ ns.db.skillBook1 ]
+	else
+		ns.passed.texture = ns.texturesNum ..tostring( pin.iconNum ) .."-" 
+			..ns.texturesNumCode[ ns.db[ "rune1" ..format( "%02d", pin.iconNum ) ] ]
+		ns.passed.scale = ns.db.iconScale * ns.scalingNum
+	end
+end
+
+local function AddToDynamicContinent( coord, pin, mapIDC, mapIDZ )
+	local mx, my = HandyNotes:getXY( coord )
+	local cx, cy = ns.HereBeDragons:TranslateZoneCoordinates( mx, my, mapIDZ, mapIDC )
+	if cx and cy then
+		pin.iconNum = ( ( pin.skillBook ~= nil ) and nil or ns.icon )
+		ns.points[ mapIDC ][ HandyNotes:getCoord( cx, cy ) ] = pin
+	end
+end
+
+local function SetupDynamicContinent( mapID )
+	-- A continent map will contain summary pins as they appear in the data file as well as dynamically
+	-- generated pins which represent a culling of and summary of all the zone pins.
+	-- The idea is to have no more than one pin per rune per zone for the player as well as the
+	-- secondary/additional class which is selectable in the Options panel.
+		
+	ns.zonePins = {}
+
+	-- First the summary pins. Coords will be native to the continent, thus needing no conversion
+	ns.points[ mapID ] = {}
+	for coord, pin in next, ns.pointsBase[ mapID ] do
+		ns.points[ mapID ][ coord ] = pin
+	end	
+
+	local children = GetMapChildrenInfo( mapID, nil, true )
+		-- Returns a table of map tables of zones belonging to the continent
+	for _, map in next, children do
+		if ns.points[ map.mapID ] then
+			-- It's one of our maps
+			ns.zonePins[ map.mapID ] = {}
+			ns.zonePins[ map.mapID ][ "1" ] = {}
+			-- Above and below: future expansion in mind, hence the "1" above and below - show multiple classes perhaps
+			for coord, pin in next, ns.points[ map.mapID ] do
+				if pin.class then
+					for i,v in ipairs( pin.class ) do
+						-- v is a capitalised class. We must compare with a numerical index for the player and a
+						-- numerical radio button with offset 1 for extra classes (when and if I code multiple classes ;) )
+						if v == ns.class then
+							if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
+								if ns.zonePins[ map.mapID ][ "1" ][ pin.spell[ i ] ] == nil then
+									if pin.skillBook then
+										if ShowPinForThisClassSpell( pin.spell[ i ], false ) and ns.db.skillBook1 > 1 then
+											ns.zonePins[ map.mapID ][ "1" ][ pin.spell[ i ] ] = true
+											AddToDynamicContinent( coord, pin, mapID,  map.mapID )
 										end
 									else
-										return coord, nil, ns.texturesNum ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) .."-" 
-											..ns.texturesNumCode[ ns.db[ "icon" ..tostring( ns.runes[ v ][ pin.spell[ i ] ].icon ) ] ],
-											ns.db.iconScale * ns.scalingNum, ns.db.iconAlpha
+										ns.icon = ns.runes[ v ][ pin.spell[ i ] ].icon
+										ns.runeDB = ns.db[ "rune1" ..format( "%02d", ns.icon ) ]
+										if ( ns.runeDB > 1 ) and ShowPinForThisClassSpell( pin.spell[ i ], false ) then
+											if pin.alsoTestQuest then
+												if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
+													ns.zonePins[ map.mapID ][ "1" ][ pin.spell[ i ] ] = true
+													AddToDynamicContinent( coord, pin, mapID,  map.mapID )
+												end
+											else
+												ns.zonePins[ map.mapID ][ "1" ][ pin.spell[ i ] ] = true
+												AddToDynamicContinent( coord, pin, mapID,  map.mapID )
+											end
+											-- Yes, possible for the pin at coord to have more than one rune for a class but it's
+											-- impossible to show multiple runes on one pin. So we grab the first. Subsequent ones
+											-- that were missed will usually/hopefully have other coords in the same zone
+										end
 									end
-								end
-							elseif pin.quest then
-								-- Quests that are separate from runes. Priest L17 quest comes to mind
-								if ShowPinForThisClassQuest( pin.quest[ i ], pin.level, false ) then
-									return coord, nil, ns.textures[ ns.db.iconChoice ],
-										ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
-								end
-							elseif pin.level then
-								-- Void Touched gear guide, for example
-								if pin.level <= ( UnitLevel( "player" ) + 1 ) then
-									return coord, nil, ns.textures[ ns.db.iconChoice ],
-										ns.db.iconScale * ns.scaling[ ns.db.iconChoice ], ns.db.iconAlpha
 								end
 							end
 						end
 					end
 				end
 			end
-			coord, pin = next(t, coord)
 		end
 	end
-	function pluginHandler:GetNodes2(mapID)
-		return iterator, ns.points[mapID]
+end
+
+local function iterator(t, prev)
+	if not t then return end
+	local coord, pin = next(t, prev)
+	
+	if ns.db[ "selfShow" ] == false then return end
+
+	while coord do
+		if ( ns.continents[ ns.mapID ] == nil ) then
+			CheckAndShow( coord, pin )
+			if ns.passed.texture then
+				return coord, nil, ns.passed.texture, ns.passed.scale, ns.db.iconAlpha
+			end
+		else
+			ShowDynamic( coord, pin )
+			return coord, nil, ns.passed.texture, ns.passed.scale, ns.db.iconAlpha
+		end
+		coord, pin = next(t, coord)
 	end
 end
+	
+function pluginHandler:GetNodes2( mapID )
+	ns.mapID = mapID
+	if ( ns.continents[ mapID ] ~= nil ) then SetupDynamicContinent( mapID ) end
+	return iterator, ns.points[ mapID ], nil
+end
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+ns.iconChoice = ns.L["1 = No Map Pin\n2 = Cyan on Black\n3 = Green on Black\n4 = Magenta on Black\n5 = Red on Black\n6 = Yellow on Black"]
+ns.iconStandard = "1 = " ..ns.L["White"] .."\n2 = " ..ns.L["Purple"] .."\n3 = " ..ns.L["Red"] .."\n4 = " 
+					..ns.L["Yellow"] .."\n5 = " ..ns.L["Green"] .."\n6 = " ..ns.L["Grey"] .."\n7 = " ..ns.L["Mana Orb"]
+					.."\n8 = " ..ns.L["Phasing"] .."\n9 = " ..ns.L["Raptor egg"] .."\n10 = " ..ns.L["Stars"]
+					.."\n11 = " ..ns.L["Cogwheel"] .."\n12 = " ..ns.L["Frost"] .."\n13 = " ..ns.L["Diamond"]
+					.."\n14 = " ..ns.L["Screw"] .."\n15 = " ..ns.L["Mjolnir"] .."\n16 = " ..ns.L["Arcane"] 
+					.."\n17= " ..ns.L["Demonic"] .."\n18 = " ..ns.L["Duty"]
 
 -- Interface -> Addons -> Handy Notes -> Plugins -> Runes options
 ns.options = {
 	type = "group",
-	name = L["Runes"],
+	name = ns.L["Runes"],
 	desc = ns.L["AddOn Description"],
 	get = function(info) return ns.db[info[#info]] end,
 	set = function(info, v)
@@ -338,208 +484,84 @@ ns.options = {
 		pluginHandler:Refresh()
 	end,
 	args = {
-		options = {
-			type = "group",
-			name = " " ..ns.L["Options"],
-			inline = true,
-			args = {
-				iconScale = {
-					type = "range",
-					name = ns.L["Map Pin Size"],
-					desc = ns.L["The Map Pin Size"],
-					min = 1, max = 4, step = 0.1,
-					arg = "iconScale",
-					order = 1,
-				},
-				iconAlpha = {
-					type = "range",
-					name = ns.L["Map Pin Alpha"],
-					desc = ns.L["The alpha transparency of the map pins"],
-					min = 0, max = 1, step = 0.01,
-					arg = "iconAlpha",
-					order = 2,
-				},
-				showCoords = {
-					type = "toggle",
-					name = ns.L["Show Coordinates"],
-					desc = ns.L["Show Coordinates Description"] 
-							..ns.colour.highlight .."(xx.xx,yy.yy)",
-					width = "full",
-					arg = "showCoords",
-					order = 3,
-				},
-				hideIfRuneLearnt = {
-					name = ns.L["Hide if the rune spell was learnt"],
-					desc = ns.L["Will also hide copmpleted Icy Veins books (Mages)"],
-					type = "toggle",
-					width = "full",
-					arg = "hideIfRuneLearnt",
-					order = 4,
-				},
+		options = { type = "group", name = ns.L["Options"], inline = true, order = 1,
+			args = { 
+				iconScale = { type = "range", name = ns.L["Map Pin Size"], desc = ns.L["The Map Pin Size"],
+					min = 1, max = 4, step = 0.1, arg = "iconScale", order = 2, },
+				iconAlpha = { type = "range", name = ns.L["Map Pin Alpha"], desc = ns.L["The alpha transparency"],
+					min = 0, max = 1, step = 0.01, arg = "iconAlpha", order = 3, },
+				showCoords = { type = "toggle", name = ns.L["Show Coordinates"], desc = ns.L["Show Coordinates Description"] 
+							..ns.colour.highlight .."(xx.xx,yy.yy)", arg = "showCoords", order = 4, },
 			},
 		},
-		icon = {
-			type = "group",
-			name = ns.L["Map Pin Selections"],
-			inline = true,
+		phases = { type = "group", name = ns.L["Season"].."/"..ns.L["Phase"], inline = true, order = 20,
+			args = { 
+				phase1 = { type = "range", name = ns.L["Phase"].." 1", desc = ns.iconStandard, width = 0.8, min = 1, max = 18,
+							step = 1, arg = "phase1", order = 21, },
+				phase2 = { type = "range", name = ns.L["Phase"].." 2", desc = ns.iconStandard, width = 0.8, min = 1, max = 18,
+							step = 1, arg = "phase2", order = 22, },
+				phase3 = { type = "range", name = ns.L["Phase"].." 3", desc = ns.iconStandard, width = 0.8, min = 1, max = 18,
+							step = 1, arg = "phase3", order = 23, },
+			},
+		},
+		player = { type = "group", name = ns.name, inline = true, order = 90,
 			args = {
-				icon1 = {
-					type = "range",
-					name = ns.L["Icon"].. " 1",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon1",
-					order = 5,
-				},
-				icon2 = {
-					type = "range",
-					name = ns.L["Icon"].. " 2",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon2",
-					order = 6,
-				},
-				icon3 = {
-					type = "range",
-					name = ns.L["Icon"].. " 3",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon3",
-					order = 7,
-				},
-				icon4 = {
-					type = "range",
-					name = ns.L["Icon"].. " 4",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon4",
-					order = 8,
-				},
-				icon5 = {
-					type = "range",
-					name = ns.L["Icon"].. " 5",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon5",
-					order = 9,
-				},
-				icon6 = {
-					type = "range",
-					name = ns.L["Icon"].. " 6",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon6",
-					order = 10,
-				},
-				icon7 = {
-					type = "range",
-					name = ns.L["Icon"].. " 7",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon7",
-					order = 11,
-				},
-				icon8 = {
-					type = "range",
-					name = ns.L["Icon"].. " 8",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon8",
-					order = 12,
-				},
-				icon9 = {
-					type = "range",
-					name = ns.L["Icon"].. " 9",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon9",
-					order = 13,
-				},
-				icon10 = {
-					type = "range",
-					name = ns.L["Icon"].. " 10",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon10",
-					order = 14,
-				},
-				icon11 = {
-					type = "range",
-					name = ns.L["Icon"].. " 11",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon11",
-					order = 15,
-				},
-				icon12 = {
-					type = "range",
-					name = ns.L["Icon"].. " 12",
-					desc = ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black"
-							.."\n4 = Red on Black\n5 = Yellow on Black"],
-					min = 1, max = 5, step = 1,
-					arg = "icon12",
-					order = 16,
-				},
-				iconChoice = {
-					type = "range",
-					name = ns.L["Quick Start / Summary"],					
-					desc = "1 = " ..ns.L["White"] .."\n2 = " ..ns.L["Purple"] .."\n3 = " ..ns.L["Red"] .."\n4 = " 
-							..ns.L["Yellow"] .."\n5 = " ..ns.L["Green"] .."\n6 = " ..ns.L["Grey"] .."\n7 = " ..ns.L["Mana Orb"]
-							.."\n8 = " ..ns.L["Phasing"] .."\n9 = " ..ns.L["Raptor egg"] .."\n10 = " ..ns.L["Stars"]
-							.."\n11 = " ..ns.L["Cogwheel"] .."\n12 = " ..ns.L["Frost"] .."\n13 = " ..ns.L["Diamond"]
-							.."\n14 = " ..ns.L["Screw"] .."\n15 = " ..ns.L["Mjolnir"] .."\n16 = " ..ns.L["Arcane"] 
-							.."\n17= " ..ns.L["Demonic"] .."\n18 = " ..ns.L["Duty"],
-					min = 1, max = 18, step = 1,
-					arg = "iconChoice",
-					order = 17,
-				},
+				classIcon = { type = "description", name = " ", desc = ns.class, image = ns.texturesNum ..ns.class, width = 0.25,
+								order = 91, },
+				selfShow = { type = "toggle", name = ns.name, desc = ns.L["Show"], arg = "selfShow", width = 0.9, order = 92, },
+				hideIfRuneLearnt = { type = "toggle", name = ns.L["Hide if learnt"], width = 1.2, arg = "hideIfRuneLearnt",
+								desc = ns.L["Will also hide completed Icy Veins books (Mages), Skill Books"], order = 93, },
+				rune101 = { type = "range", name = ns.L["Map Pin"] .." 1", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune101", order = 101, },
+				rune102 = { type = "range", name = ns.L["Map Pin"] .." 2", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune102", order = 102, },
+				rune103 = { type = "range", name = ns.L["Map Pin"] .." 3", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune103", order = 103, },
+				rune104 = { type = "range", name = ns.L["Map Pin"] .." 4", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune104", order = 104, },
+				rune105 = { type = "range", name = ns.L["Map Pin"] .." 5", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune105", order = 105, },
+				rune106 = { type = "range", name = ns.L["Map Pin"] .." 6", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune106", order = 106, },
+				rune107 = { type = "range", name = ns.L["Map Pin"] .." 7", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune107", order = 107, },
+				rune108 = { type = "range", name = ns.L["Map Pin"] .." 8", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune108", order = 108, },
+				rune109 = { type = "range", name = ns.L["Map Pin"] .." 9", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune109", order = 109, },
+				rune110 = { type = "range", name = ns.L["Map Pin"] .." 10", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune110", order = 110, },
+				rune111 = { type = "range", name = ns.L["Map Pin"] .." 11", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune111", order = 111, },
+				rune112 = { type = "range", name = ns.L["Map Pin"] .." 12", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune112", order = 112, },
+				rune113 = { type = "range", name = ns.L["Map Pin"] .." 13", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune113", order = 113, },
+				rune114 = { type = "range", name = ns.L["Map Pin"] .." 14", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune114", order = 114, },
+				rune115 = { type = "range", name = ns.L["Map Pin"] .." 15", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune115", order = 115, },
+				rune116 = { type = "range", name = ns.L["Map Pin"] .." 16", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune116", order = 116, },
+				rune117 = { type = "range", name = ns.L["Map Pin"] .." 17", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune117", order = 117, },
+				rune118 = { type = "range", name = ns.L["Map Pin"] .." 18", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune118", order = 118, },
+				rune119 = { type = "range", name = ns.L["Map Pin"] .." 19", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune119", order = 119, },
+				skillBook1 = { type = "range", name = ns.L["Skill Book"], desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "skillBook1", order = 120, },
 			},
 		},
 	},
 }
 
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
 function pluginHandler:OnEnable()
-	local HereBeDragons = LibStub("HereBeDragons-2.0", true)
-	if not HereBeDragons then return end
-	
-	for continentMapID in next, continents do
-		local children = C_Map.GetMapChildrenInfo(continentMapID, nil, true)
-		for _, map in next, children do
-			local coords = ns.points[map.mapID]
-			if coords then
-				for coord, pin in next, coords do
-					local function AddToContinent()
-						local mx, my = HandyNotes:getXY(coord)
-						local cx, cy = HereBeDragons:TranslateZoneCoordinates(mx, my, map.mapID, continentMapID)
-						if cx and cy then
-							ns.points[continentMapID] = ns.points[continentMapID] or {}
-							ns.points[continentMapID][HandyNotes:getCoord(cx, cy)] = pin
-						end
-					end
-					-- Very basic delimiting which doesn't require saved player options and also will never change
-					for i,v in ipairs( pin.class ) do
-						if ( ns.class == v ) or ( v == "ALL" ) then
-							if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
-								AddToContinent()
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-	HandyNotes:RegisterPluginDB(L["Runes"], pluginHandler, ns.options)
+	ns.HereBeDragons = LibStub("HereBeDragons-2.0", true)
+	if not ns.HereBeDragons then return end
+	HandyNotes:RegisterPluginDB("Runes", pluginHandler, ns.options)
 	ns.db = LibStub("AceDB-3.0"):New("HandyNotes_RunesDB", defaults, "Default").profile
 	pluginHandler:Refresh()
 end
@@ -549,3 +571,14 @@ function pluginHandler:Refresh()
 end
 
 LibStub("AceAddon-3.0"):NewAddon(pluginHandler, "HandyNotes_RunesDB", "AceEvent-3.0")
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+SLASH_Runes1 = "/runes"
+
+local function Slash( options )
+	Settings.OpenToCategory( "HandyNotes" )
+	LibStub( "AceConfigDialog-3.0" ):SelectGroup( "HandyNotes", "plugins", "Runes" )
+end
+
+SlashCmdList[ "Runes" ] = function( options ) Slash( options ) end
