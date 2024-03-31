@@ -849,10 +849,12 @@ frame:SetScript("OnEvent", function(self, event, addonName)
 
                             local link = "|cffFFFF00|Hgarrmission:" .. "BiaoGeYY:" .. L["详细"] .. ":" .. yy ..
                                 "|h[" .. L["详细"] .. "]|h|r"
-                            local msg = BG.STC_b1(format(L["查询成功：YY%s的评价|cffFFFFFF一共%s个|r。|cff00FF00好评%s个|r，|cffFFFF00中评%s个|r，|cffDC143C差评%s个。|r%s"],
+                            local msg = BG.STC_y1(format(L["查询成功：YY%s的评价一共%s个。%s"],
+                                yy, BG.YYMainFrame.searchText.sumpingjia[0], link))
+                            SendSystemMessage(msg)
+                            local msg = BG.STC_y1(format(L["查询成功：YY%s的评价一共%s个。|cffFFFFFF|cff00FF00%s|r/|cffFFFF00%s|r/|cffDC143C%s|r|r。%s"],
                                 yy, BG.YYMainFrame.searchText.sumpingjia[0], BG.YYMainFrame.searchText.sumpingjia[1],
                                 BG.YYMainFrame.searchText.sumpingjia[2], BG.YYMainFrame.searchText.sumpingjia[3], link))
-                            SendSystemMessage(msg)
                             BG.FrameTradeMsg:AddMessage(msg)
                             local cd = 5
                             if Size(BG.YYMainFrame.searchText.all) == 1 then
@@ -888,10 +890,9 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                             bt:SetText(L["查询"])
                             Y.DefaultResult()
                             LibBG:UIDropDownMenu_SetText(BG.YYMainFrame.DropDown, L["无"])
-                            local msg = BG.STC_r1(format(L["查询失败：没有找到YY%s的评价"], yy))
+                            local msg = BG.STC_r1(format(L["查询失败：没有找到YY%s的评价。"], yy))
                             SendSystemMessage(msg)
                             BG.FrameTradeMsg:AddMessage(msg)
-                            -- UIErrorsFrame:AddMessage(msg)
                         end
                         BG.YYMainFrame.searchText = nil
 
@@ -1309,6 +1310,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             end
         end
 
+        ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", ChangSendLink)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", ChangSendLink)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", ChangSendLink)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD", ChangSendLink)
@@ -1331,8 +1333,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             if not (YY == "YY" and yy) then return end
             if IsShiftKeyDown() then
                 ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
-                ChatEdit_InsertLink(yy)
-                _G.ChatFrame1EditBox:HighlightText()
+                ChatEdit_ChooseBoxForSend():SetText(yy)
+                ChatEdit_ChooseBoxForSend():HighlightText()
             else
                 BG.YYMainFrame.search.edit:SetText(yy)
                 Y.SearchButtonOnClick()
@@ -1627,6 +1629,35 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     do
         BG.EndPJ = {}
 
+        local function GetLeaderYY()
+            -- 是否有团长发的YY
+            for _, v in ipairs(BiaoGe.YYdb.LeaderYY) do
+                for _, vv in ipairs(BG.raidRosterInfo) do
+                    if v.name == vv.name and vv.rank == 2 then
+                        return v.yy
+                    end
+                end
+            end
+            -- 是否有物品分配者发的YY
+            for _, v in ipairs(BiaoGe.YYdb.LeaderYY) do
+                for _, vv in ipairs(BG.raidRosterInfo) do
+                    if v.name == vv.name and vv.isML then
+                        return v.yy
+                    end
+                end
+            end
+            -- 是否有其他人发的YY
+            for _, v in ipairs(BiaoGe.YYdb.LeaderYY) do
+                for _, vv in ipairs(BG.raidRosterInfo) do
+                    if v.name == vv.name then
+                        return v.yy
+                    end
+                end
+            end
+            return ""
+        end
+
+        -- UI
         do
             local f = CreateFrame("Frame", "BG.EndPJ.new", UIParent, "BackdropTemplate")
             f:SetBackdrop({
@@ -1636,7 +1667,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 insets = { left = 3, right = 3, top = 3, bottom = 3 }
             })
             f:SetBackdropColor(0, 0, 0, 0.8)
-            f:SetSize(340, 170)
+            f:SetSize(340, 210)
             f:SetPoint("TOP", 0, -300)
             f:SetClampedToScreen(true)
             f:SetFrameStrata("FULLSCREEN_DIALOG")
@@ -1659,48 +1690,13 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 BG.EndPJ.new.pingjiaButtons[2]:SetChecked(true)
                 BG.EndPJ.new.pingjiaButtons[3]:SetChecked(false)
                 BG.EndPJ.new.buttonsave:SetEnabled(true)
-                BG.EndPJ.new.openyypingjia:SetText(L["详细评价"])
-                BG.EndPJ.new.openyypingjia.type = 1
 
                 for _, edit in pairs(BG.EndPJ.textcolor_table) do
                     edit:SetTextColor(RGB("FFFF00"))
                 end
 
                 -- 历遍团长YY记录
-                -- 是否有团长发的YY
-                for _, v in ipairs(BiaoGe.YYdb.LeaderYY) do
-                    for _, vv in ipairs(BG.raidRosterInfo) do
-                        if v.name == vv.name and vv.rank == 2 then
-                            BG.EndPJ.new.yy:SetText(v.yy)
-                            break
-                        end
-                    end
-                    if BG.EndPJ.new.yy:GetText() ~= "" then break end
-                end
-                -- 是否有物品分配者发的YY
-                if BG.EndPJ.new.yy:GetText() == "" then
-                    for _, v in ipairs(BiaoGe.YYdb.LeaderYY) do
-                        for _, vv in ipairs(BG.raidRosterInfo) do
-                            if v.name == vv.name and vv.isML then
-                                BG.EndPJ.new.yy:SetText(v.yy)
-                                break
-                            end
-                        end
-                        if BG.EndPJ.new.yy:GetText() ~= "" then break end
-                    end
-                end
-                -- 是否有其他人发的YY
-                if BG.EndPJ.new.yy:GetText() == "" then
-                    for _, v in ipairs(BiaoGe.YYdb.LeaderYY) do
-                        for _, vv in ipairs(BG.raidRosterInfo) do
-                            if v.name == vv.name then
-                                BG.EndPJ.new.yy:SetText(v.yy)
-                                break
-                            end
-                        end
-                        if BG.EndPJ.new.yy:GetText() ~= "" then break end
-                    end
-                end
+                BG.EndPJ.new.yy:SetText(GetLeaderYY())
 
                 BG.ClearFocus()
                 PlaySoundFile(BG.sound2, "Master")
@@ -1745,6 +1741,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 local text_table = {
                     { name = "YY:", onenter = L["YY号必填，填写数字"] },
                     { name = L["评价:"], onenter = L["评价必填，默认中评"] },
+                    { name = L["理由:"], onenter = L["理由选填"] },
                 }
                 for i, _ in ipairs(text_table) do
                     local f = CreateFrame("Frame", nil, BG.EndPJ.new)
@@ -1793,17 +1790,10 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                     BG.EndPJ.new.havedYY:Hide()
                     for key, value in pairs(BiaoGe.YYdb.all) do
                         if self:GetText() == value.yy then
-                            BG.YYMainFrame.new.yy.num = key
-                            BG.EndPJ.new.buttonsave:SetEnabled(false)
-                            BG.EndPJ.new.buttonsave.dis:Show()
-                            BG.EndPJ.new.openyypingjia:SetText(L["修改评价"])
-                            BG.EndPJ.new.openyypingjia.type = 2
                             BG.EndPJ.new.havedYY:Show()
                             return
                         end
                     end
-                    BG.EndPJ.new.openyypingjia:SetText(L["详细评价"])
-                    BG.EndPJ.new.openyypingjia.type = 1
                 end)
                 edit:SetScript("OnEnterPressed", function(self, enter)
                     self:ClearFocus()
@@ -1865,38 +1855,127 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
                 n = n + 1
             end
+            -- 理由
+            do
+                local maxbytes = 200
+                local f = CreateFrame("Frame", nil, BG.EndPJ.new, "BackdropTemplate")
+                f:SetBackdrop({
+                    bgFile = "Interface/ChatFrame/ChatFrameBackground",
+                    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+                    edgeSize = 16,
+                    insets = { left = 3, right = 3, top = 3, bottom = 3 }
+                })
+                f:SetBackdropColor(0, 0, 0, 0.2)
+                f:SetBackdropBorderColor(1, 1, 1, 0.6)
+                f:SetSize(156, height * 2)
+                f:SetPoint("TOPLEFT", 107, height_start - height * n - 2)
+                local edit = CreateFrame("EditBox", nil, f)
+                edit:SetWidth(f:GetWidth())
+                edit:SetAutoFocus(false)
+                edit:SetMaxBytes(maxbytes)
+                edit:EnableMouse(true)
+                edit:SetTextInsets(0, 10, 0, 5)
+                edit:SetMultiLine(true)
+                edit:SetTextColor(RGB("FFFF00"))
+                edit:SetFont(BIAOGE_TEXT_FONT, 13, "OUTLINE")
+                tinsert(BG.EndPJ.textcolor_table, edit)
+                BG.EndPJ.new.edit = edit
+                local s = CreateFrame("ScrollFrame", nil, f, "UIPanelScrollFrameTemplate")
+                s:SetWidth(f:GetWidth() - 10)
+                s:SetHeight(f:GetHeight() - 10)
+                s:SetPoint("CENTER")
+                s.ScrollBar.scrollStep = BG.scrollStep
+                s:SetScrollChild(edit)
+                n = n + 2
+
+                local leftt = f:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall2")
+                leftt:SetPoint("TOPLEFT", 7, -5)
+                leftt:SetText(L["选填"])
+
+                edit:SetScript("OnTextChanged", function(self)
+                    if self:GetText() ~= "" then
+                        leftt:Hide()
+                    else
+                        leftt:Show()
+                    end
+                end)
+                edit:SetScript("OnEscapePressed", function(self)
+                    self:ClearFocus()
+                end)
+                edit:SetScript("OnEnterPressed", function(self)
+                    self:ClearFocus()
+                end)
+                edit:SetScript("OnMouseDown", function(self, enter)
+                    if enter == "RightButton" then
+                        edit:SetEnabled(false)
+                        edit:SetText("")
+                    else
+                        edit:SetFocus()
+                    end
+                end)
+                edit:SetScript("OnMouseUp", function(self, enter)
+                    if enter == "RightButton" then
+                        edit:SetEnabled(true)
+                    end
+                end)
+                f:SetScript("OnMouseDown", function(self, enter)
+                    if enter == "RightButton" then
+                        edit:SetEnabled(false)
+                        edit:SetText("")
+                    else
+                        edit:SetFocus()
+                    end
+                end)
+                f:SetScript("OnMouseUp", function(self, enter)
+                    if enter == "RightButton" then
+                        edit:SetEnabled(true)
+                    end
+                end)
+            end
             -- 保存
             do
-                function BG.EndPJ.new.buttonsaveOnClick(self)
+                function OnClick(self)
                     if not BG.EndPJ.new.buttonsave:IsEnabled() then return end
 
                     local new = BG.EndPJ.new
                     if not new.pingjia then return end
                     if new.yy:GetText() == "" or new.yy:GetText() == 0 then return end
 
+                    for i = #BiaoGe.YYdb.all, 1, -1 do
+                        if new.yy:GetText() == BiaoGe.YYdb.all[i].yy then
+                            tremove(BiaoGe.YYdb.all, i)
+                        end
+                    end
+
                     local a = {
                         date = tonumber(date("%y%m%d")),
                         yy = new.yy:GetText(),
                         name = "",
                         pingjia = new.pingjia,
-                        edit = "",
+                        edit = new.edit:GetText(),
                     }
                     tinsert(BiaoGe.YYdb.all, 1, a)
 
                     Y.SetAll()
                     Y.EscXiuGai()
                     BG.EndPJ.new:Hide()
-                    SendSystemMessage(format(L["感谢你的评价：|cff%sYY%s，%s|r"], Y.PingjiaColor(a.pingjia), a.yy, Y.Pingjia(a.pingjia)))
+
+                    local liyou = ""
+                    if BG.EndPJ.new.edit:GetText() ~= "" then
+                        liyou = L["（"] .. BG.EndPJ.new.edit:GetText() .. L["）"]
+                    end
+                    SendSystemMessage(BG.BG .. format(L["|cff%s感谢你的评价：YY%s，>>%s<<%s。|r"],
+                        Y.PingjiaColor(a.pingjia), a.yy, Y.Pingjia(a.pingjia), liyou))
 
                     PlaySound(BG.sound1, "Master")
                 end
 
                 local bt = CreateFrame("Button", nil, BG.EndPJ.new, "UIPanelButtonTemplate")
                 bt:SetSize(80, 25)
-                bt:SetPoint("TOPLEFT", 40, height_start - 15 - height * n)
+                bt:SetPoint("TOPRIGHT", BG.EndPJ.new, "TOP", -30, height_start - 10 - height * n)
                 bt:SetText(L["保存"])
                 BG.EndPJ.new.buttonsave = bt
-                bt:SetScript("OnClick", BG.EndPJ.new.buttonsaveOnClick)
+                bt:SetScript("OnClick", OnClick)
 
                 local f = CreateFrame("Frame", nil, bt)
                 f:SetAllPoints()
@@ -1911,56 +1990,15 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                         GameTooltip:AddLine(bt:GetText(), 1, 1, 1, true)
                         GameTooltip:AddLine(L["未填写YY，不能保存。"], 1, 0, 0, true)
                         GameTooltip:Show()
-                    elseif BG.EndPJ.new.openyypingjia.type == 2 then
-                        GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
-                        GameTooltip:ClearLines()
-                        GameTooltip:AddLine(bt:GetText(), 1, 1, 1, true)
-                        GameTooltip:AddLine(L["不能重复评价。如需修改评价，请点击<修改评价>按钮。"], 1, 0, 0, true)
-                        GameTooltip:Show()
                     end
                 end)
                 f:SetScript("OnLeave", GameTooltip_Hide)
-            end
-            -- 详细评价
-            do
-                local bt = CreateFrame("Button", nil, BG.EndPJ.new, "UIPanelButtonTemplate")
-                bt:SetSize(80, 25)
-                bt:SetPoint("LEFT", BG.EndPJ.new.buttonsave, "RIGHT", 10, 0)
-                bt:SetText(L["详细评价"])
-                bt.type = 1
-                BG.EndPJ.new.openyypingjia = bt
-                bt:SetScript("OnEnter", function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
-                    GameTooltip:ClearLines()
-                    if self.type == 1 then
-                        GameTooltip:AddLine(L["详细评价"], 1, 1, 1, true)
-                        GameTooltip:AddLine(L["在金团表格里写详细评价。"], 1, 0.82, 0, true)
-                    elseif self.type == 2 then
-                        GameTooltip:AddLine(L["修改评价"], 1, 1, 1, true)
-                        GameTooltip:AddLine(L["该YY号已有评价，去金团表格里修改评价。"], 1, 0.82, 0, true)
-                    end
-                    GameTooltip:Show()
-                end)
-                BG.GameTooltip_Hide(bt)
-                bt:SetScript("OnClick", function()
-                    BG.ClickTabButton(BG.tabButtons, BG.YYMainFrameTabNum)
-                    BG.MainFrame:Show()
-                    BG.EndPJ.new:Hide()
-
-                    PlaySound(BG.sound1, "Master")
-                    for key, value in pairs(BiaoGe.YYdb.all) do
-                        if BG.EndPJ.new.yy:GetText() == value.yy then
-                            Y.XiuGai(self, "new")
-                            return
-                        end
-                    end
-                end)
             end
             -- 取消
             do
                 local bt = CreateFrame("Button", nil, BG.EndPJ.new, "UIPanelButtonTemplate")
                 bt:SetSize(80, 25)
-                bt:SetPoint("LEFT", BG.EndPJ.new.openyypingjia, "RIGHT", 10, 0)
+                bt:SetPoint("TOPLEFT", BG.EndPJ.new, "TOP", 30, height_start - 10 - height * n)
                 bt:SetText(L["退出"])
                 BG.EndPJ.new.escsave = bt
                 bt:SetScript("OnClick", function()
@@ -1992,7 +2030,17 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 return
             end
             if Y.IsLeader(UnitName("player")) then return end
-
+            local yy = GetLeaderYY()
+            if yy == "" then
+                SendSystemMessage(BG.BG .. L["恭喜你们击杀尾王！由于没有记录到团长YY，快速评价框不会弹出。"])
+                return
+            end
+            for k, vv in pairs(BiaoGe.YYdb.all) do
+                if yy == vv.yy then
+                    SendSystemMessage(BG.BG .. format(L["恭喜你们击杀尾王！YY%s你曾评价为：|cff%s>>%s<<。|r"], yy, Y.PingjiaColor(vv.pingjia), Y.Pingjia(vv.pingjia)))
+                    return
+                end
+            end
             C_Timer.After(10, function()
                 BG.EndPJ.new:Show()
             end)
@@ -2020,6 +2068,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     end
 end)
 
+local CDing = {}
 local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:RegisterEvent("CHAT_MSG_CHANNEL")
@@ -2042,10 +2091,9 @@ f:SetScript("OnEvent", function(self, even, ...)
         if channelBaseName ~= YY then return end
         local sendername = strsplit("-", sender)
         local yy, date = strmatch(text, "yy(%d+),(%d+)")
-        if not yy then return end
+        if not yy or CDing[sender] then return end
         for i, v in pairs(BiaoGe.YYdb.all) do
-            if tonumber(yy) == tonumber(v.yy) then
-                if tonumber(v.date) < tonumber(date) then return end
+            if tonumber(yy) == tonumber(v.yy) and tonumber(v.date) >= tonumber(date) then
                 local resendtext = v.date .. "," .. v.pingjia .. "," .. v.edit .. ","
                 local randomtime = random(0.1, Y.lateTime)
                 C_Timer.After(randomtime, function()
@@ -2056,6 +2104,10 @@ f:SetScript("OnEvent", function(self, even, ...)
                         BG.YYMainFrame.shareCountFrame:SetHeight(BG.YYMainFrame.shareCountFrame.Text:GetStringHeight())
                     end
                     C_ChatInfo.SendAddonMessage(YY, resendtext, "WHISPER", sender)
+                    CDing[sender] = true
+                    BG.After(2, function() -- 间隔x秒发一次
+                        CDing[sender] = nil
+                    end)
                 end)
                 return
             end
@@ -2094,7 +2146,7 @@ BG.RegisterEvent("CHAT_MSG_CHANNEL_NOTICE", function(self, even, text, playerNam
     if text == "YOU_LEFT" then
         BiaoGe.YYdb.share = 0
         BG.YYShowHide(BiaoGe.YYdb.share)
-        SendSystemMessage(BG.STC_b1(L["<BiaoGe>"]) .. format(L["你已退出%s频道，YY评价模块自动关闭。"], YY))
+        SendSystemMessage(BG.BG .. format(L["你已退出%s频道，YY评价模块自动关闭。"], YY))
     end
 end)
 
@@ -2151,7 +2203,7 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
             first = nil
             if not BG.YYchannelId and BiaoGe.YYdb.share == 1 then
                 JoinPermanentChannel(YY, nil, 1)
-                SendSystemMessage(BG.STC_b1(L["<BiaoGe>"]) .. format(L["YY评价模块初始化成功，已自动加入%s频道，用于共享和查询YY大众评价。"], YY))
+                SendSystemMessage(BG.BG .. format(L["YY评价模块初始化成功，已自动加入%s频道，用于共享和查询YY大众评价。"], YY))
             end
         end
     end)

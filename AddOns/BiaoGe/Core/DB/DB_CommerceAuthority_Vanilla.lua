@@ -7,12 +7,19 @@ local L = ADDONSELF.L
 
 local pt = print
 
+local LibRecipes = LibStub("LibRecipes-3.0")
+
 local function AddDB(usetoitem, needitem, needcount, fullitem, emptygive, fullgive, moneygive, topFactionValue)
     moneygive = moneygive * 10000 -- 转换金币银币铜币
     BG.CommerceAuthority[usetoitem] = { needitem = needitem, emptygive = emptygive, fullgive = fullgive, moneygive = moneygive, topFactionValue = topFactionValue }
     BG.CommerceAuthority[needitem] = { usetoitem = usetoitem, emptygive = emptygive, fullgive = fullgive, needcount = needcount, moneygive = moneygive, topFactionValue = topFactionValue }
     if not BG.CommerceAuthority[fullitem] then
         BG.CommerceAuthority[fullitem] = { isfullitem = true, fullgive = fullgive, moneygive = moneygive, topFactionValue = topFactionValue }
+    end
+
+    local peifang = LibRecipes:GetItemInfo(needitem)
+    if peifang and not BG.CommerceAuthority[peifang] then
+        BG.CommerceAuthority[peifang] = { usetoitem = usetoitem, needitem = needitem, emptygive = emptygive, fullgive = fullgive, needcount = needcount, moneygive = moneygive, topFactionValue = topFactionValue }
     end
 end
 
@@ -117,7 +124,9 @@ for itemID in pairs(BG.CommerceAuthority) do
     GetItemInfo(itemID)
 end
 
-
+-- print(GetItemInfo(211831))
+-- print(GetItemInfo(6290))
+-- print(GetItemInfo(6325))
 
 -- pt("|cffffffff|Hitem:211827::::::::::::::::::|h[测试物品]|h|r")
 -- pt("|cffffffff|Hitem:211828::::::::::::::::::|h[测试物品]|h|r")
@@ -126,7 +135,9 @@ end
 -- pt("|cffffffff|Hitem:211831::::::::::::::::::|h[测试物品]|h|r")
 -- pt("|cffffffff|Hitem:2319::::::::::::::::::|h[测试物品]|h|r")
 --[[
-/run print(GetItemInfo(211831))
+/run print(GetItemInfo(211831)) -- 遭劫货物：黑色披风
+/run print(GetItemInfo(6290)) -- 美味小鱼
+/run print(GetItemInfo(6325)) -- 食谱：美味小鱼
  ]]
 
 --[[

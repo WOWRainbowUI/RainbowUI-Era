@@ -409,7 +409,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                         bt:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
                         bt.Text:SetTextColor(0.5, 0.5, 0.5)
                     else
-                        if i_table[4] ~= GetRealmName() then
+                        if i_table and i_table[4] ~= GetRealmName() then
                             bt:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
                             bt.Text:SetTextColor(0.5, 0.5, 0.5)
                             bt.disable = true
@@ -842,6 +842,8 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     local whoPlayersName = {}
     do
         hooksecurefunc(C_ReportSystem, "SendReport", function(reportInfo, playerLocation)
+            if #minorCategoryTbl == 0 then return end
+
             local whoIndex = playerLocation:GetWhoIndex()
             local name, realm
             if playerLocation:GetGUID() then
@@ -900,6 +902,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     end
 
     -- 一键举报
+    local SetReport
     do
         -- 重置
         local function ReSet()
@@ -909,7 +912,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             rp.targetClass = nil
         end
         -- 举报
-        local function SetReport(ReportType, unitname, playerLocation)
+        function SetReport(ReportType, unitname, playerLocation)
             local reportInfo = ReportInfo:CreateReportInfoFromType(ReportType)
             ReportFrame:InitiateReport(reportInfo, unitname, playerLocation)
         end
@@ -1067,27 +1070,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     end
                 end
             end
-            local function AddReportButton(buttontype, unittype, unitorname, dropdown)
-                local unitname, unitrealm, playerLocation
-                if unittype == "unit" then
-                    unitname, unitrealm = UnitName(unitorname)
-                    if not unitrealm then unitrealm = GetRealmName() end
-                    unitname = unitname .. "-" .. unitrealm
-                    playerLocation = PlayerLocation:CreateFromGUID(UnitGUID(unitorname))
-                elseif unittype == "name" then
-                    unitname = unitorname
-                    local guid = chatPlayerGUIDs[unitorname]
-                    if guid then
-                        playerLocation = PlayerLocation:CreateFromGUID(guid)
-                    elseif dropdown.whoIndex then
-                        playerLocation = PlayerLocation:CreateFromWhoIndex(dropdown.whoIndex)
-                        rp.targetClass = C_FriendList.GetWhoInfo(dropdown.whoIndex).filename
-                    end
-                    if not (unitname and playerLocation) then
-                        return
-                    end
-                end
-
+            local function AddReportButton(buttontype, fullname, playerLocation)
                 local mybuttontext
                 local info = UIDropDownMenu_CreateInfo()
 
@@ -1101,7 +1084,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     info.func = function()
                         rp.yes = true
                         rp.chattype = "jiaoben"
-                        SetReport(Enum.ReportType.InWorld, unitname, playerLocation)
+                        SetReport(Enum.ReportType.InWorld, fullname, playerLocation)
                     end
                 elseif buttontype == "RMT" then
                     mybuttontext = L["一键举报RMT"]
@@ -1118,7 +1101,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     info.func = function()
                         rp.yes = true
                         rp.chattype = "RMT"
-                        SetReport(Enum.ReportType.Chat, unitname, playerLocation)
+                        SetReport(Enum.ReportType.Chat, fullname, playerLocation)
                     end
                 elseif buttontype == "saorao" then
                     mybuttontext = L["一键举报骚扰"]
@@ -1134,7 +1117,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     info.func = function()
                         rp.yes = true
                         rp.chattype = "saorao"
-                        SetReport(Enum.ReportType.Chat, unitname, playerLocation)
+                        SetReport(Enum.ReportType.Chat, fullname, playerLocation)
                     end
                 elseif buttontype == "guaji" then
                     mybuttontext = L["一键举报挂机"]
@@ -1148,47 +1131,106 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                     info.func = function()
                         rp.yes = true
                         rp.chattype = "guaji"
-                        SetReport(Enum.ReportType.InWorld, unitname, playerLocation)
+                        SetReport(Enum.ReportType.InWorld, fullname, playerLocation)
                     end
                 end
                 UIDropDownMenu_AddButton(info)
                 UpdateButtons(mybuttontext, { REPORT_PLAYER, REPORT_FRIEND, IGNORE })
             end
-            hooksecurefunc("UnitPopup_ShowMenu", function(dropdown, which, unit, name, userData)
+            local function AddDeleteButton(fullname, playerLocation)
+                local name, realm = strsplit("-", fullname)
+                local mybuttontext
+                local info = UIDropDownMenu_CreateInfo()
+                mybuttontext = L["删除举报记录"]
+                info.text = mybuttontext
+                info.notCheckable = true
+                info.tooltipTitle = L["删除举报记录"]
+                info.tooltipText = L["删除该名玩家在BiaoGe插件里的全部举报记录。\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"]
+                info.func = function()
+                    for i = #db, 1, -1 do
+                        if db[i].name == name and db[i].realm == realm then
+                            tremove(db, i)
+                            break
+                        end
+                    end
+
+                    for i = #BG.ReportTbl, 1, -1 do
+                        if BG.ReportTbl[i].name == name and BG.ReportTbl[i].realm == realm then
+                            tremove(BG.ReportTbl, i)
+                            break
+                        end
+                    end
+
+                    R.UpdateScrollFrame("notsort")
+                    R.UpdateButtons()
+
+                    local _, class = C_PlayerInfo.GetClass(playerLocation)
+                    if not class then
+                        class = whoPlayersClass[name]
+                    end
+                    local color = "|c" .. select(4, GetClassColor(class))
+
+                    print(BG.STC_y1(format(L["已删除<%s>的举报记录。"], color .. fullname .. RR)))
+                end
+                UIDropDownMenu_AddButton(info)
+                UpdateButtons(mybuttontext, { REPORT_PLAYER, REPORT_FRIEND, IGNORE })
+            end
+            hooksecurefunc("UnitPopup_ShowMenu", function(dropdown, which, unit, _name, userData)
                 -- pt(which, unit, name, userData)
                 if (BiaoGe.options["report"] ~= 1) then return end
                 if (UIDROPDOWNMENU_MENU_LEVEL > 1) then return end
 
-                do
-                    local _name, _realm
-                    if unit then
-                        _name, _realm = UnitName(unit)
-                    else
-                        _name, _realm = strsplit("-", name)
+                local fullname, name, realm, playerLocation
+                if unit then
+                    name, realm = UnitName(unit)
+                    if not realm then realm = GetRealmName() end
+                    fullname = name .. "-" .. realm
+                    playerLocation = PlayerLocation:CreateFromGUID(UnitGUID(unit))
+                elseif _name then
+                    name, realm = strsplit("-", _name)
+                    if not realm then realm = GetRealmName() end
+                    fullname = name .. "-" .. realm
+
+                    local guid = chatPlayerGUIDs[fullname]
+                    if guid then
+                        playerLocation = PlayerLocation:CreateFromGUID(guid)
+                    elseif dropdown.whoIndex then
+                        playerLocation = PlayerLocation:CreateFromWhoIndex(dropdown.whoIndex)
+                        rp.targetClass = C_FriendList.GetWhoInfo(dropdown.whoIndex).filename
                     end
-                    if not _realm then _realm = GetRealmName() end
-                    -- pt(name, _name, _realm)
-                    for i, v in ipairs(db) do
-                        if _name == v.name and _realm == v.realm then
-                            local bt = _G.DropDownList1Button1
-                            bt:SetText(bt:GetText() .. BG.STC_r1(format(L["(已举报%s次)"], v.count)))
-                            break
-                        end
+                    if not (fullname and playerLocation) then
+                        return
+                    end
+                end
+
+                -- 显示已举报过几次
+                local havedReport
+                for i, v in ipairs(db) do
+                    if name == v.name and realm == v.realm then
+                        local bt = _G.DropDownList1Button1
+                        bt:SetText(bt:GetText() .. BG.STC_r1(format(L["(已举报%s次)"], v.count)))
+                        havedReport = true
+                        break
                     end
                 end
 
                 if which ~= "SELF" and which ~= "FRIEND" and unit and UnitIsPlayer(unit) then -- 头像右键菜单
-                    AddReportButton("jiaoben", "unit", unit, dropdown.whoIndex)
+                    if havedReport then
+                        AddDeleteButton(fullname, playerLocation)
+                    end
+                    AddReportButton("jiaoben", fullname, playerLocation)
                     local _, type = IsInInstance()
                     if type == "pvp" then
-                        -- if type ~= "pvp" then
-                        AddReportButton("guaji", "unit", unit, dropdown.whoIndex)
+                        AddReportButton("guaji", fullname, playerLocation)
                     else
-                        AddReportButton("RMT", "unit", unit, dropdown.whoIndex)
+                        AddReportButton("RMT", fullname, playerLocation)
                     end
-                elseif which == "FRIEND" and not UnitIsUnit('player', Ambiguate(name, 'none')) then -- 聊天框玩家右键菜单
-                    AddReportButton("jiaoben", "name", name, dropdown)
-                    AddReportButton("RMT", "name", name, dropdown)
+                elseif which == "FRIEND" and not UnitIsUnit('player', Ambiguate(fullname, 'none')) then -- 聊天框玩家右键菜单
+                    if havedReport then
+                        AddDeleteButton(fullname, playerLocation)
+                    end
+                    AddReportButton("jiaoben", fullname, playerLocation)
+                    AddReportButton("RMT", fullname, playerLocation)
                 end
             end)
 
@@ -1349,13 +1391,57 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             f:RegisterEvent("CHAT_MSG_INSTANCE_CHAT")
             f:RegisterEvent("CHAT_MSG_INSTANCE_CHAT_LEADER")
             f:SetScript("OnEvent", function(self, even, ...)
-                local _, name = ...
+                local _, name = ... -- name：某某某-服务器
                 local guid = select(12, ...)
                 if name and guid then
                     chatPlayerGUIDs[name] = guid
                 end
             end)
         end
+    end
+
+
+    -- 在荣誉击杀处，增加一键举报脚本
+    do
+        local killPlayerGUIDs = {}
+        -- 记录敌方玩家GUID
+        BG.RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", function(self, event)
+            if IsInInstance() then return end
+            local _, subevent, _, sourceGUID, _, _, _, destGUID, destName = CombatLogGetCurrentEventInfo()
+            if not killPlayerGUIDs[destName] then
+                local guidType = strsplit("-", destGUID)
+                if guidType == "Player" then
+                    local name = strsplit("-", destName)
+                    killPlayerGUIDs[name] = destGUID
+                end
+            end
+        end)
+
+        ChatFrame_AddMessageEventFilter("CHAT_MSG_COMBAT_HONOR_GAIN", function(self, even, msg, player, l, cs, t, flag, channelId, ...)
+            local name = msg:match(COMBATLOG_HONORGAIN:gsub("%%s", "(.+)"):gsub("%%d", "(%%d+)"))
+            if killPlayerGUIDs[name] then
+                -- 如果曾经举报过，则举报链接的颜色改为灰色
+                local color = "FFFF00"
+                local realm = GetRealmName()
+                for i, v in ipairs(db) do
+                    if name == v.name and realm == v.realm then
+                        color = RGB_16(nil, 0.5, 0.5, 0.5)
+                    end
+                end
+                local link = "|cff" .. color .. "|Hgarrmission:" .. "BiaoGe:report:" .. name .. "|h[" .. L["一键举报脚本"] .. "]|h|r"
+                return false, msg .. link, player, l, cs, t, flag, channelId, ...
+            end
+        end)
+
+        -- 点击[一键举报脚本]链接后
+        hooksecurefunc("SetItemRef", function(link)
+            local _, BiaoGe, report, name = strsplit(":", link, 4)
+            if not (BiaoGe == "BiaoGe" and report == "report" and killPlayerGUIDs[name]) then return end
+            local playerLocation = PlayerLocation:CreateFromGUID(killPlayerGUIDs[name])
+            rp.yes = true
+            rp.chattype = "jiaoben"
+            SetReport(Enum.ReportType.InWorld, name, playerLocation)
+        end)
     end
 
     -- 悬停目标的提示工具里增加显示举报次数

@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.8.1d"
+ADDONSELF.ver = "v1.8.2"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -20,6 +20,48 @@ do --简体说明书
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
     text = text .. "-BUG反馈：邮箱buick_hbj@163.com，Q群322785325\n\n"
 
+    -- update = update .. "|cff00FF00" .. "" .. "|r\n"
+    -- update = update .. [[]] .. "\n"
+    -- update = update .. [[]] .. "\n\n"
+
+    update = update .. "|cff00FF00" .. "3月28日更新v1.8.2" .. "|r\n"
+    update = update .. [[-为插件通讯功能增加安全机制，以避免一些恶性问题]] .. "\n"
+    update = update .. [[-部分功能得到性能优化]] .. "\n"
+    update = update .. [[-<赛季服>装备库：现在可以直接设置[套装]为心愿（比如ALT+左键[超导长袍]，会把[竭能胸甲]设为心愿装备）]] .. "\n"
+    update = update .. [[-<赛季服>角色总览：增加神庙、制皮筛盐、裁缝洗布]] .. "\n"
+    update = update .. [[-<赛季服>添加P3表格、装备库等]] .. "\n\n"
+
+    update = update .. "|cff00FF00" .. "3月27日更新v1.8.1i" .. "|r\n"
+    update = update .. [[-<WLK>ICC表格更新，以适应最新掉落改动]] .. "\n\n"
+
+    update = update .. "|cff00FF00" .. "3月22日更新v1.8.1h" .. "|r\n"
+    update = update .. [[-表格：现在会显示某个装备你是否已经拥有]] .. "\n\n"
+
+    text = text .. update
+    text = text .. "|cff00FF00按住ALT显示更多更新记录|r"
+
+    ADDONSELF.instructionsText = text
+end
+do --简体更新内容
+    local update = "|cff00BFFF< 主要更新记录 >|r\n\n" .. update
+
+    update = update .. "|cff00FF00" .. "3月13日更新v1.8.1g" .. "|r\n"
+    update = update .. [[-修复了举报记录模块的一个UI错误]] .. "\n"
+    update = update .. [[-<WLK>修复了插件设置[显示/隐藏BOSS模型]不生效的问题]] .. "\n\n"
+
+    update = update .. "|cff00FF00" .. "3月12日更新v1.8.1f" .. "|r\n"
+    update = update .. [[-一键举报：在野外荣誉击杀时，在其聊天框文本处增加[一键举报脚本]按钮]] .. "\n"
+    update = update .. [[-一键举报：在目标的右键菜单中增加[删除举报记录]按钮（如果该目标曾被你举报的话）]] .. "\n"
+    update = update .. [[-快速评价：如果没记录到团长YY则不会弹出]] .. "\n"
+    update = update .. [[-插件设置：增加<显示/隐藏BOSS模型>]] .. "\n"
+    update = update .. [[-<赛季/60服>装备过滤词缀：增加"所有法术和攻击的命中"（治疗默认勾选）]] .. "\n\n"
+
+    update = update .. "|cff00FF00" .. "3月4日更新v1.8.1e" .. "|r\n"
+    update = update .. [[-<赛季服>现在跟[遭劫货物]有关联的图纸，在鼠标提示工具中也会显示相应提示]] .. "\n"
+    update = update .. [[-<赛季服>在拍卖行Shift点击[遭劫货物]时，现在只会搜索其所需货物，而不是搜索[遭劫货物]（支持原生界面和Auctionator插件）]] .. "\n"
+    update = update .. [[-<赛季服>装备过滤："力量"词缀不会再过滤掉辐射套装]] .. "\n"
+    update = update .. [[-<赛季服>再次修复炼金转化CD可能出现时间错误的问题（需要登录一次错误的角色）]] .. "\n\n"
+
     update = update .. "|cff00FF00" .. "3月1日更新v1.8.1d" .. "|r\n"
     update = update .. [[-集结号多个关键词搜索：现在也可以使用"/"，表示"或"。]] .. "\n"
     update = update .. [[比如搜索"诺莫瑞根/矮子"，则搜索包含"诺莫瑞根"或者"矮子"的活动。]] .. "\n"
@@ -34,55 +76,6 @@ do --简体说明书
     update = update .. [[-<赛季服>在专业技能制造面板和专业技能学习面板里，高亮与[遭劫货物]有关物品]] .. "\n"
     update = update .. [[-<赛季服>更新[遭劫货物]的奖励金钱和所需材料数量]] .. "\n\n"
 
-    update = update .. "|cff00FF00" .. "2月27日更新1.8.1b版本" .. "|r\n"
-    update = update .. [[-<赛季服>角色总览：增加<炼金转化CD>]] .. "\n"
-    update = update .. [[-<赛季服>现在CTRL+点击装备兑换物（例如：竭能胸甲）也可以跳转至装备库了]] .. "\n"
-    update = update .. [[-<赛季服>删除通报账单里的"金团"关键字]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "2月21日更新1.8.1版本" .. "|r\n"
-    update = update .. [[-举报记录：查询是否已被封号改为查询当前是否在线]] .. "\n"
-    update = update .. [[-举报记录：现在可以右键打开菜单复制其名字]] .. "\n"
-    update = update .. [[-一键举报：在战场时，现在可以右键对方头像/框体一键举报挂机]] .. "\n"
-    update = update .. [[-修复了可堆叠物品在记录进表格时，可能出现数量记录不正确的问题]] .. "\n"
-    update = update .. [[-<赛季服>新增功能：血月活动期间，自动施放尸体和对话自动复活（该功能默认关闭）]] .. "\n"
-    update = update .. [[-<赛季服>添加几件之前漏掉的P2团本掉落装备]] .. "\n"
-    update = update .. [[-<赛季服>装备库：添加P2的PVP军阶奖励装备]] .. "\n\n"
-
-    -- update = update .. "|cff00FF00" .. "" .. "|r\n"
-    -- update = update .. [[]] .. "\n"
-    -- update = update .. [[]] .. "\n\n"
-
-    text = text .. update
-    text = text .. "|cff00FF00按住ALT显示更多更新记录|r"
-
-    ADDONSELF.instructionsText = text
-end
-do --简体更新内容
-    local update = "|cff00BFFF< 主要更新记录 >|r\n\n" .. update
-
-    update = update .. "|cff00FF00" .. "2月18日更新1.8.0d版本" .. "|r\n"
-    update = update .. [[-<赛季服>P2装备库：添加更多由专业制造的绿装]] .. "\n"
-    update = update .. [[-<赛季服>P2表格：尾王格子增加至10个]] .. "\n"
-    update = update .. [[-<赛季服>修复了进本不会自动清空P2表格的问题]] .. "\n"
-    update = update .. [[-<60服>40人团本不再记录世界掉落的蓝色品质装备]] .. "\n"
-    update = update .. [[-修复了装备过滤方案在更改顺序后，在下次载入时名称和图标错误的问题]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "2月15日更新1.8.0c版本" .. "|r\n"
-    update = update .. [[-集结号密语模板：活动的右键菜单里增加邀请按钮]] .. "\n"
-    update = update .. [[-<赛季服>更新P2团本掉落列表]] .. "\n"
-    update = update .. [[-<赛季服>P2表格里3号Boss跟4号位置调换]] .. "\n"
-    update = update .. [[-<赛季服>P2表格里尾王格子增加至8个（因为5号的装备可能会被记到尾王导致格子不够）]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "2月13日更新1.8.0b版本" .. "|r\n"
-    update = update .. [[-装备库：现在CTRL+点击装备可以打开试衣间]] .. "\n"
-    update = update .. [[-<赛季服>更新P2遭劫货物声望奖励提示]] .. "\n"
-    update = update .. [[-<赛季服>装备库添加P2专业制造新紫装和团本任务奖励]] .. "\n\n"
-
-    update = update .. "|cff00FF00" .. "2月8日更新1.8.0版本" .. "|r\n"
-    update = update .. [[-在表格格子里按下Enter键时，不再下跳光标，而是取消光标]] .. "\n"
-    update = update .. [[-<赛季服>P2装备库添加了部分新装备，且旧版装备替换为新版装备]] .. "\n"
-    update = update .. [[-<赛季服>角色团本总览添加新团本诺莫瑞根]] .. "\n\n"
-
     ADDONSELF.updateText = update
 end
 
@@ -95,8 +88,88 @@ local L = setmetatable({}, {
 ADDONSELF.L = L
 
 local L = {}
-
 do
+    L["(装等)"] = true
+
+
+    L["（"] = true
+    L["）"] = true
+    L["|cff%s感谢你的评价：YY%s，>>%s<<%s。|r"] = true
+
+
+    L["恭喜你们击杀尾王！YY%s你曾评价为：|cff%s>>%s<<。|r"] = true
+    L["恭喜你们击杀尾王！由于没有记录到团长YY，快速评价框不会弹出。"] = true
+    L["这个词缀是赛季服新增的，指物理和法系的命中，治疗一般需要过滤此词缀"] = true
+    L["这个词缀是指物理命中"] = true
+    L["这个词缀是指物理爆击"] = true
+    L["这个词缀是指法术命中"] = true
+    L["这个词缀是指法术爆击"] = true
+    L["这个词缀是指单纯增加法术伤害，治疗一般需要过滤此词缀"] = true
+    L["这个词缀是指增加法术伤害和治疗，物理职业一般需要过滤此词缀"] = true
+    L["这个词缀是指某种属性的法术伤害，比如增加火焰法术伤害，治疗一般需要过滤此词缀"] = true
+    L["这个词缀是指单纯增加治疗效果，法系DPS一般需要过滤此词缀"] = true
+    L["所有法术和攻击的命中"] = true
+    L["查询成功：YY%s的评价一共%s个。|cffFFFFFF|cff00FF00%s|r/|cffFFFF00%s|r/|cffDC143C%s|r|r。%s"] = true
+    L["查询成功：YY%s的评价一共%s个。%s"] = true
+    L["显示BOSS模型"] = true
+    L["在表格里显示BOSS的模型。"] = true
+    L["已删除<%s>的举报记录。"] = true
+    L["删除举报记录"] = true
+    L["删除该名玩家在BiaoGe插件里的全部举报记录。\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"] = true
+
+
+    L["遭劫货物"] = true
+    L["在专业制造面板和专业学习面板中，高亮与[遭劫货物]有关物品。"] = true
+    L["在拍卖行Shift点击[遭劫货物]时，只会搜索其所需货物，而不是搜索[遭劫货物]（支持原生界面和Auctionator插件）。"] = true
+    L["UI缩放"] = true
+    L["|cff808080（右键还原设置）|r"] = true
+    L["调整表格UI的大小。"] = true
+    L["背景材质透明度"] = true
+    L["调整背景材质透明度。"] = true
+    L["自动记录装备"] = true
+    L["在团本里拾取装备时，会自动记录进表格。"] = true
+    L["不同的副本，要求的最低品质会不同。大团本一般从紫装开始记录，小团本一般从蓝装开始记录。小怪的掉落会记录到杂项里。"] = true
+    L["装备记录通知时长"] = true
+    L["自动记录装备后会在屏幕上方通知记录结果。"] = true
+    L["装备记录通知字号"] = true
+    L["调整该字体的大小。"] = true
+    L["交易自动记账"] = true
+    L["需要配合自动记录装备，因为如果表格里没有该交易的装备，则记账失败。"] = true
+    L["如果一次交易两件装备以上，则只会记第一件装备。"] = true
+    L["交易通知时长"] = true
+    L["通知显示多久。"] = true
+    L["交易通知字号"] = true
+    L["交易通知"] = true
+    L["交易完成后会在屏幕中央通知本次记账结果。"] = true
+    L["记账效果预览框"] = true
+    L["交易的时候，可以预览这次的记账效果。"] = true
+    L["如果这次交易的装备不在表格，则可以选择强制记账。"] = true
+    L["高亮拍卖装备"] = true
+    L["当团长或物品分配者贴出装备开始拍卖时，会自动高亮表格里相应的装备。"] = true
+    L["高亮拍卖装备时长"] = true
+    L["高亮拍卖装备多久。"] = true
+    L["拍卖聊天记录框"] = true
+    L["自动记录全团跟拍卖有关的聊天。"] = true
+    L["当你点击买家或金额时会显示拍卖聊天记录。"] = true
+    L["进本自动清空表格"] = true
+    L["当你进入一个新CD团本时，表格会自动清空，原表格数据会保存至历史表格1。"] = true
+    L["清空表格时保留支出补贴名称"] = true
+    L["只保留补贴名称（例如XX补贴），支出玩家和支出金额正常清空。"] = true
+    L["这样就不用每次都重复填写补贴名称。"] = true
+    L["只有补贴名称，但没有补贴金额的，在通报账单时不会被通报。"] = true
+    L["清空表格时根据副本难度设置分钱人数"] = true
+    L["10人团本默认分钱人数为10人，25人团本默认分钱人数为25人。"] = true
+    L["金额自动加零"] = true
+    L["输入金额和欠款时自动加两个0，减少记账操作，提高记账效率。"] = true
+    L["对账单保存时长"] = true
+    L["对账单保存多久后自动删除。"] = true
+    L["按键交互声音"] = true
+    L["点击按钮时的声音。"] = true
+    L["小地图图标"] = true
+    L["显示小地图图标。"] = true
+    L["在查询名单列表界面中增加查询记录。"] = true
+
+
     L[ [[搜索框支持多个关键词搜索。]] ] = true
     L[ [["空格"表示"且"，需同时满足全部关键词。比如你想搜索哪个诺莫瑞根活动里缺少治疗，可以搜索"诺莫瑞根 治疗"。]] ] = true
     L[ [["/"表示"或"，满足其中一个关键词即可。比如你是双修牧师，可以搜索"牧师/MS/暗牧/AM"。]] ] = true
@@ -720,7 +793,7 @@ do
     L["好评"] = true
     L["中评"] = true
     L["差评"] = true
-    L["感谢你的评价：|cff%sYY%s，%s|r"] = true
+    L["感谢你的评价：YY%s，|cff%s%s|r"] = true
     L["保存"] = true
     L["详细评价"] = true
     L["|cffffffff< 详细评价 >|r\n\n1、在金团表格里写详细评价"] = true
@@ -799,7 +872,7 @@ do
     L["查询成功！CD"] = true
     L["查询"] = true
     L["无"] = true
-    L["查询失败：没有找到YY%s的评价"] = true
+    L["查询失败：没有找到YY%s的评价。"] = true
     L["查询中 "] = true
     L["查询"] = true
     L["正在初始化"] = true
@@ -1348,6 +1421,63 @@ do
         L["鲁维罗什"] = true
         L["艾隆纳亚"] = true
         L["石头看守者"] = true
+        -- new
+        L["阿\n塔\n拉\n利\n恩"] = true
+        L["腐\n溃\n烂\n泥"] = true
+        L["阿\n塔\n莱\n防\n御\n者"] = true
+        L["德\n姆\n塞\n卡\n尔"] = true
+        L["哈\n卡\n的\n化\n身"] = true
+        L["迦\n玛\n兰\n和\n奥\n戈\n姆"] = true
+        L["摩\n弗\n拉\n斯"] = true
+        L["伊\n兰\n尼\n库\n斯\n的\n阴\n影"] = true
+
+        L["加加恩·火锤"] = true
+        L["格瑞姆洛克"] = true
+        L["阿扎达斯"] = true
+        L["安图苏尔"] = true
+        L["巫医祖穆拉恩"] = true
+        L["暗影祭司塞瑟斯"] = true
+        L["灰尘怨灵"] = true
+        L["加兹瑞拉"] = true
+        L["乌克兹·沙顶"] = true
+        L["泽雷利斯"] = true
+        L["诺克赛恩"] = true
+        L["锐刺鞭笞者"] = true
+        L["维利塔恩"] = true
+        L["收割者麦什洛克"] = true
+        L["被诅咒的塞雷布拉斯"] = true
+        L["兰斯利德"] = true
+        L["工匠吉兹洛克"] = true
+        L["洛特格里普"] = true
+        L["瑟莱德丝公主"] = true
+        L["洛考尔"] = true
+        L["审讯官格斯塔恩"] = true
+        L["驯犬者格雷尔玛尔"] = true
+        L["竞技场-修行者高罗什"] = true
+        L["竞技场-格里兹尔"] = true
+        L["竞技场-剜眼者"] = true
+        L["竞技场-破坏者奥科索尔"] = true
+        L["竞技场-阿努希尔"] = true
+        L["竞技场-爬行者赫杜姆"] = true
+        L["控火师罗格雷恩"] = true
+        L["黑色宝库"] = true
+        L["典狱官斯迪尔基斯"] = true
+        L["维雷克"] = true
+        L["卫兵杜格瑞普"] = true
+        L["弗诺斯·达克维尔"] = true
+        L["伊森迪奥斯"] = true
+        L["贝尔加"] = true
+        L["安格弗将军"] = true
+        L["傀儡统帅阿格曼奇"] = true
+        L["黑铁酒吧-霍尔雷·黑须"] = true
+        L["黑铁酒吧-普拉格"] = true
+        L["黑铁酒吧-方阵"] = true
+        L["弗莱拉斯大使"] = true
+        L["无敌的潘佐尔"] = true
+        L["七贤"] = true
+        L["玛格姆斯"] = true
+        L["铁炉堡公主茉艾拉·铜须"] = true
+        L["达格兰·索瑞森大帝"] = true
     end
 
     -- L[] = true

@@ -33,6 +33,7 @@ function BG.RoleOverviewUI()
                 ["MC"] = 1,
                 ["AQL"] = 1,
                 ["ZUG"] = 1,
+                ["Temple"] = 1,
                 ["Gno"] = 1,
                 ["BD"] = 1,
                 ["huiguweek"] = 1,
@@ -54,26 +55,10 @@ function BG.RoleOverviewUI()
     end
     do
         if BG.IsVanilla() then
-            BG.Once("FBCDchoice", 240106, function()
-                -- 因为永久60，需要复原一下
-                BiaoGe.FBCDchoice = {
-                    ["NAXX"] = 1,
-                    ["TAQ"] = 1,
-                    ["BWL"] = 1,
-                    ["MC"] = 1,
-                    ["AQL"] = 1,
-                    ["ZUG"] = 1,
-                    ["BD"] = 1,
-                }
-            end)
-            BG.Once("FBCDchoice", 240113, function()
-                BiaoGe.FBCDchoice["huiguweek"] = 1
-            end)
-            BG.Once("FBCDchoice", 240208, function()
-                BiaoGe.FBCDchoice["Gno"] = 1
-            end)
-            BG.Once("FBCDchoice", 240223, function()
-                BiaoGe.FBCDchoice["alchemy"] = 1
+            BG.Once("FBCDchoice", 240328, function()
+                BiaoGe.FBCDchoice["Temple"] = 1
+                BiaoGe.FBCDchoice["leatherworking"] = 1
+                BiaoGe.FBCDchoice["tailor"] = 1
             end)
         else
             BG.Once("FBCDchoice", 240111, function()
@@ -108,12 +93,15 @@ function BG.RoleOverviewUI()
         }
         if BG.IsVanilla_Sod() then
             BG.FBCDall_table = {
+                { name = "Temple", color = "00BFFF", fbId = 109, num = 20, type = "fb" },
                 { name = "Gno", color = "00BFFF", fbId = 90, num = 10, type = "fb" },
                 { name = "BD", color = "00BFFF", fbId = 48, num = 10, type = "fb" },
                 -- 周常
                 { name = "huiguweek", name2 = L["灰谷周常"], color = "FF8C00", questID = "huiguweek", type = "quest" },
                 -- 专业
                 { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
+                { name = "leatherworking", name2 = L["制皮筛盐"], color = "ADFF2F", type = "profession" },
+                { name = "tailor", name2 = L["裁缝洗布"], color = "ADFF2F", type = "profession" },
             }
         elseif BG.IsVanilla_60() then
             BG.FBCDall_table = {
@@ -212,7 +200,7 @@ function BG.RoleOverviewUI()
                 end
             end
         end
-        tinsert(FBCDchoice_table, 1, { name = L["角色"], color = "FFFFFF" })
+        tinsert(FBCDchoice_table, 1, { name = L["角色"] .. " " .. BG.STC_dis(L["(装等)"]), color = "FFFFFF" })
         -- 根据你选择的货币，生成table
         for i, v in ipairs(BG.MONEYall_table) do
             for id, yes in pairs(BiaoGe.MONEYchoice) do
@@ -1426,15 +1414,16 @@ function BG.RoleOverviewUI()
                     name2 = L["炼金术"],
                     spell = 17187 -- 转化奥金
                 },
-                tailor = {
-                    name = L["裁缝洗布"],
-                    name2 = L["裁缝"],
-                    spell = 18560 --月布
-                },
                 leatherworking = {
                     name = L["制皮筛盐"],
                     name2 = L["制皮"],
                     spell = 19566 --筛盐
+                },
+                tailor = {
+                    name = L["裁缝洗布"],
+                    name2 = L["裁缝"],
+                    spell = 18560 --月布
+                    -- spell = 20600  -- test
                 },
             }
 
@@ -1442,6 +1431,7 @@ function BG.RoleOverviewUI()
                 local time = GetServerTime()
                 for profession, v in pairs(tbl) do
                     local startTime, duration = GetSpellCooldown(v.spell)
+                    startTime = startTime > GetTime() and (startTime - 2 ^ 32 / 1000) or startTime
                     local cooldown = startTime + duration - GetTime()
                     if cooldown > 0 then
                         BiaoGe.tradeSkillCooldown[RealmId][player][profession] = {
@@ -1453,7 +1443,6 @@ function BG.RoleOverviewUI()
                     end
                 end
             end
-
             local function UpdateProfessionCD()
                 local time = GetServerTime()
                 for p, _ in pairs(BiaoGe.tradeSkillCooldown[RealmId]) do -- 检查其他角色cd是否到期
@@ -1473,11 +1462,11 @@ function BG.RoleOverviewUI()
                                     name = color and "|c" .. color .. L["我"] .. "|r: " or L["我"] .. ": "
                                 end
                                 BG.After(i, function()
-                                    SendSystemMessage(BG.BG() .. BG.STC_g1(format(L["%s%s已就绪！"],
+                                    SendSystemMessage(BG.BG .. BG.STC_g1(format(L["%s%s已就绪！"],
                                         name, tbl[profession].name)))
-                                    SendSystemMessage(BG.BG() .. BG.STC_g1(format(L["%s%s已就绪！"],
+                                    SendSystemMessage(BG.BG .. BG.STC_g1(format(L["%s%s已就绪！"],
                                         name, tbl[profession].name)))
-                                    SendSystemMessage(BG.BG() .. BG.STC_g1(format(L["%s%s已就绪！"],
+                                    SendSystemMessage(BG.BG .. BG.STC_g1(format(L["%s%s已就绪！"],
                                         name, tbl[profession].name)))
                                     PlaySoundFile(BG["sound_" .. profession .. "Ready"], "Master")
                                 end)
@@ -1498,9 +1487,7 @@ function BG.RoleOverviewUI()
 
             BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
                 if not (isLogin or isReload) then return end
-                -- BG.Once("defaultProfessionCooldown", "", function()
                 GetCooldown()
-                -- end)
                 UpdateProfessionCD()
             end)
             C_Timer.NewTicker(60, function()

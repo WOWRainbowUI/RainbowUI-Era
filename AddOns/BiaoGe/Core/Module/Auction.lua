@@ -417,80 +417,12 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         end
 
         -- ALT点击背包生效
-        do
-            local function NDuiOnClick(self)
-                if not IsAltKeyDown() then return end
-                local link = C_Container.GetContainerItemLink(self.bagId, self.slotId)
-                BG.StartAuction(link, self)
-            end
-
-            local function EUIOnClick(self)
-                if not IsAltKeyDown() then return end
-                local link = C_Container.GetContainerItemLink(self.BagID, self.SlotID)
-                BG.StartAuction(link, self)
-            end
-
-            local function BigFootOnClick(self)
-                if not IsAltKeyDown() then return end
-                local link = C_Container.GetContainerItemLink(self:GetParent():GetID(), self:GetID())
-                BG.StartAuction(link, self)
-            end
-
-            local function OnClick(self)
-                if not IsAltKeyDown() then return end
-                local link = C_Container.GetContainerItemLink(self:GetParent():GetID(), self:GetID())
-                BG.StartAuction(link, self)
-            end
-
-            BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
-                if not (isLogin or isReload) then return end
-                if _G["NDui_BackpackSlot1"] then
-                    --NDUI背包
-                    local i = 1
-                    while _G["NDui_BackpackSlot" .. i] do
-                        _G["NDui_BackpackSlot" .. i]:HookScript("OnClick", NDuiOnClick)
-                        i = i + 1
-                    end
-                elseif _G["ElvUI_ContainerFrameBag-1Slot1"] then
-                    --EUI背包
-                    local b = -1
-                    local i = 1
-                    while _G["ElvUI_ContainerFrameBag" .. b .. "Slot" .. i] do
-                        while _G["ElvUI_ContainerFrameBag" .. b .. "Slot" .. i] do
-                            _G["ElvUI_ContainerFrameBag" .. b .. "Slot" .. i]:HookScript("OnClick", EUIOnClick)
-                            i = i + 1
-                        end
-                        b = b + 1
-                        i = 1
-                    end
-                elseif _G["CombuctorFrame1"] then
-                    --大脚背包
-                    local yes
-                    _G["CombuctorFrame1"]:HookScript("OnShow", function()
-                        if not yes then
-                            local i = 1
-                            while _G["CombuctorItem" .. i] do
-                                _G["CombuctorItem" .. i]:HookScript("OnClick", BigFootOnClick)
-                                i = i + 1
-                            end
-                            yes = true
-                        end
-                    end)
-                else
-                    -- 原生背包
-                    local b = 1
-                    local i = 1
-                    while _G["ContainerFrame" .. b .. "Item" .. i] do
-                        while _G["ContainerFrame" .. b .. "Item" .. i] do
-                            _G["ContainerFrame" .. b .. "Item" .. i]:HookScript("OnClick", OnClick)
-                            i = i + 1
-                        end
-                        b = b + 1
-                        i = 1
-                    end
-                end
-            end)
-        end
+        hooksecurefunc("ContainerFrameItemButton_OnModifiedClick", function(self, button)
+            if not IsAltKeyDown() then return end
+            local link = C_Container.GetContainerItemLink(self:GetParent():GetID(), self:GetID())
+            -- pt(link)
+            BG.StartAuction(link, self)
+        end)
     end
     ------------------团员插件版本------------------
     do

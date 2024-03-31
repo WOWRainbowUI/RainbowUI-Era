@@ -7,11 +7,11 @@ local pt = print
 local LibBG = LibStub:GetLibrary("LibUIDropDownMenu-4.0") -- 调用库菜单UI
 ADDONSELF.LibBG = LibBG
 
-C_ChatInfo.RegisterAddonMessagePrefix("BiaoGe")                                                            -- 注册插件通信频道
-C_ChatInfo.RegisterAddonMessagePrefix("BiaoGeYY")                                                          -- 注册插件通信频道（用于YY评价）
+C_ChatInfo.RegisterAddonMessagePrefix("BiaoGe")                                                      -- 注册插件通信频道
+C_ChatInfo.RegisterAddonMessagePrefix("BiaoGeYY")                                                    -- 注册插件通信频道（用于YY评价）
 
-BiaoGeFilterTooltip = CreateFrame("GameTooltip", "BiaoGeFilterTooltip", UIParent, "GameTooltipTemplate")   -- 用于收集提示工具文字
-BiaoGeFilterTooltip2 = CreateFrame("GameTooltip", "BiaoGeFilterTooltip2", UIParent, "GameTooltipTemplate") -- 用于收集提示工具文字
+BiaoGeTooltip = CreateFrame("GameTooltip", "BiaoGeFilterTooltip", UIParent, "GameTooltipTemplate")   -- 用于装备过滤功能
+BiaoGeTooltip2 = CreateFrame("GameTooltip", "BiaoGeFilterTooltip2", UIParent, "GameTooltipTemplate") -- 用于装备库
 
 local l = GetLocale()
 if (l == "koKR") then
@@ -48,13 +48,13 @@ BG.IsHorde = ADDONSELF.IsHorde
 local RealmId = GetRealmID()
 local player = UnitName("player")
 
-local vanillaAllFB = { "BD", "Gno", "NAXX", "TAQ", "AQL", "ZUG", "BWL", "MC", }
+local vanillaAllFB = { "Temple", "Gno", "BD", "NAXX", "TAQ", "AQL", "ZUG", "BWL", "MC", }
 BG.FBtable = {}
 BG.FBtable2 = {}
 BG.FBIDtable = {}
 BG.lootQuality = {}
 do
-    function AddDB(FB, FBid, phase, maxplayers, lootQuality)
+    local function AddDB(FB, FBid, phase, maxplayers, lootQuality)
         tinsert(BG.FBtable, FB)
         tinsert(BG.FBtable2,
             {
@@ -67,7 +67,6 @@ do
         BG.FBIDtable[FBid] = FB
         BG.lootQuality[FB] = lootQuality or 4
     end
-
     if BG.IsVanilla_Sod() then
         BG.FB1 = "Gno"
         BG.fullLevel = 25
@@ -75,6 +74,7 @@ do
         BG.Sod_10manRaidTbl = { 48, 90 }
         AddDB("BD", 48, "P1", 10, 3)
         AddDB("Gno", 90, "P2", 10, 3)
+        AddDB("Temple", 109, "P3", 20, 3)
     elseif BG.IsVanilla_60() then
         BG.FB1 = "MC"
         BG.fullLevel = 60
@@ -108,6 +108,105 @@ do
         }
     end
 
+    local Width, Height, Maxt, Maxb, Maxi = {}, {}, {}, {}, {}
+    local function AddDB(FB, width, height, maxt, maxb, maxi)
+        Width[FB] = width
+        Height[FB] = height
+        Maxt[FB] = maxt
+        Maxb[FB] = maxb
+        Maxi[FB] = maxi
+    end
+    BG.Maxi = 30
+    if BG.IsVanilla_Sod() then
+        AddDB("BD", 1290, 835, 3, 9, 11)
+        AddDB("Gno", 1290, 835, 3, 8, 11)
+        AddDB("Temple", 1290, 875, 3, 10, 11)
+    elseif BG.IsVanilla_60() then
+        AddDB("MC", 1290, 875, 3, 13, 15)
+        AddDB("BWL", 1290, 810, 3, 10, 15)
+        AddDB("ZUG", 1290, 810, 3, 12, 15)
+        AddDB("AQL", 1290, 810, 3, 8, 15)
+        AddDB("TAQ", 1290, 810, 3, 11, 15)
+        AddDB("NAXX", 1710, 810, 4, 17, 15)
+    else
+        AddDB("ICC", 1290, 875, 3, 15, 16)
+        AddDB("TOC", 1290, 835, 3, 9, 14)
+        AddDB("ULD", 1290, 875, 3, 16, 8)
+        AddDB("NAXX", 1710, 945, 4, 19, 11)
+    end
+    local HopeMaxi, HopeMaxb, HopeMaxn = nil, {}, {}
+    if BG.IsVanilla() then
+        HopeMaxi = 5
+    else
+        HopeMaxi = 3
+    end
+    for _, FB in pairs(BG.FBtable) do
+        HopeMaxb[FB] = Maxb[FB] - 1
+    end
+    if BG.IsVanilla() then
+        for _, FB in pairs(BG.FBtable) do
+            HopeMaxn[FB] = 1
+        end
+    else
+        HopeMaxn["ICC"] = 4
+        HopeMaxn["TOC"] = 4
+        HopeMaxn["ULD"] = 2
+        HopeMaxn["NAXX"] = 2
+    end
+    do
+        ADDONSELF.Width = Width
+        ADDONSELF.Height = Height
+        ADDONSELF.Maxt = Maxt
+        ADDONSELF.Maxb = Maxb
+        ADDONSELF.Maxi = Maxi
+        ADDONSELF.HopeMaxi = HopeMaxi
+        ADDONSELF.HopeMaxb = HopeMaxb
+        ADDONSELF.HopeMaxn = HopeMaxn
+    end
+    -- 第几个BOSS
+    local function BossNum(FB, b, t)
+        local tbl
+        -- wlk
+        if FB == "ICC" then
+            tbl = { 0, 7, 13 }
+        elseif FB == "TOC" then
+            tbl = { 0, 5, 8 }
+        elseif FB == "ULD" then
+            tbl = { 0, 7, 13 }
+        elseif FB == "NAXX" and not BG.IsVanilla() then
+            tbl = { 0, 6, 12, 16 }
+            -- sod
+        elseif FB == "BD" then
+            tbl = { 0, 5, 9 }
+        elseif FB == "Gno" then
+            tbl = { 0, 5, 8 }
+        elseif FB == "Temple" then
+            tbl = { 0, 4, 8 }
+            -- 60
+        elseif FB == "MC" then
+            tbl = { 0, 8, 12 }
+        elseif FB == "BWL" then
+            tbl = { 0, 5, 9 }
+        elseif FB == "ZUG" then
+            tbl = { 0, 6, 11 }
+        elseif FB == "AQL" then
+            tbl = { 0, 5, 8 }
+        elseif FB == "TAQ" then
+            tbl = { 0, 6, 10 }
+        elseif FB == "NAXX" and BG.IsVanilla() then
+            tbl = { 0, 6, 12, 16 }
+        end
+
+        local bb
+        if tbl[t + 1] then
+            bb = tbl[t + 1] - tbl[t]
+        else
+            bb = Maxb[FB] + 2 - tbl[t]
+        end
+        return b + tbl[t], bb
+    end
+    ADDONSELF.BossNum = BossNum
+
     BG.Movetable = {}
     BG.options = {}
     BG.itemCaches = {}
@@ -120,6 +219,7 @@ do
     BG.ver = ADDONSELF.ver
     BG.instructionsText = ADDONSELF.instructionsText
     BG.updateText = ADDONSELF.updateText
+    BG.BG = "|cff00BFFF<BiaoGe>|r "
 
     ---------- 获取副本tbl某个value ----------
     function BG.GetFBinfo(FB, info)
@@ -371,11 +471,11 @@ do
             end
         end
 
-        BG.g2 = "90EE90"
+        BG.g2 = "40c040"
         function BG.STC_g2(text)
             if text then
                 local t
-                t = "|cff" .. "90EE90" .. text .. "|r"
+                t = "|cff" .. "40c040" .. text .. "|r"
                 return t
             end
         end
@@ -429,6 +529,7 @@ do
         BG.sound_alchemyReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\alchemyReady.mp3"
         BG.sound_tailorReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\tailorReady.mp3"
         BG.sound_leatherworkingReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\leatherworkingReady.mp3"
+        BG.sound_error = "Interface\\AddOns\\BiaoGe\\Media\\sound\\error.mp3"
     end
 end
 
@@ -455,6 +556,11 @@ local function DataBase()
             if not yes then
                 BiaoGe = nil
                 SendSystemMessage(BG.BG .. " " .. L["检测到配置文件错误，现已重置！"])
+                SendSystemMessage(BG.BG .. " " .. L["检测到配置文件错误，现已重置！"])
+                SendSystemMessage(BG.BG .. " " .. L["检测到配置文件错误，现已重置！"])
+                SendSystemMessage(BG.BG .. " " .. L["检测到配置文件错误，现已重置！"])
+                SendSystemMessage(BG.BG .. " " .. L["检测到配置文件错误，现已重置！"])
+                PlaySoundFile(BG.sound_error, "Master")
             end
         end
     end
@@ -577,73 +683,7 @@ local function DataBase()
     end
 end
 
--- 其他
-do
-    local Width = {}
-    local Height = {}
-    local Maxt = {}
-    local Maxb = {}
-    local Maxi = {}
 
-    local function AddDB(FB, width, height, maxt, maxb, maxi)
-        Width[FB] = width
-        Height[FB] = height
-        Maxt[FB] = maxt
-        Maxb[FB] = maxb
-        Maxi[FB] = maxi
-    end
-    BG.Maxi = 30
-    if BG.IsVanilla_Sod() then
-        AddDB("BD", 1290, 835, 3, 9, 11)
-        AddDB("Gno", 1290, 835, 3, 8, 11)
-    elseif BG.IsVanilla_60() then
-        AddDB("MC", 1290, 875, 3, 13, 15)
-        AddDB("BWL", 1290, 810, 3, 10, 15)
-        AddDB("ZUG", 1290, 810, 3, 12, 15)
-        AddDB("AQL", 1290, 810, 3, 8, 15)
-        AddDB("TAQ", 1290, 810, 3, 11, 15)
-        AddDB("NAXX", 1710, 810, 4, 17, 15)
-    else
-        AddDB("ICC", 1290, 875, 3, 15, 16)
-        AddDB("TOC", 1290, 835, 3, 9, 14)
-        AddDB("ULD", 1290, 875, 3, 16, 8)
-        AddDB("NAXX", 1710, 945, 4, 19, 11)
-    end
-    ADDONSELF.Width = Width
-    ADDONSELF.Height = Height
-    ADDONSELF.Maxt = Maxt
-    ADDONSELF.Maxb = Maxb
-    ADDONSELF.Maxi = Maxi
-
-
-    local HopeMaxi
-    local HopeMaxb = {}
-    local HopeMaxn = {}
-
-    if BG.IsVanilla() then
-        HopeMaxi = 5
-    else
-        HopeMaxi = 3
-    end
-    ADDONSELF.HopeMaxi = HopeMaxi
-
-    for _, FB in pairs(BG.FBtable) do
-        HopeMaxb[FB] = Maxb[FB] - 1
-    end
-    ADDONSELF.HopeMaxb = HopeMaxb
-
-    if BG.IsVanilla() then
-        for _, FB in pairs(BG.FBtable) do
-            HopeMaxn[FB] = 1
-        end
-    else
-        HopeMaxn["ICC"] = 4
-        HopeMaxn["TOC"] = 4
-        HopeMaxn["ULD"] = 2
-        HopeMaxn["NAXX"] = 2
-    end
-    ADDONSELF.HopeMaxn = HopeMaxn
-end
 
 
 

@@ -21,6 +21,18 @@ local pt = print
 
 local buttonCount = {}
 if BG.IsVanilla_Sod() then
+    buttonCount.Temple = {
+        [1] = 7,
+        [2] = 7,
+        [3] = 7,
+        [4] = 7,
+        [5] = 7,
+        [6] = 7,
+        [7] = 7,
+        [8] = 8,
+        [9] = 6,
+        [10] = 9,
+    }
     buttonCount.Gno = {
         [1] = 5,
         [2] = 5,
@@ -30,8 +42,6 @@ if BG.IsVanilla_Sod() then
         [6] = 10,
         [7] = 8,
         [8] = 8,
-        [9] = 8,
-        [10] = 5,
     }
     buttonCount.BD = {
         [1] = 5,
@@ -43,8 +53,6 @@ if BG.IsVanilla_Sod() then
         [7] = 5,
         [8] = 5,
         [9] = 10,
-        [10] = 8,
-        [11] = 5,
     }
 elseif BG.IsVanilla_60() then
     buttonCount.MC = {
@@ -61,8 +69,6 @@ elseif BG.IsVanilla_60() then
         [11] = 7,
         [12] = 12,
         [13] = 15,
-        [14] = 8,
-        [15] = 5,
     }
     buttonCount.BWL = {
         [1] = 5,
@@ -75,8 +81,6 @@ elseif BG.IsVanilla_60() then
         [8] = 5,
         [9] = 10,
         [10] = 12,
-        [11] = 8,
-        [12] = 5,
     }
     buttonCount.ZUG = {
         [1] = 4,
@@ -91,8 +95,6 @@ elseif BG.IsVanilla_60() then
         [10] = 4,
         [11] = 9,
         [12] = 10,
-        [13] = 8,
-        [14] = 5,
     }
     buttonCount.AQL = {
         [1] = 5,
@@ -103,8 +105,6 @@ elseif BG.IsVanilla_60() then
         [6] = 5,
         [7] = 10,
         [8] = 11,
-        [9] = 8,
-        [10] = 5,
     }
     buttonCount.TAQ = {
         [1] = 4,
@@ -118,8 +118,6 @@ elseif BG.IsVanilla_60() then
         [9] = 5,
         [10] = 12,
         [11] = 12,
-        [12] = 8,
-        [13] = 5,
     }
     buttonCount.NAXX = {
         [1] = 4,
@@ -139,28 +137,24 @@ elseif BG.IsVanilla_60() then
         [15] = 5,
         [16] = 12,
         [17] = 12,
-        [18] = 8,
-        [19] = 5,
     }
 else
     buttonCount.ICC = {
         [1] = 3,
         [2] = 3,
         [3] = 3,
-        [4] = 4,
+        [4] = 5,
         [5] = 3,
         [6] = 3,
-        [7] = 4,
+        [7] = 5,
         [8] = 3,
-        [9] = 4,
+        [9] = 5,
         [10] = 3,
-        [11] = 4,
-        [12] = 6,
+        [11] = 5,
+        [12] = 8,
         [13] = 3,
-        [14] = 7,
-        [15] = 16,
-        [16] = 8,
-        [17] = 5,
+        [14] = 8,
+        [15] = 7,
     }
     buttonCount.TOC = {
         [1] = 5,
@@ -172,8 +166,6 @@ else
         [7] = 8,
         [8] = 12,
         [9] = Maxi["TOC"],
-        [10] = 8,
-        [11] = 5,
     }
     buttonCount.ULD = {
         [1] = 4,
@@ -192,8 +184,6 @@ else
         [14] = 4,
         [15] = 6,
         [16] = 5,
-        [17] = 8,
-        [18] = 5,
     }
     buttonCount.NAXX = {
         [1] = 5,
@@ -215,13 +205,13 @@ else
         [17] = 5,
         [18] = 6,
         [19] = 3,
-        [20] = 8,
-        [21] = 5,
     }
 end
 
 function BG.CreateFBUI(FB)
     if not buttonCount[FB] then return end
+    tinsert(buttonCount[FB], 8) -- 设置支出格子为x个
+    tinsert(buttonCount[FB], 5) -- 设置总览工资格子为x个
     for t = 1, Maxt[FB] do
         local _, bb = BossNum(FB, 0, t)
         for b = 1, bb do

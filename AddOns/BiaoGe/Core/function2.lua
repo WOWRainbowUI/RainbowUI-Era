@@ -35,15 +35,15 @@ do
     local alpha2 = 1
 
     function BG.Tooltip_SetItemByID(itemID)
-        BiaoGeFilterTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-        BiaoGeFilterTooltip:ClearLines()
-        BiaoGeFilterTooltip:SetItemByID(itemID)
+        BiaoGeTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        BiaoGeTooltip:ClearLines()
+        BiaoGeTooltip:SetItemByID(itemID)
     end
 
     local function Get_G_key(text)
         for k, v in pairs(BG.FilterClassItemDB.ShuXing) do
             if text == v.name then
-                return v.value
+                return string.gsub(v.value, "%%s", "(.+)")
             end
         end
         return "!!!!!!!!"
@@ -95,8 +95,7 @@ do
         local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID
         if not num then return end
         for k, _ in pairs(BiaoGe.FilterClassItemDB[RealmId][player][num].ShuXing) do
-            local text = Get_G_key(k):gsub("%%s", "(.+)"):gsub("%%c", "") -- 删除字符里的%s%c（主要是因为力量词缀）
-
+            local text = Get_G_key(k)
             for _, v in pairs(BG.FilterClassItemDB.ShuXing) do
                 if k == v.name and v.nothave then
                     if strfind(TooltipText, text) then
@@ -365,6 +364,8 @@ do
         self.icon:SetTexture(Texture)
         -- 装绑图标
         BG.BindOnEquip(self, bindType)
+        -- 已拥有图标
+        BG.IsHave(self, true)
 
         local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID -- 隐藏
         if num ~= 0 then
@@ -544,12 +545,9 @@ do
     end
 end
 
-------------------创建：装绑的加一个绿色材质------------------
+------------------创建：装绑图标------------------
 function BG.BindOnEquip(bt, bindType, height)
-    if bt.bindingTex then
-        bt.bindingTex:Hide()
-    end
-    if bindType == 2 then
+    if not bt.bindingTex then
         local f = CreateFrame("Frame", nil, bt)
         f:SetSize(20, height or 20)
         f:SetPoint("RIGHT", 3, 0)
@@ -565,30 +563,58 @@ function BG.BindOnEquip(bt, bindType, height)
             GameTooltip:Show()
         end)
         BG.GameTooltip_Hide(f)
-        return f
+    end
+    if bindType == 2 then
+        bt.bindingTex:Show()
+    else
+        bt.bindingTex:Hide()
     end
 end
 
 ------------------创建：装等------------------
 function BG.LevelText(bt, level, typeID)
-    if bt.levelText then
-        bt.levelText:Hide()
-    end
-    if (typeID == 2 or typeID == 4) and level then
+    if not bt.levelText then
         local f = CreateFrame("Frame", nil, bt)
         f:SetPoint("RIGHT", 0, 0)
         f.text = f:CreateFontString()
+        f.text:SetFont(BIAOGE_TEXT_FONT, 11, "OUTLINE")
+        f.text:SetTextColor(RGB("A9A9A9", 0.8))
+        f:SetSize(f.text:GetWidth(), 20)
+        bt.levelText = f
+    end
+    if (typeID == 2 or typeID == 4) and level then
+        bt.levelText.text:ClearAllPoints()
         local x = -1
         if bt.bindingTex and bt.bindingTex:IsVisible() then
             x = -9
         end
-        f.text:SetPoint("RIGHT", x, 0)
-        f.text:SetFont(BIAOGE_TEXT_FONT, 11, "OUTLINE")
-        f.text:SetTextColor(RGB("A9A9A9", 0.8))
-        f.text:SetText(level)
-        f:SetSize(f.text:GetWidth(), 20)
-        bt.levelText = f
-        return f
+        bt.levelText.text:SetPoint("RIGHT", x, 0)
+        bt.levelText.text:SetText(level)
+        bt.levelText:Show()
+    else
+        bt.levelText:Hide()
+    end
+end
+
+------------------创建：已拥有（勾子）------------------
+function BG.IsHave(bt, isZhuangbeiList)
+    if not bt.isHaveTex then
+        local tex = bt:CreateTexture(nil, 'OVERLAY')
+        tex:SetSize(28, 28)
+        if isZhuangbeiList then
+            tex:SetPoint('LEFT', -10, 0)
+        else
+            tex:SetPoint('RIGHT', bt, 'LEFT', 0, 0)
+        end
+        tex:SetTexture("interface/raidframe/readycheck-ready")
+        bt.isHaveTex = tex
+    end
+
+    local itemID = GetItemInfoInstant(bt:GetText())
+    if itemID and BG.GetItemCount(itemID) ~= 0 then
+        bt.isHaveTex:Show()
+    else
+        bt.isHaveTex:Hide()
     end
 end
 
@@ -609,11 +635,9 @@ function BG.LootedText(bt)
     f.text:SetPoint("RIGHT")
     f.text:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
     f.text:SetTextColor(RGB(BG.dis))
-    -- f.text:SetTextColor(RGB(BG.g1))
     f.text:SetText(L["已掉落"])
     f:SetSize(f.text:GetWidth(), 15)
     bt.looted = f
-    return f
 end
 
 ------------------创建：关注------------------
@@ -1261,30 +1285,31 @@ do
         f:SetBackdropBorderColor(1, 0, 0, 1)
         f:SetPoint("TOPLEFT", bag, 0, 0)
         f:SetPoint("BOTTOMRIGHT", bag, 0, 0)
+        f:SetFrameLevel(bag:GetFrameLevel() + 10)
         tinsert(BG.LastBagItemFrame, f)
     end
 
-    function BG.HilightBag(biaogelink)
+    function BG.HiLightBag(biaogelink)
         if BiaoGe.options["HighOnterItem"] ~= 1 then return end
         if not GetItemID(biaogelink) then return end
-        if BG.BagAddon == "NDUI" then
+        if _G["NDui_BackpackSlot1"] then
             local i = 1
             while _G["NDui_BackpackSlot" .. i] do
                 local bag = _G["NDui_BackpackSlot" .. i]
                 local link = C_Container.GetContainerItemLink(bag.bagId, bag.slotId)
-                if GetItemID(link) == GetItemID(biaogelink) then
+                if link and GetItemID(link) == GetItemID(biaogelink) then
                     SetHlightBag(bag)
                 end
                 i = i + 1
             end
-        elseif BG.BagAddon == "EUI" then
+        elseif _G["ElvUI_ContainerFrame"] then
             local b = -1
             local i = 1
             while _G["ElvUI_ContainerFrameBag" .. b .. "Slot" .. i] do
                 while _G["ElvUI_ContainerFrameBag" .. b .. "Slot" .. i] do
                     local bag = _G["ElvUI_ContainerFrameBag" .. b .. "Slot" .. i]
                     local link = C_Container.GetContainerItemLink(bag.BagID, bag.SlotID)
-                    if GetItemID(link) == GetItemID(biaogelink) then
+                    if link and GetItemID(link) == GetItemID(biaogelink) then
                         SetHlightBag(bag)
                     end
                     i = i + 1
@@ -1292,12 +1317,12 @@ do
                 b = b + 1
                 i = 1
             end
-        elseif BG.BagAddon == "BIGFOOT" then
+        elseif _G["CombuctorFrame1"] then
             local i = 1
             while _G["CombuctorItem" .. i] do
                 local bag = _G["CombuctorItem" .. i]
                 local link = C_Container.GetContainerItemLink(bag:GetParent():GetID(), bag:GetID())
-                if GetItemID(link) == GetItemID(biaogelink) then
+                if link and GetItemID(link) == GetItemID(biaogelink) then
                     SetHlightBag(bag)
                 end
                 i = i + 1
@@ -1309,7 +1334,7 @@ do
                 while _G["ContainerFrame" .. b .. "Item" .. i] do
                     local bag = _G["ContainerFrame" .. b .. "Item" .. i]
                     local link = C_Container.GetContainerItemLink(bag:GetParent():GetID(), bag:GetID())
-                    if GetItemID(link) == GetItemID(biaogelink) then
+                    if link and GetItemID(link) == GetItemID(biaogelink) then
                         SetHlightBag(bag)
                     end
                     i = i + 1
@@ -1335,7 +1360,7 @@ do
                         f:SetBackdropBorderColor(1, 0, 0, 1)
                         f:SetPoint("TOPLEFT", zb, "TOPLEFT", -4, -2)
                         f:SetPoint("BOTTOMRIGHT", jine, "BOTTOMRIGHT", -2, 0)
-                        f:SetFrameLevel(112)
+                        f:SetFrameLevel(zb:GetFrameLevel() + 3)
                         tinsert(BG.LastBagItemFrame, f)
                     end
                 end
@@ -1343,7 +1368,7 @@ do
         end
     end
 
-    function BG.Hide_AllHilight()
+    function BG.Hide_AllHiLight()
         for key, value in pairs(BG.LastBagItemFrame) do
             value:Hide()
         end
@@ -1498,26 +1523,3 @@ function BG.CreateScrollFrame(parent, w, h)
 
     return f, child
 end
-
---[[
-function(t)
-    if t[1] then
-        return t[1]
-    elseif t[2] then
-        return t[2]
-    end
-    return t[1]
-end
-
-function(t)
-    if t[1] then
-        return t[1]
-    elseif t[3] then
-        return t[3]
-    elseif t[4] then
-        return t[4]
-    end
-    return t[2]
-end
-
- ]]
