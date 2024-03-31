@@ -1,1 +1,1 @@
-- Bug fix
+- Update compatibility
