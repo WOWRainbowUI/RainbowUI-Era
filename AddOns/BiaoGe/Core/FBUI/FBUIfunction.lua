@@ -206,6 +206,8 @@ local function OnTextChanged(self)
     BG.BindOnEquip(self, bindType)
     -- 在按钮右边增加装等显示
     BG.LevelText(self, level, typeID)
+    -- 已拥有图标
+    BG.IsHave(self)
 end
 function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
     local bt = CreateFrame("EditBox", nil, BG["Frame" .. FB], "InputBoxTemplate")
@@ -344,7 +346,7 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
 
                 HilightBiaoGeSaveItems(FB, itemID)
             end
-            BG.HilightBag(itemLink)
+            BG.HiLightBag(itemLink)
         end
     end)
     bt:SetScript("OnLeave", function(self)
@@ -356,7 +358,7 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
             end
             BG.HistoryJineFrame:Hide()
         end
-        BG.Hide_AllHilight()
+        BG.Hide_AllHiLight()
     end)
     -- 获得光标时
     bt:SetScript("OnEditFocusGained", function(self)

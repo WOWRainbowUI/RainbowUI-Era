@@ -205,7 +205,22 @@ function BG.HistoryUI()
         bt:SetScript("OnLeave", function(self)
             GameTooltip:Hide()
         end)
+
+        local updateFrame = CreateFrame("Frame")
+        updateFrame.timeElapsed = 0
+        BG.canSendBiaoGe = false
         bt:SetScript("OnClick", function(self)
+            BG.canSendBiaoGe = true
+            updateFrame.timeElapsed = 0
+            updateFrame:SetScript("OnUpdate", function(self, elapsed)
+                updateFrame.timeElapsed = updateFrame.timeElapsed + elapsed
+                if updateFrame.timeElapsed >= 300 then
+                    BG.canSendBiaoGe = false
+                    updateFrame.timeElapsed = 0
+                    updateFrame:SetScript("OnUpdate", nil)
+                end
+            end)
+
             FrameHide(2)
 
             local text = ""
@@ -375,7 +390,9 @@ function BG.HistoryUI()
                     end
                 end
             end
-            BG.FBMainFrame:Show()
+            if BiaoGe.lastFrame == "FB" then
+                BG.FBMainFrame:Show()
+            end
         end
 
         local bt = CreateFrame("Button", nil, BG.HistoryMainFrame)
@@ -505,7 +522,7 @@ function BG.HistoryUI()
                 for i, v in ipairs(BiaoGe.HistoryList[FB]) do
                     if i ~= BG.History.GaiMingNum then
                         if v[2] == text then
-                            SendSystemMessage(BG.BG() .. BG.STC_r1(L["不能使用该名字，因为跟其他历史表格重名！"]))
+                            SendSystemMessage(BG.BG .. BG.STC_r1(L["不能使用该名字，因为跟其他历史表格重名！"]))
                             return
                         end
                     end

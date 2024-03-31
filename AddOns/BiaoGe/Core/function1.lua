@@ -13,50 +13,12 @@ local HopeMaxb = ADDONSELF.HopeMaxb
 local HopeMaxi = ADDONSELF.HopeMaxi
 local Width = ADDONSELF.Width
 local Height = ADDONSELF.Height
+local RGB = ADDONSELF.RGB
 
 local pt = print
 local RealmId = GetRealmID()
 local player = UnitName("player")
 BG.After = C_Timer.After
-
-------------------函数：第几个BOSS------------------
-local function BossNum(FB, b, t)
-    local tbl
-    if FB == "ICC" then
-        tbl = { 0, 8, 14 }
-    elseif FB == "TOC" then
-        tbl = { 0, 5, 8 }
-    elseif FB == "ULD" then
-        tbl = { 0, 7, 13 }
-    elseif FB == "NAXX" and not BG.IsVanilla() then
-        tbl = { 0, 6, 12, 16 }
-    elseif FB == "BD" then
-        tbl = { 0, 5, 9 }
-    elseif FB == "Gno" then
-        tbl = { 0, 5, 8 }
-    elseif FB == "MC" then
-        tbl = { 0, 8, 12 }
-    elseif FB == "BWL" then
-        tbl = { 0, 5, 9 }
-    elseif FB == "ZUG" then
-        tbl = { 0, 6, 11 }
-    elseif FB == "AQL" then
-        tbl = { 0, 5, 8 }
-    elseif FB == "TAQ" then
-        tbl = { 0, 6, 10 }
-    elseif FB == "NAXX" and BG.IsVanilla() then
-        tbl = { 0, 6, 12, 16 }
-    end
-
-    local bb
-    if tbl[t + 1] then
-        bb = tbl[t + 1] - tbl[t]
-    else
-        bb = Maxb[FB] + 2 - tbl[t]
-    end
-    return b + tbl[t], bb
-end
-ADDONSELF.BossNum = BossNum
 
 ------------------函数：四舍五入------------------ 数字，小数点数
 local function Round(number, decimal_places)
@@ -206,8 +168,8 @@ end
 ------------------函数：仅提取链接文本------------------
 local function GetItemID(text)
     if not text then return end
-    local h_item = "item:(%d-):"
-    -- local h_item = "|Hitem:(%d-):"
+    local h_item = "item:(%d+):"
+    -- local h_item = "|Hitem:(%d+):"
     local item = tonumber(strmatch(text, h_item))
     return item
 end
@@ -499,11 +461,6 @@ function BG.DropDownListIsVisible(self)
     end
 end
 
-----------返回字符<BiaoGe>----------
-function BG.BG()
-    return BG.STC_b1("<BiaoGe> ")
-end
-
 ----------右键菜单切换开/关----------
 function BG.SetTextHighlightTexture(bt)
     local tex = bt:CreateTexture()
@@ -551,4 +508,25 @@ function BG.SecondsToTime(second)
     if s then
         return m .. L["秒"]
     end
+end
+
+----------是否已经拥有某物品----------
+function BG.GetItemCount(_itemID)
+    local itemID = _itemID
+    if not tonumber(_itemID) then
+        itemID = tonumber(_itemID:match("item:(%d+)"))
+    end
+    for _, FB in pairs(BG.FBtable) do
+        for itemID2, _ in pairs(BG.Loot[FB].ExchangeItems) do
+            if itemID == itemID2 then
+                for _, itemID3 in pairs(BG.Loot[FB].ExchangeItems[itemID2]) do
+                    local count = GetItemCount(itemID3)
+                    if count ~= 0 then
+                        return count
+                    end
+                end
+            end
+        end
+    end
+    return GetItemCount(itemID)
 end

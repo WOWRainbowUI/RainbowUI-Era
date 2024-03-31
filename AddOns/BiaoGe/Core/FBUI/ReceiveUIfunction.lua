@@ -104,6 +104,8 @@ function BG.ReceiveZhuangBeiUI(FB, t, b, bb, i, ii)
         BG.BindOnEquip(self, bindType)
         -- 在按钮右边增加装等显示
         BG.LevelText(self, level, typeID)
+        -- 已拥有图标
+        BG.IsHave(self)
     end)
     -- 发送装备到聊天输入框
     button:SetScript("OnMouseDown", function(self, enter)

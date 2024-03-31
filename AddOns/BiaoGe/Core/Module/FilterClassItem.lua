@@ -328,7 +328,7 @@ function BG.FilterClassItemUI()
         l:SetThickness(1.5)
 
         local buttons = {}
-        local width = pailie and f:GetWidth() or 65
+        local width = pailie and f:GetWidth() or 80
         local btheight = 25
         for i, v in ipairs(table) do
             local bt = CreateFrame("CheckButton", nil, f, "ChatConfigCheckButtonTemplate")
@@ -348,8 +348,7 @@ function BG.FilterClassItemUI()
                 f:SetHeight(f:GetHeight() + btheight)
             end
             buttons[i] = bt
-            local text = v.value
-            text = text:gsub("%%c%%d ", "")
+            local text = v.name2 or v.value
             text = text:gsub("%%s", "xx")
             bt.Text:SetText(text)
             bt.Text:SetWidth(width)
@@ -410,7 +409,7 @@ function BG.FilterClassItemUI()
         })
         f:SetBackdropColor(0, 0, 0, 0.8)
         f:SetBackdropBorderColor(GetClassRGB(nil, "player", 1))
-        f:SetWidth(500)
+        f:SetWidth(560)
         f:SetHeight(400)
         f:SetFrameLevel(290)
         f:SetPoint("CENTER", 100, 0)
@@ -557,7 +556,7 @@ function BG.FilterClassItemUI()
 
         f.icons = {}
         local height
-        local maxicon = 10
+        local maxicon = 12
         for i, iconpath in ipairs(BG.FilterClassItemDB.NewIcon) do
             local bt = CreateFrame("Button", nil, f)
             if i == 1 then

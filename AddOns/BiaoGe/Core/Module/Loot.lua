@@ -158,7 +158,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
 
     local function PrintLootBoss(FB, even, numb, text)
         if BiaoGe.options["autoLoot"] ~= 1 then return end
-        SendSystemMessage(BG.STC_b1("<BiaoGe>") .. " " .. text .. "，" .. L["当前装备自动记录位置："] ..
+        SendSystemMessage(BG.BG .. text .. "，" .. L["当前装备自动记录位置："] ..
             "|cff" .. BG.Boss[FB]["boss" .. numb].color .. BG.Boss[FB]["boss" .. numb].name2 .. RR)
     end
 
@@ -216,17 +216,33 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     end)
 
     -- 记录物品进表格
+    local function UpdateBiaoGeAllIsHaved()
+        BG.After(0.2, function()
+            BG.UpdateBiaoGeAllIsHaved()
+        end)
+    end
     local function AddLootItem(FB, numb, link, Texture, level, Hope, count)
         local itemID = GetItemInfoInstant(link)
         BG.Tooltip_SetItemByID(itemID)
 
         BG.After(0.1, function()
-            local icon = BG.LootFilterClassItem(link)
+            local icon
+            if BG.GetItemCount(itemID) ~= 0 then
+                icon = AddTexture("interface/raidframe/readycheck-ready")
+            else
+                icon = BG.LootFilterClassItem(link)
+            end
             for i = 1, Maxi[FB] do
                 local zb = BG.Frame[FB]["boss" .. numb]["zhuangbei" .. i]
                 local zb1 = BG.Frame[FB]["boss" .. numb]["zhuangbei" .. (i + 1)]
                 local duizhangzb = BG.DuiZhangFrame[FB]["boss" .. numb]["zhuangbei" .. i]
                 if zb and zb:GetText() == "" then
+                    if Hope then
+                        BiaoGe[FB]["boss" .. numb]["guanzhu" .. i] = true
+                        BG.Frame[FB]["boss" .. numb]["guanzhu" .. i]:Show()
+                        BG.FrameLootMsg:AddMessage(BG.STC_g2(format(L["自动关注心愿装备：%s。团长拍卖此装备时会提醒"],
+                            (AddTexture(Texture) .. link))))
+                    end
                     if count == 1 then
                         zb:SetText(link)
                         duizhangzb:SetText(link)
@@ -242,21 +258,17 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                             format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
                                 level, count, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
                     end
-                    if Hope then
-                        BiaoGe[FB]["boss" .. numb]["guanzhu" .. i] = true
-                        BG.Frame[FB]["boss" .. numb]["guanzhu" .. i]:Show()
-                        BG.FrameLootMsg:AddMessage(BG.STC_g2(format(L["自动关注心愿装备：%s。团长拍卖此装备时会提醒"],
-                            (AddTexture(Texture) .. link))))
-                    end
+                    -- UpdateBiaoGeAllIsHaved()
                     return
                 elseif zb and not zb1 then
-                    BG.FrameLootMsg:AddMessage(icon .. format(
-                        "|cffDC143C" .. L["自动记录失败：%s%s(%s)。因为%s< %s >%s的格子满了。。"], RR,
-                        (AddTexture(Texture) .. link), level, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
                     if Hope then
                         BG.FrameLootMsg:AddMessage(format("|cffDC143C" .. L["自动关注心愿装备失败：%s%s"],
                             RR, ((AddTexture(Texture) .. link))))
                     end
+                    BG.FrameLootMsg:AddMessage(icon .. format(
+                        "|cffDC143C" .. L["自动记录失败：%s%s(%s)。因为%s< %s >%s的格子满了。。"], RR,
+                        (AddTexture(Texture) .. link), level, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                    -- UpdateBiaoGeAllIsHaved()
                     return
                 end
             end
@@ -270,15 +282,28 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 local duizhangzb = BG.DuiZhangFrame[FB]["boss" .. b]["zhuangbei" .. i]
                 if zb then
                     if GetItemID(link) == GetItemID(zb:GetText()) then
+                        if Hope then
+                            BiaoGe[FB]["boss" .. b]["guanzhu" .. i] = true
+                            BG.Frame[FB]["boss" .. b]["guanzhu" .. i]:Show()
+                            BG.FrameLootMsg:AddMessage(BG.STC_g2(format(L["自动关注心愿装备：%s。团长拍卖此装备时会提醒"],
+                                (AddTexture(Texture) .. link))))
+                        end
+
                         count = count + (tonumber(strmatch(zb:GetText(), "|h%[.*%]|h|r[*xX%s]-(%d+)")) or 1)
                         zb:SetText(link .. "x" .. count)
                         duizhangzb:SetText(link .. "x" .. count)
                         BiaoGe[FB]["boss" .. b]["zhuangbei" .. i] = link .. "x" .. count
 
-                        local icon = BG.LootFilterClassItem(link)
+                        local icon
+                        if BG.GetItemCount(link) ~= 0 then
+                            icon = AddTexture("interface/raidframe/readycheck-ready")
+                        else
+                            icon = BG.LootFilterClassItem(link)
+                        end
                         BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
                             format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
                                 level, count, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"], RR) .. icon)
+                        -- UpdateBiaoGeAllIsHaved()
                         return
                     end
                 end
@@ -288,6 +313,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         if not yes then
             local numb = Maxb[FB] - 1
             AddLootItem(FB, numb, link, Texture, level, Hope, count)
+            -- UpdateBiaoGeAllIsHaved()
+            return
         end
     end
 

@@ -83,11 +83,22 @@ local function UpdatePrice(owneritemName, needitemID, tooltip)
     end
 end
 
+local jiange
 local function SetTooltipText(itemID, itemName, tooltip)
+    if jiange then return end
+    jiange = true
+    BG.After(0, function() jiange = false end)
     for _itemID, v in pairs(BG.CommerceAuthority) do
         _itemID = tonumber(_itemID)
         if _itemID == itemID then
             tooltip:AddLine(" ")
+            if v.needitem and IsAddOnLoaded("Auctionator") then
+                tooltip:AddDoubleLine("Loading", "Loading", 1, 0.82, 0, 1, 1, 1)
+                local item = Item:CreateFromItemID(v.needitem)
+                item:ContinueOnItemLoad(function()
+                    UpdatePrice(itemName, v.needitem, tooltip)
+                end)
+            end
             if v.usetoitem then
                 tooltip:AddDoubleLine(L["可用于"], "Loading", 1, 0.82, 0, 1, 1, 1)
                 tooltip:AddDoubleLine(L["需要数量"], v.needcount, 1, 0.82, 0, 1, 1, 1)
@@ -96,13 +107,7 @@ local function SetTooltipText(itemID, itemName, tooltip)
                     UpdateLink(itemName, v.usetoitem, tooltip)
                 end)
             end
-            if v.needitem and IsAddOnLoaded("Auctionator") then
-                tooltip:AddDoubleLine("Loading", "Loading", 1, 0.82, 0, 1, 1, 1)
-                local item = Item:CreateFromItemID(v.needitem)
-                item:ContinueOnItemLoad(function()
-                    UpdatePrice(itemName, v.needitem, tooltip)
-                end)
-            end
+
             tooltip:AddDoubleLine(L["金钱奖励"], GetMoneyString(v.moneygive), 1, 0.82, 0, 1, 1, 1)
             tooltip:AddDoubleLine(L["声望奖励"], v.fullgive, 1, 0.82, 0, 1, 1, 1)
 
@@ -137,6 +142,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
     -- 专业制造
     if addonName == "Blizzard_TradeSkillUI" then
         hooksecurefunc("TradeSkillFrame_Update", function()
+            if BiaoGe.options["commerceAuthorityTooltip"] ~= 1 then return end
             local numTradeSkills = GetNumTradeSkills()
             local skillOffset = FauxScrollFrame_GetOffset(TradeSkillListScrollFrame)
             for i = 1, TRADE_SKILLS_DISPLAYED, 1 do
@@ -160,6 +166,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end
         end)
         hooksecurefunc("TradeSkillFrame_SetSelection", function()
+            if BiaoGe.options["commerceAuthorityTooltip"] ~= 1 then return end
             if not TradeSkillFrame.selectedSkill then return end
             local link = GetTradeSkillItemLink(TradeSkillFrame.selectedSkill)
             if link then
@@ -209,3 +216,36 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         end)
     end
 end)
+
+----------拍卖行的搜索框总是删除"遭劫货物："----------
+do
+    local function SearchItem(text)
+        if AuctionatorShoppingFrame and AuctionatorShoppingFrame:IsVisible() then
+            local name = GetItemInfo(text)
+            if strfind(name, L["遭劫货物"]) then
+                name = "\"" .. name:gsub(L["遭劫货物"] .. "[:：]*", "") .. "\""
+                AuctionatorShoppingFrame:DoSearch({ name }, {})
+                AuctionatorShoppingFrame.SearchOptions:SetSearchTerm(name)
+                Auctionator.Shopping.Recents.Save(name)
+            end
+        end
+    end
+    local function SetSearchName(text)
+        if BrowseName and BrowseName:IsVisible() then
+            local name = GetItemInfo(text);
+            if strfind(name, L["遭劫货物"]) then
+                name = "\"" .. name:gsub(L["遭劫货物"] .. "[:：]*", "") .. "\""
+                BrowseName:SetText(name)
+            end
+        end
+    end
+    hooksecurefunc(_G, "ChatEdit_InsertLink", function(text)
+        if BiaoGe.options["commerceAuthorityTooltip"] ~= 1 then return end
+        if strfind(text, "item:", 1, true) then
+            BG.After(0, function()
+                SearchItem(text)
+                SetSearchName(text)
+            end)
+        end
+    end)
+end

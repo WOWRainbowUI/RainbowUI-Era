@@ -92,24 +92,7 @@ local function FiltertHard(FB, hard, ii) -- 过滤不存在的副本难度
     end
 end
 local function CheckHaved(itemID) -- 是否已经拥有该装备
-    -- 检查身上
-    for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
-        local _itemID = GetInventoryItemID("player", slot)
-        if _itemID == itemID then
-            return true
-        end
-    end
-
-    -- 检查背包
-    for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-        local numSlots = C_Container.GetContainerNumSlots(bagID)
-        for slotIndex = 1, numSlots do
-            local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
-            if _itemID == itemID then
-                return true
-            end
-        end
-    end
+    if BG.GetItemCount(itemID) ~= 0 then return true end
 end
 local function AddPrice(itemID) -- 添加装备拍卖行价格
     local m
@@ -131,19 +114,26 @@ local function GetFBtable() -- 对本阶段执行还是全阶段
         return { BG.FB1 }
     end
 end
-local function CheackExchangeItems(FB, itemID) -- 兑换物
-    for exitem, v in pairs(BG.Loot[FB].ExchangeItems) do
-        for _, _item in pairs(v) do
-            if itemID == _item then
-                local _, link = GetItemInfo(exitem)
-                if link then
-                    return " " .. link
-                end
+local function GetkExchangeItem(itemID, FB) -- 获取兑换物对应物品的ID
+    local FB = FB or BG.FB1
+    for exItemID, v in pairs(BG.Loot[FB].ExchangeItems) do
+        for _, _itemID in pairs(BG.Loot[FB].ExchangeItems[exItemID]) do
+            if itemID == _itemID then
+                local _, exItemLink = GetItemInfo(exItemID)
+                return exItemID, exItemLink
             end
         end
     end
+end
+local function CheackExchangeItems(itemID, FB) -- 兑换物
+    local FB = FB or BG.FB1
+    local exItemID, exItemLink = GetkExchangeItem(itemID, FB)
+    if exItemID and exItemLink then
+        return " " .. exItemLink
+    end
     return ""
 end
+
 local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重点
     local name, link, quality, level, _, _, _, _, EquipLoc, Texture, _, typeID, subclassID, bindType = GetItemInfo(itemID)
     if not link then return end
@@ -175,7 +165,8 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
         end
 
         -- 兑换物
-        local exchangeItems = CheackExchangeItems(FB, itemID)
+        local exchangeItems = CheackExchangeItems(itemID, FB)
+        local exItemID, exItemLink = GetkExchangeItem(itemID)
 
         if BG.IsVanilla() then
             get = color .. BG.GetFBinfo(FB, "localName") .. " " .. bossname .. exchangeItems .. AddPrice(itemID)
@@ -183,10 +174,10 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             get = color .. FB .. " " .. hard .. " " .. bossname .. exchangeItems .. AddPrice(itemID)
         end
 
-        -- 团本正常掉落
-        local isRaid
-        if not otherID then
-            isRaid = true
+        -- 团本正常掉落/兑换物（比如套装）
+        local isRaid = true
+        if otherID and exchangeItems == "" then
+            isRaid = false
         end
 
         local players
@@ -201,12 +192,16 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             for b = 1, HopeMaxb[FB] do
                 for i = 1, HopeMaxi do
                     if BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] then
+                        local itemID = exItemID or itemID
                         if itemID == GetItemID(BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]:GetText()) then
                             hope = true
+                            break
                         end
                     end
                 end
+                if hope then break end
             end
+            if hope then break end
         end
 
         local a = {
@@ -251,7 +246,7 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
         end
 
         -- 兑换物
-        local exchangeItems = CheackExchangeItems(FB, itemID)
+        local exchangeItems = CheackExchangeItems(itemID, FB)
 
         -- 是否职业任务
         if classID then
@@ -491,7 +486,7 @@ local function Mode(FB, count1, count2, tbl, EquipLocs, itemID, type, hard, ii, 
         if GetItemInfo(itemID) then
             count2 = count2 + 1
             -- else
-            --     pt(itemID) -- 用于查看哪些装备ID是错误的
+            --     pt(itemID)     -- 用于查看哪些装备ID是错误的
         end
 
         local item = Item:CreateFromItemID(itemID)
@@ -505,6 +500,7 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
     local tbl = {}
     local count1 = 0
     local count2 = 0
+    local hard, ii, k
     for _, FB in pairs(GetFBtable()) do
         -- 团本
         for _, hard in ipairs(hards) do
@@ -849,6 +845,8 @@ local function SetItemLib(num, itemtbale)
             end
             right = f
             f.num = ii
+            f.itemID = GetItemInfoInstant(vv.link)
+            f.itemLink = vv.link
             BG.ItemLibMainFrame[num].buttoncount = ii
             f.Text = f:CreateFontString()
             f.Text:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
@@ -889,20 +887,50 @@ local function SetItemLib(num, itemtbale)
                     if BG.ItemLibMainFrame[num]["button" .. ii].item.hope:IsVisible() then return end
                     local itemID = GetItemInfoInstant(vv.link)
                     local nandu, boss, FB, isRaid = vv.hardnum, vv.i, vv.FB, vv.isRaid
-                    if not (isRaid and nandu and boss and FB) then
+
+                    if not (isRaid and nandu and boss and FB) and not ex then
                         UIErrorsFrame:AddMessage(L["只能设置团本BOSS正常掉落的装备为心愿"], RED_FONT_COLOR:GetRGB())
                         return
                     end
 
-                    for i = 1, HopeMaxi do
-                        if BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:GetText() == "" then
-                            BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:SetText(vv.link)
-                            BiaoGe.Hope[RealmId][player][FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] = vv.link
-                            BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
-                            if FB == BG.FB1 then
-                                BG.UpdateItemLib_RightHope(itemID, 1)
+                    local exItemID, exItemLink = GetkExchangeItem(itemID)
+
+                    if exItemID and exItemLink then
+                        for k1, v1 in pairs(BG.Loot[FB]) do
+                            if type(v1) == "table" then
+                                for k2, v2 in pairs(BG.Loot[FB][k1]) do -- BG.Loot.Gno.N
+                                    if type(v2) == "table" and type(k2) == "string" then
+                                        local boss = tonumber(k2:match("^boss(%d+)"))
+                                        if boss then
+                                            for k3, v3 in pairs(BG.Loot[FB][k1][k2]) do -- BG.Loot.Gno.N.boss1
+                                                if v3 == exItemID then
+                                                    for i = 1, HopeMaxi do
+                                                        if BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:GetText() == "" then
+                                                            BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:SetText(exItemLink)
+                                                            BiaoGe.Hope[RealmId][player][FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] = exItemLink
+                                                            BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
+                                                            BG.UpdateItemLib_LeftHope_All()
+                                                            return
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
                             end
-                            return
+                        end
+                    else
+                        for i = 1, HopeMaxi do
+                            if BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:GetText() == "" then
+                                BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:SetText(vv.link)
+                                BiaoGe.Hope[RealmId][player][FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] = vv.link
+                                BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
+                                if FB == BG.FB1 then
+                                    BG.UpdateItemLib_RightHope(itemID, 1)
+                                end
+                                return
+                            end
                         end
                     end
                     UIErrorsFrame:AddMessage(L["不能设置为心愿，因为该BOSS的心愿格子已满"], RED_FONT_COLOR:GetRGB())
@@ -913,10 +941,10 @@ local function SetItemLib(num, itemtbale)
 
             f:SetScript("OnEnter", function(self)
                 if self.onenter and i ~= 3 then
-                    BiaoGeFilterTooltip2:SetOwner(self, "ANCHOR_TOPRIGHT", 0, 0)
-                    BiaoGeFilterTooltip2:ClearLines()
-                    BiaoGeFilterTooltip2:AddLine(self.onenter, 1, 1, 1, false)
-                    BiaoGeFilterTooltip2:Show()
+                    BiaoGeTooltip2:SetOwner(self, "ANCHOR_TOPRIGHT", 0, 0)
+                    BiaoGeTooltip2:ClearLines()
+                    BiaoGeTooltip2:AddLine(self.onenter, 1, 1, 1, false)
+                    BiaoGeTooltip2:Show()
                 end
                 local itemID = GetItemInfoInstant(vv.link)
                 if BG.ButtonIsInRight(BG.MainFrame, 0.67) then
@@ -931,20 +959,20 @@ local function SetItemLib(num, itemtbale)
             end)
             f:SetScript("OnLeave", function(self)
                 GameTooltip:Hide()
-                BiaoGeFilterTooltip2:Hide()
+                BiaoGeTooltip2:Hide()
                 BG.ItemLibMainFrame[num]["button" .. ii].ds:Hide()
             end)
 
             if i == 3 and vv.bindType == 2 then -- 装绑
-                local bt = BG.BindOnEquip(f, vv.bindType, f:GetHeight())
-                bt:SetScript("OnEnter", function(self)
-                    BiaoGeFilterTooltip2:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
-                    BiaoGeFilterTooltip2:ClearLines()
-                    BiaoGeFilterTooltip2:AddLine(L["装绑"], 1, 1, 1, true)
-                    BiaoGeFilterTooltip2:Show()
+                BG.BindOnEquip(f, vv.bindType, f:GetHeight())
+                f.bindingTex:SetScript("OnEnter", function(self)
+                    BiaoGeTooltip2:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+                    BiaoGeTooltip2:ClearLines()
+                    BiaoGeTooltip2:AddLine(L["装绑"], 1, 1, 1, true)
+                    BiaoGeTooltip2:Show()
                     f:GetScript("OnEnter")(f)
                 end)
-                bt:SetScript("OnLeave", function(self)
+                f.bindingTex:SetScript("OnLeave", function(self)
                     f:GetScript("OnLeave")(f)
                 end)
             end
@@ -967,12 +995,18 @@ local function SetItemLib(num, itemtbale)
                 frame:SetWidth(t:GetWrappedWidth())
 
                 frame:SetScript("OnEnter", function(self)
-                    BiaoGeFilterTooltip2:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
-                    BiaoGeFilterTooltip2:ClearLines()
-                    BiaoGeFilterTooltip2:AddLine(BG.STC_g1(L["心愿装备"]), 1, 1, 1, true)
-                    BiaoGeFilterTooltip2:AddLine(L["掉落后会提醒"], 1, 1, 1, true)
-                    BiaoGeFilterTooltip2:AddLine(L["右键取消心愿装备"], 1, 0.82, 0, true)
-                    BiaoGeFilterTooltip2:Show()
+                    BiaoGeTooltip2:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+                    BiaoGeTooltip2:ClearLines()
+                    BiaoGeTooltip2:AddLine(BG.STC_g1(L["心愿装备"]), 1, 1, 1, true)
+                    local itemID = f.itemID
+                    local exItemID, exItemLink = GetkExchangeItem(itemID)
+                    if exItemLink then
+                        BiaoGeTooltip2:AddLine(exItemLink .. L["掉落后会提醒"], 1, 1, 1, true)
+                    else
+                        BiaoGeTooltip2:AddLine(L["掉落后会提醒"], 1, 1, 1, true)
+                    end
+                    BiaoGeTooltip2:AddLine(L["右键取消心愿装备"], 1, 0.82, 0, true)
+                    BiaoGeTooltip2:Show()
                     f:GetScript("OnEnter")(f)
                 end)
                 frame:SetScript("OnLeave", function(self)
@@ -984,6 +1018,7 @@ local function SetItemLib(num, itemtbale)
                         local itemID = GetItemInfoInstant(vv.link)
                         BG.UpdateItemLib_RightHope(itemID, 0)
                         BG.UpdateHopeFrame_Hope(itemID, 0)
+                        BG.UpdateItemLib_LeftHope_All()
                     end
                 end)
             end
@@ -1113,8 +1148,16 @@ do
         local count = BG.ItemLibMainFrame[num].buttoncount
         if count then
             for ii = 1, count do
-                local _itemID = GetItemID(BG.ItemLibMainFrame[num]["button" .. ii].item.Text:GetText())
-                if itemID == _itemID then
+                local _itemID = BG.ItemLibMainFrame[num]["button" .. ii].itemID
+
+                local isExItem
+
+                local exItemID, exItemLink = GetkExchangeItem(_itemID)
+                if itemID == exItemID then
+                    isExItem = true
+                end
+
+                if itemID == _itemID or isExItem then
                     if ShoworHide == 1 then
                         BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
                     else
@@ -1145,7 +1188,12 @@ do
         end
     end
 
-    function BG.UpdateHopeFrame_Hope(itemID, ShoworHide) -- 更新心愿清单，ShoworHide：1为添加装备，0为删除装备
+    function BG.UpdateHopeFrame_Hope(itemID, ShoworHide) -- 更新心愿清单，ShoworHide：1为添加装备，0为删除装备（该函数用于删除心愿清单）
+        local exItemID, exItemLink = GetkExchangeItem(itemID)
+        if exItemID then
+            itemID = exItemID
+        end
+
         for _, FB in pairs(GetFBtable()) do
             if ShoworHide == 0 then
                 for n = 1, HopeMaxn[FB] do
@@ -1166,6 +1214,7 @@ do
 
     function BG.UpdateItemLib_LeftHope_All()
         BG.UpdateItemLib_LeftHope_HideAll()
+
         for _, FB in pairs(GetFBtable()) do
             for n = HopeMaxn[FB], 1, -1 do
                 for b = HopeMaxb[FB], 1, -1 do
@@ -1204,34 +1253,9 @@ do
     function BG.Update_IsHaved(bt)
         local itemID = GetItemID(bt:GetText())
         if itemID then
-            -- 历遍装备栏
-            local yes
-            for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
-                local _itemID = GetInventoryItemID("player", slot)
-                if itemID == _itemID then
-                    bt.haved:Show()
-                    yes = true
-                    break
-                end
-            end
-            -- 历遍背包
-            if not yes then
-                for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-                    local numSlots = C_Container.GetContainerNumSlots(bagID)
-                    for slotIndex = 1, numSlots do
-                        local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
-                        if itemID == _itemID then
-                            bt.haved:Show()
-                            yes = true
-                            break
-                        end
-                    end
-                    if yes then
-                        break
-                    end
-                end
-            end
-            if not yes then
+            if BG.GetItemCount(itemID) ~= 0 then
+                bt.haved:Show()
+            else
                 bt.haved:Hide()
             end
         else
@@ -1246,34 +1270,9 @@ do
             for i = 1, count do
                 local item = BG.ItemLibMainFrame[num]["button" .. i].item
                 local itemID = BG.ItemLibMainFrame[num]["button" .. i].itemID
-                -- 历遍装备栏
-                local yes
-                for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do
-                    local _itemID = GetInventoryItemID("player", slot)
-                    if itemID == _itemID then
-                        item.haved:Show()
-                        yes = true
-                        break
-                    end
-                end
-                -- 历遍背包
-                if not yes then
-                    for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-                        local numSlots = C_Container.GetContainerNumSlots(bagID)
-                        for slotIndex = 1, numSlots do
-                            local _itemID = C_Container.GetContainerItemID(bagID, slotIndex)
-                            if itemID == _itemID then
-                                item.haved:Show()
-                                yes = true
-                                break
-                            end
-                        end
-                        if yes then
-                            break
-                        end
-                    end
-                end
-                if not yes then
+                if BG.GetItemCount(itemID) ~= 0 then
+                    item.haved:Show()
+                else
                     item.haved:Hide()
                 end
             end

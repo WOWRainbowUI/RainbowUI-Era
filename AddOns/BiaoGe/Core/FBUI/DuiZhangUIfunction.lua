@@ -109,6 +109,8 @@ local function OnTextChanged(self)
     BG.BindOnEquip(self, bindType)
     -- 在按钮右边增加装等显示
     BG.LevelText(self, level, typeID)
+    -- 已拥有图标
+    BG.IsHave(self)
 end
 function BG.DuiZhangZhuangBeiUI(FB, t, b, bb, i, ii)
     local button = CreateFrame("EditBox", nil, BG["DuiZhangFrame" .. FB], "InputBoxTemplate");
