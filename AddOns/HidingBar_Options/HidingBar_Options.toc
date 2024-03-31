@@ -1,7 +1,7 @@
-## Interface: 11500
+## Interface: 11501
 ## Title: HidingBar Options
 ## Author: sfmict
-## Version: v1.15.4
+## Version: v1.15.7
 ## IconTexture: Interface\AddOns\HidingBar\media\icon
 ## Notes: HidingBar Options
 ## LoadOnDemand: 1
