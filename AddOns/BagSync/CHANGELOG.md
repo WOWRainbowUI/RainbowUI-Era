@@ -1,7 +1,10 @@
 # BagSync
 
-## [v19.26](https://github.com/Xruptor/BagSync/tree/v19.26) (2024-02-16)
-[Full Changelog](https://github.com/Xruptor/BagSync/compare/v19.25...v19.26) [Previous Releases](https://github.com/Xruptor/BagSync/releases)
+## [v19.32](https://github.com/Xruptor/BagSync/tree/v19.32) (2024-03-23)
+[Full Changelog](https://github.com/Xruptor/BagSync/compare/v19.31...v19.32) [Previous Releases](https://github.com/Xruptor/BagSync/releases)
 
-- DB Check Fix  
-    * Removed an old DB refresh check that was used to check for older database formats.  It was causing issues with those whom were using symlinks to combine multiple accounts together.  (Fixed #324)  
+- TOC Update  
+    * Boy I love TOC Updates!  They are the best thing about being a WOW Addon Developer!  *facepalm*  
+- Merge pull request #329 from nanjuekaien1/patch-61  
+    Update BagSync.toc  
+- Update BagSync.toc  

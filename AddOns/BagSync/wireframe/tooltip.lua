@@ -232,6 +232,8 @@ function Tooltip:ColorizeUnit(unitObj, bypass, forceRealm, forceXRBNET, tagAtEnd
 	end
 	----------------
 
+	local addStr = ""
+
 	if BSYC.options.enableRealmNames then
 		realm = unitObj.realm
 	elseif BSYC.options.enableRealmAstrickName then
@@ -244,7 +246,14 @@ function Tooltip:ColorizeUnit(unitObj, bypass, forceRealm, forceXRBNET, tagAtEnd
 		realm = ""
 	end
 
-	local addStr = ""
+	if BSYC.options.enableCurrentRealmName and unitObj.realm == _G.GetRealmName() then
+		realm = unitObj.realm
+		if BSYC.options.enableCurrentRealmShortName then
+			realm = string.sub(realm, 1, 5)
+		end
+		addStr = self:HexColor(BSYC.colors.currentrealm, "["..realm.."]")
+	end
+
 	local delimiter = (realm ~= "" and " ") or ""
 
 	if not unitObj.isXRGuild then
@@ -267,6 +276,7 @@ function Tooltip:ColorizeUnit(unitObj, bypass, forceRealm, forceXRBNET, tagAtEnd
 		realm = (string.len(realm) > 1 and realm) or "" --lets make sure we have more than just an asterick for the realm name otherwiose it would be [+] we want [+]
 		addStr = self:HexColor(BSYC.colors.cr, "[+"..realmTag..realm.."]")
 	end
+
 	--add the tags if we have anything to work with
 	if addStr ~= "" then
 		if tagAtEnd then
@@ -638,8 +648,8 @@ function Tooltip:TallyUnits(objTooltip, link, source, isBattlePet)
 	if not CanAccessObject(objTooltip) then return end
 	if Scanner.isScanningGuild then return end --don't tally while we are scanning the Guildbank
 
-	--check for modifier option
-	if not self:CheckModifier() then return end
+	--check for modifier option only in windows that isn't BagSync search
+	if not self:CheckModifier() and not objTooltip.isBSYCSearch then return end
 
 	local showQTip = Tooltip:QTipCheck(source, isBattlePet)
 	local skipTally = false
@@ -750,7 +760,7 @@ function Tooltip:TallyUnits(objTooltip, link, source, isBattlePet)
 		--NOTE: This cache check is ONLY for units (guild, players) that isn't related to the current player.  Since that data doesn't really change we can cache those lines
 		--For the player however, we always want to grab the latest information.  So once it's grabbed we can do a small local cache for that using __lastTally
 		--Advanced Searches should always be processed and not stored in the cache
-		if turnOffCache or advUnitList or not Data.__cache.tooltip[origLink] then
+		if turnOffCache or advUnitList or (not Data.__cache.tooltip[origLink] and not BSYC.options.showCurrentPlayerOnly) then
 
 			--allow advance search matches if found, no need to set to true as advUnitList will default to dumpAll if found
 			for unitObj in Data:IterateUnits(false, advUnitList) do
@@ -796,7 +806,7 @@ function Tooltip:TallyUnits(objTooltip, link, source, isBattlePet)
 				Data.__cache.tooltip[origLink].unitList = (grandTotal > 0 and CopyTable(unitList)) or {}
 				Data.__cache.tooltip[origLink].grandTotal = grandTotal
 			end
-		elseif Data.__cache.tooltip[origLink] then
+		elseif Data.__cache.tooltip[origLink] and not BSYC.options.showCurrentPlayerOnly then
 			--use the cached results from previous DB searches, copy the table don't reference it, 
 			--otherwise we will add to it unintentially below with player data using table.insert()
 			unitList = CopyTable(Data.__cache.tooltip[origLink].unitList)
@@ -994,6 +1004,10 @@ end
 function Tooltip:CurrencyTooltip(objTooltip, currencyName, currencyIcon, currencyID, source)
 	Debug(BSYC_DL.INFO, "CurrencyTooltip", currencyName, currencyIcon, currencyID, source, BSYC.tracking.currency)
 	if not BSYC.tracking.currency then return end
+	if not BSYC.options.enableCurrencyWindowTooltipData and source ~= "bagsync_currency" then return end
+
+	--check for modifier option
+	if not self:CheckModifier() and source ~= "bagsync_currency" then return end
 
 	currencyID = tonumber(currencyID) --make sure it's a number we are working with and not a string
 	if not currencyID then return end
@@ -1003,19 +1017,26 @@ function Tooltip:CurrencyTooltip(objTooltip, currencyName, currencyIcon, currenc
 	--loop through our characters
 	local usrData = {}
 
-	local permIgnore ={
-		[2032] = "Trader's Tender", --shared across all characters
-	}
-	if permIgnore[currencyID] then return end
+	-- local permIgnore ={
+	-- 	[2032] = "Trader's Tender", --shared across all characters
+	-- }
+	--if permIgnore[currencyID] then return end
+
+	local tenderCheck = false
 
 	for unitObj in Data:IterateUnits() do
 		if not unitObj.isGuild and unitObj.data.currency and unitObj.data.currency[currencyID] and unitObj.data.currency[currencyID].count > 0 then
-			table.insert(usrData, {
-				unitObj=unitObj,
-				colorized=self:ColorizeUnit(unitObj),
-				sortIndex=self:GetSortIndex(unitObj),
-				count=unitObj.data.currency[currencyID].count
-			})
+			--check for "Trader's Tender" which is currencyID 2032.  Only display it once for the current player.
+			--that currency is account-wide.
+			if currencyID ~= 2032 or (currencyID == 2032 and not tenderCheck and unitObj.data == BSYC.db.player) then
+				table.insert(usrData, {
+					unitObj=unitObj,
+					colorized=self:ColorizeUnit(unitObj),
+					sortIndex=self:GetSortIndex(unitObj),
+					count=unitObj.data.currency[currencyID].count
+				})
+				if currencyID == 2032 and unitObj.data == BSYC.db.player then tenderCheck = true end
+			end
 		end
 	end
 
@@ -1037,6 +1058,11 @@ function Tooltip:CurrencyTooltip(objTooltip, currencyName, currencyIcon, currenc
 	end
 	if #usrData <= 0 then
 		table.insert(displayList, {NONE, " "})
+	end
+
+	--this is for trader tenders since they are account wide, only add them once
+	if currencyID == 2032 then
+		table.insert(displayList, {"|cffff7d0a["..L.DisplayTooltipAccountWide.."]|r", " "})
 	end
 
 	if BSYC.options.enableTooltipItemID and currencyID then

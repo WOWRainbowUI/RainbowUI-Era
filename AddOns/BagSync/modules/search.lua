@@ -187,6 +187,40 @@ function Search:OnEnable()
 	savedSearch.addSavedBtn:SetPoint("BOTTOM", savedSearch, "BOTTOM", 0, 5)
 	savedSearch.addSavedBtn:SetScript("OnClick", function() Search:SavedSearch_AddItem() end)
 
+	--Modules Button (credit to LibDBIcon-1.0.lua for initial button design)
+	searchFrame.modulesButton = _G.CreateFrame("Button", nil, searchFrame)
+	searchFrame.modulesButton:SetSize(31, 31)
+	searchFrame.modulesButton:RegisterForClicks("anyUp")
+	searchFrame.modulesButton:SetHighlightTexture(136477) --"Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight"
+	searchFrame.modulesButton:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 0, 0)
+	searchFrame.modulesButton:SetScript("OnClick", function() if BSYC.bgsMinimapDD then ToggleDropDownMenu(1, nil, BSYC.bgsMinimapDD, 'cursor', 0, 0) end end)
+
+	local modulesButtonOverlay = searchFrame.modulesButton:CreateTexture(nil, "OVERLAY")
+	local modulesButtonBG = searchFrame.modulesButton:CreateTexture(nil, "BACKGROUND")
+	local modulesButtonIcon = searchFrame.modulesButton:CreateTexture(nil, "ARTWORK")
+
+	if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+		modulesButtonOverlay:SetSize(50, 50)
+		modulesButtonOverlay:SetTexture(136430) --"Interface\\Minimap\\MiniMap-TrackingBorder"
+		modulesButtonOverlay:SetPoint("TOPLEFT", searchFrame.modulesButton, "TOPLEFT", 0, 0)
+		modulesButtonBG:SetSize(24, 24)
+		modulesButtonBG:SetTexture(136467) --"Interface\\Minimap\\UI-Minimap-Background"
+		modulesButtonBG:SetPoint("CENTER", searchFrame.modulesButton, "CENTER", 0, 1)
+		modulesButtonIcon:SetSize(18, 18)
+		modulesButtonIcon:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
+		modulesButtonIcon:SetPoint("CENTER", searchFrame.modulesButton, "CENTER", 0, 1)
+	else
+		modulesButtonOverlay:SetSize(53, 53)
+		modulesButtonOverlay:SetTexture(136430) --"Interface\\Minimap\\MiniMap-TrackingBorder"
+		modulesButtonOverlay:SetPoint("TOPLEFT")
+		modulesButtonBG:SetSize(20, 20)
+		modulesButtonBG:SetTexture(136467) --"Interface\\Minimap\\UI-Minimap-Background"
+		modulesButtonBG:SetPoint("TOPLEFT", 7, -5)
+		modulesButtonIcon:SetSize(17, 17)
+		modulesButtonIcon:SetTexture("Interface\\AddOns\\BagSync\\media\\icon")
+		modulesButtonIcon:SetPoint("TOPLEFT", 7, -6)
+	end
+
 	searchFrame:Hide() --important
 end
 
