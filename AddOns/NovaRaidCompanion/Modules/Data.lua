@@ -622,7 +622,7 @@ function NRC:receivedString(cmd, dataReceived, sender, distribution)
 										local cooldownName, spellName, _, spellTableName = NRC:getCooldownFromSpellID(spellID);
 										--Strip realm from sender for realm check.
 										local name, realm = strsplit("-", sender, 2);
-										if (realm ~= NRC.realm) then
+										if (realm ~= NRC.realm and realm ~= GetNormalizedRealmName()) then
 											--Talents are stored without realm name for people on same realm.
 											--If not same realm then add it.
 											name = name .. "-" .. realm;
@@ -641,7 +641,7 @@ function NRC:receivedString(cmd, dataReceived, sender, distribution)
 											NRC.data.raidCooldowns[guid][cooldownName].spellID = spellID;
 											NRC.data.raidCooldowns[guid][cooldownName].destName = destName;
 											NRC.data.raidCooldowns[guid][cooldownName].destClass = destClass;
-											NRC:pushCastCache(guid, cooldownName, destName, destClass)
+											NRC:pushCastCache(guid, cooldownName, destName, destClass, spellID);
 											local realName = NRC:getCooldownFromSpellID(spellID);
 											if (destGUID and realName == "Soulstone" and NRC:inOurGroup(destGUID)) then
 												NRC:soulstoneAdded(destGUID, GetServerTime() + soulstoneDuration);
@@ -669,8 +669,8 @@ function NRC:receivedString(cmd, dataReceived, sender, distribution)
 							endTime = GetServerTime() + cooldown;
 						end
 						--Strip realm from sender for realm check.
-						local name, realm = strsplit(sender, "-", 2);
-						if (realm ~= NRC.realm) then
+						local name, realm = strsplit("-", sender, 2);
+						if (realm ~= NRC.realm and realm ~= GetNormalizedRealmName()) then
 							--Talents are stored without realm name for people on same realm.
 							--If not same realm then add it.
 							name = name .. "-" .. realm;
@@ -687,6 +687,7 @@ function NRC:receivedString(cmd, dataReceived, sender, distribution)
 						NRC.data.raidCooldowns[guid][cooldownName].spellID = spellID;
 						NRC.data.raidCooldowns[guid][cooldownName].destName = destName;
 						NRC.data.raidCooldowns[guid][cooldownName].destClass = destClass;
+						NRC:pushCooldownCastDetect(guid, name, spellName, spellID);
 					end
 				end
 			end
@@ -951,7 +952,7 @@ end
 
 function NRC:receivedRes(data, sender, distribution)
 	local name, realm = strsplit("-", sender, 2);
-	if (realm == NRC.realm) then
+	if (realm == NRC.realm or realm == GetNormalizedRealmName()) then
 		sender = name;
 	end
 	--NRC:debug("received res update from", sender);
@@ -1036,7 +1037,7 @@ end
 
 function NRC:receivedEnchants(data, sender, distribution)
 	local name, realm = strsplit("-", sender, 2);
-	if (realm == NRC.realm) then
+	if (realm == NRC.realm or realm == GetNormalizedRealmName()) then
 		sender = name;
 	end
 	--NRC:debug("received weapon enchant update from", sender);
@@ -1134,7 +1135,7 @@ end
 
 function NRC:receivedTalents(data, sender, distribution)
 	local name, realm = strsplit("-", sender, 2);
-	if (realm == NRC.realm) then
+	if (realm == NRC.realm or realm == GetNormalizedRealmName()) then
 		sender = name;
 	end
 	--NRC:debug("received talents update from", sender);
@@ -1164,7 +1165,7 @@ function NRC:sendGlyphs(sender)
 	local data = NRC.serializer:Serialize(glyphs);
 	if (sender) then
 		local name, realm = strsplit("-", sender, 2);
-		if (realm == NRC.realm) then
+		if (realm == NRC.realm or realm == GetNormalizedRealmName()) then
 			sender = name;
 		end
 		NRC:sendComm("WHISPER", "glyrec " .. NRC.version .. " " .. data, sender);
@@ -1177,7 +1178,7 @@ end
 
 function NRC:receivedGlyphs(data, sender, distribution, isWhisper)
 	local name, realm = strsplit("-", sender, 2);
-	if (realm == NRC.realm) then
+	if (realm == NRC.realm or realm == GetNormalizedRealmName()) then
 		sender = name;
 	end
 	NRC:debug("received glyphs update from", sender);
@@ -1274,7 +1275,7 @@ end
 --If it comes included with other data in NRC:receivedData() then it's already deserialized.
 function NRC:receivedRaidData(data, sender, distribution, alreadyDeserialized)
 	local name, realm = strsplit("-", sender, 2);
-	if (realm == NRC.realm) then
+	if (realm == NRC.realm or realm == GetNormalizedRealmName()) then
 		sender = name;
 	end
 	--NRC:debug("received raid update from", sender);

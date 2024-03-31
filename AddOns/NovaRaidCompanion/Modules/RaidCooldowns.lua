@@ -15,6 +15,8 @@ local trackedSpellsCache, resSpellsCache = {}, {};
 local soulstoneSpellIDs = {};
 local recycledFrames = {};
 local castCache = {};
+local castDetectCache = {};
+local castDetectSpells = {};
 local encounterStart;
 local units = NRC.units;
 local UnitGUID = UnitGUID;
@@ -34,6 +36,7 @@ local showDead;
 if (NRC.isWrath) then
 	soulstoneDuration = 900;
 end
+local isSOD = NRC.isSOD;
 NRC.cooldownList = {};
 
 function NRC:updateRaidCooldownsShowDead()
@@ -429,34 +432,31 @@ function NRC:isCooldownEnabled(spellID)
 	end
 end
 
---Add faction specific spells.
-if (NRC.faction == "Alliance") then
-	NRC.cooldowns["Heroism"] = {
-		class = "SHAMAN",
-		icon = "Interface\\Icons\\ability_shaman_heroism",
-		cooldown = 600,
-		minLevel = 70,
-		spellIDs = {
-			[32182] = "Heroism", --Rank 1.
-		},
-	};
-else
-	NRC.cooldowns["Bloodlust"] = {
-		class = "SHAMAN",
-		icon = "Interface\\Icons\\spell_nature_bloodlust",
-		cooldown = 600,
-		minLevel = 70,
-		spellIDs = {
-			[2825] = "Bloodlust", --Rank 1.
-		},
-	};
-end
-
 --Add texture and localized spell name to our cooldowns.
 function NRC:buildCooldownData()
 	local localizeNames;
 	if (LOCALE_koKR or LOCALE_zhCN or LOCALE_zhTW or LOCALE_ruRU) then
 		localizeNames = true;
+	end
+	--Spells that are being detect via cast (can't inspect like sod runes etc).
+	if (NRC.castDetectCooldowns) then
+		for k, v in pairs(NRC.castDetectCooldowns) do
+			if (v.spellIDs and next(v.spellIDs)) then
+				for id, spellName in pairs(v.spellIDs) do
+					local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(id);
+					if (name) then
+						--Update table with locale spell names.
+						if (localizeNames) then
+							v.localizedName = name;
+						end
+						v.castDetect = true;
+						--Add spell to cache for scanning combat log.
+						castDetectSpells[id] = spellName;
+						NRC.cooldowns[k] = v;
+					end
+				end
+			end
+		end
 	end
 	for k, v in pairs(NRC.cooldowns) do
 		if (v.spellIDs and next(v.spellIDs)) then
@@ -499,7 +499,7 @@ function NRC:loadRaidCooldownGroup()
 		if (data.guid) then
 			for k, v in pairs(NRC.cooldowns) do
 				if (NRC.config["raidCooldown" .. string.gsub(k, " ", "")] and data.class == v.class
-						and (not data.level or data.level >= v.minLevel)) then
+						and (not data.level or data.level >= v.minLevel) and not v.castDetect) then
 					local hasTalent;
 					if (v.talentOnly) then
 						hasTalent = NRC:hasTalent(name, v.talentOnly.tabIndex, v.talentOnly.talentIndex, 1);
@@ -526,6 +526,7 @@ function NRC:loadRaidCooldownGroup()
 								color = v.color,
 								title = v.title,
 								localizedName = v.localizedName,
+								castDetect = v.castDetect,
 								merged = NRC.config["raidCooldown" .. string.gsub(k, " ", "") .. "Merged"],
 								frame = NRC.config["raidCooldown" .. string.gsub(k, " ", "") .. "Frame"],
 							};
@@ -569,7 +570,7 @@ function NRC:loadRaidCooldownChar(name, data, cooldownName)
 	--NRC:debug("loading char", name, data, cooldownName);
 	for k, v in pairs(NRC.cooldowns) do
 		if (NRC.config["raidCooldown" .. string.gsub(k, " ", "")] and (v.class == data.class or cooldownName == k)
-				and (not data.level or data.level >= v.minLevel)) then
+				and (not data.level or data.level >= v.minLevel) and not v.castDetect) then
 			local hasTalent;
 			if (v.talentOnly) then
 				hasTalent = NRC:hasTalent(name, v.talentOnly.tabIndex, v.talentOnly.talentIndex, 1);
@@ -596,6 +597,7 @@ function NRC:loadRaidCooldownChar(name, data, cooldownName)
 						color = v.color,
 						title = v.title,
 						localizedName = v.localizedName,
+						castDetect = v.castDetect,
 						merged = NRC.config["raidCooldown" .. string.gsub(k, " ", "") .. "Merged"],
 						frame = NRC.config["raidCooldown" .. string.gsub(k, " ", "") .. "Frame"],
 					};
@@ -630,6 +632,93 @@ function NRC:loadRaidCooldownChar(name, data, cooldownName)
 				end
 			end
 		end
+	end
+	--NRC:loadRaidCooldownsWhenUsed();
+	--NRC:updateRaidCooldowns();
+	NRC:sreAddRaidCooldownsToSpellList();
+end
+
+--Add cooldowns from runes being cast in sod, no way to inspect.
+function NRC:loadRaidCooldownCharFromCast(name, spellName, spellID, guid)
+	if (not NRC.castDetectCooldowns) then
+		return;
+	end
+	local data = NRC.groupCache[name];
+	if (not data) then
+		return;
+	end
+	NRC:debug("loading char from cast", name, spellName);
+	--Find the database table entry name (can be different than spell name).
+	local cooldownName, spellData;
+	for k, v in pairs(NRC.castDetectCooldowns) do
+		for id, _ in pairs(v.spellIDs) do
+			if (spellID == id) then
+				cooldownName = k;
+				spellData = v;
+				break;
+			end
+		end
+	end
+	if (cooldownName and NRC.config["raidCooldown" .. string.gsub(cooldownName, " ", "")]) then
+		--Create spell data if doesn't already exist.
+		local index;
+		--Check if cooldown is already in the table.
+		for i, cd in pairs(NRC.cooldownList) do
+			if (cooldownName == cd.spellName) then --Bit confusing I named it this at the start, it's the cooldownName in db table and not spellName.
+				index = i;
+				break;
+			end
+		end
+		if (not index) then
+			index = #NRC.cooldownList + 1;
+			NRC.cooldownList[index] = {
+				spellName = spellName;
+				class = spellData.class,
+				cooldown = spellData.cooldown,
+				icon = spellData.icon,
+				spellIDs = {},
+				chars = {},
+				color = spellData.color,
+				title = spellData.title,
+				localizedName = spellData.localizedName,
+				castDetect = spellData.castDetect,
+				merged = NRC.config["raidCooldown" .. string.gsub(cooldownName, " ", "") .. "Merged"],
+				frame = NRC.config["raidCooldown" .. string.gsub(cooldownName, " ", "") .. "Frame"],
+			};
+			--Add id's for each rank of this spell.
+			if (spellData.spellIDs and next(spellData.spellIDs)) then
+				for id, spellName in pairs(spellData.spellIDs) do
+					--Add spell to cache for scanning combat log.
+					trackedSpellsCache[id] = spellName;
+					--Add spell to the track list for this character.
+					NRC.cooldownList[index].spellIDs[id] = spellName;
+				end
+			end
+		end
+		--Attach character to this spell for watching.
+		if (not NRC.cooldownList[index].chars[data.guid]) then
+			if (not data.guid) then
+				NRC:debug("Cooldown guid missing for:", name);
+				--NRC:debug(data);
+			else
+				NRC.cooldownList[index].chars[data.guid] = {
+					name = name,
+					class = data.class,
+					endTime = 0,
+				};
+			end
+		end
+		--Load time from saved data if it exists.
+		if (NRC.data.raidCooldowns[data.guid] and NRC.data.raidCooldowns[data.guid][cooldownName]) then
+			NRC.cooldownList[index].chars[data.guid].endTime = NRC.data.raidCooldowns[data.guid][cooldownName].endTime;
+			NRC.cooldownList[index].chars[data.guid].destName = NRC.data.raidCooldowns[data.guid][cooldownName].destName;
+			NRC.cooldownList[index].chars[data.guid].destClass = NRC.data.raidCooldowns[data.guid][cooldownName].destClass;
+		end
+		--Keep local cache to use in combat log events.
+		if (not castDetectCache[guid]) then
+			castDetectCache[guid] = {};
+		end
+		castDetectCache[guid][spellName] = true;
 	end
 	--NRC:loadRaidCooldownsWhenUsed();
 	--NRC:updateRaidCooldowns();
@@ -688,13 +777,14 @@ function NRC:removeRaidCooldownChar(guid)
 			table.remove(NRC.cooldownList, k);
 		end
 	end]]
+	castDetectCache[guid] = nil;
 	NRC:soulstoneRemoved(guid);
 	NRC:updateRaidCooldowns();
 end
 
 --In wrath some cooldowns are reset after boss kill or wipe, if in combat and encounter lasted 30 seconds?
 function NRC:removeRaidCooldownsEncounterEnd(success)
-	if (NRC.isClassic or NRC.isTBC) then
+	if (NRC.isWrath or NRC.isTBC) then
 		return;
 	end
 	local ignoreList = { --https://us.forums.blizzard.com/en/wow/t/raid-system-adjustments-in-wrath-of-the-lich-king-classic/1307037/235
@@ -861,6 +951,21 @@ function NRC:getCooldownFromSpellID(spellID)
 			end
 		end
 	end
+	--[[if (isSOD) then
+		--Also check sod runes etc.
+		for k, v in pairs(NRC.castDetectCooldowns) do
+			if (v.spellIDs and next(v.spellIDs)) then
+				for id, spellName in pairs(v.spellIDs) do
+					if (id == spellID) then
+						--Return cooldown name and actual spell name.
+						--They can be different for things like soulstone.
+						--k is spellTableName.
+						return k, spellName, v.cooldown, k;
+					end
+				end
+			end
+		end
+	end]]
 end
 
 --Adjust cooldown time if a player has talents that change it.
@@ -888,7 +993,7 @@ function NRC:adjustCooldownFromTalents(spell, name, timestamp)
 	return timestamp;
 end
 
-local function pushCastCache(guid, cooldownName, destName, destClass)
+local function pushCastCache(guid, cooldownName, destName, destClass, spellID)
 	if (not castCache[guid]) then
 		castCache[guid] = {};
 		castCache[guid][cooldownName] = {};
@@ -899,8 +1004,20 @@ local function pushCastCache(guid, cooldownName, destName, destClass)
 	castCache[guid][cooldownName].class = destClass;
 end
 
-function NRC:pushCastCache(guid, cooldownName, destName, destClass)
-	pushCastCache(guid, cooldownName, destName, destClass)
+function NRC:pushCastCache(guid, cooldownName, destName, destClass, spellID)
+	pushCastCache(guid, cooldownName, destName, destClass);
+end
+
+--If another user with the addon uses the spell out of range of us it comes via comms.
+function NRC:pushCooldownCastDetect(sourceGUID, sourceName, spellName, spellID)
+	if (sourceGUID and sourceName and spellName and spellID) then
+		if (isSOD and castDetectSpells[spellID] and (not castDetectCache[sourceGUID]
+			or (castDetectCache[sourceGUID] and not castDetectCache[sourceGUID][spellName]))) then
+			if (NRC:inOurGroup(sourceGUID)) then
+				NRC:loadRaidCooldownCharFromCast(sourceName, spellName, spellID, sourceGUID);
+			end
+		end
+	end
 end
 
 --If a cooldown is used then update our data.
@@ -1766,6 +1883,12 @@ local function combatLogEventUnfiltered(...)
 	end
 	--print(CombatLogGetCurrentEventInfo())
 	if (subEvent == "SPELL_CAST_SUCCESS") then
+		if (isSOD and castDetectSpells[spellID] and (not castDetectCache[sourceGUID]
+			or (castDetectCache[sourceGUID] and not castDetectCache[sourceGUID][spellName]))) then
+			if (NRC:inOurGroup(sourceGUID)) then
+				NRC:loadRaidCooldownCharFromCast(sourceName, spellName, spellID, sourceGUID);
+			end
+		end
 		if (trackedSpellsCache[spellID]) then
 			--If in a group update our local cache for cooldown frames.
 			local destClass;
@@ -2570,6 +2693,11 @@ f:SetScript('OnEvent', function(self, event, ...)
 				NRC:startRaidCooldownsTicker();
 			end
 		end
+		if (isLogon or isReload) then
+			if (NRC.isSOD) then
+				NRC:loadDelayedDatabaseUpdate();
+			end
+		end
 		C_Timer.After(1, function()
 			NRC:raidCooldownsScanGroup();
 			NRC:loadPartyNeckBuffs();
@@ -2611,6 +2739,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 		isGhost = {};
 		hpCache = {};
 		hasResPending = {};
+		castDetectCache = {};
 		NRC:updateRaidCooldowns();
 		C_Timer.After(1, function()
 			NRC:loadPartyNeckBuffs();

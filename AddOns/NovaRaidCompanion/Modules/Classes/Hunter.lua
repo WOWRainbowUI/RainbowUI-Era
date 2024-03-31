@@ -673,7 +673,7 @@ end
 
 local lastAmmoWarning = 0;
 function NRC:checkAmmo()
-	if (NRC.config.lowAmmoCheck) then
+	if (NRC.config.lowAmmoCheck and UnitLevel("player") > 30) then
 		local ammoCount, ammoID = NRC:getAmmoCount();
 		if (ammoCount and ammoCount < NRC.config.lowAmmoCheckThreshold) then
 			if (GetTime() - lastAmmoWarning > 900) then

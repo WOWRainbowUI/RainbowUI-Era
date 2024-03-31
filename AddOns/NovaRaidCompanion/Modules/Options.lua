@@ -723,7 +723,7 @@ NRC.options = {
 					order = 99,
 				},
 				--Druid.
-				raidCooldownRebirth = {
+				--[[raidCooldownRebirth = {
 					type = "toggle",
 					name = "|cFFFF7C0A" .. L["raidCooldownRebirthTitle"],
 					desc = L["raidCooldownRebirthDesc"],
@@ -1600,15 +1600,15 @@ NRC.options = {
 					get = function(info) return NRC.config.raidCooldownDeathCoilFrame; end,
 					set = function(info, value) NRC.config.raidCooldownDeathCoilFrame = value; NRC:reloadRaidCooldowns(); end,
 				},
-				--[[raidCooldownRitualofSouls = {
-					type = "toggle",
-					name = "|cFF8788EE" .. L["raidCooldownRitualofSoulsTitle"],
-					desc = L["raidCooldownRitualofSoulsDesc"],
-					order = 180,
-					width = spellWidth,
-					get = "getRaidCooldownRitualofSouls",
-					set = "setRaidCooldownRitualofSouls",
-				},]]
+				--raidCooldownRitualofSouls = {
+					--type = "toggle",
+					--name = "|cFF8788EE" .. L["raidCooldownRitualofSoulsTitle"],
+					--desc = L["raidCooldownRitualofSoulsDesc"],
+					--order = 180,
+					--width = spellWidth,
+					--get = "getRaidCooldownRitualofSouls",
+					--set = "setRaidCooldownRitualofSouls",
+				},
 				--Warrior.
 				raidCooldownChallengingShout = {
 					type = "toggle",
@@ -1962,7 +1962,7 @@ NRC.options = {
 					width = frameWidth,
 					get = function(info) return NRC.config.raidCooldownNeckStatsFrame; end,
 					set = function(info, value) NRC.config.raidCooldownNeckStatsFrame = value; NRC:reloadRaidCooldowns(); end,
-				},
+				},--]]
 			},
 		},
 		raidStatus = {
@@ -3633,7 +3633,7 @@ local function setAllCooldownsUnmerged()
 end
 
 function NRC:loadExtraOptions()
-	if (NRC.faction == "Alliance") then
+	--[[if (NRC.faction == "Alliance") then
 		NRC.options.args.raidCooldowns.args["raidCooldownHeroism"] = {
 			type = "toggle",
 			name = "|cFF0070DD" .. L["raidCooldownHeroismTitle"],
@@ -3693,7 +3693,7 @@ function NRC:loadExtraOptions()
 			get = function(info) return NRC.config.raidCooldownBloodlustFrame; end,
 			set = function(info, value) NRC.config.raidCooldownBloodlustFrame = value; NRC:reloadRaidCooldowns(); end,
 		};
-	end
+	end]]
 	NRC.options.args.testAllFrames = {
 		type = "execute",
 		name = function()
@@ -3955,7 +3955,7 @@ function NRC:loadExtraOptions()
 		
 		--Wrath Cooldowns.
 		--Druid.
-		NRC.options.args.raidCooldowns.args.raidCooldownSurvivalInstincts = {
+		--[[NRC.options.args.raidCooldowns.args.raidCooldownSurvivalInstincts = {
 			type = "toggle",
 			name = "|cFFFF7C0A" .. L["raidCooldownSurvivalInstinctsTitle"],
 			desc = L["raidCooldownSurvivalInstinctsDesc"],
@@ -4334,7 +4334,7 @@ function NRC:loadExtraOptions()
 			width = frameWidth,
 			get = function(info) return NRC.config.raidCooldownHandofSalvationFrame; end,
 			set = function(info, value) NRC.config.raidCooldownHandofSalvationFrame = value; NRC:reloadRaidCooldowns(); end,
-		};
+		};]]
 		--[[NRC.options.args.raidCooldowns.args.raidCooldownDivineGuardian = {
 			type = "toggle",
 			name = "|cFFF48CBA" .. L["raidCooldownDivineGuardianTitle"],
@@ -4365,7 +4365,7 @@ function NRC:loadExtraOptions()
 			set = function(info, value) NRC.config.raidCooldownDivineGuardianFrame = value; NRC:reloadRaidCooldowns(); end,
 		};]]
 		--Priest.
-		NRC.options.args.raidCooldowns.args.raidCooldownDivineHymn = {
+		--[[NRC.options.args.raidCooldowns.args.raidCooldownDivineHymn = {
 			type = "toggle",
 			name = "|cFFFFFFFF" .. L["raidCooldownDivineHymnTitle"],
 			desc = L["raidCooldownDivineHymnDesc"],
@@ -4540,8 +4540,39 @@ function NRC:loadExtraOptions()
 			width = frameWidth,
 			get = function(info) return NRC.config.raidCooldownShatteringThrowFrame; end,
 			set = function(info, value) NRC.config.raidCooldownShatteringThrowFrame = value; NRC:reloadRaidCooldowns(); end,
-		};
+		};]]
 	end
+	--[[if (NRC.isSOD) then
+		NRC.options.args.raidCooldowns.args.raidCooldownDispersion = {
+			type = "toggle",
+			name = "|cFFFFFFFF" .. L["Dispersion"],
+			desc =  string.format(L["raidCooldownUniversalDesc"], L["Dispersion"]),
+			order = 628,
+			width = spellWidth,
+			get = "getRaidCooldownDispersion",
+			set = "setRaidCooldownDispersion",
+		};
+		NRC.options.args.raidCooldowns.args.raidCooldownDispersionMerged = {
+			type = "toggle",
+			name = "|cFFFFFFFF" .. L["Merged"],
+			desc = string.format(L["mergedDesc"], L["Dispersion"]),
+			order = 629,
+			width = mergedWidth,
+			get = function(info) return NRC.config.raidCooldownDispersionMerged; end,
+			set = function(info, value) NRC.config.raidCooldownDispersionMerged = value; NRC:reloadRaidCooldowns(); end,
+		};
+		NRC.options.args.raidCooldowns.args.raidCooldownDispersionFrame = {
+			type = "select",
+			name = "",
+			desc = string.format(L["frameDesc"], L["Dispersion"]),
+			values = setCooldownFrameOption(true),
+			sorting = setCooldownFrameOption(),
+			order = 630,
+			width = frameWidth,
+			get = function(info) return NRC.config.raidCooldownDispersionFrame; end,
+			set = function(info, value) NRC.config.raidCooldownDispersionFrame = value; NRC:reloadRaidCooldowns(); end,
+		};
+	end]]
 end
 
 		--[[NRC.options.args.raidCooldowns.args.raidCooldownRebirth = {
@@ -4883,8 +4914,10 @@ NRC.optionDefaults = {
 		dispelsFriendlyPlayers = true,
 		dispelsEnemyPlayers = false,
 			
+		---Some of these cooldowns may only be used in SoD, but store them here with the right class anyway.
+		
 		--Death Knight.
-		raidCooldownArmyoftheDead = false,
+		--[[raidCooldownArmyoftheDead = false,
 		raidCooldownArmyoftheDeadMerged = true,
 		raidCooldownArmyoftheDeadFrame = 1,
 		raidCooldownIceboundFortitude = false,
@@ -4927,7 +4960,7 @@ NRC.optionDefaults = {
 		--Hunter
 		raidCooldownMisdirection = false,
 		raidCooldownMisdirectionMerged = true,
-		raidCooldownMisdirectionFrame = 1,
+		raidCooldownMisdirectionFrame = 1,]]
 		mdSendMyCastGroup = false,
 		mdSendMyCastSay = false,
 		mdSendOtherCastGroup = false,
@@ -4946,7 +4979,7 @@ NRC.optionDefaults = {
 		hunterDistractingShotSay = false,
 		hunterDistractingShotYell = false,
 		--Mage.
-		raidCooldownEvocation = false,
+		--[[raidCooldownEvocation = false,
 		raidCooldownEvocationMerged = true,
 		raidCooldownEvocationFrame = 1,
 		raidCooldownIceBlock = false,
@@ -5014,6 +5047,9 @@ NRC.optionDefaults = {
 		raidCooldownGuardianSpirit = false,
 		raidCooldownGuardianSpiritMerged = true,
 		raidCooldownGuardianSpiritFrame = 1,
+		raidCooldownDispersion = false,
+		raidCooldownDispersionMerged = true,
+		raidCooldownDispersionFrame = 1,
 		--Rogue.
 		raidCooldownBlind = false,
 		raidCooldownBlindMerged = true,
@@ -5029,7 +5065,7 @@ NRC.optionDefaults = {
 		raidCooldownDistractFrame = 1,
 		raidCooldownTricksoftheTrade = false,
 		raidCooldownTricksoftheTradeMerged = true,
-		raidCooldownTricksoftheTradeFrame = 1,
+		raidCooldownTricksoftheTradeFrame = 1,]]
 		tricksSendMyCastGroup = false,
 		tricksSendMyCastSay = false,
 		tricksSendOtherCastGroup = false,
@@ -5050,7 +5086,7 @@ NRC.optionDefaults = {
 		tricksSendDamageGroupOther = false,
 		tricksOnlyWhenDamage = false,
 		--Shaman.
-		raidCooldownEarthElemental = false,
+		--[[raidCooldownEarthElemental = false,
 		raidCooldownEarthElementalMerged = true,
 		raidCooldownEarthElementalFrame = 1,
 		raidCooldownFireElemental = false,
@@ -5077,7 +5113,7 @@ NRC.optionDefaults = {
 		raidCooldownSoulshatterFrame = 1,
 		raidCooldownDeathCoil = false,
 		raidCooldownDeathCoilMerged = true,
-		raidCooldownDeathCoilFrame = 1,
+		raidCooldownDeathCoilFrame = 1,]]
 		--raidCooldownRitualofSouls = false,
 		--raidCooldownRitualofSoulsMerged = true,
 		--raidCooldownRitualofSoulsFrame = 1,
@@ -5087,7 +5123,7 @@ NRC.optionDefaults = {
 		soulstoneMsgGroup = false,
 		warlockCurseReminder = false,
 		--Warrior.
-		raidCooldownChallengingShout = false,
+		--[[raidCooldownChallengingShout = false,
 		raidCooldownChallengingShoutMerged = true,
 		raidCooldownChallengingShoutFrame = 1,
 		raidCooldownIntimidatingShout = false,
@@ -5129,7 +5165,7 @@ NRC.optionDefaults = {
 		raidCooldownNeckHP5Frame = 1,
 		raidCooldownNeckStats = false,
 		raidCooldownNeckStatsMerged = true,
-		raidCooldownNeckStatsFrame = 1,
+		raidCooldownNeckStatsFrame = 1,]]
 		
 		raidStatusFlask = true,
 		raidStatusFood = true,
@@ -5160,6 +5196,119 @@ NRC.optionDefaults = {
 		--raidCooldownFelArmorFrame = 1,
 	},
 };
+
+if (NRC.isClassic) then
+	NRC.optionDefaults.profile.lowAmmoCheckThreshold = 600;
+end
+
+--Raid cooldown options have be changed to a func that creates them from db.
+local function loadAllCooldownOptions()
+	local cooldowns = {};
+	for k, v in pairs(NRC.cooldowns) do
+		if (v.class ~= "ALL") then
+			v.cooldownName = k;
+			tinsert(cooldowns, v);
+		end
+	end
+	if (NRC.castDetectCooldowns) then
+		for k, v in pairs(NRC.castDetectCooldowns) do
+			if (v.class ~= "ALL") then
+				v.cooldownName = k;
+				v.castDetect = true;
+				tinsert(cooldowns, v);
+			end
+		end
+	end
+	table.sort(cooldowns, function(a, b)
+		return a.class < b.class
+			or a.class == b.class and strcmputf8i(a.cooldownName, b.cooldownName) < 0;
+	end)
+	--Add in the ALL class last so it'd siaplayed down the bottom.
+	for k, v in pairs(NRC.cooldowns) do
+		if (v.class == "ALL") then
+			v.cooldownName = k;
+			tinsert(cooldowns, v);
+		end
+	end
+	if (NRC.castDetectCooldowns) then
+		for k, v in pairs(NRC.castDetectCooldowns) do
+			if (v.class == "ALL") then
+				v.cooldownName = k;
+				v.castDetect = true;
+				tinsert(cooldowns, v);
+			end
+		end
+	end
+	--Order range starts at 200 for cooldown list.
+	local order = 200;
+	for k, v in pairs(cooldowns) do
+		local cooldownName = string.gsub(v.cooldownName, " ", "");
+		local color = "|cFF9CD6DE";
+		if (v.color) then
+			color = "|c" .. v.color;
+		else
+			local _, _, _, classHex = GetClassColor(v.class);
+			if (classHex) then
+				color = "|c" .. classHex;
+			end
+		end
+		local desc = string.format(L["raidCooldownUniversalDesc"], L[v.cooldownName]);
+		if (v.castDetect) then
+			desc = string.format(L["raidCooldownUniversalCastDetectDesc"], L[v.cooldownName]);
+		end
+		if (v.isRune) then
+			desc = "|cFFFFFF00(Rune)|r " .. desc;
+		end
+		if (v.isBook) then
+			desc = "|cFFFFFF00(Skill Book)|r " .. desc;
+		end
+		
+		NRC.options.args.raidCooldowns.args["raidCooldown" .. cooldownName] = {
+			type = "toggle",
+			name = color .. L[v.cooldownName],
+			desc =  desc,
+			order = order,
+			width = spellWidth,
+			get = function(info) return NRC.config["raidCooldown" .. cooldownName]; end,
+			set = function(info, value) NRC.config["raidCooldown" .. cooldownName] = value; NRC:reloadRaidCooldowns(); end,
+		};
+		NRC.optionDefaults.profile["raidCooldown" .. cooldownName] = false;
+		order = order + 1;
+		
+		NRC.options.args.raidCooldowns.args["raidCooldown" .. cooldownName .. "Merged"] = {
+			type = "toggle",
+			name = color .. L["Merged"],
+			desc = string.format(L["mergedDesc"], L[v.cooldownName]),
+			order = order,
+			width = mergedWidth,
+			get = function(info) return NRC.config["raidCooldown" .. cooldownName .. "Merged"]; end,
+			set = function(info, value) NRC.config["raidCooldown" .. cooldownName .. "Merged"] = value; NRC:reloadRaidCooldowns(); end,
+		};
+		NRC.optionDefaults.profile["raidCooldown" .. cooldownName .. "Merged"] = true;
+		order = order + 1;
+		
+		NRC.options.args.raidCooldowns.args["raidCooldown" .. cooldownName .. "Frame"] = {
+			type = "select",
+			name = "",
+			desc = string.format(L["frameDesc"], L[v.cooldownName]),
+			values = setCooldownFrameOption(true),
+			sorting = setCooldownFrameOption(),
+			order = order,
+			width = frameWidth,
+			get = function(info) return NRC.config["raidCooldown" .. cooldownName .. "Frame"]; end,
+			set = function(info, value) NRC.config["raidCooldown" .. cooldownName .. "Frame"] = value; NRC:reloadRaidCooldowns(); end,
+		};
+		NRC.optionDefaults.profile["raidCooldown" .. cooldownName .. "Frame"] = 1;
+		order = order + 1;
+	end
+	
+	--Enable battle res by default.
+	NRC.optionDefaults.profile["raidCooldownRebirth"] = true;
+	NRC.optionDefaults.profile["raidCooldownDivineIntervention"] = true;
+	NRC.optionDefaults.profile["raidCooldownReincarnation"] = true;
+	NRC.optionDefaults.profile["raidCooldownSoulstone"] = true;
+end
+loadAllCooldownOptions();
 
 --This is a one time run function, it runs during the version upgrade to 1.08.
 --In 1.08 profiles were added, this just copys what settings the user already had over to the default profile.
@@ -5253,8 +5402,7 @@ end
 
 local linesVersion;
 local function loadNewVersionFrame()
-	--local frame = NRC:createSimpleScrollFrame("NRCNewVersionFrame", 600, 400, 0, 150, true);
-	local frame = NRC:createSimpleScrollFrame("NRCNewVersionFrame", 600, 670, 0, 0, true);
+	local frame = NRC:createSimpleScrollFrame("NRCNewVersionFrame", 600, 570, 0, 0, true);
 	frame:SetFrameStrata("HIGH");
 	frame:SetClampedToScreen(true);
 	frame.scrollChild.fs:SetFont(NRC.regionFont, 14);
@@ -5275,10 +5423,16 @@ local function loadNewVersionFrame()
 	frame.scrollChild.fs:SetText("|cFFFFFF00Nova Raid Companion");
 	frame.scrollChild.fs2:SetText("|cFFFFFF00New in version|r |cFFFF6900" .. string.format("%.2f", NRC.version));
 	frame:Hide();
-	linesVersion = 1.33;
+	linesVersion = 1.34;
 	local lines = {
-		"Added duration animations to buffs in the raid status window (can be disabled with the checkbox).\nLow duration buffs will now glow yellow so you can easily see if flasks/buffs are about to expire (default below 5mins, can be changed in options).\nTalents column is now shown on raid buffs frame without needing to click the More button (reminder you can click anyones talents icon to view entire talents tree).",
-		"Raid Lockouts on the minimap icon now sorted alphabetically to make it easier to read.\nFixed potion of speed showing as \"Blunting Mace\" in the consumes tracker.\nFixed healthstones consumes tracking.\nFixed chat output for msgs like md/tricks threat for Instance chat.\nRemoved feast/repair bot raid chat msgs from being triggered in Dalaran.\nVarious other small bug fixes that were long overdue.",
+		"|cFF00FF00[General Changes]|r",
+		"Went through all classic era/SoD cooldowns and fixed a bunch or wrong durations and talents that reduce cooldown that were pasted over from wrath.",
+		"Fixed a bunch of small bugs for wrath and classic era.",
+		"|cFF00FF00[SoD Changes]|r",
+		"-Added many new rune spells as cooldown options to display in SoD (some runes that are optional won't display until it's detected someone has cast them so don't worrie if it doesn't show right away, the cooldown frame will show when the spell has been cast once by the player).",
+		"-Added max rank definitions for each phase to everything in the raid buffs window so they don't show as red being not max rank.",
+		"-Added hunter aspect of the lion to the pally kings column in buffs window.",
+		"-Fixed the addon not recording new SoD raids, they should now show up in the log when you right click the minimap button.",
 	};
 	local text = "";
 	--Seperator lines couldn't be used because the wow client won't render 1 pixel frames if they are in certain posotions.
@@ -6149,6 +6303,15 @@ end
 
 function NRC:getRaidCooldownGuardianSpirit(info)
 	return self.config.raidCooldownGuardianSpirit;
+end
+
+function NRC:setRaidCooldownDispersion(info, value)
+	self.config.raidCooldownDispersion = value;
+	NRC:reloadRaidCooldowns();
+end
+
+function NRC:getRaidCooldownDispersion(info)
+	return self.config.raidCooldownDispersion;
 end
 
 --Rogue raid cooldowns.

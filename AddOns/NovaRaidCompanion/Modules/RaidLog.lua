@@ -23,7 +23,7 @@ local GetPlayerInfoByGUID = GetPlayerInfoByGUID;
 local GetServerTime = GetServerTime;
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo;
 local UnitName = UnitName;
-
+	
 local lastLooted = {};
 function NRC:chatMsgLoot(...)
 	if (not NRC.raid) then
@@ -83,9 +83,15 @@ function NRC:chatMsgLoot(...)
 			--We don't need to exclude quest items because we don't track white items and we don't want to exlude mags head etc.
 			return;
 		end
+		--Some addons change the payload of the chat loot event, extract the itemLink and reform it.
+		local color, item = strmatch(itemLink, "|c(%w+)|H(.+)|h|r");
+		if (color and item) then
+			itemLink = "|c" .. color .. "|H" .. item .. "|h|r";
+		end
     end
     if (itemLink and name) then
-    	local _, itemID = strsplit(":", itemLink);
+    	--local _, itemID = strsplit(":", itemLink);
+    	local itemID = strmatch(itemLink, "item:(%d+)");
     	if (itemID) then
     		if (tonumber(itemID) == 29434) then --Badge of Justice.
     			badges[name] = tonumber(itemID);
@@ -211,7 +217,8 @@ local function removeKtWeapons()
 		--Iterate backwards when removing elements.
 		for i = #data.loot, 1, -1 do
 			if (loot[i].itemLink) then
-				local _, itemID = strsplit(":", loot[i].itemLink);
+				--local _, itemID = strsplit(":", loot[i].itemLink);
+				local itemID = strmatch(loot[i].itemLink, "item:(%d+)");
 				if (itemID) then
 					itemID = tonumber(itemID);
 				end
@@ -916,7 +923,8 @@ local function getLootData(logID, minQuality, exactQuality, showKtWeapons, encou
 	if (data.loot) then
 		for k, v in ipairs(data.loot) do
 			if (v.itemLink) then
-				local _, itemID = strsplit(":", v.itemLink);
+				--local _, itemID = strsplit(":", v.itemLink);
+				local itemID = strmatch(v.itemLink, "item:(%d+)");
 				if (itemID) then
 					itemID = tonumber(itemID);
 				end
@@ -2500,7 +2508,8 @@ function NRC:loadRenameLootFrame(logID, lootID, lineFrameCount, displayNum, fram
 			local lootText = "";
 			local v = currentLootData[lineFrameCount];
 			if (v.itemLink) then
-				local _, itemID = strsplit(":", v.itemLink);
+				--local _, itemID = strsplit(":", v.itemLink);
+				local itemID = strmatch(v.itemLink, "item:(%d+)");
 				local boss;
 				if (itemID) then
 					boss = NRC:getBossFromLoot(tonumber(itemID), data.instanceID, logID, v.time or v.timer);
@@ -2677,7 +2686,8 @@ function NRC:loadRaidLogLoot(logID)
 			local encounterText = "";
 			local lootText = "";
 			if (v.itemLink) then
-				local _, itemID = strsplit(":", v.itemLink);
+				--local _, itemID = strsplit(":", v.itemLink);
+				local itemID = strmatch(v.itemLink, "item:(%d+)");
 				local boss;
 				if (itemID) then
 					boss = NRC:getBossFromLoot(tonumber(itemID), data.instanceID, logID, v.time or v.timer);
@@ -2749,7 +2759,8 @@ function NRC:loadRaidLogLoot(logID)
 			local encounterText = "";
 			local lootText = "";
 			if (v.itemLink) then
-				local _, itemID = strsplit(":", v.itemLink);
+				--local _, itemID = strsplit(":", v.itemLink);
+				local itemID = strmatch(v.itemLink, "item:(%d+)");
 				local boss;
 				if (itemID) then
 					boss = NRC:getBossFromLoot(tonumber(itemID), data.instanceID, logID, v.time or v.timer);
@@ -2821,7 +2832,8 @@ function NRC:loadRaidLogLoot(logID)
 			local encounterText = "";
 			local lootText = "";
 			if (v.itemLink) then
-				local _, itemID = strsplit(":", v.itemLink);
+				--local _, itemID = strsplit(":", v.itemLink);
+				local itemID = strmatch(v.itemLink, "item:(%d+)");
 				local boss;
 				if (itemID) then
 					boss = NRC:getBossFromLoot(tonumber(itemID), data.instanceID, logID, v.time or v.timer);
@@ -2893,7 +2905,8 @@ function NRC:loadRaidLogLoot(logID)
 			local encounterText = "";
 			local lootText = "";
 			if (v.itemLink) then
-				local _, itemID = strsplit(":", v.itemLink);
+				--local _, itemID = strsplit(":", v.itemLink);
+				local itemID = strmatch(v.itemLink, "item:(%d+)");
 				local boss;
 				if (itemID) then
 					boss = NRC:getBossFromLoot(tonumber(itemID), data.instanceID, logID, v.time or v.timer);
@@ -3016,7 +3029,8 @@ function NRC:loadRaidBossLoot(logID, encounterID, encounterName, attemptID)
 		local encounterText = "";
 		local lootText = "";
 		if (v.itemLink) then
-			local _, itemID = strsplit(":", v.itemLink);
+			--local _, itemID = strsplit(":", v.itemLink);
+			local itemID = strmatch(v.itemLink, "item:(%d+)");
 			local boss;
 			if (itemID) then
 				boss = NRC:getBossFromLoot(tonumber(itemID), data.instanceID, logID, v.time or v.timer);
@@ -4780,6 +4794,7 @@ function NRC:loadRaidLogModelFrame(encounterID, encounterName)
 	if (data) then
 		setBottomText(data, raidLogFrame.logID);
 	end
+	raidLogFrame.modelFrame.creature:ClearModel();
 	local id, name, description, displayInfo, iconImage, uiModelSceneID = getEncounterData(encounterID);
 	if (displayInfo) then
 		raidLogFrame.modelFrame.fs:SetText("|cFFFFFF00" .. name);
@@ -5389,9 +5404,9 @@ NRC.lastInstanceName = "(Unknown Instance)";
 function NRC:enteredInstanceRD(isReload, isLogon)
 	doGUID = true;
 	local instance, instanceType = IsInInstance();
-	if (instanceType ~= "raid") then
+	--if (instanceType ~= "raid") then
 		--return;
-	end
+	--end
 	local type;
 	if (NRC.isTBC) then
 		if (NRC:isInArena()) then
@@ -5402,11 +5417,15 @@ function NRC:enteredInstanceRD(isReload, isLogon)
 			return;
 		end
 	end
+	local instanceName, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty,
+				isDynamic, instanceID, instanceGroupSize, LfgDungeonID = GetInstanceInfo();
+	if (NRC.zones[instanceID] and NRC.zones[instanceID].type == "raid") then
+		--Override if we have the instance set as a raid in db, used for sod raids.
+		instanceType = "raid";
+	end
 	--if (instance == true and (instanceType == "raid" or NRC.config.logDungeons) and type ~= "arena" and type ~= "bg") then
 	if (instance == true and ((instanceType == "raid" and NRC.config.logRaids) or (instanceType == "party" and NRC.config.logDungeons))
 			and type ~= "arena" and type ~= "bg") then
-		local instanceName, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty,
-				isDynamic, instanceID, instanceGroupSize, LfgDungeonID = GetInstanceInfo();
 		if (NRC.inInstance and NRC.lastInstanceName ~= instanceName) then
 			--If we zone from one instance into another instance and the instance name if different (UBRS to BWL etc).
 			--Close out the old instance data before starting a new.

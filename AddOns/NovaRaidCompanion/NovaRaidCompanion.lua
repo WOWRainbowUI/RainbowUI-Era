@@ -395,7 +395,7 @@ function NRC:updateMinimapButton(tooltip, frame)
 				weeklyDateString = " (" .. date("%A %H:%M", weeklyReset) .. ")";
 			end
 		end
-		tooltip:AddLine("|cFF00C8003day reset (ZA):|r |cFF9CD6DE" .. NRC:getTimeString(threeDayReset - GetServerTime(), true, "medium")
+		tooltip:AddLine("|cFF00C8003 day reset:|r |cFF9CD6DE" .. NRC:getTimeString(threeDayReset - GetServerTime(), true, "medium")
 				.. threeDateString .. "|r");
 		tooltip:AddLine("|cFF00C800Weekly reset:|r |cFF9CD6DE" .. NRC:getTimeString(weeklyReset - GetServerTime(), true, "medium")
 				.. weeklyDateString .. "|r");

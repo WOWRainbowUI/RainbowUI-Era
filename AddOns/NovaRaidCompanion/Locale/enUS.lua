@@ -1218,3 +1218,6 @@ L["buffDurationsTooltip"] = "Show a buff duration \"swipe\" effect?";
 
 L["raidStatusLowDurationTimeTitle"] = "Low Buff Duration";
 L["raidStatusLowDurationTimeDesc"] = "When buffs are below this duration in seconds the buff will glow yellow to warn you of low duration.";
+
+L["raidCooldownUniversalDesc"] = "Show %s raid cooldowns?";
+L["raidCooldownUniversalCastDetectDesc"] = "Show %s raid cooldowns? (This cooldown only shows up when a player is seen to have cast it atleast once)";

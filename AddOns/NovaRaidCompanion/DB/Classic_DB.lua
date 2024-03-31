@@ -619,7 +619,7 @@ NRC.battleElixirs = {
 		desc = "Increase melee attack power by 35",
 		maxRank = true,
 	},
-	[13452] = {
+	[17538] = {
 		name = "Elixir of the Mongoose",
 		icon = 134812,
 		desc = "+25 Agility and 2% Crit",
@@ -2322,39 +2322,60 @@ NRC.pal = {
 
 --SoD specific stuff.
 if (NRC.isSOD) then
+	--mapped to enounterID - JournalEncounterCreature.ID, name, description, displayInfo, iconImage, uiModelSceneID, expansion, zoneID.
+	--displayInfo (3d model scene, wowhead link button), iconImage (EJ display image with transparent background, only made for EJ bosses)
 	--BFD raid.
-	NRC.encounters[2694] = {"30", "Baron Aquanis", "", 110, 607552, 9, 1, 230};
-	NRC.encounters[2697] = {"3155", "Ghamoo - Ra", "", 14661, 607613, 9, 1, 230}; -- Albino Snapjaw displayInfo
-	NRC.encounters[2699] = {"3803", "Lady Sarevess", "", 4979, 607682, 9, 1, 230};
-	NRC.encounters[2704] = {"1052", "Gelihast", "", 1773, 607609, 9, 1, 230};
-	NRC.encounters[2710] = {"12822", "Lorgus Jett", "", 12822, 607701, 9, 1, 230};
-	NRC.encounters[2825] = {"4939", "Twilight Lord Kelris", "", 4939, 607800, 9, 1, 230};
-	NRC.encounters[2891] = {"1012", "Aku'mai", "", 2837, 607532, 9, 1, 230};
+	NRC.encounters[2694] = {"30", "Baron Aquanis", "", 110, 607552, 9, 1, 48};
+	NRC.encounters[2697] = {"3155", "Ghamoo - Ra", "", 14661, 607613, 9, 1, 48}; -- Albino Snapjaw displayInfo
+	NRC.encounters[2699] = {"3803", "Lady Sarevess", "", 4979, 607682, 9, 1, 48};
+	NRC.encounters[2704] = {"1052", "Gelihast", "", 1773, 607609, 9, 1, 48};
+	NRC.encounters[2710] = {"12822", "Lorgus Jett", "", 12822, 607701, 9, 1, 48};
+	NRC.encounters[2825] = {"4939", "Twilight Lord Kelris", "", 4939, 607800, 9, 1, 48};
+	NRC.encounters[2891] = {"1012", "Aku'mai", "", 2837, 607532, 9, 1, 48};
+	
+	--Gnomeregan raid.
+	NRC.encounters[2925] = {"900", "Grubbis", "", 6533, 607628, 9, 1, 90};
+	NRC.encounters[2928] = {"1236", "Viscous Fallout", "", 36529, 607808, 9, 1, 90};
+	NRC.encounters[2899] = {"989", "Crowd Pummeler 9-60", "", 36560, 607572, 9, 1, 90};
+	NRC.encounters[2927] = {"991", "Electrocutioner 6000", "", 36558, 607594, 9, 1, 90};
+	NRC.encounters[2935] = {"2671", "Mechanical Menagerie", "", 117368, nil, 9, 1, 90};
+	NRC.encounters[2940] = {"992", "Mekgineer Thermaplugg", "", 36563, 607714, 9, 1, 90};
     
-    --Change BFD to a raid.
+    --Change Sod dungs to a raid.
     NRC.zones[48].type = "raid";
+	NRC.zones[90].type = "raid";
 	
 	--Add hunter kings buff to paladin table.
-	NRC.pal[25898] = {
+	NRC.pal[409583] = {
 		name = "Heart of the Lion",
 		icon = 132185,
 		desc = "+10% Stats",
 		maxRank = true,
 		order = 2,
 	};
-	
-	--Add maxRank to tables for SoD phases.
-	local tables = {NRC.flasks, NRC.battleElixirs, NRC.guardianElixirs, NRC.foods, NRC.scrolls, NRC.dpsPotions, NRC.healthPotions, NRC.manaPotions, NRC.tempEnchants, NRC.int, NRC.fort, NRC.spirit, NRC.shadow, NRC.motw, NRC.pal};
-	local phase = NRC.sodPhase;
-	for k, v in pairs(tables) do
-		for _, data in pairs(v) do
-			if (data.maxRankSodPhases) then
-				for _, maxRankSodPhase in pairs(data.maxRankSodPhases) do
-					if (maxRankSodPhase == phase) then
-						data.maxRank = true;
+	--Certain things like GetEffectivePlayerMaxLevel() are 60 at addon load time and are updated at logon so we need to delay certain db updates that require the phase.
+	--Things had to be changed a little in Raidstatus.lua to work with this.
+	function NRC:loadDelayedDatabaseUpdate()
+		--Recheck the phase after PEW.
+		if (NRC.isClassic and C_Engraving and C_Engraving.IsEngravingEnabled()) then
+			local sodPhases = {[25]=1,[40]=2,[50]=3,[60]=4};
+			NRC.sodPhase = sodPhases[(GetEffectivePlayerMaxLevel())];
+		end
+		--Add maxRank to tables for SoD phases.
+		local tables = {NRC.flasks, NRC.battleElixirs, NRC.guardianElixirs, NRC.foods, NRC.scrolls, NRC.dpsPotions, NRC.healthPotions, NRC.manaPotions, NRC.tempEnchants, NRC.int, NRC.fort, NRC.spirit, NRC.shadow, NRC.motw, NRC.pal};
+		local phase = NRC.sodPhase;
+		for k, v in pairs(tables) do
+			for _, data in pairs(v) do
+				if (data.maxRankSodPhases) then
+					for _, maxRankSodPhase in pairs(data.maxRankSodPhases) do
+						if (maxRankSodPhase == phase) then
+							data.maxRank = true;
+							--print(data.name, data.rank)
+						end
 					end
 				end
 			end
 		end
+		NRC:logonUpdateRaidStatusDatabase();
 	end
 end
