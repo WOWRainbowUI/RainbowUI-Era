@@ -1,3 +1,3 @@
-# 11.1.39 (2024-02-26)
+# 11.1.41 (2024-03-22)
 
-* Upgraded integrated library Ace3 r1320 to fix an issue with the color picker [Comment #7208]. 
+* Updated TOC version for Patch 10.2.6 for WoW Mainline.
