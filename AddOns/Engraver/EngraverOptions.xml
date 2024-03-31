@@ -8,7 +8,7 @@
 				self:SetPoint("RIGHT", self:GetParent().DefaultsButton, "LEFT")
 			</OnLoad>
 			<OnClick>
-				SettingsPanel:OpenToCategory(Settings.KEYBINDINGS_CATEGORY_ID)
+				Settings.OpenToCategory(Settings.KEYBINDINGS_CATEGORY_ID)
 				SettingsPanel.SearchBox:SetText("Engraver")
 			</OnClick>
 		</Scripts>
@@ -35,6 +35,43 @@
 				</Scripts>
 			</Button>
 		</Frames>
+	</Frame>
+	<Frame name="SettingsSelectableTextTemplate" inherits="SettingsListElementTemplate" mixin="SettingsSelectableTextMixin" virtual="true">
+		<Size x="280" y="26"/>
+		<Frames>
+			<EditBox parentKey="editBox" name="$parentEditBox" autoFocus="false" enableKeyboard="false" font="ChatFontNormal">
+				<Size x="400" y="21" />
+				<Scripts>
+					<OnEditFocusGained>
+						self:HighlightText()
+					</OnEditFocusGained>
+					<OnEditFocusLost>
+						self:HighlightText(0, 0)
+					</OnEditFocusLost>
+				</Scripts>
+			</EditBox>
+		</Frames>
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="EngraverCharacterSpecificControlTemplate" inherits="SettingsCheckBoxControlTemplate" mixin="EngraverCharacterSpecificControlMixin" virtual="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="$parentCopyText" parentKey="copyText" inherits="GameFontNormal" justifyH="LEFT" wordwrap="false" text="Copy Settings"/>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentCopyCharacterButton" parentKey="copyCharacterButton" inherits="UIPanelButtonTemplate" text="From Character To Shared">
+				<Size x="200" y="21"/>
+			</Button>
+			<Button name="$parentCopySharedButton" parentKey="copySharedButton" inherits="UIPanelButtonTemplate" text="From Shared To Character">
+				<Size x="200" y="21"/>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+		</Scripts>
 	</Frame>
 	<CheckButton name="EngraverOptionsFilterRuneButtonTemplate" mixin="EngraverOptionsFilterRuneButtonMixin" inherits="EngraverRuneButtonTemplate" virtual="true">
 		<Scripts>

@@ -1,10 +1,10 @@
-lightweight tag 2dac4ffce2d1ebf03f39ebaeb78362b9c4dfa315 v1.13.12
+lightweight tag b780e404b5255e9d85741c8a7413b1b0fbed843d v1.14.4
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Mon Feb 19 12:55:51 2024 -0500
+Date:	Thu Mar 28 23:35:15 2024 -0400
 
-commit 2dac4ffce2d1ebf03f39ebaeb78362b9c4dfa315
+commit b780e404b5255e9d85741c8a7413b1b0fbed843d
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Mon Feb 19 12:55:51 2024 -0500
+Date:   Thu Mar 28 23:35:15 2024 -0400
 
-    ShowOnMouseOver VisibilityMode
+    Added information section to options
 
