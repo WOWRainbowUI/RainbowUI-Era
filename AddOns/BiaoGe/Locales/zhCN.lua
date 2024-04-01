@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.8.2"
+ADDONSELF.ver = "v1.8.2b"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -15,6 +15,7 @@ do --简体说明书
     text = text .. "|cffFFFFFF-发送装备：|rSHIFT+点击装备\n"
     text = text .. "|cffFFFFFF-关注装备：|rALT+点击装备，团长拍卖此装备时会提醒（当你是团员时）\n"
     text = text .. "|cffFFFFFF-团长拍卖：|rALT+点击表格/背包/聊天框装备，打开拍卖面板（当你是团长时）\n"
+    text = text .. "|cffFFFFFF-快速记账：|r右键聊天框装备时打开（不用打开表格界面就可以完成记账）\n"
     text = text .. "|cffFFFFFF-查看同部位其他可选装备：|rCTRL+点击装备\n"
     text = text .. "|cffFFFFFF-交换格子：|rCTRL+ALT+点击格子1，再点格子2，可交换两行全部内容\n"
     text = text .. "|cffFFFFFF-更多功能介绍可在设置里查看|r\n\n"
@@ -23,6 +24,11 @@ do --简体说明书
     -- update = update .. "|cff00FF00" .. "" .. "|r\n"
     -- update = update .. [[]] .. "\n"
     -- update = update .. [[]] .. "\n\n"
+
+    update = update .. "|cff00FF00" .. "4月1日更新v1.8.2b" .. "|r\n"
+    update = update .. [[-新增功能：[快速记账]（右键聊天框装备时打开）。为团员提供一种不用打开表格界面就可以记账的方式]] .. "\n"
+    update = update .. [[-欠款输入框：现在按下回车键可以清除其焦点]] .. "\n"
+    update = update .. [[-<60服>角色总览：增加炼金转化、制皮筛盐、裁缝洗布]] .. "\n\n"
 
     update = update .. "|cff00FF00" .. "3月28日更新v1.8.2" .. "|r\n"
     update = update .. [[-为插件通讯功能增加安全机制，以避免一些恶性问题]] .. "\n"
@@ -89,6 +95,16 @@ ADDONSELF.L = L
 
 local L = {}
 do
+    L["招募"] = true
+    L["< 点击复制YY号 >"] = true
+    L["(广告)"] = true
+    L["< 快速记账 >"] = true
+    L["金额："] = true
+    L["欠款："] = true
+    L["|cff00BFFF< 快速记账成功 >|r\n|cffFFFFFF装备：%s\n买家：%s\n金额：%s%s\nBOSS：%s"] = true
+    L["附魔"] = true
+
+
     L["(装等)"] = true
 
 

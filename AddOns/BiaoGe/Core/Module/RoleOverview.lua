@@ -38,6 +38,8 @@ function BG.RoleOverviewUI()
                 ["BD"] = 1,
                 ["huiguweek"] = 1,
                 ["alchemy"] = 1,
+                ["leatherworking"] = 1,
+                ["tailor"] = 1,
             }
         else
             BiaoGe.FBCDchoice = {
@@ -54,9 +56,15 @@ function BG.RoleOverviewUI()
         end
     end
     do
-        if BG.IsVanilla() then
+        if BG.IsVanilla_Sod() then
             BG.Once("FBCDchoice", 240328, function()
                 BiaoGe.FBCDchoice["Temple"] = 1
+                BiaoGe.FBCDchoice["leatherworking"] = 1
+                BiaoGe.FBCDchoice["tailor"] = 1
+            end)
+        elseif BG.IsVanilla_60() then
+            BG.Once("FBCDchoice", 240329, function()
+                BiaoGe.FBCDchoice["alchemy"] = 1
                 BiaoGe.FBCDchoice["leatherworking"] = 1
                 BiaoGe.FBCDchoice["tailor"] = 1
             end)
@@ -111,6 +119,10 @@ function BG.RoleOverviewUI()
                 { name = "MC", color = "00BFFF", fbId = 409, num = 40, type = "fb" },
                 { name = "AQL", color = "BA55D3", fbId = 509, num = 20, type = "fb" },
                 { name = "ZUG", color = "BA55D3", fbId = 309, num = 20, type = "fb" },
+                -- 专业
+                { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
+                { name = "leatherworking", name2 = L["制皮筛盐"], color = "ADFF2F", type = "profession" },
+                { name = "tailor", name2 = L["裁缝洗布"], color = "ADFF2F", type = "profession" },
             }
         end
     else

@@ -808,7 +808,6 @@ function BG.SetListmaijia(maijia, focus, guolv)
                     button:SetTextColor(GetClassRGB(GetText_T(raid[num].name)))
                 end
             end
-            button:Show()
             framedown = button
 
             button.ds = button:CreateTexture()
@@ -895,6 +894,9 @@ function BG.SetListjine(jine, FB, b, i)
         end
     end)
     edit:SetScript("OnEscapePressed", function(self)
+        BG.FrameJineList:Hide()
+    end)
+    edit:SetScript("OnEnterPressed", function(self)
         BG.FrameJineList:Hide()
     end)
     -- 点击时

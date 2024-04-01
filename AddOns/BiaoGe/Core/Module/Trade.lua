@@ -162,7 +162,9 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                                 local bt = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
                                 if bt and GetItemID(bt:GetText()) == GetItemID(Items[items]) and
                                     BG.Frame[FB]["boss" .. b]["maijia" .. i]:GetText() == "" and
-                                    BG.Frame[FB]["boss" .. b]["jine" .. i]:GetText() == "" then
+                                    BG.Frame[FB]["boss" .. b]["jine" .. i]:GetText() == "" and
+                                    not BiaoGe[FB]["boss" .. b]["qiankuan" .. i]
+                                then
                                     if num == 1 then
                                         BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetText(Player)
                                         BG.Frame[FB]["boss" .. b]["maijia" .. i]:SetCursorPosition(0)
@@ -191,7 +193,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                                         returntext = (format("|cff00BFFF" ..
                                             L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
                                             (AddTexture(Texture) .. Items[items]), SetClassCFF(Player), "|cffFFD700",
-                                            (Money + qiankuan), qiankuantext, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"]))
+                                            (Money + qiankuan), qiankuantext, "|cff" .. BG.Boss[FB]["boss" .. b]["color"],
+                                            BG.Boss[FB]["boss" .. b]["name2"]))
                                         BG.tradeDropDown.DropDown:Hide()
                                     end
                                     first = nil
@@ -233,7 +236,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
 
                                     local Texture = select(10, GetItemInfo(Items[1]))
                                     returntext = (format("|cff00BFFF" .. L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
-                                        (AddTexture(Texture) .. Items[1]), SetClassCFF(Player), "|cffFFD700", (Money + qiankuan), qiankuantext, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"]))
+                                        (AddTexture(Texture) .. Items[1]), SetClassCFF(Player), "|cffFFD700", (Money + qiankuan),
+                                        qiankuantext, "|cff" .. BG.Boss[FB]["boss" .. b]["color"], BG.Boss[FB]["boss" .. b]["name2"]))
                                     BG.tradeDropDown.DropDown:Show()
                                     return returntext
                                 end
@@ -292,6 +296,9 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             BG.TradeChange()
             BG.tradeFrame.text:SetText(BG.TradeText(0, BG.trade.target, BG.trade.player, BG.trade.targetmoney,
                 BG.trade.playermoney, BG.trade.targetitems, BG.trade.playeritems))
+        end)
+        edit:SetScript("OnEnterPressed", function(self)
+            self:ClearFocus()
         end)
         -- 点击时
         edit:SetScript("OnMouseDown", function(self, enter)

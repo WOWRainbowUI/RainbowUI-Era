@@ -249,14 +249,16 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                         BiaoGe[FB]["boss" .. numb]["zhuangbei" .. i] = link
                         BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
                             format(L["已自动记入表格：%s%s(%s) => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
-                                level, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                                level, "|cff" .. BG.Boss[FB]["boss" .. numb]["color"],
+                                BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
                     else
                         zb:SetText(link .. "x" .. count)
                         duizhangzb:SetText(link .. "x" .. count)
                         BiaoGe[FB]["boss" .. numb]["zhuangbei" .. i] = link .. "x" .. count
                         BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
                             format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
-                                level, count, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                                level, count, "|cff" .. BG.Boss[FB]["boss" .. numb]["color"],
+                                BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
                     end
                     -- UpdateBiaoGeAllIsHaved()
                     return
@@ -267,7 +269,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                     end
                     BG.FrameLootMsg:AddMessage(icon .. format(
                         "|cffDC143C" .. L["自动记录失败：%s%s(%s)。因为%s< %s >%s的格子满了。。"], RR,
-                        (AddTexture(Texture) .. link), level, "|cffFF1493", BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
+                        (AddTexture(Texture) .. link), level, "|cff" .. BG.Boss[FB]["boss" .. numb]["color"],
+                        BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
                     -- UpdateBiaoGeAllIsHaved()
                     return
                 end
@@ -302,7 +305,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                         end
                         BG.FrameLootMsg:AddMessage(icon .. "|cff00BFFF" ..
                             format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
-                                level, count, "|cffFF1493", BG.Boss[FB]["boss" .. b]["name2"], RR) .. icon)
+                                level, count, "|cff" .. BG.Boss[FB]["boss" .. b]["color"],
+                                BG.Boss[FB]["boss" .. b]["name2"], RR) .. icon)
                         -- UpdateBiaoGeAllIsHaved()
                         return
                     end
