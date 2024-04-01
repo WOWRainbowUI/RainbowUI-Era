@@ -825,6 +825,21 @@ D["Details"] = {
 		text = "切換顯示傷害/治療或其他統計：右鍵點戰鬥統計視窗標題。\n\n切換顯示整體/單次傷害：滑鼠指向戰鬥統計視窗右上方的文件圖示。\n\n切換顯示書籤：右鍵點戰鬥統計視窗內容。\n\n開新視窗：滑鼠指向戰鬥統計視窗右上方的小齒輪 > 視窗控制 > 建立視窗。\n\n顯示仇恨值：滑鼠指向戰鬥統計視窗右上方的小齒輪 (不要點它) > 外掛套件：團隊 > Tiny Threat。建議開一個新視窗來專門顯示仇恨表。\n\n|cffFF2D2D要顯示其他人的仇恨值，對方也需要安裝並更新到最新版本的 Details! 戰鬥統計插件。|r\n\n修正距離太遠 (超過50碼) 看不到 DPS 的問題：按下上方的 '開啟/關閉同步資料' 按鈕，或是輸入\n /details sync\n",
     },
 };
+D["DialogueUI"] = {
+	defaultEnable = 1,
+	tags = { "QUEST" },
+	title = "任務對話 (羊皮紙)",
+	desc = "與NPC對話、接受/交回任務時，將任務內容顯示在羊皮紙上，取代傳統的任務說明，讓你更能享受並融入任務內容的對話劇情。``對話時會隱藏遊戲介面，並將鏡頭拉近放大角色，有沉浸感。也可以設定為不要移動鏡頭。",
+	modifier = "彩虹ui",
+	{
+		type = "text",
+        text = "|cffFF2D2D有多種任務對話插件，選擇其中一種載入使用就好，不要同時載入。|r\n",
+	},
+	{
+        type = "text",
+		text = "設定選項: 和 NPC 對話時按下 F1。\n",
+    },
+};
 D["djbags"] = {
 	defaultEnable = 0,
 	title = "DJ 智能分類背包",
@@ -1288,7 +1303,7 @@ D["HidingBar"] = {
 D["Immersion"] = {
     defaultEnable = 0,
 	title = "任務對話 (說話的頭)",
-	desc = "與NPC對話、接受/交回任務時，會使用遊戲內建 '說話的頭' 風格的對話方式，取代傳統的任務說明。``讓你更能享受並融入任務內容的對話劇情。``|cffFF2D2D任務對話 (FF XIV)、任務對話 (說話的頭) 和任務對話 (電影風格) 選擇其中一種使用即可，請勿同時載入使用。|r`",
+	desc = "與NPC對話、接受/交回任務時，會使用遊戲內建 '說話的頭' 風格的對話方式，取代傳統的任務說明。``讓你更能享受並融入任務內容的對話劇情。`",
 	author = "MunkDev",
 	modifier = "彩虹ui",
 	--icon = "Interface\\Icons\\achievement_leader_sylvanas",
@@ -1297,6 +1312,10 @@ D["Immersion"] = {
         text = "設定選項",
         callback = function(cfg, v, loading) SlashCmdList["IMMERSION"]("") end,
     },
+	{
+		type = "text",
+        text = "|cffFF2D2D有多種任務對話插件，選擇其中一種載入使用就好，不要同時載入。|r\n",
+	},
 	{
 		type = "text",
         text = "鍵盤操作方式：\n\n繼續下一步、接受/交回任務：\n滑鼠或空白鍵。\n\n選擇對話項目：1~9 數字鍵。\n\n回上一步：倒退鍵。\n\n取消對話：Esc 鍵。\n",
@@ -1878,10 +1897,14 @@ D["QuestC"] = {
     defaultEnable = 0,
 	tags = { "QUEST" },
 	title = "任務對話 (電影風格)",
-	desc = "像看電影般的享受任務對話和劇情，讓每個任務都像是過場動畫。``用滑鼠點或按空白鍵接受任務和繼續下一段對話，按 Esc 取消對話。``|cffFF2D2D任務對話 (FF XIV)、任務對話 (說話的頭) 和任務對話 (電影風格) 選擇其中一種使用即可，請勿同時載入使用。|r`",
+	desc = "像看電影般的享受任務對話和劇情，讓每個任務都像是過場動畫。``用滑鼠點或按空白鍵接受任務和繼續下一段對話，按 Esc 取消對話。`",
 	modifier = "彩虹ui",
 	--icon = "Interface\\Icons\\achievement_leader_king_varian_wrynn",
 	img = true,
+	{
+		type = "text",
+        text = "|cffFF2D2D有多種任務對話插件，選擇其中一種載入使用就好，不要同時載入。|r\n",
+	},
 };
 D["Questie"] = {
     defaultEnable = 1,
@@ -2440,10 +2463,14 @@ D["TinyTooltip-Reforged"] = {
 	},
 };
 D["Tofu"] = {
-    defaultEnable = 1,
+    defaultEnable = 0,
 	tags = { "QUEST" },
 	title = "任務對話 (FF XIV)",
-	desc = "與NPC對話、接受/交回任務時，會使用 FINAL FANTASY XIV 風格的對話方式，取代傳統的任務說明。``用滑鼠點或按空白鍵接受任務和繼續下一段對話，按 Esc 取消對話。``|cffFF2D2D任務對話 (FF XIV)、任務對話 (說話的頭) 和任務對話 (電影風格) 選擇其中一種使用即可，請勿同時載入使用。|r`",
+	desc = "與NPC對話、接受/交回任務時，會使用 FINAL FANTASY XIV 風格的對話方式，取代傳統的任務說明。``用滑鼠點或按空白鍵接受任務和繼續下一段對話，按 Esc 取消對話。`",
+	{
+		type = "text",
+        text = "|cffFF2D2D有多種任務對話插件，選擇其中一種載入使用就好，不要同時載入。|r\n",
+	},
 };
 D["TomTom"] = {
     defaultEnable = 1,
