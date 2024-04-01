@@ -433,7 +433,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         local addon = CreateFrame("Frame", nil, BG.MainFrame)
         do
             addon:SetSize(1, 20)
-            addon:SetPoint("LEFT", BG.ButtonOnLineCount, "RIGHT", 0, 0)
+            addon:SetPoint("LEFT", BG.ButtonAd, "RIGHT", 0, 0)
             addon:Hide()
             addon.title = L["BiaoGe版本"]
             addon.title2 = L["插件：%s"]

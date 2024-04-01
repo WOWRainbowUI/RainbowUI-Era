@@ -13,10 +13,16 @@ do --繁体说明书
     text = text .. "|cffFFFFFF-發送裝備：|rSHIFT+點擊裝備\n"
     text = text .. "|cffFFFFFF-關注裝備：|rALT+點擊裝備，團長拍賣此裝備時會提醒（當你是團員時）\n"
     text = text .. "|cffFFFFFF-團長拍賣：|rALT+點擊表格/背包/聊天框裝備，打開拍賣面板（當你是團長時）\n"
+    text = text .. "|cffFFFFFF-快速記賬：|r右鍵聊天框裝備時打開（不用打開表格界面就可以完成記賬）\n"
     text = text .. "|cffFFFFFF-查看同部位其他可选装备：|rCTRL+點擊裝備\n"
     text = text .. "|cffFFFFFF-交換格子：|rCTRL+ALT+點擊格子1，再點格子2，可交換兩行全部內容\n"
     text = text .. "|cffFFFFFF-更多功能介紹可在設置裡查看|r\n\n"
     text = text .. "-BUG反饋：郵箱buick_hbj@163.com，Q群322785325\n\n"
+
+    update = update .. "|cff00FF00" .. "4月1日更新v1.8.2b" .. "|r\n"
+    update = update .. [[-新增功能：[快速記賬]（右鍵聊天框裝備時打開）。為團員提供一種不用打開表格界面就可以記賬的方式]] .. "\n"
+    update = update .. [[-欠款輸入框：現在按下回車鍵可以清除其焦點]] .. "\n"
+    update = update .. [[-<60服>角色總覽：增加煉金轉化、制皮篩鹽、裁縫洗布]] .. "\n\n"
 
     update = update .. "|cff00FF00" .. "3月28日更新v1.8.2" .. "|r\n"
     update = update .. [[-為插件通訊功能增加安全機制，以避免一些惡性問題]] .. "\n"
@@ -80,6 +86,16 @@ local L = setmetatable({}, {
 })
 
 do
+    L["招募"] = "招募"
+    L["< 点击复制YY号 >"] = "< 點擊複製YY號 >"
+    L["(广告)"] = "(廣告)"
+    L["< 快速记账 >"] = "< 快速記賬 >"
+    L["金额："] = "金額："
+    L["欠款："] = "欠款："
+    L["|cff00BFFF< 快速记账成功 >|r\n|cffFFFFFF装备：%s\n买家：%s\n金额：%s%s\nBOSS：%s"] = "|cff00BFFF< 快速記賬成功 >|r\n|cffFFFFFF裝備：%s\n買家：%s\n金額：%s%s\nBOSS：%s"
+    L["附魔"] = "附魔"
+
+
     L["(装等)"] = "(裝等)"
 
 

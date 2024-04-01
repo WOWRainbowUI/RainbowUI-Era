@@ -858,7 +858,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                                             format(L["已自动记入表格：%s%s(%s) => %s< %s >%s"], RR, (AddTexture(Texture) .. link), level, "|cffFF1493", BG.Boss[FB]["boss" .. num]["name2"], RR) .. BG.STC_r1(L[" （测试） "]))
                                     else
                                         f:AddMessage(format("|cff00BFFF" .. L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"],
-                                            (AddTexture(Texture) .. link), SetClassCFF(UnitName("player"), "Player"), "|cffFFD700", 10000, L["|cffFF0000（欠款2000）|r"], "|cffFF1493", BG.Boss[FB]["boss" .. num]["name2"]) .. BG.STC_r1(L[" （测试） "]))
+                                            (AddTexture(Texture) .. link), SetClassCFF(UnitName("player"), "Player"), "|cffFFD700", 10000, L["|cffFF0000（欠款2000）|r"], "|cff" .. BG.Boss[FB]["boss" .. num]["color"], BG.Boss[FB]["boss" .. num]["name2"]) .. BG.STC_r1(L[" （测试） "]))
                                     end
                                 else
                                     name, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(itemID)
@@ -1575,7 +1575,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
                 end
             end
         end)
-        hooksecurefunc("SetItemRef", function(link)
+        hooksecurefunc("SetItemRef", function(link, text, button)
             local item, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
             if not link then return end
             if IsAltKeyDown() then
@@ -1712,6 +1712,7 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
         end
         f:SetScript("OnClick", function()
             GetChannelMemberCount(World)
+            BG.PlaySound(1)
         end)
         hooksecurefunc(ChannelFrame.ChannelList, 'AddChannelButtonInternal', function(_, bt, _, name, _, channelId)
             if name == ChannelFrame.targetChannel then
@@ -2350,7 +2351,445 @@ BG.RegisterEvent("ADDON_LOADED", function(self, event, addonName)
             end)
         end)
     end
+    ----------快速记账----------
+    do
+        -- 创建买家
+        local function CreateMaijiaFrame(parent)
+            local f = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+            f:SetWidth(395)
+            f:SetHeight(230)
+            f:SetPoint("TOP", parent, "TOP", 0, -55)
+            f:EnableMouse(true)
+            parent.maijiaFrame = f
+            local buttons = {}
+            local framedown
+            local frameright = f
+            local raid = BG.PaiXuRaidRosterInfo()
+            for t = 1, 4 do
+                for i = 1, 10 do
+                    local bt = CreateFrame("EditBox", nil, f, "InputBoxTemplate")
+                    bt:SetSize(90, 20)
+                    bt:SetAutoFocus(false)
+                    bt:SetEnabled(false)
+                    if t >= 2 and i == 1 then
+                        bt:SetPoint("TOPLEFT", frameright, "TOPLEFT", 97, 0)
+                        frameright = bt
+                    end
+                    if t == 1 and i == 1 then
+                        bt:SetPoint("TOPLEFT", frameright, "TOPLEFT", 10, -5)
+                        frameright = bt
+                    end
+                    if i > 1 then
+                        bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -2)
+                    end
+                    if not IsInRaid(1) and t == 1 and i == 1 then -- 单人时
+                        bt:SetText(UnitName("player"))
+                        bt:SetCursorPosition(0)
+                        bt:SetTextColor(GetClassRGB(UnitName("player")))
+                    end
+                    local num = (t - 1) * 10 + i
+                    if raid[num] then
+                        if raid[num].name then
+                            if raid[num].role then
+                                bt:SetText(AddTexture(raid[num].role) .. raid[num].name)
+                            elseif raid[num].combatRole == "HEALER" then
+                                bt:SetText(AddTexture(raid[num].combatRole) .. raid[num].name)
+                            else
+                                bt:SetText(raid[num].name)
+                            end
+                            bt:SetCursorPosition(0)
+                            bt:SetTextColor(GetClassRGB(GetText_T(raid[num].name)))
+                        end
+                    end
+                    framedown = bt
+                    tinsert(buttons, bt)
 
+                    bt.ds = bt:CreateTexture()
+                    bt.ds:SetPoint("TOPLEFT", -3, -2)
+                    bt.ds:SetPoint("BOTTOMRIGHT", -1, 2)
+                    bt.ds:SetColorTexture(1, 1, 1, BG.onEnterAlpha)
+                    bt.ds:Hide()
+
+                    bt.choose = bt:CreateTexture()
+                    bt.choose:SetPoint("TOPLEFT", -3, -2)
+                    bt.choose:SetPoint("BOTTOMRIGHT", -1, 2)
+                    bt.choose:SetColorTexture(0, 1, 0, 0.2)
+                    bt.choose:Hide()
+
+                    bt:SetScript("OnMouseDown", function(self, enter)
+                        if bt:GetText() == "" then return end
+                        for i, _bt in ipairs(buttons) do
+                            _bt.Left:SetVertexColor(1, 1, 1)
+                            _bt.Right:SetVertexColor(1, 1, 1)
+                            _bt.Middle:SetVertexColor(1, 1, 1)
+                            _bt.choose:Hide()
+                        end
+                        if parent.maijia == GetText_T(bt) then
+                            parent.maijia = ""
+                            parent.maijiacolor = { 1, 1, 1 }
+                            bt.Left:SetVertexColor(1, 1, 1)
+                            bt.Right:SetVertexColor(1, 1, 1)
+                            bt.Middle:SetVertexColor(1, 1, 1)
+                            bt.choose:Hide()
+                        else
+                            parent.maijia = GetText_T(bt)
+                            parent.maijiacolor = { bt:GetTextColor() }
+                            bt.Left:SetVertexColor(0, 1, 0)
+                            bt.Right:SetVertexColor(0, 1, 0)
+                            bt.Middle:SetVertexColor(0, 1, 0)
+                            bt.choose:Show()
+                        end
+                        BG.ChatAccountingFrame:SureButtonUpdate()
+                        BG.PlaySound(1)
+                    end)
+                    bt:SetScript("OnEnter", function(self)
+                        if self:GetText() ~= "" then
+                            self.ds:Show()
+                        end
+                    end)
+                    bt:SetScript("OnLeave", function(self)
+                        GameTooltip:Hide()
+                        self.ds:Hide()
+                    end)
+                end
+            end
+        end
+        -- 找到合适的格子
+        local function HasEmptyGeZi(link)
+            local FB = BG.FB1
+            for b = 1, Maxb[FB] do
+                for i = 1, Maxi[FB] do
+                    local zhuangbei = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+                    local maijia = BG.Frame[FB]["boss" .. b]["maijia" .. i]
+                    local jine = BG.Frame[FB]["boss" .. b]["jine" .. i]
+
+                    if zhuangbei and GetItemID(zhuangbei:GetText()) == GetItemID(link) and
+                        maijia:GetText() == "" and jine:GetText() == "" and
+                        not BiaoGe[FB]["boss" .. b]["qiankuan" .. i] then
+                        return b, i, zhuangbei, maijia, jine
+                    end
+                end
+            end
+        end
+        -- 记账失败
+        local frames = {}
+        local updateFrame = CreateFrame("Frame")
+        updateFrame.time = 0
+        local function JiZhangError(link)
+            BG.FrameLootMsg:AddMessage(L["表格里没找到此次交易的装备，或者该装备已记过账"], RED_FONT_COLOR:GetRGB())
+            if not BG.MainFrame:IsVisible() then
+                BG.MainFrame:Show()
+                BG.ClickTabButton(BG.tabButtons, BG.FBMainFrameTabNum)
+            end
+            if BG.ChatAccountingFrame:IsVisible() then
+                BG.ChatAccountingFrame:Hide()
+            end
+
+            for i, textrue in ipairs(frames) do
+                textrue:Hide()
+            end
+            wipe(frames)
+
+            updateFrame.time = 0
+            local FB = BG.FB1
+            for b = 1, Maxb[FB] do
+                for i = 1, Maxi[FB] do
+                    local zhuangbei = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
+                    local maijia = BG.Frame[FB]["boss" .. b]["maijia" .. i]
+                    local jine = BG.Frame[FB]["boss" .. b]["jine" .. i]
+
+                    if zhuangbei and GetItemID(zhuangbei:GetText()) == GetItemID(link) then
+                        if not zhuangbei.JiZhangErrorTextrue then
+                            local textrue = zhuangbei:CreateTexture()
+                            textrue:SetPoint("TOPLEFT", zhuangbei, "TOPLEFT", -4, -2)
+                            textrue:SetPoint("BOTTOMRIGHT", jine, "BOTTOMRIGHT", -2, 0)
+                            textrue:SetColorTexture(1, 0, 0, 0.3)
+                            zhuangbei.JiZhangErrorTextrue = textrue
+                        end
+                        zhuangbei.JiZhangErrorTextrue:Show()
+                        zhuangbei.JiZhangErrorTextrue:SetAlpha(1)
+                        tinsert(frames, zhuangbei.JiZhangErrorTextrue)
+                    end
+                end
+            end
+            if #frames ~= 0 then
+                updateFrame:SetScript("OnUpdate", function(self, elapsed)
+                    updateFrame.time = updateFrame.time + elapsed
+                    if updateFrame.time >= 3 and updateFrame.time < 5 then
+                        for i, textrue in ipairs(frames) do
+                            textrue:SetAlpha((5 - updateFrame.time) / 2)
+                        end
+                    elseif updateFrame.time >= 5 then
+                        for i, textrue in ipairs(frames) do
+                            textrue:Hide()
+                        end
+                        updateFrame.time = 0
+                        updateFrame:SetScript("OnUpdate", nil)
+                    end
+                end)
+            end
+        end
+
+        -- 主UI
+        local f = CreateFrame("Frame", "BG.ChatAccountingFrame", UIParent, "BackdropTemplate")
+        do
+            f:SetBackdrop({
+                bgFile = "Interface/ChatFrame/ChatFrameBackground",
+                edgeFile = "Interface/DialogFrame/UI-DialogBox-Border",
+                edgeSize = 32,
+                insets = { left = 3, right = 3, top = 3, bottom = 3 }
+            })
+            f:SetBackdropColor(0, 0, 0, 0.8)
+            f:SetSize(430, 380)
+            f:SetFrameStrata("HIGH")
+            f:SetClampedToScreen(true)
+            f:SetFrameLevel(300)
+            f:EnableMouse(true)
+            f:SetMovable(true)
+            f:SetHyperlinksEnabled(true)
+            f:SetScript("OnMouseUp", function(self)
+                self:StopMovingOrSizing()
+            end)
+            f:SetScript("OnMouseDown", function(self)
+                self:StartMoving()
+            end)
+            f:SetScript("OnHyperlinkEnter", function(self, link, text, button)
+                GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0, 0)
+                GameTooltip:ClearLines()
+                local itemID = GetItemInfoInstant(link)
+                if itemID then
+                    GameTooltip:SetItemByID(itemID)
+                    GameTooltip:Show()
+                end
+            end)
+            f:SetScript("OnHyperlinkLeave", GameTooltip_Hide)
+            f:SetScript("OnShow", function(self)
+                if BG.ChatAccountingFrame.maijiaFrame then
+                    BG.ChatAccountingFrame.maijiaFrame:Hide()
+                end
+                CreateMaijiaFrame(BG.ChatAccountingFrame)
+                local link = ""
+                local Texture
+                if BG.ChatAccountingFrame.itemLink then
+                    Texture = select(10, GetItemInfo(BG.ChatAccountingFrame.itemLink))
+                    link = BG.ChatAccountingFrame.itemLink
+                end
+
+                local x, y = GetCursorPosition()
+                x, y = x / UIParent:GetEffectiveScale(), y / UIParent:GetEffectiveScale()
+                BG.ChatAccountingFrame:ClearAllPoints()
+                BG.ChatAccountingFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", x + 10, y + 10)
+                BG.ChatAccountingFrame.item:SetText(link)
+                BG.ChatAccountingFrame.icon:SetTexture(Texture)
+                BG.ChatAccountingFrame.maijia = ""
+                BG.ChatAccountingFrame.maijiacolor = { 1, 1, 1 }
+                BG.ChatAccountingFrame.jineFrame:SetText("")
+                BG.ChatAccountingFrame.jineFrame:SetFocus()
+                BG.ChatAccountingFrame.qiankuanFrame:SetText("")
+                BG.ChatAccountingFrame:SureButtonUpdate()
+            end)
+            f:SetScript("OnHide", function(self)
+                if BG.ChatAccountingFrame.BlinkHilight then
+                    BG.ChatAccountingFrame.BlinkHilight:Hide()
+                end
+            end)
+            BG.ChatAccountingFrame = f
+        end
+        tinsert(UISpecialFrames, "BG.ChatAccountingFrame")
+
+        -- 顶部标题
+        do
+            local t = f:CreateTexture(nil, "ARTWORK")
+            t:SetTexture("Interface/DialogFrame/UI-DialogBox-Header")
+            t:SetWidth(256)
+            t:SetHeight(64)
+            t:SetPoint("TOP", f, 0, 12)
+            f.texture = t
+            local t = f:CreateFontString()
+            t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+            t:SetText(L["< 快速记账 >"])
+            t:SetPoint("TOP", f.texture, 0, -13)
+            t:SetTextColor(RGB(BG.b1))
+        end
+
+        -- 装备
+        do
+            BG.ChatAccountingFrame.item = BG.ChatAccountingFrame:CreateFontString()
+            BG.ChatAccountingFrame.item:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+            BG.ChatAccountingFrame.item:SetPoint("TOP", BG.ChatAccountingFrame, "TOP", 0, -35)
+            BG.ChatAccountingFrame.item:SetTextColor(RGB("FFD100"))
+
+            BG.ChatAccountingFrame.icon = BG.ChatAccountingFrame:CreateTexture(nil, 'ARTWORK')
+            BG.ChatAccountingFrame.icon:SetPoint('LEFT', BG.ChatAccountingFrame.item, "LEFT", -20, 0)
+            BG.ChatAccountingFrame.icon:SetSize(18, 18)
+        end
+
+        -- 金额
+        do
+            local edit = CreateFrame("EditBox", nil, BG.ChatAccountingFrame, "InputBoxTemplate")
+            edit:SetSize(120, 20)
+            edit:SetPoint("BOTTOMRIGHT", BG.ChatAccountingFrame, "BOTTOM", 0, 60)
+            edit:SetAutoFocus(false)
+            -- edit:SetNumeric(true)
+            BG.ChatAccountingFrame.jineFrame = edit
+            edit:SetScript("OnTextChanged", function(self)
+                BG.ChatAccountingFrame.jine = self:GetText()
+                BG.ChatAccountingFrame:SureButtonUpdate()
+            end)
+            edit:SetScript("OnEnterPressed", function()
+                BG.ChatAccountingFrame:SureOnClick()
+            end)
+            edit:SetScript("OnTabPressed", function()
+                BG.ChatAccountingFrame.qiankuanFrame:SetFocus()
+            end)
+            edit:SetScript("OnMouseDown", function(self, button)
+                if button == "RightButton" then
+                    self:SetEnabled(false)
+                    self:SetText("")
+                    if self:HasFocus() then
+                        self:ClearFocus()
+                    end
+                end
+            end)
+            edit:SetScript("OnMouseUp", function(self, button)
+                self:SetEnabled(true)
+            end)
+
+            local t = BG.ChatAccountingFrame.jineFrame:CreateFontString()
+            t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+            t:SetPoint("RIGHT", BG.ChatAccountingFrame.jineFrame, "LEFT", -15, 0)
+            t:SetTextColor(RGB("FFD100"))
+            t:SetText(L["金额："])
+        end
+
+        -- 欠款
+        do
+            local edit = CreateFrame("EditBox", nil, BG.ChatAccountingFrame, "InputBoxTemplate")
+            edit:SetSize(120, 20)
+            edit:SetPoint("BOTTOMRIGHT", BG.ChatAccountingFrame, "BOTTOMRIGHT", -20, 60)
+            edit:SetAutoFocus(false)
+            edit:SetNumeric(true)
+            edit:SetTextColor(1, 0, 0)
+            BG.ChatAccountingFrame.qiankuanFrame = edit
+            edit:SetScript("OnTextChanged", function(self)
+                BG.ChatAccountingFrame.qiankuan = self:GetText()
+                BG.ChatAccountingFrame:SureButtonUpdate()
+            end)
+            edit:SetScript("OnEnterPressed", function()
+                BG.ChatAccountingFrame:SureOnClick()
+            end)
+            edit:SetScript("OnTabPressed", function()
+                BG.ChatAccountingFrame.jineFrame:SetFocus()
+            end)
+            edit:SetScript("OnMouseDown", function(self, button)
+                if button == "RightButton" then
+                    self:SetEnabled(false)
+                    self:SetText("")
+                    if self:HasFocus() then
+                        self:ClearFocus()
+                    end
+                end
+            end)
+            edit:SetScript("OnMouseUp", function(self, button)
+                self:SetEnabled(true)
+            end)
+
+            local t = BG.ChatAccountingFrame.qiankuanFrame:CreateFontString()
+            t:SetFont(BIAOGE_TEXT_FONT, 15, "OUTLINE")
+            t:SetPoint("RIGHT", BG.ChatAccountingFrame.qiankuanFrame, "LEFT", -15, 0)
+            t:SetTextColor(RGB("FFD100"))
+            t:SetText(L["欠款："])
+        end
+
+        -- 确定/取消
+        do
+            function BG.ChatAccountingFrame:SureOnClick()
+                if not self.sureButton:IsEnabled() then return end
+                local b, i, zhuangbei, maijia, jine = HasEmptyGeZi(self.itemLink)
+                if b then
+                    local FB = BG.FB1
+                    maijia:SetText(self.maijia)
+                    maijia:SetTextColor(unpack(self.maijiacolor))
+                    jine:SetText(self.jine)
+                    BiaoGe[FB]["boss" .. b]["maijia" .. i] = (self.maijia)
+                    BiaoGe[FB]["boss" .. b]["color" .. i] = self.maijiacolor
+                    BiaoGe[FB]["boss" .. b]["jine" .. i] = self.jine
+                    local qiankuantext = ""
+                    if self.qiankuan ~= "" then
+                        BiaoGe[FB]["boss" .. b]["qiankuan" .. i] = self.qiankuan
+                        BG.Frame[FB]["boss" .. b]["qiankuan" .. i]:Show()
+                        qiankuantext = format("|cffFF0000" .. L["（欠款%d）"] .. RR, self.qiankuan)
+                    end
+                    self:Hide()
+
+                    local Texture = select(10, GetItemInfo(self.itemLink))
+                    local jine = ""
+                    if self.jine ~= "" then
+                        jine = "|cffFFD700" .. self.jine .. "|rg"
+                    end
+                    local text = format(L["|cff00BFFF< 快速记账成功 >|r\n|cffFFFFFF装备：%s\n买家：%s\n金额：%s%s\nBOSS：%s"],
+                        (AddTexture(Texture) .. self.itemLink),
+                        SetClassCFF(self.maijia),
+                        jine,
+                        qiankuantext,
+                        "|cff" .. BG.Boss[FB]["boss" .. b]["color"] .. BG.Boss[FB]["boss" .. b]["name2"] .. RR)
+                    BG.FrameTradeMsg:AddMessage(text)
+                    return
+                end
+                JiZhangError(self.itemLink)
+            end
+
+            function BG.ChatAccountingFrame:SureButtonUpdate()
+                if self.maijia == "" and self.jineFrame:GetText() == "" and self.qiankuanFrame:GetText() == "" then
+                    self.sureButton:Disable()
+                else
+                    self.sureButton:Enable()
+                end
+            end
+
+            local bt = CreateFrame("Button", nil, BG.ChatAccountingFrame, "UIPanelButtonTemplate")
+            bt:SetSize(100, 30)
+            bt:SetPoint("BOTTOMRIGHT", BG.ChatAccountingFrame, "BOTTOM", -30, 20)
+            bt:SetText(L["确定"])
+            BG.ChatAccountingFrame.sureButton = bt
+            bt:SetScript("OnClick", function(self)
+                BG.ChatAccountingFrame:SureOnClick()
+                BG.PlaySound(1)
+            end)
+            local bt = CreateFrame("Button", nil, BG.ChatAccountingFrame, "UIPanelButtonTemplate")
+            bt:SetSize(100, 30)
+            bt:SetPoint("BOTTOMLEFT", BG.ChatAccountingFrame, "BOTTOM", 30, 20)
+            bt:SetText(L["取消"])
+            bt:SetScript("OnClick", function(self)
+                BG.ChatAccountingFrame:Hide()
+                BG.PlaySound(1)
+            end)
+        end
+
+        hooksecurefunc("SetItemRef", function(link, text, button)
+            local item, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
+            if not link then return end
+            if button == "RightButton" then
+                if ItemRefTooltip:IsVisible() then
+                    ItemRefTooltip:Hide()
+                end
+                local b, i, zhuangbei, maijia, jine = HasEmptyGeZi(link)
+                if b then
+                    BG.ChatAccountingFrame.itemLink = link
+                    BG.ChatAccountingFrame:Hide()
+                    BG.ChatAccountingFrame:Show()
+                    GameTooltip:Hide()
+
+                    local f = BG.Create_BlinkHilight(zhuangbei)
+                    f:SetPoint("TOPLEFT", zhuangbei, "TOPLEFT", -80, 5)
+                    f:SetPoint("BOTTOMRIGHT", jine, "BOTTOMRIGHT", 90, -5)
+                    BG.ChatAccountingFrame.BlinkHilight = f
+                    return
+                end
+                JiZhangError(link)
+            end
+        end)
+    end
     ----------清空表格----------
     do
         -- 清空按钮

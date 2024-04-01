@@ -342,6 +342,8 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             icon = AddTexture(136249, nil, ":100:100:8:92:8:92")
         elseif otherID == "工程" then
             icon = AddTexture(136243, nil, ":100:100:8:92:8:92")
+        elseif otherID == "附魔" then
+            icon = AddTexture(136244, nil, ":100:100:8:92:8:92")
         end
         local name = TRADE_SKILLS .. ": " .. L[otherID] .. icon
         local get = BG.STC_y2(name) .. AddPrice(itemID)
