@@ -319,19 +319,19 @@ L["instanceWindowWidthTitle"] = "事件視窗寬度";
 L["instanceWindowWidthDesc"] = "副本追蹤視窗要多寬。";
 
 L["instanceWindowHeightTitle"] = "事件視窗高度";
-L["instanceWindowHeghtDesc"] = "副本追蹤視窗要多高。";
+L["instanceWindowHeightDesc"] = "副本追蹤視窗要多高。";
 
 L["charsWindowWidthTitle"] = "角色視窗寬度";
 L["charsWindowWidthDesc"] = "角色資訊視窗要多寬。";
 
 L["charsWindowHeightTitle"] = "角色視窗高度";
-L["charsWindowHeghtDesc"] = "角色資訊視窗要多高。";
+L["charsWindowHeightDesc"] = "角色資訊視窗要多高。";
 
 L["tradeWindowWidthTitle"] = "交易視窗寬度";
 L["tradeWindowWidthDesc"] = "交易視窗的寬度。";
 
 L["tradeWindowHeightTitle"] = "交易視窗高度";
-L["tradeWindowHeghtDesc"] = "交易視窗的寬度。";
+L["tradeWindowHeightDesc"] = "交易視窗的寬度。";
 
 L["resetFramesTitle"] = "視窗預設值";
 L["resetFramesDesc"] = "重置所有視窗及大小回到預設值。";
@@ -417,18 +417,20 @@ L["note"] = "備註:"
 L["Nova Instance Tracker"] = "Nova 副本進度追蹤";
 L["NovaInstanceTracker"] = "副本-進度";
 L["Nova InstanceTracker"] = "Nova 副本進度追蹤";
-L["|cFF9CD6DELeft-Click|r "] = "|cFF9CD6DE左鍵|r ";
-L["|cFF9CD6DERight-Click|r "] = "|cFF9CD6DE右鍵|r ";
-L["|cFF9CD6DEMiddle-Click|r "] = "|cFF9CD6DE中鍵|r ";
-L["|cFF9CD6DEShift Left-Click|r "] = "|cFF9CD6DEShift+左鍵|r ";
-L["|cFF9CD6DEShift Right-Click|r "] = "|cFF9CD6DEShift+右鍵|r ";								 
+L["Left-Click"] = "左鍵";
+L["Right-Click"] = "右鍵";
+L["Middle-Click"] = "中鍵";
+L["Shift Left-Click"] = "Shift+左鍵";
+L["Shift Right-Click"] = "Shift+右鍵";	
+L["Ctrl Left-Click"] = "Ctrl+左鍵";			
+L["Level Log"] = "升級記錄"		 
 L["Hold to drag"] = "按住以拖曳";
-L["Show All Alts"] = "分身";
-L["Show all alts in the instance log? (Lockouts are per character)"] = "顯示所有分身的副本追蹤記錄?";
+L["Show Alts"] = "分身";
+L["showAltsTooltip"] = "顯示所有分身的副本追蹤記錄?";
 L["|cffffff00 (Mouseover names for info)"] = "|cffffff00 (將滑鼠移到姓名處以顯示詳細內容)";
 L["|cffffff00Trade Log"] = "交易記錄";
 L["Min Level"] = "對低等級";
-L["Copy/Paste"] = "複製/貼上";
+L["Copy Paste"] = "複製 貼上";
 L["Chat Window"] = "聊天視窗";
 L["Group Chat (Party/Raid)"] = "在隊伍回報 (隊伍/團隊)";
 L["Local Time"] = "本地時間";
