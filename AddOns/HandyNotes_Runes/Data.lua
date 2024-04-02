@@ -2526,12 +2526,12 @@ points[ 1430 ] = { -- Deadwind Pass
 		guide = { st.dalaranAgent }, 
 		quest = { st.dalaranQuest }, 
 		questName = { st.dalaranQuestName } 
-},
+	},
 }
 points[ 1426 ] = { -- Dun Morogh
-	[18007450] = { name="Newman's Landing", class={ "PALADIN" }, spell={ "Sheath of Light" }, guide={ st.paladin.sheathLight },
+	[18007450] = { name="紐曼碼頭", class={ "PALADIN" }, spell={ "Sheath of Light" }, guide={ st.paladin.sheathLight },
 					quest={ { 79939, 79940, 79945, 79970 } },
-					questName={ { "The Broken Hammer", "A Lost Brother", "Orders from the Grand Crusader", "Aeonas the Vindicated" } } },
+					questName={ { "破碎的戰錘", "失落的兄弟", "大十字軍的命令", "Aeonas the Vindicated" } } },
 	[21205380] = { npc=1124, name="Frostmane Shadowcaster", faction="Alliance", class={ "MAGE", "PRIEST", "WARLOCK", "WARRIOR" },				
 					spell={ "Living Flame", "Homunculi", "Demonic Grace", "Devastate" },
 					guide={ st.mage.livingFlame, st.priest.citadel, st.warlock.grace ..st.warlock.graceDM,
