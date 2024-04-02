@@ -700,22 +700,78 @@ ns.runes = {
 			start = "齊克希爾，在希爾斯布萊德丘陵的塔倫米爾和南海鎮之間游走（聯盟/部落）" 
 		},
 		-- Phase 2
-		["Expose Weaknesss"]={ rune="Rune of Expose Weakness", spellID=409504, level=26, icon=13, slot=6,
-				start="Kill Ogres (L36-43) and Troggs (L39-41) in the Badlands" },
-		["Invigoration"]={ rune="Rune of Invigoration", spellID=437997, level=27, icon=14, slot=8,
-				start="Go to Amaryllis Webb in the Swamp of Sorrows to obtain a catching kit. No killing" },
-		["Trap Launcher"]={ rune="Rune of the Trapper", spellID=409541, level=30, icon=15, slot=8,
-				start="Go to a pillaged campsite in Desolace" },
-		["Dual Wield Specialization"]={ rune="Rune of the Scrapper", spellID=409687, level=32, icon=16, slot=8,
-				start="Go to a location south-west from Hemet Nesingwary's camp in Stranglethorn Vale" },
-		["Steady Shot"]={ rune="Rune of Steady Shot", spellID=437123, level=33, icon=17, slot=6,
-				start="Kill Needletooth (L35). Witherbark Village lake, Arathi Highlands" },
-		["Melee Specialist"]={ rune="Rune of Close Combat", spellID=415352, level=40, icon=18, slot=6, start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Aspect of the Viper"]={ skillBook="Treatise on Aspect of the Viper", spellID=415423, level=1, start= st.dungeonSummary },
-		-- Other datamined "Runes"
-		["Focus Fire"]={ nonRune="", spellID=428726, level=0, icon=0, slot=9, start="Unknown" },
-		["T.N.T."]={ nonRune="", spellID=428717, level=0, icon=0, slot=9, start="Unknown" },
+		["Expose Weakness"] = { 
+			rune = "暴露弱點符文", 
+			spellID = 409504, 
+			level = 26, 
+			icon = 13, 
+			slot = 6,
+			start = "在荒蕪之地擊殺食人魔 (等級 36-43) 和穴居人 (等級 39-41)" 
+		},
+		["Invigoration"] = { 
+			rune = "活力符文", 
+			spellID = 437997, 
+			level = 27, 
+			icon = 14, 
+			slot = 8,
+			start = "前往悲傷沼澤的 Amaryllis Webb 處獲得捕捉工具包。無需擊殺。" 
+		},
+		["Trap Launcher"] = { 
+			rune = "陷阱發射器符文", 
+			spellID = 409541, 
+			level = 30, 
+			icon = 15, 
+			slot = 8,
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Dual Wield Specialization"] = { 
+			rune = "雙持專精符文", 
+			spellID = 409687, 
+			level = 32, 
+			icon = 16, 
+			slot = 8,
+			start = "前往位於荊棘谷 Hemet Nesingwary 營地西南方的位置" 
+		},
+		["Steady Shot"] = { 
+			rune = "穩固射擊符文", 
+			spellID = 437123, 
+			level = 33, 
+			icon = 17, 
+			slot = 6,
+			start = "擊殺針牙 (等級 35)。位於阿拉希高地枯木村湖泊。" 
+		},
+		["Melee Specialist"] = { 
+			rune = "近戰專家符文", 
+			spellID = 415352, 
+			level = 40, 
+			icon = 18, 
+			slot = 6, 
+			start = st.dalaranSpeakTo 
+		},
+		-- 第二階段技能書
+		["Aspect of the Viper"] = { 
+			skillBook = "毒蛇之相專論", 
+			spellID = 415423, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
+		-- 其他數據挖掘的“符文”
+		["Focus Fire"] = { 
+			nonRune = "", 
+			spellID = 428726, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["T.N.T."] = { 
+			nonRune = "", 
+			spellID = 428717, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
 
 		spells={ "Chimera Shot", "Explosive Shot", "Master Marksman", "Flanking Strike", "Carve",
 			"Beast Mastery", "Serpent Spread", "Kill Command", "Sniper Training", "Lone Wolf",
@@ -726,63 +782,216 @@ ns.runes = {
 								
 	["MAGE"] = {
 		-- Phase 1
-		["Ice Lance"]={ rune="Spell Notes: Ice Lance (CALE ENCI)", spellID=400640, level=2, icon=1, slot=10,
-				start="Marryk Nurrbit, back of Anvilmar, Dun Morogh; Khelden Bremen, Northshire Abbey, Elwynn Forest (A)\n"
-					.."Mai'ah, Valley of Trials, Durotar; Isabella, Deathknell, Tirisfal Glades (H)" },
-		["Living Flame"]={ rune="Spell Notes: Living Flame (MILEGIN VALF)", spellID=401556, level=8, icon=2, slot=7,
-				start="Kobold mobs near Jasperlode Mine, Elwynn Forest; Frostmane mobs north-west of Kharanos, Dun Morogh (A)\n"
-					.."Burning Blade mobs, Skull Rock, Durotar; Scarlet mobs, Solliden Farm, Tirisfal Glades (H)" },
-		["Enlightenment"]={ rune="Spell Notes: Enlightenment", spellID=412324, level=8, icon=3, slot=5,
-				start="Any critter in Elwynn Forest but near Ridgepoint Tower is suggested.\n"
-					.."Or Odd Melons you see around any farm in Tirisfal Glades" },
-		["Burnout"]={ rune="Spell Notes: Burnout", spellID=412286, level=9, icon=4, slot=5,
-				start="Frozen: Trogg, Gol'bolar quarry, Dun Morogh; Murloc, Stonecairn Lake, Elwynn Forest (A)\n"
-					.."Makrura, east of Razor Hill, Durotar; Murloc, north-west of Brightwater Lake, Tirisfal Glades (H)" },
-		["Fingers of Frost"]={ rune="Spell Notes: Fingers of Frost (RING SEFF OSTROF)", spellID=400647, level=10, icon=5, slot=5,
-				start="Several elite/rares in Dun Morogh; Hogger Elwynn Forest (A),\n"
-					.."Zalazane, Echo Isles, Duratar; Gazz'uz, cave near Orgrimmar, Durotar; Gillgar, Tirisfal Glades (H)" },
-		["Living Bomb"]={ rune="Spell Notes: BIVOLG NIMB", spellID=400613, level=12, icon=6, slot=10,
-				start="Stonesplitter caves and northern lake, Loch Modan (A/H);\n"
-					.."Extra reward from a small quest chain. Begin: \"A Talking Head\" mob drop on Fenris Isle, Silverpine (H)" },
-		["Arcane Surge"]={ rune="Spell Notes: Arcane Surge", spellID=425124, level=15, icon=7, slot=7,
-				start=st.supplyFactionStart },
-		["Regeneration"]={ rune="Spell Notes: Regeneration (TENGI RONEERA)", spellID=401417, level=15, icon=8, slot=5,
-				start="Stack of books in the south hut of the northern island, The Loch, Loch Modan; Defias Pillager, Westfall (A)\n"
-					.."Dalaran Apprentice, Silverpine Forest; Kolkar's Booty in centaur camps, The Barrens (H)" },
-		["Arcane Blast"]={ rune="Spell Notes: Arcane Blast", spellID=400574, level=18, icon=9, slot=10,
-				start="Naga Manuscript from Wrathtail Naga, Zoram Strand, north coast of Ashenvale (A/H)" },
-		["Icy Veins"]={ rune="Spell Notes: Icy Veins", spellID=425121, level=20, icon=10, slot=7,
-				start="Collect 10 books across Azeroth, too numerous to list here, but...\n"
-					.."see my detailed guide at: Garion Wendell in the Stormwind Mage Tower\n"
-					.."portal room (A) or Owen Thadd in the Mages Quarter of Undercity (H)" },
-		["Rewind Time"]={ rune="Spell Notes: Rewind Time (TERWEM DINI)", spellID=401462, level=20, icon=11, slot=10,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Mass Regeneration"]={ rune="Spell Notes: Mass Regeneration", spellID=412510, level=25, icon=12, slot=7,
-				start="Crypts in the Raven Hill Cemetary, Duskwood" },
+		["Ice Lance"] = { 
+			rune = "法術筆記：冰箭術 (CALE ENCI)", 
+			spellID = 400640, 
+			level = 2, 
+			icon = 1, 
+			slot = 10,
+			start = "Marryk Nurrbit，位於丹莫羅鐵砧山後方；Khelden Bremen，位於艾爾文森林的北郡修道院 (聯盟)\n"
+				.."Mai'ah，位於杜洛塔的試煉谷；Isabella，位於提瑞斯法林地的喪鐘鎮 (部落)" 
+		},
+		["Living Flame"] = { 
+			rune = "法術筆記：活體火焰 (MILEGIN VALF)", 
+			spellID = 401556, 
+			level = 8, 
+			icon = 2, 
+			slot = 7,
+			start = "位於艾爾文森林碧玉礦洞附近的狗頭人；位於丹莫羅卡拉諾斯西北方的霜鬃野豬人 (聯盟)\n"
+				.."位於杜洛塔顱骨岩的燃刃氏族；位於提瑞斯法林地索利登農場的猩紅十字軍 (部落)" 
+		},
+		["Enlightenment"] = { 
+			rune = "法術筆記：啟迪", 
+			spellID = 412324, 
+			level = 8, 
+			icon = 3, 
+			slot = 5,
+			start = "建議在艾爾文森林任何靠近嶺頂哨塔的小動物身上取得。\n"
+				.."或者在提瑞斯法林地任何農場附近找到的奇異瓜" 
+		},
+		["Burnout"] = { 
+			rune = "法術筆記：燃盡", 
+			spellID = 412286, 
+			level = 9, 
+			icon = 4, 
+			slot = 5,
+			start = "冰凍：位於丹莫羅戈爾博拉採石場的穴居人；位於艾爾文森林石頭湖的魚人 (聯盟)\n"
+				.."位於杜洛塔剃刀嶺東方的瑪克魯拉；位於提瑞斯法林地明鏡湖西北方的魚人 (部落)" 
+		},
+		["Fingers of Frost"] = { 
+			rune = "法術筆記：冰霜之指 (RING SEFF OSTROF)", 
+			spellID = 400647, 
+			level = 10, 
+			icon = 5, 
+			slot = 5,
+			start = "丹莫羅的幾個精英/稀有怪；艾爾文森林的霍格 (聯盟),\n"
+				.."杜洛塔回音群島的 Zalazane；杜洛塔奧格瑪附近洞穴的 Gazz'uz；提瑞斯法林地的 Gillgar (部落)" 
+		},
+		["Living Bomb"] = { 
+			rune = "法術筆記：BIVOLG NIMB", 
+			spellID = 400613, 
+			level = 12, 
+			icon = 6, 
+			slot = 10,
+			start = "洛克莫丹的碎石洞穴和北湖 (聯盟/部落);\n"
+				.."銀松森林芬里斯島上“會說話的頭”掉落的任務鏈的額外獎勵 (部落)" 
+		},
+		["Arcane Surge"] = { 
+			rune = "法術筆記：奧術衝擊", 
+			spellID = 425124, 
+			level = 15, 
+			icon = 7, 
+			slot = 7,
+			start = st.supplyFactionStart 
+		},
+		["Regeneration"] = { 
+			rune = "法術筆記：復原 (TENGI RONEERA)", 
+			spellID = 401417, 
+			level = 15, 
+			icon = 8, 
+			slot = 5,
+			start = "洛克莫丹湖中北部島嶼南邊小屋的書堆；西部荒野的迪菲亞盜賊 (聯盟)\n"
+				.."銀松森林的達拉然學徒；貧瘠之地半人馬營地的科爾卡的戰利品 (部落)" 
+		},
+		["Arcane Blast"] = { 
+			rune = "法術筆記：奧術飛彈", 
+			spellID = 400574, 
+			level = 18, 
+			icon = 9, 
+			slot = 10,
+			start = "位於灰谷北部海岸佐拉姆海岸的怒濤娜迦掉落的娜迦手稿 (聯盟/部落)" 
+		},
+		["Icy Veins"] = { 
+			rune = "法術筆記：冰冷血脈", 
+			spellID = 425121, 
+			level = 20, 
+			icon = 10, 
+			slot = 7,
+			start = "收集散佈在艾澤拉斯的 10 本書，數量太多，無法在此一一列出，但...\n"
+				.."請參閱我位於暴風城法師塔傳送門房間的 Garion Wendell (聯盟) 或幽暗城法師區的 Owen Thadd (部落) 處的詳細指南" 
+		},
+		["Rewind Time"] = { 
+			rune = "法術筆記：時光倒流 (TERWEM DINI)", 
+			spellID = 401462, 
+			level = 20, 
+			icon = 11, 
+			slot = 10,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Mass Regeneration"] = { 
+			rune = "法術筆記：群體復原", 
+			spellID = 412510, 
+			level = 25, 
+			icon = 12, 
+			slot = 7,
+			start = "位於暮色森林烏鴉嶺墓地的地下墓穴" 
+		},
 		-- Phase 2
-		["Chronostatic Preservation"]={ rune="Spell Notes: Chronostatic Preservation", spellID=436516, level=26, icon=13, slot=8,
-				start="Three separate mob drops in Thousand Needles. Requires three to four mages" },
-		["Brain Freeze"]={ rune="Spell Notes: Brain Freeze", spellID=400731, level=30, icon=14, slot=8,
-				start="Go to a pillaged campsite in Desolace" },
-		["Hot Streak"]={ rune="Spell Notes: Hot Streak", spellID=400624, level=33, icon=15, slot=6,
-				start="Kill the Ancient Fire Elemental (L34/35) in the Alterac Mountains" },
-		["Spell Power"]={ rune="Spell Power Rune", spellID=412322, level=33, icon=16, slot=8, 
-				start="Collect 20 books across Azeroth, too numerous to list here, but...\n"
-					.."see my detailed guide at: Garion Wendell in the Stormwind Mage Tower\n"
-					.."portal room (A) or Owen Thadd in the Mages Quarter of Undercity (H)" },
-		["Frostfire Bolt"]={ rune="Spell Notes: Frostfire Bolt (TROFF IRESTBOL)", spellID=401502, level=37, icon=17, slot=6,
-				start="Drops from Skullsplitter Mystics, Stranglethorn Vale" },
-		["Spellfrost Bolt"]={ rune="Spell Notes: Spellfrost Bolt (PELFRB STOLLOTS)", spellID=412532, level=37, icon=18, slot=6,
-				start="Drops from Skullsplitter Mystics, Stranglethorn Vale" },
-		["Missile Barrage"]={ rune="Spell Notes: Missile Barrage", spellID=400588, level=40, icon=19, slot=6, start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Expanded Intellect"]={ skillBook="Tome of Expanded Intellect", spellID=436949, level=1, start=st.dungeonSummary },
-		-- Other datamined "Runes"
-		["Balefire Bolt"]={ nonRune="", spellID=428878, level=0, icon=0, slot=9, start="Unknown" },
-		["Deep Freeze"]={ nonRune="", spellID=428739, level=0, icon=0, slot=1, start="Unknown" },
-		["Displacement"]={ nonRune="Scroll of Controlled Displacement", spellID=428861, level=0, icon=0, slot=9, start="Unknown" },
-		["Molten Armor"]={ nonRune="", spellID=428741, level=0, icon=0, slot=9, start="Unknown" },
-		["Temporal Anomaly"]={ nonRune="", spellID=428885, level=0, icon=0, slot=1, start="Unknown" },
+		["Chronostatic Preservation"] = { 
+			rune = "法術筆記：時間靜止保存", 
+			spellID = 436516, 
+			level = 26, 
+			icon = 13, 
+			slot = 8,
+			start = "千針石林中三個不同怪物掉落。需要三到四個法師。" 
+		},
+		["Brain Freeze"] = { 
+			rune = "法術筆記：腦袋凍結", 
+			spellID = 400731, 
+			level = 30, 
+			icon = 14, 
+			slot = 8,
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Hot Streak"] = { 
+			rune = "法術筆記：熱連擊", 
+			spellID = 400624, 
+			level = 33, 
+			icon = 15, 
+			slot = 6,
+			start = "擊殺奧特蘭克山脈的遠古火元素 (等級 34/35)" 
+		},
+		["Spell Power"] = { 
+			rune = "法術能量符文", 
+			spellID = 412322, 
+			level = 33, 
+			icon = 16, 
+			slot = 8, 
+			start = "收集散佈在艾澤拉斯的 20 本書，數量太多，無法在此一一列出，但...\n"
+				.."請參閱我位於暴風城法師塔傳送門房間的 Garion Wendell (聯盟) 或幽暗城法師區的 Owen Thadd (部落) 處的詳細指南" 
+		},
+		["Frostfire Bolt"] = { 
+			rune = "法術筆記：冰霜烈焰箭 (TROFF IRESTBOL)", 
+			spellID = 401502, 
+			level = 37, 
+			icon = 17, 
+			slot = 6,
+			start = "由荊棘谷的碎顱秘法師掉落" 
+		},
+		["Spellfrost Bolt"] = { 
+			rune = "法術筆記：冰霜法術箭 (PELFRB STOLLOTS)", 
+			spellID = 412532, 
+			level = 37, 
+			icon = 18, 
+			slot = 6,
+			start = "由荊棘谷的碎顱秘法師掉落" 
+		},
+		["Missile Barrage"] = { 
+			rune = "法術筆記：飛彈連射", 
+			spellID = 400588, 
+			level = 40, 
+			icon = 19, 
+			slot = 6, 
+			start = st.dalaranSpeakTo 
+		},
+		-- 第二階段技能書
+		["Expanded Intellect"] = { 
+			skillBook = "擴展智力典籍", 
+			spellID = 436949, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
+		-- 其他數據挖掘的“符文”
+		["Balefire Bolt"] = { 
+			nonRune = "", 
+			spellID = 428878, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Deep Freeze"] = { 
+			nonRune = "", 
+			spellID = 428739, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
+		["Displacement"] = { 
+			nonRune = "Scroll of Controlled Displacement", 
+			spellID = 428861, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Molten Armor"] = { 
+			nonRune = "", 
+			spellID = 428741, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Temporal Anomaly"] = { 
+			nonRune = "", 
+			spellID = 428885, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
 
 		spells={ "Ice Lance", "Living Flame", "Enlightenment", "Burnout", "Fingers of Frost", "Living Bomb",
 				"Arcane Surge", "Regeneration", "Arcane Blast", "Icy Veins", "Rewind Time", "Mass Regeneration",
@@ -793,52 +1002,207 @@ ns.runes = {
 					
 	["PALADIN"] = {
 		-- Phase 1
-		["Crusader Strike"]={ rune="Libram of Judgement", spellID=407676, level=4, icon=1, slot=10,
-				start="Bromos Grummner, Anvilmar, Dun Morogh; Brother Sammuel, Northshire Abbey, Elwynn Forest" },
-		["Inspiration Exemplar"]={ rune="Rune of Inspiration", spellID=407880, level=5, icon=2, slot=7,
-				start=st.twoPlusHealers .."Wendigo Cave, Dun Morogh; east of Jerod's Landing, Elwynn Forest" },
-		["Rebuke"]={ rune="Rune of Rebuke", spellID=425609, level=8, icon=3, slot=7,
-				start="Liv Bradford, The Park in Stormwind City" },
-		["Aegis"]={ rune="Rune of Aegis", spellID=425589, level=8, icon=4, slot=5,
-				start="Entrance to Gnomeregan (don't go in), Dun Morogh; deep inside the Jasperloade Mine, Elwynn Forest" },
-		["Horn of Lordaeron"]={ rune="Libram of Blessings", spellID=425600, level=10, icon=5, slot=5,
-				start="On a bench in Thelsamar Tavern, Loch Modan; Undying Laborer, Jangalode Mine, Westfall" },
-		["Seal of Martyrdom"]={ rune="Rune of Martyrdom", spellID=407798, level=10, icon=6, slot=5,
-				start="Brother Romulus, Stormwind Cathedral" },
-		["Beacon of Light"]={ rune="Rune of Beckoning Light", spellID=407613, level=15, icon=7, slot=10,
-				start=st.supplyFactionStart },
-		["Hand of Reckoning"]={ rune="Libram of Justice", spellID=407631, level=15, icon=8, slot=10,
-				start="Far south cave in Stonesplitter Valley, Loch Modan; Leprithus and Defias Drone, Westfall" },
-		["Divine Sacrifice"]={ rune="Rune of Sacrifice", spellID=407804, level=20, icon=9, slot=7,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Avenger's Shield"]={ rune="Rune of the Avenger", spellID=407669, level=23, icon=10, slot=7,
-				start="Dro'zem the Blasphemous, Redridge Mountians. Well south of the\n",
-			"Tower of Althalaxx, northern Darkshore" },
-		["Divine Storm"]={ rune="Divine Storm Rune", spellID=407778, level=25, icon=11, slot=5,
-				start="Top of the Tower of Althalaxx, northern Darkshore" },
-		["Exorcist"]={ rune="Libram of Banishmen", spellID=415076, level=25, icon=12, slot=7,
-				start="Defias mobs on the souther border of Duskwood" },
+		["Crusader Strike"] = { 
+			rune = "審判聖典", 
+			spellID = 407676, 
+			level = 4, 
+			icon = 1, 
+			slot = 10,
+			start = "Bromos Grummner，位於丹莫羅鐵砧山；Sammuel 兄弟，位於艾爾文森林北郡修道院" 
+		},
+		["Inspiration Exemplar"] = { 
+			rune = "啟發符文", 
+			spellID = 407880, 
+			level = 5, 
+			icon = 2, 
+			slot = 7,
+			start = st.twoPlusHealers .. "位於丹莫羅的溫迪戈洞穴；位於艾爾文森林傑羅德碼頭東部" 
+		},
+		["Rebuke"] = { 
+			rune = "斥責符文", 
+			spellID = 425609, 
+			level = 8, 
+			icon = 3, 
+			slot = 7,
+			start = "Liv Bradford，位於暴風城公園" 
+		},
+		["Aegis"] = { 
+			rune = "神盾符文", 
+			spellID = 425589, 
+			level = 8, 
+			icon = 4, 
+			slot = 5,
+			start = "諾莫瑞根入口（不要進去），丹莫羅；位於艾爾文森林碧玉礦洞深處" 
+		},
+		["Horn of Lordaeron"] = { 
+			rune = "祝福聖典", 
+			spellID = 425600, 
+			level = 10, 
+			icon = 5, 
+			slot = 5,
+			start = "位於洛克莫丹塞爾薩瑪酒館的长凳上；位於西部荒野詹加洛德礦洞的不死勞工" 
+		},
+		["Seal of Martyrdom"] = { 
+			rune = "殉難符文", 
+			spellID = 407798, 
+			level = 10, 
+			icon = 6, 
+			slot = 5,
+			start = "Romulus 兄弟，位於暴風城大教堂" 
+		},
+		["Beacon of Light"] = { 
+			rune = "召喚之光符文", 
+			spellID = 407613, 
+			level = 15, 
+			icon = 7, 
+			slot = 10,
+			start = st.supplyFactionStart 
+		},
+		["Hand of Reckoning"] = { 
+			rune = "正義聖典", 
+			spellID = 407631, 
+			level = 15, 
+			icon = 8, 
+			slot = 10,
+			start = "位於洛克莫丹碎石谷的南部洞穴；位於西部荒野的 Leprithus 和迪菲亞嘍囉" 
+		},
+		["Divine Sacrifice"] = { 
+			rune = "犧牲符文", 
+			spellID = 407804, 
+			level = 20, 
+			icon = 9, 
+			slot = 7,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Avenger's Shield"] = { 
+			rune = "復仇者符文", 
+			spellID = 407669, 
+			level = 23, 
+			icon = 10, 
+			slot = 7,
+			start = "位於赤脊山脈的 Dro'zem the Blasphemous。位於黑海岸北部阿薩拉克斯塔的南部" 
+		},
+		["Divine Storm"] = { 
+			rune = "神聖風暴符文", 
+			spellID = 407778, 
+			level = 25, 
+			icon = 11, 
+			slot = 5,
+			start = "位於黑海岸北部阿薩拉克斯塔的頂部" 
+		},
+		["Exorcist"] = { 
+			rune = "放逐聖典", 
+			spellID = 415076, 
+			level = 25, 
+			icon = 12, 
+			slot = 7,
+			start = "位於暮色森林南部邊境的迪菲亞嘍囉" 
+		},
 		-- Phase 2
-		["Sacred Shield"]={ rune="Libram of Deliverance", spellID=412019, level=18, icon=13, slot=8,
-				start="Loot the Libram of Deliverance in Nigel's Point, Desolace" },
-		["Guarded by the Light"]={ rune="Rune of the Guardian", spellID=415059, level=30, icon=14, slot=8,
-				start="Loot the Dormant Holy Rune in the Alterac Mountains. Later, requires a helper" },
-		["The Art of War"]={ rune="Rune of Warfare", spellID=426157, level=30, icon=15, slot=8,
-				start="Go to a pillaged campsite in Desolace" },
-		["Enlightened Judgements"]={ rune="Rune of Piety", spellID=426173, level=34, icon=16, slot=6, 
-				start="Farm mobs in Arathi Highlands (wetlands) for three types of beads. Purify and then combine the beads" },
-		["Infusion of Light"]={ rune="Rune of Infusions", spellID=426065, level=40, icon=17, slot=6, start=st.dalaranSpeakTo },
-		["Sheath of Light"]={ rune="Sheath of Light", spellID=426158, level=40, icon=18, slot=6,
-				start="Find a Broken Hammer in Mannoroc Cove in Desolace to commence a quest chain. Requires Cathedral wing access to SM" },
-		-- Phase 2 Skill Books
-		["Enhanced Blessings"]={ skillBook="Testament of Enhanced Blessings", spellID=435984, level=1, start=st.dungeonSummary },
-		-- Other datamined "Runes"
-		["Fanaticism"]={ rune="", spellID=429142, level=0, icon=0, slot=1, start="Unknown" },
-		["Improved Hammer of Wrath"]={ rune="", spellID=429152, level=0, icon=0, slot=9, start="Unknown" },
-		["Improved Sanctuary"]={ rune="", spellID=429133, level=0, icon=0, slot=1, start="Unknown" },
-		["Light's Grace"]={ rune="", spellID=428909, level=0, icon=0, slot=1, start="Unknown" },
-		["Purifying Power"]={ rune="", spellID=429144, level=0, icon=0, slot=9, start="Unknown" },
-		["Wrath"]={ rune="", spellID=429139, level=0, icon=0, slot=1, start="Unknown" },
+		["Sacred Shield"] = { 
+			rune = "解脫聖典", 
+			spellID = 412019, 
+			level = 18, 
+			icon = 13, 
+			slot = 8,
+			start = "在淒涼之地奈傑爾岬取得解脫聖典" 
+		},
+		["Guarded by the Light"] = { 
+			rune = "守護者符文", 
+			spellID = 415059, 
+			level = 30, 
+			icon = 14, 
+			slot = 8,
+			start = "在奧特蘭克山脈取得休眠的聖符文。之後需要一名助手。" 
+		},
+		["The Art of War"] = { 
+			rune = "戰爭符文", 
+			spellID = 426157, 
+			level = 30, 
+			icon = 15, 
+			slot = 8,
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Enlightened Judgements"] = { 
+			rune = "虔誠符文", 
+			spellID = 426173, 
+			level = 34, 
+			icon = 16, 
+			slot = 6, 
+			start = "在阿拉希高地（濕地）的怪物身上收集三種珠子。淨化珠子後將它們組合起來。" 
+		},
+		["Infusion of Light"] = { 
+			rune = "灌注符文", 
+			spellID = 426065, 
+			level = 40, 
+			icon = 17, 
+			slot = 6, 
+			start = st.dalaranSpeakTo 
+		},
+		["Sheath of Light"] = { 
+			rune = "光之護鞘", 
+			spellID = 426158, 
+			level = 40, 
+			icon = 18, 
+			slot = 6,
+			start = "在淒涼之地瑪諾洛克海灣找到一把破碎的戰錘，開始一個任務鏈。需要進入血色修道院的教堂側翼。" 
+		},
+		-- 第二階段技能書
+		["Enhanced Blessings"] = { 
+			skillBook = "強化祝福聖典", 
+			spellID = 435984, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
+		-- 其他數據挖掘的“符文”
+		["Fanaticism"] = { 
+			rune = "", 
+			spellID = 429142, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
+		["Improved Hammer of Wrath"] = { 
+			rune = "", 
+			spellID = 429152, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Improved Sanctuary"] = { 
+			rune = "", 
+			spellID = 429133, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
+		["Light's Grace"] = { 
+			rune = "", 
+			spellID = 428909, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
+		["Purifying Power"] = { 
+			rune = "", 
+			spellID = 429144, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Wrath"] = { 
+			rune = "", 
+			spellID = 429139, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
 		-- Dormant Holy Rune. Libram of benediction
 
 		spells={ "Crusader Strike", "Inspiration Exemplar", "Rebuke", "Aegis", "Horn of Lordaeron",
@@ -850,59 +1214,206 @@ ns.runes = {
 
 	["PRIEST"] = {
 		-- Phase 1
-		["Penance"]={ rune="Memory of a Troubled Acolyte", spellID=402174, level=2, icon=1, slot=10,
-				start= "Branstock Khalder, Anvilmar, Coldridge Valley; Priestess Anetta, Northshire Abbey; Shanda, Shadowglen (A)\n"
-					.."Ken'Jai, Valley of Trials; Dark Cleric Duesten, Deathknell" },
-		["Prayer of Mending"]={ rune="Reciprocal Epiphany", spellID=401859, level=7, icon=2, slot=7,
-				start=st.twoPlusHealers
-					.."Grizzled Den, Dun Morogh; east of Jarod's Landing, southern Elwynn Forest; Oracle Glade, Teldrassil (A)\n"
-					.."South of and outside of the Valley of Trials, Durotar; near northern exit, Venture Co cave, Mulgore (H)" },
-		["Void Plague"]={ rune="Memory of a Dark Purpose", spellID=425204, level=7, icon=3, slot=5,
-				start="Leper Gnome/Gibblewit near Gnomeregan; Goldtooth in Elwynn Forest; Gnarlpine Cache, Ban'ethil Barrow Den, "
-					.."Teldrassil (A)\nKul Tiras mob, east of Razor Hill, Durotar; Gillgar, north-west from Deathknell, Tirisfal GladeS (H)" },
-		["Homunculi"]={ rune="Prophecy of a Desecrated Citadel", spellID=402799, level=8, icon=4, slot=7,
-				start="Shimmer Ridge, Dun Morogh; Defias Rogue Wizard, Elwynn Forest; Rascal Sprite, Fel Rock Cave, Teldrassil (A);\n"
-					.."Voodoo Troll, Echo Isle, Duratar; Scarlet mobs near Solliden Farmstead, Tirisfal Glades (H)\n"
-					.."Needs two Meditations" },
-		["Shared Pain"]={ rune="Memory of an Imprisoned Saviour", spellID=401969, level=8, icon=5, slot=7,
-				start="Defeat Captain Beld, far south-east Dun Morogh; Kobold mobs, mines, Elwynn Forest; Lord Melenas, Teldrassil (A)\n"
-					.."Gazz'uz or Makasgar, Mulgore; Tirisfal Farmer mobs, Tirisfal Glades (H)" },
-		["Mind Sear"]={ rune="Tenebrous Epiphany", spellID=413259, level=15, icon=6, slot=10,
-				start=st.supplyFactionStart },
-		["Twisted Faith"]={ rune="Memory of a Devout Champion", spellID=425198, level=15, icon=7, slot=5,
-				start="Naga mobs, Ruins of Mathystra, Darkshore; Silverstream Mine, Loch Modan; Gold Coast Quarry and\n"
-					.."Jangolode Mine, Westfall (A). Wailing Spirit, southern Silverpine Forest; Razormane mobs, The Barrens (H)" },
-		["Shadow Word: Death"]={ rune="Prophecy of a King's Demise", spellID=401955, level=20, icon=8, slot=10,
-				start="Orb, coast, Darkshore; Mo'grosh Stronghold, Loch Modan (A)\n"
-					.."Thule Ravenclaw, Fenris Isle, Silverpine Forest; Desert Mirage, The Barrens (H)\n"
-					.."Needs two Meditations" },
-		["Serendipity"]={ rune="Harmonious Epiphany", spellID=413248, level=20, icon=9, slot=5,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Power Word: Barrier"]={ rune="Prophecy of a City Enthralled", spellID=425207, level=23, icon=10, slot=7,
-				start="Blackrock Shadowcaster, Stone watch, Redridge Mountains (A/H). Needs two Meditations" },
-		["Strength of Soul"]={ rune="Prophecy of Seven Visitors", spellID=415739, level=23, icon=11, slot=5,
-				start="Primal Insight from Thistlefur mobs, Ashenvale (A/H). Needs two Meditations" },
-		["Circle of Healing"]={ rune="Prophecy of a Thousand Lights", spellID=401946, level=25, icon=12, slot=10,
-				start="Obtain Dark Insight from Defias mobs in Duskwood (A/H). Needs two Meditations" },
+		["Penance"] = { 
+			rune = "苦惱侍僧的記憶", 
+			spellID = 402174, 
+			level = 2, 
+			icon = 1, 
+			slot = 10,
+			start = "Branstock Khalder，位於丹莫羅冷 Ridge 谷的鐵砧山；Anetta 女祭司，位於北郡修道院；Shanda，位於影牙城堡 (聯盟)\n"
+				.."Ken'Jai，位於試煉谷；黑暗牧師 Duesten，位於喪鐘鎮 (部落)" 
+		},
+		["Prayer of Mending"] = { 
+			rune = "相互啟示", 
+			spellID = 401859, 
+			level = 7, 
+			icon = 2, 
+			slot = 7,
+			start = st.twoPlusHealers
+				.."位於丹莫羅的灰熊巢穴；位於艾爾文森林南部傑羅德碼頭東部；位於泰達希爾的神諭林地 (聯盟)\n"
+				.."位於杜洛塔試煉谷南部和外部；位於莫高雷風險投資公司洞穴的北部出口附近 (部落)" 
+		},
+		["Void Plague"] = { 
+			rune = "黑暗目的的記憶", 
+			spellID = 425204, 
+			level = 7, 
+			icon = 3, 
+			slot = 5,
+			start = "位於諾莫瑞根附近的麻風侏儒/吉布爾維特；位於艾爾文森林的金牙；位於泰達希爾巴尼希爾墓穴的 gnarlpine 儲藏室 (聯盟)\n"
+				.."位於杜洛塔剃刀嶺東部的庫爾提拉斯暴徒；位於提瑞斯法林地喪鐘鎮西北方的 Gillgar (部落)" 
+		},
+		["Homunculi"] = { 
+			rune = "褻瀆堡壘的預言", 
+			spellID = 402799, 
+			level = 8, 
+			icon = 4, 
+			slot = 7,
+			start = "位於丹莫羅的微光嶺；位於艾爾文森林的迪菲亞盜賊巫師；位於泰達希爾邪惡岩石洞穴的 Rascal Sprite (聯盟);\n"
+				.."位於杜洛塔回音群島的巫毒巨魔；位於提瑞斯法林地索利登農場附近的猩紅十字軍 (部落)\n"
+				.."需要兩個冥想" 
+		},
+		["Shared Pain"] = { 
+			rune = "被囚禁救世主的記憶", 
+			spellID = 401969, 
+			level = 8, 
+			icon = 5, 
+			slot = 7,
+			start = "擊敗位於丹莫羅東南部的 Beld 隊長；位於艾爾文森林礦洞的狗頭人；位於泰達希爾的 Melenas 領主 (聯盟)\n"
+				.."位於莫高雷的 Gazz'uz 或 Makasgar；位於提瑞斯法林地的提瑞斯法農民 (部落)" 
+		},
+		["Mind Sear"] = { 
+			rune = "幽暗啟示", 
+			spellID = 413259, 
+			level = 15, 
+			icon = 6, 
+			slot = 10,
+			start = st.supplyFactionStart 
+		},
+		["Twisted Faith"] = { 
+			rune = "虔誠勇士的記憶", 
+			spellID = 425198, 
+			level = 15, 
+			icon = 7, 
+			slot = 5,
+			start = "位於黑海岸瑪西斯塔廢墟的娜迦；位於洛克莫丹的銀溪礦洞；位於西部荒野的黃金海岸採石場和詹加洛德礦洞 (聯盟)。位於銀松森林南部的哀嚎之魂；位於貧瘠之地的剃刀沼澤 (部落)" 
+		},
+		["Shadow Word: Death"] = { 
+			rune = "國王之死的預言", 
+			spellID = 401955, 
+			level = 20, 
+			icon = 8, 
+			slot = 10,
+			start = "位於黑海岸的球體；位於洛克莫丹的莫格羅什要塞 (聯盟)\n"
+				.."位於銀松森林芬里斯島的 Thule Ravenclaw；位於貧瘠之地的沙漠幻影 (部落)\n"
+				.."需要兩個冥想" 
+		},
+		["Serendipity"] = { 
+			rune = "和諧啟示", 
+			spellID = 413248, 
+			level = 20, 
+			icon = 9, 
+			slot = 5,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Power Word: Barrier"] = { 
+			rune = "被奴役城市的預言", 
+			spellID = 425207, 
+			level = 23, 
+			icon = 10, 
+			slot = 7,
+			start = "位於赤脊山脈石頭崗哨的黑石暗影施法者 (聯盟/部落)。需要兩個冥想" 
+		},
+		["Strength of Soul"] = { 
+			rune = "七位訪客的預言", 
+			spellID = 415739, 
+			level = 23, 
+			icon = 11, 
+			slot = 5,
+			start = "位於灰谷的薊皮怪物掉落的原始洞察力 (聯盟/部落)。需要兩個冥想" 
+		},
+		["Circle of Healing"] = { 
+			rune = "千燈之預言", 
+			spellID = 401946, 
+			level = 25, 
+			icon = 12, 
+			slot = 10,
+			start = "從暮色森林的迪菲亞嘍囉身上獲得黑暗洞察力 (聯盟/部落)。需要兩個冥想" 
+		},
 		-- Phase 2
-		["Empowered Renew"]={ rune="Prophecy of the quickened Path", spellID=425266, level=26, icon=13, slot=6,
-				start="Farm Grimtotem mobs (L25-28) in Thousand Needles for the rune. Or else Crushridge Ogres (L34-36) in Arathi" },
-		["Mind Spike"]={ rune="Psychosophic Epiphany", spellID=431655, level=30, icon=14, slot=6, start="Go to a pillaged campsite in Desolace" },
-		["Renewed Hope"]={ rune="Unsettling Vision", spellID=425280, level=32, icon=15, slot=6,
-				start="Kill nagas in northern Desolace until the Unsettling Vision drops. Then activate it via Mind Control" },	
-		["Pain Suppression"]={ rune="Memory of a Leader's Betrayal", spellID=402004, level=35, icon=16, slot=8,
-				start="look for \"Echos\" in Arathi, Dustwallow, SM graveyard, Swamp of Sorrows. Then complete a ritual in the SM Library wing " },
-		["Spirit of the Redeemer"]={ rune="Luminous Epiphany", spellID=425284, level=40, icon=17, slot=8, start=st.dalaranSpeakTo },
-		["Dispersion"]={ rune="Prophecy of Imprisoned Malice", spellID=425294, level=18, icon=18, slot=8,
-				start="Officially you need a mage and rogue to help with tasks in Stranglethorn Vale. See that map also for HACKS!" },
-		-- Phase 2 Skill Books
-		["Increased Fortitude"]={ skillBook="Scroll Increased Fortitude", spellID=436951, level=1, start=st.dungeonSummary },
-		["Shadowfiend"]={ skillBook="Scroll of Shadowfiend", spellID=401977, level=1, start=st.dungeonSummary },
-		-- Other datamined "Runes"
-		["Despair"]={ rune="", spellID=431670, level=0, icon=0, slot=9, start="Unknown" },
-		["Divine Aegis"]={ rune="", spellID=431622, level=0, icon=0, slot=1, start="Unknown" },
-		["Surge of Light"]={ rune="", spellID=431664, level=0, icon=0, slot=9, start="Unknown" },
-		["Void Zone"]={ rune="", spellID=431681, level=0, icon=0, slot=9, start="Unknown" },
+		["Empowered Renew"] = { 
+			rune = "加速之路的預言", 
+			spellID = 425266, 
+			level = 26, 
+			icon = 13, 
+			slot = 6,
+			start = "在千針石林中擊殺 Grimtotem 暴徒 (等級 25-28) 以獲得符文。或者在阿拉希高地擊殺碎脊食人魔 (等級 34-36)" 
+		},
+		["Mind Spike"] = { 
+			rune = "心理學啟示", 
+			spellID = 431655, 
+			level = 30, 
+			icon = 14, 
+			slot = 6, 
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Renewed Hope"] = { 
+			rune = "令人不安的景象", 
+			spellID = 425280, 
+			level = 32, 
+			icon = 15, 
+			slot = 6,
+			start = "在淒涼之地北部擊殺娜迦，直到掉落令人不安的景象。然後通過精神控制激活它。" 
+		},	
+		["Pain Suppression"] = { 
+			rune = "領袖背叛的記憶", 
+			spellID = 402004, 
+			level = 35, 
+			icon = 16, 
+			slot = 8,
+			start = "在阿拉希高地、塵泥沼澤、血色修道院墓地、悲傷沼澤尋找“回聲”。然後在血色修道院圖書館側翼完成一個儀式。" 
+		},
+		["Spirit of the Redeemer"] = { 
+			rune = "光輝啟示", 
+			spellID = 425284, 
+			level = 40, 
+			icon = 17, 
+			slot = 8, 
+			start = st.dalaranSpeakTo 
+		},
+		["Dispersion"] = { 
+			rune = "被囚禁惡意的預言", 
+			spellID = 425294, 
+			level = 18, 
+			icon = 18, 
+			slot = 8,
+			start = "官方需要一名法師和一名盜賊幫助完成荊棘谷的任務。也請參閱該地圖以獲取 HACKS！" 
+		},
+		-- 第二階段技能書
+		["Increased Fortitude"] = { 
+			skillBook = "堅韌卷軸", 
+			spellID = 436951, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
+		["Shadowfiend"] = { 
+			skillBook = "暗影魔卷軸", 
+			spellID = 401977, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
+		-- 其他數據挖掘的“符文”
+		["Despair"] = { 
+			rune = "", 
+			spellID = 431670, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Divine Aegis"] = { 
+			rune = "", 
+			spellID = 431622, 
+			level = 0, 
+			icon = 0, 
+			slot = 1, 
+			start = "未知" 
+		},
+		["Surge of Light"] = { 
+			rune = "", 
+			spellID = 431664, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
+		["Void Zone"] = { 
+			rune = "", 
+			spellID = 431681, 
+			level = 0, 
+			icon = 0, 
+			slot = 9, 
+			start = "未知" 
+		},
 
 		spells={ "Penance", "Prayer of Mending", "Void Plague", "Homunculi", "Shared Pain",
 			"Mind Sear", "Twisted Faith", "Shadow Word: Death", "Serendipity", 
