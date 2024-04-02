@@ -1,3 +1,7 @@
+== v2.02 - 2nd April 2024
+* Fix for SkillBooks not hiding when completed
+* Added an AddOn label for my "catch all" "Please Report" messages for stray data
+
 == v2.01 - 31st March 2024
 * Remove Cozy Sleeping bag (again)
 * Forgot to test for completion on the Continent maps

@@ -4,7 +4,7 @@
                                                 Runes
                                              Data Module
 
-                                       v2.01 - 31st March 2024
+                                       v2.02 - 2nd April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 

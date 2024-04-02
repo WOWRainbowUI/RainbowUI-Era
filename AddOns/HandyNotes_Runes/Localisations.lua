@@ -4,7 +4,7 @@
                                                 Runes
                                          Localisation Module
 
-                                       v1.39 - 23rd March 2024
+                                       v2.02 - 2nd April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
