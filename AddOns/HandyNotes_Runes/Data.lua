@@ -1425,56 +1425,166 @@ ns.runes = {
 			
 	["ROGUE"] = {
 		-- Phase 1
-		["Shadowstrike"]={ rune="Rune of Shadowstrike", spellID=399985, level=2, icon=1, slot=10,
-				start="Solm Hargrin, Anvilmar, Coldridge Valley; Jorik Kerridan, behind the Northshire Abbey, Northshire\n"
-					.."Frahun Shadewhisper, Shadowglen (A). Rwag, Valley of Trials; David Trias, Deathknell (H)" },
-		["Quick Draw"]={ rune="Rune of Quick Draw", spellID=398196, level=8, icon=2, slot=5,
-				start="Loot/Pp four segments of a map. See the Tooltip at the turn-in location for details: Dun Morogh: Under\n"
-					.."a bridge between Kharanos and Ironforge; Ridgepoint Tower, Elwynn; Rut'theran Village, Teldrassil (A)\n"
-					.."Far South, Echo Isles, Durotar; West of Brill, under the bridge, west side, Tirisfal Glades (H)" },
-		["Slaughter from the Shadows"]={ rune="Rune of Slaughter", spellID=424925, level=8, icon=3, slot=5,
-				start="Chest above Kharanos Inn, Dun Morogh; above the spooky house north of Goldshire, Elwynn; Gnarlpine Chache,\n"
-					.."Barrow Den, Teldrassil (A); Chest at Drygulch Ravine, Durotar; Relic Coffer, Agamand Crypts, Tirisfal (H)" },
-		["Mutilate"]={ rune="Rune of Mutilation", spellID=399960, level=8, icon=4, slot=10,
-				start="Pickpocket Dark Iron mobs, far south-east of Dun Morogh; Pp Garrick Padfoot, Northshire (A); Pp Captain\n"
-					.."Perrine, west of Unercity (H). Kill Lord Melenas, Teldrassil (A); Speak to Ba'so, south of Razer Hill (H)" },
-		["Between the Eyes"]={ rune="Rune of Precision", spellID=400009, level=10, icon=5, slot=7,
-				start="Dusty Chest, Forlorn Cavern, IF; Dusty Chest, Dwarven District, SW; Gnarlpine Stash key from Gnarlines,\n"
-					.."Teldrassil (A); Dusty Chest, The Drag, Org; Shipwreck Cache, Tirisfal (H). See Tooltips for details" },
-		["Saber Slash"]={ rune="Rune of Saber Slash", spellID=424785, level=15, icon=6, slot=10,
-				start="Auberdine Lighthouse, Darkshore; Stonewrought Dam, Loch Modan; Defias Scout, Sentinel Hill, Westfall (A);\n"
-					.."Northwatch Hold, The Barrens; entrance of SFK, Silverpine Forest. Lots more details. See tooltips" },
-		["Blade Dance"]={ rune="Rune of Blade Dance", spellID=400012, level=15, icon=7, slot=7,
-				start="Kill Naga at Cliffspring River Cave, Darkshore; Pp Dark Iron Dwarves, Loch Modan; Pp Defias, Westfall (A)\n"
-					.."Pp Southsea Pirates, south of Ratchet, The Barrens (H). Lots more details,. See tooltips" },
-		["Just a Flesh Wound"]={ rune="Rune of Teasing", spellID=400014, level=15, icon=8, slot=5,
-				start=st.supplyFactionStart },
-		["Envenom"]={ rune="Rune of Venom", spellID=399963, level=20, icon=9, slot=7,
-				start="Purchase a Hot Tip from a vendor lurking behind Durnholde Keep, Hillsbrad Foothills" },
-		["Main Gauche"]={ rune="Rune of Main Gauche", spellID=424919, level=20, icon=10, slot=10,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Deadly Brew"]={ rune="Rune of Deadly Brew", spellID=399965, level=22, icon=11, slot=5,
-				start="Pyrewood Village, Silverpine Forest. Lengthy, with quests. See tooltip for details" },		
-		["Shiv"]={ rune="Rune of Shiving", spellID=424800, level=25, icon=12, slot=10,
-				start="Pickpocket Defias Night Runner in Duskwood. South of the Raven Hill Cemetary" },
+		["Shadowstrike"] = { 
+			rune = "暗影打擊符文", 
+			spellID = 399985, 
+			level = 2, 
+			icon = 1, 
+			slot = 10,
+			start = "Solm Hargrin，位於丹莫羅冷 Ridge 谷的鐵砧山；Jorik Kerridan，位於北郡修道院後方；Frahun Shadewhisper，位於影牙城堡 (聯盟)\n"
+				.."Rwag，位於試煉谷；David Trias，位於喪鐘鎮 (部落)" 
+		},
+		["Quick Draw"] = { 
+			rune = "快速拔槍符文", 
+			spellID = 398196, 
+			level = 8, 
+			icon = 2, 
+			slot = 5,
+			start = "拾取/偷竊地圖的四個部分。有關詳細信息，請參閱交接地點的工具提示：丹莫羅：位於卡拉諾斯和鐵爐堡之間的橋下；艾爾文森林的嶺頂哨塔；泰達希爾的魯瑟蘭村 (聯盟)\n"
+				.."位於杜洛塔回音群島的南部；位於提瑞斯法林地布瑞爾西邊，橋下，西側 (部落)" 
+		},
+		["Slaughter from the Shadows"] = { 
+			rune = "屠殺符文", 
+			spellID = 424925, 
+			level = 8, 
+			icon = 3, 
+			slot = 5,
+			start = "位於丹莫羅卡拉諾斯旅館上方的箱子；位於艾爾文森林金 Shire 北部幽靈屋上方的箱子；位於泰達希爾巴尼希爾墓穴的 gnarlpine 儲藏室 (聯盟)；位於杜洛塔乾涸峽谷的箱子；位於提瑞斯法林地阿加曼德墓穴的遺物箱 (部落)" 
+		},
+		["Mutilate"] = { 
+			rune = "致殘符文", 
+			spellID = 399960, 
+			level = 8, 
+			icon = 4, 
+			slot = 10,
+			start = "偷竊丹莫羅東南部黑暗鐵矮人的物品；偷竊北郡的 Garrick Padfoot (聯盟)；偷竊幽暗城西部的 Perrine 隊長 (部落)。擊殺泰達希爾的 Melenas 領主 (聯盟)；與位於剃刀嶺南部的 Ba'so 交談 (部落)" 
+		},
+		["Between the Eyes"] = { 
+			rune = "精確符文", 
+			spellID = 400009, 
+			level = 10, 
+			icon = 5, 
+			slot = 7,
+			start = "位於鐵爐堡被遺忘洞穴的 dusty 箱子；位於暴風城矮人區的 dusty 箱子；位於泰達希爾，從 Gnarlpine 身上取得 gnarlpine 儲藏室鑰匙 (聯盟)；位於奧格瑪的 dusty 箱子；位於提瑞斯法林地的沉船儲藏室 (部落)。有關詳細信息，請參閱工具提示。" 
+		},
+		["Saber Slash"] = { 
+			rune = "軍刀猛擊符文", 
+			spellID = 424785, 
+			level = 15, 
+			icon = 6, 
+			slot = 10,
+			start = "位於黑海岸的奧伯丁燈塔；位於洛克莫丹的石工水壩；位於西部荒野哨兵嶺的迪菲亞斥候 (聯盟);\n"
+				.."位於貧瘠之地的北 watch 堡壘；位於銀松森林影牙城堡入口。更多詳細信息，請參閱工具提示。" 
+		},
+		["Blade Dance"] = { 
+			rune = "劍刃亂舞符文", 
+			spellID = 400012, 
+			level = 15, 
+			icon = 7, 
+			slot = 7,
+			start = "擊殺位於黑海岸懸崖之泉洞穴的娜迦；偷竊洛克莫丹的黑暗鐵矮人；偷竊西部荒野的迪菲亞 (聯盟)\n"
+				.."偷竊位於貧瘠之地棘齒城南部的南海海盜 (部落)。更多詳細信息，請參閱工具提示。" 
+		},
+		["Just a Flesh Wound"] = { 
+			rune = "戲弄符文", 
+			spellID = 400014, 
+			level = 15, 
+			icon = 8, 
+			slot = 5,
+			start = st.supplyFactionStart 
+		},
+		["Envenom"] = { 
+			rune = "毒藥符文", 
+			spellID = 399963, 
+			level = 20, 
+			icon = 9, 
+			slot = 7,
+			start = "從潛伏在希爾斯布萊德丘陵敦霍爾德城堡後面的商人那裡購買一個熱門提示" 
+		},
+		["Main Gauche"] = { 
+			rune = "副手符文", 
+			spellID = 424919, 
+			level = 20, 
+			icon = 10, 
+			slot = 10,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Deadly Brew"] = { 
+			rune = "致命藥劑符文", 
+			spellID = 399965, 
+			level = 22, 
+			icon = 11, 
+			slot = 5,
+			start = "位於銀松森林的 pyrewood 村。很長，需要完成任務。有關詳細信息，請參閱工具提示。" 
+		},		
+		["Shiv"] = { 
+			rune = "刺骨符文", 
+			spellID = 424800, 
+			level = 25, 
+			icon = 12, 
+			slot = 10,
+			start = "偷竊暮色森林烏鴉嶺墓地南部的迪菲亞夜行者" 
+		},
 		-- Phase 2
-		["Poisoned Knife"]={ rune="Rune of the Poisoned Blade", spellID=425012, level=30, icon=13, slot=6,
-				start="Go to a pillaged campsite in Desolace" },
-		["Shadowstep"]={ rune="Rune of Shadowstep", spellID=400029, level=30, icon=14, slot=6,
-				start="Pyrewood Village, Silverpine Forest. Lengthy, with quests. Scarlet Monastery Library Wing. See tooltips for details" },
-		["Shuriken Toss"]={ rune="Rune of the Assassin", spellID=399986, level=30, icon=15, slot=6,
-				start="Disarm (L30) a Poison Dart trap in the Swamp of Sorrows so that you may then loot a chest" },
-		["Rolling with the Punches"]={ rune="Rune of the Southpaw", spellID=400016, level=30, icon=16, slot=8,
-				start="With Lockpicking @ L55 go to Camp E'Thok in Thousand Needles" },
-		["Waylay"]={ rune="Rune of the Assailant", spellID=408700, level=40, icon=17, slot=8, start=st.dalaranSpeakTo },
-		["Master of Subtlety"]={ rune="Rune of Subtlety", spellID=425096, level=40, icon=18, slot=8,
-				start="Head to a tower in Kurzen's Compound, far north Stranglethorn Vale" },
-		-- Phase 2 Skill Books
-		["Redirect"]={ skillBook="Manual of Redirect", spellID=438040, level=1, start=st.dungeonSummary },
+		["Poisoned Knife"] = { 
+			rune = "毒刃符文", 
+			spellID = 425012, 
+			level = 30, 
+			icon = 13, 
+			slot = 6,
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Shadowstep"] = { 
+			rune = "暗影步符文", 
+			spellID = 400029, 
+			level = 30, 
+			icon = 14, 
+			slot = 6,
+			start = "位於銀松森林的 pyrewood 村。很長，需要完成任務。血色修道院圖書館側翼。有關詳細信息，請參閱工具提示。" 
+		},
+		["Shuriken Toss"] = { 
+			rune = "刺客符文", 
+			spellID = 399986, 
+			level = 30, 
+			icon = 15, 
+			slot = 6,
+			start = "解除悲傷沼澤中的一個毒鏢陷阱 (等級 30)，以便你可以拾取一個箱子" 
+		},
+		["Rolling with the Punches"] = { 
+			rune = "左撇子符文", 
+			spellID = 400016, 
+			level = 30, 
+			icon = 16, 
+			slot = 8,
+			start = "使用開鎖技能 (等級 55) 前往千針石林的 E'Thok 營地" 
+		},
+		["Waylay"] = { 
+			rune = "襲擊者符文", 
+			spellID = 408700, 
+			level = 40, 
+			icon = 17, 
+			slot = 8, 
+			start = st.dalaranSpeakTo 
+		},
+		["Master of Subtlety"] = { 
+			rune = "敏銳符文", 
+			spellID = 425096, 
+			level = 40, 
+			icon = 18, 
+			slot = 8,
+			start = "前往位於荊棘谷北部庫爾森營地的一座塔樓" 
+		},
+		-- 第二階段技能書
+		["Redirect"] = { 
+			skillBook = "轉向手冊", 
+			spellID = 438040, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
 		-- Other datamined "Runes"
-		["Combat Potency"]={ rune="", spellID=432259, level=0, icon=0, slot=1, start="Unknown" },
-		["Focused Attacks"]={ rune="", spellID=432256, level=0, icon=0, slot=1, start="Unknown" },
-		["Honor Among Thieves"]={ rune="", spellID=432264, level=0, icon=0, slot=1, start="Unknown" },
+		["Combat Potency"]={ rune="", spellID=432259, level=0, icon=0, slot=1, start="未知" },
+		["Focused Attacks"]={ rune="", spellID=432256, level=0, icon=0, slot=1, start="未知" },
+		["Honor Among Thieves"]={ rune="", spellID=432264, level=0, icon=0, slot=1, start="未知" },
 
 		spells={ "Shadowstrike", "Quick Draw", "Slaughter from the Shadows",  "Mutilate",
 			"Between the Eyes", "Saber Slash", "Blade Dance", "Just a Flesh Wound", "Envenom",
@@ -1485,47 +1595,166 @@ ns.runes = {
 			
 	["SHAMAN"] = {
 		-- Phase 1
-		["Overload"]={ rune="Dyadic Icon", spellID=408438, level=2, icon=1, slot=5,
-				start="Troll/Orc: Shikrik in Valley of Trials, Durotar; Tauren: Meela Dawnstrider in Camp Narache, Mulgore" },
-		["Lava Lash"]={ rune="Lava Lash", spellID=408507, level=4, icon=2, slot=10,
-				start="Speak to Boarton Shadetotem, main Thunder Bluff mesa, Mulgore" },
-		["Shield Mastery"]={ rune="Galvanic Iron", spellID=408524, level=6, icon=3, slot=5,
-				start="Randomly spawned Galvanic Totems in Durotar and Mulgore. Listen and look for them as you quest. Don't delay" },
-		["Ancestral Guidance"]={ rune="Echo of the Ancestors", spellID=409324, level=7, icon=4, slot=7,
-				start=st.twoPlusHealers .."Kolkar Crag, far south-west Durotar; on an overlook, via Venture Co Mine, Mulgore" },
-		["Molten Blast"]={ rune="Sulfurous Icon", spellID=425339, level=8, icon=5, slot=10,
-				start="Frozen Makrura, Durotar; Bael'Dun Digsite, south-west of Thunder Bluff" },
-		["Way of Earth"]={ rune="Earthen Rune", spellID=408531, level=12, icon=6, slot=7,
-				start="Purge Desert Mirage, west of Ratchet, The Barrens; Rot Hide Mystics, Silverpine Forest" },
-		["Healing Rain"]={ rune="Rune of Healing Rain", spellID=415236, level=15, icon=7, slot=5,
-				start=st.supplyFactionStart },
-		["Water Shield"]={ rune="Tempest Icon", spellID=408510, level=15, icon=8, slot=10,
-				start="Kolkar's Booty in centaur camps, The Barrens; Grimson the Pale, Deep Elem Mine, Silverpine Forest" },
-		["Dual Wield Specialization"]={ rune="Rune of Dual Wield Specialization", spellID=408496, level=20, icon=9, slot=5,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Lava Burst"]={ rune="Kajaric Icon", spellID=408490, level=25, icon=10, slot=10,
-				start="Mudsnout Shaman, Hillsbrad Foothills" },
-		["Shamanistic Rage"]={ rune="Rune of Primordial Fury", spellID=425336, level=25, icon=11, slot=7,
-				start="Primordial Anomaly, south of the Charred Vale, Stonetalon Mountains. More details. See tooltip" },
-		["Earth Shield"]={ rune="Rune of Earth Shield", spellID=408514, level=25, icon=12, slot=7,
-				start="Kill Baron Aquanis in Blackfathom Deeps" },
-		-- Phase 2
-		["Spirit of the Alpha"]={ rune="Rune of the Alpha", spellID=408696, level=25, icon=13, slot=8,
-				start="Light parkour near Freewind Post in Thousand Needles" },
-		["Decoy Totem"]={ rune="Decoy Totem", spellID=425874, level=27, icon=14, slot=8,
-				start="Farm items in Thousand Needles (L25-30), make an Altar offering, profit" },				
-		["Ancestral Awakening"]={ rune="Rune of Ancestral Awakening", spellID=425858, level=30, icon=15, slot=8,
-				start="Go to a pillaged campsite in Desolace" },		
-		["Fire Nova"]={ rune="Brimstone Icon", spellID=408339, level=33, icon=16, slot=6,
-				start="Kill Flameseer Dubelen (L35e) in Desolace. Then 2 x Maraudon antechamber corpse runs" },
-		["Power Surge"]={ rune="Rune of Power", spellID=415100, level=34, icon=17, slot=6,
-				start="Search for Bouldefist Ogres (L32-33) in Arathi Highlands. Can be grouped" },
-		["Maelstrom Weapon"]={ rune="Rune of the Storm", spellID=408498, level=36, icon=18, slot=6,
-				start="Obtain a Tattered Note off Charlga Razorflank in RFK and complete a quest chain" },				
-		["Two-Handed Mastery"]={ rune="Rune of Two-Handed Mastery", spellID=436364, level=40, icon=19, slot=5,
-				start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Totemic Projection"]={ skillBook="Revelation of Totemic Projection", spellID=437009, level=1, start=st.dungeonSummary },
+		["Overload"] = { 
+			rune = "二元圖騰", 
+			spellID = 408438, 
+			level = 2, 
+			icon = 1, 
+			slot = 5,
+			start = "巨魔/獸人：位於杜洛塔試煉谷的 Shikrik；牛頭人：位於莫高雷納拉其營地的 Meela Dawnstrider" 
+		},
+		["Lava Lash"] = { 
+			rune = "熔岩鞭笞", 
+			spellID = 408507, 
+			level = 4, 
+			icon = 2, 
+			slot = 10,
+			start = "與位於莫高雷雷霆崖主平台的 Boarton Shadetotem 交談" 
+		},
+		["Shield Mastery"] = { 
+			rune = "電流鐵", 
+			spellID = 408524, 
+			level = 6, 
+			icon = 3, 
+			slot = 5,
+			start = "位於杜洛塔和莫高雷的隨機生成的電流圖騰。在做任務時聆聽並尋找它們。不要拖延。" 
+		},
+		["Ancestral Guidance"] = { 
+			rune = "先祖的回響", 
+			spellID = 409324, 
+			level = 7, 
+			icon = 4, 
+			slot = 7,
+			start = st.twoPlusHealers .. "位於杜洛塔西南部的科爾卡尖塔；通過風險投資公司礦洞，位於莫高雷的一個瞭望台上" 
+		},
+		["Molten Blast"] = { 
+			rune = "硫磺圖騰", 
+			spellID = 425339, 
+			level = 8, 
+			icon = 5, 
+			slot = 10,
+			start = "位於杜洛塔的冰凍瑪克魯拉；位於雷霆崖西南部的貝爾丹挖掘場" 
+		},
+		["Way of Earth"] = { 
+			rune = "土符文", 
+			spellID = 408531, 
+			level = 12, 
+			icon = 6, 
+			slot = 7,
+			start = "淨化位於貧瘠之地棘齒城西部的沙漠幻影；位於銀松森林的腐皮秘法師" 
+		},
+		["Healing Rain"] = { 
+			rune = "治療之雨符文", 
+			spellID = 415236, 
+			level = 15, 
+			icon = 7, 
+			slot = 5,
+			start = st.supplyFactionStart 
+		},
+		["Water Shield"] = { 
+			rune = "風暴圖騰", 
+			spellID = 408510, 
+			level = 15, 
+			icon = 8, 
+			slot = 10,
+			start = "位於貧瘠之地半人馬營地的科爾卡的戰利品；位於銀松森林深 Elem 礦洞的 Grimson the Pale" 
+		},
+		["Dual Wield Specialization"] = { 
+			rune = "雙持專精符文", 
+			spellID = 408496, 
+			level = 20, 
+			icon = 9, 
+			slot = 5,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Lava Burst"] = { 
+			rune = "卡加利克圖騰", 
+			spellID = 408490, 
+			level = 25, 
+			icon = 10, 
+			slot = 10,
+			start = "位於希爾斯布萊德丘陵的泥 snout 薩滿" 
+		},
+		["Shamanistic Rage"] = { 
+			rune = "原始狂怒符文", 
+			spellID = 425336, 
+			level = 25, 
+			icon = 11, 
+			slot = 7,
+			start = "位於石爪山脈焦灼山谷南部的原始異常。更多詳細信息，請參閱工具提示。" 
+		},
+		["Earth Shield"] = { 
+			rune = "地盾符文", 
+			spellID = 408514, 
+			level = 25, 
+			icon = 12, 
+			slot = 7,
+			start = "擊殺位於黑 fathom 深淵的 Baron Aquanis" 
+		},
+		-- 第二階段
+		["Spirit of the Alpha"] = { 
+			rune = "首領符文", 
+			spellID = 408696, 
+			level = 25, 
+			icon = 13, 
+			slot = 8,
+			start = "位於千針石林自由之風哨站附近的輕度跑酷" 
+		},
+		["Decoy Totem"] = { 
+			rune = "誘捕圖騰", 
+			spellID = 425874, 
+			level = 27, 
+			icon = 14, 
+			slot = 8,
+			start = "在千針石林中收集物品 (等級 25-30)，製作祭壇祭品，獲取利潤" 
+		},				
+		["Ancestral Awakening"] = { 
+			rune = "先祖覺醒符文", 
+			spellID = 425858, 
+			level = 30, 
+			icon = 15, 
+			slot = 8,
+			start = "前往淒涼之地的被掠奪營地" 
+		},		
+		["Fire Nova"] = { 
+			rune = "硫磺圖騰", 
+			spellID = 408339, 
+			level = 33, 
+			icon = 16, 
+			slot = 6,
+			start = "擊殺位於淒涼之地的烈焰先知 Dubelen (等級 35 精英)。然後進行 2 次瑪拉頓前廳屍體跑" 
+		},
+		["Power Surge"] = { 
+			rune = "力量符文", 
+			spellID = 415100, 
+			level = 34, 
+			icon = 17, 
+			slot = 6,
+			start = "在阿拉希高地尋找巨石拳食人魔 (等級 32-33)。可以組隊。" 
+		},
+		["Maelstrom Weapon"] = { 
+			rune = "風暴符文", 
+			spellID = 408498, 
+			level = 36, 
+			icon = 18, 
+			slot = 6,
+			start = "從剃刀高地的 Charlga Razorflank 身上獲得一張破損的筆記，並完成一個任務鏈" 
+		},				
+		["Two-Handed Mastery"] = { 
+			rune = "雙手武器專精符文", 
+			spellID = 436364, 
+			level = 40, 
+			icon = 19, 
+			slot = 5,
+			start = st.dalaranSpeakTo 
+		},
+		-- 第二階段技能書
+		["Totemic Projection"] = { 
+			skillBook = "圖騰投射啟示", 
+			spellID = 437009, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
 
 		spells={ "Overload", "Lava Lash", "Shield Mastery", "Ancestral Guidance", "Molten Blast",
 			"Way of Earth", "Healing Rain", "Water Shield", "Dual Wield Specialization",
@@ -1536,59 +1765,177 @@ ns.runes = {
 
 	["WARLOCK"] = {
 		-- Phase 1
-		["Haunt"]={ rune="Rune of Haunting", spellID=403501, level=2, icon=1, slot=10,
-				start="Speak to Alamar Grimm, Anvilmar, Coldridge Valley; Drusilla La Salle, Northshire (A).\n"
-					.."Nartok, Valley of Trials; Maximillion, Deathknell (H)" },
-		["Chaos Bolt"]={ rune="Rune of Chaos Bolt", spellID=403629, level=6, icon=2, slot=10,
-				start="Frozen: Trogg, Gol'bolar quarry, Dun Morogh; Murloc, Stonecairn Lake, Elwynn Forest (A)\n"
-					.."Makrura, east of Razor Hill, Durotar; Murloc, north-west of Brightwater Lake, Tirisfal Glades (H)" },
-		["Demonic Grace"]={ rune="Rune of Grace", spellID=425463, level=8, icon=3, slot=7,
-				start="Ominous Tome drops from: Frostmane Shadowcaster, cave west of Brewnall, Dun Morogh; Lasperlode Mine Kobolds,\n"
-					.."Elwynn Forest (A). Voodoo Doll on Echo Isles, Durotar; Darkeye Bonecaster, Agamand Mills, Tirisfal (H)" },
-		["Demonic Tactics"]={ rune="Rune of Tactics", spellID=412727, level=8, icon=4, slot=5,
-				start="Dead Acolyte near Jasperlode Mine, Elwynn Forest (A);\n"
-					.."Dead Acolyte, towards the Monastery, Tirisfal Glades (H)" },
-		["Soul Siphon"]={ rune="Rune of Soul Siphon", spellID=403511, level=10, icon=5, slot=5,
-				start="Use Drain Soul twice. See these tooltips: Captain Beld, far south-east Dun Morogh; Hogger, Elwynn Forest (A)\n"
-					.."Gazz'uz, cave outside Orgrimmar; Maggot Eye, Garren's Haunt, Tirisfal Glades (H)" },
-		["Master Channeler"]={ rune="Rune of Channeling", spellID=403668, level=12, icon=6, slot=5,
-				start="Greishan Ironstove, long path, Loch Modan; Dark Strand Fanatics, Tower of Athalaxx, Darkshore (A)\n"
-					.."Altar of Thorns, Thorn Hill, The Barrens; Sadistic Fiend, Deep Elm Mine, Silverpine Forest (H)" },
-		["Everlasting Affliction"]={ rune="Rune of Everlasting Affliction", spellID=412689, level=15, icon=7, slot=7,
-				start=st.supplyFactionStart },
-		["Lake of Fire"]={ rune="Rune of Fires Wake", spellID=403666, level=20, icon=8, slot=5,
-				start="Zixil, wanders between Tarren Mill and Southshore, Hillsbrad Foothills (A/H)" },
-		["Shadow Bolt Volley"]={ rune="Rune of Shadowbolts", spellID=403628, level=20, icon=9, slot=10,
-				start="Delmanis the Hated, Tower of Athalaxx, Darkshore; Demonic Remains, Ironbands Excavation, Loch Modan (A)\n"
-					.."Supervisor Lugwizzle, Sludge Fen, The Barrens; Ravenclaw mobs, Beren's Peril cave, Silverpine Forest (H)" },
-		["Demonic Pact"]={ rune="Rune of the Pact", spellID=425464, level=20, icon=10, slot=7,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Incinerate"]={ rune="Rune of Incinerate", spellID=412758, level=23, icon=11, slot=7,
-				start="Incinerator Gar'im, cave south-east corner of Redridge (A/H)" },
-		["Metamorphosis"]={ rune="Rune of Metamorphosis", spellID=403789, level=25, icon=12, slot=10,
-				start="Doan Karhan, near Camp Taurajo, southern Barrens" },
-		-- Phase 2
-		["Dance of the Wicked"]={ rune="Rune of Wickedness", spellID=412798, level=30, icon=13, slot=8,
-				start="With Hellfire learnt, interact with a dead ogre in Stranglethorn, Alterac, Desolace or Thousand Needles" },
-		["Shadow and Flame"]={ rune="Rune of Burning Darkness", spellID=426316, level=30, icon=14, slot=6, 
-				start="Go to a pillaged campsite in Desolace" },
-		["Grimoire of Synergy"]={ rune="Rune of Synergy", spellID=426301, level=32, icon=15, slot=6,
-				start="Raszel Ander, near Camp Taurajo, southern Barrens" },
-		["Invocation"]={ rune="Rune of Invocation", spellID=426243, level=34, icon=16, slot=6,
-				start="Go to Stromgarde Keep in Arathi Highlands and begin by killing Syndicate Conjurors" },
-		["Shadowflame"]={ rune="Rune of Shadowflames", spellID=426320, level=38, icon=17, slot=8,
-				start="Go to Shadowbreak Ravine in Desolace and do Warlock stuff" },
-		["Demonic Knowledge"]={ rune="Rune of Forbidden Knowledge", spellID=412732, level=40, icon=18, slot=8, start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Portal Summoning"]={ skillBook="Grimoire of Portal Summoning", spellID=437169, level=1, start=st.dungeonSummary },
-		["Soul Harvesting"]={ skillBook="Grimoire of Soul Harvesting", spellID=437032, level=1, start=st.dungeonSummary },
+		["Haunt"] = { 
+			rune = "鬼魅符文", 
+			spellID = 403501, 
+			level = 2, 
+			icon = 1, 
+			slot = 10,
+			start = "與 Alamar Grimm 交談，位於丹莫羅冷 Ridge 谷的鐵砧山；Drusilla La Salle，位於北郡 (聯盟)。\n"
+				.."Nartok，位於試煉谷；Maximillion，位於喪鐘鎮 (部落)" 
+		},
+		["Chaos Bolt"] = { 
+			rune = "混亂箭符文", 
+			spellID = 403629, 
+			level = 6, 
+			icon = 2, 
+			slot = 10,
+			start = "冰凍：位於丹莫羅戈爾博拉採石場的穴居人；位於艾爾文森林石頭湖的魚人 (聯盟)\n"
+				.."位於杜洛塔剃刀嶺東方的瑪克魯拉；位於提瑞斯法林地明鏡湖西北方的魚人 (部落)" 
+		},
+		["Demonic Grace"] = { 
+			rune = "恩典符文", 
+			spellID = 425463, 
+			level = 8, 
+			icon = 3, 
+			slot = 7,
+			start = "不祥之書掉落自：位於丹莫羅布魯諾爾西部洞穴的霜鬃暗影施法者；位於艾爾文森林碧玉礦洞的狗頭人 (聯盟)。位於杜洛塔回音群島的巫毒娃娃；位於提瑞斯法林地阿加曼德磨坊的暗眼骨法師 (部落)" 
+		},
+		["Demonic Tactics"] = { 
+			rune = "戰術符文", 
+			spellID = 412727, 
+			level = 8, 
+			icon = 4, 
+			slot = 5,
+			start = "位於艾爾文森林碧玉礦洞附近的死亡侍僧 (聯盟);\n"
+				.."位於提瑞斯法林地，朝向修道院的死亡侍僧 (部落)" 
+		},
+		["Soul Siphon"] = { 
+			rune = "靈魂虹吸符文", 
+			spellID = 403511, 
+			level = 10, 
+			icon = 5, 
+			slot = 5,
+			start = "使用兩次吸取靈魂。請參閱這些工具提示：位於丹莫羅東南部的 Beld 隊長；位於艾爾文森林的霍格 (聯盟)\n"
+				.."位於奧格瑪城外洞穴的 Gazz'uz；位於提瑞斯法林地加倫鬼屋的 Maggot Eye (部落)" 
+		},
+		["Master Channeler"] = { 
+			rune = "引導符文", 
+			spellID = 403668, 
+			level = 12, 
+			icon = 6, 
+			slot = 5,
+			start = "Greishan Ironstove，位於洛克莫丹的長路；位於黑海岸阿薩拉克斯塔的黑暗海岸狂熱者 (聯盟)\n"
+				.."位於貧瘠之地荊棘山的荊棘祭壇；位於銀松森林深 Elem 礦洞的 Sadistic Fiend (部落)" 
+		},
+		["Everlasting Affliction"] = { 
+			rune = "永恆痛苦符文", 
+			spellID = 412689, 
+			level = 15, 
+			icon = 7, 
+			slot = 7,
+			start = st.supplyFactionStart 
+		},
+		["Lake of Fire"] = { 
+			rune = "火焰之 wake 符文", 
+			spellID = 403666, 
+			level = 20, 
+			icon = 8, 
+			slot = 5,
+			start = "Zixil，在希爾斯布萊德丘陵的塔倫米爾和南海鎮之間徘徊 (聯盟/部落)" 
+		},
+		["Shadow Bolt Volley"] = { 
+			rune = "暗影箭齊射符文", 
+			spellID = 403628, 
+			level = 20, 
+			icon = 9, 
+			slot = 10,
+			start = "位於黑海岸阿薩拉克斯塔的 Delmanis the Hated；位於洛克莫丹鐵環挖掘場的惡魔遺骸 (聯盟)\n"
+				.."位於貧瘠之地污泥沼澤的 Supervisor Lugwizzle；位於銀松森林貝倫的危機洞穴的 Ravenclaw 暴徒 (部落)" 
+		},
+		["Demonic Pact"] = { 
+			rune = "契約符文", 
+			spellID = 425464, 
+			level = 20, 
+			icon = 10, 
+			slot = 7,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Incinerate"] = { 
+			rune = "焚化符文", 
+			spellID = 412758, 
+			level = 23, 
+			icon = 11, 
+			slot = 7,
+			start = "位於赤脊山脈東南角洞穴的 Incinerator Gar'im (聯盟/部落)" 
+		},
+		["Metamorphosis"] = { 
+			rune = "變形符文", 
+			spellID = 403789, 
+			level = 25, 
+			icon = 12, 
+			slot = 10,
+			start = "位於貧瘠之地南部陶拉祖營地附近的 Doan Karhan" 
+		},
+		-- 第二階段
+		["Dance of the Wicked"] = { 
+			rune = "邪惡符文", 
+			spellID = 412798, 
+			level = 30, 
+			icon = 13, 
+			slot = 8,
+			start = "學習地獄火後，與荊棘谷、奧特蘭克、淒涼之地或千針石林中的一個死亡食人魔互動" 
+		},
+		["Shadow and Flame"] = { 
+			rune = "燃燒黑暗符文", 
+			spellID = 426316, 
+			level = 30, 
+			icon = 14, 
+			slot = 6, 
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Grimoire of Synergy"] = { 
+			rune = "協同符文", 
+			spellID = 426301, 
+			level = 32, 
+			icon = 15, 
+			slot = 6,
+			start = "Raszel Ander，位於貧瘠之地南部陶拉祖營地附近" 
+		},
+		["Invocation"] = { 
+			rune = "召喚符文", 
+			spellID = 426243, 
+			level = 34, 
+			icon = 16, 
+			slot = 6,
+			start = "前往阿拉希高地的斯通加德要塞，首先擊殺辛迪加 conjuror" 
+		},
+		["Shadowflame"] = { 
+			rune = "暗影烈焰符文", 
+			spellID = 426320, 
+			level = 38, 
+			icon = 17, 
+			slot = 8,
+			start = "前往淒涼之地的暗影裂口，做一些術士的事情" 
+		},
+		["Demonic Knowledge"] = { 
+			rune = "禁忌知識符文", 
+			spellID = 412732, 
+			level = 40, 
+			icon = 18, 
+			slot = 8, 
+			start = st.dalaranSpeakTo 
+		},
+		-- 第二階段技能書
+		["Portal Summoning"] = { 
+			skillBook = "傳送門召喚聖典", 
+			spellID = 437169, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
+		["Soul Harvesting"] = { 
+			skillBook = "靈魂收割聖典", 
+			spellID = 437032, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
 		-- Other datamined "Runes"
-		["Avoidance"]={ nonRune="", spellID=427743, level=0, start="Unknown" },
-		["Backdraft"]={ nonRune="", spellID=427713, level=0, icon=0, slot=1, start="Unknown" },
-		["Immolation Aura"]={ nonRune="", spellID=427726, level=0, icon=0, slot=9, start="Unknown" },
-		["Pandemic"]={ nonRune="", spellID=427712, level=0, icon=0, slot=1, start="Unknown" },
-		["Summon Felguard"]={ nonRune="", spellID=427733, level=0, icon=0, slot=9, start="Unknown" },
-		["Unstable Affliction"]={ nonRune="", spellID=427717, level=0, icon=0, slot=9, start="Unknown" },
+		["Avoidance"]={ nonRune="", spellID=427743, level=0, start="未知" },
+		["Backdraft"]={ nonRune="", spellID=427713, level=0, icon=0, slot=1, start="未知" },
+		["Immolation Aura"]={ nonRune="", spellID=427726, level=0, icon=0, slot=9, start="未知" },
+		["Pandemic"]={ nonRune="", spellID=427712, level=0, icon=0, slot=1, start="未知" },
+		["Summon Felguard"]={ nonRune="", spellID=427733, level=0, icon=0, slot=9, start="未知" },
+		["Unstable Affliction"]={ nonRune="", spellID=427717, level=0, icon=0, slot=9, start="未知" },
 
 		spells={ "Haunt", "Chaos Bolt", "Demonic Grace", "Demonic Tactics", "Soul Siphon", "Master Channeler",
 			"Everlasting Affliction", "Lake of Fire", "Shadow Bolt Volley", "Demonic Pact", "Incinerate",
@@ -1598,57 +1945,170 @@ ns.runes = {
 	},
 
 	["WARRIOR"] = {
-		["Victory Rush"]={ rune="Rune of Victory Rush", spellID=402927, level=2, icon=1, slot=10,
-				start="You'll stumble across the stash / quest while questing in your starting zone" },
-		["Blood Frenzy"]={ rune="Rune of Blood Frenzy", spellID=412507, level=7, icon=2, slot=5,
-				start="Wandering Swordsman: Westbrook Garrison, Elwynn Forest (A); Bladescar Highlands, Durotar (H). Other locations" },
-		["Furious Thunder"]={ rune="Rune of Furious Thunder", spellID=403219, level=7, icon=3, slot=7,
-				start="Various Elites/Rares in Dun Morogh (A) and Durotar, Mulgore (H); Goldtooth, Mother Fang in Elwynn Forest (A)\n"
-				.."Gnarlpine Cache, Ban'ethil Barrow Den, Teldrassil (A); Gillgar, west of Soliden Farmstead, Tirisfal (H)" },
-		["Devastate"]={ rune="Rune of Devastate", spellID=403196, level=8, icon=4, slot=10,
-				start="Junni Steelpass, Kharanos; Viktoria Woods, SW; Delwynna, Darn; Vahi Bonespliter, Razor Hill;\n"
-				.."Vateya Timberhoof, Bloodhoof; Dorac Graves, UC. Each one will accept three items you'll\n"
-				.."loot as you quest normally. Alliance side there's no overlap, Horde - a little overlap.\n"
-				.."Check each NPC above for complete, localised, details as way too many too list here" },
-		["Frenzied Assault"]={ rune="Rune of Frenzied Assault", spellID=425412, level=10, icon=5, slot=7,
-				start="Simply help one of six people, mostly Innkeepers, one in each main city" },
-		["Single-Minded Fury"]={ rune="Rune of Single-Minded Fury", spellID=413404, level=15, icon=6, slot=10,
-				start=st.supplyFactionStart },
-		["Endless Rage"]={ rune="Rune of Endless Rage", spellID=403218, level=20, icon=7, slot=10,
-				start="Old Murk-eye, southern coast, Westfall; Lady Sedorax, Darkshore (A);\n"
-				.."Horde Warbanner, The Crossroads; Skittering Dark Cave, Silverpine Forest (H)" },
-		["Quick Strike"]={ rune="Rune of Quick Strike", spellID=429765, level=20, icon=8, slot=10,
-				start="Paxnozz, Mathystra, Darkshore; Defias in Westfall (A); Kilxx @ Ratchet (H);\n"
-				.."Troggs west of Thelsamar, Loch Modan" },
-		["Warbringer"]={ rune="Rune of the Warbringer", spellID=425421, level=20, icon=9, slot=5,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Consumed by Rage"]={ rune="Rune of Consuming Rage", spellID=425418, level=25, icon=10, slot=7,
-				start="Carrodin @ Thelgen Rock Cave, Wetlands" },
-		["Flagellation"]={ rune="Rune of Flagellation", spellID=402877, level=25, icon=11, slot=5,
-				start="Crypts in the Raven Hill Cemetary, Duskwood" },
-		["Raging Blow"]={ rune="Rune of Raging Blow", spellID=402911, level=25, icon=12, slot=5,
-				start="Alonso, Ashenvale @ the path to Stonetalon Mountains" },
-		-- Phase 2
-		["Intervene"]={ rune="Rune of Intervention", spellID=403338, level=24, icon=13, slot=8,
-				start="Strike three combat dummies in Thousand Needles in a specific manner" },
-		["Enraged Regeneration"]={ rune="Rune of Healing Rage", spellID=402913, level=30, icon=14, slot=8,
-				start="Go to a pillaged campsite in Desolace" },
-		["Focused Rage"]={ rune="Rune of Focused Rage", spellID=29787, level=33, icon=15, slot=6,
-				start="Head to Witherbark Village in Arathi Highlands and slay Witherbark mobs" },
-		["Blood Surge"]={ rune="Rune of Blood Surge", spellID=413380, level=36, icon=16, slot=6,
-				start="Begin by slaying elite Boulderfist Maulers (Arathi) or Crushridge Mages (Alterac) (L37)" },
-		["Rallying Cry"]={ rune="Rune of the Commander", spellID=426490, level=39, icon=17, slot=8,
-				start="Drops of the Wandering Swordsman (L40) in the Badlands" },
-		["Precise Timing"]={ rune="Rune of Ruthless Precision", spellID=402922, level=40, icon=18, slot=6, start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Commanding Shout"]={ skillBook="Handbook of Commanding Shout", spellID=403215, level=1, start=st.dungeonSummary },
+		["Victory Rush"] = { 
+			rune = "勝利衝鋒符文", 
+			spellID = 402927, 
+			level = 2, 
+			icon = 1, 
+			slot = 10,
+			start = "在你的起始區域做任務時，你會偶然發現這個儲藏室/任務。" 
+		},
+		["Blood Frenzy"] = { 
+			rune = "嗜血狂亂符文", 
+			spellID = 412507, 
+			level = 7, 
+			icon = 2, 
+			slot = 5,
+			start = "流浪劍客：位於艾爾文森林的威斯特布魯克駐軍 (聯盟)；位於杜洛塔的刀疤高地 (部落)。其他位置" 
+		},
+		["Furious Thunder"] = { 
+			rune = "狂怒雷霆符文", 
+			spellID = 403219, 
+			level = 7, 
+			icon = 3, 
+			slot = 7,
+			start = "位於丹莫羅 (聯盟) 和杜洛塔、莫高雷 (部落) 的各種精英/稀有怪；位於艾爾文森林的 Goldtooth、Mother Fang (聯盟)\n"
+				.."位於泰達希爾巴尼希爾墓穴的 gnarlpine 儲藏室 (聯盟)；位於提瑞斯法林地索利登農場西部的 Gillgar (部落)" 
+		},
+		["Devastate"] = { 
+			rune = "毀滅符文", 
+			spellID = 403196, 
+			level = 8, 
+			icon = 4, 
+			slot = 10,
+			start = "Junni Steelpass，位於卡拉諾斯；Viktoria Woods，位於暴風城；Delwynna，位於達納蘇斯；Vahi Bonespliter，位於剃刀嶺；\n"
+				.."Vateya Timberhoof，位於血蹄村；Dorac Graves，位於幽暗城。每個人都會接受你在正常任務過程中拾取的三件物品。聯盟方沒有重疊，部落方有一點重疊。\n"
+				.."檢查上面每個 NPC 以獲取完整、本地化的詳細信息，因為這裡列出的太多了。" 
+		},
+		["Frenzied Assault"] = { 
+			rune = "狂亂突襲符文", 
+			spellID = 425412, 
+			level = 10, 
+			icon = 5, 
+			slot = 7,
+			start = "只需幫助六個人中的其中一個，大部分是旅館老闆，每個主城都有一個。" 
+		},
+		["Single-Minded Fury"] = { 
+			rune = "一心狂怒符文", 
+			spellID = 413404, 
+			level = 15, 
+			icon = 6, 
+			slot = 10,
+			start = st.supplyFactionStart 
+		},
+		["Endless Rage"] = { 
+			rune = "無盡怒火符文", 
+			spellID = 403218, 
+			level = 20, 
+			icon = 7, 
+			slot = 10,
+			start = "位於西部荒野南部海岸的 Old Murk-eye；位於黑海岸的 Lady Sedorax (聯盟);\n"
+				.."位於十字路口的部落戰旗；位於銀松森林的 Skittering Dark Cave (部落)" 
+		},
+		["Quick Strike"] = { 
+			rune = "快速打擊符文", 
+			spellID = 429765, 
+			level = 20, 
+			icon = 8, 
+			slot = 10,
+			start = "Paxnozz，位於黑海岸的瑪西斯塔；位於西部荒野的迪菲亞 (聯盟)；位於棘齒城的 Kilxx (部落);\n"
+				.."位於洛克莫丹塞爾薩瑪西部的穴居人" 
+		},
+		["Warbringer"] = { 
+			rune = "戰爭使者符文", 
+			spellID = 425421, 
+			level = 20, 
+			icon = 9, 
+			slot = 5,
+			start = "位於貧瘠之地棘齒城的 Grizzby" 
+		},
+		["Consumed by Rage"] = { 
+			rune = "吞噬怒火符文", 
+			spellID = 425418, 
+			level = 25, 
+			icon = 10, 
+			slot = 7,
+			start = "位於濕地的塞爾根岩洞的 Carrodin" 
+		},
+		["Flagellation"] = { 
+			rune = "鞭笞符文", 
+			spellID = 402877, 
+			level = 25, 
+			icon = 11, 
+			slot = 5,
+			start = "位於暮色森林烏鴉嶺墓地的地下墓穴" 
+		},
+		["Raging Blow"] = { 
+			rune = "狂怒打擊符文", 
+			spellID = 402911, 
+			level = 25, 
+			icon = 12, 
+			slot = 5,
+			start = "位於灰谷通往石爪山脈的道路上的 Alonso" 
+		},
+		-- 第二階段
+		["Intervene"] = { 
+			rune = "干預符文", 
+			spellID = 403338, 
+			level = 24, 
+			icon = 13, 
+			slot = 8,
+			start = "以特定方式攻擊千針石林中的三個戰鬥假人" 
+		},
+		["Enraged Regeneration"] = { 
+			rune = "癒合之怒符文", 
+			spellID = 402913, 
+			level = 30, 
+			icon = 14, 
+			slot = 8,
+			start = "前往淒涼之地的被掠奪營地" 
+		},
+		["Focused Rage"] = { 
+			rune = "集中怒火符文", 
+			spellID = 29787, 
+			level = 33, 
+			icon = 15, 
+			slot = 6,
+			start = "前往阿拉希高地的枯木村，擊殺枯木暴徒" 
+		},
+		["Blood Surge"] = { 
+			rune = "血涌符文", 
+			spellID = 413380, 
+			level = 36, 
+			icon = 16, 
+			slot = 6,
+			start = "首先擊殺阿拉希高地的精英巨石拳重擊者 (等級 37) 或奧特蘭克的碎脊法師 (等級 37)" 
+		},
+		["Rallying Cry"] = { 
+			rune = "指揮官符文", 
+			spellID = 426490, 
+			level = 39, 
+			icon = 17, 
+			slot = 8,
+			start = "位於荒蕪之地的流浪劍客 (等級 40) 掉落" 
+		},
+		["Precise Timing"] = { 
+			rune = "無情精確符文", 
+			spellID = 402922, 
+			level = 40, 
+			icon = 18, 
+			slot = 6, 
+			start = st.dalaranSpeakTo 
+		},
+		-- 第二階段技能書
+		["Commanding Shout"] = { 
+			skillBook = "指揮怒吼手冊", 
+			spellID = 403215, 
+			level = 1, 
+			start = st.dungeonSummary 
+		},
 		-- Other datamined "Runes"
-		["Rampage"]={ nonRune="", spellID=427081, level=0, icon=0, slot=9, start="Unknown" },
-		["Shield Mastery"]={ nonRune="", spellID=426980, level=0, icon=0, slot=1, start="Unknown" },
-		["Sword and Board"]={ nonRune="", spellID=426978, level=0, icon=0, slot=9, start="Unknown" },
-		["Taste for Blood"]={ nonRune="", spellID=426953, level=0, icon=0, slot=1, start="Unknown" },
-		["Vigilance"]={ nonRune="", spellID=426972, level=0, icon=0, slot=1, start="Unknown" },
-		["Wrecking Crew"]={ nonRune="", spellID=427065, level=0, icon=0, slot=9, start="Unknown" },
+		["Rampage"]={ nonRune="", spellID=427081, level=0, icon=0, slot=9, start="未知" },
+		["Shield Mastery"]={ nonRune="", spellID=426980, level=0, icon=0, slot=1, start="未知" },
+		["Sword and Board"]={ nonRune="", spellID=426978, level=0, icon=0, slot=9, start="未知" },
+		["Taste for Blood"]={ nonRune="", spellID=426953, level=0, icon=0, slot=1, start="未知" },
+		["Vigilance"]={ nonRune="", spellID=426972, level=0, icon=0, slot=1, start="未知" },
+		["Wrecking Crew"]={ nonRune="", spellID=427065, level=0, icon=0, slot=9, start="未知" },
 
 		spells={ "Victory Rush", "Blood Frenzy", "Furious Thunder", "Devastate", "Frenzied Assault",
 			"Single-Minded Fury", "Endless Rage", "Quick Strike", "Warbringer", "Consumed by Rage", 
@@ -1665,143 +2125,408 @@ ns.runes = {
 --=======================================================================================================
 
 points[ 1416 ] = { -- Alterac Mountains
-	[39606080] = { item=213452, name="Dormant Holy Rune", class={ "PALADIN" }, spell={ "Guarded by the Light" },
-					guide={ st.paladin.guardedLight } },
-	[40604700] = { name="Crushridge mobs (Various)", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
-	[48505770] = { object=423896, name="Manual", class={ "MAGE" },
-					spell={ "Spell Power" }, guide={ st.mage.spellPower }, alsoTestQuest=true,
-					tip="On a crate, just inside the tower",
-					quest={ { 79948 } }, questName={ { "Defensive Magics 101" } } },
-	[51004020] = { name="Crushridge ogres (various)", class={ "PRIEST" }, spell={ "Empowered Renew" },
-					tip="Farming Grimtotem mobs in Thousand\nNeedles is much easier", guide={ st.priest.empowered }, },
-	[51605640] = { name="Crushridge ogres (various)", class={ "PRIEST" }, spell={ "Empowered Renew" },
-					tip="Farming Grimtotem mobs in Thousand\nNeedles is much easier", guide={ st.priest.empowered }, },
-	[54604940] = { npc=217620, name="Reckless Warlock", class={ "WARLOCK" }, spell={ "Dance of the Wicked" }, guide={ st.warlock.dance },
-					tip="At the back of the cave" },
-	[61004760] = { npc=217305, name="Ancient Fire Elemental", class={ "MAGE" }, spell={ "Hot Streak" }, guide={ st.mage.hotStreak } },
-	[80406680] = { npc=6176, name="Bath'rah the Windwatcher", class={ "SHAMAN" }, spell={ "Maelstrom Weapon" },
-					guide={ st.shaman.maelstrom }, quest={ st.shaman.maelstromQ }, questName={ st.shaman.maelstromQN } },
+	[39606080] = { 
+		item = 213452, 
+		name = "休眠的聖符文", 
+		class = { "PALADIN" }, 
+		spell = { "Guarded by the Light" },
+		guide = { st.paladin.guardedLight } 
+	},
+	[40604700] = { 
+		name = "碎脊暴徒 (多種)", 
+		class = { "WARRIOR" }, 
+		spell = { "Blood Surge" }, 
+		guide = { st.warrior.bloodSurge },
+		quest = { 79624, 79677, 79678 }, 
+		questName = { "人人都會做飯", "快速採購", "試吃" } 
+	},
+	[48505770] = { 
+		object = 423896, 
+		name = "手冊", 
+		class = { "MAGE" },
+		spell = { "Spell Power" }, 
+		guide = { st.mage.spellPower }, 
+		alsoTestQuest = true,
+		tip = "在一個板條箱上，就在塔內",
+		quest = { { 79948 } }, 
+		questName = { { "防禦魔法 101" } } 
+	},
+	[51004020] = { 
+		name = "碎脊食人魔 (多種)", 
+		class = { "PRIEST" }, 
+		spell = { "Empowered Renew" },
+		tip = "在千針石林中\n擊殺 Grimtotem 暴徒要容易得多", 
+		guide = { st.priest.empowered }, 
+	},
+	[51605640] = { 
+		name = "碎脊食人魔 (多種)", 
+		class = { "PRIEST" }, 
+		spell = { "Empowered Renew" },
+		tip = "在千針石林中\n擊殺 Grimtotem 暴徒要容易得多", 
+		guide = { st.priest.empowered }, 
+	},
+	[54604940] = { 
+		npc = 217620, 
+		name = "魯莽的術士", 
+		class = { "WARLOCK" }, 
+		spell = { "Dance of the Wicked" }, 
+		guide = { st.warlock.dance },
+		tip = "在洞穴的後方" 
+	},
+	[61004760] = { 
+		npc = 217305, 
+		name = "遠古火元素", 
+		class = { "MAGE" }, 
+		spell = { "Hot Streak" }, 
+		guide = { st.mage.hotStreak } 
+	},
+	[80406680] = { 
+		npc = 6176, 
+		name = "Bath'rah the Windwatcher", 
+		class = { "SHAMAN" }, 
+		spell = { "Maelstrom Weapon" },
+		guide = { st.shaman.maelstrom }, 
+		quest = { st.shaman.maelstromQ }, 
+		questName = { st.shaman.maelstromQN } 
+	},
 }
 points[ 1417 ] = { -- Arathi Highlands
-	[21508390] = { object=422911, name="Sealed Barrel", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					tip="Lowest level of the boat. Nearby\nnaga (L40) can root you for 10s.\nLoot the Smuggler's Spice Blend",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
-	[22206760] = { name="Boulderfist mobs (Various)", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
-	[26006360] = { npc=2590, name="Syndicate Conjuror", class={ "WARLOCK" },
-					tip="you need 10 x Conjuror's Pendant.\nYou may safely group with other warlocks",
-					spell={ "Invocation" }, guide={ st.warlock.invocation } },
-	[53009100] = { object=420055, name="Rowboat", class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "Eclipse", "Trap Launcher", "Brain Freeze", "The Art of War",
-					"Mind Spike", "Poisoned Knife", "Ancestral Awakening", "Shadow and Flame", "Enraged Regeneration" },
-					guide={ st.pillaged }, quest={ { 79229, 79235, 79236, 79242 } }, 
-					questName={ { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } },
-	[27205700] = { npc=217387, name="Brother Atticus", class={ "PALADIN" },
-					spell={ "Enlightened Judgements" }, guide={ st.paladin.judgements } },
-	[30802860] = { npc=217589, name="Hay Weevil", class={ "DRUID", "HUNTER" },
-					spell={ "Survival Instincts", "Invigoration" }, guide={ st.amaryllis } },
-	[31406480] = { object=422911, name="Sealed Barrel", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					tip="Cave entrance through to the sunken boat",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
-	[34004400] = { npc=2562, name="Boulderfist Ogre", class={ "SHAMAN" }, spell={ "Power Surge" }, guide={ st.shaman.powerSurge } },
-	[48608860] = { name="Dark Iron (Various)", class={ "PALADIN" },
-					spell={ "Enlightened Judgements" }, guide={ st.paladin.judgements } },
-	[55603920] = { npc=217589, name="Hay Weevil", class={ "DRUID", "HUNTER" },
-					spell={ "Survival Instincts", "Invigoration" }, guide={ st.amaryllis } },
-	[57607460] = { npc=217300, name="Skonk", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
-	[61604100] = { npc=218931, name="Dark Rider", tip="Search this area",
-					class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
-					"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
-					"Precise Timing" }, guide={ st.dalaranAgent }, quest={ st.dalaranQuest }, questName={ st.dalaranQuestName } },
-	[61905570] = { npc=217589, name="Hay Weevil", class={ "DRUID", "HUNTER" },
-					spell={ "Survival Instincts", "Invigoration" }, guide={ st.amaryllis } },
-	[62205450] = { object=424267, name="Grave", class={ "PRIEST" }, tip="Arathi Echo",
-					spell={ "Pain Suppression" }, guide={ st.priest.painSuppression } },
-	[68006440] = { npc=217836, name="Needletooth", class={ "HUNTER" }, spell={ "Steady Shot" }, guide={ st.druid.steadyShot } },
-	[68257142] = { name="Witherbark mobs (Various)", class={ "WARRIOR" }, spell={ "Focused Rage" }, guide={ st.warrior.focusedRage } },
-	[73606520] = { object=423897, name="Scrolls", class={ "MAGE" },
-					spell={ "Spell Power" }, guide={ st.mage.spellPower }, alsoTestQuest=true,
-					tip="Just to the right of a tent entrance at\nWinterbark Village, Arathi Highlands",
-					quest={ { 79949 } }, questName={ { "A Web of Lies: Debunking Myths and Legends" } } },
-	[93807160] = { npc=215655, name="Illari Duskfeather", class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "Eclipse", "Trap Launcher", "Brain Freeze", "The Art of War",
-					"Mind Spike", "Poisoned Knife", "Ancestral Awakening", "Shadow and Flame", "Enraged Regeneration" },
-					guide={ st.pillaged }, quest={ { 79229, 79235, 79236, 79242 } }, 
-					questName={ { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } },
-	[94106930] = { object=418855, name="Illari's Loot Cache", class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "Eclipse", "Trap Launcher", "Brain Freeze", "The Art of War",
-					"Mind Spike", "Poisoned Knife", "Ancestral Awakening", "Shadow and Flame", "Enraged Regeneration" },
-					guide={ st.pillaged }, quest={ { 79229, 79235, 79236, 79242 } }, 
-					questName={ { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } },
+	[21508390] = { 
+		object = 422911, 
+		name = "密封的桶", 
+		class = { "WARRIOR" }, 
+		spell = { "Blood Surge" }, 
+		guide = { st.warrior.bloodSurge },
+		tip = "船的最低层。附近的\n娜迦 (等级 40) 可以将你定身 10 秒。\n拾取走私者的香料混合物",
+		quest = { 79624, 79677, 79678 }, 
+		questName = { "人人都會做飯", "快速採購", "試吃" } 
+	},
+	[22206760] = { 
+		name = "巨石拳暴徒 (多種)", 
+		class = { "WARRIOR" }, 
+		spell = { "Blood Surge" }, 
+		guide = { st.warrior.bloodSurge },
+		quest = { 79624, 79677, 79678 }, 
+		questName = { "人人都會做飯", "快速採購", "試吃" } 
+	},
+	[26006360] = { 
+		npc = 2590, 
+		name = "辛迪加 conjuror", 
+		class = { "WARLOCK" },
+		tip = "你需要 10 個 conjuror 的坠饰。\n你可以安全地与其他术士组队",
+		spell = { "Invocation" }, 
+		guide = { st.warlock.invocation } 
+	},
+	[53009100] = { 
+		object = 420055, 
+		name = "划艇", 
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "Eclipse", "Trap Launcher", "Brain Freeze", "The Art of War",
+			"Mind Spike", "Poisoned Knife", "Ancestral Awakening", "Shadow and Flame", "Enraged Regeneration" },
+		guide = { st.pillaged }, 
+		quest = { { 79229, 79235, 79236, 79242 } }, 
+		questName = { { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } 
+	},
+	[27205700] = { 
+		npc = 217387, 
+		name = "Atticus 兄弟", 
+		class = { "PALADIN" },
+		spell = { "Enlightened Judgements" }, 
+		guide = { st.paladin.judgements } 
+	},
+	[30802860] = { 
+		npc = 217589, 
+		name = "乾草象鼻蟲", 
+		class = { "DRUID", "HUNTER" },
+		spell = { "Survival Instincts", "Invigoration" }, 
+		guide = { st.amaryllis } 
+	},
+	[31406480] = { 
+		object = 422911, 
+		name = "密封的桶", 
+		class = { "WARRIOR" }, 
+		spell = { "Blood Surge" }, 
+		guide = { st.warrior.bloodSurge },
+		tip = "洞穴入口通往沉船",
+		quest = { 79624, 79677, 79678 }, 
+		questName = { "人人都會做飯", "快速採購", "試吃" } 
+	},
+	[34004400] = { 
+		npc = 2562, 
+		name = "巨石拳食人魔", 
+		class = { "SHAMAN" }, 
+		spell = { "Power Surge" }, 
+		guide = { st.shaman.powerSurge } 
+	},
+	[48608860] = { 
+		name = "黑暗鐵矮人 (多種)", 
+		class = { "PALADIN" },
+		spell = { "Enlightened Judgements" }, 
+		guide = { st.paladin.judgements } 
+	},
+	[55603920] = { 
+		npc = 217589, 
+		name = "乾草象鼻蟲", 
+		class = { "DRUID", "HUNTER" },
+		spell = { "Survival Instincts", "Invigoration" }, 
+		guide = { st.amaryllis } 
+	},
+	[57607460] = { 
+		npc = 217300, 
+		name = "Skonk", 
+		class = { "WARRIOR" }, 
+		spell = { "Blood Surge" }, 
+		guide = { st.warrior.bloodSurge },
+		quest = { 79624, 79677, 79678 }, 
+		questName = { "人人都會做飯", "快速採購", "試吃" } 
+	},
+	[61604100] = { 
+		npc = 218931, 
+		name = "黑暗騎士", 
+		tip = "搜索此區域",
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "King of the Jungle", "Melee Specialist", "Missile Barrage",
+			"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
+			"Precise Timing" }, 
+		guide = { st.dalaranAgent }, 
+		quest = { st.dalaranQuest }, 
+		questName = { st.dalaranQuestName } 
+	},
+	[61905570] = { 
+		npc = 217589, 
+		name = "乾草象鼻蟲", 
+		class = { "DRUID", "HUNTER" },
+		spell = { "Survival Instincts", "Invigoration" }, 
+		guide = { st.amaryllis } 
+	},
+	[62205450] = { 
+		object = 424267, 
+		name = "墳墓", 
+		class = { "PRIEST" }, 
+		tip = "阿拉希回聲",
+		spell = { "Pain Suppression" }, 
+		guide = { st.priest.painSuppression } 
+	},
+	[68006440] = { 
+		npc = 217836, 
+		name = "Needletooth", 
+		class = { "HUNTER" }, 
+		spell = { "Steady Shot" }, 
+		guide = { st.druid.steadyShot } 
+	},
+	[68257142] = { 
+		name = "枯木暴徒 (多種)", 
+		class = { "WARRIOR" }, 
+		spell = { "Focused Rage" }, 
+		guide = { st.warrior.focusedRage } 
+	},
+	[73606520] = { 
+		object = 423897, 
+		name = "卷軸", 
+		class = { "MAGE" },
+		spell = { "Spell Power" }, 
+		guide = { st.mage.spellPower }, 
+		alsoTestQuest = true,
+		tip = "位於阿拉希高地冬bark 村的一個帳篷入口右側",
+		quest = { { 79949 } }, 
+		questName = { { "A Web of Lies: Debunking Myths and Legends" } } 
+	},
+	[93807160] = { 
+		npc = 215655, 
+		name = "Illari Duskfeather", 
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "Eclipse", "Trap Launcher", "Brain Freeze", "The Art of War",
+			"Mind Spike", "Poisoned Knife", "Ancestral Awakening", "Shadow and Flame", "Enraged Regeneration" },
+		guide = { st.pillaged }, 
+		quest = { { 79229, 79235, 79236, 79242 } }, 
+		questName = { { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } 
+	},
+	[94106930] = { 
+		object = 418855, 
+		name = "Illari 的戰利品儲藏室", 
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "Eclipse", "Trap Launcher", "Brain Freeze", "The Art of War",
+			"Mind Spike", "Poisoned Knife", "Ancestral Awakening", "Shadow and Flame", "Enraged Regeneration" },
+		guide = { st.pillaged }, 
+		quest = { { 79229, 79235, 79236, 79242 } }, 
+		questName = { { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } 
+	},
 }
 points[ 1418 ] = { -- Badlands
-	[04008060] = { name="Rock Elementals (Various)", class={ "SHAMAN" }, spell={ "Maelstrom Weapon" },
-					guide={ st.shaman.maelstrom }, quest={ st.shaman.maelstromQ }, questName={ st.shaman.maelstromQN } },
-	[17404080] = { name="Rock Elementals (Various)", class={ "SHAMAN" }, spell={ "Maelstrom Weapon" },
-					guide={ st.shaman.maelstrom }, quest={ st.shaman.maelstromQ }, questName={ st.shaman.maelstromQN } },
-	[20005460] = { npc=218273, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Rallying Cry" }, guide={ st.warrior.rallyingCry } },
-	[22406670] = { object=413699, name="Large Nest", class={ "HUNTER" }, spell={ "Expose Weaknesss" },
-					tip="On top of a small mesa. Approach from the east",
-					guide={ st.hunter.expose }, quest={ { 78823, 78830 } },
-					questName={ { "Terror of the Desert Skies", "Terror of the Desert Skies" } } },
-	[25406120] = { npc=218273, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Rallying Cry" }, guide={ st.warrior.rallyingCry } },
-	[27206960] = { npc=218273, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Rallying Cry" }, guide={ st.warrior.rallyingCry } },
-	[30805760] = { name="Dustbelcher (Various), Stonevault (Various)", class={ "HUNTER" }, spell={ "Expose Weaknesss" },
-					tip="Farm until the Primitive Drawing drops.\nDustbelcher Ogres/Brutes have the\nfar better drop rate (1 in 8)",
-					guide={ st.hunter.expose }, quest={ { 78823, 78830 } },
-					questName={ { "Terror of the Desert Skies", "Terror of the Desert Skies" } } },
-	[33606800] = { npc=218273, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Rallying Cry" }, guide={ st.warrior.rallyingCry } },
-	[35805840] = { npc=218273, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Rallying Cry" }, guide={ st.warrior.rallyingCry } },
-	[41502810] = { object=422919, name="Tapped Shadowforge Keg", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					tip="Descend to the basement of Angor Fortress.\nLoot the Balmy Brew",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
-	[43007860] = { name="Rock Elementals (Various)", class={ "SHAMAN" }, spell={ "Maelstrom Weapon" },
-					guide={ st.shaman.maelstrom }, quest={ st.shaman.maelstromQ }, questName={ st.shaman.maelstromQN } },
-	[44001600] = { name="Skillbooks", tip="Uldaman", skillBook=true, guide={ st.dungeonDrops }, 
-					class={ "DRUID", "DRUID", "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "PRIEST", "ROGUE", "SHAMAN",
-						"WARLOCK", "WARLOCK", "WARRIOR" },	
-					spell={ "Deeper Wilds", "Enhanced Restoration", "Revive", "Aspect of the Viper", "Expanded Intellect",
-							"Enhanced Blessings", "Increased Fortitude", "Shadowfiend", "Redirect", "Totemic Projection",
-							"Portal Summoning", "Soul Harvesting", "Commanding Shout" }, },
-	[56405540] = { npc=218931, name="Dark Rider", tip="Search this area",
-					class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
-					"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
-					"Precise Timing" }, guide={ st.dalaranAgent }, quest={ st.dalaranQuest }, questName={ st.dalaranQuestName } },
-	[56703990] = { object=423899, name="Scrolls", class={ "MAGE" },
-					spell={ "Spell Power" }, guide={ st.mage.spellPower }, alsoTestQuest=true,
-					tip="Approach via the path to the south. Inside the crypt",
-					quest={ { 79951 } }, questName={ { "Mummies: A Guide to the Unsavory Undead" } } },
-	[63207000] = { name="Dustbelcher (Various), Stonevault (Various)", class={ "HUNTER" }, spell={ "Expose Weaknesss" },
-					tip="Farm until the Primitive Drawing drops.\nDustbelcher Ogres/Brutes have the\nfar better drop rate (1 in 8)",
-					guide={ st.hunter.expose }, quest={ { 78823, 78830 } },
-					questName={ { "Terror of the Desert Skies", "Terror of the Desert Skies" } } },
-	[65504330] = { name="Skillbooks", tip="Uldaman Back Entrance", skillBook=true, guide={ st.dungeonDrops }, 
-					class={ "DRUID", "DRUID", "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "PRIEST", "ROGUE", "SHAMAN",
-						"WARLOCK", "WARLOCK", "WARRIOR" },	
-					spell={ "Deeper Wilds", "Enhanced Restoration", "Revive", "Aspect of the Viper", "Expanded Intellect",
-							"Enhanced Blessings", "Increased Fortitude", "Shadowfiend", "Redirect", "Totemic Projection",
-							"Portal Summoning", "Soul Harvesting", "Commanding Shout" }, },
+	[04008060] = { 
+		name = "岩石元素 (多種)", 
+		class = { "SHAMAN" }, 
+		spell = { "Maelstrom Weapon" },
+		guide = { st.shaman.maelstrom }, 
+		quest = { st.shaman.maelstromQ }, 
+		questName = { st.shaman.maelstromQN } 
+	},
+	[17404080] = { 
+		name = "岩石元素 (多種)", 
+		class = { "SHAMAN" }, 
+		spell = { "Maelstrom Weapon" },
+		guide = { st.shaman.maelstrom }, 
+		quest = { st.shaman.maelstromQ }, 
+		questName = { st.shaman.maelstromQN } 
+	},
+	[20005460] = { 
+		npc = 218273, 
+		name = "流浪劍客", 
+		class = { "WARRIOR" },
+		spell = { "Rallying Cry" }, 
+		guide = { st.warrior.rallyingCry } 
+	},
+	[22406670] = { 
+		object = 413699, 
+		name = "大型鳥巢", 
+		class = { "HUNTER" }, 
+		spell = { "Expose Weaknesss" },
+		tip = "在一個小平台的頂部。從東邊接近",
+		guide = { st.hunter.expose }, 
+		quest = { { 78823, 78830 } },
+		questName = { { "Terror of the Desert Skies", "Terror of the Desert Skies" } } 
+	},
+	[25406120] = { 
+		npc = 218273, 
+		name = "流浪劍客", 
+		class = { "WARRIOR" },
+		spell = { "Rallying Cry" }, 
+		guide = { st.warrior.rallyingCry } 
+	},
+	[27206960] = { 
+		npc = 218273, 
+		name = "流浪劍客", 
+		class = { "WARRIOR" },
+		spell = { "Rallying Cry" }, 
+		guide = { st.warrior.rallyingCry } 
+	},
+	[30805760] = { 
+		name = "Dustbelcher (多種), Stonevault (多種)", 
+		class = { "HUNTER" }, 
+		spell = { "Expose Weaknesss" },
+		tip = "刷怪直到掉落原始圖畫。\nDustbelcher 食人魔/野蠻人的\n掉落率要高得多 (八分之一)",
+		guide = { st.hunter.expose }, 
+		quest = { { 78823, 78830 } },
+		questName = { { "Terror of the Desert Skies", "Terror of the Desert Skies" } } 
+	},
+	[33606800] = { 
+		npc = 218273, 
+		name = "流浪劍客", 
+		class = { "WARRIOR" },
+		spell = { "Rallying Cry" }, 
+		guide = { st.warrior.rallyingCry } 
+	},
+	[35805840] = { 
+		npc = 218273, 
+		name = "流浪劍客", 
+		class = { "WARRIOR" },
+		spell = { "Rallying Cry" }, 
+		guide = { st.warrior.rallyingCry } 
+	},
+	[41502810] = { 
+		object = 422919, 
+		name = "已開封的暗影熔炉酒桶", 
+		class = { "WARRIOR" }, 
+		spell = { "Blood Surge" }, 
+		guide = { st.warrior.bloodSurge },
+		tip = "下降到安戈尔要塞的地下室。\n拾取溫和的啤酒",
+		quest = { 79624, 79677, 79678 }, 
+		questName = { "人人都會做飯", "快速採購", "試吃" } 
+	},
+	[43007860] = { 
+		name = "岩石元素 (多種)", 
+		class = { "SHAMAN" }, 
+		spell = { "Maelstrom Weapon" },
+		guide = { st.shaman.maelstrom }, 
+		quest = { st.shaman.maelstromQ }, 
+		questName = { st.shaman.maelstromQN } 
+	},
+	[44001600] = { 
+		name = "技能書", 
+		tip = "奧達曼", 
+		skillBook = true, 
+		guide = { st.dungeonDrops }, 
+		class = { "DRUID", "DRUID", "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "PRIEST", "ROGUE", "SHAMAN",
+			"WARLOCK", "WARLOCK", "WARRIOR" },	
+		spell = { "Deeper Wilds", "Enhanced Restoration", "Revive", "Aspect of the Viper", "Expanded Intellect",
+				"Enhanced Blessings", "Increased Fortitude", "Shadowfiend", "Redirect", "Totemic Projection",
+				"Portal Summoning", "Soul Harvesting", "Commanding Shout" }, 
+	},
+	[56405540] = { 
+		npc = 218931, 
+		name = "黑暗騎士", 
+		tip = "搜索此區域",
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "King of the Jungle", "Melee Specialist", "Missile Barrage",
+			"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
+			"Precise Timing" }, 
+		guide = { st.dalaranAgent }, 
+		quest = { st.dalaranQuest }, 
+		questName = { st.dalaranQuestName } 
+	},
+	[56703990] = { 
+		object = 423899, 
+		name = "卷軸", 
+		class = { "MAGE" },
+		spell = { "Spell Power" }, 
+		guide = { st.mage.spellPower }, 
+		alsoTestQuest = true,
+		tip = "從南邊的路徑接近。在地下墓穴內",
+		quest = { { 79951 } }, 
+		questName = { { "Mummies: A Guide to the Unsavory Undead" } } 
+	},
+	[63207000] = { 
+		name = "Dustbelcher (多種), Stonevault (多種)", 
+		class = { "HUNTER" }, 
+		spell = { "Expose Weaknesss" },
+		tip = "刷怪直到掉落原始圖畫。\nDustbelcher 食人魔/野蠻人的\n掉落率要高得多 (八分之一)",
+		guide = { st.hunter.expose }, 
+		quest = { { 78823, 78830 } },
+		questName = { { "Terror of the Desert Skies", "Terror of the Desert Skies" } } 
+	},
+	[65504330] = { 
+		name = "技能書", 
+		tip = "奧達曼後門", 
+		skillBook = true, 
+		guide = { st.dungeonDrops }, 
+		class = { "DRUID", "DRUID", "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "PRIEST", "ROGUE", "SHAMAN",
+			"WARLOCK", "WARLOCK", "WARRIOR" },	
+		spell = { "Deeper Wilds", "Enhanced Restoration", "Revive", "Aspect of the Viper", "Expanded Intellect",
+				"Enhanced Blessings", "Increased Fortitude", "Shadowfiend", "Redirect", "Totemic Projection",
+				"Portal Summoning", "Soul Harvesting", "Commanding Shout" }, 
+	},
 }
 points[ 1430 ] = { -- Deadwind Pass
-	[52003440] = { npc=218920, name="Dalaran Agent",
-					class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
-					"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
-					"Precise Timing" }, guide={ st.dalaranAgent }, quest={ st.dalaranQuest }, questName={ st.dalaranQuestName } },
-	[43803380] = { npc=218931, name="Dalaran Agent", tip="Seen all along the top path plus north from here",
-					class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
-					"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
-					"Precise Timing" }, guide={ st.dalaranAgent }, quest={ st.dalaranQuest }, questName={ st.dalaranQuestName } },
+	[52003440] = { 
+		npc = 218920, 
+		name = "達拉然特工",
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "King of the Jungle", "Melee Specialist", "Missile Barrage",
+			"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
+			"Precise Timing" }, 
+		guide = { st.dalaranAgent }, 
+		quest = { st.dalaranQuest }, 
+		questName = { st.dalaranQuestName } 
+	},
+	[43803380] = { 
+		npc = 218931, 
+		name = "達拉然特工", 
+		tip = "沿著頂部路徑以及從這裡往北都可以看到",
+		class = { "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+			"SHAMAN", "WARLOCK", "WARRIOR" }, 
+		spell = { "King of the Jungle", "Melee Specialist", "Missile Barrage",
+			"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
+			"Precise Timing" }, 
+		guide = { st.dalaranAgent }, 
+		quest = { st.dalaranQuest }, 
+		questName = { st.dalaranQuestName } 
+},
 }
 points[ 1426 ] = { -- Dun Morogh
 	[18007450] = { name="Newman's Landing", class={ "PALADIN" }, spell={ "Sheath of Light" }, guide={ st.paladin.sheathLight },
