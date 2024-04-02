@@ -3,7 +3,7 @@
 
                                                 Runes
 
-                                       v2.01 - 31st March 2024
+                                       v2.02 - 2nd April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -43,6 +43,7 @@ local GetMapChildrenInfo = C_Map.GetMapChildrenInfo
 local GetRunesForCategory = C_Engraving.GetRunesForCategory
 local IsKnownRuneSpell = C_Engraving.IsKnownRuneSpell
 local IsQuestFlaggedCompleted = C_QuestLog.IsQuestFlaggedCompleted
+local IsSpellKnown = IsSpellKnown
 local LibStub = _G.LibStub
 local UIParent = _G.UIParent
 local UnitLevel = UnitLevel
@@ -120,6 +121,25 @@ local function ShowPinForThisClassQuest( quests, level, forceCheck )
 	end
 end
 
+local function ShowPinForThisClassSkillBook( spellID, forceCheck )
+
+	if forceCheck == false and ns.db.hideIfRuneLearnt == false then return true end
+
+	if not HandyNotes_RunesDB then return true end -- too soon for the server
+	if HandyNotes_RunesDB.runesKnown == nil then HandyNotes_RunesDB.runesKnown = {} end
+	if HandyNotes_RunesDB.runesKnown[ ns.class ] == nil then HandyNotes_RunesDB.runesKnown[ ns.class ] = {} end
+	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells == nil then HandyNotes_RunesDB.runesKnown[ ns.class ].spells = {} end
+
+	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ tostring( spellID ) ] then
+		return false
+	end
+	if IsSpellKnown( spellID ) == true then
+		HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ tostring( spellID ) ] = true
+		return false
+	end
+	return true
+end
+
 local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language spell from the Data file
 
 	if forceCheck == false and ns.db.hideIfRuneLearnt == false then return true end
@@ -150,6 +170,7 @@ local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language
 	end
 	return true
 end
+
 
 -- ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -183,7 +204,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 				if pin.qStart == 2 then
 					GameTooltip:AddLine( "\n" ..ns.colour.class .."Skill Books:" )
 					for _,s in ipairs( v.skillBooks ) do
-						completed = not ShowPinForThisClassSpell( s, true )
+						completed = not ShowPinForThisClassSkillBook( ns.runes[ k ][ s ].spellID, true )
 						GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ s ],
 								( ( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
 														or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) ) )
@@ -304,7 +325,7 @@ local function CheckAndShow( coord, pin )
 	ns.passed.texture = nil
 	
 	if not pin.class then
-		print("Please report error: name="..(pin.name or "nil").." tip="..(pin.tip or "nil").." coord="..coord.." m="..ns.mapID)
+		print("HN Runes. Please report error: name="..(pin.name or "nil").." tip="..(pin.tip or "nil").." coord="..coord.." m="..ns.mapID)
 		return
 	end
 
@@ -314,7 +335,7 @@ local function CheckAndShow( coord, pin )
 				if pin.skillBook then
 					-- Will have the spell field and follow the rune data rules, just isn't actually a rune
 					-- Intended for Season Two Spell Books, which result in a learnt spell - same as for a rune
-					if ShowPinForThisClassSpell( pin.spell[ i ], false ) and ns.db.skillBook1 > 1 then
+					if ShowPinForThisClassSkillBook( ns.runes[ v ][ pin.spell[ i ] ].spellID, false ) and ns.db.skillBook1 > 1 then
 						ns.passed.texture = ns.textures[ ns.db.skillBook1 ]
 						ns.passed.scale = ns.db.iconScale * ns.scaling[ ns.db.skillBook1 ]
 					end
@@ -341,7 +362,7 @@ local function CheckAndShow( coord, pin )
 						end
 					end
 				else
-					print("Please report error: name="..(pin.name or "nil").." tip="..(pin.tip or "nil")..
+					print("HN Runes: Please report error: name="..(pin.name or "nil").." tip="..(pin.tip or "nil")..
 							" coord="..coord.." m="..ns.mapID)
 				end
 			end
@@ -405,7 +426,8 @@ local function SetupDynamicContinent( mapID )
 							if ( pin.faction == nil ) or ( pin.faction == ns.faction ) then
 								if ns.zonePins[ map.mapID ][ "1" ][ pin.spell[ i ] ] == nil then
 									if pin.skillBook then
-										if ShowPinForThisClassSpell( pin.spell[ i ], false ) and ns.db.skillBook1 > 1 then
+										if ShowPinForThisClassSkillBook( ns.runes[ v ][ pin.spell[ i ] ].spellID, false ) 
+												and ns.db.skillBook1 > 1 then
 											ns.zonePins[ map.mapID ][ "1" ][ pin.spell[ i ] ] = true
 											AddToDynamicContinent( coord, pin, mapID,  map.mapID )
 										end
