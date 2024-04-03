@@ -1,5 +1,45 @@
 ## SpellActivationOverlay Changelog
 
+#### v1.2.0 (2024-03-19)
+
+Bump in TOC file for Season of Discovery and Hardcore update (Classic Era)
+
+Shout-out to fellow developers abecks, Amanthuul and AboveAzureSkies. Thanks!
+
+Talent update:
+- New SAO: Druid's Nature's Grace (Classic Era)
+
+New runes for Season of Discovery:
+- New SAO: Druid's Eclipse
+- New GAB: Druid's Starfire button glows during Lunar Eclipse
+- New GAB: Druid's Wrath button glows during Solar Eclipse
+- New SAO: Mage's Hot Streak
+- New GAB: Mage's Pyroblast button glows during Hot Streak
+- New SAO: Mage's Missile Barrage, blue-ish tint to differ from Arcane Blast
+- New GAB: Mage's Arcane Missiles button glows during Missile Barrage
+- New SAO: Mage's Brain Freeze
+- New GAB: Mage's Fireball button glows during Brain Freeze
+- New GAB: Mage's Spellfrost Bolt button glows during Brain Freeze
+- New GAB: Mage's Frostfire Bolt button glows during Brain Freeze
+- New SAO: Shaman's Maelstrom Weapon
+- New GAB: Shaman's Lightning Bolt glows during Maelstrom Weapon
+- New GAB: Shaman's Chain Lightning glows during Maelstrom Weapon
+- New GAB: Shaman's Lesser Healing Wave glows during Maelstrom Weapon
+- New GAB: Shaman's Healing Wave glows during Maelstrom Weapon
+- New GAB: Shaman's Chain Heal glows during Maelstrom Weapon
+- New GAB: Shaman's Lava Burst glows during Maelstrom Weapon
+- New SAO: Shaman's Power Surge
+- New GAB: Shaman's Chain Lightning glows during Power Surge
+- New GAB: Shaman's Chain Heal glows during Power Surge
+- New GAB: Shaman's Lava Burst glows during Power Surge
+- New SAO: Warrior's Bloodsurge
+- New GAB: Warrior's Slam glows during Bloodsurge
+
+#### v1.1.4 (2024-01-23)
+
+- Rune list is refreshed explicitly, so that detection no longer fails
+- Runes are checked every 10 secs until one is found, to detect them sooner
+
 #### v1.1.3 (2023-12-13)
 
 Effects based on stackable auras could sometimes not be triggered correctly:

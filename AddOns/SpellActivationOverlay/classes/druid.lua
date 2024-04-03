@@ -7,8 +7,8 @@ local GetSpellInfo = GetSpellInfo
 local UnitGUID = UnitGUID
 
 local omenSpellID = 16870;
-local lunarSpellID = 48518;
-local solarSpellID = 48517;
+local lunarSpellID = SAO:IsSoD() and 408255 or 48518;
+local solarSpellID = SAO:IsSoD() and 408250 or 48517;
 
 local feralCache = false;
 local clarityCache = false;
@@ -83,6 +83,25 @@ local function updateRightSAOTimer(self, realSpellID)
     updateOneSAOTimer(self, rightFakeSpellID, realSpellID);
 end
 
+--[[
+    Update Lest/Right SAO
+
+    On Wrath, Lunar and Solar Eclipse are exclusive, and have priority over Omen.
+    Possibilities ("X / Y" means "Left uses texture X and Right uses texture Y"):
+    - Lunar   / nothing (Lunar proc, no Omen)
+    - Lunar   / Omen    (Lunar proc, Omen proc)
+    - nothing / Solar   (Solar proc, no Omen)
+    - Omen    / Solar   (Solar proc, Omen proc)
+    - Omen    / Omen    (Omen proc, no eclipse)
+    - nothing / nothing (no proc)
+
+    On Season of Discovery, Lunar and Solar Eclipse have charges, and have priority over Omen.
+    Possibilities are the same as Wrath, plus these ones:
+    - Lunar   / Solar   (Lunar proc, Solar proc, no Omen)
+    - Lunar   / Solar   (Lunar proc, Solar proc, Omen proc)
+    The problem is, we don't get to see the Omen proc in the last case.
+    If this is unacceptable, please file an issue.
+]]
 local function updateSAOs(self)
     local omenTexture = feralCache and "feral_omenofclarity" or "natures_grace";
     local lunarTexture = "eclipse_moon";
@@ -96,22 +115,43 @@ local function updateSAOs(self)
     local mustActivateLunar = lunarCache and (not lunarOptions or type(lunarOptions[0]) == "nil" or lunarOptions[0]);
     local mustActivateSolar = solarCache and (not solarOptions or type(solarOptions[0]) == "nil" or solarOptions[0]);
 
-    if (mustActivateLunar) then
-        -- Lunar Eclipse
-        updateLeftSAO (self, lunarTexture, lunarSpellID); -- Left is always Lunar Eclipse
-        updateRightSAO(self, mayActivateOmen and omenTexture or '', mayActivateOmen and omenSpellID or nil); -- Right is either Omen or nothing
-    elseif (mustActivateSolar) then
-        -- Solar Eclipse
-        updateLeftSAO (self, mayActivateOmen and omenTexture or '', mayActivateOmen and omenSpellID or nil); -- Left is either Omen or nothing
-        updateRightSAO(self, solarTexture, solarSpellID); -- Right is always Solar Eclipse
-    else
-        -- No Eclipse: either both SAOs are Omen of Clarity, or both are nothing
+    if self:IsSoD() then
+        -- Season of Discovery
+        local leftImage, rightImage = '', '';
+        local leftSpell, rightSpell = nil, nil;
         if (mayActivateOmen) then
-            updateLeftSAO (self, omenTexture, omenSpellID);
-            updateRightSAO(self, omenTexture, omenSpellID);
+            leftImage, rightImage = omenTexture, omenTexture;
+            leftSpell, rightSpell = omenSpellID, omenSpellID;
+        end
+        if (mustActivateLunar) then
+            leftImage = lunarTexture;
+            leftSpell = lunarSpellID;
+        end
+        if (mustActivateSolar) then
+            rightImage = solarTexture;
+            rightSpell = solarSpellID;
+        end
+        updateLeftSAO (self, leftImage , leftSpell );
+        updateRightSAO(self, rightImage, rightSpell);
+    else
+        -- Wrath of the Lich King
+        if (mustActivateLunar) then
+            -- Lunar Eclipse
+            updateLeftSAO (self, lunarTexture, lunarSpellID); -- Left is always Lunar Eclipse
+            updateRightSAO(self, mayActivateOmen and omenTexture or '', mayActivateOmen and omenSpellID or nil); -- Right is either Omen or nothing
+        elseif (mustActivateSolar) then
+            -- Solar Eclipse
+            updateLeftSAO (self, mayActivateOmen and omenTexture or '', mayActivateOmen and omenSpellID or nil); -- Left is either Omen or nothing
+            updateRightSAO(self, solarTexture, solarSpellID); -- Right is always Solar Eclipse
         else
-            updateLeftSAO (self, '', nil);
-            updateRightSAO(self, '', nil);
+            -- No Eclipse: either both SAOs are Omen of Clarity, or both are nothing
+            if (mayActivateOmen) then
+                updateLeftSAO (self, omenTexture, omenSpellID);
+                updateRightSAO(self, omenTexture, omenSpellID);
+            else
+                updateLeftSAO (self, '', nil);
+                updateRightSAO(self, '', nil);
+            end
         end
     end
 end
@@ -256,7 +296,7 @@ local function registerClass(self)
     -- Track Eclipses with a custom CLEU function, so that eclipses can coexist with Omen of Clarity
     -- self:RegisterAura("eclipse_lunar", 0, lunarSpellID, "eclipse_moon", "Left", 1, 255, 255, 255, true);
     -- self:RegisterAura("eclipse_solar", 0, solarSpellID, "eclipse_sun", "Right (Flipped)", 1, 255, 255, 255, true);
-    if not self.IsEra() then -- Must exclude Eclipses for Classic Era, because there are no Eclipses, but the fake spell IDs would be accepted
+    if self.IsWrath() or self.IsSoD() then -- Must exclude Eclipses for expansions which have no Eclipses, because the fake spell IDs would be accepted
         self:RegisterAura("eclipse_lunar", 0, lunarSpellID+1000000, "eclipse_moon", "Left", 1, 255, 255, 255, true); -- Fake spell ID, for option testing
         self:RegisterAura("eclipse_solar", 0, solarSpellID+1000000, "eclipse_sun", "Right (Flipped)", 1, 255, 255, 255, true); -- Fake spell ID, for option testing
     end
@@ -292,8 +332,15 @@ local function registerClass(self)
     self:RegisterAura("predatory_strikes", 0, 69369, "predatory_swiftness", "Top", 1, 255, 255, 255, true, predatoryStrikesSpells);
 
     -- Nature's Grace
-    lazyCreateNaturesGraceVariants(self);
-    self:RegisterAura("natures_grace", 0, 16886, naturesGraceVariants.textureFunc, "Top", 1, 255, 255, 255, true);
+    if self.IsEra() then
+        -- Texture of Nature's Grace is always "serendipity" to avoid confusion with SoD's Fury of Stormrage which, obvisouly, uses "fury_of_stormrage"
+        -- This limitation is necessary for Season of Discovery only, but because SoD and non-SoD Era share the same config file, we have to dumb down
+        self:RegisterAura("natures_grace", 0, 16886, "serendipity", "Top", 1, 255, 255, 255, true);
+    else
+        -- Let the player select between "serendipity" and "fury_of_stormrage"
+        lazyCreateNaturesGraceVariants(self);
+        self:RegisterAura("natures_grace", 0, 16886, naturesGraceVariants.textureFunc, "Top", 1, 255, 255, 255, true);
+    end
 
     -- Balance 4p set bonuses
     self:RegisterAura("wrath_of_elune", 0, 46833, "shooting_stars", "Top", 1, 255, 255, 255, true, { starfire }); -- PvP season 5-6-7-8
@@ -353,11 +400,9 @@ local function loadOptions(self)
     local predatoryStrikesTalent = 16972;
     local predatoryStrikesBuff = 69369;
 
-    local naturesGraceTalent = 61346;
+    local naturesGraceEraTalent = 16880;
+    local naturesGraceWrathTalent = 61346;
     local naturesGraceBuff = 16886;
-
-    -- Nature's Grace variants
-    lazyCreateNaturesGraceVariants(self);
 
     self:AddOverlayOption(omenOfClarityTalent, omenSpellID, 0, nil, nil, nil,  omenSpellID+1000000); -- Spell ID not used by ActivateOverlay like typical overlays
     self:AddOverlayOption(lunarEclipseTalent, lunarSpellID, 0, nil, nil, nil, lunarSpellID+1000000); -- Spell ID not used by ActivateOverlay like typical overlays
@@ -367,7 +412,15 @@ local function loadOptions(self)
     if self.IsSoD() then
         self:AddOverlayOption(furyOfStormrageTalent, furyOfStormrageBuff);
     end
-    self:AddOverlayOption(naturesGraceTalent, naturesGraceBuff, 0, nil, naturesGraceVariants);
+    if self.IsEra() then
+        self:AddOverlayOption(naturesGraceEraTalent, naturesGraceBuff);
+    elseif self.IsTBC() then
+        lazyCreateNaturesGraceVariants(self);
+        self:AddOverlayOption(naturesGraceEraTalent, naturesGraceBuff, 0, nil, naturesGraceVariants); -- Same talent as Era
+    else
+        lazyCreateNaturesGraceVariants(self);
+        self:AddOverlayOption(naturesGraceWrathTalent, naturesGraceBuff, 0, nil, naturesGraceVariants);
+    end
     self:AddOverlayOption(predatoryStrikesTalent, predatoryStrikesBuff);
     self:AddSoulPreserverOverlayOption(60512); -- 60512 = Druid buff
 
