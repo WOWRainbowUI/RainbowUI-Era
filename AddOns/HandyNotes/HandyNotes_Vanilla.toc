@@ -3,7 +3,8 @@
 ## Notes: Handy notes for your maps
 ## Notes-frFR: Notes pratiques pour vos cartes.
 ## Author: Xinhuan
-## Version: v1.6.17
+## Version: v1.6.18
+## DefaultState: enabled
 ## X-Category: Map
 ## X-eMail: xinhuan @ gmail DOT com
 ## OptionalDeps: Ace3, TomTom, HereBeDragons
@@ -19,7 +20,6 @@
 ## Notes-zhTW: HandyNotes |n|n在地圖上提供方便的標註功能，搭配相關模組一起使用，可以在地圖上顯示寶箱、稀有怪...的位置。|n|n|cffffd200使用方法: |r從Esc>選項>插件>地圖標記，進行設定。
 ## X-Category-zhTW: 地圖
 ## IconTexture: Interface\Icons\inv_misc_map_01
-## DefaultState: disabled
 
 # Library files
 #@no-lib-strip@
