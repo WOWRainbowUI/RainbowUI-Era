@@ -19,6 +19,10 @@ do --繁体说明书
     text = text .. "|cffFFFFFF-更多功能介紹可在設置裡查看|r\n\n"
     text = text .. "-BUG反饋：郵箱buick_hbj@163.com，Q群322785325\n\n"
 
+    update = update .. "|cff00FF00" .. "4月3日更新v1.8.2c" .. "|r\n"
+    update = update .. [[-修復了把YY號碼轉換為YY鏈接時可能會導致遊戲卡死的問題]] .. "\n"
+    update = update .. [[-感謝飛越公會(YY:65538)對本插件的讚助]] .. "\n\n"
+
     update = update .. "|cff00FF00" .. "4月1日更新v1.8.2b" .. "|r\n"
     update = update .. [[-新增功能：[快速記賬]（右鍵聊天框裝備時打開）。為團員提供一種不用打開表格界面就可以記賬的方式]] .. "\n"
     update = update .. [[-欠款輸入框：現在按下回車鍵可以清除其焦點]] .. "\n"

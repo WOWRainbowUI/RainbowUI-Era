@@ -890,7 +890,7 @@ local function SetItemLib(num, itemtbale)
                     local itemID = GetItemInfoInstant(vv.link)
                     local nandu, boss, FB, isRaid = vv.hardnum, vv.i, vv.FB, vv.isRaid
 
-                    if not (isRaid and nandu and boss and FB) and not ex then
+                    if not (isRaid and nandu and boss and FB) then
                         UIErrorsFrame:AddMessage(L["只能设置团本BOSS正常掉落的装备为心愿"], RED_FONT_COLOR:GetRGB())
                         return
                     end
