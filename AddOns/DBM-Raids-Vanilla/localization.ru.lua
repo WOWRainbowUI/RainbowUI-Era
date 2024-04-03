@@ -540,14 +540,12 @@ L:SetWarningLocalization{
 L:SetTimerLocalization{
 	TimerSubmerge		= "Погружение",
 	TimerEmerge			= "Появление",
-	timerCombatStart	= DBM_CORE_L.GENERIC_TIMER_COMBAT
 }
 L:SetOptionLocalization{
 	WarnSubmerge		= "Показывать предупреждение о погружении",
 	TimerSubmerge		= "Показывать время до погружения",
 	WarnEmerge			= "Показывать предупреждение о появлении",
 	TimerEmerge			= "Показывать время до появления",
-	timerCombatStart	= DBM_CORE_L.OPTION_TIMER_COMBAT
 }
 L:SetMiscLocalization{
 	Submerge	= "ПРИДИТЕ, МОИ СЛУГИ! ЗАЩИТИТЕ СВОЕГО ХОЗЯИНА!",
@@ -1192,7 +1190,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("CrowdPummellerSoD")
 
 L:SetGeneralLocalization({
-	name = "Толпогон 9-60"
+	name = "\"Толпогон 9-60\""
 })
 
 ---------------
@@ -1204,13 +1202,18 @@ L:SetGeneralLocalization({
 	name = "Грязнюк"
 })
 
+L:SetMiscLocalization({
+	FirstPull = "Некоторые вентиляционные шахты до сих пор разносят радиоактивные вещества по всему Гномрегану.",
+	Pull = "О нет! Такие толчки могут означать только одно..."
+})
+
 ----------------------------
 --  Electrocutioner 6000  --
 ----------------------------
 L = DBM:GetModLocalization("ElectrocutionerSoD")
 
 L:SetGeneralLocalization({
-	name = "Электрошокер-6000"
+	name = "Электрошокер 6000"
 })
 
 -----------------------
@@ -1253,4 +1256,75 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization({
 	timerTankCD	= "Показывать таймер перезарядки случайных способностей танка на 4 этапе"
+})
+
+------------------
+--  Sunken Temple  --
+------------------
+
+---------------------------
+--  Atal'alarion  --
+---------------------------
+L = DBM:GetModLocalization("AtalalarionSoD")
+
+L:SetGeneralLocalization({
+	name = "Атал'аларион"
+})
+
+---------------------------
+--  Festering Rotslime  --
+---------------------------
+L = DBM:GetModLocalization("FesteringRotslimeSoD")
+
+L:SetGeneralLocalization({
+	name = "Гнойная гнилослизь"
+})
+
+---------------------------
+--  Atal'ai Defenders  --
+---------------------------
+L = DBM:GetModLocalization("AtalaiDefendersSoD")
+
+L:SetGeneralLocalization({
+	name = "Защитники Атал'ай"
+})
+---------------------------
+--  Dreamscythe and Weaver  --
+---------------------------
+L = DBM:GetModLocalization("DreamscytheAndWeaverSoD")
+
+L:SetGeneralLocalization({
+	name = "Жнец Снов и Ткачик"
+})
+---------------------------
+--  Avatar of Hakkar  --
+---------------------------
+L = DBM:GetModLocalization("AvatarofHakkarSoD")
+
+L:SetGeneralLocalization({
+	name = "Аватара Хаккара"
+})
+---------------------------
+--  Jammal'an and Ogom  --
+---------------------------
+L = DBM:GetModLocalization("JammalanAndOgomSoD")
+
+L:SetGeneralLocalization({
+	name = "Джаммал'ан и Огом"
+})
+---------------------------
+--  Morphaz and Hazzas  --
+---------------------------
+L = DBM:GetModLocalization("MorphazandHazzasSoD")
+
+L:SetGeneralLocalization({
+	name = "Морфаз и Хаззас"
+})
+---------------------------
+--  Shade of Eranikus  --
+---------------------------
+L = DBM:GetModLocalization("ShadeofEranikusSoD")
+
+L:SetGeneralLocalization({
+	name = "Тень Эраникуса"
 })

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("KazzakClassic", "DBM-Azeroth")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20220131034020")
+mod:SetRevision("20240316015938")
 mod:SetCreatureID(12397)--121818 TW ID, 12397 classic ID
 --mod:SetModelID(17887)
 mod:EnableWBEngageSync()--Enable syncing engage in outdoors
@@ -31,32 +31,22 @@ function mod:OnCombatStart(delay, yellTriggered)
 	end
 end
 
-do
-	local ShadowBoltVolley = DBM:GetSpellInfo(21341)
-	function mod:SPELL_CAST_SUCCESS(args)
-		--if args.spellId == 243712 then
-		if args.spellName == ShadowBoltVolley and args:IsSrcTypeHostile() then
-			warningShadowBoltVolley:Show()
-			--timerShadowBoltVolleyCD:Start()
-		end
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpell(21341) and args:IsSrcTypeHostile() then
+		warningShadowBoltVolley:Show()
+		--timerShadowBoltVolleyCD:Start()
 	end
 end
 
-do
-	local MarkofKaz = DBM:GetSpellInfo(21056)
-	function mod:SPELL_AURA_APPLIED(args)
-		--local spellId = args.spellId
-		local spellName = args.spellName
-		--if spellId == 21056 then
-		if spellName == MarkofKaz then
-			self:SendSync("Mark", args.destName)
-			if self:AntiSpam(5, 1) then
-				if args:IsPlayer() then
-					specWarnMark:Show()
-					specWarnMark:Play("targetyou")
-				else
-					warningMark:Show(args.destName)
-				end
+function mod:SPELL_AURA_APPLIED(args)
+	if args:IsSpell(21056) then
+		self:SendSync("Mark", args.destName)
+		if self:AntiSpam(5, 1) then
+			if args:IsPlayer() then
+				specWarnMark:Show()
+				specWarnMark:Play("targetyou")
+			else
+				warningMark:Show(args.destName)
 			end
 		end
 	end
@@ -64,6 +54,7 @@ end
 
 do
 	local playerName = UnitName("player")
+
 	function mod:OnSync(msg, targetName, sender)
 		if not self:IsInCombat() then return end
 		if msg == "Mark" and sender and self:AntiSpam(5, 1) then

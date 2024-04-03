@@ -538,14 +538,14 @@ L:SetWarningLocalization{
 L:SetTimerLocalization{
 	TimerSubmerge		= "Submerge",
 	TimerEmerge			= "Emerge",
-	timerCombatStart	= DBM_CORE_L.GENERIC_TIMER_COMBAT
+	timerCombatStart	= DBM_CORE_L.AUTO_TIMER_TEXTS.combat
 }
 L:SetOptionLocalization{
 	WarnSubmerge		= "Show warning for submerge",
 	TimerSubmerge		= "Show timer for submerge",
 	WarnEmerge			= "Show warning for emerge",
 	TimerEmerge			= "Show timer for emerge",
-	timerCombatStart	= DBM_CORE_L.OPTION_TIMER_COMBAT
+	timerCombatStart	= DBM_CORE_L.AUTO_TIMER_OPTIONS.combat
 }
 L:SetMiscLocalization{
 	Submerge	= "COME FORTH, MY SERVANTS! DEFEND YOUR MASTER!",
@@ -1207,6 +1207,11 @@ L:SetGeneralLocalization({
 	name = "Grubbis"
 })
 
+L:SetMiscLocalization({
+	FirstPull = "There are still ventilation shafts actively spewing radioactive material throughout Gnomeregan.",
+	Pull = "Oh no! Tremors like these can only mean one thing..."
+})
+
 ----------------------------
 --  Electrocutioner 6000  --
 ----------------------------
@@ -1258,3 +1263,73 @@ L:SetOptionLocalization({
 	timerTankCD	= "Show timer for random tank ability cooldown in stage 4"
 })
 
+------------------
+--  Sunken Temple  --
+------------------
+
+---------------------------
+--  Atal'alarion  --
+---------------------------
+L = DBM:GetModLocalization("AtalalarionSoD")
+
+L:SetGeneralLocalization({
+	name = "Atal'alarion"
+})
+
+---------------------------
+--  Festering Rotslime  --
+---------------------------
+L = DBM:GetModLocalization("FesteringRotslimeSoD")
+
+L:SetGeneralLocalization({
+	name = "Festering Rotslime"
+})
+
+---------------------------
+--  Atal'ai Defenders  --
+---------------------------
+L = DBM:GetModLocalization("AtalaiDefendersSoD")
+
+L:SetGeneralLocalization({
+	name = "Atal'ai Defenders"
+})
+---------------------------
+--  Dreamscythe and Weaver  --
+---------------------------
+L = DBM:GetModLocalization("DreamscytheAndWeaverSoD")
+
+L:SetGeneralLocalization({
+	name = "Dreamscythe and Weaver"
+})
+---------------------------
+--  Avatar of Hakkar  --
+---------------------------
+L = DBM:GetModLocalization("AvatarofHakkarSoD")
+
+L:SetGeneralLocalization({
+	name = "Avatar of Hakkar"
+})
+---------------------------
+--  Jammal'an and Ogom  --
+---------------------------
+L = DBM:GetModLocalization("JammalanAndOgomSoD")
+
+L:SetGeneralLocalization({
+	name = "Jammal'an and Ogom"
+})
+---------------------------
+--  Morphaz and Hazzas  --
+---------------------------
+L = DBM:GetModLocalization("MorphazandHazzasSoD")
+
+L:SetGeneralLocalization({
+	name = "Morphaz and Hazzas"
+})
+---------------------------
+--  Shade of Eranikus  --
+---------------------------
+L = DBM:GetModLocalization("ShadeofEranikusSoD")
+
+L:SetGeneralLocalization({
+	name = "Shade of Eranikus"
+})

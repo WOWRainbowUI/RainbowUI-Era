@@ -1174,7 +1174,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("TwilightLordKelrisSoD")
 
 L:SetGeneralLocalization({
-	name = "Seigneur du crépuscule Kelris"
+	name = "Seigneur du Crépuscule Kelris"
 })
 
 ------------------
@@ -1208,13 +1208,17 @@ L:SetGeneralLocalization({
 	name = "Grubbis"
 })
 
+L:SetMiscLocalization({
+	FirstPull = "Des buses de ventilation continuent de cracher de la matière radioactive au-dessus de Gnomeregan.",
+	Pull = "Oh non ! Des secousses pareilles ne peuvent signifier qu’une chose…"
+})
 ----------------------------
 --  Electrocutioner 6000  --
 ----------------------------
 L = DBM:GetModLocalization("ElectrocutionerSoD")
 
 L:SetGeneralLocalization({
-	name = "Électrocuteur 6000"
+	name = "Electrocuteur 6000"
 })
 
 -----------------------
@@ -1256,4 +1260,75 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization({
 	timerTankCD	= "Afficher un chronomètre pour le temps de recharge aléatoire de la technique du tank à l'étape 4"
+})
+
+------------------
+--  Sunken Temple  --
+------------------
+
+---------------------------
+--  Atal'alarion  --
+---------------------------
+L = DBM:GetModLocalization("AtalalarionSoD")
+
+L:SetGeneralLocalization({
+	name = "Atal'alarion"
+})
+
+---------------------------
+--  Festering Rotslime  --
+---------------------------
+L = DBM:GetModLocalization("FesteringRotslimeSoD")
+
+L:SetGeneralLocalization({
+	name = "Pourriture gélatineuse purulente"
+})
+
+---------------------------
+--  Atal'ai Defenders  --
+---------------------------
+L = DBM:GetModLocalization("AtalaiDefendersSoD")
+
+L:SetGeneralLocalization({
+	name = "Défenseurs atal’ai"
+})
+---------------------------
+--  Dreamscythe and Weaver  --
+---------------------------
+L = DBM:GetModLocalization("DreamscytheAndWeaverSoD")
+
+L:SetGeneralLocalization({
+	name = "Fauche-rêve et tisserand"
+})
+---------------------------
+--  Avatar of Hakkar  --
+---------------------------
+L = DBM:GetModLocalization("AvatarofHakkarSoD")
+
+L:SetGeneralLocalization({
+	name = "Avatar d’Hakkar"
+})
+---------------------------
+--  Jammal'an and Ogom  --
+---------------------------
+L = DBM:GetModLocalization("JammalanAndOgomSoD")
+
+L:SetGeneralLocalization({
+	name = "Jammal’an et Ogom"
+})
+---------------------------
+--  Morphaz and Hazzas  --
+---------------------------
+L = DBM:GetModLocalization("MorphazandHazzasSoD")
+
+L:SetGeneralLocalization({
+	name = "Morphaz et Hazzas"
+})
+---------------------------
+--  Shade of Eranikus  --
+---------------------------
+L = DBM:GetModLocalization("ShadeofEranikusSoD")
+
+L:SetGeneralLocalization({
+	name = "Ombre d’Eranikus"
 })

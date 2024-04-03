@@ -13,7 +13,7 @@ local playerFaction = GetPlayerFactionGroup("player")
 local DBM5Protocol = "1" -- DBM protocol version
 local DBM5Prefix = UnitName("player") .. "-" .. GetRealmName() .. "\t" .. DBM5Protocol .. "\t" -- Name-Realm\tProtocol version\t
 
-mod:SetRevision("20240227185019")
+mod:SetRevision("20240304142504")
 mod:SetZone(DBM_DISABLE_ZONE_DETECTION)
 mod:RegisterEvents(
 	"ZONE_CHANGED_NEW_AREA",
@@ -405,14 +405,15 @@ do
 	end
 
 	function mod:CHAT_MSG_BG_SYSTEM_NEUTRAL(msg)
-		if self.Options.TimerStart and msg:find(L.BgStart120) then
-			startTimer:Update(isClassic and 1.5 or 0, 120)
-		elseif self.Options.TimerStart and (msg:find(L.BgStart60) or msg == L.ArenaStart60 or msg:find(L.ArenaStart60)) then
-			startTimer:Update(isClassic and 61.5 or 60, 120)
-		elseif self.Options.TimerStart and (msg:find(L.BgStart30) or msg == L.ArenaStart30 or msg:find(L.ArenaStart30)) then
-			startTimer:Update(isClassic and 91.5 or 90, 120)
+		-- in Classic era the chat msg is about 1.5 seconds early
+		if self.Options.TimerStart and (msg:find(L.BgStart120) or msg:find(L.BgStart120era)) then
+			startTimer:Update(0, 120)
+		elseif self.Options.TimerStart and (msg:find(L.BgStart60) or msg:find(L.BgStart60era) or msg == L.ArenaStart60 or msg:find(L.ArenaStart60)) then
+			startTimer:Update(isClassic and 58.5 or 60, 120)
+		elseif self.Options.TimerStart and (msg:find(L.BgStart30) or msg:find(L.BgStart30era) or msg == L.ArenaStart30 or msg:find(L.ArenaStart30)) then
+			startTimer:Update(isClassic and 88.5 or 90, 120)
 		elseif self.Options.TimerStart and (msg == L.ArenaStart15 or msg:find(L.ArenaStart15)) then
-			startTimer:Update(isClassic and 106.5 or 105, 120)
+			startTimer:Update(isClassic and 103.5 or 105, 120)
 		elseif not isClassic and (msg == L.Vulnerable1 or msg == L.Vulnerable2 or msg:find(L.Vulnerable1) or msg:find(L.Vulnerable2)) then
 			vulnerableTimer:Start()
 		end
@@ -657,7 +658,9 @@ do
 			end
 			if widgetID == 1671 or widgetID == 2074 then -- Standard battleground score predictor: 1671. Deepwind rework: 2074
 				local info = GetDoubleStatusBarWidgetVisualizationInfo(widgetID)
-				self:UpdateWinTimer(info.leftBarMax, info.leftBarValue, info.rightBarValue, allyBases, hordeBases)
+				if info then
+					self:UpdateWinTimer(info.leftBarMax, info.leftBarValue, info.rightBarValue, allyBases, hordeBases)
+				end
 			end
 			if widgetID == 1893 or widgetID == 1894 then -- Classic Arathi Basin
 				local totalScore = isWrath and 1600 or 2000
@@ -665,18 +668,22 @@ do
 			end
 		elseif widgetID == 1683 then -- Temple Of Kotmogu
 			local widgetInfo = GetDoubleStateIconRowVisualizationInfo(1683)
-			for _, v in pairs(widgetInfo.leftIcons) do
-				if v.iconState == 1 then
-					allyBases = allyBases + 1
+			if widgetInfo then
+				for _, v in pairs(widgetInfo.leftIcons) do
+					if v.iconState == 1 then
+						allyBases = allyBases + 1
+					end
 				end
-			end
-			for _, v in pairs(widgetInfo.rightIcons) do
-				if v.iconState == 1 then
-					hordeBases = hordeBases + 1
+				for _, v in pairs(widgetInfo.rightIcons) do
+					if v.iconState == 1 then
+						hordeBases = hordeBases + 1
+					end
 				end
 			end
 			local info = GetDoubleStatusBarWidgetVisualizationInfo(1689)
-			self:UpdateWinTimer(info.leftBarMax, info.leftBarValue, info.rightBarValue, allyBases, hordeBases)
+			if info then
+				self:UpdateWinTimer(info.leftBarMax, info.leftBarValue, info.rightBarValue, allyBases, hordeBases)
+			end
 		end
 	end
 	mod.UPDATE_UI_WIDGET = mod.AREA_POIS_UPDATED

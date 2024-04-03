@@ -1189,6 +1189,10 @@ L:SetGeneralLocalization({
 	name = "格鲁比斯"
 })
 
+L:SetMiscLocalization({
+	FirstPull = "在诺莫瑞根各地，还有一些会喷出辐射性物质的通风井。",
+	Pull = "糟了！这样的震颤只能代表一件事……"
+})
 ----------------------------
 --  Electrocutioner 6000  --
 ----------------------------
@@ -1238,4 +1242,75 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization({
 	timerTankCD	= "Show timer for random tank ability cooldown in stage 4"
+})
+
+------------------
+--  Sunken Temple  --
+------------------
+
+---------------------------
+--  Atal'alarion  --
+---------------------------
+L = DBM:GetModLocalization("AtalalarionSoD")
+
+L:SetGeneralLocalization({
+	name = "阿塔拉利恩"
+})
+
+---------------------------
+--  Festering Rotslime  --
+---------------------------
+L = DBM:GetModLocalization("FesteringRotslimeSoD")
+
+L:SetGeneralLocalization({
+	name = "腐溃烂泥"
+})
+
+---------------------------
+--  Atal'ai Defenders  --
+---------------------------
+L = DBM:GetModLocalization("AtalaiDefendersSoD")
+
+L:SetGeneralLocalization({
+	name = "阿塔莱防御者"
+})
+---------------------------
+--  Dreamscythe and Weaver  --
+---------------------------
+L = DBM:GetModLocalization("DreamscytheAndWeaverSoD")
+
+L:SetGeneralLocalization({
+	name = "德姆塞卡尔与德拉维沃尔"
+})
+---------------------------
+--  Avatar of Hakkar  --
+---------------------------
+L = DBM:GetModLocalization("AvatarofHakkarSoD")
+
+L:SetGeneralLocalization({
+	name = "哈卡的化身"
+})
+---------------------------
+--  Jammal'an and Ogom  --
+---------------------------
+L = DBM:GetModLocalization("JammalanAndOgomSoD")
+
+L:SetGeneralLocalization({
+	name = "迦玛兰和奥戈姆"
+})
+---------------------------
+--  Morphaz and Hazzas  --
+---------------------------
+L = DBM:GetModLocalization("MorphazandHazzasSoD")
+
+L:SetGeneralLocalization({
+	name = "摩弗拉斯和哈扎斯"
+})
+---------------------------
+--  Shade of Eranikus  --
+---------------------------
+L = DBM:GetModLocalization("ShadeofEranikusSoD")
+
+L:SetGeneralLocalization({
+	name = "伊兰尼库斯的阴影"
 })
