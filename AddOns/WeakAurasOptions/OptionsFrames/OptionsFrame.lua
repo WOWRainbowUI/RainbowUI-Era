@@ -112,11 +112,7 @@ function OptionsPrivate.CreateFrame()
   frame:EnableMouse(true)
   frame:SetMovable(true)
   frame:SetResizable(true)
-  if frame.SetResizeBounds then
-    frame:SetResizeBounds(minWidth, minHeight)
-  else
-    frame:SetMinResize(minWidth, minHeight)
-  end
+  frame:SetResizeBounds(minWidth, minHeight)
   frame:SetFrameStrata("DIALOG")
   -- Workaround classic issue
   WeakAurasOptionsPortrait:SetTexture([[Interface\AddOns\WeakAuras\Media\Textures\logo_256_round.tga]])
@@ -349,7 +345,7 @@ function OptionsPrivate.CreateFrame()
 
 
   local minimizebutton = CreateFrame("Button", nil, frame, "MaximizeMinimizeButtonFrameTemplate")
-  minimizebutton:SetPoint("RIGHT", frame.CloseButton, "LEFT", WeakAuras.IsClassicEraOrWrath() and  10 or 0, 0)
+  minimizebutton:SetPoint("RIGHT", frame.CloseButton, "LEFT", WeakAuras.IsClassicEraOrWrathOrCata() and  10 or 0, 0)
   minimizebutton:SetOnMaximizedCallback(function()
     frame.minimized = false
     local right, top = frame:GetRight(), frame:GetTop()
