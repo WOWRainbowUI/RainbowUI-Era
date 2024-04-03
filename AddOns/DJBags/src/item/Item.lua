@@ -157,7 +157,7 @@ function item:Update()
     local filtered = cInfo and cInfo.isFiltered
     local id = cInfo and cInfo.itemID
 
-    local equipable = IsEquippableItem(id)
+    local equipable = id and C_Item.IsEquippableItem(id) or false
 
     local name, level, classId, class, subClass
     if id then
