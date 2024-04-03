@@ -3186,250 +3186,728 @@ points[ 1426 ] = { -- Dun Morogh
 		spell = { "Explosive Shot", "Fingers of Frost", "Furious Thunder" }, 
 		guide = { st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } 
 	},
-	[62604620] = { npc=1388, name="Vagash", class={ "HUNTER", "MAGE", "WARRIOR" }, faction="Alliance",
-					spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
-					guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } },
-	[62605640] = { npc=1130, name="Bjarn", class={ "MAGE" }, faction="Alliance",
-					spell={ "Fingers of Frost" }, guide={ st.mage.fingers } },
-	[62723345] = { npc=5570, name="Bruuk Barleybeard", class={ "WARRIOR" }, faction="Alliance",					
-					spell={ "Frenzied Assault" }, guide={ st.warrior.frenziedAssault },
-					tip="Speak to Bruuk first, and then\nspeak to Bruart, who is nearby.\n"
-						.."They are in the inn Bruuk's\nCorner, to the left of the\n"
-						.."entrance to the Military Wing" },
-	[63282278] = { object=386691, name="Library Book", class={ "MAGE" }, faction="Alliance",
-					spell={ "Icy Veins" }, guide={ st.mage.icyVeins }, alsoTestQuest=true,
-					quest={ 79091 }, questName={ "Archmage Antonidas: The Unabridged Autobiography" },
-					tip="The Ironforge Library of course!" },
-	[63605020] = { npc=208711, name="Toby", class={ "HUNTER" }, spell={ "Carve" },
-					guide={ st.hunter.carve } },
-	[65005960] = { npc=1130, name="Bjarn", class={ "MAGE" }, faction="Alliance",
-					spell={ "Fingers of Frost" }, guide={ st.mage.fingers } },
-	[67005960] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
-					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[69405220] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
-					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[69605820] = { npc=208752, name="Frozen Trogg", class={ "MAGE", "WARLOCK" }, faction="Alliance",
-					tip="Needs about five separate Fire debuffs to defrost",
-					spell={ "Burnout", "Chaos Bolt" }, guide={ st.frozen } },
-	[69805900] = { npc=1118, name="Rockjaw Trogg mobs (Various)", class={ "HUNTER" }, spell={ "Carve" },
-					guide={ st.hunter.carve } },
-	[70005640] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
-					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[71805040] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
-					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[72605140] = { npc=1119, name="Hammerspine", class={ "MAGE", "PRIEST" }, faction="Alliance",
-					spell={ "Fingers of Frost", "Shared Pain" }, guide={ st.mage.fingers, st.priest.sharedPain } },
-	[73005920] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
-					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[75005800] = { name="Rockjaw mobs (Various)", class={ "ROGUE", "WARRIOR" }, faction="Alliance",
-					tip={ "Pick Pocket Top-Left Map Piece", "Pristine Trogg Heart" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } },
-	[77506080] = { npc=6123, name="Dark Iron Spy", class={ "ROGUE", "ROGUE" }, faction="Alliance", tip="Pickpocket",
-					tip={ nil, "Pp and kill. Bottom-Left Map Piece" }, spell={ "Mutilate", "Quick Draw" },
-					guide={ st.rogue.mutilate, st.rogue.quickDraw ..st.rogue.quickDrawDM } },
-	[78206230] = { npc=6124, name="Captain Beld", class={ "PRIEST", "WARLOCK" }, faction="Alliance",
-					spell={ "Shared Pain", "Soul Siphon" }, guide={ st.priest.sharedPain, st.warlock.soulSiphon } },
+	[62604620] = { 
+	  npc=1388, 
+	  name="瓦加什", 
+	  class={ "HUNTER", "MAGE", "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Explosive Shot", "Fingers of Frost", "Furious Thunder" },
+	  guide={ st.hunter.explosiveShot, st.mage.fingers, st.warrior.furiousThunder } 
+	},
 
-	[79003710] = { npc=1961, name="Mangeclaw", class={ "HUNTER", "MAGE" }, faction="Alliance",
-					spell={ "Explosive Shot", "Fingers of Frost" }, 
-					guide={ st.hunter.explosiveShot, st.mage.fingers } },
+	[62605640] = { 
+	  npc=1130, 
+	  name="比亞恩", 
+	  class={ "MAGE" }, 
+	  faction="Alliance",
+	  spell={ "Fingers of Frost" }, 
+	  guide={ st.mage.fingers } 
+	},
+
+	[62723345] = { 
+	  npc=5570, 
+	  name="布魯克·大麥鬍", 
+	  class={ "WARRIOR" }, 
+	  faction="Alliance",					
+	  spell={ "Frenzied Assault" }, 
+	  guide={ st.warrior.frenziedAssault },
+	  tip="先跟布魯克說話，然後\n再跟附近的布魯亞特說話。\n"
+		  .."他們在布魯克的角落旅館裡，\n在軍情處入口的左側。" 
+	},
+
+	[63282278] = { 
+	  object=386691, 
+	  name="圖書館書籍", 
+	  class={ "MAGE" }, 
+	  faction="Alliance",
+	  spell={ "Icy Veins" }, 
+	  guide={ st.mage.icyVeins }, 
+	  alsoTestQuest=true,
+	  quest={ 79091 }, 
+	  questName={ "大法師安東尼達斯：未刪節自傳" },
+	  tip="當然是在鐵爐堡圖書館！" 
+	},
+
+	[63605020] = { 
+	  npc=208711, 
+	  name="托比", 
+	  class={ "HUNTER" }, 
+	  spell={ "Carve" },
+	  guide={ st.hunter.carve } 
+	},
+
+	[65005960] = { 
+	  npc=1130, 
+	  name="比亞恩", 
+	  class={ "MAGE" }, 
+	  faction="Alliance",
+	  spell={ "Fingers of Frost" }, 
+	  guide={ st.mage.fingers } 
+	},
+
+	[67005960] = { 
+	  name="碎石顎生物（多種）", 
+	  class={ "ROGUE", "WARRIOR" }, 
+	  faction="Alliance",
+	  tip={ "扒竊左上角地圖碎片", "原始食人妖之心臟" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } 
+	},
+
+	[69405220] = { 
+	  name="碎石顎生物（多種）", 
+	  class={ "ROGUE", "WARRIOR" }, 
+	  faction="Alliance",
+	  tip={ "扒竊左上角地圖碎片", "原始食人妖之心臟" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } 
+	},
+
+	[69605820] = { 
+	  npc=208752, 
+	  name="冰凍的食人妖", 
+	  class={ "MAGE", "WARLOCK" }, 
+	  faction="Alliance",
+	  tip="需要大約五個不同的火焰減益效果才能解凍",
+	  spell={ "Burnout", "Chaos Bolt" }, 
+	  guide={ st.frozen } 
+	},
+
+	[69805900] = { 
+	  npc=1118, 
+	  name="碎石顎食人妖生物（多種）", 
+	  class={ "HUNTER" }, 
+	  spell={ "Carve" },
+	  guide={ st.hunter.carve } 
+	},
+	[70005640] = { 
+	  name="碎石顎生物（多種）", 
+	  class={ "ROGUE", "WARRIOR" }, 
+	  faction="Alliance",
+	  tip={ "扒竊左上角地圖碎片", "原始食人妖之心臟" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } 
+	},
+
+	[71805040] = { 
+	  name="碎石顎生物（多種）", 
+	  class={ "ROGUE", "WARRIOR" }, 
+	  faction="Alliance",
+	  tip={ "扒竊左上角地圖碎片", "原始食人妖之心臟" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } 
+	},
+
+	[72605140] = { 
+	  npc=1119, 
+	  name="錘脊", 
+	  class={ "MAGE", "PRIEST" }, 
+	  faction="Alliance",
+	  spell={ "Fingers of Frost", "Shared Pain" }, 
+	  guide={ st.mage.fingers, st.priest.sharedPain } 
+	},
+
+	[73005920] = { 
+	  name="碎石顎生物（多種）", 
+	  class={ "ROGUE", "WARRIOR" }, 
+	  faction="Alliance",
+	  tip={ "扒竊左上角地圖碎片", "原始食人妖之心臟" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } 
+	},
+
+	[75005800] = { 
+	  name="碎石顎生物（多種）", 
+	  class={ "ROGUE", "WARRIOR" }, 
+	  faction="Alliance",
+	  tip={ "扒竊左上角地圖碎片", "原始食人妖之心臟" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawDM, st.warrior.devastate ..st.warrior.devastateJunni } 
+	},
+
+	[77506080] = { 
+	  npc=6123, 
+	  name="黑鐵間諜", 
+	  class={ "ROGUE", "ROGUE" }, 
+	  faction="Alliance", 
+	  tip="Pickpocket",
+	  tip={ nil, "Pp and kill. Bottom-Left Map Piece" }, 
+	  spell={ "Mutilate", "Quick Draw" },
+	  guide={ st.rogue.mutilate, st.rogue.quickDraw ..st.rogue.quickDrawDM } 
+	},
+
+	[78206230] = { 
+	  npc=6124, 
+	  name="貝爾德隊長", 
+	  class={ "PRIEST", "WARLOCK" }, 
+	  faction="Alliance",
+	  spell={ "Shared Pain", "Soul Siphon" }, 
+	  guide={ st.priest.sharedPain, st.warlock.soulSiphon } 
+	},
+
+	[79003710] = { 
+	  npc=1961, 
+	  name="曼格克勞", 
+	  class={ "HUNTER", "MAGE" }, 
+	  faction="Alliance",
+	  spell={ "Explosive Shot", "Fingers of Frost" }, 
+	  guide={ st.hunter.explosiveShot, st.mage.fingers } 
+	},
 }
 points[ 1431 ] = { -- Duskwood
-	[04402840] = { npc=205153, name="Ada Gelhardt", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Seal of Martyrdom" }, guide={ st.paladin.martyrdom } },
-	[16702850] = { object=409735, name="Spellbook", class={ "MAGE" },
-					spell={ "Icy Veins" }, guide={ st.mage.icyVeins }, alsoTestQuest=true,
-					quest={ 78147 }, questName={ "Crimes Against Anatomy" },
-					tip="In the last room of the Dawning Wood\nCatacombs. The western building" },
-	[17603740] = { object=411328, name="Slumbering Bones", class={ "MAGE", "WARRIOR" },
-					spell={ "Mass Regeneration", "Flagellation" }, guide={ st.duskwoodCrypts },
-					tip="This Crypt second" },
-	[19904550] = { npc=215, name="Statue", class={ "ROGUE" },
-					tip="/kneel here at the statue, after\nyou obtain an Engraved Gold Ring",
-					spell={ "Shiv" }, guide={ st.rogue.shiv } },
-	[21804640] = { npc=218931, name="Dark Rider", tip="Seen throughout the Raven Hill cemetary",
-					class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
-					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
-					"Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
-					"Precise Timing" }, guide={ st.dalaranAgent }, quest={ st.dalaranQuest }, questName={ st.dalaranQuestName } },
-	[22606880] = { name="Defias Mobs (Various)", class={ "PALADIN", "PRIEST" },
-					spell={ "Exorcist", "Circle of Healing" }, guide={ st.paladin.banishment, st.priest.circle } },
-	[22806560] = { npc=215, name="Defias Night Runner", class={ "ROGUE" },
-					tip="Pp to obtain a Engraved Gold Ring",
-					spell={ "Shiv" }, guide={ st.rogue.shiv } },
-	[22836560] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance", -- offset to avoid duplicate pin
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[23607320] = { name="Defias Mobs (Various)", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Exorcist" }, guide={ st.paladin.banishment } },
-	[26003090] = { object=411348, name="Dusty Coffer", class={ "MAGE", "WARRIOR" },
-					spell={ "Mass Regeneration", "Flagellation" }, guide={ st.duskwoodCrypts },
-					tip="This Crypt first" },
-	[50607540] = { name="Defias Mobs (Various)", class={ "PALADIN", "PRIEST" },
-					spell={ "Exorcist", "Circle of Healing" }, guide={ st.paladin.banishment, st.priest.circle } },
-	[50807100] = { npc=215, name="Defias Night Runner", class={ "ROGUE" },
-					tip="Pp to obtain a Engraved Gold Ring",
-					spell={ "Shiv" }, guide={ st.rogue.shiv } },
-	[61403040] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
-					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
-	[65003440] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
-					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
-	[65402600] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
-					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
-	[67202940] = { item=210043, name="Symbol of the Second Owl", class={ "DRUID" },
-					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth }, tip=st.agon },
-	[91103060] = { name="Secluded Grave", class={ "PRIEST" },
-					spell={ "Circle of Healing" }, guide={ st.priest.circle } },
+	[04402840] = { 
+	  npc=205153, 
+	  name="艾達·格爾哈特", 
+	  class={ "PALADIN" }, 
+	  faction="Alliance",
+	  spell={ "Seal of Martyrdom" }, 
+	  guide={ st.paladin.martyrdom } 
+	},
+
+	[16702850] = { 
+	  object=409735, 
+	  name="法術書", 
+	  class={ "MAGE" },
+	  spell={ "Icy Veins" }, 
+	  guide={ st.mage.icyVeins }, 
+	  alsoTestQuest=true,
+	  quest={ 78147 }, 
+	  questName={ "Crimes Against Anatomy" },
+	  tip="在黎明森林地下墓穴的最後一個房間。\n西邊的建築物" 
+	},
+
+	[17603740] = { 
+	  object=411328, 
+	  name="沉睡的骨頭", 
+	  class={ "MAGE", "WARRIOR" },
+	  spell={ "Mass Regeneration", "Flagellation" }, 
+	  guide={ st.duskwoodCrypts },
+	  tip="這個地下墓穴第二個" 
+	},
+
+	[19904550] = { 
+	  npc=215, 
+	  name="雕像", 
+	  class={ "ROGUE" },
+	  tip="在獲得刻金戒指後，在雕像這裡/kneel",
+	  spell={ "Shiv" }, 
+	  guide={ st.rogue.shiv } 
+	},
+
+	[21804640] = { 
+	  npc=218931, 
+	  name="黑暗騎士", 
+	  tip="在 Raven Hill 墓地隨處可見",
+	  class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
+	  "SHAMAN", "WARLOCK", "WARRIOR" }, 
+	  spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
+	  "Infusion of Light", "Spirit of the Redeemer", "Waylay", "Two-Handed Mastery", "Demonic Knowledge",
+	  "Precise Timing" }, 
+	  guide={ st.dalaranAgent }, 
+	  quest={ st.dalaranQuest }, 
+	  questName={ st.dalaranQuestName } 
+	},
+
+	[22606880] = { 
+	  name="迪菲亞暴徒（多種）", 
+	  class={ "PALADIN", "PRIEST" },
+	  spell={ "Exorcist", "Circle of Healing" }, 
+	  guide={ st.paladin.banishment, st.priest.circle } 
+	},
+
+	[22806560] = { 
+	  npc=215, 
+	  name="迪菲亞夜行者", 
+	  class={ "ROGUE" },
+	  tip="Pp to obtain a Engraved Gold Ring",
+	  spell={ "Shiv" }, 
+	  guide={ st.rogue.shiv } 
+	},
+
+	[22836560] = { 
+	  name="迪菲亞暴徒（多種）", 
+	  class={ "PALADIN" }, 
+	  faction="Alliance", -- offset to avoid duplicate pin
+	  spell={ "Exorcist" }, 
+	  guide={ st.paladin.banishment } 
+	},
+
+	[23607320] = { 
+	  name="迪菲亞暴徒（多種）", 
+	  class={ "PALADIN" }, 
+	  faction="Alliance",
+	  spell={ "Exorcist" }, 
+	  guide={ st.paladin.banishment } 
+	},
+
+	[26003090] = { 
+	  object=411348, 
+	  name="塵封的保險箱", 
+	  class={ "MAGE", "WARRIOR" },
+	  spell={ "Mass Regeneration", "Flagellation" }, 
+	  guide={ st.duskwoodCrypts },
+	  tip="這個地下墓穴第一個" 
+	},
+
+	[50607540] = { 
+	  name="迪菲亞暴徒（多種）", 
+	  class={ "PALADIN", "PRIEST" },
+	  spell={ "Exorcist", "Circle of Healing" }, 
+	  guide={ st.paladin.banishment, st.priest.circle } 
+	},
+
+	[50807100] = { 
+	  npc=215, 
+	  name="迪菲亞夜行者", 
+	  class={ "ROGUE" },
+	  tip="Pp to obtain a Engraved Gold Ring",
+	  spell={ "Shiv" }, 
+	  guide={ st.rogue.shiv } 
+	},
+
+	[61403040] = { 
+	  item=210043, 
+	  name="第二隻貓頭鷹的象徵", 
+	  class={ "DRUID" },
+	  spell={ "Wild Growth" }, 
+	  guide={ st.druid.wildGrowth }, 
+	  tip=st.agon 
+	},
+
+	[65003440] = { 
+	  item=210043, 
+	  name="第二隻貓頭鷹的象徵", 
+	  class={ "DRUID" },
+	  spell={ "Wild Growth" }, 
+	  guide={ st.druid.wildGrowth }, 
+	  tip=st.agon 
+	},
+
+	[65402600] = { 
+	  item=210043, 
+	  name="第二隻貓頭鷹的象徵", 
+	  class={ "DRUID" },
+	  spell={ "Wild Growth" }, 
+	  guide={ st.druid.wildGrowth }, 
+	  tip=st.agon 
+	},
+
+	[67202940] = { 
+	  item=210043, 
+	  name="第二隻貓頭鷹的象徵", 
+	  class={ "DRUID" },
+	  spell={ "Wild Growth" }, 
+	  guide={ st.druid.wildGrowth }, 
+	  tip=st.agon 
+	},
+
+	[91103060] = { 
+	  name="僻靜的墳墓", 
+	  class={ "PRIEST" },
+	  spell={ "Circle of Healing" }, 
+	  guide={ st.priest.circle } 
+	},
 }
 points[ 1429 ] = { -- Elwynn Forest
-	[13213968] = { npc=203475, name="Liv Bradford", class={ "PALADIN", "WARRIOR" }, faction="Alliance",
-					spell={ "Rebuke", "Frenzied Assault" },
-					guide={ st.livAndStuart, st.warrior.frenziedAssault .."\n\n" ..st.livAndStuart } },
-	[14184463] = { npc=204070, name="Soboz", class={ "WARLOCK" }, faction="Alliance",
-					spell={ "Demonic Grace" }, guide={ st.warlock.grace ..st.warlock.graceEF },
-					tip="He's" ..st.secretCoven ..".\n\nTake the ramp next to Gakin and descend\n"
-						.."into the crypts. Take the first right turn and\ngo down. Now the first left turn down. Voilà!\n\n"
-						.."Stand on the magenta rune and summon!" },
-	[14234510] = { npc=6122, name="Gakin the Darkbinder", class={ "WARLOCK" }, faction="Alliance",
-					spell={ "Soul Siphon" }, guide={ st.warlock.soulSiphon }, tip="He's" ..st.secretCoven },
-	[14574457] = { npc=5495, name="Ursula Deline", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Divine Storm" }, quest={ { 78088, 78089, 78090, 78091, 78092, 78093 } }, tip="She's" ..st.secretCoven,
-					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
-						"It Must Be Destroyed", "Return to Delgren" } }, guide={ st.paladin.divineStorm } },
-	[18862699] = { npc=5492, name="Katherine the Pure", class={ "PALADIN", "PALADIN" }, faction="Alliance",
-					spell={ "Divine Storm", "Sheath of Light" }, tip="First room on the left",
-					quest={ { 78088, 78089, 78090, 78091, 78092, 78093 }, { 79939, 79940, 79945, 79970 } },					
-					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
-						"It Must Be Destroyed", "Return to Delgren" }, { "The Broken Hammer", "A Lost Brother",
-						"Orders from the Grand Crusader", "Aeonas the Vindicated" } },
-						guide={ st.paladin.divineStorm, st.paladin.sheathLight } },
-	[19104563] = { npc=211033, npc=211033, name="Garion Wendell", class={ "MAGE", "MAGE" }, faction="Alliance",
-					spell={ "Icy Veins", "Spell Power" }, guide={ st.mage.icyVeins, st.mage.spellPower },
-					tip="In the Wizard's Sanctum, Mage Quarter",	
-					quest={ { 78145, 79091, 79092, 79097, 78142, 78147, 79948, 78149, 78146, 78124, 79093, 78148, 78143, 78127, 78150 }, 
-						{ 79953, 79949, 79535, 79950, 79947, 79951, 79952, 79536 } },
-					questName={ {
-						"Arcanic Systems Manual" ..colourPlaintext .."    The Sludge Fen, The Barrens",
-						"Archmage Antonidas: The Unabridged ..." ..colourPlaintext .."    Hall of Explorers, Ironforge",
-						"Archmage Theocritus's Research Journal"..colourPlaintext .."    Tower of Azora, Elwynn Forest",
-						"Baxtan: On Destructive Magics" ..colourPlaintext .."    Next to Gazlove, Ratchet, The Barrens",
-						"Bewitchments and Glamours" ..colourPlaintext .."    Moonbrook, Westfall",
-						"Crimes Against Anatomy" ..colourPlaintext .."    Raven Hill Crypt, Duskwood",
-						"Defensive Magics 101" ..colourPlaintext .."    Ogre Tower in Alterac Mountains",
-						"Fury of the Land" ..colourPlaintext .."    Near Grimtotems in Stonetalon Mountains",
-						"Goaz Scrolls" ..colourPlaintext .."    Whelgar's Excavation Site, Wetlands",
-						"Nar'thalas Almanac" ..colourPlaintext .."    Darkshore Ruins",
-						"Rumi of Gnomeregan: The Collected Works" ..colourPlaintext .."    Thelsamar or Westfall Inn",
-						"Runes of the Sorcerer-Kings" ..colourPlaintext .."    The Ogre Cave in Loch Modan",
-						"Secrets of the Dreamers" ..colourPlaintext .."    Near the Wailing Caverns portal",
-						"The Dalaran Digest" ..colourPlaintext .."    Amber Mill, Silverpine Forest",
-						"Friend of the Library" ..colourPlaintext .."    The final step for Icy Veins!" }, 
-						{ "A Ludites Guide to Caring for Your Pet" ..colourPlaintext .."    Farm Lost Ones in the Swamp of Sorrows",
-						"A Web of Lies: Debunking Myths and Legends" ..colourPlaintext .."    Alongside a tent. Winterbark Village, Arathi",
-						"Basilisks: Should Petrification be Feared?" ..colourPlaintext .."    Entrance to Crystalvein Mine, Stranglethorn",
-						"Demons and You" ..colourPlaintext .."    Inside the Thunder Axe Fortress",
-						"Geomancy: The Stone-Cold Truth" ..colourPlaintext .."    Inside a hut, Darkcloud Pinnacle, Thousand Needles",
-						"Mummies: A Guide to the Unsavory Undead" ..colourPlaintext .."    Crypt within a mesa. Badlands",
-						"RwlRwlRwlRwl" ..colourPlaintext .."    Witch Hill murloc Camp, Swamp of Sorrows",
-						"Greater Friend of the Library" ..colourPlaintext .."    The final step for Spell Power!" } } },
-	[19212554] = { npc=205278, name="Brother Romulus", class={ "PALADIN" }, faction="Alliance",
-					spell={ "Seal of Martyrdom" }, guide={ st.paladin.martyrdom } },
-	[22607320] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[23609180] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
-					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
-	[24409460] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",				
-					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
-					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-	[25408820] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
-					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-	[25573835] = { npc=213077, name="Elaine Compton", faction="Alliance",
-					tip="Standing near the street corner, easily missed",
-					class=st.allClass, spell=st.allSpellACA, guide={ st.supplyFaction } },
-	[25607420] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[26609360] = { npc=448, name="Hogger", class={ "MAGE", "WARLOCK", "WARRIOR" },
-					spell={ "Fingers of Frost", "Soul Siphon", "Furious Thunder" },
-					guide={ st.mage.fingers, st.warlock.soulSiphon, st.warrior.furiousThunder },
-					tip="Pin marks his camp. Frequently kited" },
-	[26808620] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
-					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
-	[27408020] = { npc=478, name="Riverpaw Outrunner", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
-	[27409200] = { npc=478, name="Riverpaw Outrunner", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Bottom-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
-	[28009580] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
-					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
-	[28362596] = { object=386777, name="Dusty Chest", class={ "ROGUE" }, faction="Alliance", guide={ st.rogue.precision },
-					spell={ "Slaughter from the Shadows" }, tip="Upper level of the house in\nCutthroat Alley, Stormwind" },
-	[29807480] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[30608300] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
-					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-	[30608820] = { npc=100, name="Gruff Swiftbite", class={ "WARRIOR" }, faction="Alliance",
-					spell={ "Furious Thunder" }, guide={ st.warrior.furiousThunder } },
-	[31205720] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
-	[31443441] = { npc=203226, name="Viktoria Woods", class={ "WARRIOR" }, faction="Alliance",
-					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVik }, },
-	[41208820] = { name="Riverpaw Runt/Outrunner", class={ "WARLOCK", "WARRIOR" }, faction="Alliance",
-					guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
-					spell={ "Demonic Grace", "Devastate" }, tip={ "Gnoll Blood", "Severed Gnoll Head"} },
-	[36008260] = { npc=475, name="Kobold Tunneler", faction="Alliance", class={ "ROGUE", "WARRIOR" },
-					tip={ "Pick Pocket or kill. Top-Right Map Piece", "Severed Kobold Head" }, spell={ "Quick Draw", "Devastate" },
-					guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF, st.warrior.devastate ..st.warrior.devastateVik } },
-	[36208000] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[38607560] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[40808020] = { npc=40, name="Kobold Miner", faction="Alliance", class={ "PRIEST", "ROGUE", "WARRIOR" },
-					tip={ nil, "Pick Pocket or kill. Top-Right Map Piece", "Severed Kobold Head" },
-					spell={ "Shared Pain", "Quick Draw", "Devastate" },
-					guide={ st.priest.sharedPain, st.rogue.quickDraw ..st.rogue.quickDrawEF, 
-							st.warrior.devastate ..st.warrior.devastateVik } },
-	[41607600] = { npc=203079, name="Wandering Swordsman", class={ "WARRIOR" },
-					spell={ "Blood Frenzy" }, guide={ st.warrior.bloodFrenzy } },
-	[41607800] = { npc=327, name="Goldtooth", class={ "PRIEST", "WARRIOR", "WARRIOR" }, faction="Alliance",
-					spell={ "Void Plague", "Furious Thunder", "Devastate" }, tip={ nil, nil, "Severed Kobold Head" },
-					guide={ st.priest.voidPlague, st.warrior.furiousThunder, st.warrior.devastate ..st.warrior.devastateVik } },
-	[44096632] = { npc=204256, name="Damien Kane", class={ "WARLOCK" }, faction="Alliance",
-					spell={ "Soul Siphon" }, guide={ st.warlock.soulSiphon },
-					tip= "Basement of the Lion's Pride, hiding behind barrels.\nOr go upstairs for ERP. "
-						.."Truly a Season of Discovery! :O" },
-	[44396624] = { npc=906, name="Maximillian Crowe", class={ "WARLOCK" }, faction="Alliance",
-					tip="Basement of the Lion's Pride,\nvia the kitchen backroom",
-					spell={ "Demonic Tactics" }, guide={ st.warlock.tactics } },
-	[46176213] = { object=387466, name="Rusty Lockbox", class={ "ROGUE" }, faction="Alliance",
-					spell={ "Slaughter from the Shadows" }, guide={ st.rogue.slaughter },
-					tip="On the roof of the spooky house north of Goldshire.\nNext to the chimney so can be difficult to see.\n"
-						.."Use the crates at the side of the house to jump" },
-	[46807460] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
-	[48402920] = { npc=80, name="Kobold Laborer", class={ "PRIEST" }, faction="Alliance",
-					tip="You want a Memory of a Troubled Acolyte to drop", spell={ "Penance" }, 
-					guide={ st.starterZoneClass ..st.priest.penanceEF }, quest={ 77619 }, questName={ "Meditation on the Light" } },
-	[49008320] = { name="Defias Bandit/Bodyguard", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
-					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
-	[49206560] = { name="Crystal Lake Murlocs (Various)", faction="Alliance", class={ "WARRIOR" }, tip="Severed Murloc Head",
-					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateVik } },
-	[49663941] = { npc=198, name="Khelden Bremen", class={ "MAGE" }, faction="Alliance",
-					tip="Enter the Abbey and bear left.\nHe is upstairs in the Library Wing",
-					spell={ "Ice Lance" }, guide={ st.starterZoneClass }, quest={ 77620 }, questName={ "Spell Research" } },
-	[49874265] = { npc=459, name="Drusilla La Salle", class={ "WARLOCK" }, faction="Alliance",
-					spell={ "Haunt" }, guide={ st.starterZoneClass }, quest={ 77621 },
-					questName={ "Stolen Power" } },
-	[49985201] = { npc=201854, name="Cutty", class={ "ROGUE" }, faction="Alliance",
-					tip="Stealthed. Outside of and leaning\nagainst the Northshire wall. Far\neastern edge, past the river",
-					spell={ "Mutilate" }, guide={ st.rogue.mutilate } },
-	[49813949] = { npc=915, name="Priestess Anetta", class={ "PRIEST" }, faction="Alliance",
-					tip="Enter the Abbey and bear left. Enter the\nLibrary Wing and she's in the back room", spell={ "Penance" }, 
-					guide={ st.starterZoneClass ..st.priest.penanceEF }, quest={ 77619 }, questName={ "Meditation on the Light" } },
+	[13213968] = { 
+	  npc=203475, 
+	  name="莉芙·布拉德福德", 
+	  class={ "PALADIN", "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Rebuke", "Frenzied Assault" },
+	  guide={ st.livAndStuart, st.warrior.frenziedAssault .."\n\n" ..st.livAndStuart } 
+	},
+
+	[14184463] = { 
+	  npc=204070, 
+	  name="索博茲", 
+	  class={ "WARLOCK" }, 
+	  faction="Alliance",
+	  spell={ "Demonic Grace" }, 
+	  guide={ st.warlock.grace ..st.warlock.graceEF },
+	  tip="他在" ..st.secretCoven .."。\n\n從加金旁邊的斜坡下去，\n進入地下墓穴。右轉，然後\n下去。現在左轉下去。瞧！\n\n站在洋紅色的符文上召喚！" 
+	},
+
+	[14234510] = { 
+	  npc=6122, 
+	  name="加金·暗影束縛者", 
+	  class={ "WARLOCK" }, 
+	  faction="Alliance",
+	  spell={ "Soul Siphon" }, 
+	  guide={ st.warlock.soulSiphon }, 
+	  tip="他在" ..st.secretCoven 
+	},
+
+	[14574457] = { 
+	  npc=5495, 
+	  name="烏蘇拉·德萊恩", 
+	  class={ "PALADIN" }, 
+	  faction="Alliance",
+	  spell={ "Divine Storm" }, 
+	  quest={ { 78088, 78089, 78090, 78091, 78092, 78093 } }, 
+	  tip="她在" ..st.secretCoven,
+	  questName={ { "奇怪的神器", "來自暴風城的建議", "第二意見", "賺取你的鹽", 
+		"它必須被摧毀", "返回德爾格倫" } }, 
+	  guide={ st.paladin.divineStorm } 
+	},
+
+	[18862699] = { 
+	  npc=5492, 
+	  name="純潔的凱瑟琳", 
+	  class={ "PALADIN", "PALADIN" }, 
+	  faction="Alliance",
+	  spell={ "Divine Storm", "Sheath of Light" }, 
+	  tip="左邊第一個房間",
+	  quest={ { 78088, 78089, 78090, 78091, 78092, 78093 }, { 79939, 79940, 79945, 79970 } },					
+	  questName={ { "奇怪的神器", "來自暴風城的建議", "第二意見", "賺取你的鹽", 
+		"它必須被摧毀", "返回德爾格倫" }, { "破碎的戰錘", "失落的兄弟",
+		"大十字軍的命令", "被昭雪的艾歐娜" } },
+	  guide={ st.paladin.divineStorm, st.paladin.sheathLight } 
+	},
+
+	[19104563] = { 
+	  npc=211033, 
+	  npc=211033, 
+	  name="加里恩·溫德爾", 
+	  class={ "MAGE", "MAGE" }, 
+	  faction="Alliance",
+	  spell={ "Icy Veins", "Spell Power" }, 
+	  guide={ st.mage.icyVeins, st.mage.spellPower },
+	  tip="在法師區的巫師聖殿",	
+	  quest={ { 78145, 79091, 79092, 79097, 78142, 78147, 79948, 78149, 78146, 78124, 79093, 78148, 78143, 78127, 78150 }, 
+		{ 79953, 79949, 79535, 79950, 79947, 79951, 79952, 79536 } },
+	  questName={ {
+		"奧術系統手冊" ..colourPlaintext .."    污泥沼澤，貧瘠之地",
+		"大法師安東尼達斯：未刪節..." ..colourPlaintext .."    探險者大廳，鐵爐堡",
+		"大法師西奧克里圖斯的研究日記"..colourPlaintext .."    艾爾文森林，阿祖拉之塔",
+		"巴克斯坦：論毀滅魔法" ..colourPlaintext .."    加茲洛夫旁邊，棘齒城，貧瘠之地",
+		"魅惑與魅力" ..colourPlaintext .."    月溪鎮，西部荒野",
+		"解剖學罪行" ..colourPlaintext .."    暮色森林地下墓穴，暮色森林",
+		"防禦魔法 101" ..colourPlaintext .."    奧特蘭克山脈的食人魔塔",
+		"大地之怒" ..colourPlaintext .."    石爪山脈的格林托特姆附近",
+		"戈阿茲卷軸" ..colourPlaintext .."    濕地，維爾加的挖掘場",
+		"納薩拉斯年鑑" ..colourPlaintext .."    黑海岸廢墟",
+		"諾莫瑞根的魯米：文集" ..colourPlaintext .."    塞爾薩瑪或西部荒野旅館",
+		"巫妖王的符文" ..colourPlaintext .."    洛克莫丹的食人魔洞穴",
+		"夢境者的秘密" ..colourPlaintext .."    哀嚎洞穴傳送門附近",
+		"達拉然文摘" ..colourPlaintext .."    銀松森林，琥珀磨坊",
+		"圖書館之友" ..colourPlaintext .."    冰冷血脈的最後一步！" }, 
+		{ "盧迪特寵物護理指南" ..colourPlaintext .."    在悲傷沼澤刷失落者",
+		"謊言之網：揭穿神話和傳說" ..colourPlaintext .."    在一個帳篷旁邊。阿拉希高地，冬樹村",
+		"蛇髮女妖：石化應該被恐懼嗎？" ..colourPlaintext .."    荊棘谷，水晶礦脈入口",
+		"惡魔與你" ..colourPlaintext .."    雷霆之斧要塞內",
+		"地質學：冰冷的真相" ..colourPlaintext .."    千針石林，黑暗之雲峰，一個小屋內",
+		"木乃伊：令人討厭的亡靈指南" ..colourPlaintext .."    荒蕪之地，一個台地內的地下墓穴",
+		"RwlRwlRwlRwl" ..colourPlaintext .."    悲傷沼澤，女巫山魚人營地",
+		"圖書館高級之友" ..colourPlaintext .."    法術力量的最後一步！" } } },
+	},
+	[19212554] = { 
+	  npc=205278, 
+	  name="羅穆盧斯兄弟", 
+	  class={ "PALADIN" }, 
+	  faction="Alliance",
+	  spell={ "Seal of Martyrdom" }, 
+	  guide={ st.paladin.martyrdom } 
+	},
+	[22607320] = { 
+	  npc=203079, 
+	  name="流浪劍客", 
+	  class={ "WARRIOR" },
+	  spell={ "Blood Frenzy" }, 
+	  guide={ st.warrior.bloodFrenzy } 
+	},
+	[23609180] = { 
+	  npc=100, 
+	  name="格拉夫·迅牙", 
+	  class={ "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Furious Thunder" }, 
+	  guide={ st.warrior.furiousThunder } 
+	},
+	[24409460] = { 
+	  name="河爪小鬼/奔行者", 
+	  class={ "WARLOCK", "WARRIOR" }, 
+	  faction="Alliance",				
+	  guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
+	  spell={ "Demonic Grace", "Devastate" }, 
+	  tip={ "Gnoll Blood", "Severed Gnoll Head"} 
+	},
+	[25408820] = { 
+	  name="河爪小鬼/奔行者", 
+	  class={ "WARLOCK", "WARRIOR" }, 
+	  faction="Alliance",
+	  guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
+	  spell={ "Demonic Grace", "Devastate" }, 
+	  tip={ "Gnoll Blood", "Severed Gnoll Head"} 
+	},
+	[25573835] = { 
+	  npc=213077, 
+	  name="伊蓮·康普頓", 
+	  faction="Alliance",
+	  tip="站在街角附近，容易錯過",
+	  class=st.allClass, 
+	  spell=st.allSpellACA, 
+	  guide={ st.supplyFaction } 
+	},
+	[25607420] = { 
+	  npc=203079, 
+	  name="流浪劍客", 
+	  class={ "WARRIOR" },
+	  spell={ "Blood Frenzy" }, 
+	  guide={ st.warrior.bloodFrenzy } 
+	},
+	[26609360] = { 
+	  npc=448, 
+	  name="霍格", 
+	  class={ "MAGE", "WARLOCK", "WARRIOR" },
+	  spell={ "Fingers of Frost", "Soul Siphon", "Furious Thunder" },
+	  guide={ st.mage.fingers, st.warlock.soulSiphon, st.warrior.furiousThunder },
+	  tip="圖釘標記了他的營地。經常被風箏" 
+	},
+	[26808620] = { 
+	  npc=100, 
+	  name="格拉夫·迅牙", 
+	  class={ "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Furious Thunder" }, 
+	  guide={ st.warrior.furiousThunder } 
+	},
+	[27408020] = { 
+	  npc=478, 
+	  name="河爪奔行者", 
+	  faction="Alliance", 
+	  class={ "ROGUE" }, 
+	  tip="扒竊或殺死。左下角地圖碎片",
+	  spell={ "Quick Draw" }, 
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } 
+	},
+	[27409200] = { 
+	  npc=478, 
+	  name="河爪奔行者", 
+	  faction="Alliance", 
+	  class={ "ROGUE" }, 
+	  tip="扒竊或殺死。左下角地圖碎片",
+	  spell={ "Quick Draw" }, 
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } 
+	},
+	[28009580] = { 
+	  npc=100, 
+	  name="格拉夫·迅牙", 
+	  class={ "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Furious Thunder" }, 
+	  guide={ st.warrior.furiousThunder } 
+	},
+	[28362596] = { 
+	  object=386777, 
+	  name="落滿灰塵的箱子", 
+	  class={ "ROGUE" }, 
+	  faction="Alliance", 
+	  guide={ st.rogue.precision },
+	  spell={ "Slaughter from the Shadows" }, 
+	  tip="暴風城刺客小巷房屋的上層" 
+	},
+	[29807480] = { 
+	  npc=203079, 
+	  name="流浪劍客", 
+	  class={ "WARRIOR" },
+	  spell={ "Blood Frenzy" }, 
+	  guide={ st.warrior.bloodFrenzy } 
+	},
+	[30608300] = { 
+	  name="河爪小鬼/奔行者", 
+	  class={ "WARLOCK", "WARRIOR" }, 
+	  faction="Alliance",
+	  guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
+	  spell={ "Demonic Grace", "Devastate" }, 
+	  tip={ "Gnoll Blood", "Severed Gnoll Head"} 
+	},
+	[30608820] = { 
+	  npc=100, 
+	  name="格拉夫·迅牙", 
+	  class={ "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Furious Thunder" }, 
+	  guide={ st.warrior.furiousThunder } 
+	},
+	[31205720] = { 
+	  npc=116, 
+	  name="迪菲亞盜賊", 
+	  faction="Alliance", 
+	  class={ "ROGUE" }, 
+	  tip="扒竊或殺死。左上角地圖碎片",
+	  spell={ "Quick Draw" }, 
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } 
+	},
+	[31443441] = { 
+	  npc=203226, 
+	  name="維多利亞·伍茲", 
+	  class={ "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Devastate" }, 
+	  guide={ st.warrior.devastate ..st.warrior.devastateVik }, 
+	},
+	[41208820] = { 
+	  name="河爪小鬼/奔行者", 
+	  class={ "WARLOCK", "WARRIOR" }, 
+	  faction="Alliance",
+	  guide={ st.warlock.grace ..st.warlock.graceEF, st.warrior.devastate ..st.warrior.devastateVik },
+	  spell={ "Demonic Grace", "Devastate" }, 
+	  tip={ "Gnoll Blood", "Severed Gnoll Head"} 
+	},
+	[36008260] = { 
+	  npc=475, 
+	  name="狗頭人掘洞者", 
+	  faction="Alliance", 
+	  class={ "ROGUE", "WARRIOR" },
+	  tip={ "扒竊或殺死。右上角地圖碎片", "Severed Kobold Head" }, 
+	  spell={ "Quick Draw", "Devastate" },
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF, st.warrior.devastate ..st.warrior.devastateVik } 
+	},
+	[36208000] = { 
+	  npc=203079, 
+	  name="流浪劍客", 
+	  class={ "WARRIOR" },
+	  spell={ "Blood Frenzy" }, 
+	  guide={ st.warrior.bloodFrenzy } 
+	},
+	[38607560] = { 
+	  npc=203079, 
+	  name="流浪劍客", 
+	  class={ "WARRIOR" },
+	  spell={ "Blood Frenzy" }, 
+	  guide={ st.warrior.bloodFrenzy } 
+	},
+	[40808020] = { 
+	  npc=40, 
+	  name="狗頭人礦工", 
+	  faction="Alliance", 
+	  class={ "PRIEST", "ROGUE", "WARRIOR" },
+	  tip={ nil, "扒竊或殺死。右上角地圖碎片", "Severed Kobold Head" },
+	  spell={ "Shared Pain", "Quick Draw", "Devastate" },
+	  guide={ st.priest.sharedPain, st.rogue.quickDraw ..st.rogue.quickDrawEF, 
+			  st.warrior.devastate ..st.warrior.devastateVik } 
+	},
+	[41607600] = { 
+	  npc=203079, 
+	  name="流浪劍客", 
+	  class={ "WARRIOR" },
+	  spell={ "Blood Frenzy" }, 
+	  guide={ st.warrior.bloodFrenzy } 
+	},
+	[41607800] = { 
+	  npc=327, 
+	  name="金牙", 
+	  class={ "PRIEST", "WARRIOR", "WARRIOR" }, 
+	  faction="Alliance",
+	  spell={ "Void Plague", "Furious Thunder", "Devastate" }, 
+	  tip={ nil, nil, "Severed Kobold Head" },
+	  guide={ st.priest.voidPlague, st.warrior.furiousThunder, st.warrior.devastate ..st.warrior.devastateVik } 
+	},
+	[44096632] = { 
+	  npc=204256, 
+	  name="達米安·凱恩", 
+	  class={ "WARLOCK" }, 
+	  faction="Alliance",
+	  spell={ "Soul Siphon" }, 
+	  guide={ st.warlock.soulSiphon },
+	  tip= "獅王之傲地窖，藏在桶後面。\n或者上樓去 ERP。\n真是個發現的季節！ :O" 
+	},
+	[44396624] = { 
+	  npc=906, 
+	  name="馬克西米利安·克羅", 
+	  class={ "WARLOCK" }, 
+	  faction="Alliance",
+	  tip="獅王之傲地窖，\n通過廚房後面的房間",
+	  spell={ "Demonic Tactics" }, 
+	  guide={ st.warlock.tactics } 
+	},
+	[46176213] = { 
+	  object=387466, 
+	  name="生鏽的保險箱", 
+	  class={ "ROGUE" }, 
+	  faction="Alliance",
+	  spell={ "Slaughter from the Shadows" }, 
+	  guide={ st.rogue.slaughter },
+	  tip="在金 Shire 以北的鬼屋屋頂上。\n在煙囪旁邊，所以可能很難看到。\n使用房子旁邊的板條箱跳上去" 
+	},
+	[46807460] = { 
+	  npc=116, 
+	  name="迪菲亞盜賊", 
+	  faction="Alliance", 
+	  class={ "ROGUE" }, 
+	  tip="扒竊或殺死。左上角地圖碎片",
+	  spell={ "Quick Draw" }, 
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } 
+	},
+	[48402920] = { 
+	  npc=80, 
+	  name="狗頭人勞工", 
+	  class={ "PRIEST" }, 
+	  faction="Alliance",
+	  tip="你想要一個掉落的 Memory of a Troubled Acolyte", 
+	  spell={ "Penance" }, 
+	  guide={ st.starterZoneClass ..st.priest.penanceEF }, 
+	  quest={ 77619 }, 
+	  questName={ "光之冥想" } 
+	},
+	[49008320] = { 
+	  name="迪菲亞盜賊/保鏢", 
+	  faction="Alliance", 
+	  class={ "ROGUE" }, 
+	  tip="扒竊或殺死。左上角地圖碎片",
+	  spell={ "Quick Draw" }, 
+	  guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } 
+	},
+	[49206560] = { 
+	  name="水晶湖魚人（各種）", 
+	  faction="Alliance", 
+	  class={ "WARRIOR" }, 
+	  tip="Severed Murloc Head",
+	  spell={ "Devastate" }, 
+	  guide={ st.warrior.devastate ..st.warrior.devastateVik } 
+	},
+	[49663941] = { 
+	  npc=198, 
+	  name="凱爾登·布雷門", 
+	  class={ "MAGE" }, 
+	  faction="Alliance",
+	  tip="進入修道院，左轉。\n他在圖書館側樓上",
+	  spell={ "Ice Lance" }, 
+	  guide={ st.starterZoneClass }, 
+	  quest={ 77620 }, 
+	  questName={ "法術研究" } 
+	},
+	[49874265] = { 
+	  npc=459, 
+	  name="德魯西拉·拉薩爾", 
+	  class={ "WARLOCK" }, 
+	  faction="Alliance",
+	  spell={ "Haunt" }, 
+	  guide={ st.starterZoneClass }, 
+	  quest={ 77621 },
+	  questName={ "被盜的力量" } 
+	},
+	[49985201] = { 
+	  npc=201854, 
+	  name="卡蒂", 
+	  class={ "ROGUE" }, 
+	  faction="Alliance",
+	  tip="潛行。在北郡城牆外，靠著城牆。\n最東邊，過了河",
+	  spell={ "Mutilate" }, 
+	  guide={ st.rogue.mutilate } 
+	},
+	[49813949] = { 
+	  npc=915, 
+	  name="女祭司安妮塔", 
+	  class={ "PRIEST" }, 
+	  faction="Alliance",
+	  tip="進入修道院，左轉。進入\n圖書館側樓，她在後面的房間", 
+	  spell={ "Penance" }, 
+	  guide={ st.starterZoneClass ..st.priest.penanceEF }, 
+	  quest={ 77619 }, 
+	  questName={ "光之冥想" } 
+	},
 	[50003500] = { npc=257, name="Kobold Worker", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Right Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 	[50406100] = { name="Crystal Lake Murlocs (Various)", faction="Alliance", class={ "WARRIOR" }, tip="Severed Murloc Head",
