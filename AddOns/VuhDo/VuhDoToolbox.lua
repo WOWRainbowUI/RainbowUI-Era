@@ -629,7 +629,7 @@ end
 
 --
 function VUHDO_isSpellKnown(aSpellName)
-	
+
 	if not aSpellName then
 		return false;
 	end

@@ -1139,7 +1139,7 @@ local VUHDO_DEFAULT_PANEL_SETUP = {
 		[5] = true,
 		[6] = true,
 		[7] = true,
-		[8] = true
+		[8] = true,
 	},
 
 	["HOTS"] = {
@@ -1216,7 +1216,7 @@ local VUHDO_DEFAULT_PANEL_SETUP = {
 			["R"] = 0,	["G"] = 1,	["B"] = 0,	["O"] = 1,
 			["useText"] = true, ["useBackground"] = true, ["useOpacity"] = true,
 			["modeText"] = 2, -- 1=enemy, 2=solid, 3=class color, 4=gradient
-			["modeBack"] = 1
+			["modeBack"] = 1,
 		},
 
 		["IRRELEVANT"] =  {
@@ -1442,7 +1442,7 @@ local VUHDO_DEFAULT_PER_PANEL_SETUP = {
 		["showTot"] = false,
 		["totSpacing"] = 3,
 		["totWidth"] = 30,
-		["targetOrientation"] = 1;
+		["targetOrientation"] = 1,
 
 		["isTarClassColText"] = true,
 		["isTarClassColBack"] = false,
@@ -1462,7 +1462,8 @@ local VUHDO_DEFAULT_PER_PANEL_SETUP = {
 		["position"] = VUHDO_LT_POS_ABOVE,
 		["verbose"] = false,
 		["hideIrrelevant"] = false,
-		["showTotalHp"] = false;
+		["showTotalHp"] = false,
+		["showEffectiveHp"] = false,
 	},
 
 	["ID_TEXT"] = {
