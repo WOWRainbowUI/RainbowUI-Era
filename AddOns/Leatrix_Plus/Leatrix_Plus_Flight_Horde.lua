@@ -31,6 +31,7 @@
 				["0.43:0.93:0.55:0.57:0.44:0.19"] = 903, -- Booty Bay, Kargath, Undercity
 				["0.43:0.93:0.55:0.57:0.62:0.31:0.49:0.27:0.38:0.24"] = 882, -- Booty Bay, Kargath, Hammerfall, Tarren Mill, The Sepulcher
 				["0.43:0.93:0.55:0.57:0.44:0.19:0.49:0.27"] = 970, -- Booty Bay, Kargath, Undercity, Tarren Mill
+				["0.43:0.93:0.55:0.57:0.44:0.19:0.38:0.24"] = 938, -- Booty Bay, Kargath, Undercity, The Sepulcher
 
 				-- Horde: Flame Crest (Burning Steppes)
 				["0.56:0.61:0.61:0.75:0.43:0.93"] = 472, -- Flame Crest, Stonard, Booty Bay
@@ -63,6 +64,7 @@
 				["0.45:0.84:0.55:0.57:0.44:0.19:0.49:0.27"] = 890, -- Grom'gol, Kargath, Undercity, Tarren Mill
 				["0.45:0.84:0.55:0.57:0.56:0.61"] = 413, -- Grom'gol, Kargath, Flame Crest
 				["0.45:0.84:0.55:0.57:0.44:0.19:0.70:0.16"] = 1012, -- Grom'gol, Kargath, Undercity, Light's Hope Chapel
+				["0.45:0.84:0.55:0.57:0.44:0.19:0.38:0.24"] = 858, -- Grom'gol, Kargath, Undercity, The Sepulcher
 
 				-- Horde: Hammerfall (Arathi Highlands)
 				["0.62:0.31:0.55:0.57:0.45:0.84:0.43:0.93"] = 651, -- Hammerfall, Kargath, Grom'gol, Booty Bay
@@ -79,6 +81,7 @@
 				["0.62:0.31:0.49:0.27:0.44:0.19:0.70:0.16"] = 441, -- Hammerfall, Tarren Mill, Undercity, Light's Hope Chapel
 				["0.62:0.31:0.44:0.19:0.38:0.24"] = 290, -- Hammerfall, Undercity, The Sepulcher
 				["0.62:0.31:0.55:0.57:0.43:0.93"] = 675, -- Hammerfall, Kargath, Booty Bay
+				["0.62:0.31:0.44:0.19:0.70:0.16"] = 444, -- Hammerfall, Undercity, Light's Hope Chapel
 
 				-- Horde: Kargath (Badlands)
 				["0.55:0.57:0.43:0.93"] = 417, -- Kargath, Booty Bay
@@ -343,6 +346,7 @@
 				["0.56:0.53:0.41:0.47"] = 150, -- Crossroads, Sun Rock Retreat
 				["0.56:0.53:0.45:0.56"] = 182, -- Crossroads, Thunder Bluff
 				["0.56:0.53:0.41:0.47:0.32:0.58"] = 292, -- Crossroads, Sun Rock Retreat, Shadowprey Village
+				["0.56:0.53:0.45:0.56:0.32:0.58"] = 342, -- Crossroads, Thunder Bluff, Shadowprey Village
 
 				-- Horde: Everlook (Winterspring)
 				["0.64:0.23:0.63:0.36:0.56:0.53:0.55:0.73:0.61:0.80"] = 584, -- Everlook, Valormok, Crossroads, Freewind Post, Gadgetzan
@@ -369,6 +373,9 @@
 				["0.64:0.23:0.63:0.44:0.55:0.42:0.41:0.37"] = 553, -- Everlook, Orgrimmar, Splintertree Post, Zoram'gar Outpost
 				["0.64:0.23:0.63:0.44:0.56:0.53:0.55:0.73:0.61:0.80"] = 691, -- Everlook, Orgrimmar, Crossroads, Freewind Post, Gadgetzan
 				["0.64:0.23:0.63:0.44:0.45:0.56"] = 529, -- Everlook, Orgrimmar, Thunder Bluff
+				["0.64:0.23:0.63:0.44:0.56:0.53:0.61:0.80"] = 717, -- Everlook, Orgrimmar, Crossroads, Gadgetzan
+				["0.64:0.23:0.63:0.36:0.56:0.53:0.61:0.80"] = 611, -- Everlook, Valormok, Crossroads, Gadgetzan
+				["0.64:0.23:0.63:0.44:0.56:0.53:0.55:0.73"] = 599, -- Everlook, Orgrimmar, Crossroads, Freewind Post
 
 				-- Horde: Freewind Post (Thousand Needles)
 				["0.55:0.73:0.61:0.80"] = 93, -- Freewind Post, Gadgetzan
@@ -465,6 +472,8 @@
 				["0.54:0.21:0.46:0.30:0.56:0.53:0.41:0.37"] = 583, -- Moonglade, Bloodvenom Post, Crossroads, Zoram'gar Outpost
 				["0.54:0.21:0.46:0.30:0.63:0.36:0.55:0.42"] = 438, -- Moonglade, Bloodvenom Post, Valormok, Splintertree Post
 				["0.54:0.21:0.64:0.23:0.63:0.44"] = 446, -- Moonglade, Everlook, Orgrimmar
+				["0.54:0.21:0.64:0.23:0.63:0.44:0.57:0.64"] = 674, -- Moonglade, Everlook, Orgrimmar, Brackenwall Village
+				["0.54:0.21:0.64:0.23:0.63:0.44:0.56:0.53:0.61:0.55"] = 607, -- Moonglade, Everlook, Orgrimmar, Crossroads, Ratchet
 
 				-- Horde: Orgrimmar (Durotar)
 				["0.63:0.44:0.61:0.80"] = 417, -- Orgrimmar, Gadgetzan (Pavel Pavlov reported 436)
@@ -475,7 +484,7 @@
 				["0.63:0.44:0.57:0.64"] = 229, -- Orgrimmar, Brackenwall Village
 				["0.63:0.44:0.56:0.53:0.53:0.61"] = 200, -- Orgrimmar, Crossroads, Camp Taurajo
 				["0.63:0.44:0.56:0.53:0.61:0.55"] = 161, -- Orgrimmar, Crossroads, Ratchet
-				["0.63:0.44:0.56:0.53"] = 110, -- Orgrimmar, Crossroads (david latal reported 162)
+				["0.63:0.44:0.56:0.53"] = 110, -- Orgrimmar, Crossroads (Joseph Ortiz and david latal reported 162)
 				["0.63:0.44:0.63:0.36"] = 99, -- Orgrimmar, Valormok
 				["0.63:0.44:0.55:0.42"] = 89, -- Orgrimmar, Splintertree Post
 				["0.63:0.44:0.64:0.23"] = 319, -- Orgrimmar, Everlook
@@ -515,6 +524,7 @@
 				["0.61:0.55:0.56:0.53:0.45:0.56"] = 250, -- Ratchet, Crossroads, Thunder Bluff
 				["0.61:0.55:0.56:0.53:0.41:0.47:0.32:0.58"] = 360, -- Ratchet, Crossroads, Sun Rock Retreat, Shadowprey Village
 				["0.61:0.55:0.56:0.53:0.61:0.80"] = 372, -- Ratchet, Crossroads, Gadgetzan
+				["0.61:0.55:0.56:0.53:0.45:0.56:0.32:0.58"] = 410, -- Ratchet, Crossroads, Thunder Bluff, Shadowprey Village
 
 				-- Horde: Shadowprey Village (Desolace)
 				["0.32:0.58:0.44:0.69:0.55:0.73:0.61:0.80"] = 395, -- Shadowprey Village, Camp Mojache, Freewind Post, Gadgetzan
@@ -542,6 +552,7 @@
 				["0.32:0.58:0.41:0.47:0.56:0.53:0.63:0.44"] = 490, -- Shadowprey Village, Sun Rock Retreat, Crossroads, Orgrimmar
 				["0.32:0.58:0.41:0.47:0.56:0.53:0.53:0.61"] = 439, -- Shadowprey Village, Sun Rock Retreat, Crossroads, Camp Taurajo
 				["0.32:0.58:0.41:0.47:0.56:0.53"] = 349, -- Shadowprey Village, Sun Rock Retreat, Crossroads
+				["0.32:0.58:0.41:0.47:0.56:0.53:0.61:0.55"] = 400, -- Proie-de-l'Ombre, Retraite de Roche-Soleil, La Croisée, Ratchet
 
 				-- Horde: Splintertree Post (Ashenvale)
 				["0.55:0.42:0.56:0.53:0.55:0.73:0.61:0.80"] = 436, -- Splintertree Post, Crossroads, Freewind Post, Gadgetzan
@@ -604,7 +615,7 @@
 				["0.45:0.56:0.63:0.36:0.64:0.23:0.54:0.21"] = 532, -- Thunder Bluff, Valormok, Everlook, Moonglade
 				["0.45:0.56:0.56:0.53:0.46:0.30"] = 411, -- Thunder Bluff, Crossroads, Bloodvenom Post
 				["0.45:0.56:0.56:0.53:0.41:0.37"] = 389, -- Thunder Bluff, Crossroads, Zoram'gar Outpost
-				["0.45:0.56:0.41:0.47"] = 182, -- Thunder Bluff, Sun Rock Retreat (Jonathon Allen reported 50)
+				["0.45:0.56:0.41:0.47"] = 182, -- Thunder Bluff, Sun Rock Retreat (Jonathon Allen reported 50, Thomas Gaillot reported 389)
 				["0.45:0.56:0.32:0.58"] = 159, -- Thunder Bluff, Shadowprey Village
 				["0.45:0.56:0.56:0.53:0.46:0.30:0.54:0.21"] = 534, -- Thunder Bluff, Crossroads, Bloodvenom Post, Moonglade
 				["0.45:0.56:0.63:0.44:0.64:0.23"] = 527, -- Thunder Bluff, Orgrimmar, Everlook

@@ -1,5 +1,5 @@
 ﻿----------------------------------------------------------------------
--- 	Leatrix Plus 1.15.20 (28th February 2024)
+-- 	Leatrix Plus 1.15.25 (3rd April 2024)
 ----------------------------------------------------------------------
 
 --	01:Functns, 02:Locks, 03:Restart, 20:Live, 30:Isolated, 40:Player
@@ -19,7 +19,7 @@
 	local void
 
 	-- Version
-	LeaPlusLC["AddonVer"] = "1.15.20"
+	LeaPlusLC["AddonVer"] = "1.15.25"
 
 	-- Get locale table
 	local void, Leatrix_Plus = ...
@@ -4982,6 +4982,16 @@
 							-- Show button frame
 							local x, y, row, col = 0, 0, 0, 0
 							local buttons = LibDBIconStub:GetButtonList()
+							-- Sort the button table
+							table.sort(buttons, function(a, b)
+								if string.find(a, "LeaPlusCustomIcon_") then
+									a = string.gsub(a, "LeaPlusCustomIcon_", "")
+								end
+								if string.find(b, "LeaPlusCustomIcon_") then
+									b = string.gsub(b, "LeaPlusCustomIcon_", "")
+								end
+								return a:lower() < b:lower()
+							end)
 							-- Calculate buttons per row
 							local buttonsPerRow
 							local totalButtons = #buttons
@@ -5012,9 +5022,9 @@
 												button:SetPoint("TOPLEFT", bFrame, "TOPLEFT", x, y)
 												col = col + 1; if col >= buttonsPerRow then col = 0; row = row + 1; x = 0; y = y - 30 else x = x + 30 end
 											else
-												-- Minimap is on right side of screen
-												button:SetPoint("TOPRIGHT", bFrame, "TOPRIGHT", x, y)
-												col = col + 1; if col >= buttonsPerRow then col = 0; row = row + 1; x = 0; y = y - 30 else x = x - 30 end
+												-- Minimap is on right side of screen (changed from TOPRIGHT to TOPLEFT and x - 30 to x + 30 to make sorting work)
+												button:SetPoint("TOPLEFT", bFrame, "TOPLEFT", x, y)
+												col = col + 1; if col >= buttonsPerRow then col = 0; row = row + 1; x = 0; y = y - 30 else x = x + 30 end
 											end
 											if totalButtons <= buttonsPerRow then
 												bFrame:SetWidth(totalButtons * 30)
@@ -9879,11 +9889,16 @@
 
 							-- If buff matches cooldown we want, start the cooldown
 							for q = 1, 40 do
-								local void, void, void, void, length, expire, void, void, void, spellID = UnitBuff(owner, q)
-								if spellID and id == spellID then
-									icon[i]:Show()
-									local start = expire - length
-									CooldownFrame_Set(icon[i].c, start, length, 1)
+								local BuffData = C_UnitAuras.GetBuffDataByIndex(owner, q)
+								if BuffData then
+									local spellID = BuffData.spellId
+									local length = BuffData.duration
+									local expire = BuffData.expirationTime
+									if spellID and id == spellID then
+										icon[i]:Show()
+										local start = expire - length
+										CooldownFrame_Set(icon[i].c, start, length, 1)
+									end
 								end
 							end
 
@@ -10008,11 +10023,16 @@
 
 						-- If buff matches spell we want, show cooldown icon
 						for q = 1, 40 do
-							local void, void, void, void, length, expire, void, void, void, spellID = UnitBuff(newowner, q)
-							if spellID and newspell == spellID then
-								icon[i]:Show()
-								-- Set the cooldown to the buff cooldown
-								CooldownFrame_Set(icon[i].c, expire - length, length, 1)
+							local BuffData = C_UnitAuras.GetBuffDataByIndex(newowner, q)
+							if BuffData then
+								local length = BuffData.duration
+								local expire = BuffData.expirationTime
+								local spellID = BuffData.spellId
+								if spellID and newspell == spellID then
+									icon[i]:Show()
+									-- Set the cooldown to the buff cooldown
+									CooldownFrame_Set(icon[i].c, expire - length, length, 1)
+								end
 							end
 						end
 					end
@@ -10087,10 +10107,13 @@
 			-- Function to show spell ID in tooltips
 			local function CooldownIDFunc(unit, target, index, auratype)
 				if LeaPlusLC["ShowCooldownID"] == "On" and auratype ~= "HARMFUL" then
-					local spellid = select(10, UnitAura(target, index))
-					if spellid then
-						GameTooltip:AddLine(L["Spell ID"] .. ": " .. spellid)
-						GameTooltip:Show()
+					local AuraData = C_UnitAuras.GetAuraDataByIndex(target, index)
+					if AuraData then
+						local spellid = AuraData.spellId
+						if spellid then
+							GameTooltip:AddLine(L["Spell ID"] .. ": " .. spellid)
+							GameTooltip:Show()
+						end
 					end
 				end
 			end
@@ -13835,20 +13858,28 @@
 					-- Buffs and debuffs
 					for i = 1, BUFF_MAX_DISPLAY do
 						if _G["BuffButton" .. i] and mouseFocus == _G["BuffButton" .. i] then
-							local spellName, void, void, void, void, void, void, void, void, spellID = UnitBuff("player", i)
-							if spellName and spellID then
-								LeaPlusLC:ShowSystemEditBox("https://" .. LeaPlusLC.WowheadLock .. "/spell=" .. spellID, false)
-								LeaPlusLC.FactoryEditBox.f:SetText(L["Spell"] .. ": " .. spellName .. " (" .. spellID .. ")")
+							local BuffData = C_UnitAuras.GetBuffDataByIndex("player", i)
+							if BuffData then
+								local spellName = BuffData.name
+								local spellID = BuffData.spellId
+								if spellName and spellID then
+									LeaPlusLC:ShowSystemEditBox("https://" .. LeaPlusLC.WowheadLock .. "/spell=" .. spellID, false)
+									LeaPlusLC.FactoryEditBox.f:SetText(L["Spell"] .. ": " .. spellName .. " (" .. spellID .. ")")
+								end
 							end
 							return
 						end
 					end
 					for i = 1, DEBUFF_MAX_DISPLAY do
 						if _G["DebuffButton" .. i] and mouseFocus == _G["DebuffButton" .. i] then
-							local spellName, void, void, void, void, void, void, void, void, spellID = UnitDebuff("player", i)
-							if spellName and spellID then
-								LeaPlusLC:ShowSystemEditBox("https://" .. LeaPlusLC.WowheadLock .. "/spell=" .. spellID, false)
-								LeaPlusLC.FactoryEditBox.f:SetText(L["Spell"] .. ": " .. spellName .. " (" .. spellID .. ")")
+							local DebuffData = C_UnitAuras.GetDebuffDataByIndex("player", i)
+							if DebuffData then
+								local spellName = DebuffData.name
+								local spellID = DebuffData.spellId
+								if spellName and spellID then
+									LeaPlusLC:ShowSystemEditBox("https://" .. LeaPlusLC.WowheadLock .. "/spell=" .. spellID, false)
+									LeaPlusLC.FactoryEditBox.f:SetText(L["Spell"] .. ": " .. spellName .. " (" .. spellID .. ")")
+								end
 							end
 							return
 						end
@@ -14515,11 +14546,15 @@
 				end
 				return
 			elseif str == "click" then
-				-- Click a button
+				-- Click a button (optional x number of times)
 				local frame = GetMouseFocus()
 				local ftype = frame:GetObjectType()
 				if frame and ftype and ftype == "Button" then
-					frame:Click()
+					if arg1 and tonumber(arg1) > 1 and tonumber(arg1) < 1000 then
+						for i =1, tonumber(arg1) do C_Timer.After(0.1 * i, function() frame:Click() end) end
+					else
+						frame:Click()
+					end
 				else
 					LeaPlusLC:Print("Hover the pointer over a button.")
 				end
