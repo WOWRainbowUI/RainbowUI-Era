@@ -55,11 +55,11 @@ local minimapOptionsLocales = {
         ["ruRU"] = "Показать/скрыть цветной ореол вокруг значков на миникарте",
         ["deDE"] = "Zeichnet eine leuchtende Textur hinter die Minimap-Icons. Farblich einzigartig für jede Quest.",
         ["koKR"] = "미니맵 아이콘에 반짝이는 효과를 표시합니다. 퀘스트마다 각각 다른 색상을 지닙니다.",
-        ["esMX"] = "Mostrar un aura destrás de los iconos de minimapa con colores unicos para cada misión",
+        ["esMX"] = "Mostrar un aura detrás de los iconos de minimapa con colores únicos para cada misión",
         ["enUS"] = true,
         ["zhCN"] = "替小地图标记显示一圈光晕，且不同任务有不同的颜色",
         ["zhTW"] = "在小地圖圖示的後面繪製發光材質，每個任務都可以有不同的顏色。",
-        ["esES"] = "Mostrar un aura destrás de los iconos de minimapa con colores unicos para cada misión",
+        ["esES"] = "Mostrar un aura detrás de los iconos de minimapa con colores únicos para cada misión",
         ["frFR"] = "Active un effet de surbrillance autour des icônes sur la minicarte, colorié différemment pour chaque quête.",
     },
     ["Minimap Note Options"] = {
@@ -75,7 +75,7 @@ local minimapOptionsLocales = {
         ["frFR"] = "Options des icônes sur la minicarte",
     },
     ["How large the minimap icons are.\n(Default: %s)"] = {
-        ["ptBR"] = "Qual é o tamanho dos ícones da mini-carta.\n(Por defeito: %s)",
+        ["ptBR"] = "Qual é o tamanho dos ícones do minimapa.\n(Por defeito: %s)",
         ["ruRU"] = "Одновременная регулировка размера всех значков на миникарте\n(по умолчанию: %s)",
         ["deDE"] = "Skaliert wie groß die Minimap-Icons sind.\n(Standard: %s)",
         ["koKR"] = "미니맵 아이콘의 크기를 설정합니다.\n(기본값: %s)",
