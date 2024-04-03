@@ -1943,8 +1943,6 @@ local function OptionsUI()
             end)
         end
     end
-
-    BG.DuiZhangList() -- 对账单奇怪bug所以放到最后才读取
 end
 
 

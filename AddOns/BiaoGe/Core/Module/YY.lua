@@ -1271,43 +1271,37 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             return text
         end
 
+        local function CreateLink(cleanedYY)
+            return "|cff00BFFF|Hgarrmission:YY:" .. cleanedYY ..
+                "|h[YY:" .. cleanedYY .. PingJia(cleanedYY) .. "]|h|r"
+        end
+
+        local function remove_spaces(s)
+            return s:gsub("%s", "")
+        end
+
         local function ChangSendLink(self, even, msg, player, l, cs, t, flag, channelId, ...)
             if BiaoGe.YYdb.share ~= 1 then return end
             -- 进团5分钟内把纯数字转换为超链接
             local playerName = strsplit("-", player)
             if starttime and Y.IsLeader(playerName) then
-                msg = string.gsub(msg, " ", "")
-                local cleanedYY = string.match(msg, "^%d+$")
+                msg = gsub(msg, " ", "")
+                local cleanedYY = strmatch(msg, "^%d+$")
                 if cleanedYY and strlen(cleanedYY) >= 4 then
-                    local link = "|cff00BFFF|Hgarrmission:" .. "YY:" .. cleanedYY ..
-                        "|h[" .. "YY:" .. cleanedYY .. PingJia(cleanedYY) .. "]|h|r" -- 把YY号转换为超链接
+                    local link = CreateLink(cleanedYY)
                     return false, link, player, l, cs, t, flag, channelId, ...
                 end
             end
 
-            msg = string.gsub(msg, "yy", "YY")
-            msg = string.gsub(msg, "Yy", "YY")
-            msg = string.gsub(msg, "yY", "YY")
-            msg = string.gsub(msg, "YY[：: ]*(%d+)", "YY%1")
-
-            local yykey = "YY%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d+"
-            local last
-            for yy in string.gmatch(msg, yykey) do
-                local cleanedYY = string.gsub(yy, "%D", "") -- 把非数字的格式删掉，只保留YY号码数字
-
-                local s, e = strfind(msg, yy, last or 1)    -- 查找yy字符串的开始和结束位置
-                local t1 = strsub(msg, 1, s - 1)
-                local t2 = strsub(msg, e + 1)
-                local link = "|cff00BFFF|Hgarrmission:" .. "YY:" .. cleanedYY ..
-                    "|h[" .. "YY:" .. cleanedYY .. PingJia(cleanedYY) .. "]|h|r" -- 把YY号转换为超链接
-                local newmsg = t1 .. link .. t2
-                local s, e = strfind(newmsg, link, last or 1, true)
-                msg = newmsg
-                last = e + 1
-            end
-            if last then
-                return false, msg, player, l, cs, t, flag, channelId, ...
-            end
+            local yykey = "[yY][yY][：: ]*([%d%s]*%d+)"
+            msg = msg:gsub(yykey, function(text)
+                return CreateLink(remove_spaces(text))
+            end)
+            local yykey2 = "(%d+[%d%s]*)[yY][yY]"
+            msg = msg:gsub(yykey2, function(text)
+                return CreateLink(remove_spaces(text))
+            end)
+            return false, msg, player, l, cs, t, flag, channelId, ...
         end
 
         ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", ChangSendLink)
@@ -1471,8 +1465,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             if not Y.IsLeader(playerName) then return end
 
             if starttime then
-                msg = string.gsub(msg, " ", "")
-                local cleanedYY = string.match(msg, "^%d+$")
+                msg = gsub(msg, " ", "")
+                local cleanedYY = strmatch(msg, "^%d+$")
                 if cleanedYY and strlen(cleanedYY) >= 4 then
                     for k, v in pairs(BiaoGe.YYdb.LeaderYY) do
                         if tonumber(v.yy) == tonumber(cleanedYY) and v.name == playerName then
@@ -1485,14 +1479,14 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
 
-            msg = string.gsub(msg, "yy", "YY")
-            msg = string.gsub(msg, "Yy", "YY")
-            msg = string.gsub(msg, "yY", "YY")
-            msg = string.gsub(msg, "YY[：: ]*(%d+)", "YY%1")
+            msg = gsub(msg, "yy", "YY")
+            msg = gsub(msg, "Yy", "YY")
+            msg = gsub(msg, "yY", "YY")
+            msg = gsub(msg, "YY[：: ]*(%d+)", "YY%1")
 
             local yykey = "YY%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d+"
             for yy in string.gmatch(msg, yykey) do
-                local cleanedYY = string.gsub(yy, "%D", "")
+                local cleanedYY = gsub(yy, "%D", "")
 
                 for k, v in pairs(BiaoGe.YYdb.LeaderYY) do
                     if tonumber(v.yy) == tonumber(cleanedYY) and v.name == playerName then
@@ -2208,3 +2202,37 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
         end
     end)
 end)
+
+
+-- 废弃代码
+--[[             msg = gsub(msg, "[yY][yY][：: ]*(%d+)", "YY%1")
+            msg = gsub(msg, "(%d+)%s*[yY][yY]", "%1YY")
+
+            local yykey = "YY%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d+"
+            local yykey2 = "%d+%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*YY"
+            local last
+            for yy in string.gmatch(msg, yykey) do
+                local cleanedYY = gsub(yy, "%D", "")     -- 把非数字的格式删掉，只保留YY号码数字
+                local s, e = strfind(msg, yy, last or 1) -- 查找yy字符串的开始和结束位置
+                local t1 = strsub(msg, 1, s - 1)
+                local t2 = strsub(msg, e + 1)
+                local link = CreateLink(cleanedYY)
+                local newmsg = t1 .. link .. t2
+                local s, e = strfind(newmsg, link, last or 1, true)
+                msg = newmsg
+                last = e + 1
+            end
+            for yy in string.gmatch(msg, yykey2) do
+                local cleanedYY = gsub(yy, "%D", "")     -- 把非数字的格式删掉，只保留YY号码数字
+                local s, e = strfind(msg, yy, last or 1) -- 查找yy字符串的开始和结束位置
+                local t1 = strsub(msg, 1, s - 1)
+                local t2 = strsub(msg, e + 1)
+                local link = CreateLink(cleanedYY)
+                local newmsg = t1 .. link .. t2
+                local s, e = strfind(newmsg, link, last or 1, true)
+                msg = newmsg
+                last = e + 1
+            end
+            if last then
+                return false, msg, player, l, cs, t, flag, channelId, ...
+            end ]]

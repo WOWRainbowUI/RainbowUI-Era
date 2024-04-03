@@ -772,12 +772,12 @@ do
             ["2891"] = 7,
         },
         Gno = {
-            ["2925"] = 1, -- Grubbis 格\n鲁\n比\n斯
-            ["2928"] = 2, -- ViscousFallout 粘\n性\n辐\n射\n尘
-            ["2899"] = 3, -- CrowdPummeler 群\n体\n打\n击\n者
-            ["2927"] = 4, -- Electrocutioner6000 电\n刑\n器\n6\n0\n0\n0\n型
-            ["2935"] = 5, -- MechanicalMenagerie 机械动物园
-            ["2940"] = 6, -- MekgineerThermaplugg 瑟\n玛\n普\n拉\n格
+            ["2925"] = 1,
+            ["2928"] = 2,
+            ["2899"] = 3,
+            ["2927"] = 4,
+            ["2935"] = 5,
+            ["2940"] = 6,
         },
         Temple = {
             ["2952"] = 1,

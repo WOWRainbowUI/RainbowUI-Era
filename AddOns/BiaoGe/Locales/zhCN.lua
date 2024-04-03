@@ -1,6 +1,6 @@
 local AddonName, ADDONSELF = ...
 
-ADDONSELF.ver = "v1.8.2b"
+ADDONSELF.ver = "v1.8.2c"
 
 if (GetLocale() == "zhTW") then return end
 
@@ -24,6 +24,9 @@ do --简体说明书
     -- update = update .. "|cff00FF00" .. "" .. "|r\n"
     -- update = update .. [[]] .. "\n"
     -- update = update .. [[]] .. "\n\n"
+    update = update .. "|cff00FF00" .. "4月3日更新v1.8.2c" .. "|r\n"
+    update = update .. [[-修复了把YY号码转换为YY链接时可能会导致游戏卡死的问题]] .. "\n"
+    update = update .. [[-感谢飞越公会(YY:65538)对本插件的赞助]] .. "\n\n"
 
     update = update .. "|cff00FF00" .. "4月1日更新v1.8.2b" .. "|r\n"
     update = update .. [[-新增功能：[快速记账]（右键聊天框装备时打开）。为团员提供一种不用打开表格界面就可以记账的方式]] .. "\n"
