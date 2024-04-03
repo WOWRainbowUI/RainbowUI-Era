@@ -630,7 +630,6 @@ L["Zoram'gar Outpost"] = "佐拉姆加前哨站"
 L["Zul'Farrak"] = "祖爾法拉克"
 L["Zul'Gurub"] = "祖爾格拉布"
 
-
 -- 自行加入
 L["Mechanics"] = "調整視窗"
 L["Remove map border"] = "移除地圖邊框"
