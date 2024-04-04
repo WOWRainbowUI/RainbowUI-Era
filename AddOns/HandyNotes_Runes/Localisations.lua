@@ -1,16 +1,3 @@
---[[
-                                ----o----(||)----oo----(||)----o----
-
-                                                Runes
-                                         Localisation Module
-
-                                       v2.02 - 2nd April 2024
-                                Copyright (C) Taraezor / Chris Birch
-                                         All Rights Reserved
-
-                                ----o----(||)----oo----(||)----o----
-]]
-
 local _, ns = ...
 L = {}
 ns.L = L

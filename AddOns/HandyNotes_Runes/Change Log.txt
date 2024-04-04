@@ -1,3 +1,7 @@
+== v2.03 - 4th April 2024
+* Fixed typo Reports of plent at Ridgepoint...
+* TOC updated to 1.15.2
+
 == v2.02 - 2nd April 2024
 * Fix for SkillBooks not hiding when completed
 * Added an AddOn label for my "catch all" "Please Report" messages for stray data
