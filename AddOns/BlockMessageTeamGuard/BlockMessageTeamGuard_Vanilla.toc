@@ -1,5 +1,5 @@
 ## Interface: 11502
-## Version: v1.4
+## Version: v1.4 Fix4
 ## Title: BlockMessageTeamGuard
 ## Notes: BlockMessageTeamGuard V1.4
 ## Title-zhTW: |cffFF9999[聊天]|r 廣告守衛
