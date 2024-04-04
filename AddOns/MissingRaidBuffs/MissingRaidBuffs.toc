@@ -3,8 +3,6 @@
 ## Title-zhCN: 缺失buff检测
 ## Notes: List players missing raid buffs that you can cast
 ## Notes-zhCN: 显示你的小队或团队成员缺失的buff
-## Title-zhTW: |cffFF7F00[團隊]|r 增益缺失監看
-## Notes-zhTW: Missing Raid Buffs |n|n增益缺失監看，智力、耐力、精神、爪子，讓你非常直覺快速的看到缺少增益的人，讓你可以快速地幫死掉的人補上增益。
 ## Version: 1.1.8
 ## Author: Slainsvirtue-Mankrik
 ## X-Curse-Project-ID: 358106
@@ -13,6 +11,11 @@
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace-3.0
 ## X-Embeds: LibStub, CallbackHandler-1.0, Ace-3.0
 ## SavedVariables: MissingRaidBuffsDB
+
+## Title-zhTW: |cffFF7F00[團隊]|r 增益缺失監看
+## Notes-zhTW: Missing Raid Buffs |n|n增益缺失監看，智力、耐力、精神、爪子，讓你非常直覺快速的看到缺少增益的人，讓你可以快速地幫死掉的人補上增益。
+## X-Category-zhTW: 團隊
+## DefaultState: disabled
 
 #@no-lib-strip@
 lib\LibStub\LibStub.lua
