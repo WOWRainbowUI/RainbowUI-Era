@@ -230,11 +230,36 @@ ITEM_SET_DATA_RAW.CLASSIC = {
 	[549] = {{23316,23317,23303,23288,23302,23289},1,3,68,16,{{2,14047},{4,23044},{6,14467}}}, -- Lieutenant Commander's Investiture
 	[550] = {{23306,23307,23292,23279,23293,23278},3,3,68,4,{{2,14384},{4,23158},{6,14467}}}, -- Lieutenant Commander's Pursuance
 	[551] = {{23308,23309,23294,23280,23295,23281},2,3,68,1024,{{2,14049},{4,23218},{6,14467}}}, -- Lieutenant Commander's Refuge
-	-- Season of Discovery - BFD 10 Man - Leveling Sets
-	[1570] = {{209683,209671,209669},1,3,30,0,{{2,9415},{3,432639}}}, -- Twilight Invoker's Vestments
-	[1577] = {{211506,211504,211505},3,3,30,0,{{2,9141},{3,432639}}}, -- Blackfathom Avenger's Mail
-	[1578] = {{211510,211511,211512},2,3,30,0,{{2,9141},{3,432639}}}, -- Blackfathom Slayer's Leather
-	[1579] = {{211507,211508,211509},2,3,30,0,{{2,9417},{3,432639}}}, -- Blackfathom Elementalist's Hide
+	[1618] = {{220803,220796,220801,220807,220798,220800},4,3,53,0,{{3,14462},{6,9336}}}, --Blood Guard's Plate
+	[1624] = {{220842,220841,220838,220843,220839,220840},3,3,53,0,{{3,14462},{6,9318}}}, --Blood Guard's Inscribed Mail
+	[1623] = {{220848,220849,220844,220845,220847,220846},3,3,53,0,{{3,14462},{6,9346}}}, --Blood Guard's Pulsing Mail
+	[1622] = {{220820,220823,220826,220831,220834,220835},3,3,53,0,{{3,14462},{6,9336}}}, --Blood Guard's Mail
+	[1625] = {{220821,220824,220827,220830,220833,220836},3,3,53,0,{{3,14462},{6,9336}}}, -- Blood Guard's Chain
+	[1627] = {{220851,220853,220855,220857,220859,220861},2,3,53,0,{{3,14462},{6,9336}}}, -- Blood Guard's Leather
+	[1631] = {{220873,220871,220869,220867,220865,220863},2,3,53,0,{{3,14462},{6,9346}}}, -- Blood Guard's Crackling Leather
+	[1629] = {{220875,220877,220879,220881,220883,220885},2,3,53,0,{{3,14462},{6,9318}}}, -- Blood Guard's Restored Leather
+	[1633] = {{220907,220905,220904,220908,220906,220909},1,3,53,0,{{3,14462},{6,9346}}}, --Blood Guard's Dreadweave
+	[1635] = {{220899,220901,220903,220898,220902,220900},1,3,53,0,{{3,14462},{6,9318}}}, -- Blood Guard's Satin
+	[1619] = {{220804,220795,220794,220806,220797,220799},4,3,53,0,{{3,14462},{6,9336}}}, -- Knight-Lieutenant's Plate
+	[1620] = {{220810,220808,220813,220812,220809,220811},4,3,53,0,{{3,14462},{6,9318}}}, -- Knight-Lieutenant's Imbued Plate
+	[1621] = {{220819,220818,220815,220817,220816,220814},4,3,53,0,{{3,14462},{6,9346}}},-- Knight-Lieutenant's Lamellar Plate
+	[1665] = {{223075,223073,223078,223076,223074,223077},3,3,53,0,{{3,14462},{6,9336}}}, -- Knight-Lieutenant's Mail
+	[1626] = {{220822,220825,220828,220829,220832,220837},3,3,53,0,{{3,14462},{6,9336}}}, -- Knight-Lieutenant's Chain
+	[1628] = {{220850,220852,220854,220856,220858,220860},2,3,53,0,{{3,14462},{6,9336}}}, -- Knight-Lieutenant's Leather
+	[1632] = {{220872,220870,220868,220866,220864,220862},2,3,53,0,{{3,14462},{6,9346}}}, -- Knight-Lieutenant's Crackling Leather
+	[1630] = {{220874,220876,220878,220880,220882,220884},2,3,53,0,{{3,14462},{6,9318}}}, -- Knight-Lieutenant's Restored Leather
+	[1634] = {{220889,220887,220886,220890,220888,220891},1,3,53,0,{{3,14462},{6,9346}}}, -- Knight-Lieutenant's Dreadweave
+	[1636] = {{220896,220894,220892,220897,220893,220895},1,3,53,0,{{3,14462},{6,9318}}}, -- Knight Lieutenant's Satin
+	[1652] = {{221376,221381,221380,221378,221377,221379},4,3,50,0,{{3,9117},{6,9331}}}, -- Emerald Dream Plate
+	[1653] = {{221384,221386,221382,221383,221385,221387},4,3,50,0,{{3,9117},{6,9408}}}, -- Emerald Encrusted Battleplate
+	[1654] = {{221391,221392,221390,221389,221388,221393},3,3,50,0,{{3,9117},{6,9331}}}, -- Emerald Scalemail
+	[1655] = {{221397,221399,221395,221396,221398,221394},3,3,50,0,{{3,9117},{6,9408}}}, -- Emerald Laden Chain
+	[1656] = {{221402,221400,221404,221403,221401,221405},3,3,50,0,{{3,9117},{6,9417}}}, -- Emerald Chainmail
+	[1657] = {{221408,221411,221406,221407,221410,221409},2,3,50,0,{{3,9117},{6,9331}}}, -- Emerald Leathers
+	[1658] = {{221413,221416,221417,221412,221414,221415},2,3,50,0,{{3,9117},{6,9408}}}, -- Emerald Dreamkeeper Garb
+	[1659] = {{221422,221424,221419,221421,221423,221420},2,3,50,0,{{3,9117},{6,9417}}}, -- Emerald Watcher Vestments
+	[1660] = {{221425,221431,221430,221427,221429,221426},1,3,50,0,{{3,9117},{6,9417}}}, -- Emerald Enchanted Vestments
+	[1661] = {{221437,221432,221434,221436,221435,221438},1,3,50,0,{{3,9117},{6,9408}}}, -- Emerald Woven Garb
 }
 
 if AtlasLoot:GameVersion_GE(AtlasLoot.BC_VERSION_NUM) then
@@ -1117,10 +1142,7 @@ ITEM_TO_SET_DATA.CLASSIC = {
 	[51484]=3005777,[51481]=3005777,[51482]=3005777,[51483]=3005777,[51485]=3005777,
 	[51489]=3005778,[51486]=3005778,[51487]=3005778,[51488]=3005778,[51490]=3005778,
 	[51465]=3005779,[51462]=3005779,[51463]=3005779,[51465]=3005779,[51466]=3005779,
-	[51538]=3005780,[51540]=3005780,[51536]=3005780,[51537]=3005780,[51539]=3005780,
-	-- Season of Discovery - BFD 10 Man - Item to Set Mapping
-	[209683]=1570,[209671]=1570,[209669]=1570,[211506]=1577,[211504]=1577,[211505]=1577,
-	[211510]=1578,[211511]=1578,[211512]=1578,[211507]=1579,[211508]=1579,[211509]=1579,
+	[51538]=3005780,[51540]=3005780,[51536]=3005780,[51537]=3005780,[51539]=3005780
 }
 
 if AtlasLoot:GameVersion_GE(AtlasLoot.BC_VERSION_NUM) then
@@ -1547,7 +1569,8 @@ function ItemSet.GetPhaseTextureForSetID(setID)
 end
 
 function ItemSet.GetSetDescriptionString(setID)
-    if not ITEM_SET_DATA[setID] then return end
+    local AL = AtlasLoot.Locales
+	if not ITEM_SET_DATA[setID] then return end
     local itemType
     if ITEM_SET_DATA[setID][5] and CLASS_BIT_TO_CLASS[ITEM_SET_DATA[setID][5]] then
         itemType = CLASS_NAMES_WITH_COLORS[CLASS_BIT_TO_CLASS[ITEM_SET_DATA[setID][5]]]
@@ -1556,11 +1579,11 @@ function ItemSet.GetSetDescriptionString(setID)
     end
 
     if itemType and itemType ~= "" then
-        return format("%s%s | |cff00ccffiLvlAvg:|r %d", Requirements.BuildClassString(ITEM_SET_DATA[setID][5]), itemType, ITEM_SET_DATA[setID][4])
+        return format("%s%s | |cff00ccff"..AL["iLvlAvg"]..":|r %d", Requirements.BuildClassString(ITEM_SET_DATA[setID][5]), itemType, ITEM_SET_DATA[setID][4])
     elseif ITEM_SET_DATA[setID][5] > 0 then
-        return format("%s |cff00ccffiLvlAvg:|r %d", Requirements.BuildClassString(ITEM_SET_DATA[setID][5]), ITEM_SET_DATA[setID][4])
+        return format("%s |cff00ccff"..AL["iLvlAvg"]..":|r %d", Requirements.BuildClassString(ITEM_SET_DATA[setID][5]), ITEM_SET_DATA[setID][4])
     else
-        return format("|cff00ccffiLvlAvg:|r %d", ITEM_SET_DATA[setID][4])
+        return format("|cff00ccff"..AL["iLvlAvg"]..":|r %d", ITEM_SET_DATA[setID][4])
     end
 end
 

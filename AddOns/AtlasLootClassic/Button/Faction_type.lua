@@ -116,7 +116,7 @@ local FACTION_KEY = {
 	-- SoD
 	[889] = "Warsong Outriders",
 	[890] = "Silverwing Sentinels",
-	[2586] = "Azeroth Commerce Authority",
+	[2586] = AL["Azeroth Commerce Authority"],
 	[2587] = "Durotar Supply and Logistics",
 	-- BC
 	[922] = AL["Tranquillien"], -- Horde only
