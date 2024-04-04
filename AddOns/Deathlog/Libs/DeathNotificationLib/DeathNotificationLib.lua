@@ -1051,9 +1051,9 @@ death_notification_lib_event_handler:RegisterEvent("CHAT_MSG_PARTY")
 death_notification_lib_event_handler:RegisterEvent("CHAT_MSG_ADDON") -- enable again for queries
 death_notification_lib_event_handler:RegisterEvent("PLAYER_ENTERING_WORLD")
 death_notification_lib_event_handler:RegisterEvent("DUEL_TO_THE_DEATH_REQUESTED")
-if tocversion >= 11404 then
-	death_notification_lib_event_handler:RegisterEvent("CHAT_MSG_GUILD_DEATHS")
-end
+-- if tocversion >= 11404 then
+--	death_notification_lib_event_handler:RegisterEvent("CHAT_MSG_GUILD_DEATHS")
+-- end
 
 local function handleEvent(self, event, ...)
 	local arg = { ... }
