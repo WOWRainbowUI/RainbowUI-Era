@@ -1,3 +1,9 @@
+15-Mar-2024 v1.0.20
+
+- Removed IsItemInRange check which is disallowed during combat now
+- Updated ButtonForge Toolbar to have a border again
+
+
 17-Jan-2023 v1.0.18
   
 - GetItemCooldown added back to game as C_Container.GetItemCooldown
