@@ -1,0 +1,14 @@
+## Interface: 30403
+## Title: Unlearned Recipes
+## Version: r009
+## Notes: NYI
+## Author: Teelo
+## X-Curse-Project-ID: 985591
+## IconTexture: Interface\Icons\inv_scroll_03
+
+## Title-zhTW: |cffFFFF99[專業]|r 未學配方
+## Notes-zhTW: Unlearned Recipes |n|n顯示你尚未學會的配方。|n|n|cffFF2D2D特別注意: |r無法和 "專業助手" 插件一起使用。|r
+## X-Category-zhTW: 交易
+## DefaultState: disabled
+
+incompatible.lua

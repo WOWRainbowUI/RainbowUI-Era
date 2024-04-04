@@ -2544,6 +2544,12 @@ D["UnitFramesPlus"] = {
         text = "移動位置：按住 Shift 鍵拖曳移動，不用解鎖框架。\n\n目標的目標：建議關閉遊戲內建的目標的目標框架，插件有自己的。按 Esc > 介面設定 > 戰鬥 > 顯示目標的目標，取消打勾。\n",
 	},
 };
+D["UnlearnedRecipes"] = {
+    defaultEnable = 0,
+	tags = { "PROFESSION" },
+	title = "未學配方",
+	desc = "在專業視窗中顯示你尚未學會的配方。``|cffFF2D2D特別注意: 無法和 '專業助手' 插件一起使用。|r`",
+};
 D["VuhDo"] = {
     defaultEnable = 0,
 	tags = { "BOSSRAID" },
