@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Plain Title: Glass
 ## Author: mixxorz
 ## Version: 1.8.0b-Wrath

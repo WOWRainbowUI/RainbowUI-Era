@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Version: 2.02
 ## Author: Taraezor
 ## IconTexture: Interface\Icons\INV_Misc_Rune_06

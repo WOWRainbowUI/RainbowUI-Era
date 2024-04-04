@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: Auctionator
 ## Version: 10.2.10
 ## Author: Borjamacare, plusmouse

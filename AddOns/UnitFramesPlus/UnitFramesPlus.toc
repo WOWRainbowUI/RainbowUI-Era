@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: UnitFramesPlus
 ## Notes: Enhanced Unit Frames
 ## Title-zhCN: 系统头像增强

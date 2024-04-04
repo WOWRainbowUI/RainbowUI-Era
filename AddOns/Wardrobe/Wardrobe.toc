@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Author: Copperbolts
 ## Version: 3.4.1
 ## Title: |cffFF7D0AWardrobe|r

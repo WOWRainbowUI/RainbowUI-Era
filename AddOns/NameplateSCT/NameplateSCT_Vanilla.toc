@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Version: 1.33
 ## Title: NameplateSCT
 ## Author: mpstark, Justwait

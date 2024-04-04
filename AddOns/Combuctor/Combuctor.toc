@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: Combuctor
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank

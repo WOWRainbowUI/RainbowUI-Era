@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: SilverPlateTweaks
 ## Author: Lad-Lightbringer | SilverrWolf
 ## Title-zhTW: |cff0099FF[介面]|r 血條距離微調

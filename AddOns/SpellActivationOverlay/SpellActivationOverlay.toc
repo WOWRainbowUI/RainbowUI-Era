@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: |TInterface/Icons/Spell_Frost_Stun:16:16:0:0:512:512:64:448:64:448|t SpellActivationOverlay |cffa2f3ff1.2.0|r
 ## Notes: Mimic Spell Activation Overlays from Modern World of Warcraft
 ## Author: Vinny/Ennvina

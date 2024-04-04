@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: Missing Raid Buffs
 ## Title-zhCN: 缺失buff检测
 ## Notes: List players missing raid buffs that you can cast

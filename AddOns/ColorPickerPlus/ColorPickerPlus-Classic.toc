@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: ColorPickerPlus
 ## Notes: Hooks into the standard Color Picker to provide text entry for colors (RGB and hex values), starting color and chosen color swatches
 ## Title-zhTW: |cff0099FF[介面]|r [暫時停用] 顏色選擇器 Plus

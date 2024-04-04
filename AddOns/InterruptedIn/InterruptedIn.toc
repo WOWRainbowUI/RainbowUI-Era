@@ -1,4 +1,4 @@
-﻿## Interface: 11501
+﻿## Interface: 11502
 ## Title: InterruptedIn
 ## Notes: Simple countdown announcment command which can be interrupted.
 ## Notes-zhCN:中断式倒数发话指令

@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Notes: Raid and combat helpers, raid wide cooldown tracking.
 ## Title: Nova Raid Companion
 ## Author: Novaspark-Arugal OCE
