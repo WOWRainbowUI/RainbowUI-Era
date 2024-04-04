@@ -1,16 +1,3 @@
---[[
-                                ----o----(||)----oo----(||)----o----
-
-                                                Runes
-                                             Data Module
-
-                                       v2.02 - 2nd April 2024
-                                Copyright (C) Taraezor / Chris Birch
-                                         All Rights Reserved
-
-                                ----o----(||)----oo----(||)----o----
-]]
-
 local _, ns = ...
 local points = ns.points
 local colourPrefix		= ns.colour.prefix
@@ -4027,7 +4014,7 @@ points[ 1429 ] = { -- Elwynn Forest
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawTel } },
 	[84607960] = { name="Critters with Wild Polymorph debuff", class={ "MAGE" },
 					spell={ "Enlightenment" }, guide={ st.mage.enlightenment },
-					tip="Reports of plent at Ridgepoint\nTower but they can be anywhere" },
+					tip="Reports of plenty at Ridgepoint\nTower but they can be anywhere" },
 	[89607800] = { npc=116, name="Defias Bandit", faction="Alliance", class={ "ROGUE" }, tip="Pick Pocket or kill. Top-Left Map Piece",
 					spell={ "Quick Draw" }, guide={ st.rogue.quickDraw ..st.rogue.quickDrawEF } },
 }
