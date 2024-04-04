@@ -3586,7 +3586,7 @@ points[ 1429 ] = { -- Elwynn Forest
 		"地質學：冰冷的真相" ..colourPlaintext .."    千針石林，黑暗之雲峰，一個小屋內",
 		"木乃伊：令人討厭的亡靈指南" ..colourPlaintext .."    荒蕪之地，一個台地內的地下墓穴",
 		"RwlRwlRwlRwl" ..colourPlaintext .."    悲傷沼澤，女巫山魚人營地",
-		"圖書館高級之友" ..colourPlaintext .."    法術力量的最後一步！" } } },
+		"圖書館高級之友" ..colourPlaintext .."    法術力量的最後一步！" } }
 	},
 	[19212554] = { 
 	  npc=205278, 
