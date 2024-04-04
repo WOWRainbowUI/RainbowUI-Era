@@ -849,6 +849,10 @@ D["djbags"] = {
 	img = true,
 	{
 		type = "text",
+		text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",
+	},
+	{
+		type = "text",
         text = "|cffFF2D2DDJ智能分類背包和整合背包選擇其中一種使用即可，請勿同時載入。|r\n",
 	},
 	{
