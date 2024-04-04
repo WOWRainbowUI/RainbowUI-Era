@@ -1825,13 +1825,13 @@ function Button:UpdateRangeTimerSpell()
 	end
 end
 function Button:UpdateRangeTimerItem()
-	if (IsItemInRange(self.ItemId, self.Target)) then
+	--[[  Commented while IsItemInRange is restricted during combat if (IsItemInRange(self.ItemId, self.Target)) then
 		if (not self.RangeTimerOn) then
 			self:AddToRangeTimer();
 		end
 	elseif (self.RangeTimerOn) then
 		self:RemoveFromRangeTimer();
-	end
+	end ]]
 end
 function Button:UpdateRangeTimerMacro()
 	if (self.MacroMode == "spell") then
@@ -1879,11 +1879,11 @@ function Button:CheckRangeTimerSpell()
 	end
 end
 function Button:CheckRangeTimerItem()
-	if (IsItemInRange(self.ItemId, self.Target) == 1) then
+	--[[ Commented while IsItemInRange is restricted during combat if (IsItemInRange(self.ItemId, self.Target) == 1) then
 		self.WHotKey:SetVertexColor(0.6, 0.6, 0.6);
 	else
 		self.WHotKey:SetVertexColor(1.0, 0.1, 0.1);
-	end
+	end ]]
 end
 function Button:CheckRangeTimerMacro()
 	if (self.MacroMode == "spell") then
