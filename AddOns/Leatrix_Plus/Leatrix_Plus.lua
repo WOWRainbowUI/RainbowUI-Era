@@ -50,7 +50,7 @@
 	if C_AddOns.IsAddOnLoaded("totalRP3") then LeaPlusLC.totalRP3 = true end
 	
 	-- 自行加入暴雪頭像插件檢查
-	if IsAddOnLoaded("EasyFrames") or IsAddOnLoaded("UnitFramesPlus") then LeaPlusLC.EasyFrames = true end
+	if C_AddOns.IsAddOnLoaded("EasyFrames") or C_AddOns.IsAddOnLoaded("UnitFramesPlus") then LeaPlusLC.EasyFrames = true end
 
 ----------------------------------------------------------------------
 --	L00: Leatrix Plus
