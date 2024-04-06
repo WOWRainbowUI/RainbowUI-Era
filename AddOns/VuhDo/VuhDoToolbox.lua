@@ -75,18 +75,22 @@ local VUHDO_RUNE_CACHE_SPELL_NAME = {
 };
 
 local VUHDO_RUNE_INVENTORY_SLOTS = {
+	[INVSLOT_HEAD] = true,
 	[INVSLOT_CHEST] = true,
 	[INVSLOT_LEGS] = true,
 	[INVSLOT_HAND] = true,
 	[INVSLOT_WAIST] = true,
 	[INVSLOT_FEET] = true,
+	[INVSLOT_WRIST] = true,
 };
 
+local VUHDO_ACTION_HEAD_RUNE = "head rune ability";
 local VUHDO_ACTION_CHEST_RUNE = "chest rune ability";
 local VUHDO_ACTION_LEGS_RUNE = "legs rune ability";
 local VUHDO_ACTION_HANDS_RUNE = "hands rune ability";
 local VUHDO_ACTION_WAIST_RUNE = "waist rune ability";
 local VUHDO_ACTION_FEET_RUNE = "feet rune ability";
+local VUHDO_ACTION_WRIST_RUNE = "wrist rune ability";
 
 local sEmpty = { };
 setmetatable(sEmpty, { __newindex = function(aTable, aKey, aValue) VUHDO_xMsg("WARNING: newindex on dummy array: ", aKey, aValue); end });
@@ -1505,11 +1509,13 @@ local function VUHDO_isRuneSlotAction(anActionName)
 	if anActionName then
 		tActionLowerName = strlower(anActionName);
 
-		if tActionLowerName == VUHDO_ACTION_CHEST_RUNE
+		if tActionLowerName == VUHDO_ACTION_HEAD_RUNE
+			or tActionLowerName == VUHDO_ACTION_CHEST_RUNE
 			or tActionLowerName == VUHDO_ACTION_LEGS_RUNE
 			or tActionLowerName == VUHDO_ACTION_HANDS_RUNE
 			or tActionLowerName == VUHDO_ACTION_WAIST_RUNE
-			or tActionLowerName == VUHDO_ACTION_FEET_RUNE then
+			or tActionLowerName == VUHDO_ACTION_FEET_RUNE
+			or tActionLowerName == VUHDO_ACTION_WRIST_RUNE then
 			return true;
 		end
 	else
