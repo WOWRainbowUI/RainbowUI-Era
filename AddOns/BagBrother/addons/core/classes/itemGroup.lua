@@ -90,7 +90,7 @@ end
 function Items:GET_ITEM_INFO_RECEIVED(_,itemID)
 	if not self:Delaying('Layout') then
 		for i, button in ipairs(self.order) do
-			if button.info.id == itemID then
+			if button.info and button.info.id == itemID then -- 暫時修正
 				button:Update()
 			end
 		end
