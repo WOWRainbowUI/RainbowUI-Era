@@ -97,12 +97,11 @@ elseif ns.locale == "zhTW" then
 	ns.L["Will also hide copmpleted Icy Veins books (Mages)"] = "同時也要隱藏冰寒脈動之書 (法師)"
 	ns.L["Icon"] = "數字"
 	ns.L["Quick Start / Summary"] = "快速開始/總結"
-	ns.L["1 = Cyan on Black\n2 = Green on Black\n3 = Magenta on Black\n4 = Red on Black\n5 = Yellow on Black"] = "1 = 天藍色\n2 = 綠色\n3 = 桃紅色\n4 = 紅色\n5 = 黃色"
 	ns.L["Season"] = "賽季"
 	ns.L["Phase"] = "階段"
 	ns.L["Show"] = "顯示"
 	ns.L["Will also hide completed Icy Veins books (Mages), Skill Books"] = "同時也會隱藏已完成的冰寒脈動書籍 (法師) 和技能書。"
-	ns.L["1 = No Map Pin\n2 = Cyan on Black\n3 = Green on Black\n4 = Magenta on Black\n5 = Red on Black\n6 = Yellow on Black"] = "1 = 不顯示圖示\n2 = 青色黑底\n3 = 綠色黑底\n4 = 洋紅色黑底\n5 = 紅色黑底\n6 = 黃色黑底"
+	ns.L["1 = No Map Pin\n2 = Cyan\n3 = Green\n4 = Magenta\n5 = Red\n6 = Yellow"] = "1 = 不顯示圖示\n2 = 天藍色\n3 = 綠色\n4 = 桃紅色\n5 = 紅色\n6 = 黃色"
 
 else
 	ns.L["Character"] = "Character"

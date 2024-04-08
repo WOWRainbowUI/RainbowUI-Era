@@ -3,7 +3,7 @@
 
                                                 Runes
 
-                                       v2.03 - 4th April 2024
+                                       v2.06 - 8th April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -34,7 +34,9 @@ local defaults = { profile = { iconScale = 2.5, iconAlpha = 1, showCoords = fals
 								rune101 = 6, rune102 = 6, rune103 = 6, rune104 = 6, rune105 = 6,
 								rune106 = 6, rune107 = 6, rune108 = 6, rune109 = 6, rune110 = 6, 
 								rune111 = 6, rune112 = 6, rune113 = 6, rune114 = 6, rune115 = 6, 
-								rune116 = 6, rune117 = 6, rune118 = 6, rune119 = 6, } }
+								rune116 = 6, rune117 = 6, rune118 = 6, rune119 = 6, rune120 = 6, 
+								rune121 = 6, rune122 = 6, rune123 = 6, rune124 = 6, rune125 = 6, 
+								rune126 = 6, } }
 local pluginHandler = {}
 
 -- Upvalues
@@ -80,7 +82,7 @@ ns.scalingNum = 0.4
 
 local function ShowPinForThisClassQuest( quests, level, forceCheck )
 
-	if level then if level > ( UnitLevel( "player" ) + 1 ) then return false end end
+	if level and ( type( level ) == "number" ) then if level > ( UnitLevel( "player" ) + 1 ) then return false end end
 	if forceCheck == false and ns.db.hideIfRuneLearnt == false then return true end
 
 	if not HandyNotes_RunesDB then return true end -- too soon for the server
@@ -183,15 +185,16 @@ function pluginHandler:OnEnter(mapFile, coord)
 
 	local completed, quests, questNames;
 	local pin = ns.points[mapFile] and ns.points[mapFile][coord]
-	local previousEntry, spaceBeforeQuests = false, false
+	local spaceBeforeQuests = false
 	
-	if pin.qStart then
+	if pin.phase then
 		for k,v in pairs( ns.runes ) do
 			if k == ns.class then
 				local completed;
-				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." Phase " ..pin.qStart .." for " ..ns.name )
+				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." Phase " ..pin.phase .." for " ..ns.name )
 				for r,s in ipairs( v.spells ) do
-					if ( ( r < 13 ) and ( pin.qStart == 1 ) ) or ( ( r >= 13 ) and ( pin.qStart == 2 ) ) then
+					print( "r="..r.." s="..s.." v[s]?="..(v[s] and "true" or "false"))
+					if ns.runes[ k ][ s ].phase == pin.phase then
 						completed = not ShowPinForThisClassSpell( s, true )
 						GameTooltip:AddDoubleLine( ns.colour.prefix ..r .. ".  " ..ns.L[ s ] .."   (" ..v[s].level .."+)",
 								( ( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
@@ -201,7 +204,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 						GameTooltip:AddLine( ns.colour.plaintext ..v[s].start )
 					end
 				end
-				if pin.qStart == 2 then
+				if pin.phase == 2 then
 					GameTooltip:AddLine( "\n" ..ns.colour.class .."Skill Books:" )
 					for _,s in ipairs( v.skillBooks ) do
 						completed = not ShowPinForThisClassSkillBook( ns.runes[ k ][ s ].spellID, true )
@@ -221,15 +224,19 @@ function pluginHandler:OnEnter(mapFile, coord)
 
 			if ( ns.class == v ) or ( v == "ALL" ) then
 			
-				-- Data will be typical rune spells or the new levelled quests type
-			
-				if not pin.level then			
-					if previousEntry == true then GameTooltip:AddLine( "\n" ) end
-					previousEntry = true
-					GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ pin.spell[ i ] ] ..ns.colour.highlight .."\n(" 
-								..(ns.runes[ v ][ pin.spell[ i ] ].rune or ns.runes[ v ][ pin.spell[ i ] ].skillBook ) ..")",
-								ns.colour.class ..ns.classLocal )
-					GameTooltip:AddLine( ns.colour.highlight ..pin.name .."\n" )
+				GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ pin.spell[ i ] ] ..ns.colour.highlight .."\n(" 
+							..(ns.runes[ v ][ pin.spell[ i ] ].rune or ns.runes[ v ][ pin.spell[ i ] ].skillBook ) ..")",
+							ns.colour.class ..ns.classLocal )
+				GameTooltip:AddLine( ns.colour.highlight ..pin.name .."\n" )
+
+				if pin.preRune then
+					-- Added originally for Warrior Gladiator Stance in Phase 3
+					for j,s in ipairs( pin.preRune ) do
+						completed = not ShowPinForThisClassSpell( s, true )
+						GameTooltip:AddDoubleLine( ns.colour.highlight ..s,
+								( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] )
+								or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
+					end
 				end
 				
 				-- Quests are listed as: (a) part of collecting the rune or (b) as a non-rune levelling guide
@@ -245,59 +252,39 @@ function pluginHandler:OnEnter(mapFile, coord)
 					if type( quests ) == "table" then				
 						-- Note that a class with a {} for quests will safely drop through here, thus not pulling in any quests
 						for j,w in ipairs( quests ) do
-							if pin.level then
-								if previousEntry == false then
-									previousEntry = true
-									GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.name, 
-											ns.colour.highlight .."Level = " ..pin.level )
-								end
-							end
 							if spaceBeforeQuests == false then GameTooltip:AddLine( "\n" ) end
 							spaceBeforeQuests = true
 							completed = IsQuestFlaggedCompleted( w )
 							GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames[ j ],
-									( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] .." (" ..ns.name ..")" )
-									or ( "\124cFFFF0000" ..ns.L["Not Completed"] .." (" ..ns.name ..")" ) )
+									( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] )
+									or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
 						end
 						spaceBeforeQuests = false
 					else
-						if pin.level then
-							if previousEntry == false then
-								previousEntry = true
-								GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.name, 
-										ns.colour.highlight .."Level = " ..pin.level )
-							end
-						end
 						GameTooltip:AddLine( "\n" )
 						completed = IsQuestFlaggedCompleted( quests )
 						GameTooltip:AddDoubleLine( ns.colour.highlight ..questsNames,
-								( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] .." (" ..ns.name ..")" ) 
-									or ( "\124cFFFF0000" ..ns.L["Not Completed"] .." (" ..ns.name ..")" ) )
+								( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] ) 
+									or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
+					end
+				end
+								
+				if pin.tip then
+					-- Table or string
+					if type( pin.tip ) == "table" then
+						if pin.tip[ i ] ~= nil then
+							GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip[ i ] )
+						end
+					else
+						-- Single tip for all classes is permitted
+						GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip )
 					end
 				end
 				
-				if pin.level and ( ( previousEntry == true ) or ( pin.quest == nil ) ) or not pin.level then
-					if previousEntry == false then
-						GameTooltip:AddDoubleLine( ns.colour.prefix ..pin.name, 
-								ns.colour.highlight .."Level = " ..pin.level )
-					end
-					if pin.tip then
-						-- Table or string
-						if type( pin.tip ) == "table" then
-							if pin.tip[ i ] ~= nil then
-								GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip[ i ] )
-							end
-						else
-							-- Single tip for all classes is permitted
-							GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip )
-						end
-					end
-					
-					if pin.guide then
-						-- Single guide for all classes is permitted. Always a table
-						GameTooltip:AddLine( "\n" ..ns.colour.highlight ..L["Guide"].."\n\n" ..ns.colour.plaintext
-									..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
-					end
+				if pin.guide then
+					-- Single guide for all classes is permitted. Always a table
+					GameTooltip:AddLine( "\n" ..ns.colour.highlight ..L["Guide"].."\n\n" ..ns.colour.plaintext
+								..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
 				end
 			end
 		end
@@ -372,8 +359,8 @@ end
 
 local function ShowDynamic( coord, pin )
 	if not ns.db then return end
-	if pin.qStart then
-		local phase = ns.db[ "phase" ..tostring( pin.qStart ) ]
+	if pin.phase then
+		local phase = ns.db[ "phase" ..tostring( pin.phase ) ]
 		ns.passed.texture = ns.textures[ phase ]
 		ns.passed.scale = ns.db.iconScale * ns.scaling[ phase ] * 2
 	elseif pin.skillBook then
@@ -432,6 +419,8 @@ local function SetupDynamicContinent( mapID )
 											AddToDynamicContinent( coord, pin, mapID,  map.mapID )
 										end
 									else
+								--		print("i="..i.." s="..pin.spell[ i ].." m="..map.mapID.." c="..coord)
+										-- following lines will ABEND if there's a spell name typo in the data file
 										ns.icon = ns.runes[ v ][ pin.spell[ i ] ].icon
 										ns.runeDB = ns.db[ "rune1" ..format( "%02d", ns.icon ) ]
 										if ( ns.runeDB > 1 ) and ShowPinForThisClassSpell( pin.spell[ i ], false ) then
@@ -487,7 +476,7 @@ end
 
 -- ---------------------------------------------------------------------------------------------------------------------------------
 
-ns.iconChoice = ns.L["1 = No Map Pin\n2 = Cyan on Black\n3 = Green on Black\n4 = Magenta on Black\n5 = Red on Black\n6 = Yellow on Black"]
+ns.iconChoice = L["1 = No Map Pin\n2 = Cyan\n3 = Green\n4 = Magenta\n5 = Red\n6 = Yellow"]
 ns.iconStandard = "1 = " ..ns.L["White"] .."\n2 = " ..ns.L["Purple"] .."\n3 = " ..ns.L["Red"] .."\n4 = " 
 					..ns.L["Yellow"] .."\n5 = " ..ns.L["Green"] .."\n6 = " ..ns.L["Grey"] .."\n7 = " ..ns.L["Mana Orb"]
 					.."\n8 = " ..ns.L["Phasing"] .."\n9 = " ..ns.L["Raptor egg"] .."\n10 = " ..ns.L["Stars"]
@@ -532,47 +521,62 @@ ns.options = {
 								order = 91, },
 				selfShow = { type = "toggle", name = ns.name, desc = ns.L["Show"], arg = "selfShow", width = 0.9, order = 92, },
 				hideIfRuneLearnt = { type = "toggle", name = ns.L["Hide if learnt"], width = 1.2, arg = "hideIfRuneLearnt",
-								desc = ns.L["Will also hide completed Icy Veins books (Mages), Skill Books"], order = 93, },
-				rune101 = { type = "range", name = ns.L["Map Pin"] .." 1", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune101", order = 101, },
-				rune102 = { type = "range", name = ns.L["Map Pin"] .." 2", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune102", order = 102, },
-				rune103 = { type = "range", name = ns.L["Map Pin"] .." 3", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune103", order = 103, },
-				rune104 = { type = "range", name = ns.L["Map Pin"] .." 4", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune104", order = 104, },
-				rune105 = { type = "range", name = ns.L["Map Pin"] .." 5", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune105", order = 105, },
-				rune106 = { type = "range", name = ns.L["Map Pin"] .." 6", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune106", order = 106, },
-				rune107 = { type = "range", name = ns.L["Map Pin"] .." 7", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune107", order = 107, },
-				rune108 = { type = "range", name = ns.L["Map Pin"] .." 8", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune108", order = 108, },
-				rune109 = { type = "range", name = ns.L["Map Pin"] .." 9", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune109", order = 109, },
-				rune110 = { type = "range", name = ns.L["Map Pin"] .." 10", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune110", order = 110, },
-				rune111 = { type = "range", name = ns.L["Map Pin"] .." 11", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune111", order = 111, },
-				rune112 = { type = "range", name = ns.L["Map Pin"] .." 12", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune112", order = 112, },
-				rune113 = { type = "range", name = ns.L["Map Pin"] .." 13", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune113", order = 113, },
-				rune114 = { type = "range", name = ns.L["Map Pin"] .." 14", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune114", order = 114, },
-				rune115 = { type = "range", name = ns.L["Map Pin"] .." 15", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune115", order = 115, },
-				rune116 = { type = "range", name = ns.L["Map Pin"] .." 16", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune116", order = 116, },
-				rune117 = { type = "range", name = ns.L["Map Pin"] .." 17", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune117", order = 117, },
-				rune118 = { type = "range", name = ns.L["Map Pin"] .." 18", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune118", order = 118, },
-				rune119 = { type = "range", name = ns.L["Map Pin"] .." 19", desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "rune119", order = 119, },
+								desc = L["Will also hide completed Icy Veins books (Mages), Skill Books"], order = 93, },
 				skillBook1 = { type = "range", name = ns.L["Skill Book"], desc = ns.iconChoice, width = 0.8,
-								min = 1, max = 6, step = 1, arg = "skillBook1", order = 120, },
+								min = 1, max = 6, step = 1, arg = "skillBook1", order = 94, },
+				separator1 = { type = "header", name = "", order = 95, },
+				rune101 = { type = "range", name = ns.L[ "Rune" ] .." 1", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune101", order = 101, },
+				rune102 = { type = "range", name = ns.L[ "Rune" ] .." 2", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune102", order = 102, },
+				rune103 = { type = "range", name = ns.L[ "Rune" ] .." 3", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune103", order = 103, },
+				rune104 = { type = "range", name = ns.L[ "Rune" ] .." 4", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune104", order = 104, },
+				rune105 = { type = "range", name = ns.L[ "Rune" ] .." 5", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune105", order = 105, },
+				rune106 = { type = "range", name = ns.L[ "Rune" ] .." 6", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune106", order = 106, },
+				rune107 = { type = "range", name = ns.L[ "Rune" ] .." 7", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune107", order = 107, },
+				rune108 = { type = "range", name = ns.L[ "Rune" ] .." 8", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune108", order = 108, },
+				rune109 = { type = "range", name = ns.L[ "Rune" ] .." 9", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune109", order = 109, },
+				rune110 = { type = "range", name = ns.L[ "Rune" ] .." 10", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune110", order = 110, },
+				rune111 = { type = "range", name = ns.L[ "Rune" ] .." 11", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune111", order = 111, },
+				rune112 = { type = "range", name = ns.L[ "Rune" ] .." 12", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune112", order = 112, },
+				rune113 = { type = "range", name = ns.L[ "Rune" ] .." 13", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune113", order = 113, },
+				rune114 = { type = "range", name = ns.L[ "Rune" ] .." 14", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune114", order = 114, },
+				rune115 = { type = "range", name = ns.L[ "Rune" ] .." 15", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune115", order = 115, },
+				rune116 = { type = "range", name = ns.L[ "Rune" ] .." 16", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune116", order = 116, },
+				rune117 = { type = "range", name = ns.L[ "Rune" ] .." 17", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune117", order = 117, },
+				rune118 = { type = "range", name = ns.L[ "Rune" ] .." 18", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune118", order = 118, },
+				rune119 = { type = "range", name = ns.L[ "Rune" ] .." 19", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune119", order = 119, },
+				rune120 = { type = "range", name = ns.L[ "Rune" ] .." 20", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune120", order = 120, },
+				rune121 = { type = "range", name = ns.L[ "Rune" ] .." 21", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune121", order = 121, },
+				rune122 = { type = "range", name = ns.L[ "Rune" ] .." 22", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune122", order = 122, },
+				rune123 = { type = "range", name = ns.L[ "Rune" ] .." 23", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune123", order = 123, },
+				rune124 = { type = "range", name = ns.L[ "Rune" ] .." 24", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune124", order = 124, },
+				rune125 = { type = "range", name = ns.L[ "Rune" ] .." 25", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune125", order = 125, },
+				rune126 = { type = "range", name = ns.L[ "Rune" ] .." 26", desc = ns.iconChoice, width = 0.8,
+								min = 1, max = 6, step = 1, arg = "rune126", order = 126, },
 			},
 		},
 	},
