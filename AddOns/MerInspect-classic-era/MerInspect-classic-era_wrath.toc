@@ -1,4 +1,4 @@
-## Interface: 11502
+## Interface: 30403
 ## Title: MerInspect for classic era
 ## Version: 1.0.8
 ## Notes: Inspect Assist 

@@ -167,6 +167,16 @@ local function ChatItemSlot(Hyperlink)
     local slot
     local link = string.match(Hyperlink, "|H(.-)|h")
     local name, _, quality, level, _, class, subclass, _, equipSlot = GetItemInfo(link)
+
+    -- links need to be skipped
+    if (
+        equipSlot == "INVTYPE_NON_EQUIP_IGNORE" 
+        or equipSlot == "INVTYPE_NON_EQUIP"
+        or equipSlot == "INVTYPE_BAG"
+    ) then
+        return Hyperlink
+    end
+
     if (equipSlot == "INVTYPE_CLOAK" or equipSlot == "INVTYPE_TRINKET" or equipSlot == "INVTYPE_FINGER" or equipSlot == "INVTYPE_NECK") then
         slot = _G[equipSlot] or equipSlot
     elseif (equipSlot == "INVTYPE_RANGEDRIGHT") then
