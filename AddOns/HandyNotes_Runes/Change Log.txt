@@ -1,3 +1,22 @@
+== v2.06 - 8th April 2024
+* Phase 3 Shaman, Warlocks, Warriors
+* Removed character name from quest completion status - it was totally unnecessary
+* Now supports a new preRune parameter, with completion status too in Tooltips
+* Balefire Bolt summary updated
+
+== v2.05 - 8th April 2024
+* Phase 3 Druids, Hunters, Mages
+* Bits and pieces of other classes - WIP
+* Level parameter in Core can be other than number now
+* Mage Books completely rebuilt
+* Fix to the missing final phase 2 book collection hand in with Owen Thadd - quest name was missing from my database
+* Simplify the name of the coloured number textures in the Options panel
+* Owen Thadd now also has pins on Tirisfal Glades
+
+== v2.04 - 5th April 2024
+* Removed redundant priest code (from the priest L17 quest chain which is now in my CGM AddOn)
+* Added early rune code for Phase 3 - not complete. Just the basics
+
 == v2.03 - 4th April 2024
 * Fixed typo Reports of plent at Ridgepoint...
 * TOC updated to 1.15.2
