@@ -3,7 +3,7 @@
 
                                                 Runes
 
-                                       v2.06 - 8th April 2024
+                                       v2.07 - 9th April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -183,9 +183,9 @@ function pluginHandler:OnEnter(mapFile, coord)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 	end
 
-	local completed, quests, questNames;
+	local completed, quests, questNames, preRunes;
 	local pin = ns.points[mapFile] and ns.points[mapFile][coord]
-	local spaceBeforeQuests = false
+	local spaceBeforeQuests, spaceBeforePreRunes, spaceBeforeTitle = false, false, false
 	
 	if pin.phase then
 		for k,v in pairs( ns.runes ) do
@@ -193,7 +193,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 				local completed;
 				GameTooltip:SetText( ns.colour.class ..ns.classLocal .." Phase " ..pin.phase .." for " ..ns.name )
 				for r,s in ipairs( v.spells ) do
-					print( "r="..r.." s="..s.." v[s]?="..(v[s] and "true" or "false"))
+				--	print( "r="..r.." s="..s.." v[s]?="..(v[s] and "true" or "false"))
 					if ns.runes[ k ][ s ].phase == pin.phase then
 						completed = not ShowPinForThisClassSpell( s, true )
 						GameTooltip:AddDoubleLine( ns.colour.prefix ..r .. ".  " ..ns.L[ s ] .."   (" ..v[s].level .."+)",
@@ -224,6 +224,11 @@ function pluginHandler:OnEnter(mapFile, coord)
 
 			if ( ns.class == v ) or ( v == "ALL" ) then
 			
+				if spaceBeforeTitle == true then
+					GameTooltip:AddLine( "\n" )
+					spaceBeforeTitle = false
+				end
+			
 				GameTooltip:AddDoubleLine( ns.colour.prefix ..ns.L[ pin.spell[ i ] ] ..ns.colour.highlight .."\n(" 
 							..(ns.runes[ v ][ pin.spell[ i ] ].rune or ns.runes[ v ][ pin.spell[ i ] ].skillBook ) ..")",
 							ns.colour.class ..ns.classLocal )
@@ -231,9 +236,23 @@ function pluginHandler:OnEnter(mapFile, coord)
 
 				if pin.preRune then
 					-- Added originally for Warrior Gladiator Stance in Phase 3
-					for j,s in ipairs( pin.preRune ) do
-						completed = not ShowPinForThisClassSpell( s, true )
-						GameTooltip:AddDoubleLine( ns.colour.highlight ..s,
+					-- Expanded for Rogue Honor Among Thieves to allow for multiple class entries per coordinate
+					-- Same rules as per quests
+					preRunes = ( pin.preRune[ i ] ~= nil ) and pin.preRune[ i ] or pin.preRune[ 1 ]
+					if type( preRunes ) == "table" then				
+						for j,w in ipairs( preRunes ) do
+							if spaceBeforePreRunes == false then GameTooltip:AddLine( "\n" ) end
+							spaceBeforePreRunes = true
+							completed = not ShowPinForThisClassSpell( w, true )
+							GameTooltip:AddDoubleLine( ns.colour.highlight ..preRunes[ j ],
+									( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] )
+									or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
+						end
+						spaceBeforePreRunes = false
+					else
+						GameTooltip:AddLine( "\n" )
+						completed = not ShowPinForThisClassSpell( preRunes, true )
+						GameTooltip:AddDoubleLine( ns.colour.highlight ..preRunes,
 								( completed == true ) and ( "\124cFF00FF00" ..ns.L["Completed"] )
 								or ( "\124cFFFF0000" ..ns.L["Not Completed"] ) )
 					end
@@ -285,6 +304,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 					-- Single guide for all classes is permitted. Always a table
 					GameTooltip:AddLine( "\n" ..ns.colour.highlight .."Guide\n\n" ..ns.colour.plaintext
 								..( ( pin.guide[ i ] ~= nil ) and pin.guide[ i ] or pin.guide[ 1 ] ) )
+					spaceBeforeTitle = true
 				end
 			end
 		end
@@ -420,7 +440,6 @@ local function SetupDynamicContinent( mapID )
 										end
 									else
 								--		print("i="..i.." s="..pin.spell[ i ].." m="..map.mapID.." c="..coord)
-										-- following lines will ABEND if there's a spell name typo in the data file
 										ns.icon = ns.runes[ v ][ pin.spell[ i ] ].icon
 										ns.runeDB = ns.db[ "rune1" ..format( "%02d", ns.icon ) ]
 										if ( ns.runeDB > 1 ) and ShowPinForThisClassSpell( pin.spell[ i ], false ) then

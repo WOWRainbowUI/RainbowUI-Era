@@ -1,3 +1,8 @@
+== v2.07 - 9th April 2024
+* Added Paladins, Priests, Rogues
+* Quests not showing fixed
+* Some formatting typos I think
+
 == v2.06 - 8th April 2024
 * Phase 3 Shaman, Warlocks, Warriors
 * Removed character name from quest completion status - it was totally unnecessary

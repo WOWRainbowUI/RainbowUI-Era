@@ -257,13 +257,14 @@ st.paladin.banishment = "Target the Defias Enchanters, Defias Night Blades\n"
 st.paladin.blessings = "Go to the Thelsamar Tavern in Loch Modan.\nIt's sitting on a table there. Or else go\n"
 			.."to Westfall and kill Undying Laborers in the\nJangolode Mine or the Gold Coast Quarry\n\n"
 			.."Follow the Libram's Tooltip instructions. Done!"
-st.paladin.divineStorm = "You'll find an Orb at the top of the Athalaxx Tower\nin northern Darkshore. Starts a quest.\n\n"
-			.."Seek out Delgren the Purifier at Maestra's Post in\nAshenvale.\n\nAs instructed, go to Katherine the Pure in the\n"
-			.."Stormwind Cathedral who'll send you to speak to\nUrsula Deline at the back of the Mages Quarter.\n\n"
-			.."Ursula sends you to Redridge to collect her Salt.\nIt has a low drop rate QQ. Return to her.\n\n"
-			.."Ursula now needs Motes from Ashenvale.\n\nAfter collecting the Motes take them to the Altar\n"
-			.."of Mannoroth. It's big and purple. Click on\nthe ground to turn the Motes in. A Shattered Orb\n"
-			.."appears. Take it to Delgren. Finally!"
+st.paladin.divineStorm = "You'll find an Orb at the top of the Athalaxx Tower in northern Darkshore. Starts a quest.\n\n"
+			.."Seek out Delgren the Purifier at Maestra's Post in Ashenvale.\n\n"
+			.."As instructed, go to Katherine the Pure in the Stormwind Cathedral who'll send you to speak to\n"
+			.."Ursula Deline at the back of the Mages Quarter.\n\n"
+			.."Ursula sends you to Redridge to collect her Salt. It has a low drop rate QQ. Return to her.\n\n"
+			.."Ursula now needs Motes from Ashenvale.\n\n"
+			.."After collecting the Motes take them to the Altar of Mannoroth. It's big and purple. Click on\n"
+			.."the ground to turn the Motes in. A Shattered Orb appears. Take it to Delgren. Finally!"
 st.paladin.judgement = "Dwarves visit Bromos Grummner at the Anvilmar\nentrance and humans speak to Brother Sammuel\n"
 			.."in the Hall of Arms in the Northsire Abbey.\n\nYou're now tasked with dispatching Frostmane\n"
 			.."Troll Whelps in Coldridge Valley or the Defias\nThugs in the vineyard to the east of the Abbey.\n\n"
@@ -292,16 +293,30 @@ st.paladin.sacredShield = "On a bench that's inside Brother Anton's building.\n\
 			.."other players/NPCs five times. MUST be movement\nimpairing roots. Not slows, for example.\n\n"
 			.."Nets are great - Murloc Netters in Westfall or the\nDragonmaw area of Wetlands, Magram Wranglers near\n"
 			.."Maraudon, Greymist netters in Darkshore, etc.\n\nCan be your same friend over and over again!"
-st.paladin.sheathLight = "Must have obtained the Divine Storm rune.\nLater you'll need a Cathedral Wing key to\n"
-			.."Scarlet Monastery.\n\nAt Mannoroc Cove loot an ornate warhammer.\n"
-			.."which starts the quest \"The Broken Hammer\".\n\nNow farm the nearby Burning Blade Summoners\n"
-			.."(L38-39) for a Torn Letter. Go to Katherine\nthe Pure (first room on the left) in the SW\n"
-			.."Cathedral. Listen to her for \"A Lost Brother\".\n\nSet your hearth to Stormwind then go to Menethil\n"
-			.."Harbor wharf, Wetlands and talk to Harold Riggs.\n\nTake an extremely long swim south to Newman's\n"
-			.."Landing. You'll see a building and a wharf.\nThis is the far south-west corner of Dun Morogh.\n\n"
-			.."You'll be ambushed. Loot the Orders and pickup\nthe quest and hearth to SW. Speak to Katherine.\n\n"
-			.."Now defeat High Inquisitor Whtemane in the\nCathedral Wing of Scarlet Monastery. Locate\n"
-			.."Aeonas before you leave! Now hearth again and\nKatherine again and you're pretty much done."
+st.paladin.sheathLight = "Must have obtained the Divine Storm rune. Later you'll need a Cathedral Wing key to\n"
+			.."Scarlet Monastery.\n\n"
+			.."At Mannoroc Cove loot an ornate warhammer which starts the quest \"The Broken Hammer\".\n\n"
+			.."Now farm the nearby Burning Blade Summoners (L38-39) for a Torn Letter. Go to Katherine\n"
+			.."the Pure (first room on the left) in the SW Cathedral. Listen to her for \"A Lost Brother\".\n\n"
+			.."Set your hearth to Stormwind then go to Menethil Harbor wharf, Wetlands and talk to Harold Riggs.\n\n"
+			.."Take an extremely long swim south to Newman's Landing. You'll see a building and a wharf.\n"
+			.."This is the far south-west corner of Dun Morogh.\n\n"
+			.."You'll be ambushed. Loot the Orders and pickup the quest and hearth to SW. Speak to Katherine.\n\n"
+			.."Now defeat High Inquisitor Whtemane in the Cathedral Wing of Scarlet Monastery. Locate\n"
+			.."Aeonas before you leave! Now hearth again and Katherine again and you're pretty much done."
+-- Paladin Phase 3
+st.paladin.fanaticism = "Pick up the quest from Aeonis the Vindicated.\nHe's in the Stormwind Cathedral. Proceed to\n"
+			.."Theramore and give Elrick a whooping.\n\nSpeak to the Stern-Faced Bar Patron.\n\n"
+			.."Back at Katherine the Pure in the Cathedral,\nand she'll reward you grandly"
+st.paladin.hammerRighteous = "In Felwood you climb up the rope to reach Aeonis.\nNext speak with Gregory and accept the quest.\n\n"
+			.."Go north and farm the Shatter Scale Vale for 3 x\nFiery Infernal Core. Next meet the Tauren Brave\n"
+			.."Stonetorch, to the north of Tarren Mill in the Hillsbrad\nFoothills. You'll obtain the Symbol of Faith.\n\n"
+			.."The Shimmering Grave Dust is from a Grave Mound,\nobtained after killing Princess Theradras in\nMaraudon.\n\n"
+			.."The Tripple-Brewed Molten Lager you purchase from\nPlugger Spazzring at the Grim Guzzler tavern, well\n"
+			.."into Blackrock Depths. That's one mighty series of\ncorpse runs for solo players.\n\n"
+			.."Return to Gregory for the hand in. Accept your Rune!"
+st.paladin.wrath = "North of Quel'Danil Lodge in The Hinterlands is\nwhere Paladins will use their Sense Undead to\n"
+			.."locate a Vengeful Spirit (L45). Kill it.\n\nSpeak to Magister Falath in the Mystic Ward of\nIronforge. Enjoy!"
 
 -- Priest Phase 1
 st.priest.circle = "Obtain Dark Insight from the Defias mobs\nthen use it at the secluded grave"
@@ -369,27 +384,39 @@ st.priest.painSuppression = "Collect \"echos\" in the Swamp of Sorrows, Arathi\n
 st.priest.renewedHope = "Farm the Slitherblade naga mobs along the Desolace\ncoast until an Unsettling Vision drops.\n\n"
 			.."Now use Mind Control (L30) on a Slitherblade\nTide Priestess (L33-34). You must be no more\n"
 			.."than 2 levels below this mob for MC to work.\n\nNow use your Unsettling Vision to learn!"
+-- Priest Phase 3
+st.priest.eyeOfVoid = "Collect seven eyes from around Azeroth: Blasted Lands,\nFelwood, Feralas, Searing Gorge, Stranglethorn Vale,\n"
+			.."Tanaris, and The Hinterlands.\n\nAfterwards go to the far north-east promontory of\n"
+			.."Azshara and locate the Shrine of the Watcher.\n\n/kneel to receive a quest. (Reload if bugged).\n"
+			.."Hand in for your phat reward"
+st.priest.surgeLight = "Between the server hours of 9pm and 3am the\nEcho of a Lost Soul will spawn at: the Gadgetzan\n"
+			.."Graveyard in Tanaris, the Ruins of Alboraz in\nStranglethorn, the Graveyard south east of\n"
+			.."Stonard, the graveyard north west of Revantusk\nVillage.\n\nThe Echo is immune to most damage except Arcane.\n"
+			.."Kill and loot.\n\nRespawn is very fast so if you do not see the Echo\nthen you are standing there at the wrong time"
 
 -- Rogue Phase 1
 st.rogue.bladeDance = "Cliffspring River Cave, Darkshore. Keys drops\noff Cliffspring mobs; Pp Dark Iron Dwarves in\n"
 			.."Loch Modan. Open the lockbox; Pick Pocket Defias\nmobs for a Discreet Envelope. Go to the back\n"
 			.."entrance of the Deadmines, Westfall (A).\n\nPp Southsea mobs for Buccaneer's Matchbox. Go\n"
 			.."up the nearby hill. Light the gunpowder bucket.\nKaboom! Voilà, your reward awaits! (H)"
-st.rogue.deadlyBrew = "At L20 you'll receive a letter from \"C\".\nIgnore it. At L22 learn Vanish and Distract\n"
-			.."and have five points in Master of Deception\n(Tier 1 Subtlety). Camouflage (T2) is strongly\n"
-			.."suggested. Another 5 points!\n\nAt Pyrewood Village loot the chest in the little\n"
-			.."house/hut. Thus begins the first quest (above).\n\n(Don't go to Stonetalon Mountains. Noobs do that.\n"
-			.."Enter SFK alone ftw coz you my friend are l33t!)\n\nStealth to Rethilgore. First boss in the first\n"
-			.."room. Go to your A/H cell nearby. Open the cell\nbut quickly Vanish! Talk to the NPC to open the\nCourtyard Gate.\n\n"
-			.."You need to locate Gemela and Gefell. Stealth!\nYou may luck out with a Pick Pocket resist. Be\n"
-			.."ready to Vanish. Use Distract too as necessary.\n\nGemela is in the Dining Room, near the Kitchen.\n"
-			.."Pp her to receive Sister's Half-Key.\n\nGefell is upstairs, take a right. He drops the\nBrother's Half-Key.\n\n"
-			.."Combine the two for Twin Key but note that you'll\nneed to Vanish again (or do it safely).\n\n"
-			.."Back to the Courtyard and the Stables. Use the key\non the chest. You now have the Horn of Xelthos.\n\n"
-			.."Outside the dungeon, turn in at the little house.\nYou must now wait for a second mail. It will tell\n"
-			.."you to come back to here for your reward!!!\n\nYMMV but reports are that you must go to a city to\n"
-			.."trigger the letter. But first try waiting 15 minutes\nincluding a full Exit game. Might save a long walk!\n\n"
-			.."(The second quest (above) indicates if you have yet\nto \"hand in\" after the second letter)"
+st.rogue.deadlyBrew = "At L20 you'll receive a letter from \"C\". Ignore it. At L22 learn Vanish and Distract\n"
+			.."and have five points in Master of Deception (Tier 1 Subtlety). Camouflage (T2) is strongly\n"
+			.."suggested. Another 5 points!\n\n"
+			.."At Pyrewood Village loot the chest in the little house/hut. Thus begins the first quest (above).\n\n"
+			.."(Don't go to Stonetalon Mountains. Noobs do that. Enter SFK alone ftw coz you my friend are l33t!)\n\n"
+			.."Stealth to Rethilgore. First boss in the first room. Go to your A/H cell nearby. Open the cell\n"
+			.."but quickly Vanish! Talk to the NPC to open the Courtyard Gate.\n\n"
+			.."You need to locate Gemela and Gefell. Stealth! You may luck out with a Pick Pocket resist. Be\n"
+			.."ready to Vanish. Use Distract too as necessary.\n\n"
+			.."Gemela is in the Dining Room, near the Kitchen. Pp her to receive Sister's Half-Key.\n\n"
+			.."Gefell is upstairs, take a right. He drops the Brother's Half-Key.\n\n"
+			.."Combine the two for Twin Key but note that you'll need to Vanish again (or do it safely).\n\n"
+			.."Back to the Courtyard and the Stables. Use the key on the chest. You now have the Horn of Xelthos.\n\n"
+			.."Outside the dungeon, turn in at the little house. You must now wait for a second mail. It will tell\n"
+			.."you to come back to here for your reward!!!\n\n"
+			.."YMMV but reports are that you must go to a city to trigger the letter. But first try waiting 15 minutes\n"
+			.."including a full Exit game. Might save a long walk!\n\n"
+			.."(The second quest (above) indicates if you have yet to \"hand in\" after the second letter)"
 st.rogue.envenom = "Speak to Kris Legace. She's behind Durnholde\nKeep. There's no need to enter it.\n\n"
 			.."Buy \"Hot Tip\" from her. You'll need 75s.\n\nCheck your map. Follow the river east of Tarren\n"
 			.."Mill all the way into the Western Plaguelands.\n\nContinue right to the end - the waterfall. The\n"
@@ -442,16 +469,17 @@ st.rogue.slaughter = "Above the Inn, Kharanos, Dun Morogh; Roof of the\nspooky h
 -- Rogue Phase 2
 st.rogue.punches = "Simply pick the strongboxes within\nstrongboxes. The most difficult requires\n"
 			.."Level 55 Lockpicking. You may discard\nthe notes you'll find"
-st.rogue.shadowstep = "At L20 you'll receive a letter from \"C\",\nassuming you've already obtained Deadly Brew.\n\n"
-			.."Once again, head to the Dead Drop location in\nPyrewood Village in Silverpine and pickup \"The\n"
-			.."Eye of Bhossca\" part 2.\n\nThe Supply Locker is near the stables in the\n"
-			.."Monastery grounds (Outside the instance).\nPick (100) and loot the disguise.\n\n"
-			.."Enter SC GY Wing solo, don the disguise and\nPP a Scarlet Scryer for a key. Enter the Lib wing\n"
-			.."and open the Personal Letterbox in the\nAthanaeum for a Confidential Message. Enter the\n"
-			.."GY Wing. /sit on a bench in the Forloin Cloister\nthen cross the room and /sit on the other side.\n\n"
-			.."Now walk north and loot the Stone Coffer from a\nmausoleum niche for another Key.\n\n"
-			.."Go to the Gallery of Treasures in the Lib Wing and\nloot the Padlocked Reliquary -> Eye of Bhossca.\n\n"
-			.."Back in Pyrewood, place the Eye in the Dead Drop\nchest. Hearth to a MAJOR city. Check mail (relog).\n"
+st.rogue.shadowstep = "At L20 you'll receive a letter from \"C\", assuming you've already obtained Deadly Brew.\n\n"
+			.."Once again, head to the Dead Drop location in Pyrewood Village in Silverpine and pickup \"The\n"
+			.."Eye of Bhossca\" part 2.\n\n"
+			.."The Supply Locker is near the stables in the Monastery grounds (Outside the instance).\n"
+			.."Pick (100) and loot the disguise.\n\n"
+			.."Enter SC GY Wing solo, don the disguise and PP a Scarlet Scryer for a key. Enter the Lib wing\n"
+			.."and open the Personal Letterbox in the Athanaeum for a Confidential Message. Enter the\n"
+			.."GY Wing. /sit on a bench in the Forloin Cloister then cross the room and /sit on the other side.\n\n"
+			.."Now walk north and loot the Stone Coffer from a mausoleum niche for another Key.\n\n"
+			.."Go to the Gallery of Treasures in the Lib Wing and loot the Padlocked Reliquary -> Eye of Bhossca.\n\n"
+			.."Back in Pyrewood, place the Eye in the Dead Drop chest. Hearth to a MAJOR city. Check mail (relog).\n"
 			.."Yup... back to the Dead Drop. Grab your phat lewt"
 st.rogue.shurikenToss = "Near the marked chest spawn location will\nbe a Poison Dart trap. Use Disarm Trap (L30)\n"
 			.."or wait for another Rogue to do it for you.\n\nDon't walk in front of the trap!!!\n\n"
@@ -460,6 +488,20 @@ st.rogue.subtlety = "Enter the stone tower in the Kurzen compound\nand speak to 
 			.."Kill Kurzen mobs in the cave to the north\nfor a Compound Cage Key. Free Mathers.\n\n"
 			.."At Booty Bay speak to Captain Aransas.\n\nNote that the cave also has a chest (125)\n"
 			.."that you can pick"
+-- Rogue Phase 3
+st.rogue.honorThieves = "Upon receiving the quest you'll go to Ravenholdt\nManor in Alterac Mountains. Fahrad there will send you\n"
+			.."to Zul'Farrak.\n\nEnter the Zul'Farrak SOLO. (It's a special version just\nfor Rogues doing this).\n\n"
+			.."Look in tents for two Vile Concoctions in Clay Vessels.\nNote that throwing the Concoctions into a cauldron will\n"
+			.."not break stealth.\n\nUse one near Antu'sul then loot the Offering of Bone from\n"
+			.."his bag. Likewise Witch Doctor Zum'rah for the Ward of\nthe dead. Equip this trinket and you'll see a grave. Loot\n"
+			.."the Offering of Flesh from it.\n\nCombine both Offerings -> Blood Magic Essence.\n\n"
+			.."To the right of the \"Stair Event\" is a stone block.\nJump up. Walk to a balcony with a chest. Obtain the\n"
+			.."Hollow Emblem. Combine this with the Blood Essence ->\nEmblem of Blood Magic.\n\n"
+			.."At the top of the pyramid loot the War Chest for a\nTalisman of Kazdor. Well done. Return to Ravenholdt.\n\n"
+			.."Now take your Modified Talisman to the Pyrewood\nVillage Dead Drop. Now back to Ravenholdt where Fahrad\n"
+			.."will reward you with your Rune AND a great Agility cloak!"
+st.rogue.unfair = "Pickpocket the pirate mobs at the Cove in Tanaris\nuntil you score a Kidnapper's Coin Purse with a\n"
+			.."Precious Medallion.\n\nTake to Jabbey at the Steamwheedle Port and he'll\nhappily exchange it for a Rune of Foul Play!"
 
 -- Shaman Phase 1
 st.shaman.dyadicIcon = "Troll/Orc: Meet Shikrik in the Valley of the Trials,\nTauren: Meela Dawnstrider in Camp Narache.\n\n"
@@ -798,9 +840,10 @@ st.nightmareIncursions = "Duskwood: Level 23+, Ashenvale: 37+, Feralas: 47+, The
 st.leylineGuide = "Visit four Leyline Confluxes in each of Azshara, Feralas,\nThe Hinterlands and Searing Gorge.\n\n"
 			.."Use either a Warlock's Worldcore Fragment (from Imp\nexplorations) or a Mage's Scroll of Geomancy.\n\n"
 			.."An Enraged Leywalker (L47e) will spawn. Immune to arcane\ndamage. It will drop a Leycryst. Combine all four. Voilà!\n\n"
-			.."Non-Mages/Locks must group up to do this"
+			.."Paladins/Priests must group up to do this"
 st.leylineSummary = "At Azshara, Feralas, The Hinterlands and Searing Gorge you must \"attune\" to a leyline with\n"
 					.."a Scroll of Geomancy (Mage decipher) or Worldcore Fragments (Warlock Imp explorations)"
+st.leylineSummaryExtra = ".\nPaladins and Priests must group with one or more Mages/Warlocks"
 st.wildGods = "Find the Shadowtooth Emissary @ the Emerald\nSanctuary, southern Felwood. Accept \"The Wild Gods\".\n\n"
 			.."Kill Vilebranch mobs (L45e-51e) @ Jinth'Alor,\nsouth-east Hinterlands, to obtain a Wildwhisper\nDraught.\n\n"
 			.."In Razorfen Downs (far south Barrens), do a full\nclear of the last boss. Drink the Draught. Speak to\n"
@@ -1081,24 +1124,29 @@ ns.runes = {
 		-- Phase 2 Skill Books
 		["Enhanced Blessings"]={ skillBook="Testament of Enhanced Blessings", spellID=435984, level=1, start=st.dungeonSummary },
 		-- Phase 3
-		["Fanaticism"]={ rune="?", phase=3, spellID=429142, level=0, icon=19, slot=1, start="Unknown" },
-		["Hammer of the Righteous"]={ rune="?", phase=3, spellID=409922, level=0, icon=20, slot=9, start="Unknown" },
-		["Improved Hammer of Wrath"]={ rune="Rune of the Hammer", phase=3, spellID=429152, level="23/37/47", icon=21, slot=9,
+		["Improved Hammer of Wrath"]={ rune="Rune of the Hammer", phase=3, spellID=429152, level="23/37/47", icon=19, slot=9,
 				start=st.emeraldWardens },
-		["Improved Sanctuary"]={ rune="?", phase=3, spellID=429133, level=40, icon=22, slot=1, start=st.wildGodsStart },
-		["Light's Grace"]={ rune="Rune of Grace", phase=3, spellID=428909, level=0, icon=23, slot=1, start="Unknown" },
-		["Purifying Power"]={ rune="?", phase=3, spellID=429144, level=47, icon=24, slot=9, start=st.leylineSummary },
-		["Wrath"]={ rune="?", phase=3, spellID=429139, level=0, icon=25, slot=1, start="Unknown" },
-		-- Dormant Holy Rune. Libram of benediction
-
---=======================================================================================================
+		["Wrath"]={ rune="Rune of Wrath", phase=3, spellID=429139, level=42, icon=20, slot=1,
+				start="With Sense Undead learnt, go to north of Quel'Danil Lodge, The Hinterlands, between 9pm and 3am\n"
+					.."server time. Kill a Vengeful Spirit (L45). Go to the Mystic Ward in Ironforge for the turn in" },
+		["Improved Sanctuary"]={ rune="Improved Sanctuary", phase=3, spellID=429133, level=40, icon=21, slot=1,
+				start=st.wildGodsStart },
+		["Fanaticism"]={ rune="Fanaticism", phase=3, spellID=429142, level=44, icon=22, slot=1,
+				start="Learn the Sheath of Light rune prior. Speak to Aeonas the Vindicated in the SW Cathedral. Must be L44" },
+		["Purifying Power"]={ rune="Purifying Power", phase=3, spellID=429144, level=47, icon=23, slot=9,
+				start=st.leylineSummary ..st.leylineSummaryExtra },		
+		["Hammer of the Righteous"]={ rune="Hammer of the Righteous", phase=3, spellID=409922, level=50, icon=24, slot=9,
+				start="Learn Fanaticism prior. Speak to Aeonas the Vindicated at the Bloodvenom Falls, Felwood. Must be L44.\n"
+					.."Along the way you'll go to the Grim Guzzler, inside Blackrock Depths, and Maraudon (group for that)" },
+		["Light's Grace"]={ rune="Rune of Grace", phase=3, spellID=428909, level=100, icon=25, slot=1,
+				start="Unknown. People consider that it's probably not worth the effort of discovering" },
 
 		spells={ "Crusader Strike", "Inspiration Exemplar", "Rebuke", "Aegis", "Horn of Lordaeron",
 			"Seal of Martyrdom", "Beacon of Light", "Hand of Reckoning", "Divine Sacrifice",
 			"Avenger's Shield", "Divine Storm", "Exorcist", "Sacred Shield", "Guarded by the Light",
 			"The Art of War", "Enlightened Judgements", "Infusion of Light", "Sheath of Light",
-			"Fanaticism", "Hammer of the Righteous", "Improved Hammer of Wrath", "Improved Sanctuary",
-			"Light's Grace", "Purifying Power", "Wrath" },
+			"Improved Hammer of Wrath", "Wrath", "Improved Sanctuary", "Fanaticism", "Purifying Power",
+			"Hammer of the Righteous", "Light's Grace", },
 		skillBooks={ "Enhanced Blessings" },
 	},
 
@@ -1154,21 +1202,25 @@ ns.runes = {
 		["Increased Fortitude"]={ skillBook="Scroll Increased Fortitude", spellID=436951, level=1, start=st.dungeonSummary },
 		["Shadowfiend"]={ skillBook="Scroll of Shadowfiend", spellID=401977, level=1, start=st.dungeonSummary },
 		-- Phase 3
-		["Divine Aegis"]={ rune="Resolute Epiphany", phase=3, spellID=431622, level=40, icon=19, slot=1, start=st.wildGodsStart },
-		["Eye of the Void"]={ rune="Prophecy of awakened Chaos", phase=3, spellID=402789, level=0, icon=20, slot=1, start="Unknown" },
-		["Pain and Suffering"]={ rune="Prophecy of the Verdant Winter", phase=3, spellID=413251, level=43, icon=21, slot=1,
-				start=st.enragedVoidWalkerStart },
-		["Surge of Light"]={ rune="?", phase=3, spellID=431664, level=0, icon=22, slot=9, start="Unknown" },
-		["Void Zone"]={ rune="Nihilist Epiphany", phase=3, spellID=431681, level="23/37/47", icon=23, slot=9,
+		["Void Zone"]={ rune="Nihilist Epiphany", phase=3, spellID=431681, level="23/37/47", icon=19, slot=9,
 				start=st.emeraldWardens },
-		["Despair"]={ rune="?", phase=3, spellID=431670, level=47, icon=24, slot=9, start=st.leylineSummary },
+		["Surge of Light"]={ rune="Prophecy of the Lost Tribe", phase=3, spellID=431664, level=40, icon=20, slot=9,
+				start="Between 9pm and 3am server time, an Echo of a Lost Soul will appear in the Swamp of Sorrows, Stranglethorn\n"
+					.."Vale, Tanaris, The Hinterlands. Must be killed with Arcane damage although Holy might eventually work" },
+		["Divine Aegis"]={ rune="Resolute Epiphany", phase=3, spellID=431622, level=40, icon=21, slot=1, start=st.wildGodsStart },
+		["Pain and Suffering"]={ rune="Prophecy of the Verdant Winter", phase=3, spellID=413251, level=43, icon=22, slot=1,
+				start=st.enragedVoidWalkerStart },
+		["Despair"]={ rune="Despair", phase=3, spellID=431670, level=47, icon=23, slot=9,
+				start=st.leylineSummary ..st.leylineSummaryExtra },		
+		["Eye of the Void"]={ rune="Prophecy of Awakened Chaos", phase=3, spellID=402789, level=47, icon=24, slot=1,
+				start="Collect seven eyes from around Azeroth: Blasted Lands, Felwood, Feralas, Searing Gorge,\n"
+					.."Stranglethorn Vale, Tanaris, The Hinterlands. Afterwards go to Azshara for the hand in" },
 
-		spells={ "Penance", "Prayer of Mending", "Void Plague", "Homunculi", "Shared Pain",
-			"Mind Sear", "Twisted Faith", "Shadow Word: Death", "Serendipity", 
-			"Power Word: Barrier", "Strength of Soul", "Circle of Healing", "Empowered Renew",
-			"Mind Spike", "Renewed Hope", "Pain Suppression", "Spirit of the Redeemer",
-			"Dispersion", "Divine Aegis", "Eye of the Void", "Pain and Suffering",
-			"Surge of Light", "Void Zone", "Despair" },
+		spells={ "Penance", "Prayer of Mending", "Void Plague", "Homunculi", "Shared Pain", "Mind Sear",
+			"Twisted Faith", "Shadow Word: Death", "Serendipity", "Power Word: Barrier",
+			"Strength of Soul", "Circle of Healing", "Empowered Renew", "Mind Spike", "Renewed Hope",
+			"Pain Suppression", "Spirit of the Redeemer", "Dispersion", "Void Zone", "Surge of Light",
+			"Divine Aegis", "Pain and Suffering", "Despair", "Eye of the Void", },
 		skillBooks={ "Increased Fortitude", "Shadowfiend" },
 	},
 			
@@ -1221,22 +1273,25 @@ ns.runes = {
 		-- Phase 2 Skill Books
 		["Redirect"]={ skillBook="Manual of Redirect", spellID=438040, level=1, start=st.dungeonSummary },
 		-- Phase 3
-		["Carnage"]={ rune="Rune of Carnage", phase=3, spellID=432276, level=0, icon=19, slot=9, start="Unknown" },
-		["Combat Potency"]={ rune="Rune of Potency", phase=3, spellID=432259, level=40, icon=20, slot=1, start=st.wildGodsStart },
-		["Cut to the Chase"]={ rune="Rune of Alacrity", phase=3, spellID=432271, level="23/37/47", icon=21, slot=9,
+		["Cut to the Chase"]={ rune="Rune of Alacrity", phase=3, spellID=432271, level="23/37/47", icon=19, slot=9,
 				start=st.emeraldWardens },
-		["Focused Attacks"]={ rune="Rune of Focus", phase=3, spellID=432256, level=0, icon=22, slot=1, start="Unknown" },
-		["Honor Among Thieves"]={ rune="Rune of the Coterie", phase=3, spellID=432264, level=0, icon=23, slot=1, start="Unknown" },
-		["Unfair Advantage"]={ rune="Rune of Foul Play", phase=3, spellID=432300, level=0, icon=24, slot=9, start="Unknown" },
-
---=======================================================================================================
+		["Focused Attacks"]={ rune="Rune of Focus", phase=3, spellID=432256, level=34, icon=20, slot=1,
+				start="Use Blind (L34) on a Vilebranch Mask and loot its chest, The Hinterlands" },
+		["Carnage"]={ rune="Rune of Carnage", phase=3, spellID=432276, level=40, icon=21, slot=9,
+				start="Head to near Dreadmaul Hold in the Blasted Lands and climb a tower and lockpick (L225) a chest" },
+		["Unfair Advantage"]={ rune="Rune of Foul Play", phase=3, spellID=432300, level=42, icon=22, slot=9,
+				start="Pickpocket pirates (L44-45) in Tanaris for a Kidnapper's Coin Purse. Turn in at Steamwheedle Port" },
+		["Combat Potency"]={ rune="Rune of Potency", phase=3, spellID=432259, level=40, icon=23, slot=1, start=st.wildGodsStart },
+		["Honor Among Thieves"]={ rune="Rune of the Coterie", phase=3, spellID=432264, level=45, icon=24, slot=1,
+				start="You need to have visited Ravenholdt previously and to have completed the Pyrewood Dead Drop quests/runes.\n"
+					.."Then at L45 you'll receive a letter sending you back to Ravenholdt Manor" },
 
 		spells={ "Shadowstrike", "Quick Draw", "Slaughter from the Shadows",  "Mutilate",
 			"Between the Eyes", "Saber Slash", "Blade Dance", "Just a Flesh Wound", "Envenom",
 			"Main Gauche", "Deadly Brew", "Shiv", "Poisoned Knife", "Shadowstep",
-			"Shuriken Toss", "Rolling with the Punches", "Waylay", "Master of Subtlety", "Carnage",
-			"Combat Potency", "Cut to the Chase", "Focused Attacks", "Honor Among Thieves",
-			"Unfair Advantage" },
+			"Shuriken Toss", "Rolling with the Punches", "Waylay", "Master of Subtlety",
+			"Cut to the Chase", "Focused Attacks", "Carnage", "Unfair Advantage", "Combat Potency",
+			"Honor Among Thieves", },
 		skillBooks={ "Redirect" },
 	},
 			
@@ -1458,7 +1513,7 @@ points[ 1416 ] = { -- Alterac Mountains
 	[39606080] = { item=213452, name="Dormant Holy Rune", class={ "PALADIN" }, spell={ "Guarded by the Light" },
 					guide={ st.paladin.guardedLight } },
 	[40604700] = { name="Crushridge mobs (Various)", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[48505770] = { object=423896, name="Manual", class={ "MAGE" },
 					spell={ "Spell Power" }, guide={ st.mage.books }, alsoTestQuest=true,
 					tip="On a crate, just inside the tower",
@@ -1472,13 +1527,17 @@ points[ 1416 ] = { -- Alterac Mountains
 	[61004760] = { npc=217305, name="Ancient Fire Elemental", class={ "MAGE" }, spell={ "Hot Streak" }, guide={ st.mage.hotStreak } },
 	[80406680] = { npc=6176, name="Bath'rah the Windwatcher", class={ "SHAMAN" }, spell={ "Maelstrom Weapon" },
 					guide={ st.shaman.maelstrom }, quest={ st.shaman.maelstromQ }, questName={ st.shaman.maelstromQN } },
+	[84608020] = { name="Fahrad / Zan Shivsproket", class={ "ROGUE" }, spell={ "Honor Among Thieves" }, guide={ st.rogue.honorThieves },
+					quest={ { 6681, 80526, 80411, 80453, 80454, 80455 } }, preRune={ { "Deadly Brew", "Shadowstep" } },
+					questName={ { "The Manor, Ravenholdt", "Fool Me Twice", "The Talisman of Kazdor", "Best Laid Plans",
+						"One Last Drop", "Biding Our Time" } } },
 }
 points[ 1417 ] = { -- Arathi Highlands
 	[21508390] = { object=422911, name="Sealed Barrel", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
 					tip="Lowest level of the boat. Nearby\nnaga (L40) can root you for 10s.\nLoot the Smuggler's Spice Blend",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[22206760] = { name="Boulderfist mobs (Various)", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[26006360] = { npc=2590, name="Syndicate Conjuror", class={ "WARLOCK" },
 					tip="you need 10 x Conjuror's Pendant.\nYou may safely group with other warlocks",
 					spell={ "Invocation" }, guide={ st.warlock.invocation } },
@@ -1493,14 +1552,14 @@ points[ 1417 ] = { -- Arathi Highlands
 					spell={ "Survival Instincts", "Invigoration" }, guide={ st.amaryllis } },
 	[31406480] = { object=422911, name="Sealed Barrel", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
 					tip="Cave entrance through to the sunken boat",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[34004400] = { npc=2562, name="Boulderfist Ogre", class={ "SHAMAN" }, spell={ "Power Surge" }, guide={ st.shaman.powerSurge } },
 	[48608860] = { name="Dark Iron (Various)", class={ "PALADIN" },
 					spell={ "Enlightened Judgements" }, guide={ st.paladin.judgements } },
 	[55603920] = { npc=217589, name="Hay Weevil", class={ "DRUID", "HUNTER" },
 					spell={ "Survival Instincts", "Invigoration" }, guide={ st.amaryllis } },
 	[57607460] = { npc=217300, name="Skonk", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[61604100] = { npc=218931, name="Dark Rider", tip="Search this area",
 					class={ "DRUID", "HUNTER", "MAGE", "PALADIN", "PRIEST", "ROGUE",
 					"SHAMAN", "WARLOCK", "WARRIOR" }, spell={ "King of the Jungle", "Melee Specialist", "Missile Barrage",
@@ -1552,7 +1611,7 @@ points[ 1418 ] = { -- Badlands
 					spell={ "Rallying Cry" }, guide={ st.warrior.rallyingCry } },
 	[41502810] = { object=422919, name="Tapped Shadowforge Keg", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
 					tip="Descend to the basement of Angor Fortress.\nLoot the Balmy Brew",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[43007860] = { name="Rock Elementals (Various)", class={ "SHAMAN" }, spell={ "Maelstrom Weapon" },
 					guide={ st.shaman.maelstrom }, quest={ st.shaman.maelstromQ }, questName={ st.shaman.maelstromQN } },
 	[44001600] = { name="Skillbooks", tip="Uldaman", skillBook=true, guide={ st.dungeonDrops }, 
@@ -1582,9 +1641,13 @@ points[ 1418 ] = { -- Badlands
 							"Portal Summoning", "Soul Harvesting", "Commanding Shout" }, },
 }
 points[ 1419 ] = { -- Blasted Lands
+	[45301640] = { object=442405, name="Abandoned Cache", class={ "ROGUE" }, spell={ "Carnage" },
+					guide={ "Climb the tower, lockpick the chest.\nSurprise! A Murderous Lost One (L46).\nKill for your phat lewt!" }, },
 	[45405420] = { npc=221740, name="Calefactus the Unleashed", class={ "HUNTER" }, spell={ "Rapid Killing" },
 					quest={ { 81900, 81917, 81919 } }, questName={ { "The Burning Beast", "Chains That Bind", "Brought to Heel" } },
 					guide={ st.hunter.rapidKilling }, tip={ st.hunter.calefactus } },
+	[49001400] = { item=223331, name="Pulsating Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid } },
 	[50003900] = { npc=221740, name="Calefactus the Unleashed", class={ "HUNTER" }, spell={ "Rapid Killing" },
 					quest={ { 81900, 81917, 81919 } }, questName={ { "The Burning Beast", "Chains That Bind", "Brought to Heel" } },
 					guide={ st.hunter.rapidKilling }, tip={ st.hunter.calefactus } },
@@ -2224,8 +2287,11 @@ points[ 1424 ] = { -- Hillsbrad Foothills
 					spell={ "Lava Burst" }, guide={ st.shaman.kajaricIcon } },
 	[65606300] = { npc=2373, name="Kajaric Icon", class={ "SHAMAN" },
 					spell={ "Lava Burst" }, guide={ st.shaman.kajaricIcon } },
+	[67601500] = { npc=214529, name="Brave Stonetorch", class={ "PALADIN" }, preRune={ { "Fanaticism" } },
+					quest={ { 81790 } }, questName={ { "Materials of Significance" } }, spell={ "Hammer of the Righteous" },
+					tip="Yes, a Tauren Paladin. Nice\nlead in to Horde Paladins!", guide={ st.paladin.hammerRighteous } },
 	[78603860] = { name="Wild Gryphon/Kurdros/Granistad", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[79704090] = { name="Rubble Pile/Storage Locker", class={ "WARLOCK" },
 					spell={ "Lake of Fire" }, guide={ st.warlock.firesWake }, 
 					tip="Aim carefully or bye bye 5 gold... QQ" },
@@ -2234,11 +2300,13 @@ points[ 1424 ] = { -- Hillsbrad Foothills
 					spell={ "Envenom" }, guide={ st.rogue.envenom } },
 	[88604120] = { name="Wild Gryphon/Kurdros/Granistad", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
 					tip="Loot a Hybrid Haunch",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 }
 points[ 1455 ] = { -- Ironforge
 	[24276747] = { npc=214099, name="Tamelyn Aldridge", faction="Alliance",
 					class=st.allClass, spell=st.allSpellACA, guide={ st.supplyFaction } },
+	[27601120] = { npc=221827, name="Magister Falath", class={ "PALADIN" }, spell={ "Wrath" },
+					guide={ st.paladin.wrath }, },
 	[51901360] = { object=405946, name="Dusty Chest", class={ "ROGUE" }, faction="Alliance", guide={ st.rogue.precision },
 					tip="In an alcove to the right of the stairs", spell={ "Slaughter from the Shadows" } },
 	[72537696] = { npc=5570, name="Bruuk Barleybeard", class={ "WARRIOR" }, faction="Alliance",					
@@ -2567,6 +2635,9 @@ points[ 1427 ] = { -- Searing Gorge
 					guide={ st.warrior.tasteForBlood } },
 	[42503050] = { object=441913, name="Giant Golem Foot (left)", class={ "WARRIOR" }, spell={ "Taste for Blood" },
 					guide={ st.warrior.tasteForBlood }, tip="At the back of the cave" },
+	[43804580] = { item=223332, name="Vibrating Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid },
+					tip="In a cave. You'll need to drop down" },
 	[44003290] = { object=441912, name="Giant Golem Foot (right)", class={ "WARRIOR" }, spell={ "Taste for Blood" },
 					guide={ st.warrior.tasteForBlood }, tip="Inside the slag pits" },
 	[49703740] = { object=441914, name="Giant Golem Arm (right)", class={ "WARRIOR" }, spell={ "Taste for Blood" },
@@ -2603,10 +2674,17 @@ points[ 1421 ] = { -- Silverpine Forest
 	[46802660] = { npc=1778, name="Ferocious Grizzled Bear", class={ "HUNTER" },
 					spell={ "Beast Mastery" }, guide={ st.hunter.beastMastery } },
 	[47107110] = { object=410369, name="Dead Drop", class={ "ROGUE", "ROGUE" },
-					spell={ "Deadly Brew", "Shadowstep" }, guide={ st.rogue.deadlyBrew, st.rogue.shadowstep },
+					spell={ "Deadly Brew", "Shadowstep" },
+					guide={ st.rogue.deadlyBrew, st.rogue.shadowstep },
+					preRune={ {}, {}, { "Deadly Brew", "Shadowstep" } },
 					quest={ { 78261, 78307 }, { 78699,78676 } },
 					questName={ { "The Horn of Xelthos (Main)", "The Horn of Xelthos (Reward)" },
-						{ "The Eye of Bhossca (Dead Drop)", "The Eye of Bhossca (SM)" } } },
+						{ "The Eye of Bhossca (Dead Drop)", "The Eye of Bhossca (SM)" }, } },
+	[48607260] = { object=410369, name="Dead Drop", class={ "ROGUE" }, spell={ "Honor Among Thieves" },
+					guide={ st.rogue.honorThieves },preRune={ { "Deadly Brew", "Shadowstep" } },
+					quest={ { 6681, 80526, 80411, 80453, 80454, 80455 } },
+					questName={ { "The Manor, Ravenholdt", "Fool Me Twice", "The Talisman of Kazdor", "Best Laid Plans",
+						"One Last Drop", "Biding Our Time" } } },
 	[48004060] = { npc=1769, name="Moonrage Whitescalp", class={ "DRUID" },
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
 	[48203360] = { npc=1769, name="Moonrage Whitescalp", class={ "DRUID" },
@@ -2708,6 +2786,9 @@ points[ 1453 ] = { -- Stormwind City
 					spell={ "Divine Storm" }, quest={ { 78088, 78089, 78090, 78091, 78092, 78093 } }, tip="She's" ..st.secretCoven,
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" } }, guide={ st.paladin.divineStorm } },
+	[36327847] = { npc=211033, name="Garion Wendell", class={ "MAGE" }, faction="Alliance",
+					spell={ "Icy Veins" }, tip="Collect any 10 books", guide={ st.mage.books },
+					quest={ st.mage.booksQuestIDsA }, questName={ st.mage.booksQuestNamesA }, },
 	[37223185] = { npc=5492, name="Katherine the Pure", class={ "PALADIN", "PALADIN" }, faction="Alliance",
 					spell={ "Divine Storm", "Sheath of Light" }, tip="First room on the left",
 					quest={ { 78088, 78089, 78090, 78091, 78092, 78093 }, { 79939, 79940, 79945, 79970 } },					
@@ -2715,9 +2796,9 @@ points[ 1453 ] = { -- Stormwind City
 						"It Must Be Destroyed", "Return to Delgren" }, { "The Broken Hammer", "A Lost Brother",
 						"Orders from the Grand Crusader", "Aeonas the Vindicated" } },
 						guide={ st.paladin.divineStorm, st.paladin.sheathLight } },
-	[36327847] = { npc=211033, name="Garion Wendell", class={ "MAGE" }, faction="Alliance",
-					spell={ "Icy Veins" }, tip="Collect any 10 books", guide={ st.mage.books },
-					quest={ st.mage.booksQuestIDsA }, questName={ st.mage.booksQuestNamesA }, },
+	[37603160] = { name="Aeonas the Vindicated / Katherine the Pure", class={ "PALADIN" }, faction="Alliance",
+					quest={ { 81764, 81766 } }, questName={ { "The Mysterious Merchant", "The Bloody Missive" } }, 
+					spell={ "Fanaticism" }, guide={ st.paladin.fanaticism },  preRune={ { "Sheath of Light" } }, },
 	[37827997] = { npc=211033, name="Garion Wendell", class={ "MAGE" }, faction="Alliance",
 					spell={ "Spell Power" }, tip="Collect any 20 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsA }, questName={ st.mage.booksQuestNamesA }, },
@@ -2753,6 +2834,9 @@ points[ 1434 ] = { -- Stranglethorn Vale
 	[31801570] = { npc=217783, name="Bloodscalp Guerrilla", class={ "HUNTER" },
 					spell={ "Dual Wield Specialization" }, guide={ st.hunter.dualWield } },
 	[33001380] = { name="Bloodscalp trolls (Various)", class={ "PRIEST" }, spell={ "Dispersion" }, guide={ st.priest.dispersion } },
+	[33008800] = { item=223333, name="Baleful Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid },
+					tip="Directly behind Captain Stillwater" },
 	[35601080] = { npc=715, name="Hemet Nesingwary", class={ "HUNTER", "PRIEST" }, spell={ "Expose Weaknesss", "Dispersion" },
 					guide={ st.hunter.expose, st.priest.dispersion }, quest={ { 78823, 78830 }, {} },
 					questName={ { "Terror of the Desert Skies", "Terror of the Desert Skies" }, {} } },
@@ -2762,6 +2846,9 @@ points[ 1434 ] = { -- Stranglethorn Vale
 					guide={ st.grizzby }, quest={ 78265 }, questName={ "Fish Oil" } },
 	[37002460] = { name="Murkgill Mobs (Various)", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78265 }, questName={ "Fish Oil" } },
+	[40705850] = { npc=223591, name="Echo of a Lost Soul", class={ "PRIEST" }, spell={ "Surge of Light" },
+					tip="Outside these hours the Lost Soul might be seen on\nthe beach at the end of the Blood Moon PvP event. YMMV",
+					guide={ st.priest.surgeLight } },
 	[41505090] = { object=421526, name="Research Notes", class={ "MAGE" },
 					spell={ "Spell Power" }, guide={ st.mage.books }, alsoTestQuest=true,
 					tip="On a bench to the right of the cave entrance",
@@ -2784,12 +2871,14 @@ points[ 1435 ] = { -- Swamp of Sorrows
 					spell={ "Survival Instincts", "Invigoration" }, guide={ st.amaryllis } },
 	[42603070] = { object=428228, name="Conspicuous Cache", class={ "ROGUE" },
 					spell={ "Shuriken Toss" }, guide={ st.rogue.shurikenToss } },
+	[50106200] = { npc=223591, name="Echo of a Lost Soul", class={ "PRIEST" }, spell={ "Surge of Light" },
+					guide={ st.priest.surgeLight } },
 	[56307620] = { item=220345, name="Sanguine Sorcery", class={ "MAGE" },
 					spell={ "Deep Freeze" }, guide={ st.mage.books }, alsoTestQuest=true,
 					quest={ { 81947 } }, questName={ { "Sanguine Sorcery" } } },
 	[58406220] = { npc=769, name="Deathstrike Tarantula", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
 					tip="Loot the Viscous Venom",
-					quest={ 79624, 79677, 79678 }, questName={ "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } },
+					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
 	[61602240] = { object=423901, name="Book", class={ "MAGE" },
 					spell={ "Spell Power" }, guide={ st.mage.books }, alsoTestQuest=true,
 					tip="Farm nearby Lost Ones for a Rusted\nCage Key to open the Rusted Cage",
@@ -2825,6 +2914,8 @@ points[ 1425 ] = { -- The Hinterlands
 						.."Don't go east to Shadra'Alor as the Sadists\nthere are much tougher. Stay south of Aerie Peak" } },
 	[28606120] = { name="Owlbeast Mobs (Various)", class={ "MAGE" }, spell={ "Temporal Anomaly" },
 					guide={ st.mage.temporal }, quest={ 82082 }, questName={ "A Lesson in Literacy" } },
+	[33004400] = { npc=221828, name="Vengeful Spirit", class={ "PALADIN" }, spell={ "Wrath" },
+					guide={ st.paladin.wrath }, tip="Use Sense Undead to see.\nRespawn is about 10 minutes" },
 	[36007270] = { object=441252, name="Book", class={ "MAGE" },
 					spell={ "Deep Freeze" }, guide={ st.mage.books }, alsoTestQuest=true, tip="Behind a wall",
 					quest={ { 81954 } }, questName={ { "Venomous Journeys" } } },
@@ -2844,6 +2935,8 @@ points[ 1425 ] = { -- The Hinterlands
 					quest={ { 82073, 82076, 82071, 82074, 82072, 82075, 81960, 81968 } },
 					questName={ { "Cleansing Water", "Answering Water's Call", "Purifying Fire", "Answering Fire's Call",
 						"Purging Earth", "Answering Earth's Call", "Clarifying Air", "Answering Air's Call" } } },
+	[58407270] = { item=223334, name="Glowing Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid } },
 	[61403450] = { name="Quartermaster Alandra / Field Captain Korlian", class=st.allClass, spell=st.emeraldSpell,
 					guide={ st.nightmareIncursions } },
 	[64006680] = { name="Vilebranch Trolls (Various)", class=st.allClass, spell=st.wildGodsSpells, guide={ st.wildGods },
@@ -2852,6 +2945,10 @@ points[ 1425 ] = { -- The Hinterlands
 					guide={ st.mage.temporal }, quest={ 82082 }, questName={ "A Lesson in Literacy" } },
 	[66005300] = { npc=221933, name="Moonkin Avatar", class={ "DRUID" }, spell={ "Efflorescence" },
 					guide={ st.druid.efflorescence }, quest={ 81924 }, questName={ "Wisdom of the Guardians" } },
+	[72506870] = { npc=223591, name="Echo of a Lost Soul", class={ "PRIEST" }, spell={ "Surge of Light" },
+					guide={ st.priest.surgeLight } },
+	[72605280] = { npc=222695, name="Vilebranch Mask", class={ "ROGUE" },
+					spell={ "Focused Attacks" }, guide={ "Use Blind (L34). Loot the chest\nThere are stealthed wolves in the area" } },
 }
 points[ 1420 ] = { -- Tirisfal Glades
 	[24705945] = { object=406736, name="Lost Stash", class={ "WARLOCK", "WARRIOR" }, faction="Horde",
@@ -3700,21 +3797,23 @@ points[ 1447 ] = { -- Azshara
 					spell={ "Displacement", "Purifying Power", "Despair", "Backdraft" }, guide={ st.leylineGuide },
 					tip="Near to The Forlorn Ridge" },
 	[25456612] = { npc=221400, name="Kajind", class={ "WARRIOR" }, tip="Up in a mountain, path is from the east",
-					spell={ "Gladiator Stance" }, guide={ st.warrior.gladiator }, preRune={ "Blood Frenzy", "Rallying Cry" },
+					spell={ "Gladiator Stance" }, guide={ st.warrior.gladiator }, preRune={ { "Blood Frenzy", "Rallying Cry" } },
 					quest={ { 81682, 81697, 81801, 81877 } }, 
 					questName={ { "The Old Champ", "Defanged", "Return to the Arena", "Fight Night" } } },
 	[34004900] = { name="Shrine of the Beast", class={ "DRUID" }, spell={ "Efflorescence" },
 					guide={ st.druid.efflorescence }, quest={ 81924 }, questName={ "Wisdom of the Guardians" } },
 	[36207000] = { npc=221651, name="Ceruleos", class={ "WARRIOR" }, spell={ "Gladiator Stance" },
-					guide={ st.warrior.gladiator }, preRune={ "Blood Frenzy", "Rallying Cry" },
+					guide={ st.warrior.gladiator }, preRune={ { "Blood Frenzy", "Rallying Cry" } },
 					quest={ { 81682, 81697, 81801, 81877 } }, 
 					questName={ { "The Old Champ", "Defanged", "Return to the Arena", "Fight Night" } } },
 	[42607160] = { npc=221651, name="Ceruleos", class={ "WARRIOR" }, spell={ "Gladiator Stance" },
-					guide={ st.warrior.gladiator }, preRune={ "Blood Frenzy", "Rallying Cry" },
+					guide={ st.warrior.gladiator }, preRune={ { "Blood Frenzy", "Rallying Cry" } },
 					quest={ { 81682, 81697, 81801, 81877 } }, 
 					questName={ { "The Old Champ", "Defanged", "Return to the Arena", "Fight Night" } } },
 	[43003000] = { npc=222580, name="Child of Apa'ro", class={ "DRUID" }, spell={ "Efflorescence" },
 					guide={ st.druid.efflorescence }, quest={ 81924 }, questName={ "Wisdom of the Guardians" } },
+	[89003300] = { npc=223590, name="Shrine of the Watcher", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid } },
 }
 points[ 1439 ] = { -- Darkshore
 	[30404800] = { npc=414646, name="Remnant", class={ "PRIEST" }, faction="Alliance", 
@@ -4120,10 +4219,25 @@ points[ 1445 ] = { -- Dustwallow Marsh
 					quest={ { 79952 } }, questName={ { "RwlRwlRwlRwl" } } },
 	[63704250] = { object=424264, name="Grave", class={ "PRIEST" }, tip="Theramore Echo",
 					spell={ "Pain Suppression" }, guide={ st.priest.painSuppression } },
+	[66604520] = { npc=221575, name="Elrick", class={ "PALADIN" }, faction="Alliance", preRune={ { "Sheath of Light" } },
+					quest={ { 81764, 81766 } }, questName={ { "The Mysterious Merchant", "The Bloody Missive" } }, 
+					spell={ "Fanaticism" }, guide={ st.paladin.fanaticism }, },
 }
 points[ 1448 ] = { -- Felwood
+	[35305870] = { item=223336, name="Piercing Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid } },
 	[41304360] = { npc=222408, name="Shadowtooth Emissary", class=st.allClass, spell=st.wildGodsSpells, guide={ st.wildGods },
 					quest={ { 82043, 82044 } }, questName={ { "The Wild Gods (Part 1)", "The Wild Gods (Part 2)" } } },
+	[42604140] = { name="Infernal / Entropic Beast", class={ "PALADIN" }, preRune={ { "Fanaticism" } },
+					quest={ { 81790 } }, questName={ { "Materials of Significance" } }, spell={ "Hammer of the Righteous" },
+					guide={ st.paladin.hammerRighteous } },
+	[43005700] = { name="Rope / Aeonus", class={ "PALADIN" }, preRune={ { "Fanaticism" } },
+					tip="Reports indicate that Aeonus' horse is interactive\nand located at the Emerald Santuary to the south",
+					quest={ { 81790 } }, questName={ { "Materials of Significance" } }, spell={ "Hammer of the Righteous" },
+					guide={ st.paladin.hammerRighteous } },
+	[44605200] = { npc=221636, name="Gregory", class={ "PALADIN" }, preRune={ { "Fanaticism" } },
+					quest={ { 81790 } }, questName={ { "Materials of Significance" } }, spell={ "Hammer of the Righteous" },
+					guide={ st.paladin.hammerRighteous } },
 }
 points[ 1444 ] = { -- Feralas
 	[22207050] = { name="Treant Avatar / Blightbark", class={ "DRUID" }, spell={ "Efflorescence" },
@@ -4164,6 +4278,9 @@ points[ 1444 ] = { -- Feralas
 					tip="At The High Wilderness" },
 	[57206900] = { npc=221985, name="Tyrisius", class={ "DRUID" }, spell={ "Efflorescence" },
 					guide={ st.druid.efflorescence }, quest={ 81924 }, questName={ "Wisdom of the Guardians" } },
+	[57206870] = { item=223337, name="Burning Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid },
+					tip="In a tower in the Ruins of Isildien" },
 	[58705240] = { name="Shrine of the Warden", class={ "DRUID" }, spell={ "Efflorescence" },
 					guide={ st.druid.efflorescence }, quest={ 81924 }, questName={ "Wisdom of the Guardians" } },
 	[53006000] = { npc=222376, name="Groddoc Infant", class={ "HUNTER" }, spell={ "Catlike Reflexes" },
@@ -4577,11 +4694,16 @@ points[ 1446 ] = { -- Tanaris
 						.."will spawn. Open it, loot, profit!\n\nBring friends to distract if you must. Otherwise\n"
 						.."just preclear ftw!" } },
 	[43803200] = { npc=222243, name="Zopilote", class={ "HUNTER" }, spell={ "Raptor Fury" }, guide={ "Kill Zopilote" } },
-	[52803640] = { npc=222243, name="Zopilote", class={ "HUNTER" }, spell={ "Raptor Fury" }, guide={ "Kill Zopilote" } },
 	[51602760] = { npc=220984, name="Fizbuz Mithril", class={ "WARRIOR" }, spell={ "Gladiator Stance" },
-					guide={ st.warrior.gladiator }, preRune={ "Blood Frenzy", "Rallying Cry" },
+					guide={ st.warrior.gladiator }, preRune={ { "Blood Frenzy", "Rallying Cry" } },
 					quest={ { 81682, 81697, 81801, 81877 } }, 
 					questName={ { "The Old Champ", "Defanged", "Return to the Arena", "Fight Night" } } },
+	[52803640] = { npc=222243, name="Zopilote", class={ "HUNTER" }, spell={ "Raptor Fury" }, guide={ "Kill Zopilote" } },
+	[53802880] = { npc=223591, name="Echo of a Lost Soul", class={ "PRIEST" }, spell={ "Surge of Light" },
+					guide={ st.priest.surgeLight } },
+	[56407370] = { item=223335, name="Oozing Eye", class={ "PRIEST" }, spell={ "Eye of the Void" },
+					quest={ { 82316 } }, questName={ { "Seven Eyes I Seek..." } }, guide={ st.priest.eyeOfVoid },
+					tip="In the hive in The Gaping Chasm" },
 	[59003650] = { name="Cryptic Scroll of Summoning", class={ "PRIEST", "SHAMAN" },
 					spell={ "Pain and Suffering", "Mental Dexterity" }, guide={ st.enragedVoidWalker } },
 	[61605420] = { name="Blisterpaw Hyena, Glashide Glazer, Land Rager", class={ "SHAMAN" }, spell={ "Overcharged" },
@@ -4596,9 +4718,11 @@ points[ 1446 ] = { -- Tanaris
 						"Purging Earth", "Answering Earth's Call", "Clarifying Air", "Answering Air's Call" } } },
 	[63803100] = { name="Wastewander mobs (Various)", class={ "PRIEST", "SHAMAN" },
 					spell={ "Pain and Suffering", "Mental Dexterity" }, guide={ st.enragedVoidWalker } },
+	[67002200] = { npc=8139, name="Jabbey", class={ "ROGUE" }, spell={ "Unfair Advantage" }, guide={ st.rogue.unfair } },
 	[72704780] = { object=441248, name="Book", class={ "MAGE" }, tip="In a bookshelf, middle pirate building",
 					spell={ "Deep Freeze" }, guide={ st.mage.books }, alsoTestQuest=true,
 					quest={ { 81949 } }, questName={ { "Legends of the Tidesages" } } },
+	[73404580] = { name="Southsea Pirates (Various)", class={ "ROGUE" }, spell={ "Unfair Advantage" }, guide={ st.rogue.unfair } },
 }
 points[ 1438 ] = { -- Teldrassil
 	[33603560] = { npc=204827, name="Adventurer's Remains", class={ "DRUID", "PALADIN", "PRIEST", "SHAMAN" }, faction="Alliance",
