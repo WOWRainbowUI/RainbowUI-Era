@@ -1,41 +1,55 @@
 local _, ns = ...
 local points = ns.points
 
-ns.bestPet = "獵人最好的寵物莫過於貓科動物了。\n\n以下是一些值得馴服的稀有/菁英寵物：\n\n"
-.."莫克瓦 - 莫高雷血蹄村西方，等級 7\n拉魯克 - 杜洛塔迴音群島，等級 7\n"
-.."暮色潛行者 - 泰達希爾，等級 9\n耙子 - 雷霆崖東方，等級 10，重生時間 30+ 分鐘\n"
-.."迪舒 - 北貧瘠之地，等級 13\n暗影爪 - 黑海岸奧伯丁北方，等級 13\n"
-.."胡瑪 - 貧瘠之地棘齒城，等級 23，重生時間 8+ 小時\n"
-.."阿拉加 - 奧特蘭克山谷，等級 35，重生時間 2-3 天\n斷牙 - 荒蕪之地，等級 37\n"
-.."巴格希拉 - 荊棘谷，等級 40 菁英\n班加拉什王 - 荊棘谷，等級 43 菁英\n\n"
-.."對於喜歡風蛇的玩家... 當然是哈卡之子\n你可以在祖爾格拉布找到他。等級 60 菁英，當然還有\n"
-.."石爪山脈的幼年獅鷲 (限定)，作為獲得殺戮命令的共同獎勵"
-ns.chest1 = "* 10 級攔路強盜補給品\n* 10 級法師卷軸\n* 5 x 專業配方\n* 白色、灰色物品"
-ns.chest2 = "* 10 級攔路強盜補給品\n* 10 級法師卷軸\n* 13 x 專業配方\n* 綠色、白色、灰色物品"
-ns.chest3 = "* 20 級攔路強盜補給品\n* 20 級法師卷軸\n* 10 x 專業配方\n* 綠色、灰色物品"
-ns.cozySleepingBag = "第一步：" ..( ( ns.faction == "Alliance" ) and "前往西部荒野的艾力克斯頓農場" or
-"前往貧瘠之地陶拉祖南方道路上的燒毀高塔" ) .."\n在瓦礫堆中尋找燒毀的殘骸。\n\n"
-.."第二步：" ..( ( ns.faction == "Alliance" ) and "前往貧瘠之地陶拉祖南方道路上的燒毀高塔。" or
-"前往西部荒野的艾力克斯頓農場" )
-.."\n在瓦礫堆中尋找燒毀的殘骸。\n從附近的釘板拾取下一個任務。\n\n"
-.."第三步：前往石爪山脈，尋找一個\n廢棄的營地。它位於陽岩避難所東北方向的一條小徑上。\n那裡有一個箱子，上面有口袋垃圾。\n\n"
-.."第四步：往北走，直接上山，尋找一個土堆。\n"
-.."點擊完成“攀爬”。接受“弄濕的工作”。\n\n"
-.."第五步：洛克莫丹，在與\n濕地接壤的大壩壁架上。點擊鷹雕像完成任務並開始新的任務。\n\n"
-.."第六步：攀登索拉丁之牆，它與希爾斯布萊德丘陵和阿拉希\n高地接壤。從希爾斯布萊德丘陵一側通過一輛破車向上攀爬。\n繼續攀爬，你會發現一個大廳和一個袋子。\n\n"
-.."注意：這個任務鏈獎勵你 8 個學徒的飼料。目前這是獲得這個休息經驗加成的唯一途徑！"
+ns.bestPet = "可以說，獵人最好的寵物是貓。\n\n以下是一系列不錯的稀有/精英寵物可供馴服：\n\n"
+.."莫克瓦 - 7 級，莫高雷血蹄村以西\n拉魯克 - 7 級，杜隆塔爾回音群島\n"
+.."暮色潛行者 - 9 級，泰達希爾\n掃蕩者 - 10 級，雷霆崖以東。重生時間 30+ 分鐘\n"
+.."迪舒 - 13 級，貧瘠之地北部\n暗影之爪 - 13 級，黑海岸奧伯丁以北\n"
+.."胡瑪爾 - 23 級，貧瘠之地棘齒城。重生時間 8+ 小時\n"
+.."阿拉加 - 35 級，奧特蘭克。重生時間 2-3 天\n斷牙 - 37 級，荒蕪之地\n"
+.."巴格塞拉 - 40 級精英，荊棘谷\n班加拉什國王 - 43 級精英，荊棘谷\n\n"
+.."對於那些喜歡風蛇的人來說...當然是哈卡之子\n你可以在祖爾格拉布找到他。60 級精英，當然還有石爪山脈的\n"
+.."幼年驕傲之翼（僅限），作為獲得殺戮命令的共同獎勵"
+ns.chest1 = "* 10 級被劫物資\n* 10 級法師卷軸\n* 5 個專業配方\n* 白色物品、灰色物品"
+ns.chest2 = "* 10 級被劫物資\n* 10 級法師卷軸\n* 13 個專業配方\n* 綠色物品、白色物品、灰色物品"
+ns.chest3 = "* 20 級被劫物資\n* 20 級法師卷軸\n* 10 個專業配方\n* 綠色物品、灰色物品"
+ns.cozySleepingBag = "第一步：" ..( ( ns.faction == "Alliance" ) and "前往西部荒野的亞歷克斯頓農場" or
+"前往貧瘠之地陶拉祖營地以南的被燒毀的塔樓" ) .."\n在廢墟中尋找燒焦的殘骸。\n\n"
+.."第二步：" ..( ( ns.faction == "Alliance" ) and "前往貧瘠之地陶拉祖營地以南的被燒毀的塔樓。" or
+"前往西部荒野的亞歷克斯頓農場" )
+.."\n在廢墟中尋找燒焦的殘骸。\n從附近的一個釘著木板的地方拾取下一個任務。\n\n"
+.."第三步：前往石爪山脈，尋找一個\n廢棄的營地。它位於太陽岩避難所東北方向的一條小路旁。\n那裡有一個口袋垃圾，在一個箱子上。\n\n"
+.."第四步：向北走，直接上山，尋找一堆土。\n"
+.."點擊完成“攀爬”。接受“濕活”。\n\n"
+.."第五步：洛克莫丹，在與\n濕地接壤的水壩的壁架上。點擊鷹形雕像完成\n並開始任務。\n\n"
+.."第六步：攀登索拉丁之牆，與希爾斯布萊德丘陵和阿拉希\n高地接壤。從希爾斯布萊德丘陵一側\n通過一輛破損的馬車爬上去。\n繼續攀爬，你會發現一個大廳和一個袋子。\n\n"
+.."注意：這個任務鏈獎勵你 8 件學生\n飼料。目前獲得這種休息經驗加成的唯一途徑！"
+ns.felPortals = "術士探索者小鬼使用，\n法師用於他們的邪能火球符文等"
+ns.twoMeditate = "在 17 級時前往暴風城的公園（人類/\n矮人）、達納蘇斯的月神殿（暗夜精靈）、\n"
+.."幽暗城的戰爭區（所有部落），從牧師訓練師那裡獲得一個種族\n任務。\n\n"
+.."最終你將能夠跨種族（以及陣營，錯誤？）共享多個冥想\n增益效果。\n\n"
+.."玩家 1：/kneel；玩家 2：/pray"
 ns.voidTouchedTitle = "虛空之觸裝備指南"
-ns.voidTouched = "(1) 將鍛造、制皮或裁縫其中之一的技能等級提升至 25 級和 100 級。\n\n"
-.."(2) 從拍賣場購買一瓶混合悔恨藥劑。\n煉金術士可以從以下地點購買這個配方：位於塔倫米爾和南海鎮之間小路上的齊克希爾；\n位於赤脊山/艾爾文森林通往夜色鎮的小路上的克茲克斯。\n\n"
-.."(3) 在灰谷的佐拉姆海岸找到死去的暮光信徒。\n喝下藥劑並與他交談。\n\n"
-.."(4) 在黑霧深淵中，擊敗第二個首領，加摩拉。\n與老塞拉基斯的屍體互動。\n\n"
-.."(5) 在棘齒城接受諾拉·安妮赫特的任務。需要 40 個奇異之塵、5 個強效魔法精華、2 個小塊閃光碎片、\n"
-.."一把變換鱗片和 5 枚金幣。鱗片可以從老\n塞拉基斯身上掉落。其他物品可以在拍賣場購買。\n\n"
-.."(6) 用她給你的護身符獎勵，返回黑霧深淵並前往凱爾里斯的\n水下洞穴。掠奪工匠的箱子。“盒子”會\n神奇地出現在你的背包中。\n\n(7) 前往奧特蘭克山脈。使用石柱摧毀盒子。\n\n"
-.."(8) 一個暗影人物會出現。與他互動。你必須選擇\n“好吧，讓我看看”選項。\n\n"
-.."(9) 恭喜。你現在擁有所有第一階段的配方。可能是當前版本最好的！\n\n"
-.."(從 (6) 開始重複以獲得另一個碎片)"
-
+ns.voidTouched = "(1) 鍛造、制皮或裁縫中的一項達到 25 級和 100 級。\n\n"
+.."(2) 從拍賣行購買一瓶融合的悔恨藥劑。\n煉金術士可以從塔倫米爾和南海鎮之間的路上的齊希爾處購買此配方；從\n赤松森林/艾爾文森林到夜色鎮的路上的克茲克斯處購買。\n\n"
+.."(3) 在灰谷的佐拉姆海岸找到死去的暮光信徒。喝下藥劑並與他交談。\n\n"
+.."(4) 在黑澗深淵中，擊敗第二個 Boss，加穆拉。\n與老塞拉基斯的屍體互動。\n\n"
+.."(5) 在棘齒城接受來自諾拉·安妮哈特的任務。奇怪的\n灰塵 x 40，大魔法精華 x 5，小微光碎片 x 2，\n"
+.."一把變幻的鱗片，5 金。鱗片從老\n塞拉基斯身上掉落。其他東西從拍賣行獲得。\n\n"
+.."(6) 用她的護身符獎勵，返回黑fathom 深淵，前往凱爾里斯的\n水下洞穴。拾取工匠的箱子。“盒子”\n"
+.."神奇地出現在你的包裡。\n\n(7) 前往奧特蘭克山脈。使用柱子摧毀盒子。\n\n"
+.."(8) 一個陰影人物出現了。互動。你必須選擇\n“好吧，讓我看看”選項。\n\n"
+.."(9) 恭喜。你現在擁有所有第一階段的配方。可能是 BiS！\n\n"
+.."(從 (6) 開始重複，以獲得另一個碎片)"
+			
+			
+-- Icons:	1 -3 	Chest
+--			4		Void-Touched
+--			5		Best Pets
+--			6		Cozy Sleeping Bag
+--			7		Fel Portals
+	
+	
 --=======================================================================================================
 --
 -- EASTERN KINGDOMS
@@ -100,31 +114,31 @@ points[ 1426 ] = { -- Dun Morogh
 }
 
 points[ 1431 ] = { -- Duskwood
---[[	[18002560] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[18002560] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[37602240] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[37602240] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[55406160] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[55406160] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[59001960] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[59001960] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[68203400] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[68203400] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
@@ -137,83 +151,92 @@ quest={ 78909 }, questName={ "變換鱗片護身符號" }, continent=true },
 }
 
 points[ 1429 ] = { -- Elwynn Forest
---[[	[12463405] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[12463405] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Begin here", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[19392475] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[19392475] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Finish the second quest here. /kneel always!", faction="Alliance",
 					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race=="Night elf") and 78193 or 0 ) } }, 
 					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
 							( ( ns.race == "Night Elf") and "Secrets of the Light (2)" or "" ) } } },
 ]]
-	[23805890] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[24409350] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[26109200] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[27808840] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[30806480] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[36206580] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[37908330] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[38208200] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[40307750] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[40807760] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[41605280] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[41807800] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[41808150] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[47508640] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[48008710] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[48608790] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[52505900] = {  title="破損的箱子", icon=1, tip=ns.chest1, continent=true },
-	[54306670] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[55606700] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[56706680] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[61004910] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[61304970] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[61704680] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[62204800] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[64805730] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[65004130] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[65005630] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[66104070] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[68404460] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[69903880] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[71107770] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[71108040] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[71507670] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[74005000] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[75508520] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[76508650] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[77308520] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[78205750] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[79305710] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[79405450] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[79505710] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[79705530] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
+	[23805890] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[24409350] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[26049211] = { title="破損的箱子", icon=1, tip=ns.chest1 }, -- V
+	[27808840] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[30806480] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[36206580] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[37908330] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[38208200] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[40307750] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[40807760] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[41605280] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[41807800] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[41808150] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[47608647] = { title="破損的箱子", icon=1, tip=ns.chest1 }, -- V
+	[48008710] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[48608790] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[52505900] = { title="破損的箱子", icon=1, tip=ns.chest1, continent=true },
+	[54306670] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[55606700] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[56706680] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[61004910] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[61304970] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[61704680] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[62204800] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[64805730] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[65004130] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[65005630] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[66104070] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[68404460] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[69903880] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[71107770] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[71108040] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[71507670] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[74005000] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[75508520] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[76508650] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[77308520] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[78205750] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[79305710] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[79405450] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[79505710] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[79705530] = { title="破損的箱子", icon=1, tip=ns.chest1 },
 }
 
 points[ 1424 ] = { -- Hillsbrad Foothills
-	[50514971] = { npc=3537, name="齊克希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買混合\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變換鱗片護身符" } },
-[52714131] = { npc=3537, name="齊克希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買混合\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變換鱗片護身符" } },
-[55511881] = { npc=3537, name="齊克希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買混合\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變換鱗片護身符" } },
-[55612661] = { npc=3537, name="齊克希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買混合\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變換鱗片護身符號" }, continent=true },
-[55613461] = { npc=3537, name="齊克希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買混合\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變換鱗片護身符" } },
-[60712021] = { npc=3537, name="齊克希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買混合\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變換鱗片護身符" } },
-[88557351] = { name="暗影人物 / 純淨之光碎片", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="通過 Ravenholdt 莊園前往" },
+--[[	[33003600] = { name="Hillsbrad mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+	[35204700] = { name="Hillsbrad mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+]]
+	[50514971] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="煉金術士可以購買融合的\n悔恨藥劑配方",
+quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
+[52714131] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="煉金術士可以購買融合的\n悔恨藥劑配方",
+quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
+[55511881] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="煉金術士可以購買融合的\n悔恨藥劑配方",
+quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
+[55612661] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="煉金術士可以購買融合的\n悔恨藥劑配方",
+quest={ 78909 }, questName={ "變幻的鱗片護身符" }, continent=true },
+[55613461] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="煉金術士可以購買融合的\n悔恨藥劑配方",
+quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
+[60712021] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="煉金術士可以購買融合的\n悔恨藥劑配方",
+quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
+[88557351] = { name="陰影人物 / 純淨之光碎片", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+tip="通過 Ravenholdt 莊園前往" 
 
 	[87304960] = { name="舊的破車", title="舒適的睡袋", icon=6, guide=ns.cozySleepingBag,
 quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } },
@@ -269,70 +292,82 @@ questName={ { "...以及你找到的那張紙條", "墊腳石", "攀爬", "弄�
 }
 
 points[ 1433 ] = { -- Redridge Mountains
-	[14506170] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[14906430] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[17106360] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[17201800] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[19802150] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[20501390] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[21103620] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[21701930] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[23402700] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[27302140] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[27902850] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[28008400] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[28202840] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[29608450] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[32308300] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[34102570] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[39003180] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[43807090] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[47407060] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[52304670] = {  title="破損的箱子", icon=3, tip=ns.chest3, continent=true },
-	[56005740] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[14506170] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
+	[14506170] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[14906430] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[17106360] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[17201800] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[19802150] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[20501390] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[21103620] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[21701930] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[23402700] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[27302140] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[27902850] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[28008400] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[28202840] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[29608450] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[32308300] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[34102570] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[39003180] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[43807090] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[47407060] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[52304670] = { title="破損的箱子", icon=3, tip=ns.chest3, continent=true },
+	[56005740] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[14506170] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+
+	[29803040] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[79003340] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[79007300] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[83204480] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[86305250] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
 }
 
 points[ 1421 ] = { -- Silverpine Forest
-	[36502930] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[43502250] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[43503170] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[44107170] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[44702050] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[44902350] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[45307500] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[45405420] = {  title="破損的箱子", icon=2, tip=ns.chest2, continent=true  },
-	[46007150] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[46305480] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[47207380] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[47705550] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[48302450] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[55801960] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[56202760] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[59101810] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[59901750] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[60801630] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[64801210] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[66301300] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
-	[64504970] = {  title="破損的箱子", icon=3, tip=ns.chest3, continent=true },
-	[65004200] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[65202320] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[65802340] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[66804550] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[67502540] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[67802420] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[77603100] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
-	[80202850] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
+	[36502930] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[43502250] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[43503170] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[44107170] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[44702050] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[44902350] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[45307500] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[45405420] = { title="破損的箱子", icon=2, tip=ns.chest2, continent=true  },
+	[46007150] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[46305480] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[47207380] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[47705550] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[48302450] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[55801960] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[56202760] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[59101810] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[59901750] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[60801630] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[64801210] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[66301300] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+	[64504970] = { title="破損的箱子", icon=3, tip=ns.chest3, continent=true },
+	[65004200] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[65202320] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[65802340] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[66804550] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[67502540] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[67802420] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[77603100] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+	[80202850] = { title="破損的箱子", icon=3, tip=ns.chest3 },
+
+	[38802340] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[44602550] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[45403180] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[50205680] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[50206520] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
 }
 
 points[ 1453 ] = { -- Stormwind City
---[[	[20685007] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[20685007] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Begin here", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[38582606] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[38582606] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Finish the second quest here. /kneel always!", faction="Alliance",
 					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race=="Night elf") and 78193 or 0 ) } }, 
 					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
@@ -348,28 +383,60 @@ points[ 1434 ] = { -- Stranglethorn Vale
 }
 
 points[ 1435 ] = { -- Swamp of Sorrows
+	[10505980] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[12502960] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[16606330] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[22906440] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[26904940] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[34302830] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[36305030] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[49503850] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[56706530] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[60502770] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[60904360] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[69407840] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[72401030] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[77308960] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[81203450] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[83406520] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[87302650] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[91006540] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[91205660] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
 }
 
 points[ 1420 ] = { -- Tirisfal Glades
-	[25304870] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[31704610] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[34704100] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[38004970] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[49203360] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[49603570] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[49804280] = {  title="破損的箱子", icon=1, tip=ns.chest1, continent=true },
-	[51006750] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[51802600] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[55504210] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[57903290] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[58703070] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[58802700] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[72802580] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[77205980] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
-	[78405590] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
+	[25304870] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[31704610] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[34704100] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[38004970] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[49203360] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[49603570] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[49804280] = { title="破損的箱子", icon=1, tip=ns.chest1, continent=true },
+	[51006750] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[51802600] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[55504210] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[57903290] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[58703070] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[58802700] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[72802580] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[77205980] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+	[78405590] = { title="破損的箱子", icon=1, tip=ns.chest1 },
+
+--[[	[56204940] = { npc=6491, name="Spirit Healer (Brill)", class={ "PRIEST" }, faction="Horde",
+					level=18, guide={ ns.twoMeditate }, tip="Come to here for the second quest hand-in. /kneel",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+]]
 }
 
 points[ 1458 ] = { -- Undercity
+--[[	[47201960] = { npc=211225, name="Baj'ura", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+]]
 }
 
 points[ 1422 ] = { -- Western Plaguelands
@@ -421,11 +488,34 @@ points[ 1436 ] = { -- Westfall
 	[63807030] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 	[65307510] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 
-	[37505070] = { name="燒毀的殘骸", title="舒適的睡袋", icon=6, guide=ns.cozySleepingBag,
-quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } },
-questName={ { "...以及你找到的那張紙條", "墊腳石", "攀爬", "弄濕的工作", "鷹之拳",
-"這裡應該是了" } },
-tip="聯盟：第一步\n部落：第二步", continent=true },
+	[37505070] = { name="Burned-Out Remains", title="Cozy Sleeping Bag", icon=6, guide=ns.cozySleepingBag,
+					quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } }, 
+					questName={ { "...and that note you found", "Stepping Stones", "Scramble", "Wet Job", "Eagle's Fist",
+						"This Must Be The Place" } },
+						tip="Alliance: Step One\nHorde: Step Two", continent=true },
+						
+	[29004780] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[29005820] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[29603420] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[29606940] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[31406530] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[31803940] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[32007620] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[32208020] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[32402920] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[34008220] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[37808540] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[41401540] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[46801260] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[46903950] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[47406740] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[47607930] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[47801380] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[29004780] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[51003240] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[51607120] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[57001050] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[62502630] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
 }
 
 points[ 1437 ] = { -- Wetlands
@@ -452,13 +542,78 @@ points[ 1440 ] = { -- Ashenvale
 	[31902320] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 	[31903120] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 	
-	[17202660] = { npc=212334, name="死去的暮光信徒", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-quest={ 78909 }, questName={ "變換鱗片護身符" }, continent=true },
+	[17202660] = { npc=212334, name="Dead Twilight Cultist", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
+					quest={ 78909 }, questName={ "Shifting Scale Talisman" }, continent=true },
+
+	[24406340] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[27606260] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[30203020] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[33402840] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[44506420] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[51204720] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[52506280] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[55604040] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[67004600] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[67005120] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[77407320] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[80507070] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[84807020] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+
+--[[	[31602300] = { name="Forsaken mobs (Various)", class={ "PRIEST" }, level=18, guide={ ns.twoMeditate },
+					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race == "Night elf" ) and 78193 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
+							( ( ns.race == "Night Elf" ) and "Secrets of the Light (2)" or "" ) } } },
+	[33406820] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[61007620] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },									
+	[64206840] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[67208280] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[71405400] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[76604520] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[79007360] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[79406200] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[85406640] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+]]
 }
 
 points[ 1439 ] = { -- Darkshore
-	[36702740] = {  title="破損的箱子", icon=2, tip=ns.chest2 },
---[[	[37604380] = { npc=211298, name="Syrnoya", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[36702740] = { title="破損的箱子", icon=2, tip=ns.chest2 },
+--[[	[37604380] = { npc=211298, name="Syrnoya", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Complete the second quest here. /kneel always!", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
@@ -503,7 +658,7 @@ points[ 1439 ] = { -- Darkshore
 }
 
 points[ 1457 ] = { -- Darnassus
---[[	[38608880] = { npc=211188, name="Maethra Slagheart", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[38608880] = { npc=211188, name="Maethra Slagheart", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Begin the first quest here", faction="Alliance",
 					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race == "Night elf" ) and 78193 or 0 ) } }, 
 					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
@@ -512,6 +667,19 @@ points[ 1457 ] = { -- Darnassus
 }
 
 points[ 1443 ] = { -- Desolace
+	[48808220] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[49507470] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[52008540] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[52107250] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[52808100] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[54401920] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[56107460] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[71501860] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[72502200] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[73502470] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[74501040] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[76501920] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[80401700] = { name="邪能之淚", title="邪能傳送門", icon=7, tip=ns.felPortals },
 }
 
 points[ 1411 ] = { -- Durotar
@@ -564,7 +732,14 @@ points[ 1411 ] = { -- Durotar
 	[68308510] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
 	[68407150] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
 
-	[68607160] = { npc=208124, name="拉魯克", title="最佳獵人寵物", icon=5, guide=ns.bestPet, continent=true },
+	[68607160] = { npc=208124, name="Raluk", title="Best Hunter Pets", icon=5, guide=ns.bestPet, continent=true },
+
+--[[	[68707110] = { object=410168, name="Voodoo Pile", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					tip="Ignore the quest directions. Climb the\nhill on the northern-most island",
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+]]
 }
 
 points[ 1445 ] = { -- Dustwallow Marsh
@@ -620,6 +795,13 @@ points[ 1412 ] = { -- Mulgore
 }
 
 points[ 1454 ] = { -- Orgrimmar
+--[[points[ 1454 ] = { -- Orgrimmar
+	[35748823] = { npc=211229, name="Dietrich Praice", class={ "PRIEST" }, faction="Horde",
+					level=18, guide={ ns.twoMeditate }, tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+]]
 }
 
 points[ 1442 ] = { -- Stonetalon Mountains
@@ -747,11 +929,41 @@ quest={ 78909 }, questName={ "變換鱗片護身符" }, continent=true },
 	[51802800] = { npc=5865, name="迪舒", title="最佳獵人寵物", icon=5, guide=ns.bestPet },
 	[62603440] = { npc=5828, name="獅王胡瑪", title="最佳獵人寵物", icon=5, guide=ns.bestPet },
 
-	[46407390] = { name="燒毀的殘骸", title="舒適的睡袋", icon=6, guide=ns.cozySleepingBag,
-	quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } },
-	questName={ { "...以及你找到的那張紙條", "墊腳石", "攀爬", "弄濕的工作", "鷹之拳",
-	"這裡應該是了" } },
-	tip="聯盟：第二步\n部落：第一步", continent=true },
+	[46407390] = { name="Burned-Out Remains", title="Cozy Sleeping Bag", icon=6, guide=ns.cozySleepingBag,
+					quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } }, 
+					questName={ { "...and that note you found", "Stepping Stones", "Scramble", "Wet Job", "Eagle's Fist",
+						"This Must Be The Place" } },
+						tip="Alliance: Step Two\nHorde: Step One", continent=true },
+
+	[43208020] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[43808380] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[46008560] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[47808360] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[48408120] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[48608300] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[39501380] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
+	[40001380] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[40801440] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[42001420] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[44405000] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[45805120] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[46405260] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[47604940] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[51605340] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[53005080] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[54404850] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[55602560] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[55805100] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[56002480] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[57602350] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[58802560] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[59002920] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[59003200] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[59203660] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[59802750] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[60203600] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[60802900] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
+	[61803200] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
 }
 
 points[ 1441 ] = { -- Thousand Needles
