@@ -27,6 +27,11 @@ ns.cozySleepingBag = "Step One: " ..( ( ns.faction == "Alliance" ) and "Go to Al
 			.."Step Six: Climb the Thoradin Wall, bordering Hillsbrad and Arathi\nHighlands. Climb up from the Hillsbrad side "
 			.."via a broken cart.\n Keep climbing and you'll find a hall and a bag.\n\n"
 			.."Note: This quest chain rewards you with 8 pieces of Student\nFodder. Currently the only way to obtain this rested XP boon!"
+ns.felPortals = "Used by the Warlock Explorer Imp,\nMages for their Balefire Bolt rune, etc"
+ns.twoMeditate = "At level 17 go to The Park in Stormwind (Human /\nDwarf), Temple of the Moon, Darnassus (Night Elf),\n"
+			.."War Quarter, Undercity (All Horde) for a RACIAL\nquest from a Priest trainer.\n\n"
+			.."Ultimately you'll be able to share multiple Meditation\nbuffs across races (and factions too. Bug?).\n\n"
+			.."Player 1: /kneel; Player 2: /pray"
 ns.voidTouchedTitle = "Void Touched Gear Guide"
 ns.voidTouched = "(1) Reach level 25 and 100 in one of\nBlacksmithing, Leatherworking or Tailoring.\n\n"
 			.."(2) Purchase an Elixir of Coalesced Regret from the AH.\nAlchemists may purchase this recipe from Zixil, on the path\n"
@@ -40,7 +45,15 @@ ns.voidTouched = "(1) Reach level 25 and 100 in one of\nBlacksmithing, Leatherwo
 			.."(8) A Shadowy Figure spawns. Interact. You MUST SELECT THE\n\"FINE, SHOW ME\" option.\n\n"
 			.."(9) Gratz. You now have every Phase 1 recipe. Likely BiS!\n\n"
 			.."(Repeat from (6) to obtain another shard)"
-
+			
+			
+-- Icons:	1 -3 	Chest
+--			4		Void-Touched
+--			5		Best Pets
+--			6		Cozy Sleeping Bag
+--			7		Fel Portals
+	
+	
 --=======================================================================================================
 --
 -- EASTERN KINGDOMS
@@ -105,31 +118,31 @@ points[ 1426 ] = { -- Dun Morogh
 }
 
 points[ 1431 ] = { -- Duskwood
---[[	[18002560] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[18002560] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[37602240] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[37602240] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[55406160] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[55406160] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[59001960] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[59001960] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[68203400] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[68203400] = { name="Dire Wolf (Various)", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Collect the Paws off these mobs. For the first quest", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
@@ -142,13 +155,13 @@ points[ 1431 ] = { -- Duskwood
 }
 
 points[ 1429 ] = { -- Elwynn Forest
---[[	[12463405] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[12463405] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Begin here", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[19392475] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[19392475] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Finish the second quest here. /kneel always!", faction="Alliance",
 					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race=="Night elf") and 78193 or 0 ) } }, 
 					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
@@ -156,7 +169,7 @@ points[ 1429 ] = { -- Elwynn Forest
 ]]
 	[23805890] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[24409350] = { title="Battered Chest", icon=1, tip=ns.chest1 },
-	[26109200] = { title="Battered Chest", icon=1, tip=ns.chest1 },
+	[26049211] = { title="Battered Chest", icon=1, tip=ns.chest1 }, -- V
 	[27808840] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[30806480] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[36206580] = { title="Battered Chest", icon=1, tip=ns.chest1 },
@@ -167,7 +180,7 @@ points[ 1429 ] = { -- Elwynn Forest
 	[41605280] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[41807800] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[41808150] = { title="Battered Chest", icon=1, tip=ns.chest1 },
-	[47508640] = { title="Battered Chest", icon=1, tip=ns.chest1 },
+	[47608647] = { title="Battered Chest", icon=1, tip=ns.chest1 }, -- V
 	[48008710] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[48608790] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[52505900] = { title="Battered Chest", icon=1, tip=ns.chest1, continent=true },
@@ -199,6 +212,15 @@ points[ 1429 ] = { -- Elwynn Forest
 }
 
 points[ 1424 ] = { -- Hillsbrad Foothills
+--[[	[33003600] = { name="Hillsbrad mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+	[35204700] = { name="Hillsbrad mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+]]
 	[50514971] = { npc=3537, name="Zixil", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
 					tip="Alchemists may purchase an Elixir\nof Coalesced Regret recipe",
 					quest={ 78909 }, questName={ "Shifting Scale Talisman" } },
@@ -296,6 +318,12 @@ points[ 1433 ] = { -- Redridge Mountains
 	[52304670] = { title="Battered Chest", icon=3, tip=ns.chest3, continent=true },
 	[56005740] = { title="Battered Chest", icon=3, tip=ns.chest3 },
 	[14506170] = { title="Battered Chest", icon=3, tip=ns.chest3 },
+
+	[29803040] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[79003340] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[79007300] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[83204480] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[86305250] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
 }
 
 points[ 1421 ] = { -- Silverpine Forest
@@ -328,16 +356,22 @@ points[ 1421 ] = { -- Silverpine Forest
 	[67802420] = { title="Battered Chest", icon=3, tip=ns.chest3 },
 	[77603100] = { title="Battered Chest", icon=3, tip=ns.chest3 },
 	[80202850] = { title="Battered Chest", icon=3, tip=ns.chest3 },
+
+	[38802340] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[44602550] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[45403180] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[50205680] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[50206520] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
 }
 
 points[ 1453 ] = { -- Stormwind City
---[[	[20685007] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[20685007] = { npc=11397, name="Nara Meideros", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Begin here", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
 					questName={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (1)" or "" ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and "Secrets of Elune (2)" or "" ) } } },
-	[38582606] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+	[38582606] = { npc=376, name="High Priestess Laurena", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Finish the second quest here. /kneel always!", faction="Alliance",
 					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race=="Night elf") and 78193 or 0 ) } }, 
 					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
@@ -353,6 +387,25 @@ points[ 1434 ] = { -- Stranglethorn Vale
 }
 
 points[ 1435 ] = { -- Swamp of Sorrows
+	[10505980] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[12502960] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[16606330] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[22906440] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[26904940] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[34302830] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[36305030] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[49503850] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[56706530] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[60502770] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[60904360] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[69407840] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[72401030] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[77308960] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[81203450] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[83406520] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[87302650] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[91006540] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[91205660] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
 }
 
 points[ 1420 ] = { -- Tirisfal Glades
@@ -372,9 +425,22 @@ points[ 1420 ] = { -- Tirisfal Glades
 	[72802580] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[77205980] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 	[78405590] = { title="Battered Chest", icon=1, tip=ns.chest1 },
+
+--[[	[56204940] = { npc=6491, name="Spirit Healer (Brill)", class={ "PRIEST" }, faction="Horde",
+					level=18, guide={ ns.twoMeditate }, tip="Come to here for the second quest hand-in. /kneel",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+]]
 }
 
 points[ 1458 ] = { -- Undercity
+--[[	[47201960] = { npc=211225, name="Baj'ura", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+]]
 }
 
 points[ 1422 ] = { -- Western Plaguelands
@@ -431,6 +497,29 @@ points[ 1436 ] = { -- Westfall
 					questName={ { "...and that note you found", "Stepping Stones", "Scramble", "Wet Job", "Eagle's Fist",
 						"This Must Be The Place" } },
 						tip="Alliance: Step One\nHorde: Step Two", continent=true },
+						
+	[29004780] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[29005820] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[29603420] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[29606940] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[31406530] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[31803940] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[32007620] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[32208020] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[32402920] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[34008220] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[37808540] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[41401540] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[46801260] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[46903950] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[47406740] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[47607930] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[47801380] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[29004780] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[51003240] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[51607120] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[57001050] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[62502630] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
 }
 
 points[ 1437 ] = { -- Wetlands
@@ -459,11 +548,76 @@ points[ 1440 ] = { -- Ashenvale
 	
 	[17202660] = { npc=212334, name="Dead Twilight Cultist", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
 					quest={ 78909 }, questName={ "Shifting Scale Talisman" }, continent=true },
+
+	[24406340] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[27606260] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[30203020] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[33402840] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[44506420] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[51204720] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[52506280] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[55604040] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[67004600] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[67005120] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[77407320] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[80507070] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[84807020] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+
+--[[	[31602300] = { name="Forsaken mobs (Various)", class={ "PRIEST" }, level=18, guide={ ns.twoMeditate },
+					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race == "Night elf" ) and 78193 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
+							( ( ns.race == "Night Elf" ) and "Secrets of the Light (2)" or "" ) } } },
+	[33406820] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[61007620] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },									
+	[64206840] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[67208280] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+	[71405400] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[76604520] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[79007360] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[79406200] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+	[85406640] = { name="Shadethicket mobs (Various)", class={ "PRIEST" }, faction="Horde", level=18,
+					guide={ ns.twoMeditate }, tip="Collect Shadeleaf off the mobs",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },
+]]
 }
 
 points[ 1439 ] = { -- Darkshore
 	[36702740] = { title="Battered Chest", icon=2, tip=ns.chest2 },
---[[	[37604380] = { npc=211298, name="Syrnoya", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[37604380] = { npc=211298, name="Syrnoya", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Complete the second quest here. /kneel always!", faction="Alliance",
 					quest={ { ( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78194 or 0 ), 
 							( ( ( ns.race == "Dwarf" ) or ( ns.race == "Human" ) ) and 78195 or 0 ) } }, 
@@ -508,7 +662,7 @@ points[ 1439 ] = { -- Darkshore
 }
 
 points[ 1457 ] = { -- Darnassus
---[[	[38608880] = { npc=211188, name="Maethra Slagheart", class={ "PRIEST" }, level=17, guide={ st.priest.twoMeditate },
+--[[	[38608880] = { npc=211188, name="Maethra Slagheart", class={ "PRIEST" }, level=17, guide={ ns.twoMeditate },
 					tip="Begin the first quest here", faction="Alliance",
 					quest={ { ( ( ns.race == "Night elf" ) and 78192 or 0 ), ( ( ns.race == "Night elf" ) and 78193 or 0 ) } }, 
 					questName={ { ( ( ns.race == "Night elf" ) and "Secrets of the Light (1)" or "" ), 
@@ -517,6 +671,19 @@ points[ 1457 ] = { -- Darnassus
 }
 
 points[ 1443 ] = { -- Desolace
+	[48808220] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[49507470] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[52008540] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[52107250] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[52808100] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[54401920] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[56107460] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[71501860] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[72502200] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[73502470] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[74501040] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[76501920] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[80401700] = { name="Fel Tear", title="Fel Portals", icon=7, tip=ns.felPortals },
 }
 
 points[ 1411 ] = { -- Durotar
@@ -570,6 +737,13 @@ points[ 1411 ] = { -- Durotar
 	[68407150] = { title="Battered Chest", icon=1, tip=ns.chest1 },
 
 	[68607160] = { npc=208124, name="Raluk", title="Best Hunter Pets", icon=5, guide=ns.bestPet, continent=true },
+
+--[[	[68707110] = { object=410168, name="Voodoo Pile", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
+					tip="Ignore the quest directions. Climb the\nhill on the northern-most island",
+					quest={ { ( ( ns.race == "Troll" ) and 78198 or 0 ), ( ( ns.race == "Troll" ) and 78199 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
+							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
+]]
 }
 
 points[ 1445 ] = { -- Dustwallow Marsh
@@ -625,6 +799,13 @@ points[ 1412 ] = { -- Mulgore
 }
 
 points[ 1454 ] = { -- Orgrimmar
+--[[points[ 1454 ] = { -- Orgrimmar
+	[35748823] = { npc=211229, name="Dietrich Praice", class={ "PRIEST" }, faction="Horde",
+					level=18, guide={ ns.twoMeditate }, tip="Begin the first quest here",
+					quest={ { ( ( ns.race == "Undead" ) and 78196 or 0 ), ( ( ns.race == "Undead" ) and 78197 or 0 ) } }, 
+					questName={ { ( ( ns.race == "Undead" ) and "Secrets of Undeath (1)" or "" ), 
+							( ( ns.race == "Undead" ) and "Secrets of Undeath (2)" or "" ) } } },							
+]]
 }
 
 points[ 1442 ] = { -- Stonetalon Mountains
@@ -757,6 +938,36 @@ points[ 1413 ] = { -- The Barrens
 					questName={ { "...and that note you found", "Stepping Stones", "Scramble", "Wet Job", "Eagle's Fist",
 						"This Must Be The Place" } },
 						tip="Alliance: Step Two\nHorde: Step One", continent=true },
+
+	[43208020] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[43808380] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[46008560] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[47808360] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[48408120] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[48608300] = { name="Fel Crack", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[39501380] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals, continent=true },
+	[40001380] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[40801440] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[42001420] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[44405000] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[45805120] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[46405260] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[47604940] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[51605340] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[53005080] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[54404850] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[55602560] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[55805100] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[56002480] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[57602350] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[58802560] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[59002920] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[59003200] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[59203660] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[59802750] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[60203600] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[60802900] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
+	[61803200] = { name="Fel Sliver", title="Fel Portals", icon=7, tip=ns.felPortals },
 }
 
 points[ 1441 ] = { -- Thousand Needles

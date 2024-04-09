@@ -4,7 +4,7 @@
                                         Chests, Gear and More
                                          Localisation Module
 
-                                       v1.00 - 20th March 2024
+                                       v1.02 - 7th April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 

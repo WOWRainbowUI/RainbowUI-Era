@@ -3,7 +3,7 @@
 
                                         Chests, Gear and More
 
-                                       v1.01 - 4th April 2024
+                                       v1.02 - 7th April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -24,10 +24,11 @@ ns.colour.plaintext = "\124cFF7F5217" -- Red Dirt
 
 local defaults = { profile = { iconScale = 2.5, iconAlpha = 1, showCoords = false,
 								chest1 = 1, chest2 = 2, chest3 = 3, voidTouched = 4,
-								bestPets = 5, cozySleeping = 6, } }
+								bestPets = 5, cozySleeping = 6, felPortal = 10, } }
 local pluginHandler = {}
 
 ns.continents = {}
+ns.continents[ 947 ] = true -- World Map
 ns.continents[ 1414 ] = true -- Kalimdor
 ns.continents[ 1415 ] = true -- Eastern Kingdoms
 
@@ -111,6 +112,16 @@ do
 				if ns.db.cozySleeping > 0 then
 					return coord, nil, ns.textures[ ns.db.cozySleeping ],
 						ns.db.iconScale * ns.scaling[ ns.db.cozySleeping ], ns.db.iconAlpha
+				end		
+			elseif pin.icon == 7 then
+				if ns.db.felPortal > 0 then
+					if ns.continents[ ns.mapID ] then
+						return coord, nil, ns.textures[ ns.db.felPortal ],
+							ns.db.iconScale * ns.scaling[ ns.db.felPortal ], ns.db.iconAlpha
+					else
+						return coord, nil, ns.textures[ ns.db.felPortal ],
+							ns.db.iconScale * ns.scaling[ ns.db.felPortal ] * 0.8, ns.db.iconAlpha
+					end		
 				end		
 			end
 			coord, pin = next(t, coord)
@@ -225,6 +236,14 @@ ns.options = {
 					min = 0, max = 14, step = 1,
 					arg = "cozySleeping",
 					order = 9,
+				},
+				felPortal = {
+					type = "range",
+					name = ns.L["Fel Portal"],
+					desc = ns.choices,
+					min = 0, max = 14, step = 1,
+					arg = "felPortal",
+					order = 10,
 				},
 			},
 		},
