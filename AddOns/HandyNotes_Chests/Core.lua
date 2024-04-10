@@ -55,7 +55,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 	
 	GameTooltip:SetText( ns.colour.prefix ..pin.title )
 	if pin.icon < 4 then
-		GameTooltip:AddLine( ns.colour.highlight .."Chest Rank " ..pin.icon )
+		GameTooltip:AddLine( ns.colour.highlight ..ns.L["Chest Rank "] ..pin.icon )
 	else
 		GameTooltip:AddLine( ns.colour.highlight ..pin.name )
 	end
@@ -63,7 +63,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 		GameTooltip:AddLine( "\n" ..ns.colour.plaintext ..pin.tip )
 	end
 	if pin.guide then
-		GameTooltip:AddLine( "\n" ..ns.colour.highlight .."Guide\n\n" ..ns.colour.plaintext ..pin.guide )
+		GameTooltip:AddLine( "\n" ..ns.colour.highlight ..ns.L["Guide"].."\n\n" ..ns.colour.plaintext ..pin.guide )
 	end
 	
 	if ( ns.db.showCoords == true ) then

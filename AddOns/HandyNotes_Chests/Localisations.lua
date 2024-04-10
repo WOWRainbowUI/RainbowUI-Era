@@ -106,6 +106,8 @@ elseif ns.locale == "zhTW" then
 	-- 自行加入
 	ns.L["No Map Pin"] = "不顯示圖示"
 	ns.L["Chests"] = "探索賽季寶箱"
+	ns.L["Chest Rank "] = "寶箱等級 "
+	ns.L["Guide"] = "指南"
 
 else
 	ns.L["Character"] = "Character"

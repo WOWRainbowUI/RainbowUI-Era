@@ -217,32 +217,89 @@ points[ 1424 ] = { -- Hillsbrad Foothills
 					questName={ { ( ( ns.race == "Troll" ) and "Secrets of the Loa (1)" or "" ), 
 							( ( ns.race == "Troll" ) and "Secrets of the Loa (2)" or "" ) } } },
 ]]
-	[50514971] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買融合的\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
-[52714131] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買融合的\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
-[55511881] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買融合的\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
-[55612661] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買融合的\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變幻的鱗片護身符" }, continent=true },
-[55613461] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買融合的\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
-[60712021] = { npc=3537, name="齊希爾", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="煉金術士可以購買融合的\n悔恨藥劑配方",
-quest={ 78909 }, questName={ "變幻的鱗片護身符" } },
-[88557351] = { name="陰影人物 / 純淨之光碎片", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-tip="通過 Ravenholdt 莊園前往" 
+	[50514971] = { 
+  npc = 3537, 
+  name = "齊希爾",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "煉金術士可以購買\n聚合的悔恨藥劑配方",
+  quest = { 78909 }, 
+  questName = { "變換鱗片護符" } 
+},
+[52714131] = { 
+  npc = 3537, 
+  name = "齊希爾",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "煉金術士可以購買\n聚合的悔恨藥劑配方",
+  quest = { 78909 }, 
+  questName = { "變換鱗片護符" } 
+},
+[55511881] = { 
+  npc = 3537, 
+  name = "齊希爾",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "煉金術士可以購買\n聚合的悔恨藥劑配方",
+  quest = { 78909 }, 
+  questName = { "變換鱗片護符" } 
+},
+[55612661] = { 
+  npc = 3537, 
+  name = "齊希爾",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "煉金術士可以購買\n聚合的悔恨藥劑配方",
+  quest = { 78909 }, 
+  questName = { "變換鱗片護符" }, 
+  continent = true 
+},
+[55613461] = { 
+  npc = 3537, 
+  name = "齊希爾",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "煉金術士可以購買\n聚合的悔恨藥劑配方",
+  quest = { 78909 }, 
+  questName = { "變換鱗片護符" } 
+},
+[60712021] = { 
+  npc = 3537, 
+  name = "齊希爾",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "煉金術士可以購買\n聚合的悔恨藥劑配方",
+  quest = { 78909 }, 
+  questName = { "變換鱗片護符" } 
+},
+[88557351] = { 
+  name = "陰影人物 / 純淨之光碎片",
+  title = ns.voidTouchedTitle, 
+  icon = 4, 
+  guide = ns.voidTouched,
+  tip = "通過 Ravenholdt 莊園" 
+},
 
-	[87304960] = { name="舊的破車", title="舒適的睡袋", icon=6, guide=ns.cozySleepingBag,
-quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } },
-questName={ { "...以及你找到的那張紙條", "墊腳石", "攀爬", "弄濕的工作", "鷹之拳",
-"這裡應該就是了" } }, continent=true,
-tip="第六步。從這裡開始第六步，\n而不是從阿拉希高地一側" },
+[87304960] = { 
+  name = "舊破車",
+  title = "舒適的睡袋", 
+  icon = 6, 
+  guide = ns.cozySleepingBag,				
+  quest = { 
+    { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } 
+  }, 
+  questName = { 
+    { "...還有你找到的那張紙條", "墊腳石", "攀爬", "濕活", "鷹爪", "就是這裡了" } 
+  }, 
+  continent = true,
+  tip = "第六步。從這裡開始第六步，\n而不是從阿拉希高地那邊" 
+},
 }
 
 points[ 1455 ] = { -- Ironforge
@@ -488,11 +545,23 @@ points[ 1436 ] = { -- Westfall
 	[63807030] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 	[65307510] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 
-	[37505070] = { name="Burned-Out Remains", title="Cozy Sleeping Bag", icon=6, guide=ns.cozySleepingBag,
-					quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } }, 
-					questName={ { "...and that note you found", "Stepping Stones", "Scramble", "Wet Job", "Eagle's Fist",
-						"This Must Be The Place" } },
-						tip="Alliance: Step One\nHorde: Step Two", continent=true },
+	[37505070] = { 
+	  name = "燒焦的殘骸",  -- 物品名稱
+	  title = "舒適的睡袋", -- 物品標題
+	  icon = 6,           -- 物品圖示ID
+	  guide = ns.cozySleepingBag, -- 指南函數
+
+	  quest = {             -- 任務列表
+		{ ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } 
+	  },
+
+	  questName = {       -- 任務名稱列表
+		{ "...還有你找到的那張紙條", "墊腳石", "攀爬", "濕活", "鷹爪", "就是這裡了" } 
+	  },
+
+	  tip = "Alliance: 第一步\nHorde: 第二步", -- 提示文字
+	  continent = true       -- 是否為大陸任務
+	},
 						
 	[29004780] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
 	[29005820] = { name="邪能碎片", title="邪能傳送門", icon=7, tip=ns.felPortals },
@@ -542,8 +611,17 @@ points[ 1440 ] = { -- Ashenvale
 	[31902320] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 	[31903120] = {  title="破損的箱子", icon=3, tip=ns.chest3 },
 	
-	[17202660] = { npc=212334, name="Dead Twilight Cultist", title=ns.voidTouchedTitle, icon=4, guide=ns.voidTouched,
-					quest={ 78909 }, questName={ "Shifting Scale Talisman" }, continent=true },
+	[17202660] = { 
+	  npc = 212334, 
+	  name = "死亡的暮光信徒",
+	  title = ns.voidTouchedTitle, 
+	  icon = 4, 
+	  guide = ns.voidTouched,
+
+	  quest = { 78909 }, 
+	  questName = { "變換鱗片護符" }, 
+	  continent = true 
+	},
 
 	[24406340] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
 	[27606260] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
@@ -732,7 +810,14 @@ points[ 1411 ] = { -- Durotar
 	[68308510] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
 	[68407150] = {  title="破損的箱子", icon=1, tip=ns.chest1 },
 
-	[68607160] = { npc=208124, name="Raluk", title="Best Hunter Pets", icon=5, guide=ns.bestPet, continent=true },
+	[68607160] = { 
+	  npc = 208124, 
+	  name = "拉魯克",
+	  title = "最佳獵人寵物", 
+	  icon = 5, 
+	  guide = ns.bestPet, 
+	  continent = true 
+	},
 
 --[[	[68707110] = { object=410168, name="Voodoo Pile", class={ "PRIEST" }, faction="Horde", level=18, guide={ ns.twoMeditate },
 					tip="Ignore the quest directions. Climb the\nhill on the northern-most island",
@@ -929,11 +1014,23 @@ quest={ 78909 }, questName={ "變換鱗片護身符" }, continent=true },
 	[51802800] = { npc=5865, name="迪舒", title="最佳獵人寵物", icon=5, guide=ns.bestPet },
 	[62603440] = { npc=5828, name="獅王胡瑪", title="最佳獵人寵物", icon=5, guide=ns.bestPet },
 
-	[46407390] = { name="Burned-Out Remains", title="Cozy Sleeping Bag", icon=6, guide=ns.cozySleepingBag,
-					quest={ { ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } }, 
-					questName={ { "...and that note you found", "Stepping Stones", "Scramble", "Wet Job", "Eagle's Fist",
-						"This Must Be The Place" } },
-						tip="Alliance: Step Two\nHorde: Step One", continent=true },
+	[46407390] = { 
+	  name = "燒焦的殘骸",
+	  title = "舒適的睡袋", 
+	  icon = 6, 
+	  guide = ns.cozySleepingBag,
+
+	  quest = { 
+		{ ( ( ns.faction == "Alliance" ) and 79008 or 79007 ), 79192, 79980, 79974, 79975, 79976 } 
+	  },
+
+	  questName = { 
+		{ "...還有你找到的那張紙條", "墊腳石", "攀爬", "濕活", "鷹爪", "就是這裡了" } 
+	  },
+
+	  tip = "聯盟: 第二步\n部落: 第一步", 
+	  continent = true 
+	},
 
 	[43208020] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals, continent=true },
 	[43808380] = { name="邪能裂隙", title="邪能傳送門", icon=7, tip=ns.felPortals },
