@@ -414,6 +414,13 @@ if ns.locale == "deDE" then
 	ns.L["Nourish"] = "Pflege"
 	ns.L["Revive"] = "Wiederbelebung"
 	ns.L["Survival Instincts"] = "Überlebensinstinkte"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "Erblühen"
+	ns.L["Elune's Fires"] = "Feuer Elunes"
+	ns.L["Gale Winds"] = "Orkanwinde"
+	ns.L["Gore"] = "Aufspießen"
+	ns.L["Improved Barkskin"] = "Verbesserte Baumrinde"
+	ns.L["Improved Frenzied Regeneration"] = "Verbesserte rasende Regeneration"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "Meister der Tiere"
 	ns.L["Carve"] = "Zerlegen"
@@ -435,6 +442,12 @@ if ns.locale == "deDE" then
 	ns.L["Melee Specialist"] = "Nahkampfspezialist"
 	ns.L["Steady Shot"] = "Zuverlässiger Schuss"
 	ns.L["Trap Launcher"] = "Fallenschleuder"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "Katzenhafte Reflexe"
+	ns.L["Focus Fire"] = "Fokussiertes Feuer"
+	ns.L["Lock and Load"] = "Sichern und Laden"
+	ns.L["Rapid Killing"] = "Schneller Tod"
+	ns.L["Raptor Killing"] = "Raptorenfuror"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "Arkanschlag"
 	ns.L["Arcane Surge"] = "Arkane Woge"
@@ -457,6 +470,13 @@ if ns.locale == "deDE" then
 	ns.L["Missile Barrage"] = "Geschosssalve"
 	ns.L["Spell Power"] = "Zaubermacht"
 	ns.L["Spellfrost Bolt"] = "Zauberfrostblitz"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "Fortgeschrittener Schutzzauber"
+	ns.L["Balefire Bolt"] = "Qualfeuerblitz"
+	ns.L["Deep Freeze"] = "Tieffrieren"
+	ns.L["Displacement"] = "Verzerrung"
+	ns.L["Molten Armor"] = "Glühende Rüstung"
+	ns.L["Temporal Anomaly"] = "Zeitanomalie"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "Aegis"
 	ns.L["Avenger's Shield"] = "Schild des Rächers"
@@ -478,6 +498,14 @@ if ns.locale == "deDE" then
 	ns.L["Sacred Shield"] = "Geheiligter Schild"
 	ns.L["Sheath of Light"] = "Ummantelung des Lichts"
 	ns.L["The Art of War"] = "Die Kunst des Krieges"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "Fanatismus"	
+	ns.L["Hammer of the Righteous"] = "Hammer der Rechtschaffenen"	
+	ns.L["Improved Hammer of Wrath"] = "Verbesserter Hammer des Zorns"	
+	ns.L["Improved Sanctuary"] = "Verbessertes Refugium"	
+	ns.L["Light's Grace"] = "Anmut des Lichts"	
+	ns.L["Purifying Power"] = "Reinigende Macht"	
+	ns.L["Wrath"] = "Zorn"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "Kreis der Heilung"
 	ns.L["Homunculi"] = "Homunculi"
@@ -500,6 +528,13 @@ if ns.locale == "deDE" then
 	ns.L["Renewed Hope"] = "Erneuerte Hoffnung"
 	ns.L["Shadowfiend"] = "Schattengeist"
 	ns.L["Spirit of the Redeemer"] = "Geist des Erlösers"
+	-- Priest Phase 3
+	ns.L["Despair"] = "Verzweiflung"	
+	ns.L["Divine Aegis"] = "Göttliche Aegis"	
+	ns.L["Eye of the Void"] = "Auge der Leere"	
+	ns.L["Pain and Suffering"] = "Schmerz und Leid"	
+	ns.L["Surge of Light"] = "Woge des Lichts"	
+	ns.L["Void Zone"] = "Zone der Leere"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "Zwischen die Augen"
 	ns.L["Blade Dance"] = "Klingentanz"
@@ -521,6 +556,13 @@ if ns.locale == "deDE" then
 	ns.L["Shadowstep"] = "Schattenschritt"
 	ns.L["Shuriken Toss"] = "Shurikenwurf"
 	ns.L["Waylay"] = "Auflauern"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "Massaker"
+	ns.L["Combat Potency"] = "Kampfkraft"
+	ns.L["Cut to the Chase"] = "In Stücke schneiden"
+	ns.L["Focused Attacks"] = "Fokussierte Angriffe"
+	ns.L["Honor Among Thieves"] = "Ehre unter Dieben"
+	ns.L["Unfair Advantage"] = "Unfairer Vorteil"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "Führung der Ahnen"
 	ns.L["Dual Wield Specialization"] = "Beidhändigkeitsspezialisierung"
@@ -543,6 +585,14 @@ if ns.locale == "deDE" then
 	ns.L["Spirit of the Alpha"] = "Geist des Alphas"
 	ns.L["Totemic Projection"] = "Totemische Projektion"
 	ns.L["Two-Handed Mastery"] = "Zweihandmeisterschaft"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "Brennen"
+	ns.L["Mental Dexterity"] = "Geistige Gewandtheit"
+	ns.L["Overcharged"] = "Überladen"
+	ns.L["Riptide"] = "Springflut"
+	ns.L["Rolling Thunder"] = "Rollender Donner"
+	ns.L["Static Shock"] = "Statischer Schock"
+	ns.L["Tidal Waves"] = "Flutwellen"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "Chaosblitz"
 	ns.L["Demonic Grace"] = "Dämonische Anmut"
@@ -565,6 +615,13 @@ if ns.locale == "deDE" then
 	ns.L["Shadow and Flame"] = "Schatten und Flamme"
 	ns.L["Shadowflame"] = "Schattenflamme"
 	ns.L["Soul Harvesting"] = "Seelenernte"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "Pyrolyse"
+	ns.L["Immolation Aura"] = "Feuerbrandaura"
+	ns.L["Pandemic"] = "Pandemie"
+	ns.L["Summon Felguard"] = "Teufelswache beschwören"
+	ns.L["Unstable Affliction"] = "Instabiles Gebrechen"
+	ns.L["Vengeance"] = "Rache"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "Blutraserei"
 	ns.L["Consumed by Rage"] = "Von Wut zerfressen"
@@ -586,6 +643,14 @@ if ns.locale == "deDE" then
 	ns.L["Intervene"] = "Einschreiten"
 	ns.L["Precise Timing"] = "Präzises Timing"
 	ns.L["Rallying Cry"] = "Anspornender Schrei"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "Gladiatorhaltung"
+	ns.L["Rampage"] = "Toben"
+	ns.L["Shield Mastery"] = "Schildmeisterschaft"
+	ns.L["Sword and Board"] = "Schwert und Schild"
+	ns.L["Taste for Blood"] = "Verlangen nach Blut"
+	ns.L["Vigilance"] = "Wachsamkeit"
+	ns.L["Wrecking Crew"] = "Abrisskommando"
 
 elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["AddOn Description"] = "Todas las runas SoD. (¡Y más!)"
@@ -622,6 +687,13 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Nourish"] = "Nutrir"
 	ns.L["Revive"] = "Revivir"
 	ns.L["Survival Instincts"] = "Instintos de supervivencia"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "Floración"
+	ns.L["Elune's Fires"] = "Fuegos de Elune"
+	ns.L["Gale Winds"] = "Viento huracanado"
+	ns.L["Gore"] = "Cornada"
+	ns.L["Improved Barkskin"] = "Piel de corteza mejorada"
+	ns.L["Improved Frenzied Regeneration"] = "Regeneración frenética mejorada"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "Maestría en bestias"
 	ns.L["Carve"] = "Trinchar"
@@ -643,6 +715,13 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Melee Specialist"] = "Especialista cuerpo a cuerpo"
 	ns.L["Steady Shot"] = "Disparo firme"
 	ns.L["Trap Launcher"] = "Lanzador de trampas"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "Reflejos felinos"
+	ns.L["Focus Fire"] = "Enfocar Fuego"
+	ns.L["Lock and Load"] = "Bloquear y cargar"
+	ns.L["Rapid Killing"] = "Matanza rápida"
+	ns.L["Raptor Killing"] = "Furia de raptor"
+	ns.L["T.N.T."] = "TNT"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "Explosión Arcana"
 	ns.L["Arcane Surge"] = "Oleada Arcana"
@@ -665,6 +744,13 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Missile Barrage"] = "Tromba de misiles"
 	ns.L["Spell Power"] = "Poder con hechizos"
 	ns.L["Spellfrost Bolt"] = "Descarga de Fríoarcano"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "Protección avanzada"
+	ns.L["Balefire Bolt"] = "Descarga de Fuegotorvo"
+	ns.L["Deep Freeze"] = "Congelación profunda"
+	ns.L["Displacement"] = "Desplazamiento"
+	ns.L["Molten Armor"] = "Armadura de arrabio"
+	ns.L["Temporal Anomaly"] = "Anomalía temporal"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "Égida"
 	ns.L["Avenger's Shield"] = "Escudo de vengador"
@@ -686,6 +772,14 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Sacred Shield"] = "Escudo sacro"
 	ns.L["Sheath of Light"] = "Vaina de Luz"
 	ns.L["The Art of War"] = "El arte de la guerra"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "Fanatismo"	
+	ns.L["Hammer of the Righteous"] = "Martillo del honrado"	
+	ns.L["Improved Hammer of Wrath"] = "Martillo de cólera mejorado"	
+	ns.L["Improved Sanctuary"] = "Salvaguardia mejorada"	
+	ns.L["Light's Grace"] = "Gracia de Luz"	
+	ns.L["Purifying Power"] = "Poder purificador"	
+	ns.L["Wrath"] = "Cólera"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "Círculo de sanación"
 	ns.L["Homunculi"] = "Homúnculos"
@@ -708,6 +802,13 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Renewed Hope"] = "Esperanza renovada"
 	ns.L["Shadowfiend"] = "Maligno de las Sombras"
 	ns.L["Spirit of the Redeemer"] = "Espíritu del redentor"
+	-- Priest Phase 3
+	ns.L["Despair"] = "Desesperación"	
+	ns.L["Divine Aegis"] = "Égida divina"	
+	ns.L["Eye of the Void"] = "Ojo del Vacío"	
+	ns.L["Pain and Suffering"] = "Dolor y sufrimiento"	
+	ns.L["Surge of Light"] = "Oleada de Luz"	
+	ns.L["Void Zone"] = "Zona de vacío"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "Entre ceja y ceja"
 	ns.L["Blade Dance"] = "Danza de hojas"
@@ -729,6 +830,13 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Shadowstep"] = "Paso de las Sombras"
 	ns.L["Shuriken Toss"] = "Lanzamiento de shuriken"
 	ns.L["Waylay"] = "Artimaña"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "Carnicería"
+	ns.L["Combat Potency"] = "Potencia de combate"
+	ns.L["Cut to the Chase"] = "Acortar"
+	ns.L["Focused Attacks"] = "Ataques centrados"
+	ns.L["Honor Among Thieves"] = "Honor entre ladrones"
+	ns.L["Unfair Advantage"] = "Ventaja desleal"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "Guía ancestral"
 	ns.L["Dual Wield Specialization"] = "Especialización en doble empuñadura"
@@ -751,6 +859,14 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Spirit of the Alpha"] = "Espíritu del alfa"
 	ns.L["Totemic Projection"] = "Proyección totémica"
 	ns.L["Two-Handed Mastery"] = "Maestría con arma a dos manos"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "Quemar"
+	ns.L["Mental Dexterity"] = "Maña mental"
+	ns.L["Overcharged"] = "Sobrecargado"
+	ns.L["Riptide"] = "Mareas vivas"
+	ns.L["Rolling Thunder"] = "Trueno ondulante"
+	ns.L["Static Shock"] = "Choque estático"
+	ns.L["Tidal Waves"] = "Maremotos"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "Descarga de caos"
 	ns.L["Demonic Grace"] = "Gracia demoníaca"
@@ -773,6 +889,13 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Shadow and Flame"] = "Sombras y llamas"
 	ns.L["Shadowflame"] = "Pirosombra"
 	ns.L["Soul Harvesting"] = "Cosecha de almas"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "Explosión de humo"
+	ns.L["Immolation Aura"] = "Aura de Inmolación"
+	ns.L["Pandemic"] = "Pandemia"
+	ns.L["Summon Felguard"] = "Invocar a guardia vil"
+	ns.L["Unstable Affliction"] = "Aflicción inestable"
+	ns.L["Vengeance"] = "Venganza"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "Frenesí sangriento"
 	ns.L["Consumed by Rage"] = "Consumido por la ira"
@@ -794,6 +917,14 @@ elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["Intervene"] = "Intervenir"
 	ns.L["Precise Timing"] = "Sincronización precisa"
 	ns.L["Rallying Cry"] = "Berrido de convocación"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "Actitud de gladiador"
+	ns.L["Rampage"] = "Desenfreno"
+	ns.L["Shield Mastery"] = "Maestría con escudos"
+	ns.L["Sword and Board"] = "Escudo y espada"
+	ns.L["Taste for Blood"] = "Gusto por la sangre"
+	ns.L["Vigilance"] = "Vigilancia"
+	ns.L["Wrecking Crew"] = "Equipo de demolición"
 
 elseif ns.locale == "frFR" then
 	ns.L["AddOn Description"] = "Toutes les runes SoD. (Et plus!)"
@@ -830,6 +961,12 @@ elseif ns.locale == "frFR" then
 	ns.L["Nourish"] = "Nourrir"
 	ns.L["Revive"] = "Ressusciter"
 	ns.L["Survival Instincts"] = "Instincts de survie"
+	-- Druid Phase 3
+	ns.L["Elune's Fires"] = "Feux d’Élune"
+	ns.L["Gale Winds"] = "Grands vents"
+	ns.L["Gore"] = "Encorner"
+	ns.L["Improved Barkskin"] = "Écorce améliorée"
+	ns.L["Improved Frenzied Regeneration"] = "Régénération frénétique améliorée"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "Maîtrise des bêtes"
 	ns.L["Carve"] = "Écharper"
@@ -851,6 +988,12 @@ elseif ns.locale == "frFR" then
 	ns.L["Melee Specialist"] = "Spécialiste de la mêlée"
 	ns.L["Steady Shot"] = "Tir assuré"
 	ns.L["Trap Launcher"] = "Lance-piège"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "Réflexes félins"
+	ns.L["Focus Fire"] = "Focalisation du feu"
+	ns.L["Lock and Load"] = "Prêt à tirer"
+	ns.L["Rapid Killing"] = "Tueur rapide"
+	ns.L["Raptor Killing"] = "Fureur du raptor"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "Déflagration des arcanes"
 	ns.L["Arcane Surge"] = "Éruption d’arcanes"
@@ -873,6 +1016,13 @@ elseif ns.locale == "frFR" then
 	ns.L["Missile Barrage"] = "Barrage de projectiles"
 	ns.L["Spell Power"] = "Puissance des sorts"
 	ns.L["Spellfrost Bolt"] = "Descarga de Fríoarcano"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "Protection avancée"
+	ns.L["Balefire Bolt"] = "Trait de bûcher"
+	ns.L["Deep Freeze"] = "Congélation"
+	ns.L["Displacement"] = "Déplacement"
+	ns.L["Molten Armor"] = "Armure de la fournaise"
+	ns.L["Temporal Anomaly"] = "Anomalie temporelle"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "Egide"
 	ns.L["Avenger's Shield"] = "Bouclier du vengeur"
@@ -894,6 +1044,14 @@ elseif ns.locale == "frFR" then
 	ns.L["Sacred Shield"] = "Bouclier saint"
 	ns.L["Sheath of Light"] = "Fourreau de lumière"
 	ns.L["The Art of War"] = "L’art de la guerre"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "Fanatisme"	
+	ns.L["Hammer of the Righteous"] = "Marteau du vertueux"	
+	ns.L["Improved Hammer of Wrath"] = "Marteau de courroux amélioré"	
+	ns.L["Improved Sanctuary"] = "Sanctuaire amélioré"	
+	ns.L["Light's Grace"] = "Grâce de la Lumière"	
+	ns.L["Purifying Power"] = "Puissance purifiante"	
+	ns.L["Wrath"] = "Colère"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "Cercle de soins"
 	ns.L["Homunculi"] = "Homoncules"
@@ -916,6 +1074,13 @@ elseif ns.locale == "frFR" then
 	ns.L["Renewed Hope"] = "Regain d’espoir"
 	ns.L["Shadowfiend"] = "Ombrefiel"
 	ns.L["Spirit of the Redeemer"] = "Esprit du rédempteur"
+	-- Priest Phase 3
+	ns.L["Despair"] = "Désespoir"	
+	ns.L["Divine Aegis"] = "Égide divine"	
+	ns.L["Eye of the Void"] = "Œil du Vide"	
+	ns.L["Pain and Suffering"] = "Douleur et souffrance"	
+	ns.L["Surge of Light"] = "Vague de Lumière"	
+	ns.L["Void Zone"] = "Zone de Vide"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "Entre les deux yeux"
 	ns.L["Blade Dance"] = "Danse des lames"
@@ -937,6 +1102,12 @@ elseif ns.locale == "frFR" then
 	ns.L["Shadowstep"] = "Pas de l’ombre"
 	ns.L["Shuriken Toss"] = "Lancer de shuriken"
 	ns.L["Waylay"] = "Affût"
+	-- Rogue Phase 3
+	ns.L["Combat Potency"] = "Toute-puissance de combat"
+	ns.L["Cut to the Chase"] = "Tailler dans le vif"
+	ns.L["Focused Attacks"] = "Attaques focalisées"
+	ns.L["Honor Among Thieves"] = "Honneur des voleurs"
+	ns.L["Unfair Advantage"] = "Avantage déloyal"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "Soutien ancestral"
 	ns.L["Dual Wield Specialization"] = "Spécialisation Ambidextrie"
@@ -959,6 +1130,14 @@ elseif ns.locale == "frFR" then
 	ns.L["Spirit of the Alpha"] = "Esprit de l’alpha"
 	ns.L["Totemic Projection"] = "Projection totémique"
 	ns.L["Two-Handed Mastery"] = "Maîtrise à deux mains"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "Brûler"
+	ns.L["Mental Dexterity"] = "Dextérité mentale"
+	ns.L["Overcharged"] = "Surchargé"
+	ns.L["Riptide"] = "Remous"
+	ns.L["Rolling Thunder"] = "Tonnerre grondant"
+	ns.L["Static Shock"] = "Horion statique"
+	ns.L["Tidal Waves"] = "Raz-de-marée"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "Trait du chaos"
 	ns.L["Demonic Grace"] = "Grâce démoniaque"
@@ -981,6 +1160,12 @@ elseif ns.locale == "frFR" then
 	ns.L["Shadow and Flame"] = "Ombre et flammes"
 	ns.L["Shadowflame"] = "Ombreflamme"
 	ns.L["Soul Harvesting"] = "Moisson d’âme"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "Explosion de fumées"
+	ns.L["Immolation Aura"] = "Aura d’immolation"
+	ns.L["Pandemic"] = "Pandémie"
+	ns.L["Summon Felguard"] = "Invocation d’un gangregarde"
+	ns.L["Unstable Affliction"] = "Affliction instable"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "Frénésie sanglante"
 	ns.L["Consumed by Rage"] = "Consumé par la rage"
@@ -1002,6 +1187,13 @@ elseif ns.locale == "frFR" then
 	ns.L["Intervene"] = "Intervention"
 	ns.L["Precise Timing"] = "Moment exact"
 	ns.L["Rallying Cry"] = "Cri de ralliement"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "Posture du gladiateur"
+	ns.L["Rampage"] = "Saccager"
+	ns.L["Shield Mastery"] = "Maîtrise du bouclier"
+	ns.L["Sword and Board"] = "Épée et bouclier"
+	ns.L["Taste for Blood"] = "Goût du sang"
+	ns.L["Wrecking Crew"] = "Démolisseurs"
 
 elseif ns.locale == "koKR" then
 	ns.L["AddOn Description"] = "모든 SoD 룬. (그리고 더!)."
@@ -1038,6 +1230,13 @@ elseif ns.locale == "koKR" then
 	ns.L["Nourish"] = "육성"
 	ns.L["Revive"] = "되살리기"
 	ns.L["Survival Instincts"] = "생존 본능"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "꽃피우기"
+	ns.L["Elune's Fires"] = "엘룬의 불꽃"
+	ns.L["Gale Winds"] = "강풍"
+	ns.L["Gore"] = "꿰뚫기"
+	ns.L["Improved Barkskin"] = "나무 껍질 연마"
+	ns.L["Improved Frenzied Regeneration"] = "광포한 재생력 연마"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "야수 숙련"
 	ns.L["Carve"] = "저미기"
@@ -1059,6 +1258,13 @@ elseif ns.locale == "koKR" then
 	ns.L["Melee Specialist"] = "근접 전투 전문가"
 	ns.L["Steady Shot"] = "고정 사격"
 	ns.L["Trap Launcher"] = "덫 발사"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "살쾡이의 반사 신경"
+	ns.L["Focus Fire"] = "화력 집중"
+	ns.L["Lock and Load"] = "실탄 장전"
+	ns.L["Rapid Killing"] = "신속한 사냥"
+	ns.L["Raptor Killing"] = "랩터의 격노"
+	ns.L["T.N.T."] = "강력한 폭탄"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "비전 작렬"
 	ns.L["Arcane Surge"] = "비전 쇄도"
@@ -1081,6 +1287,13 @@ elseif ns.locale == "koKR" then
 	ns.L["Missile Barrage"] = "화살 탄막"
 	ns.L["Spell Power"] = "주문 강화"
 	ns.L["Spellfrost Bolt"] = "비전냉기 화살"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "고급 수호물"
+	ns.L["Balefire Bolt"] = "재앙불꽃 화살"
+	ns.L["Deep Freeze"] = "동결"
+	ns.L["Displacement"] = "변위"
+	ns.L["Molten Armor"] = "타오르는 갑옷"
+	ns.L["Temporal Anomaly"] = "시간 변칙"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "보호"
 	ns.L["Avenger's Shield"] = "응징의 방패"
@@ -1102,6 +1315,14 @@ elseif ns.locale == "koKR" then
 	ns.L["Sacred Shield"] = "성스러운 보호막"
 	ns.L["Sheath of Light"] = "수호의 빛"
 	ns.L["The Art of War"] = "전쟁의 기술"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "광신"	
+	ns.L["Hammer of the Righteous"] = "정의의 망치"	
+	ns.L["Improved Hammer of Wrath"] = "천벌의 망치 연마"	
+	ns.L["Improved Sanctuary"] = "성역 연마"	
+	ns.L["Light's Grace"] = "빛의 은총"	
+	ns.L["Purifying Power"] = "정화의 힘"	
+	ns.L["Wrath"] = "천벌"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "치유의 마법진"
 	ns.L["Homunculi"] = "호문쿨루스"
@@ -1124,6 +1345,13 @@ elseif ns.locale == "koKR" then
 	ns.L["Renewed Hope"] = "새로운 희망"
 	ns.L["Shadowfiend"] = "어둠의 마귀"
 	ns.L["Spirit of the Redeemer"] = "구원자의 영혼"
+	-- Priest Phase 3
+	ns.L["Despair"] = "절망"	
+	ns.L["Divine Aegis"] = "신의 보호"	
+	ns.L["Eye of the Void"] = "공허의 눈"	
+	ns.L["Pain and Suffering"] = "고통과 고뇌"	
+	ns.L["Surge of Light"] = "빛의 쇄도"	
+	ns.L["Void Zone"] = "공허의 지대"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "미간 적중"
 	ns.L["Blade Dance"] = "칼춤"
@@ -1145,6 +1373,13 @@ elseif ns.locale == "koKR" then
 	ns.L["Shadowstep"] = "그림자 밟기"
 	ns.L["Shuriken Toss"] = "표창 투척"
 	ns.L["Waylay"] = "습격"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "살육자"
+	ns.L["Combat Potency"] = "전투 능력"
+	ns.L["Cut to the Chase"] = "신속한 결말"
+	ns.L["Focused Attacks"] = "집중 공격"
+	ns.L["Honor Among Thieves"] = "도둑의 명예"
+	ns.L["Unfair Advantage"] = "부당 이득"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "고대의 인도"
 	ns.L["Dual Wield Specialization"] = "쌍수 무기 전문화"
@@ -1167,6 +1402,14 @@ elseif ns.locale == "koKR" then
 	ns.L["Spirit of the Alpha"] = "우두머리의 영혼"
 	ns.L["Totemic Projection"] = "토템 재배치"
 	ns.L["Two-Handed Mastery"] = "양손 장비 숙련"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "태우기"
+	ns.L["Mental Dexterity"] = "교묘한 정신"
+	ns.L["Overcharged"] = "과충전"
+	ns.L["Riptide"] = "성난 해일"
+	ns.L["Rolling Thunder"] = "구르는 천둥"
+	ns.L["Static Shock"] = "전하 충격"
+	ns.L["Tidal Waves"] = "굽이치는 물결"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "혼돈의 화살"
 	ns.L["Demonic Grace"] = "악마의 은총"
@@ -1189,6 +1432,13 @@ elseif ns.locale == "koKR" then
 	ns.L["Shadow and Flame"] = "어둠과 불길"
 	ns.L["Shadowflame"] = "암흑불길"
 	ns.L["Soul Harvesting"] = "영혼 수확"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "역류"
+	ns.L["Immolation Aura"] = "제물의 오라"
+	ns.L["Pandemic"] = "병균 확산"
+	ns.L["Summon Felguard"] = "지옥수호병 소환"
+	ns.L["Unstable Affliction"] = "불안정한 고통"
+	ns.L["Vengeance"] = "복수"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "피의 광란"
 	ns.L["Consumed by Rage"] = "분노 잠식"
@@ -1210,6 +1460,14 @@ elseif ns.locale == "koKR" then
 	ns.L["Intervene"] = "가로막기"
 	ns.L["Precise Timing"] = "정확한 시간 감각"
 	ns.L["Rallying Cry"] = "재집결의 함성"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "검투사 태세"
+	ns.L["Rampage"] = "광란"
+	ns.L["Shield Mastery"] = "방패 숙련"
+	ns.L["Sword and Board"] = "검과 방패"
+	ns.L["Taste for Blood"] = "피의 맛"
+	ns.L["Vigilance"] = "경계"
+	ns.L["Wrecking Crew"] = "파괴자"
 
 elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["AddOn Description"] = "Todas as runas SoD. (E mais!)"
@@ -1246,6 +1504,13 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Nourish"] = "Nutrir"
 	ns.L["Revive"] = "Reviver"
 	ns.L["Survival Instincts"] = "Instintos de Sobrevivência"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "Eflorescência"
+	ns.L["Elune's Fires"] = "Chamas de Eluna"
+	ns.L["Gale Winds"] = "Tormenta"
+	ns.L["Gore"] = "Escornar"
+	ns.L["Improved Barkskin"] = "Pele de Árvore Aprimorada"
+	ns.L["Improved Frenzied Regeneration"] = "Glifo de Regeneração Frenética Aprimorada"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "Domínio das Feras"
 	ns.L["Carve"] = "Trinchar"
@@ -1267,6 +1532,12 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Melee Specialist"] = "Especialista em Corpo a Corpo"
 	ns.L["Steady Shot"] = "Tiro Firme"
 	ns.L["Trap Launcher"] = "Lançador de Armadilhas"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "Reflexos Felinos"
+	ns.L["Focus Fire"] = "Fogo Concentrado"
+	ns.L["Lock and Load"] = "Largar o Dedo"
+	ns.L["Rapid Killing"] = "Matança Veloz"
+	ns.L["Raptor Killing"] = "Fúria do Raptor"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "Impacto Arcano"
 	ns.L["Arcane Surge"] = "Surto Arcano"
@@ -1289,6 +1560,13 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Missile Barrage"] = "Salva de Mísseis"
 	ns.L["Spell Power"] = "Poder Mágico"
 	ns.L["Spellfrost Bolt"] = "Seta de Gelo Mágico"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "Proteção Avançada"
+	ns.L["Balefire Bolt"] = "Seta Incendiária"
+	ns.L["Deep Freeze"] = "Congelamento Profundo"
+	ns.L["Displacement"] = "Deslocamento"
+	ns.L["Molten Armor"] = "Armadura Derretida"
+	ns.L["Temporal Anomaly"] = "Anomalia Temporal"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "Égide"
 	ns.L["Avenger's Shield"] = "Escudo do Vingador"
@@ -1310,6 +1588,14 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Sacred Shield"] = "Escudo Sagrado"
 	ns.L["Sheath of Light"] = "Bainha de Luz"
 	ns.L["The Art of War"] = "A Arte da Guerra"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "Fanatismo"	
+	ns.L["Hammer of the Righteous"] = "Martelo do Íntegro"	
+	ns.L["Improved Hammer of Wrath"] = "Martelo da Ira Aprimorado"	
+	ns.L["Improved Sanctuary"] = "Santuário Aprimorado"	
+	ns.L["Light's Grace"] = "Graça da Luz"	
+	ns.L["Purifying Power"] = "Poder Purificador"	
+	ns.L["Wrath"] = "Ira"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "Círculo de Cura"
 	ns.L["Homunculi"] = "Homúnculos"
@@ -1332,6 +1618,13 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Renewed Hope"] = "Esperança Renovada"
 	ns.L["Shadowfiend"] = "Demônio das Sombras"
 	ns.L["Spirit of the Redeemer"] = "Espírito do Redentor"
+	-- Priest Phase 3
+	ns.L["Despair"] = "Desespero"	
+	ns.L["Divine Aegis"] = "Égide Divina"	
+	ns.L["Eye of the Void"] = "Olho do Caos"	
+	ns.L["Pain and Suffering"] = "Dor e Sofrimento"	
+	ns.L["Surge of Light"] = "Torrente de Luz"	
+	ns.L["Void Zone"] = "Área de Caos"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "No Meio da Testa"
 	ns.L["Blade Dance"] = "Dança de Lâminas"
@@ -1353,6 +1646,13 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Shadowstep"] = "Passo Furtivo"
 	ns.L["Shuriken Toss"] = "Lançar Shuriken"
 	ns.L["Waylay"] = "Atocaiar"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "Chacina"
+	ns.L["Combat Potency"] = "Vigor em Combate"
+	ns.L["Cut to the Chase"] = "Ir ao Ponto"
+	ns.L["Focused Attacks"] = "Ataques Concentrados"
+	ns.L["Honor Among Thieves"] = "Honra Entre Ladrões"
+	ns.L["Unfair Advantage"] = "Vantagem Desleal"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "Conselho dos Ancestrais"
 	ns.L["Dual Wield Specialization"] = "Especialização em Duas Armas"
@@ -1375,6 +1675,14 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Spirit of the Alpha"] = "Espírito do Alfa"
 	ns.L["Totemic Projection"] = "Projeção Totêmica"
 	ns.L["Two-Handed Mastery"] = "Maestria em Duas Mãos"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "Queimadura"
+	ns.L["Mental Dexterity"] = "Destreza Mental"
+	ns.L["Overcharged"] = "Sobrecarga"
+	ns.L["Riptide"] = "Contracorrente"
+	ns.L["Rolling Thunder"] = "Eco Ribombante"
+	ns.L["Static Shock"] = "Choque Estático"
+	ns.L["Tidal Waves"] = "Mar Revolto"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "Seta do Caos"
 	ns.L["Demonic Grace"] = "Graça Demoníaca"
@@ -1397,6 +1705,13 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Shadow and Flame"] = "Sombra e Chama"
 	ns.L["Shadowflame"] = "Chama Sombria"
 	ns.L["Soul Harvesting"] = "Almas Colhidas"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "Cortina de Fogo"
+	ns.L["Immolation Aura"] = "Aura de Imolação"
+	ns.L["Pandemic"] = "Pandemia"
+	ns.L["Summon Felguard"] = "Evocar Guarda Vil"
+	ns.L["Unstable Affliction"] = "Agonia Instável"
+	ns.L["Vengeance"] = "Vingança"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "Frenesi de Sangue"
 	ns.L["Consumed by Rage"] = "Consumido pela Raiva"
@@ -1418,6 +1733,14 @@ elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["Intervene"] = "Comprar Briga"
 	ns.L["Precise Timing"] = "Momento Exato"
 	ns.L["Rallying Cry"] = "Brado de Convocação"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "Postura do Gladiador"
+	ns.L["Rampage"] = "Alvoroço"
+	ns.L["Shield Mastery"] = "Proficiência em Escudo"
+	ns.L["Sword and Board"] = "Espada e Escudo"
+	ns.L["Taste for Blood"] = "Apetite por Sangue"
+	ns.L["Vigilance"] = "Vigilância"
+	ns.L["Wrecking Crew"] = "Violência Gratuita"
 
 elseif ns.locale == "ruRU" then
 	ns.L["AddOn Description"] = "Все руны SoD. (И более!)"
@@ -1454,6 +1777,13 @@ elseif ns.locale == "ruRU" then
 	ns.L["Nourish"] = "Покровительство природы"
 	ns.L["Revive"] = "Оживление"
 	ns.L["Survival Instincts"] = "Инстинкты выживания"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "Период цветения"
+	ns.L["Elune's Fires"] = "Огни Элуны"
+	ns.L["Gale Winds"] = "Штормовые ветра"
+	ns.L["Gore"] = "Кровавая атака"
+	ns.L["Improved Barkskin"] = "Улучшенная дубовая кожа"
+	ns.L["Improved Frenzied Regeneration"] = "Улучшенное неистовое восстановление"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "Повелитель зверей"
 	ns.L["Carve"] = "Разделка туши"
@@ -1475,6 +1805,12 @@ elseif ns.locale == "ruRU" then
 	ns.L["Melee Specialist"] = "Специалист по ближнему бою"
 	ns.L["Steady Shot"] = "Верный выстрел"
 	ns.L["Trap Launcher"] = "Бросок ловушки"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "Кошачьи рефлексы"
+	ns.L["Focus Fire"] = "Сконцентрированный огонь"
+	ns.L["Lock and Load"] = "На изготовку!"
+	ns.L["Rapid Killing"] = "Быстрые убийства"
+	ns.L["Raptor Killing"] = "Неистовство ящера"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "Чародейская вспышка"
 	ns.L["Arcane Surge"] = "Чародейский выброс"
@@ -1497,6 +1833,13 @@ elseif ns.locale == "ruRU" then
 	ns.L["Missile Barrage"] = "Заградительные стрелы"
 	ns.L["Spell Power"] = "Сила заклинаний"
 	ns.L["Spellfrost Bolt"] = "Стрела чар льда"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "Улучшенные обереги"
+	ns.L["Balefire Bolt"] = "Стрела гибельного огня"
+	ns.L["Deep Freeze"] = "Глубокая заморозка"
+	ns.L["Displacement"] = "Смещение"
+	ns.L["Molten Armor"] = "Раскаленный доспех"
+	ns.L["Temporal Anomaly"] = "Временная аномалия"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "Эгида"
 	ns.L["Avenger's Shield"] = "Щит мстителя"
@@ -1518,6 +1861,14 @@ elseif ns.locale == "ruRU" then
 	ns.L["Sacred Shield"] = "Священный щит"
 	ns.L["Sheath of Light"] = "Покров Света"
 	ns.L["The Art of War"] = "Искусство войны"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "Фанатизм"	
+	ns.L["Hammer of the Righteous"] = "Молот праведника"	
+	ns.L["Improved Hammer of Wrath"] = "Улучшенный молот гнева"	
+	ns.L["Improved Sanctuary"] = "Улучшенное святилище"	
+	ns.L["Light's Grace"] = "Благоволение Света"	
+	ns.L["Purifying Power"] = "Очищающая сила"	
+	ns.L["Wrath"] = "Гнев"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "Круг исцеления"
 	ns.L["Homunculi"] = "Гомункулы"
@@ -1540,6 +1891,13 @@ elseif ns.locale == "ruRU" then
 	ns.L["Renewed Hope"] = "Новая надежда"
 	ns.L["Shadowfiend"] = "Исчадие Тьмы"
 	ns.L["Spirit of the Redeemer"] = "Дух воздаяния"
+	-- Priest Phase 3
+	ns.L["Despair"] = "Отчаяние"	
+	ns.L["Divine Aegis"] = "Божественное покровительство"	
+	ns.L["Eye of the Void"] = "Око Бездны"	
+	ns.L["Pain and Suffering"] = "Боль и страдание"	
+	ns.L["Surge of Light"] = "Пробуждение Света"	
+	ns.L["Void Zone"] = "Портал Бездны"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "Промеж глаз"
 	ns.L["Blade Dance"] = "Танец клинков"
@@ -1561,6 +1919,13 @@ elseif ns.locale == "ruRU" then
 	ns.L["Shadowstep"] = "Шаг сквозь тень"
 	ns.L["Shuriken Toss"] = "Бросок сюрикэна"
 	ns.L["Waylay"] = "Засада"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "Резня"
+	ns.L["Combat Potency"] = "Боевой потенциал"
+	ns.L["Cut to the Chase"] = "Сразу к делу"
+	ns.L["Focused Attacks"] = "Целенаправленные атаки"
+	ns.L["Honor Among Thieves"] = "Воровская честь"
+	ns.L["Unfair Advantage"] = "Незаслуженное преимущество"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "Наставления предков"
 	ns.L["Dual Wield Specialization"] = "Специализация на бое с оружием в обеих руках"
@@ -1583,6 +1948,14 @@ elseif ns.locale == "ruRU" then
 	ns.L["Spirit of the Alpha"] = "Дух вожака стаи"
 	ns.L["Totemic Projection"] = "Проецирование тотемов"
 	ns.L["Two-Handed Mastery"] = "Мастер двуручного оружия"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "Горение"
+	ns.L["Mental Dexterity"] = "Гибкость разума"
+	ns.L["Overcharged"] = "Перегруженность"
+	ns.L["Riptide"] = "Быстрина"
+	ns.L["Rolling Thunder"] = "Громовые раскаты"
+	ns.L["Static Shock"] = "Статический шок"
+	ns.L["Tidal Waves"] = "Приливные волны"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "Стрела Хаоса"
 	ns.L["Demonic Grace"] = "Демоническая грация"
@@ -1605,6 +1978,13 @@ elseif ns.locale == "ruRU" then
 	ns.L["Shadow and Flame"] = "Тьма и пламя"
 	ns.L["Shadowflame"] = "Пламя Тьмы"
 	ns.L["Soul Harvesting"] = "Жатва душ"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "Обратный поток"
+	ns.L["Immolation Aura"] = "Обжигающий жар"
+	ns.L["Pandemic"] = "Пандемия"
+	ns.L["Summon Felguard"] = "Призыв стража Скверны"
+	ns.L["Unstable Affliction"] = "Нестабильное колдовство"
+	ns.L["Vengeance"] = "Отмщение"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "Кровавое бешенство"
 	ns.L["Consumed by Rage"] = "Неконтролируемая ярость"
@@ -1626,6 +2006,14 @@ elseif ns.locale == "ruRU" then
 	ns.L["Intervene"] = "Вмешательство"
 	ns.L["Precise Timing"] = "Точный расчет"
 	ns.L["Rallying Cry"] = "Ободряющий клич"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "Стойка гладиатора"
+	ns.L["Rampage"] = "Буйство"
+	ns.L["Shield Mastery"] = "Мастерское владение щитом"
+	ns.L["Sword and Board"] = "Щит и меч"
+	ns.L["Taste for Blood"] = "Вкус крови"
+	ns.L["Vigilance"] = "Бдительность"
+	ns.L["Wrecking Crew"] = "Погром"
 
 elseif ns.locale == "zhCN" then
 	ns.L["AddOn Description"] = "所有 SoD 符文。 （和更多！）。"
@@ -1662,6 +2050,13 @@ elseif ns.locale == "zhCN" then
 	ns.L["Nourish"] = "滋养"
 	ns.L["Revive"] = "起死回生"
 	ns.L["Survival Instincts"] = "生存本能"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "百花齐放"
+	ns.L["Elune's Fires"] = "艾露恩之火"
+	ns.L["Gale Winds"] = "烈风"
+	ns.L["Gore"] = "淤血"
+	ns.L["Improved Barkskin"] = "强化树皮术"
+	ns.L["Improved Frenzied Regeneration"] = "强化狂暴回复"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "野兽控制"
 	ns.L["Carve"] = "削凿"
@@ -1683,6 +2078,12 @@ elseif ns.locale == "zhCN" then
 	ns.L["Melee Specialist"] = "近战专家"
 	ns.L["Steady Shot"] = "稳固射击"
 	ns.L["Trap Launcher"] = "陷阱发射器"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "猎豹敏捷"
+	ns.L["Focus Fire"] = "集中火力"
+	ns.L["Lock and Load"] = "荷枪实弹"
+	ns.L["Rapid Killing"] = "疾速杀戮"
+	ns.L["Raptor Killing"] = "猛禽之怒"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "奥术冲击"
 	ns.L["Arcane Surge"] = "奥术涌动"
@@ -1705,6 +2106,13 @@ elseif ns.locale == "zhCN" then
 	ns.L["Missile Barrage"] = "飞弹连射"
 	ns.L["Spell Power"] = "法术强权"
 	ns.L["Spellfrost Bolt"] = "法术冰霜箭"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "进阶结界"
+	ns.L["Balefire Bolt"] = "怨火之箭"
+	ns.L["Deep Freeze"] = "深度冻结"
+	ns.L["Displacement"] = "闪回"
+	ns.L["Molten Armor"] = "熔岩护甲"
+	ns.L["Temporal Anomaly"] = "时空畸体"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "神盾"
 	ns.L["Avenger's Shield"] = "复仇者之盾"
@@ -1726,6 +2134,14 @@ elseif ns.locale == "zhCN" then
 	ns.L["Sacred Shield"] = "圣洁护盾"
 	ns.L["Sheath of Light"] = "圣光出鞘"
 	ns.L["The Art of War"] = "战争艺术"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "狂信"	
+	ns.L["Hammer of the Righteous"] = "正义之锤"	
+	ns.L["Improved Hammer of Wrath"] = "强化愤怒之锤"	
+	ns.L["Improved Sanctuary"] = "强化庇护"	
+	ns.L["Light's Grace"] = "光之优雅"	
+	ns.L["Purifying Power"] = "净化之力"	
+	ns.L["Wrath"] = "愤怒"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "治疗之环"
 	ns.L["Homunculi"] = "裂魂魔"
@@ -1748,6 +2164,13 @@ elseif ns.locale == "zhCN" then
 	ns.L["Renewed Hope"] = "新生希望"
 	ns.L["Shadowfiend"] = "暗影魔"
 	ns.L["Spirit of the Redeemer"] = "救赎者之魂"
+	-- Priest Phase 3
+	ns.L["Despair"] = "绝望"	
+	ns.L["Divine Aegis"] = "神圣庇护"	
+	ns.L["Eye of the Void"] = "虚空之眼"	
+	ns.L["Pain and Suffering"] = "饱受折磨"	
+	ns.L["Surge of Light"] = "圣光涌动"	
+	ns.L["Void Zone"] = "虚空领域"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "正中眉心"
 	ns.L["Blade Dance"] = "刃舞"
@@ -1769,6 +2192,13 @@ elseif ns.locale == "zhCN" then
 	ns.L["Shadowstep"] = "暗影步"
 	ns.L["Shuriken Toss"] = "飞镖投掷"
 	ns.L["Waylay"] = "埋伏"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "诛灭"
+	ns.L["Combat Potency"] = "作战潜能"
+	ns.L["Cut to the Chase"] = "穷追猛砍"
+	ns.L["Focused Attacks"] = "专注攻击"
+	ns.L["Honor Among Thieves"] = "盗贼的尊严"
+	ns.L["Unfair Advantage"] = "压倒优势"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "先祖指引"
 	ns.L["Dual Wield Specialization"] = "双武器专精"
@@ -1791,6 +2221,14 @@ elseif ns.locale == "zhCN" then
 	ns.L["Spirit of the Alpha"] = "头狼之魂"
 	ns.L["Totemic Projection"] = "图腾投射"
 	ns.L["Two-Handed Mastery"] = "双手精通"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "燃烧"
+	ns.L["Mental Dexterity"] = "聪慧"
+	ns.L["Overcharged"] = "能量超载"
+	ns.L["Riptide"] = "激流"
+	ns.L["Rolling Thunder"] = "滚雷"
+	ns.L["Static Shock"] = "静电震击"
+	ns.L["Tidal Waves"] = "潮汐奔涌"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "混乱之箭"
 	ns.L["Demonic Grace"] = "恶魔优雅"
@@ -1813,6 +2251,13 @@ elseif ns.locale == "zhCN" then
 	ns.L["Shadow and Flame"] = "影与焰"
 	ns.L["Shadowflame"] = "暗影烈焰"
 	ns.L["Soul Harvesting"] = "灵魂收割"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "爆燃"
+	ns.L["Immolation Aura"] = "献祭光环"
+	ns.L["Pandemic"] = "恶疾"
+	ns.L["Summon Felguard"] = "召唤恶魔卫士"
+	ns.L["Unstable Affliction"] = "痛苦无常"
+	ns.L["Vengeance"] = "复仇"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "血之狂暴"
 	ns.L["Consumed by Rage"] = "噬心狂怒"
@@ -1834,6 +2279,14 @@ elseif ns.locale == "zhCN" then
 	ns.L["Intervene"] = "援护"
 	ns.L["Precise Timing"] = "精准猛击"
 	ns.L["Rallying Cry"] = "集结呐喊"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "角斗姿态"
+	ns.L["Rampage"] = "暴怒"
+	ns.L["Shield Mastery"] = "盾牌精通"
+	ns.L["Sword and Board"] = "剑盾猛攻"
+	ns.L["Taste for Blood"] = "血之气息"
+	ns.L["Vigilance"] = "警戒"
+	ns.L["Wrecking Crew"] = "破坏能手"
 
 elseif ns.locale == "zhTW" then
 	ns.L["AddOn Description"] = "所有 SoD 符文。 （和更多！）。"
@@ -1870,6 +2323,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Nourish"] = "滋養"
 	ns.L["Revive"] = "起死回生"
 	ns.L["Survival Instincts"] = "生存本能"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "百花齊放"
+	ns.L["Elune's Fires"] = "艾露恩之火"
+	ns.L["Gale Winds"] = "烈風"
+	ns.L["Gore"] = "淤血"
+	ns.L["Improved Barkskin"] = "強化樹皮術"
+	ns.L["Improved Frenzied Regeneration"] = "強化狂暴回覆"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "野獸控制"
 	ns.L["Carve"] = "削鑿"
@@ -1891,6 +2351,12 @@ elseif ns.locale == "zhTW" then
 	ns.L["Melee Specialist"] = "近戰專家"
 	ns.L["Steady Shot"] = "穩固射擊"
 	ns.L["Trap Launcher"] = "陷阱發射器"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "獵豹敏捷"
+	ns.L["Focus Fire"] = "集中火力"
+	ns.L["Lock and Load"] = "荷槍實彈"
+	ns.L["Rapid Killing"] = "疾速殺戮"
+	ns.L["Raptor Killing"] = "猛禽之怒"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "奧術衝擊"
 	ns.L["Arcane Surge"] = "奧術湧動"
@@ -1913,6 +2379,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Missile Barrage"] = "飛彈連射"
 	ns.L["Spell Power"] = "法術強權"
 	ns.L["Spellfrost Bolt"] = "法術冰霜箭"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "進階結界"
+	ns.L["Balefire Bolt"] = "怨火之箭"
+	ns.L["Deep Freeze"] = "深度凍結"
+	ns.L["Displacement"] = "閃回"
+	ns.L["Molten Armor"] = "熔岩護甲"
+	ns.L["Temporal Anomaly"] = "時空畸體"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "神盾"
 	ns.L["Avenger's Shield"] = "復仇者之盾"
@@ -1934,6 +2407,14 @@ elseif ns.locale == "zhTW" then
 	ns.L["Sacred Shield"] = "聖潔護盾"
 	ns.L["Sheath of Light"] = "聖光出鞘"
 	ns.L["The Art of War"] = "戰爭藝術"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "狂信"	
+	ns.L["Hammer of the Righteous"] = "正義之鎚"	
+	ns.L["Improved Hammer of Wrath"] = "強化憤怒之錘"	
+	ns.L["Improved Sanctuary"] = "強化庇護"	
+	ns.L["Light's Grace"] = "光之優雅"	
+	ns.L["Purifying Power"] = "淨化之力"	
+	ns.L["Wrath"] = "憤怒"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "治療之環"
 	ns.L["Homunculi"] = "裂魂魔"
@@ -1956,6 +2437,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Renewed Hope"] = "新生希望"
 	ns.L["Shadowfiend"] = "暗影魔"
 	ns.L["Spirit of the Redeemer"] = "救贖者之魂"
+	-- Priest Phase 3
+	ns.L["Despair"] = "絕望"	
+	ns.L["Divine Aegis"] = "神聖庇護"	
+	ns.L["Eye of the Void"] = "虛空之眼"	
+	ns.L["Pain and Suffering"] = "飽受折磨"	
+	ns.L["Surge of Light"] = "聖光湧動"	
+	ns.L["Void Zone"] = "虛空領域"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "正中眉心"
 	ns.L["Blade Dance"] = "刃舞"
@@ -1977,6 +2465,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Shadowstep"] = "暗影步"
 	ns.L["Shuriken Toss"] = "飛鏢投擲"
 	ns.L["Waylay"] = "埋伏"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "誅滅"
+	ns.L["Combat Potency"] = "作戰潛能"
+	ns.L["Cut to the Chase"] = "窮追猛砍"
+	ns.L["Focused Attacks"] = "專注攻擊"
+	ns.L["Honor Among Thieves"] = "盜賊的尊嚴"
+	ns.L["Unfair Advantage"] = "壓倒優勢"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "先祖指引"
 	ns.L["Dual Wield Specialization"] = "雙武器專精"
@@ -1999,6 +2494,14 @@ elseif ns.locale == "zhTW" then
 	ns.L["Spirit of the Alpha"] = "頭狼之魂"
 	ns.L["Totemic Projection"] = "圖騰投射"
 	ns.L["Two-Handed Mastery"] = "雙手精通"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "燃燒"
+	ns.L["Mental Dexterity"] = "聰慧"
+	ns.L["Overcharged"] = "能量超載"
+	ns.L["Riptide"] = "激流"
+	ns.L["Rolling Thunder"] = "滾雷"
+	ns.L["Static Shock"] = "靜電震擊"
+	ns.L["Tidal Waves"] = "潮汐奔湧"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "混亂之箭"
 	ns.L["Demonic Grace"] = "惡魔優雅"
@@ -2021,6 +2524,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Shadow and Flame"] = "影與焰"
 	ns.L["Shadowflame"] = "暗影烈焰"
 	ns.L["Soul Harvesting"] = "靈魂收割"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "爆燃"
+	ns.L["Immolation Aura"] = "獻祭光環"
+	ns.L["Pandemic"] = "惡疾"
+	ns.L["Summon Felguard"] = "召喚惡魔衛士"
+	ns.L["Unstable Affliction"] = "痛苦無常"
+	ns.L["Vengeance"] = "復仇"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "血之狂暴"
 	ns.L["Consumed by Rage"] = "噬心狂怒"
@@ -2043,6 +2553,14 @@ elseif ns.locale == "zhTW" then
 	ns.L["Precise Timing"] = "精準猛擊"
 	ns.L["Rallying Cry"] = "集結吶喊"
 	ns.L["Rallying Cry"] = "集結吶喊"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "角斗姿態"
+	ns.L["Rampage"] = "暴怒"
+	ns.L["Shield Mastery"] = "盾牌精通"
+	ns.L["Sword and Board"] = "劍盾猛攻"
+	ns.L["Taste for Blood"] = "血之氣息"
+	ns.L["Vigilance"] = "警戒"
+	ns.L["Wrecking Crew"] = "破壞能手"
 
 else
 	ns.L["AddOn Description"] = "All the SoD Runes. (And more!)"

@@ -3,7 +3,7 @@
 
                                                 Runes
 
-                                       v2.07 - 9th April 2024
+                                       v2.08 - 9th April 2024
                                 Copyright (C) Taraezor / Chris Birch
                                          All Rights Reserved
 
@@ -152,12 +152,16 @@ local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language
 	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells == nil then HandyNotes_RunesDB.runesKnown[ ns.class ].spells = {} end
 
 	if HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ ns.L[ spell ] ] then
+		-- Testing against a localised spelling of the spell
+		-- We keep a permanent copy of the spell in the DB - avoids repeated API calls -> lag/fps. Player can't unlearn a spell!
 		return false
 	end
-	if not ns.runeCategories then
+	if not ns.runeCategories then -- Build once each login/reload
 		C_Engraving.RefreshRunesList()
 		ns.runeCategories = C_Engraving.GetRuneCategories( false, false )
-			-- returns 5, 7, 10 as of 1.15.0 (Chest/Legs/Hands); 6, 8 and even a 5 for 1.15.1
+			-- Phase 1: 5, 7, 10 (Chest/Legs/Hands)
+			-- Phase 2: 6, 8 and even a 5 (Waist/Feet/Chest)
+			-- Phase 3: 1 and 9 (Head/Bracers)
 		if ns.runeCategories == nil then return true end -- too soon for the server
 		if #ns.runeCategories == 0 then return true end -- too soon for the server
 	end
@@ -165,11 +169,14 @@ local function ShowPinForThisClassSpell( spell, forceCheck ) -- English language
 		local engravingData = GetRunesForCategory( cat, true )
 		for _,ed in ipairs( engravingData ) do
 			if ed.name == ns.L[ spell ] then -- It appears that ed.name is localised
+				-- To here if the returned list of known runes contains the passed rune
 				HandyNotes_RunesDB.runesKnown[ ns.class ].spells[ ns.L[ spell ] ] = true
+				-- Saving a localised spelling of the spell in our lookup table
 				return false
 			end
 		end
 	end
+	-- Rune is not yet known. So "true" is "yes, we need to show the pin" BUT also "not yet known/completed"
 	return true
 end
 
@@ -407,6 +414,7 @@ local function SetupDynamicContinent( mapID )
 	-- generated pins which represent a culling of and summary of all the zone pins.
 	-- The idea is to have no more than one pin per rune per zone for the player as well as the
 	-- secondary/additional class which is selectable in the Options panel.
+	-- Since I introduced this continent/world maps pin culling the previous massive lag/fps hit has disappeared
 		
 	ns.zonePins = {}
 
