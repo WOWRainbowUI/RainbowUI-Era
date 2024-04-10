@@ -274,7 +274,7 @@ function pluginHandler:OnEnable()
 			end
 		end
 	end
-	HandyNotes:RegisterPluginDB("Chests", pluginHandler, ns.options)
+	HandyNotes:RegisterPluginDB(ns.L["Chests"], pluginHandler, ns.options)
 	ns.db = LibStub("AceDB-3.0"):New("HandyNotes_ChestsDB", defaults, "Default").profile
 	pluginHandler:Refresh()
 end

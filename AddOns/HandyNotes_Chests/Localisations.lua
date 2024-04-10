@@ -147,6 +147,8 @@ else
 	-- 自行加入
 	ns.L["No Map Pin"] = "No Map Pin"
 	ns.L["Chests"] = "Chests"
+	ns.L["Chest Rank "] = "Chest Rank "
+	ns.L["Guide"] = "Guide"
 end
 
 -- Translations specific to the Chests AddOn
