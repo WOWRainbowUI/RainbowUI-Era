@@ -97,10 +97,10 @@ st.hunter.rapidKilling = "進入灼熱峽谷西北角的火 watch嶺洞穴。\n�
 			.."請注意，你會收到一個很棒的小飾品，它專門\n幫助馴服熔火之心的熔岩犬。BoPU"
 
 -- Mage
-st.mage.books = "從艾澤拉斯各地收集書籍可以獲得三個符文。任何列出的書籍\n"
-			.."都算數。你將發現的每本書都交給幽暗城的歐文·薩德（部落）或暴風城的加里恩·溫德爾。\n\n"
-			.."你可以一次交一本書或一次交幾本書。當你交的書足夠獲得一個符文時，\n"
-			.."一個微不足道的完成任務將會獎勵你你的符文。"
+st.mage.books = "在艾澤拉斯各地收集書籍可以獲得三個符文。任何列出的書籍都算數。\n"
+            .."你將發現的每一本書都交給幽暗城的歐文·薩德 (部落) 或暴風城的加里恩·溫德爾。\n\n"
+            .."你可以一次交一本書或幾本書。當你交了足夠的書來獲得符文時，\n"
+            .."一個簡單的完成任務就會獎勵你符文。" 
 st.mage.booksQuestIDsA = { 79953, 81955, 79949, 78145, 79091, 79092, 79535, 79097, 78142, 81956, 
 						78147, 79948, 79950, 81952, 78149, 79947, 78146, 81949, 79951, 78124, 
 						79093, 78148, 79952, 81947, 78143, 81953, 78127, 81951, 81954, 78150, 79536, 82208 }
@@ -355,8 +355,8 @@ st.priest.surgeLight = "在服務器時間晚上 9 點到凌晨 3 點之間，\n
 -- Rogue Phase 1
 st.rogue.bladeDance = "黑海岸的懸崖之泉洞穴。鑰匙從懸崖之泉怪物身上掉落；在\n"
 .."洛克莫丹扒竊黑鐵矮人。打開保險箱；扒竊迪菲亞\n怪物獲得一份謹慎的信封。前往西部荒野\n"
-.."死亡礦井的後門入口 (A)。\n\n扒竊南海鎮怪物獲得海盜的火柴盒。前往\n"
-.."附近的山上。點燃火藥桶。\n砰！瞧，你的獎勵在等著你！ (H)"
+.."死亡礦井的後門入口 (聯盟)。\n\n扒竊南海鎮怪物獲得海盜的火柴盒。前往\n"
+.."附近的山上。點燃火藥桶。\n砰！瞧，你的獎勵在等著你！ (部落)"
 st.rogue.deadlyBrew = "在 20 級時，你會收到一封來自“C”的信。忽略它。在 22 級時學習消失和擾亂\n"
 .."並在欺詐大師（1 級敏銳）中投入五點。強烈建議\n"
 .."使用偽裝（2 級）。再投入 5 點！\n\n"
@@ -380,10 +380,10 @@ st.rogue.envenom = "與克里斯·萊加斯交談。她在敦霍爾德\n城堡�
 .."以東的河流一直走到西瘟疫之地。\n\n繼續走到盡頭 - 瀑布。\n"
 .."生鏽的保險箱的位置標記在地圖上"
 st.rogue.mutilate = "在丹莫羅遙遠的東南部，赫爾姆斯床湖以南，扒竊黑鐵密探獲得黑鼠的筆記；扒竊加里克\n"
-.."·帕德福特獲得卡蒂的筆記，北郡葡萄園；\n梅萊納斯領主，泰達希爾的邪惡岩石洞穴 (A)。\n\n"
-.."在杜隆塔爾扒竊燃燒之刃怪物獲得巴克索的筆記；\n在提瑞斯法林地布瑞爾以南扒竊佩林隊長 (H)"
-st.rogue.precision = "從鐵爐堡的孤寂洞穴、暴風城的\n刺客小巷、泰達希爾最南端的 gnarlpine\n藏匿處拾取 (A)。\n\n"
-.."奧格瑞瑪的 The Drag 中的箱子；提瑞斯法林地\n加倫之墓以東的沉船寶箱 (H)"
+.."·帕德福特獲得卡蒂的筆記，北郡葡萄園；\n梅萊納斯領主，泰達希爾的邪惡岩石洞穴 (聯盟)。\n\n"
+.."在杜隆塔爾扒竊燃燒之刃怪物獲得巴克索的筆記；\n在提瑞斯法林地布瑞爾以南扒竊佩林隊長 (部落)"
+st.rogue.precision = "從鐵爐堡的孤寂洞穴、暴風城的\n刺客小巷、泰達希爾最南端的 gnarlpine\n藏匿處拾取 (聯盟)。\n\n"
+.."奧格瑞瑪的 The Drag 中的箱子；提瑞斯法林地\n加倫之墓以東的沉船寶箱 (部落)"
 st.rogue.quickDraw = "你需要拼湊一張分成\n四部分的藏寶圖。你不能跨區域共享部分。\n"
 .."決定你大部分時間會在哪裡度過。扒竊。\n\n"
 st.rogue.quickDrawDM = "丹莫羅藏寶圖：\n"
@@ -416,12 +416,12 @@ st.rogue.quickDrawTG = "提瑞斯法林地藏寶圖：\n"
 .." 左下：加倫之墓的豺狼人\n"
 .." 右下：邪惡的鰭狀魚人，沿海地區"
 st.rogue.saberSlash = "黑海岸的奧伯丁燈塔；洛克莫丹\n石工水壩的平台；西部荒野\n"
-.."哨兵嶺旅店後面的山丘 (A)。\n\n貧瘠之地北崗哨堡壘的馬厩屋頂\n"
-.."銀松森林影牙城堡入口處\n平台上的生鏽箱子 (H)"
+.."哨兵嶺旅店後面的山丘 (聯盟)。\n\n貧瘠之地北崗哨堡壘的馬厩屋頂\n"
+.."銀松森林影牙城堡入口處\n平台上的生鏽箱子 (部落)"
 st.rogue.shiv = "首先通過扒竊暮色森林南部邊界的\n迪菲亞怪物獲得一枚刻有文字的金戒指。\n\n"
 .."然後前往墓地，在\n雕像前 /kneel。小心巡邏，選擇你的時機！"
 st.rogue.slaughter = "丹莫羅卡拉諾斯旅店上方；艾爾文森林\n金谷以北的幽靈屋頂；\n"
-.."泰達希爾班奈希爾墓穴巢穴內\n有幾個寶箱位置 (A)。\n\n"
+.."泰達希爾班奈希爾墓穴巢穴內\n有幾個寶箱位置 (聯盟)。\n\n"
 .."杜隆塔爾的乾涸峽谷 - 尋找剃刀嶺西北偏北的一個針；提瑞斯法林地\n"
 .."阿加曼德地穴中的聖物箱。鑰匙從\n附近的怪物身上掉落"
 -- Rogue Phase 2
@@ -569,13 +569,25 @@ st.warrior.devastateVik = "維多利亞需要：來自任何礦井附近的穴�
 
 st.warrior.endlessRage = "聯盟可以選擇追捕西部荒野南部海岸的老Murk-eye；與洛克莫丹東北角的精英食人魔戰鬥，或者擊敗你任務中心的Sedorax 女士。\n\n部落需要從十字路 口旅館旁grab 一個容易看到的旗幟，然後挑戰北望堡的Stonebrew 中尉，或者殺死銀松森林Skittering 黑暗洞穴中的一個怪物。\n\n做任何方便的事。"
 
-st.warrior.frenziedAssault = "與以下其中一位交談：奧格瑪The Drag 的Zamja；雷霆崖Spirit Rise 的Netali Proudwind；提瑞斯法林地佈瑞爾旅館的Penny Hawkins（部落）或鐵爐堡旅館 老闆Bruuk Barleybeard、暴風城The Park 的Liv Bradford；泰達希爾Dolanaar 的旅館老闆Keldamyr（聯盟）\n\n他們會要求你彈飛某人。很簡單！"
-
-st.warrior.furiousThunder = "艾爾文森林的Hogger（聯盟/部落）。\n\n丹莫羅的嚎叫者Edan、Fyodi、老冰鬍子、Vagash 和Vejrek；艾爾文森林的金牙、 Gruff Swiftbite；泰達希爾的Gnarlpine 儲藏處（聯盟）\n\n杜洛塔爾的死亡剝皮者、閃電皮怪物；杜洛塔爾骷髏岩洞穴的Felweaver Scornn（稀有）、Gazz'uz；杜洛 塔爾試煉谷的Sarkoth；莫高雷的Arra'chea 怪物、Lurkmane、Snagglespear、The Rake、Sister Hatelash；提瑞斯法林地的Gillgar（部落）。\n\n呼！拾取並學習！"
-
-st.warrior.harenTip = "當戰鬥圖騰從任何 Mo'grosh 食人魔身上掉落時，使用它來挑戰在湖附近奔跑的 Haren Swifthoof 進行決鬥。"
-
-st.warrior.quickStrike = "部落應該去棘齒城的Kilxx，購買一個魚叉，然後遊出去用魚叉捕獲Bruuz。\n\n聯盟的選擇包括，類似地，用一個gnarled 魚叉擊敗Paxnozz。 位置在黑海岸瑪西斯特拉廢墟的西邊，但首先要從一隻死海龜的頭上拾取戰利品。\n\n聯盟也可以從西部荒野的任何迪菲亞怪物身上獲得一個鰓毒，用 它殺死南部海岸的魚人以獲得一個海洋之魂，然後前往美杜莎雕像，然後殺死下一個怪物。\n\n更簡單的是洛克莫丹塞爾薩瑪爾以西的穴居人。 他們會掉落一個晶洞。最好看看我提供的工具提示。"
+st.warrior.frenziedAssault = "與以下其中一位交談：\n薩姆加，奧格瑪的飛龍；\n奈塔莉·驕傲之風，雷霆崖的精神高地；\n"
+            .."潘妮·霍金斯，提瑞斯法林地布瑞爾旅館 (部落) 或\n布魯克·大鬍子，鐵爐堡的旅館老闆，莉芙\n"
+            .."布拉德福德，暴風城的公園；旅館老闆\n泰達希爾多蘭納爾的凱爾達米爾 (聯盟)\n\n"
+            .."他們會要求你彈飛某人。簡單！"
+st.warrior.furiousThunder = "艾爾文森林的霍格 (A/H)。\n\n"
+            .."艾丹·咆哮者、菲奧迪、老冰鬍、瓦加什和\n維杰雷克，丹莫羅；金牙、粗魯的迅齒，\n"
+            .."艾爾文森林； gnarlpine 儲物箱，泰達希爾 (聯盟)\n\n死亡剝皮者、閃電獸皮生物，杜洛塔；\n"
+            .."邪惡編織者斯科恩（稀有），加茲烏茲，杜洛塔骷髏岩洞穴；薩科斯，杜洛塔試煉谷；\n"
+            .."阿拉切生物，潛伏者，尖牙矛，耙子，\n哈特拉什修女，莫高雷；吉爾加，提瑞斯法 (部落)。\n\n呼！掠奪和學習！"
+st.warrior.harenTip = "當任何莫高雷食人魔掉落戰鬥圖騰時，\n用它來挑戰在湖附近奔跑的哈倫·迅蹄，\n"
+            .."進行決鬥"
+st.warrior.quickStrike = "部落應該去棘齒城的基爾克斯，買一個\n魚叉，然後游出去用魚叉\n"
+            .."網住布魯茲。\n\n聯盟的選擇包括，同樣，用粗糙的魚叉\n"
+            .."擊敗帕克斯諾茲。位置在\n黑海岸馬西斯特拉廢墟以西\n"
+            .."但首先從死海龜的頭上掠奪。\n\n"
+            .."聯盟還可以從西部荒野的任何\n迪菲亞暴徒那裡獲得魚鰓草，用它來殺死\n"
+            .."南海岸的魚人，以獲得大海的靈魂，\n然後去美杜莎雕像，然後殺死\n下一個怪物。\n\n"
+            .."更簡單的是洛克莫丹塞爾薩瑪爾以西的穴居人。\n他們會掉落一個晶洞。最好看看\n"
+            .."我提供的工具提示"
 
 st.warrior.ragingBlow = "需要取得三個物品。頭盔位於銀松森林南部的影牙城堡，這是一個22-30 級的地牢。它在第四個Boss 指揮官斯普林維爾身後的長凳 上。\n\n「黑鐵企業家」出售長矛。他位於濕地的Dun Modr，就在阿拉希高地邊界附近。\n\n盾牌很方便地掛在牆上，在赤脊山脈Stonewatch 城堡 的Gath'ilzogg 後面。部落應該在聯盟標記怪物後復活，哈哈。"
 -- Warrior Phase 2
@@ -702,26 +714,26 @@ ns.runes = {
 	["DRUID"] = {
 		-- Phase 1
 		["Fury of Stormrage"] = { rune="月神偶像", phase=1, spellID=414799, level=2, icon=1, slot=5,
-start="暗影谷的格雷爾金怪物 (A)。貧瘠之地的荊棘之刃峽谷中的箱子 (H)" },
+start="暗影谷的格雷爾金怪物 (聯盟)。貧瘠之地的荊棘之刃峽谷中的箱子 (部落)" },
 ["Living Seed"] = { rune="自然潛能符文", phase=1, spellID=414677, level=2, icon=2, slot=5,
-start="從泰達希爾各地收集林地花朵 (A)；從莫高雷各地收集草原花朵 (H)" },
+start="從泰達希爾各地收集林地花朵 (聯盟)；從莫高雷各地收集草原花朵 (部落)" },
 ["Sunfire"] = { rune="太陽符文", phase=1, spellID=414684, level=4, icon=3, slot=10,
-start="白色月石：泰達希爾東南部 (A)；莫高雷西南部 (H)" },
+start="白色月石：泰達希爾東南部 (聯盟)；莫高雷西南部 (部落)" },
 ["Lifebloom"] = { rune="生命符文", phase=1, spellID=408124, level=7, icon=4, slot=7,
-start=st.twoPlusHealers .."泰達希爾的奧拉密斯林地 (A)；莫高雷風險投資公司洞穴的北邊出口附近 (H)" },
+start=st.twoPlusHealers .."泰達希爾的奧拉密斯林地 (聯盟)；莫高雷風險投資公司洞穴的北邊出口附近 (部落)" },
 ["Mangle"] = { rune="熊形態狂怒偶像", phase=1, spellID=409828, level=10, icon=5, slot=10,
-start="怒爪，班奈希爾墓穴巢穴附近，泰達希爾；平原潛行者怪物，莫高雷北部和東北部 (H)" },
+start="怒爪，班奈希爾墓穴巢穴附近，泰達希爾；平原潛行者怪物，莫高雷北部和東北部 (部落)" },
 ["Wild Strikes"] = { rune="野性偶像", phase=1, spellID=407977, level=14, icon=6, slot=5,
 start="恐怖圖騰怪物，石爪山脈東南入口/出口" },
 ["Lacerate"] = { rune="撕裂符文", phase=1, spellID=414644, level=15, icon=7, slot=10,
-start="卡拉深水，洛克湖，洛克莫丹 (A)\n"
+start="卡拉深水，洛克湖，洛克莫丹 (聯盟)\n"
 .."黑海岸沿海弗博格的螃蟹零食；貧瘠之地被遺忘的水池，被遺棄的碎顎巢穴" },
 ["Skull Bash"] = { rune="顱骨打擊符文", phase=1, spellID=410176, level=15, icon=8, slot=7,
 start=st.supplyFactionStart },
 ["Starsurge"] = { rune="星辰符文", phase=1, spellID=417157, level=20, icon=9, slot=7,
 start="與格魯吉姆德恩交談，在濕地東北部的一座橋下" },
 ["Savage Roar"] = { rune="凶猛偶像", phase=1, spellID=407988, level=20, icon=10, slot=7,
-start="巢穴母親，黑海岸巴沙拉蘭以西；貧瘠之地半人馬營地的科爾卡的戰利品 (H)" },
+start="巢穴母親，黑海岸巴沙拉蘭以西；貧瘠之地半人馬營地的科爾卡的戰利品 (部落)" },
 ["Survival of the Fittest"] = { rune="生存符文", phase=1, spellID=411115, level=20, icon=11, slot=5,
 start="貧瘠之地棘齒城的格里茲比" },
 ["Wild Growth"] = { rune="野性成長符文", phase=1, spellID=408120, level=25, icon=12, slot=10,
@@ -767,29 +779,29 @@ start=st.wildGodsStart },
 	["HUNTER"] = {
 		-- Phase 1
 		["Chimera Shot"] = { rune="奇美拉符文", phase=1, spellID=409433, level=2, icon=1, slot=10,
-start="索加斯·格里姆森，安威瑪爾，冰風峽谷；艾安娜·永恆 stride，奧達希爾，暗影谷 (A)。\n"
-.."珍珊，試煉谷；蘭卡·遠射，紅雲台地 (H)" },
+start="索加斯·格里姆森，安威瑪爾，冰風峽谷；艾安娜·永恆 stride，奧達希爾，暗影谷 (聯盟)。\n"
+.."珍珊，試煉谷；蘭卡·遠射，紅雲台地 (部落)" },
 ["Explosive Shot"] = { rune="爆炸射擊符文", phase=1, spellID=409552, level=5, icon=2, slot=10,
-start="丹莫羅 (A) 和莫高雷 (H) 的各種精英/稀有怪物；怒爪，班奈希爾墓穴巢穴，泰達希爾 (A)" },
+start="丹莫羅 (聯盟) 和莫高雷 (部落) 的各種精英/稀有怪物；怒爪，班奈希爾墓穴巢穴，泰達希爾 (聯盟)" },
 ["Master Marksman"] = { rune="神射手符文", phase=1, spellID=409428, level=6, icon=3, slot=5,
-start="沙沙作響的灌木叢：通往泰達希爾奧拉密斯林地的小路旁；丹莫羅布瑞爾村莊南部 (A)\n"
-.."剃刀嶺以西，向南轉；莫高雷血蹄村以東，靠近湖邊 (H)" },
+start="沙沙作響的灌木叢：通往泰達希爾奧拉密斯林地的小路旁；丹莫羅布瑞爾村莊南部 (聯盟)\n"
+.."剃刀嶺以西，向南轉；莫高雷血蹄村以東，靠近湖邊 (部落)" },
 ["Flanking Strike"] = { rune="側翼打擊符文", phase=1, spellID=415320, level=8, icon=4, slot=7,
-start="喬魯爾，丹莫羅布瑞爾村莊以東，靠近洞穴；莫格，泰達希爾北部，林地對面 (A)\n"
+start="喬魯爾，丹莫羅布瑞爾村莊以東，靠近洞穴；莫格，泰達希爾北部，林地對面 (聯盟)\n"
 .."勞爾，杜隆塔爾回音群島北部；莫克瓦，莫高雷血蹄村西北部" },
 ["Carve"] = { rune="切割符文", phase=1, spellID=425711, level=10, icon=5, slot=10,
-start="使用試劑馴服動物：丹莫羅的琥珀靜謐牧場；達納蘇斯的瑞萊隆 (A)\n"
-.."杜隆塔爾剃刀嶺的拉齊爾；莫高雷血蹄村的塔科達·陽鬃 (H)" },
+start="使用試劑馴服動物：丹莫羅的琥珀靜謐牧場；達納蘇斯的瑞萊隆 (聯盟)\n"
+.."杜隆塔爾剃刀嶺的拉齊爾；莫高雷血蹄村的塔科達·陽鬃 (部落)" },
 ["Beast Mastery"] = { rune="野獸控制符文", phase=1, spellID=409368, level=15, icon=6, slot=10,
-start="熊怪營地，黑海岸；遠行者營地，洛克莫丹；銀色馬刺，西部荒野金海岸礦場以北 (A)\n"
-.."凶猛的灰熊，銀松森林北部；巡邏的獵豹，貧瘠之地陶拉祖營地以北 (H)" },
+start="熊怪營地，黑海岸；遠行者營地，洛克莫丹；銀色馬刺，西部荒野金海岸礦場以北 (聯盟)\n"
+.."凶猛的灰熊，銀松森林北部；巡邏的獵豹，貧瘠之地陶拉祖營地以北 (部落)" },
 ["Serpent Spread"] = { rune="毒蛇蔓延符文", phase=1, spellID=425738, level=15, icon=7, slot=7,
 start=st.supplyFactionStart },
 ["Kill Command"] = { rune="殺戮命令符文", phase=1, spellID=409379, level=20, icon=8, slot=7,
 start="吉克斯·瘋狂火箭，石爪山脈太陽岩避難所附近 (A/H)" },
 ["Sniper Training"] = { rune="狙擊手符文", phase=1, spellID=415399, level=20, icon=9, slot=7,
 start="粗糙的魚叉，黑海岸瑪瑟斯特拉廢墟以西；卡克爾，洛克莫丹的湖中（南部）；\n"
-.."迪菲亞斥候，西部荒野哨兵嶺；基爾克斯，貧瘠之地棘齒城 (H)" },
+.."迪菲亞斥候，西部荒野哨兵嶺；基爾克斯，貧瘠之地棘齒城 (部落)" },
 ["Lone Wolf"] = { rune="孤狼符文", phase=1, spellID=415370, level=20, icon=10, slot=5,
 start="貧瘠之地棘齒城的格里茲比" },
 ["Heart of the Lion"] = { rune="獅心符文", phase=1, spellID=409580, level=25, icon=11, slot=5,
@@ -834,34 +846,34 @@ start="從灼熱峽谷的風暴烏鴉巢穴中拾取一個風暴烏鴉蛋。然�
 	["MAGE"] = {
 		-- Phase 1
 		["Ice Lance"] = { rune="法術筆記：冰槍術 (CALE ENCI)", phase=1, spellID=400640, level=2, icon=1, slot=10,
-start="瑪瑞克·努爾比特，安威瑪爾後方，丹莫羅；凱爾登·布雷曼，北郡修道院，艾爾文森林 (A)\n"
-.."瑪雅，試煉谷，杜隆塔爾；伊莎貝拉，喪鐘鎮，提瑞斯法林地 (H)" },
+start="瑪瑞克·努爾比特，安威瑪爾後方，丹莫羅；凱爾登·布雷曼，北郡修道院，艾爾文森林 (聯盟)\n"
+.."瑪雅，試煉谷，杜隆塔爾；伊莎貝拉，喪鐘鎮，提瑞斯法林地 (部落)" },
 ["Living Flame"] = { rune="法術筆記：活體火焰 (MILEGIN VALF)", phase=1, spellID=401556, level=8, icon=2, slot=7,
-start="碧玉礦洞附近的狗頭人怪物，艾爾文森林；卡拉諾斯西北部的霜鬃怪物，丹莫羅 (A)\n"
-.."燃燒之刃怪物，骷髏石，杜隆塔爾；血色怪物，索利登農場，提瑞斯法林地 (H)" },
+start="碧玉礦洞附近的狗頭人怪物，艾爾文森林；卡拉諾斯西北部的霜鬃怪物，丹莫羅 (聯盟)\n"
+.."燃燒之刃怪物，骷髏石，杜隆塔爾；血色怪物，索利登農場，提瑞斯法林地 (部落)" },
 ["Enlightenment"] = { rune="法術筆記：啟迪", phase=1, spellID=412324, level=8, icon=3, slot=5,
 start="艾爾文森林中的任何小動物，但建議靠近山脊點塔。\n"
 .."或者你在提瑞斯法林地任何農場周圍看到的奇異瓜" },
 ["Burnout"] = { rune="法術筆記：燃盡", phase=1, spellID=412286, level=9, icon=4, slot=5,
-start="冷凍：穴居人，丹莫羅的戈爾博拉採石場；魚人，艾爾文森林的石碑湖 (A)\n"
-.."馬庫拉，杜隆塔爾剃刀嶺以東；魚人，提瑞斯法林地光明之水湖西北部 (H)" },
+start="冷凍：穴居人，丹莫羅的戈爾博拉採石場；魚人，艾爾文森林的石碑湖 (聯盟)\n"
+.."馬庫拉，杜隆塔爾剃刀嶺以東；魚人，提瑞斯法林地光明之水湖西北部 (部落)" },
 ["Fingers of Frost"] = { rune="法術筆記：冰霜之指 (RING SEFF OSTROF)", phase=1, spellID=400647, level=10, icon=5,
-slot=5, start="丹莫羅的幾個精英/稀有怪物；艾爾文森林的霍格 (A),\n"
-.."扎拉贊恩，杜隆塔爾的回音群島；加祖茲，杜隆塔爾奧格瑞瑪附近的洞穴；吉爾加，提瑞斯法林地 (H)" },
+slot=5, start="丹莫羅的幾個精英/稀有怪物；艾爾文森林的霍格 (聯盟),\n"
+.."扎拉贊恩，杜隆塔爾的回音群島；加祖茲，杜隆塔爾奧格瑞瑪附近的洞穴；吉爾加，提瑞斯法林地 (部落)" },
 ["Living Bomb"] = { rune="法術筆記：BIVOLG NIMB", phase=1, spellID=400613, level=12, icon=6, slot=10,
 start="洛克莫丹的碎石者洞穴和北部湖泊 (A/H);\n"
-.."來自一個小型任務鏈的額外獎勵。開始：銀松森林芬里斯島上的“會說話的頭”怪物掉落 (H)" },
+.."來自一個小型任務鏈的額外獎勵。開始：銀松森林芬里斯島上的“會說話的頭”怪物掉落 (部落)" },
 ["Arcane Surge"] = { rune="法術筆記：奧術衝擊", phase=1, spellID=425124, level=15, icon=7, slot=7,
 start=st.supplyFactionStart },
 ["Regeneration"] = { rune="法術筆記：恢復 (TENGI RONEERA)", phase=1, spellID=401417, level=15, icon=8, slot=5,
-start="洛克莫丹的湖中北部島嶼的南邊小屋裡的書堆；西部荒野的迪菲亞掠奪者 (A)\n"
-.."達拉然學徒，銀松森林；貧瘠之地半人馬營地的科爾卡的戰利品 (H)" },
+start="洛克莫丹的湖中北部島嶼的南邊小屋裡的書堆；西部荒野的迪菲亞掠奪者 (聯盟)\n"
+.."達拉然學徒，銀松森林；貧瘠之地半人馬營地的科爾卡的戰利品 (部落)" },
 ["Arcane Blast"] = { rune="法術筆記：奧術飛彈", phase=1, spellID=400574, level=18, icon=9, slot=10,
 start="灰谷北部海岸佐拉姆海岸的怒鰭納迦掉落的納迦手稿 (A/H)" },
 ["Icy Veins"] = { rune="冰冷血脈", phase=1, spellID=425121, level=20, icon=10, slot=7,
 start="在艾澤拉斯各地收集 10 本書，數量太多，無法在此列出，但...\n"
 .."請參閱我在以下位置的詳細指南：暴風城法師塔\n"
-.."傳送門房間的加里恩·溫德爾 (A) 或幽暗城法師區的歐文·薩德 (H)" },
+.."傳送門房間的加里恩·溫德爾 (聯盟) 或幽暗城法師區的歐文·薩德 (部落)" },
 ["Rewind Time"] = { rune="法術筆記：時間倒流 (TERWEM DINI)", phase=1, spellID=401462, level=20, icon=11, slot=10,
 start="貧瘠之地棘齒城的格里茲比" },
 ["Mass Regeneration"] = { rune="法術筆記：群體恢復", phase=1, spellID=412510, level=25, icon=12, slot=7,
@@ -876,7 +888,7 @@ start="殺死奧特蘭克山脈的遠古火元素（34/35 級）" },
 ["Spell Power"] = { rune="法術能量", phase=2, spellID=412322, level=33, icon=16, slot=8,
 start="在艾澤拉斯各地收集 20 本書，數量太多，無法在此列出，但...\n"
 .."請參閱我在以下位置的詳細指南：暴風城法師塔\n"
-.."傳送門房間的加里恩·溫德爾 (A) 或幽暗城法師區的歐文·薩德 (H)" },
+.."傳送門房間的加里恩·溫德爾 (聯盟) 或幽暗城法師區的歐文·薩德 (部落)" },
 ["Frostfire Bolt"] = { rune="法術筆記：冰火術 (TROFF IRESTBOL)", phase=2, spellID=401502, level=37, icon=17, slot=6,
 start="荊棘谷碎顱者秘術師掉落" },
 ["Spellfrost Bolt"] = { rune="法術筆記：寒冰箭 (PELFRB STOLLOTS)", phase=2, spellID=412532, level=37, icon=18,
@@ -891,11 +903,11 @@ start=st.emeraldWardens },
 ["Balefire Bolt"] = { rune="法術筆記：邪能火球", phase=3, spellID=428878, level=34, icon=21, slot=9,
 start="獲得一份空間修復卷軸（拍賣行）。找到一個邪能傳送門並關閉它。" ..st.felPortals ..st.getCGM },
 ["Temporal Anomaly"] = { rune="時間異常", phase=3, spellID=428885, level=42, icon=22, slot=1,
-start="你的友好圖書館員加里恩·溫德爾 (A) 或歐文·薩德 (H) 在 42 級時會有一個取物任務。" },
+start="你的友好圖書館員加里恩·溫德爾 (聯盟) 或歐文·薩德 (部落) 在 42 級時會有一個取物任務。" },
 ["Deep Freeze"] = { rune="深度凍結", phase=3, spellID=428739, level=45, icon=23, slot=1,
 start="在艾澤拉斯各地收集 25 本書，數量太多，無法在此列出，但...\n"
 .."請參閱我在以下位置的詳細指南：暴風城法師塔\n"
-.."傳送門房間的加里恩·溫德爾 (A) 或幽暗城法師區的歐文·薩德 (H)" },
+.."傳送門房間的加里恩·溫德爾 (聯盟) 或幽暗城法師區的歐文·薩德 (部落)" },
 ["Displacement"] = { rune="受控位移卷軸", phase=3, spellID=428861, level=47, icon=24, slot=9,
 start=st.leylineSummary },
 ["Advanced Warding"] = { rune="法術筆記：高級防護", phase=3, spellID=428738, level=50, icon=25, slot=1,
@@ -979,69 +991,249 @@ start="未知。人們認為發現它可能不值得付出努力" },
 
 	["PRIEST"] = {
 		-- Phase 1
-		["Penance"]={ rune="Memory of a Troubled Acolyte", phase=1, spellID=402174, level=2, icon=1, slot=10,
-				start= "Branstock Khalder, Anvilmar, Coldridge Valley; Priestess Anetta, Northshire Abbey; Shanda, Shadowglen (A)\n"
-					.."Ken'Jai, Valley of Trials; Dark Cleric Duesten, Deathknell" },
-		["Prayer of Mending"]={ rune="Reciprocal Epiphany", phase=1, spellID=401859, level=7, icon=2, slot=7,
-				start=st.twoPlusHealers
-					.."Grizzled Den, Dun Morogh; east of Jarod's Landing, southern Elwynn Forest; Oracle Glade, Teldrassil (A)\n"
-					.."South of and outside of the Valley of Trials, Durotar; near northern exit, Venture Co cave, Mulgore (H)" },
-		["Void Plague"]={ rune="Memory of a Dark Purpose", phase=1, spellID=425204, level=7, icon=3, slot=5,
-				start="Leper Gnome/Gibblewit near Gnomeregan; Goldtooth in Elwynn Forest; Gnarlpine Cache, Ban'ethil Barrow Den, "
-					.."Teldrassil (A)\nKul Tiras mob, east of Razor Hill, Durotar; Gillgar, north-west from Deathknell, Tirisfal GladeS (H)" },
-		["Homunculi"]={ rune="Prophecy of a Desecrated Citadel", phase=1, spellID=402799, level=8, icon=4, slot=7,
-				start="Shimmer Ridge, Dun Morogh; Defias Rogue Wizard, Elwynn Forest; Rascal Sprite, Fel Rock Cave, Teldrassil (A);\n"
-					.."Voodoo Troll, Echo Isle, Duratar; Scarlet mobs near Solliden Farmstead, Tirisfal Glades (H)\n"
-					.."Needs two Meditations" },
-		["Shared Pain"]={ rune="Memory of an Imprisoned Saviour", phase=1, spellID=401969, level=8, icon=5, slot=7,
-				start="Defeat Captain Beld, far south-east Dun Morogh; Kobold mobs, mines, Elwynn Forest; Lord Melenas, Teldrassil (A)\n"
-					.."Gazz'uz or Makasgar, Mulgore; Tirisfal Farmer mobs, Tirisfal Glades (H)" },
-		["Mind Sear"]={ rune="Tenebrous Epiphany", phase=1, spellID=413259, level=15, icon=6, slot=10,
-				start=st.supplyFactionStart },
-		["Twisted Faith"]={ rune="Memory of a Devout Champion", phase=1, spellID=425198, level=15, icon=7, slot=5,
-				start="Naga mobs, Ruins of Mathystra, Darkshore; Silverstream Mine, Loch Modan; Gold Coast Quarry and\n"
-					.."Jangolode Mine, Westfall (A). Wailing Spirit, southern Silverpine Forest; Razormane mobs, The Barrens (H)" },
-		["Shadow Word: Death"]={ rune="Prophecy of a King's Demise", phase=1, spellID=401955, level=20, icon=8, slot=10,
-				start="Orb, coast, Darkshore; Mo'grosh Stronghold, Loch Modan (A)\n"
-					.."Thule Ravenclaw, Fenris Isle, Silverpine Forest; Desert Mirage, The Barrens (H)\n"
-					.."Needs two Meditations" },
-		["Serendipity"]={ rune="Harmonious Epiphany", phase=1, spellID=413248, level=20, icon=9, slot=5,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Power Word: Barrier"]={ rune="Prophecy of a City Enthralled", phase=1, spellID=425207, level=23, icon=10, slot=7,
-				start="Blackrock Shadowcaster, Stone watch, Redridge Mountains (A/H). Needs two Meditations" },
-		["Strength of Soul"]={ rune="Prophecy of Seven Visitors", phase=1, spellID=415739, level=23, icon=11, slot=5,
-				start="Primal Insight from Thistlefur mobs, Ashenvale (A/H). Needs two Meditations" },
-		["Circle of Healing"]={ rune="Prophecy of a Thousand Lights", phase=1, spellID=401946, level=25, icon=12, slot=10,
-				start="Obtain Dark Insight from Defias mobs in Duskwood (A/H). Needs two Meditations" },
+		["Penance"] = {
+  rune = "受困侍僧的記憶",
+  phase = 1,
+  spellID = 402174,
+  level = 2,
+  icon = 1,
+  slot = 10,
+  start = "布蘭斯托克·卡爾德，冷脊山脈的鐵砧山；安妮塔女祭司，北郡修道院；珊達，影牙城堡 (聯盟)\n"
+      .."肯傑，試煉谷；黑暗牧師杜斯滕，喪鐘鎮"
+},
+["Prayer of Mending"] = {
+  rune = "相互頓悟",
+  phase = 1,
+  spellID = 401859,
+  level = 7,
+  icon = 2,
+  slot = 7,
+  start = st.twoPlusHealers
+      .."灰熊丘陵，丹莫羅；艾爾文森林南部，賈羅德碼頭以東；先知之刃，泰達希爾 (聯盟)\n"
+      .."杜洛塔試煉谷南部和外部；莫高雷風險投資公司洞穴北部出口附近 (部落)"
+},
+["Void Plague"] = {
+  rune = "黑暗目的的記憶",
+  phase = 1,
+  spellID = 425204,
+  level = 7,
+  icon = 3,
+  slot = 5,
+  start = "麻風侏儒/吉布爾維特靠近諾莫瑞根；艾爾文森林的金牙； gnarlpine 儲物箱，班艾希爾 Barrow Den，"
+      .."泰達希爾 (聯盟)\n庫爾提拉斯生物，剃刀嶺以東，杜洛塔；吉爾加，提瑞斯法林地喪鐘鎮西北 (部落)"
+},
+["Homunculi"] = {
+  rune = "褻瀆城堡的預言",
+  phase = 1,
+  spellID = 402799,
+  level = 8,
+  icon = 4,
+  slot = 7,
+  start = "閃光嶺，丹莫羅；迪菲亞盜賊巫師，艾爾文森林； rascal 小精靈，泰達希爾邪能岩洞穴 (聯盟);\n"
+      .."巫毒巨魔，杜洛塔回音群島；提瑞斯法林地索利登農場附近的猩紅生物 (部落)\n"
+      .."需要兩個冥想"
+},
+["Shared Pain"] = {
+  rune = "被囚禁救世主的記憶",
+  phase = 1,
+  spellID = 401969,
+  level = 8,
+  icon = 5,
+  slot = 7,
+  start = "擊敗貝爾德隊長，遠在丹莫羅東南部；狗頭人暴徒，礦山，艾爾文森林；梅萊納斯勳爵，泰達希爾 (聯盟)\n"
+      .."加茲烏茲或馬卡斯加爾，莫高雷；提瑞斯法農民暴徒，提瑞斯法林地 (部落)"
+},
+["Mind Sear"] = {
+  rune = "幽暗頓悟",
+  phase = 1,
+  spellID = 413259,
+  level = 15,
+  icon = 6,
+  slot = 10,
+  start = st.supplyFactionStart
+},
+["Twisted Faith"] = {
+  rune = "虔誠冠軍的記憶",
+  phase = 1,
+  spellID = 425198,
+  level = 15,
+  icon = 7,
+  slot = 5,
+  start = "納迦生物，黑海岸的馬西斯特拉廢墟；洛克莫丹的銀溪礦；金海岸採石場和\n"
+      .."西部荒野的江戈洛德礦 (聯盟)。哀嚎之魂，銀松森林南部；剃刀沼澤生物，貧瘠之地 (部落)"
+},
+["Shadow Word: Death"] = {
+  rune = "國王之死的預言",
+  phase = 1,
+  spellID = 401955,
+  level = 20,
+  icon = 8,
+  slot = 10,
+  start = "球體，海岸，黑海岸；莫高雷要塞，洛克莫丹 (聯盟)\n"
+      .."圖勒·渡鴉爪，銀松森林芬里斯島；沙漠幻影，貧瘠之地 (部落)\n"
+      .."需要兩個冥想"
+},
+["Serendipity"] = {
+  rune = "和諧頓悟",
+  phase = 1,
+  spellID = 413248,
+  level = 20,
+  icon = 9,
+  slot = 5,
+  start = "棘齒城的格里茲比，貧瘠之地"
+},
+["Power Word: Barrier"] = {
+  rune = "被迷住城市的預言",
+  phase = 1,
+  spellID = 425207,
+  level = 23,
+  icon = 10,
+  slot = 7,
+  start = "黑石暗影施法者，赤脊山脈石堡 (A/H)。需要兩個冥想"
+},
+["Strength of Soul"] = {
+  rune = "七位訪客的預言",
+  phase = 1,
+  spellID = 415739,
+  level = 23,
+  icon = 11,
+  slot = 5,
+  start = "來自灰谷薊皮生物的原始洞察力 (A/H)。需要兩個冥想"
+},
+["Circle of Healing"] = {
+  rune = "千燈預言",
+  phase = 1,
+  spellID = 401946,
+  level = 25,
+  icon = 12,
+  slot = 10,
+  start = "從暮色森林的迪菲亞暴徒那裡獲得黑暗洞察力 (A/H)。需要兩個冥想"
+},
 		-- Phase 2
-		["Empowered Renew"]={ rune="Prophecy of the quickened Path", phase=2, spellID=425266, level=26, icon=13, slot=6,
-				start="Farm Grimtotem mobs (L25-28) in Thousand Needles for the rune. Or else Crushridge Ogres (L34-36) in Arathi" },
-		["Mind Spike"]={ rune="Psychosophic Epiphany", phase=2, spellID=431655, level=30, icon=14, slot=6,
-				start="Go to a pillaged campsite in Desolace" },
-		["Renewed Hope"]={ rune="Unsettling Vision", phase=2, spellID=425280, level=32, icon=15, slot=6,
-				start="Kill nagas in northern Desolace until the Unsettling Vision drops. Then activate it via Mind Control" },	
-		["Pain Suppression"]={ rune="Memory of a Leader's Betrayal", phase=2, spellID=402004, level=35, icon=16, slot=8,
-				start="look for \"Echos\" in Arathi, Dustwallow, SM graveyard, Swamp of Sorrows. Then complete a ritual in the SM Library wing " },
-		["Spirit of the Redeemer"]={ rune="Luminous Epiphany", phase=2, spellID=425284, level=40, icon=17, slot=8, start=st.dalaranSpeakTo },
-		["Dispersion"]={ rune="Prophecy of Imprisoned Malice", phase=2, spellID=425294, level=18, icon=18, slot=8,
-				start="Officially you need a mage and rogue to help with tasks in Stranglethorn Vale. See that map also for HACKS!" },
-		-- Phase 2 Skill Books
-		["Increased Fortitude"]={ skillBook="Scroll Increased Fortitude", spellID=436951, level=1, start=st.dungeonSummary },
-		["Shadowfiend"]={ skillBook="Scroll of Shadowfiend", spellID=401977, level=1, start=st.dungeonSummary },
-		-- Phase 3
-		["Void Zone"]={ rune="Nihilist Epiphany", phase=3, spellID=431681, level="23/37/47", icon=19, slot=9,
-				start=st.emeraldWardens },
-		["Surge of Light"]={ rune="Prophecy of the Lost Tribe", phase=3, spellID=431664, level=40, icon=20, slot=9,
-				start="Between 9pm and 3am server time, an Echo of a Lost Soul will appear in the Swamp of Sorrows, Stranglethorn\n"
-					.."Vale, Tanaris, The Hinterlands. Must be killed with Arcane damage although Holy might eventually work" },
-		["Divine Aegis"]={ rune="Resolute Epiphany", phase=3, spellID=431622, level=40, icon=21, slot=1, start=st.wildGodsStart },
-		["Pain and Suffering"]={ rune="Prophecy of the Verdant Winter", phase=3, spellID=413251, level=43, icon=22, slot=1,
-				start=st.enragedVoidWalkerStart },
-		["Despair"]={ rune="Despair", phase=3, spellID=431670, level=47, icon=23, slot=9,
-				start=st.leylineSummary ..st.leylineSummaryExtra },		
-		["Eye of the Void"]={ rune="Prophecy of Awakened Chaos", phase=3, spellID=402789, level=47, icon=24, slot=1,
-				start="Collect seven eyes from around Azeroth: Blasted Lands, Felwood, Feralas, Searing Gorge,\n"
-					.."Stranglethorn Vale, Tanaris, The Hinterlands. Afterwards go to Azshara for the hand in" },
+		["Empowered Renew"] = {
+  rune = "加速之路的預言",
+  phase = 2,
+  spellID = 425266,
+  level = 26,
+  icon = 13,
+  slot = 6,
+  start = "在千針石林中擊殺恐怖圖騰生物（25-28 級）以獲取符文。或者阿拉希高地的碎脊食人魔（34-36 級）"
+},
+["Mind Spike"] = {
+  rune = "心理頓悟",
+  phase = 2,
+  spellID = 431655,
+  level = 30,
+  icon = 14,
+  slot = 6,
+  start = "前往淒涼之地的被洗劫的營地"
+},
+["Renewed Hope"] = {
+  rune = "令人不安的景象",
+  phase = 2,
+  spellID = 425280,
+  level = 32,
+  icon = 15,
+  slot = 6,
+  start = "在淒涼之地北部殺死納迦，直到掉落令人不安的景象。然後通過精神控制激活它"
+},
+["Pain Suppression"] = {
+  rune = "領袖背叛的記憶",
+  phase = 2,
+  spellID = 402004,
+  level = 35,
+  icon = 16,
+  slot = 8,
+  start = "在阿拉希高地、塵泥沼澤、血色修道院墓地、悲傷沼澤中尋找“迴聲”。然後在血色修道院圖書館側翼完成一個儀式"
+},
+["Spirit of the Redeemer"] = {
+  rune = "光明頓悟",
+  phase = 2,
+  spellID = 425284,
+  level = 40,
+  icon = 17,
+  slot = 8,
+  start = st.dalaranSpeakTo
+},
+["Dispersion"] = {
+  rune = "被囚禁的惡意的預言",
+  phase = 2,
+  spellID = 425294,
+  level = 18,
+  icon = 18,
+  slot = 8,
+  start = "官方你需要法師和盜賊來幫助完成荊棘谷的任務。另請參閱該地圖以獲取黑客！"
+},
+-- Phase 2 Skill Books
+["Increased Fortitude"] = {
+  skillBook = "增加堅韌捲軸",
+  spellID = 436951,
+  level = 1,
+  start = st.dungeonSummary
+},
+["Shadowfiend"] = {
+  skillBook = "暗影惡魔捲軸",
+  spellID = 401977,
+  level = 1,
+  start = st.dungeonSummary
+},
+-- Phase 3
+["Void Zone"] = {
+  rune = "虛無主義頓悟",
+  phase = 3,
+  spellID = 431681,
+  level = "23/37/47",
+  icon = 19,
+  slot = 9,
+  start = st.emeraldWardens
+},
+["Surge of Light"] = {
+  rune = "失落部落的預言",
+  phase = 3,
+  spellID = 431664,
+  level = 40,
+  icon = 20,
+  slot = 9,
+  start = "在伺服器時間晚上 9 點到凌晨 3 點之間，一個失落靈魂的迴聲將出現在悲傷沼澤、荊棘谷\n"
+      .."塔納利斯，辛特蘭。必須用奧術傷害殺死，雖然神聖傷害最終可能會起作用"
+},
+["Divine Aegis"] = {
+  rune = "堅決頓悟",
+  phase = 3,
+  spellID = 431622,
+  level = 40,
+  icon = 21,
+  slot = 1,
+  start = st.wildGodsStart
+},
+["Pain and Suffering"] = {
+  rune = "翠綠冬天的預言",
+  phase = 3,
+  spellID = 413251,
+  level = 43,
+  icon = 22,
+  slot = 1,
+  start = st.enragedVoidWalkerStart
+},
+["Despair"] = {
+  rune = "絕望",
+  phase = 3,
+  spellID = 431670,
+  level = 47,
+  icon = 23,
+  slot = 9,
+  start = st.leylineSummary .. st.leylineSummaryExtra
+},
+["Eye of the Void"] = {
+  rune = "覺醒混亂的預言",
+  phase = 3,
+  spellID = 402789,
+  level = 47,
+  icon = 24,
+  slot = 1,
+  start = "從艾澤拉斯各地收集七隻眼睛：詛咒之地、費伍德森林、菲拉斯、灼熱峽谷，\n"
+      .."荊棘谷，塔納利斯，辛特蘭。之後前往艾薩拉交任務"
+},
 
 		spells={ "Penance", "Prayer of Mending", "Void Plague", "Homunculi", "Shared Pain", "Mind Sear",
 			"Twisted Faith", "Shadow Word: Death", "Serendipity", "Power Word: Barrier",
@@ -1053,65 +1245,240 @@ start="未知。人們認為發現它可能不值得付出努力" },
 			
 	["ROGUE"] = {
 		-- Phase 1
-		["Shadowstrike"]={ rune="Rune of Shadowstrike", phase=1, spellID=399985, level=2, icon=1, slot=10,
-				start="Solm Hargrin, Anvilmar, Coldridge Valley; Jorik Kerridan, behind the Northshire Abbey, Northshire\n"
-					.."Frahun Shadewhisper, Shadowglen (A). Rwag, Valley of Trials; David Trias, Deathknell (H)" },
-		["Quick Draw"]={ rune="Rune of Quick Draw", phase=1, spellID=398196, level=8, icon=2, slot=5,
-				start="Loot/Pp four segments of a map. See the Tooltip at the turn-in location for details: Dun Morogh: Under\n"
-					.."a bridge between Kharanos and Ironforge; Ridgepoint Tower, Elwynn; Rut'theran Village, Teldrassil (A)\n"
-					.."Far South, Echo Isles, Durotar; West of Brill, under the bridge, west side, Tirisfal Glades (H)" },
-		["Slaughter from the Shadows"]={ rune="Rune of Slaughter", phase=1, spellID=424925, level=8, icon=3, slot=5,
-				start="Chest above Kharanos Inn, Dun Morogh; above the spooky house north of Goldshire, Elwynn; Gnarlpine Chache,\n"
-					.."Barrow Den, Teldrassil (A); Chest at Drygulch Ravine, Durotar; Relic Coffer, Agamand Crypts, Tirisfal (H)" },
-		["Mutilate"]={ rune="Rune of Mutilation", phase=1, spellID=399960, level=8, icon=4, slot=10,
-				start="Pickpocket Dark Iron mobs, far south-east of Dun Morogh; Pp Garrick Padfoot, Northshire (A); Pp Captain\n"
-					.."Perrine, west of Unercity (H). Kill Lord Melenas, Teldrassil (A); Speak to Ba'so, south of Razer Hill (H)" },
-		["Between the Eyes"]={ rune="Rune of Precision", phase=1, spellID=400009, level=10, icon=5, slot=7,
-				start="Dusty Chest, Forlorn Cavern, IF; Dusty Chest, Dwarven District, SW; Gnarlpine Stash key from Gnarlines,\n"
-					.."Teldrassil (A); Dusty Chest, The Drag, Org; Shipwreck Cache, Tirisfal (H). See Tooltips for details" },
-		["Saber Slash"]={ rune="Rune of Saber Slash", phase=1, spellID=424785, level=15, icon=6, slot=10,
-				start="Auberdine Lighthouse, Darkshore; Stonewrought Dam, Loch Modan; Defias Scout, Sentinel Hill, Westfall (A);\n"
-					.."Northwatch Hold, The Barrens; entrance of SFK, Silverpine Forest. Lots more details. See tooltips" },
-		["Blade Dance"]={ rune="Rune of Blade Dance", phase=1, spellID=400012, level=15, icon=7, slot=7,
-				start="Kill Naga at Cliffspring River Cave, Darkshore; Pp Dark Iron Dwarves, Loch Modan; Pp Defias, Westfall (A)\n"
-					.."Pp Southsea Pirates, south of Ratchet, The Barrens (H). Lots more details,. See tooltips" },
-		["Just a Flesh Wound"]={ rune="Rune of Teasing", phase=1, spellID=400014, level=15, icon=8, slot=5,
-				start=st.supplyFactionStart },
-		["Envenom"]={ rune="Rune of Venom", phase=1, spellID=399963, level=20, icon=9, slot=7,
-				start="Purchase a Hot Tip from a vendor lurking behind Durnholde Keep, Hillsbrad Foothills" },
-		["Main Gauche"]={ rune="Rune of Main Gauche", phase=1, spellID=424919, level=20, icon=10, slot=10,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Deadly Brew"]={ rune="Rune of Deadly Brew", phase=1, spellID=399965, level=22, icon=11, slot=5,
-				start="Pyrewood Village, Silverpine Forest. Lengthy, with quests. See tooltip for details" },		
-		["Shiv"]={ rune="Rune of Shiving", phase=1, spellID=424800, level=25, icon=12, slot=10,
-				start="Pickpocket Defias Night Runner in Duskwood. South of the Raven Hill Cemetary" },
+		["Shadowstrike"] = {
+  rune = "暗影突襲符文",
+  phase = 1,
+  spellID = 399985,
+  level = 2,
+  icon = 1,
+  slot = 10,
+  start = "索爾姆·哈格林，冷脊山脈的鐵砧山；喬里克·克里丹，北郡修道院後面，北郡\n"
+      .."弗拉洪·暗語者，影牙城堡 (聯盟). Rwag，試煉谷；大衛·特里亞斯，喪鐘鎮 (部落)"
+},
+["Quick Draw"] = {
+  rune = "快速拔槍符文",
+  phase = 1,
+  spellID = 398196,
+  level = 8,
+  icon = 2,
+  slot = 5,
+  start = "掠奪/Pp 地圖的四個部分。有關詳細信息，請參閱交接地點的工具提示：丹莫羅：在\n"
+      .."卡拉諾斯和鐵爐堡之間的橋下；艾爾文森林的嶺點塔；泰達希爾的魯瑟蘭村 (聯盟)\n"
+      .."遠南，回音群島，杜洛塔；布瑞爾以西，橋下，西側，提瑞斯法林地 (部落)"
+},
+["Slaughter from the Shadows"] = {
+  rune = "殺戮符文",
+  phase = 1,
+  spellID = 424925,
+  level = 8,
+  icon = 3,
+  slot = 5,
+  start = "卡拉諾斯旅館上方的箱子，丹莫羅；艾爾文森林金郡北部幽靈屋上方； gnarlpine 儲物箱，\n"
+      .."Barrow Den，泰達希爾 (聯盟); 杜洛塔 Drygulch 峽谷的箱子；提瑞斯法阿加曼德墓穴的聖物棺材 (部落)"
+},
+["Mutilate"] = {
+  rune = "毀傷符文",
+  phase = 1,
+  spellID = 399960,
+  level = 8,
+  icon = 4,
+  slot = 10,
+  start = "扒竊丹莫羅東南部的黑鐵生物；扒竊北郡的加里克·帕德富特 (聯盟); 扒竊\n"
+      .."佩林隊長，幽暗城以西 (部落)。殺死梅萊納斯勳爵，泰達希爾 (聯盟); 與剃刀嶺南部的巴索交談 (部落)"
+},
+["Between the Eyes"] = {
+  rune = "精準符文",
+  phase = 1,
+  spellID = 400009,
+  level = 10,
+  icon = 5,
+  slot = 7,
+  start = "塵土飛揚的箱子，鐵爐堡荒涼洞穴；塵土飛揚的箱子，暴風城矮人區； gnarlpine 儲物箱鑰匙來自 gnarlpines，\n"
+      .."泰達希爾 (聯盟); 塵土飛揚的箱子，奧格瑪的飛龍；提瑞斯法的沉船儲物箱 (部落)。有關詳細信息，請參閱工具提示"
+},
+["Saber Slash"] = {
+  rune = "劍刃斬擊符文",
+  phase = 1,
+  spellID = 424785,
+  level = 15,
+  icon = 6,
+  slot = 10,
+  start = "黑海岸的奧伯丁燈塔；洛克莫丹的石工大壩；迪菲亞偵察兵，西部荒野哨兵嶺 (聯盟);\n"
+      .."貧瘠之地的北崗哨；銀松森林影牙城堡入口。更多細節。請參閱工具提示"
+},
+["Blade Dance"] = {
+  rune = "劍刃亂舞符文",
+  phase = 1,
+  spellID = 400012,
+  level = 15,
+  icon = 7,
+  slot = 7,
+  start = "在黑海岸的懸崖泉河洞穴殺死納迦；扒竊洛克莫丹的黑鐵矮人；扒竊西部荒野的迪菲亞 (聯盟)\n"
+      .."扒竊棘齒城南部的南海海盜，貧瘠之地 (部落)。更多細節，請參閱工具提示"
+},
+["Just a Flesh Wound"] = {
+  rune = "戲弄符文",
+  phase = 1,
+  spellID = 400014,
+  level = 15,
+  icon = 8,
+  slot = 5,
+  start = st.supplyFactionStart 
+},
+["Envenom"] = {
+  rune = "毒藥符文",
+  phase = 1,
+  spellID = 399963,
+  level = 20,
+  icon = 9,
+  slot = 7,
+  start = "從潛伏在希爾斯布萊德丘陵敦霍爾德城堡後面的商人那裡購買熱門提示"
+},
+["Main Gauche"] = {
+  rune = "副手符文",
+  phase = 1,
+  spellID = 424919,
+  level = 20,
+  icon = 10,
+  slot = 10,
+  start = "棘齒城的格里茲比，貧瘠之地"
+},
+["Deadly Brew"] = {
+  rune = "致命藥膏符文",
+  phase = 1,
+  spellID = 399965,
+  level = 22,
+  icon = 11,
+  slot = 5,
+  start = "銀松森林的焚木村。冗長，有任務。有關詳細信息，請參閱工具提示"
+},
+["Shiv"] = {
+  rune = "切割符文",
+  phase = 1,
+  spellID = 424800,
+  level = 25,
+  icon = 12,
+  slot = 10,
+  start = "扒竊暮色森林的迪菲亞夜行者。烏鴉嶺墓地以南"
+},
 		-- Phase 2
-		["Poisoned Knife"]={ rune="Rune of the Poisoned Blade", phase=2, spellID=425012, level=30, icon=13, slot=6,
-				start="Go to a pillaged campsite in Desolace" },
-		["Shadowstep"]={ rune="Rune of Shadowstep", phase=2, spellID=400029, level=30, icon=14, slot=6,
-				start="Pyrewood Village, Silverpine Forest. Lengthy, with quests. Scarlet Monastery Library Wing. See tooltips for details" },
-		["Shuriken Toss"]={ rune="Rune of the Assassin", phase=2, spellID=399986, level=30, icon=15, slot=6,
-				start="Disarm (L30) a Poison Dart trap in the Swamp of Sorrows so that you may then loot a chest" },
-		["Rolling with the Punches"]={ rune="Rune of the Southpaw", phase=2, spellID=400016, level=30, icon=16, slot=8,
-				start="With Lockpicking @ L55 go to Camp E'Thok in Thousand Needles" },
-		["Waylay"]={ rune="Rune of the Assailant", phase=2, spellID=408700, level=40, icon=17, slot=8, start=st.dalaranSpeakTo },
-		["Master of Subtlety"]={ rune="Rune of Subtlety", phase=2, spellID=425096, level=40, icon=18, slot=8,
-				start="Head to a tower in Kurzen's Compound, far north Stranglethorn Vale" },
-		-- Phase 2 Skill Books
-		["Redirect"]={ skillBook="Manual of Redirect", spellID=438040, level=1, start=st.dungeonSummary },
-		-- Phase 3
-		["Cut to the Chase"]={ rune="Rune of Alacrity", phase=3, spellID=432271, level="23/37/47", icon=19, slot=9,
-				start=st.emeraldWardens },
-		["Focused Attacks"]={ rune="Rune of Focus", phase=3, spellID=432256, level=34, icon=20, slot=1,
-				start="Use Blind (L34) on a Vilebranch Mask and loot its chest, The Hinterlands" },
-		["Carnage"]={ rune="Rune of Carnage", phase=3, spellID=432276, level=40, icon=21, slot=9,
-				start="Head to near Dreadmaul Hold in the Blasted Lands and climb a tower and lockpick (L225) a chest" },
-		["Unfair Advantage"]={ rune="Rune of Foul Play", phase=3, spellID=432300, level=42, icon=22, slot=9,
-				start="Pickpocket pirates (L44-45) in Tanaris for a Kidnapper's Coin Purse. Turn in at Steamwheedle Port" },
-		["Combat Potency"]={ rune="Rune of Potency", phase=3, spellID=432259, level=40, icon=23, slot=1, start=st.wildGodsStart },
-		["Honor Among Thieves"]={ rune="Rune of the Coterie", phase=3, spellID=432264, level=45, icon=24, slot=1,
-				start="You need to have visited Ravenholdt previously and to have completed the Pyrewood Dead Drop quests/runes.\n"
-					.."Then at L45 you'll receive a letter sending you back to Ravenholdt Manor" },
+		["Poisoned Knife"] = {
+  rune = "淬毒之刃符文",
+  phase = 2,
+  spellID = 425012,
+  level = 30,
+  icon = 13,
+  slot = 6,
+  start = "前往淒涼之地的被洗劫的營地"
+},
+["Shadowstep"] = {
+  rune = "暗影步符文",
+  phase = 2,
+  spellID = 400029,
+  level = 30,
+  icon = 14,
+  slot = 6,
+  start = "銀松森林的焚木村。冗長，有任務。血色修道院圖書館側翼。有關詳細信息，請參閱工具提示"
+},
+["Shuriken Toss"] = {
+  rune = "刺客符文",
+  phase = 2,
+  spellID = 399986,
+  level = 30,
+  icon = 15,
+  slot = 6,
+  start = "解除悲傷沼澤中的毒鏢陷阱 (30 級)，以便你可以掠奪箱子"
+},
+["Rolling with the Punches"] = {
+  rune = "左撇子符文",
+  phase = 2,
+  spellID = 400016,
+  level = 30,
+  icon = 16,
+  slot = 8,
+  start = "開鎖技能達到 55 級後前往千針石林的埃索克營地"
+},
+["Waylay"] = {
+  rune = "襲擊者符文",
+  phase = 2,
+  spellID = 408700,
+  level = 40,
+  icon = 17,
+  slot = 8,
+  start = st.dalaranSpeakTo 
+},
+["Master of Subtlety"] = {
+  rune = "詭詐符文",
+  phase = 2,
+  spellID = 425096,
+  level = 40,
+  icon = 18,
+  slot = 8,
+  start = "前往荊棘谷北部庫爾森營地中的一座塔"
+},
+-- Phase 2 Skill Books
+["Redirect"] = {
+  skillBook = "轉移手冊",
+  spellID = 438040,
+  level = 1,
+  start = st.dungeonSummary 
+},
+-- Phase 3
+["Cut to the Chase"] = {
+  rune = "迅捷符文",
+  phase = 3,
+  spellID = 432271,
+  level = "23/37/47",
+  icon = 19,
+  slot = 9,
+  start = st.emeraldWardens 
+},
+["Focused Attacks"] = {
+  rune = "專注符文",
+  phase = 3,
+  spellID = 432256,
+  level = 34,
+  icon = 20,
+  slot = 1,
+  start = "對辛特蘭的一個惡枝面具使用致盲 (34 級) 並掠奪其箱子"
+},
+["Carnage"] = {
+  rune = "殺戮符文",
+  phase = 3,
+  spellID = 432276,
+  level = 40,
+  icon = 21,
+  slot = 9,
+  start = "前往詛咒之地恐懼魔堡附近，爬上塔樓並用開鎖技能 (225 級) 打開一個箱子"
+},
+["Unfair Advantage"] = {
+  rune = "卑鄙符文",
+  phase = 3,
+  spellID = 432300,
+  level = 42,
+  icon = 22,
+  slot = 9,
+  start = "在塔納利斯扒竊海盜（44-45 級）以獲取綁架者的錢袋。在熱砂港交任務"
+},
+["Combat Potency"] = {
+  rune = "效力符文",
+  phase = 3,
+  spellID = 432259,
+  level = 40,
+  icon = 23,
+  slot = 1,
+  start = st.wildGodsStart 
+},
+["Honor Among Thieves"] = {
+  rune = "小圈子符文",
+  phase = 3,
+  spellID = 432264,
+  level = 45,
+  icon = 24,
+  slot = 1,
+  start = "您需要先訪問過 Ravenholdt 並完成焚木村 Dead Drop 任務/符文。\n"
+      .."然後在 45 級時，您將收到一封信，讓您返回 Ravenholdt 莊園"
+},
 
 		spells={ "Shadowstrike", "Quick Draw", "Slaughter from the Shadows",  "Mutilate",
 			"Between the Eyes", "Saber Slash", "Blade Dance", "Just a Flesh Wound", "Envenom",
@@ -1124,61 +1491,249 @@ start="未知。人們認為發現它可能不值得付出努力" },
 			
 	["SHAMAN"] = {
 		-- Phase 1
-		["Overload"]={ rune="Dyadic Icon", phase=1, spellID=408438, level=2, icon=1, slot=5,
-				start="Troll/Orc: Shikrik in Valley of Trials, Durotar; Tauren: Meela Dawnstrider in Camp Narache, Mulgore" },
-		["Lava Lash"]={ rune="Lava Lash", phase=1, spellID=408507, level=4, icon=2, slot=10,
-				start="Speak to Boarton Shadetotem, main Thunder Bluff mesa, Mulgore" },
-		["Shield Mastery"]={ rune="Galvanic Iron", phase=1, spellID=408524, level=6, icon=3, slot=5,
-				start="Randomly spawned Galvanic Totems in Durotar and Mulgore. Listen and look for them as you quest. Don't delay" },
-		["Ancestral Guidance"]={ rune="Echo of the Ancestors", phase=1, spellID=409324, level=7, icon=4, slot=7,
-				start=st.twoPlusHealers .."Kolkar Crag, far south-west Durotar; on an overlook, via Venture Co Mine, Mulgore" },
-		["Molten Blast"]={ rune="Sulfurous Icon", phase=1, spellID=425339, level=8, icon=5, slot=10,
-				start="Frozen Makrura, Durotar; Bael'Dun Digsite, south-west of Thunder Bluff" },
-		["Way of Earth"]={ rune="Earthen Rune", phase=1, spellID=408531, level=12, icon=6, slot=7,
-				start="Purge Desert Mirage, west of Ratchet, The Barrens; Rot Hide Mystics, Silverpine Forest" },
-		["Healing Rain"]={ rune="Rune of Healing Rain", phase=1, spellID=415236, level=15, icon=7, slot=5,
-				start=st.supplyFactionStart },
-		["Water Shield"]={ rune="Tempest Icon", phase=1, spellID=408510, level=15, icon=8, slot=10,
-				start="Kolkar's Booty in centaur camps, The Barrens; Grimson the Pale, Deep Elem Mine, Silverpine Forest" },
-		["Dual Wield Specialization"]={ rune="Rune of Dual Wield Specialization", phase=1, spellID=408496, level=20, icon=9, slot=5,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Lava Burst"]={ rune="Kajaric Icon", phase=1, spellID=408490, level=25, icon=10, slot=10,
-				start="Mudsnout Shaman, Hillsbrad Foothills" },
-		["Shamanistic Rage"]={ rune="Rune of Primordial Fury", phase=1, spellID=425336, level=25, icon=11, slot=7,
-				start="Primordial Anomaly, south of the Charred Vale, Stonetalon Mountains. More details. See tooltip" },
-		["Earth Shield"]={ rune="Rune of Earth Shield", phase=1, spellID=408514, level=25, icon=12, slot=7,
-				start="Kill Baron Aquanis in Blackfathom Deeps" },
+		["Overload"] = {
+  rune = "二元圖標",
+  phase = 1,
+  spellID = 408438,
+  level = 2,
+  icon = 1,
+  slot = 5,
+  start = "巨魔/獸人：杜洛塔試煉谷的希克里克；牛頭人：莫高雷納拉其營地的米拉·晨行者"
+},
+["Lava Lash"] = {
+  rune = "熔岩鞭笞",
+  phase = 1,
+  spellID = 408507,
+  level = 4,
+  icon = 2,
+  slot = 10,
+  start = "與莫高雷雷霆崖主台地的博爾頓·暗影圖騰交談"
+},
+["Shield Mastery"] = {
+  rune = "電流鐵",
+  phase = 1,
+  spellID = 408524,
+  level = 6,
+  icon = 3,
+  slot = 5,
+  start = "杜洛塔和莫高雷中隨機生成的電流圖騰。在您執行任務時聆聽並尋找它們。不要拖延"
+},
+["Ancestral Guidance"] = {
+  rune = "祖先的迴聲",
+  phase = 1,
+  spellID = 409324,
+  level = 7,
+  icon = 4,
+  slot = 7,
+  start = st.twoPlusHealers .."寇卡爾峭壁，杜洛塔西南偏遠地區；通過風險投資公司礦山，在莫高雷的一個俯瞰處"
+},
+["Molten Blast"] = {
+  rune = "硫磺圖標",
+  phase = 1,
+  spellID = 425339,
+  level = 8,
+  icon = 5,
+  slot = 10,
+  start = "冰凍的馬庫拉，杜洛塔；巴爾丹挖掘場，雷霆崖西南"
+},
+["Way of Earth"] = {
+  rune = "土之符文",
+  phase = 1,
+  spellID = 408531,
+  level = 12,
+  icon = 6,
+  slot = 7,
+  start = "淨化棘齒城以西的沙漠幻影，貧瘠之地；腐爛獸皮術士，銀松森林"
+},
+["Healing Rain"] = {
+  rune = "治療之雨符文",
+  phase = 1,
+  spellID = 415236,
+  level = 15,
+  icon = 7,
+  slot = 5,
+  start = st.supplyFactionStart 
+},
+["Water Shield"] = {
+  rune = "暴風雨圖標",
+  phase = 1,
+  spellID = 408510,
+  level = 15,
+  icon = 8,
+  slot = 10,
+  start = "貧瘠之地半人馬營地的寇卡爾的戰利品；蒼白的格里姆森，銀松森林深元素礦井"
+},
+["Dual Wield Specialization"] = {
+  rune = "雙持專精符文",
+  phase = 1,
+  spellID = 408496,
+  level = 20,
+  icon = 9,
+  slot = 5,
+  start = "棘齒城的格里茲比，貧瘠之地"
+},
+["Lava Burst"] = {
+  rune = "卡加里克圖標",
+  phase = 1,
+  spellID = 408490,
+  level = 25,
+  icon = 10,
+  slot = 10,
+  start = "希爾斯布萊德丘陵的泥鼻薩滿"
+},
+["Shamanistic Rage"] = {
+  rune = "原始狂怒符文",
+  phase = 1,
+  spellID = 425336,
+  level = 25,
+  icon = 11,
+  slot = 7,
+  start = "石爪山脈焦炭谷南部的原始異常。更多細節。請參閱工具提示"
+},
+["Earth Shield"] = {
+  rune = "地盾符文",
+  phase = 1,
+  spellID = 408514,
+  level = 25,
+  icon = 12,
+  slot = 7,
+  start = "在黑澗深淵中殺死阿夸尼斯男爵"
+},
 		-- Phase 2
-		["Spirit of the Alpha"]={ rune="Rune of the Alpha", phase=2, spellID=408696, level=25, icon=13, slot=8,
-				start="Light parkour near Freewind Post in Thousand Needles" },
-		["Decoy Totem"]={ rune="Decoy Totem", phase=2, spellID=425874, level=27, icon=14, slot=8,
-				start="Farm items in Thousand Needles (L25-30), make an Altar offering, profit" },				
-		["Ancestral Awakening"]={ rune="Rune of Ancestral Awakening", phase=2, spellID=425858, level=30, icon=15, slot=8,
-				start="Go to a pillaged campsite in Desolace" },		
-		["Fire Nova"]={ rune="Brimstone Icon", phase=2, spellID=408339, level=33, icon=16, slot=6,
-				start="Kill Flameseer Dubelen (L35e) in Desolace. Then 2 x Maraudon antechamber corpse runs" },
-		["Power Surge"]={ rune="Rune of Power", phase=2, spellID=415100, level=34, icon=17, slot=6,
-				start="Search for Bouldefist Ogres (L32-33) in Arathi Highlands. Can be grouped" },
-		["Maelstrom Weapon"]={ rune="Rune of the Storm", phase=2, spellID=408498, level=36, icon=18, slot=6,
-				start="Obtain a Tattered Note off Charlga Razorflank in RFK and complete a quest chain" },				
-		["Two-Handed Mastery"]={ rune="Rune of Two-Handed Mastery", phase=2, spellID=436364, level=40, icon=19, slot=5,
-				start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Totemic Projection"]={ skillBook="Revelation of Totemic Projection", spellID=437009, level=1, start=st.dungeonSummary },
-		-- Phase 3
-		["Burn"]={ rune="Rune of Burn", phase=3, spellID=415231, level="23/37/47", icon=20, slot=1, start=st.emeraldWardens },
-		["Tidal Waves"]={ rune="Rune of Tidal Waves", phase=3, spellID=432042, level=37, icon=21, slot=9,
-				start="Look for a crate and an empty tent past the lakes south of Camp Mojache in Feralas.\nFighting not necessary" },
-		["Static Shock"]={ rune="Rune of Static Shock", phase=3, spellID=432235, level=42, icon=22, slot=9,
-				start="Two players, both of whom can ideally deliver nature damage, are essential. Not necessarily\nanother Shammy. "
-					.."Proceed to the southern ogre area of Feralas" },
-		["Riptide"]={ rune="Rune of Riptide", phase=3, spellID=409954, level=40, icon=23, slot=9, start=st.wildGodsStart },
-		["Mental Dexterity"]={ rune="Rune of Mental Dexterity", phase=3, spellID=415140, level=43, icon=24, slot=1,
-				start=st.enragedVoidWalkerStart },
-		["Rolling Thunder"]={ rune="Rune of Rolling Thunder", phase=3, spellID=432235, level=43, icon=25, slot=9,
-				start="Abyssal Sands, Tanaris. Simple mob run through... except you have a 50% damage\ntaken debuff. Mobs are L43-45" },
-		["Overcharged"]={ rune="Rune of Overcharged", phase=3, spellID=432240, level=45, icon=26, slot=9,
-				start="Fetch quests in Azshara, Searing Gorge, Tanaris & The Hinterlands. Final hand in is in Feralas" },
+		["Spirit of the Alpha"] = {
+  rune = "首領符文",
+  phase = 2,
+  spellID = 408696,
+  level = 25,
+  icon = 13,
+  slot = 8,
+  start = "在千針石林的自由風哨站附近進行輕度跑酷"
+},
+["Decoy Totem"] = {
+  rune = "誘捕圖騰",
+  phase = 2,
+  spellID = 425874,
+  level = 27,
+  icon = 14,
+  slot = 8,
+  start = "在千針石林中收集物品（25-30 級），製作祭壇祭品，獲利"
+},
+["Ancestral Awakening"] = {
+  rune = "先祖覺醒符文",
+  phase = 2,
+  spellID = 425858,
+  level = 30,
+  icon = 15,
+  slot = 8,
+  start = "前往淒涼之地的被洗劫的營地"
+},
+["Fire Nova"] = {
+  rune = "硫磺石圖標",
+  phase = 2,
+  spellID = 408339,
+  level = 33,
+  icon = 16,
+  slot = 6,
+  start = "殺死淒涼之地的烈焰先知杜貝倫（35 級精英）。然後 2 次瑪拉頓前廳屍體跑"
+},
+["Power Surge"] = {
+  rune = "力量符文",
+  phase = 2,
+  spellID = 415100,
+  level = 34,
+  icon = 17,
+  slot = 6,
+  start = "在阿拉希高地尋找巨石拳食人魔（32-33 級）。可以組隊"
+},
+["Maelstrom Weapon"] = {
+  rune = "風暴符文",
+  phase = 2,
+  spellID = 408498,
+  level = 36,
+  icon = 18,
+  slot = 6,
+  start = "從剃刀高地的查爾加·剃刀側翼獲得一張破舊的便條，並完成一個任務鏈"
+},
+["Two-Handed Mastery"] = {
+  rune = "雙手武器專精符文",
+  phase = 2,
+  spellID = 436364,
+  level = 40,
+  icon = 19,
+  slot = 5,
+  start = st.dalaranSpeakTo 
+},
+-- Phase 2 Skill Books
+["Totemic Projection"] = {
+  skillBook = "圖騰投射啟示錄",
+  spellID = 437009,
+  level = 1,
+  start = st.dungeonSummary 
+},
+-- Phase 3
+["Burn"] = {
+  rune = "燃燒符文",
+  phase = 3,
+  spellID = 415231,
+  level = "23/37/47",
+  icon = 20,
+  slot = 1,
+  start = st.emeraldWardens 
+},
+["Tidal Waves"] = {
+  rune = "潮汐波浪符文",
+  phase = 3,
+  spellID = 432042,
+  level = 37,
+  icon = 21,
+  slot = 9,
+  start = "在菲拉斯莫沙徹營地以南的湖泊附近尋找一個板條箱和一個空帳篷。\n不需要戰鬥"
+},
+["Static Shock"] = {
+  rune = "靜電衝擊符文",
+  phase = 3,
+  spellID = 432235,
+  level = 42,
+  icon = 22,
+  slot = 9,
+  start = "兩個玩家，最好都能造成自然傷害，是必不可少的。不一定是\n另一個薩滿。前往菲拉斯南部的食人魔區域"
+},
+["Riptide"] = {
+  rune = "激流符文",
+  phase = 3,
+  spellID = 409954,
+  level = 40,
+  icon = 23,
+  slot = 9,
+  start = st.wildGodsStart 
+},
+["Mental Dexterity"] = {
+  rune = "精神敏捷符文",
+  phase = 3,
+  spellID = 415140,
+  level = 43,
+  icon = 24,
+  slot = 1,
+  start = st.enragedVoidWalkerStart 
+},
+["Rolling Thunder"] = {
+  rune = "滾雷符文",
+  phase = 3,
+  spellID = 432235,
+  level = 43,
+  icon = 25,
+  slot = 9,
+  start = "塔納利斯的深淵之沙。簡單的暴徒跑過...除了你有一個 50% 的傷害\n承受減益。暴徒是 43-45 級"
+},
+["Overcharged"] = {
+  rune = "過度充電符文",
+  phase = 3,
+  spellID = 432240,
+  level = 45,
+  icon = 26,
+  slot = 9,
+  start = "在艾薩拉、灼熱峽谷、塔納利斯和辛特蘭獲取任務。最後的交接在菲拉斯"
+},
 
 		spells={ "Overload", "Lava Lash", "Shield Mastery", "Ancestral Guidance", "Molten Blast",
 			"Way of Earth", "Healing Rain", "Water Shield", "Dual Wield Specialization",
@@ -1191,65 +1746,245 @@ start="未知。人們認為發現它可能不值得付出努力" },
 
 	["WARLOCK"] = {
 		-- Phase 1
-		["Haunt"]={ rune="Rune of Haunting", phase=1, spellID=403501, level=2, icon=1, slot=10,
-				start="Speak to Alamar Grimm, Anvilmar, Coldridge Valley; Drusilla La Salle, Northshire (A).\n"
-					.."Nartok, Valley of Trials; Maximillion, Deathknell (H)" },
-		["Chaos Bolt"]={ rune="Rune of Chaos Bolt", phase=1, spellID=403629, level=6, icon=2, slot=10,
-				start="Frozen: Trogg, Gol'bolar quarry, Dun Morogh; Murloc, Stonecairn Lake, Elwynn Forest (A)\n"
-					.."Makrura, east of Razor Hill, Durotar; Murloc, north-west of Brightwater Lake, Tirisfal Glades (H)" },
-		["Demonic Grace"]={ rune="Rune of Grace", phase=1, spellID=425463, level=8, icon=3, slot=7,
-				start="Ominous Tome drops from: Frostmane Shadowcaster, cave west of Brewnall, Dun Morogh; Lasperlode Mine Kobolds,\n"
-					.."Elwynn Forest (A). Voodoo Doll on Echo Isles, Durotar; Darkeye Bonecaster, Agamand Mills, Tirisfal (H)" },
-		["Demonic Tactics"]={ rune="Rune of Tactics", phase=1, spellID=412727, level=8, icon=4, slot=5,
-				start="Dead Acolyte near Jasperlode Mine, Elwynn Forest (A);\n"
-					.."Dead Acolyte, towards the Monastery, Tirisfal Glades (H)" },
-		["Soul Siphon"]={ rune="Rune of Soul Siphon", phase=1, spellID=403511, level=10, icon=5, slot=5,
-				start="Use Drain Soul twice. See these tooltips: Captain Beld, far south-east Dun Morogh; Hogger, Elwynn Forest (A)\n"
-					.."Gazz'uz, cave outside Orgrimmar; Maggot Eye, Garren's Haunt, Tirisfal Glades (H)" },
-		["Master Channeler"]={ rune="Rune of Channeling", phase=1, spellID=403668, level=12, icon=6, slot=5,
-				start="Greishan Ironstove, long path, Loch Modan; Dark Strand Fanatics, Tower of Athalaxx, Darkshore (A)\n"
-					.."Altar of Thorns, Thorn Hill, The Barrens; Sadistic Fiend, Deep Elm Mine, Silverpine Forest (H)" },
-		["Everlasting Affliction"]={ rune="Rune of Everlasting Affliction", phase=1, spellID=412689, level=15, icon=7, slot=7,
-				start=st.supplyFactionStart },
-		["Lake of Fire"]={ rune="Rune of Fires Wake", phase=1, spellID=403666, level=20, icon=8, slot=5,
-				start="Zixil, wanders between Tarren Mill and Southshore, Hillsbrad Foothills (A/H)" },
-		["Shadow Bolt Volley"]={ rune="Rune of Shadowbolts", phase=1, spellID=403628, level=20, icon=9, slot=10,
-				start="Delmanis the Hated, Tower of Athalaxx, Darkshore; Demonic Remains, Ironbands Excavation, Loch Modan (A)\n"
-					.."Supervisor Lugwizzle, Sludge Fen, The Barrens; Ravenclaw mobs, Beren's Peril cave, Silverpine Forest (H)" },
-		["Demonic Pact"]={ rune="Rune of the Pact", phase=1, spellID=425464, level=20, icon=10, slot=7,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Incinerate"]={ rune="Rune of Incinerate", phase=1, spellID=412758, level=23, icon=11, slot=7,
-				start="Incinerator Gar'im, cave south-east corner of Redridge (A/H)" },
-		["Metamorphosis"]={ rune="Rune of Metamorphosis", phase=1, spellID=403789, level=25, icon=12, slot=10,
-				start="Doan Karhan, near Camp Taurajo, southern Barrens" },
+		["Haunt"] = {
+  rune = "鬼魂符文",
+  phase = 1,
+  spellID = 403501,
+  level = 2,
+  icon = 1,
+  slot = 10,
+  start = "與阿拉瑪·格林交談，冷脊山脈的鐵砧山；德魯西拉·拉薩爾，北郡 (聯盟)。\n"
+      .."納爾托克，試煉谷；馬克西米利安，喪鐘鎮 (部落)"
+},
+["Chaos Bolt"] = {
+  rune = "混沌箭符文",
+  phase = 1,
+  spellID = 403629,
+  level = 6,
+  icon = 2,
+  slot = 10,
+  start = "冰凍：穴居人，丹莫羅戈爾博拉採石場；魚人，艾爾文森林石頭湖 (聯盟)\n"
+      .."馬庫拉，剃刀嶺以東，杜洛塔；魚人，提瑞斯法林地亮水湖西北 (部落)"
+},
+["Demonic Grace"] = {
+  rune = "恩典符文",
+  phase = 1,
+  spellID = 425463,
+  level = 8,
+  icon = 3,
+  slot = 7,
+  start = "不祥之書掉落自：霜鬃暗影施法者，丹莫羅布倫納爾以西的洞穴；拉斯珀洛德礦井狗頭人，\n"
+      .."艾爾文森林 (聯盟)。杜洛塔回音群島的巫毒娃娃；提瑞斯法阿加曼德磨坊的暗眼骨法師 (部落)"
+},
+["Demonic Tactics"] = {
+  rune = "戰術符文",
+  phase = 1,
+  spellID = 412727,
+  level = 8,
+  icon = 4,
+  slot = 5,
+  start = "艾爾文森林碧玉礦井附近的死亡侍僧 (聯盟);\n"
+      .."死亡侍僧，通往修道院，提瑞斯法林地 (部落)"
+},
+["Soul Siphon"] = {
+  rune = "吸取靈魂符文",
+  phase = 1,
+  spellID = 403511,
+  level = 10,
+  icon = 5,
+  slot = 5,
+  start = "使用兩次吸取靈魂。請參閱這些工具提示：貝爾德隊長，遠在丹莫羅東南部；艾爾文森林的霍格 (聯盟)\n"
+      .."加茲烏茲，奧格瑪城外的洞穴；蛆眼，提瑞斯法林地加倫的鬼屋 (部落)"
+},
+["Master Channeler"] = {
+  rune = "引導符文",
+  phase = 1,
+  spellID = 403668,
+  level = 12,
+  icon = 6,
+  slot = 5,
+  start = "格雷山·鐵爐，洛克莫丹長路；黑海岸狂熱者，阿塔拉克斯塔，黑海岸 (聯盟)\n"
+      .."荊棘祭壇，貧瘠之地荊棘山；虐待狂，銀松森林深元素礦井 (部落)"
+},
+["Everlasting Affliction"] = {
+  rune = "永恆痛苦符文",
+  phase = 1,
+  spellID = 412689,
+  level = 15,
+  icon = 7,
+  slot = 7,
+  start = st.supplyFactionStart 
+},
+["Lake of Fire"] = {
+  rune = "火焰之 wake 符文",
+  phase = 1,
+  spellID = 403666,
+  level = 20,
+  icon = 8,
+  slot = 5,
+  start = "齊希爾，在希爾斯布萊德丘陵的塔倫米爾和南海鎮之間遊蕩 (A/H)"
+},
+["Shadow Bolt Volley"] = {
+  rune = "暗影箭齊發符文",
+  phase = 1,
+  spellID = 403628,
+  level = 20,
+  icon = 9,
+  slot = 10,
+  start = "可恨的德爾瑪尼斯，黑海岸阿塔拉克斯塔；惡魔遺骸，洛克莫丹鐵環挖掘場 (聯盟)\n"
+      .."監工盧格維茲爾，貧瘠之地淤泥沼澤；渡鴉爪生物，銀松森林貝倫的危險洞穴 (部落)"
+},
+["Demonic Pact"] = {
+  rune = "契約符文",
+  phase = 1,
+  spellID = 425464,
+  level = 20,
+  icon = 10,
+  slot = 7,
+  start = "棘齒城的格里茲比，貧瘠之地"
+},
+["Incinerate"] = {
+  rune = "焚燒符文",
+  phase = 1,
+  spellID = 412758,
+  level = 23,
+  icon = 11,
+  slot = 7,
+  start = "焚化者加里姆，赤脊山東南角的洞穴 (A/H)"
+},
+["Metamorphosis"] = {
+  rune = "變形符文",
+  phase = 1,
+  spellID = 403789,
+  level = 25,
+  icon = 12,
+  slot = 10,
+  start = "多安·卡漢，陶拉祖營地附近，貧瘠之地南部"
+},
 		-- Phase 2
-		["Dance of the Wicked"]={ rune="Rune of Wickedness", phase=2, spellID=412798, level=30, icon=13, slot=8,
-				start="With Hellfire learnt, interact with a dead ogre in Stranglethorn, Alterac, Desolace or Thousand Needles" },
-		["Shadow and Flame"]={ rune="Rune of Burning Darkness", phase=2, spellID=426316, level=30, icon=14, slot=6, 
-				start="Go to a pillaged campsite in Desolace" },
-		["Grimoire of Synergy"]={ rune="Rune of Synergy", phase=2, spellID=426301, level=32, icon=15, slot=6,
-				start="Raszel Ander, near Camp Taurajo, southern Barrens" },
-		["Invocation"]={ rune="Rune of Invocation", phase=2, spellID=426243, level=34, icon=16, slot=6,
-				start="Go to Stromgarde Keep in Arathi Highlands and begin by killing Syndicate Conjurors" },
-		["Shadowflame"]={ rune="Rune of Shadowflames", phase=2, spellID=426320, level=38, icon=17, slot=8,
-				start="Go to Shadowbreak Ravine in Desolace and do Warlock stuff" },
-		["Demonic Knowledge"]={ rune="Rune of Forbidden Knowledge", phase=2, spellID=412732, level=40, icon=18, slot=8,
-				start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Portal Summoning"]={ skillBook="Grimoire of Portal Summoning", spellID=437169, level=1, start=st.dungeonSummary },
-		["Soul Harvesting"]={ skillBook="Grimoire of Soul Harvesting", spellID=437032, level=1, start=st.dungeonSummary },
-		-- Phase 3
-		["Summon Felguard"]={ rune="Rune of the Felguard", phase=3, spellID=427733, level=10, icon=19, slot=9,
-				start="Acquire an Explorer Imp, randomly after using Drain Soul (L10). Stand near a Fel Portal\n"
-					.."Summon and send your Imp through. Loot bag has a chance to contain the rune." ..st.felPortals ..st.getCGM },
-		["Unstable Affliction"]={ rune="Rune of Affliction", phase=3, spellID=427717, level="23/37/47", icon=20, slot=9,
-				start=st.emeraldWardens },
-		["Immolation Aura"]={ rune="Rune of Immolation Aura", phase=3, spellID=427726, level=38, icon=21, slot=9,
-				start="Farm mobs (L40) in the far north-east Bough Shadow corner of Ashenvale, for components to combine" },
-		["Pandemic"]={ rune="Rune of Pandemic", phase=3, spellID=427712, level=40, icon=22, slot=1,
-				start="Around the path west of Camp Mojache, loot two containers and defeat a Diseased Forest Walker (L43-44)" },
-		["Vengeance"]={ rune="Rune of Vengeance", phase=3, spellID=426470, level=40, icon=23, slot=1, start=st.wildGodsStart },
-		["Backdraft"]={ rune="Backdraft", phase=3, spellID=427713, level=47, icon=24, slot=1, start=st.leylineSummary },
+		["Dance of the Wicked"] = {
+  rune = "邪惡符文",
+  phase = 2,
+  spellID = 412798,
+  level = 30,
+  icon = 13,
+  slot = 8,
+  start = "學習地獄火後，與荊棘谷、奧特蘭克、淒涼之地或千針石林中的一個死去的食人魔互動"
+},
+["Shadow and Flame"] = {
+  rune = "燃燒的黑暗符文",
+  phase = 2,
+  spellID = 426316,
+  level = 30,
+  icon = 14,
+  slot = 6,
+  start = "前往淒涼之地的被洗劫的營地"
+},
+["Grimoire of Synergy"] = {
+  rune = "協同符文",
+  phase = 2,
+  spellID = 426301,
+  level = 32,
+  icon = 15,
+  slot = 6,
+  start = "拉斯澤爾·安德，陶拉祖營地附近，貧瘠之地南部"
+},
+["Invocation"] = {
+  rune = "召喚符文",
+  phase = 2,
+  spellID = 426243,
+  level = 34,
+  icon = 16,
+  slot = 6,
+  start = "前往阿拉希高地的斯通加德城堡，首先殺死辛迪加 conjurors"
+},
+["Shadowflame"] = {
+  rune = "暗影烈焰符文",
+  phase = 2,
+  spellID = 426320,
+  level = 38,
+  icon = 17,
+  slot = 8,
+  start = "前往淒涼之地的暗影裂口，做術士的事情"
+},
+["Demonic Knowledge"] = {
+  rune = "禁忌知識符文",
+  phase = 2,
+  spellID = 412732,
+  level = 40,
+  icon = 18,
+  slot = 8,
+  start = st.dalaranSpeakTo 
+},
+-- Phase 2 Skill Books
+["Portal Summoning"] = {
+  skillBook = "傳送門召喚魔法書",
+  spellID = 437169,
+  level = 1,
+  start = st.dungeonSummary 
+},
+["Soul Harvesting"] = {
+  skillBook = "靈魂收割魔法書",
+  spellID = 437032,
+  level = 1,
+  start = st.dungeonSummary 
+},
+-- Phase 3
+["Summon Felguard"] = {
+  rune = "惡魔守衛符文",
+  phase = 3,
+  spellID = 427733,
+  level = 10,
+  icon = 19,
+  slot = 9,
+  start = "在使用吸取靈魂 (10 級) 後隨機獲得一個探險者小鬼。站在邪能傳送門附近\n"
+      .."召喚並讓你的小鬼穿過。戰利品袋有機會包含符文。" ..st.felPortals ..st.getCGM 
+},
+["Unstable Affliction"] = {
+  rune = "痛苦符文",
+  phase = 3,
+  spellID = 427717,
+  level = "23/37/47",
+  icon = 20,
+  slot = 9,
+  start = st.emeraldWardens 
+},
+["Immolation Aura"] = {
+  rune = "獻祭光環符文",
+  phase = 3,
+  spellID = 427726,
+  level = 38,
+  icon = 21,
+  slot = 9,
+  start = "在灰谷東北角的樹蔭角落刷怪 (40 級)，以獲取組合所需的組件"
+},
+["Pandemic"] = {
+  rune = "瘟疫符文",
+  phase = 3,
+  spellID = 427712,
+  level = 40,
+  icon = 22,
+  slot = 1,
+  start = "在莫沙徹營地以西的小路附近，掠奪兩個容器並擊敗一個患病的森林行者 (43-44 級)"
+},
+["Vengeance"] = {
+  rune = "復仇符文",
+  phase = 3,
+  spellID = 426470,
+  level = 40,
+  icon = 23,
+  slot = 1,
+  start = st.wildGodsStart 
+},
+["Backdraft"] = {
+  rune = "回火",
+  phase = 3,
+  spellID = 427713,
+  level = 47,
+  icon = 24,
+  slot = 1,
+  start = st.leylineSummary 
+},
 
 		spells={ "Haunt", "Chaos Bolt", "Demonic Grace", "Demonic Tactics", "Soul Siphon",
 			"Master Channeler", "Everlasting Affliction", "Lake of Fire", "Shadow Bolt Volley",
@@ -1260,66 +1995,246 @@ start="未知。人們認為發現它可能不值得付出努力" },
 	},
 
 	["WARRIOR"] = {
-		["Victory Rush"]={ rune="Rune of Victory Rush", phase=1, spellID=402927, level=2, icon=1, slot=10,
-				start="You'll stumble across the stash / quest while questing in your starting zone" },
-		["Blood Frenzy"]={ rune="Rune of Blood Frenzy", phase=1, spellID=412507, level=7, icon=2, slot=5,
-				start="Wandering Swordsman: Westbrook Garrison, Elwynn Forest (A); Bladescar Highlands, Durotar (H). Other locations" },
-		["Furious Thunder"]={ rune="Rune of Furious Thunder", phase=1, spellID=403219, level=7, icon=3, slot=7,
-				start="Various Elites/Rares in Dun Morogh (A) and Durotar, Mulgore (H); Goldtooth, Mother Fang in Elwynn Forest (A)\n"
-				.."Gnarlpine Cache, Ban'ethil Barrow Den, Teldrassil (A); Gillgar, west of Soliden Farmstead, Tirisfal (H)" },
-		["Devastate"]={ rune="Rune of Devastate", phase=1, spellID=403196, level=8, icon=4, slot=10,
-				start="Junni Steelpass, Kharanos; Viktoria Woods, SW; Delwynna, Darn; Vahi Bonespliter, Razor Hill;\n"
-				.."Vateya Timberhoof, Bloodhoof; Dorac Graves, UC. Each one will accept three items you'll\n"
-				.."loot as you quest normally. Alliance side there's no overlap, Horde - a little overlap.\n"
-				.."Check each NPC above for complete, localised, details as way too many too list here" },
-		["Frenzied Assault"]={ rune="Rune of Frenzied Assault", phase=1, spellID=425412, level=10, icon=5, slot=7,
-				start="Simply help one of six people, mostly Innkeepers, one in each main city" },
-		["Single-Minded Fury"]={ rune="Rune of Single-Minded Fury", phase=1, spellID=413404, level=15, icon=6, slot=10,
-				start=st.supplyFactionStart },
-		["Endless Rage"]={ rune="Rune of Endless Rage", phase=1, spellID=403218, level=20, icon=7, slot=10,
-				start="Old Murk-eye, southern coast, Westfall; Lady Sedorax, Darkshore (A);\n"
-				.."Horde Warbanner, The Crossroads; Skittering Dark Cave, Silverpine Forest (H)" },
-		["Quick Strike"]={ rune="Rune of Quick Strike", phase=1, spellID=429765, level=20, icon=8, slot=10,
-				start="Paxnozz, Mathystra, Darkshore; Defias in Westfall (A); Kilxx @ Ratchet (H);\n"
-				.."Troggs west of Thelsamar, Loch Modan" },
-		["Warbringer"]={ rune="Rune of the Warbringer", phase=1, spellID=425421, level=20, icon=9, slot=5,
-				start="Grizzby @ Ratchet, The Barrens" },
-		["Consumed by Rage"]={ rune="Rune of Consuming Rage", phase=1, spellID=425418, level=25, icon=10, slot=7,
-				start="Carrodin @ Thelgen Rock Cave, Wetlands" },
-		["Flagellation"]={ rune="Rune of Flagellation", phase=1, spellID=402877, level=25, icon=11, slot=5,
-				start="Crypts in the Raven Hill Cemetary, Duskwood" },
-		["Raging Blow"]={ rune="Rune of Raging Blow", phase=1, spellID=402911, level=25, icon=12, slot=5,
-				start="Alonso, Ashenvale @ the path to Stonetalon Mountains" },
+		["Victory Rush"] = {
+  rune = "勝利衝擊符文",
+  phase = 1,
+  spellID = 402927,
+  level = 2,
+  icon = 1,
+  slot = 10,
+  start = "您會在起始區域進行任務時偶然發現藏匿處/任務"
+},
+["Blood Frenzy"] = {
+  rune = "嗜血狂亂符文",
+  phase = 1,
+  spellID = 412507,
+  level = 7,
+  icon = 2,
+  slot = 5,
+  start = "流浪劍客：艾爾文森林的 Westbrook 驻军 (聯盟); 杜洛塔的刀疤高地 (部落)。其他地點"
+},
+["Furious Thunder"] = {
+  rune = "狂怒雷霆符文",
+  phase = 1,
+  spellID = 403219,
+  level = 7,
+  icon = 3,
+  slot = 7,
+  start = "丹莫羅 (聯盟) 和杜洛塔、莫高雷 (部落) 中的各種精英/稀有；艾爾文森林中的金牙、母牙 (聯盟)\n"
+      .."gnarlpine 儲物箱，班艾希爾 Barrow Den，泰達希爾 (聯盟); 吉爾加，提瑞斯法索利登農場以西 (部落)"
+},
+["Devastate"] = {
+  rune = "毀滅符文",
+  phase = 1,
+  spellID = 403196,
+  level = 8,
+  icon = 4,
+  slot = 10,
+  start = "朱妮·鋼鐵通行證，卡拉諾斯；維多利亞·伍茲，暴風城；德爾溫娜，達恩；瓦希·碎骨者，剃刀嶺；\n"
+      .."瓦特亞·伐木蹄，血蹄村；多拉克·格雷夫斯，幽暗城。每個人都會接受你會\n"
+      .."在你正常任務時掠奪的三件物品。聯盟方沒有重疊，部落 - 有一些重疊。\n"
+      .."檢查上面的每個 NPC 以獲取完整、本地化的詳細信息，因為這裡列出的太多了"
+},
+["Frenzied Assault"] = {
+  rune = "狂亂突襲符文",
+  phase = 1,
+  spellID = 425412,
+  level = 10,
+  icon = 5,
+  slot = 7,
+  start = "只需幫助六個人中的一個，主要是旅館老闆，每個主要城市都有一個"
+},
+["Single-Minded Fury"] = {
+  rune = "一心一意之怒符文",
+  phase = 1,
+  spellID = 413404,
+  level = 15,
+  icon = 6,
+  slot = 10,
+  start = st.supplyFactionStart 
+},
+["Endless Rage"] = {
+  rune = "無盡怒火符文",
+  phase = 1,
+  spellID = 403218,
+  level = 20,
+  icon = 7,
+  slot = 10,
+  start = "老泥眼，西部荒野南部海岸；塞多拉克斯夫人，黑海岸 (聯盟);\n"
+      .."部落戰旗，十字路口；銀松森林疾跑黑暗洞穴 (部落)"
+},
+["Quick Strike"] = {
+  rune = "快速打擊符文",
+  phase = 1,
+  spellID = 429765,
+  level = 20,
+  icon = 8,
+  slot = 10,
+  start = "帕克斯諾茲，黑海岸馬西斯特拉；西部荒野的迪菲亞 (聯盟); 棘齒城的基爾克斯 (部落);\n"
+      .."塞爾薩瑪爾以西的穴居人，洛克莫丹"
+},
+["Warbringer"] = {
+  rune = "戰爭使者符文",
+  phase = 1,
+  spellID = 425421,
+  level = 20,
+  icon = 9,
+  slot = 5,
+  start = "棘齒城的格里茲比，貧瘠之地"
+},
+["Consumed by Rage"] = {
+  rune = "消耗怒火符文",
+  phase = 1,
+  spellID = 425418,
+  level = 25,
+  icon = 10,
+  slot = 7,
+  start = "卡羅丁@濕地的塞爾根岩洞"
+},
+["Flagellation"] = {
+  rune = "鞭笞符文",
+  phase = 1,
+  spellID = 402877,
+  level = 25,
+  icon = 11,
+  slot = 5,
+  start = "暮色森林烏鴉嶺墓地的地下室"
+},
+["Raging Blow"] = {
+  rune = "狂怒打擊符文",
+  phase = 1,
+  spellID = 402911,
+  level = 25,
+  icon = 12,
+  slot = 5,
+  start = "阿隆索，灰谷@通往石爪山脈的道路"
+},
 		-- Phase 2
-		["Intervene"]={ rune="Rune of Intervention", phase=2, spellID=403338, level=24, icon=13, slot=8,
-				start="Strike three combat dummies in Thousand Needles in a specific manner" },
-		["Enraged Regeneration"]={ rune="Rune of Healing Rage", phase=2, spellID=402913, level=30, icon=14, slot=8,
-				start="Go to a pillaged campsite in Desolace" },
-		["Focused Rage"]={ rune="Rune of Focused Rage", phase=2, spellID=29787, level=33, icon=15, slot=6,
-				start="Head to Witherbark Village in Arathi Highlands and slay Witherbark mobs" },
-		["Blood Surge"]={ rune="Rune of Blood Surge", phase=2, spellID=413380, level=36, icon=16, slot=6,
-				start="Begin by slaying elite Boulderfist Maulers (Arathi) or Crushridge Mages (Alterac) (L37)" },
-		["Rallying Cry"]={ rune="Rune of the Commander", phase=2, spellID=426490, level=39, icon=17, slot=8,
-				start="Drops of the Wandering Swordsman (L40) in the Badlands" },
-		["Precise Timing"]={ rune="Rune of Ruthless Precision", phase=2, spellID=402922, level=40, icon=18, slot=6,
-				start=st.dalaranSpeakTo },
-		-- Phase 2 Skill Books
-		["Commanding Shout"]={ skillBook="Handbook of Commanding Shout", spellID=403215, level=1, start=st.dungeonSummary },
-		-- Phase 3
-		["Shield Mastery"]={ rune="Rune of the Protector",phase=3,  spellID=426980, level="23/37/47", icon=19, slot=1,
-				start=st.emeraldWardens },
-		["Wrecking Crew"]={ rune="Rune of Demolition", phase=3, spellID=427065, level=38, icon=20, slot=1,
-				start="Head to The Hinterlands and farm Witherbark Troll mobs (L40-45) for a Geode Hammer" },
-		["Sword and Board"]={ rune="Rune of the Knight", phase=3, spellID=426978, level=40, icon=21, slot=9,
-				start=st.wildGodsStart },
-		["Rampage"]={ rune="Rune of the Unbridled", phase=3, spellID=427081, level=43, icon=22, slot=9,
-				start="Kill Ohk'zi (L43e). Inside a Gordunni Outpost cave. North of Camp Majache, Feralas" },
-		["Gladiator Stance"]={ rune="Rune of the Gladiator", phase=3, spellID=412513, level=46, icon=23, slot=9,
-				start="Must have Blood Frenzy & Rallying Cry. Go pick up a quest from Fizbuz Mithril in Gadgetzan, Tanaris" },
-		["Taste for Blood"]={ rune="Rune of the Bloodthirsty", phase=3, spellID=426953, level=50, icon=24, slot=1,
-				start="Head to the Searing Gorge, collect some constructor parts, summon Iodax (L50). Defeat. Loot" },
-		["Vigilance"]={ rune="Rune of the Watchman", phase=3, spellID=426972, level=50, icon=25, slot=1,
-				start="Defeat the Tyrant of the Hive (L46e) in the Writhing Deep, Feralas. Best to group up" },
+		["Intervene"] = {
+  rune = "干預符文",
+  phase = 2,
+  spellID = 403338,
+  level = 24,
+  icon = 13,
+  slot = 8,
+  start = "以特定方式擊打千針石林中的三個戰鬥假人"
+},
+["Enraged Regeneration"] = {
+  rune = "狂怒回血符文",
+  phase = 2,
+  spellID = 402913,
+  level = 30,
+  icon = 14,
+  slot = 8,
+  start = "前往淒涼之地的被洗劫的營地"
+},
+["Focused Rage"] = {
+  rune = "專注怒火符文",
+  phase = 2,
+  spellID = 29787,
+  level = 33,
+  icon = 15,
+  slot = 6,
+  start = "前往阿拉希高地的枯木村，殺死枯木生物"
+},
+["Blood Surge"] = {
+  rune = "血性狂暴符文",
+  phase = 2,
+  spellID = 413380,
+  level = 36,
+  icon = 16,
+  slot = 6,
+  start = "首先殺死精英巨石拳重擊者（阿拉希高地）或碎脊法師（奧特蘭克）（37 級）"
+},
+["Rallying Cry"] = {
+  rune = "指揮官符文",
+  phase = 2,
+  spellID = 426490,
+  level = 39,
+  icon = 17,
+  slot = 8,
+  start = "荒蕪之地流浪劍客的掉落物 (40 級)"
+},
+["Precise Timing"] = {
+  rune = "冷酷精準符文",
+  phase = 2,
+  spellID = 402922,
+  level = 40,
+  icon = 18,
+  slot = 6,
+  start = st.dalaranSpeakTo 
+},
+-- Phase 2 Skill Books
+["Commanding Shout"] = {
+  skillBook = "命令怒吼手冊",
+  spellID = 403215,
+  level = 1,
+  start = st.dungeonSummary 
+},
+-- Phase 3
+["Shield Mastery"] = {
+  rune = "守護者符文",
+  phase = 3,
+  spellID = 426980,
+  level = "23/37/47",
+  icon = 19,
+  slot = 1,
+  start = st.emeraldWardens 
+},
+["Wrecking Crew"] = {
+  rune = "爆破符文",
+  phase = 3,
+  spellID = 427065,
+  level = 38,
+  icon = 20,
+  slot = 1,
+  start = "前往辛特蘭，在枯木巨魔生物 (40-45 級) 中收集晶洞之錘"
+},
+["Sword and Board"] = {
+  rune = "騎士符文",
+  phase = 3,
+  spellID = 426978,
+  level = 40,
+  icon = 21,
+  slot = 9,
+  start = st.wildGodsStart 
+},
+["Rampage"] = {
+  rune = "放蕩符文",
+  phase = 3,
+  spellID = 427081,
+  level = 43,
+  icon = 22,
+  slot = 9,
+  start = "殺死奧克茲 (43 級精英)。在戈敦尼哨站洞穴內。瑪拉徹營地北部，菲拉斯"
+},
+["Gladiator Stance"] = {
+  rune = "角鬥士符文",
+  phase = 3,
+  spellID = 412513,
+  level = 46,
+  icon = 23,
+  slot = 9,
+  start = "必須有嗜血狂亂和集結呐喊。去塔納利斯加基森的菲茲巴茲·秘銀那裡接任務"
+},
+["Taste for Blood"] = {
+  rune = "嗜血符文",
+  phase = 3,
+  spellID = 426953,
+  level = 50,
+  icon = 24,
+  slot = 1,
+  start = "前往灼熱峽谷，收集一些構造器零件，召喚艾歐達克斯 (50 級)。擊敗。掠奪"
+},
+["Vigilance"] = {
+  rune = "守望者符文",
+  phase = 3,
+  spellID = 426972,
+  level = 50,
+  icon = 25,
+  slot = 1,
+  start = "擊敗菲拉斯扭曲深淵中的蜂巢暴君 (46 級精英)。最好組隊"
+},
 
 		spells={ "Victory Rush", "Blood Frenzy", "Furious Thunder", "Devastate", "Frenzied Assault",
 			"Single-Minded Fury", "Endless Rage", "Quick Strike", "Warbringer", "Consumed by Rage", 
@@ -2332,22 +3247,16 @@ points[ 1432 ] = { -- Loch Modan
 	[27205100] = { name="Stonesplitter Scout/Trogg", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
 					tip="Skull-Shaped Geode. Then get hit by a\nStonesplitter Skullthumper in the caves" },				
-	[27408560] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[27605480] = { name="Stonesplitter Scout/Trogg", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
 					tip="Skull-Shaped Geode. Then get hit by a\nStonesplitter Skullthumper in the caves" },				
-	[28008120] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
+	[29008500] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[29206080] = { npc=3291, name="Greishan Ironstove", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[29208320] = { npc=1163, name="Stonesplitter Skullthumper", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
 					tip="They will crack open your Skull-Shaped Geode" },				
-	[29208760] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
-	[30008380] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[30203300] = { npc=3291, name="Greishan Ironstove", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
 	[30208200] = { name="Stonesplitter Scout/Trogg", class={ "WARRIOR" },
@@ -2360,19 +3269,17 @@ points[ 1432 ] = { -- Loch Modan
 					tip="Skull-Shaped Geode. Then get hit by a\nStonesplitter Skullthumper in the caves" },				
 	[31705420] = { npc=3291, name="Greishan Ironstove", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
-	[32208720] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[33607140] = { name="Stonesplitter Scout/Trogg", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
 					tip="Skull-Shaped Geode. Then get hit by a\nStonesplitter Skullthumper in the caves" },				
 	[34204760] = { npc=3291, name="Greishan Ironstove", class={ "WARLOCK" }, faction="Alliance",
 					spell={ "Master Channeler" }, guide={ st.warlock.channeling } },
-	[34408160] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[34807640] = { name="Stonesplitter Scout/Trogg", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
 					tip="Skull-Shaped Geode. Then get hit by a\nStonesplitter Skullthumper in the caves" },				
-	[35009060] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
+	[35008100] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
+					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
+	[35509060] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[35208100] = { npc=1163, name="Stonesplitter Skullthumper", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
@@ -2386,8 +3293,6 @@ points[ 1432 ] = { -- Loch Modan
 	[36208620] = { npc=1163, name="Stonesplitter Skullthumper", class={ "WARRIOR" },
 					spell={ "Quick Strike" }, guide={ st.warrior.quickStrike },
 					tip="They will crack open your Skull-Shaped Geode" },				
-	[36407800] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[36602560] = { name="Tunnel Rat mobs (Various)", class={ "PRIEST" }, faction="Alliance",
 					spell={ "Twisted Faith" }, guide={ st.priest.twisted ..st.priest.twistedLM } },
 	[36809160] = { object=407850, name="Sunken Reliquary", class={ "PALADIN" }, faction="Alliance",
@@ -2416,8 +3321,6 @@ points[ 1432 ] = { -- Loch Modan
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[47806380] = { npc=1224, name="Young Threshadon", class={ "DRUID" }, faction="Alliance",
 					spell={ "Lacerate" }, guide={ st.druid.lacerate } },
-	[48202360] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
-					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[49602980] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },
 					spell={ "Living Bomb" }, guide={ st.mage.livingBomb } },
 	[50602500] = { npc=1166, name="Stonesplitter Seer", class={ "MAGE" },

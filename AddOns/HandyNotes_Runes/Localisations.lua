@@ -92,7 +92,7 @@ elseif ns.locale == "zhTW" then
 	
 	-- 自行加入
 	ns.L["Guide"] = "指南"
-	ns.L["Runes"] = "符文"
+	ns.L["Rune"] = "符文"
 	ns.L["Hide if the rune spell was learnt"] = "隱藏已學會的符文"
 	ns.L["Will also hide copmpleted Icy Veins books (Mages)"] = "同時也要隱藏冰寒脈動之書 (法師)"
 	ns.L["Icon"] = "數字"
@@ -137,6 +137,19 @@ else
 	ns.L["Left"] = "Left"
 	ns.L["Right"] = "Right"
 	ns.L["Try later"] = "Not possible at this time. Try later"
+	
+	-- 自行加入
+	ns.L["Guide"] = "Guide"
+	ns.L["Rune"] = "Rune"
+	ns.L["Hide if the rune spell was learnt"] = "Hide if the rune spell was learnt"
+	ns.L["Will also hide copmpleted Icy Veins books (Mages)"] = "Will also hide copmpleted Icy Veins books (Mages)"
+	ns.L["Icon"] = "Icon"
+	ns.L["Quick Start / Summary"] = "Quick Start / Summary"
+	ns.L["Season"] = "Season"
+	ns.L["Phase"] = "Phase"
+	ns.L["Show"] = "Show"
+	ns.L["Will also hide completed Icy Veins books (Mages), Skill Books"] = "Will also hide completed Icy Veins books (Mages), Skill Books"
+	ns.L["1 = No Map Pin\n2 = Cyan\n3 = Green\n4 = Magenta\n5 = Red\n6 = Yellow"] = "1 = No Map Pin\n2 = Cyan\n3 = Green\n4 = Magenta\n5 = Red\n6 = Yellow"
 end
 
 -- Translations specific to the Runes AddOn
@@ -176,6 +189,13 @@ if ns.locale == "zhCN" then
 	ns.L["Nourish"] = "滋养"
 	ns.L["Revive"] = "起死回生"
 	ns.L["Survival Instincts"] = "生存本能"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "百花齐放"
+	ns.L["Elune's Fires"] = "艾露恩之火"
+	ns.L["Gale Winds"] = "烈风"
+	ns.L["Gore"] = "淤血"
+	ns.L["Improved Barkskin"] = "强化树皮术"
+	ns.L["Improved Frenzied Regeneration"] = "强化狂暴回复"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "野兽控制"
 	ns.L["Carve"] = "削凿"
@@ -197,6 +217,12 @@ if ns.locale == "zhCN" then
 	ns.L["Melee Specialist"] = "近战专家"
 	ns.L["Steady Shot"] = "稳固射击"
 	ns.L["Trap Launcher"] = "陷阱发射器"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "猎豹敏捷"
+	ns.L["Focus Fire"] = "集中火力"
+	ns.L["Lock and Load"] = "荷枪实弹"
+	ns.L["Rapid Killing"] = "疾速杀戮"
+	ns.L["Raptor Killing"] = "猛禽之怒"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "奥术冲击"
 	ns.L["Arcane Surge"] = "奥术涌动"
@@ -219,6 +245,13 @@ if ns.locale == "zhCN" then
 	ns.L["Missile Barrage"] = "飞弹连射"
 	ns.L["Spell Power"] = "法术强权"
 	ns.L["Spellfrost Bolt"] = "法术冰霜箭"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "进阶结界"
+	ns.L["Balefire Bolt"] = "怨火之箭"
+	ns.L["Deep Freeze"] = "深度冻结"
+	ns.L["Displacement"] = "闪回"
+	ns.L["Molten Armor"] = "熔岩护甲"
+	ns.L["Temporal Anomaly"] = "时空畸体"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "神盾"
 	ns.L["Avenger's Shield"] = "复仇者之盾"
@@ -240,6 +273,14 @@ if ns.locale == "zhCN" then
 	ns.L["Sacred Shield"] = "圣洁护盾"
 	ns.L["Sheath of Light"] = "圣光出鞘"
 	ns.L["The Art of War"] = "战争艺术"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "狂信"	
+	ns.L["Hammer of the Righteous"] = "正义之锤"	
+	ns.L["Improved Hammer of Wrath"] = "强化愤怒之锤"	
+	ns.L["Improved Sanctuary"] = "强化庇护"	
+	ns.L["Light's Grace"] = "光之优雅"	
+	ns.L["Purifying Power"] = "净化之力"	
+	ns.L["Wrath"] = "愤怒"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "治疗之环"
 	ns.L["Homunculi"] = "裂魂魔"
@@ -262,6 +303,13 @@ if ns.locale == "zhCN" then
 	ns.L["Renewed Hope"] = "新生希望"
 	ns.L["Shadowfiend"] = "暗影魔"
 	ns.L["Spirit of the Redeemer"] = "救赎者之魂"
+	-- Priest Phase 3
+	ns.L["Despair"] = "绝望"	
+	ns.L["Divine Aegis"] = "神圣庇护"	
+	ns.L["Eye of the Void"] = "虚空之眼"	
+	ns.L["Pain and Suffering"] = "饱受折磨"	
+	ns.L["Surge of Light"] = "圣光涌动"	
+	ns.L["Void Zone"] = "虚空领域"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "正中眉心"
 	ns.L["Blade Dance"] = "刃舞"
@@ -283,6 +331,13 @@ if ns.locale == "zhCN" then
 	ns.L["Shadowstep"] = "暗影步"
 	ns.L["Shuriken Toss"] = "飞镖投掷"
 	ns.L["Waylay"] = "埋伏"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "诛灭"
+	ns.L["Combat Potency"] = "作战潜能"
+	ns.L["Cut to the Chase"] = "穷追猛砍"
+	ns.L["Focused Attacks"] = "专注攻击"
+	ns.L["Honor Among Thieves"] = "盗贼的尊严"
+	ns.L["Unfair Advantage"] = "压倒优势"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "先祖指引"
 	ns.L["Dual Wield Specialization"] = "双武器专精"
@@ -305,6 +360,14 @@ if ns.locale == "zhCN" then
 	ns.L["Spirit of the Alpha"] = "头狼之魂"
 	ns.L["Totemic Projection"] = "图腾投射"
 	ns.L["Two-Handed Mastery"] = "双手精通"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "燃烧"
+	ns.L["Mental Dexterity"] = "聪慧"
+	ns.L["Overcharged"] = "能量超载"
+	ns.L["Riptide"] = "激流"
+	ns.L["Rolling Thunder"] = "滚雷"
+	ns.L["Static Shock"] = "静电震击"
+	ns.L["Tidal Waves"] = "潮汐奔涌"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "混乱之箭"
 	ns.L["Demonic Grace"] = "恶魔优雅"
@@ -327,6 +390,13 @@ if ns.locale == "zhCN" then
 	ns.L["Shadow and Flame"] = "影与焰"
 	ns.L["Shadowflame"] = "暗影烈焰"
 	ns.L["Soul Harvesting"] = "灵魂收割"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "爆燃"
+	ns.L["Immolation Aura"] = "献祭光环"
+	ns.L["Pandemic"] = "恶疾"
+	ns.L["Summon Felguard"] = "召唤恶魔卫士"
+	ns.L["Unstable Affliction"] = "痛苦无常"
+	ns.L["Vengeance"] = "复仇"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "血之狂暴"
 	ns.L["Consumed by Rage"] = "噬心狂怒"
@@ -348,14 +418,22 @@ if ns.locale == "zhCN" then
 	ns.L["Intervene"] = "援护"
 	ns.L["Precise Timing"] = "精准猛击"
 	ns.L["Rallying Cry"] = "集结呐喊"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "角斗姿态"
+	ns.L["Rampage"] = "暴怒"
+	ns.L["Shield Mastery"] = "盾牌精通"
+	ns.L["Sword and Board"] = "剑盾猛攻"
+	ns.L["Taste for Blood"] = "血之气息"
+	ns.L["Vigilance"] = "警戒"
+	ns.L["Wrecking Crew"] = "破坏能手"
 
 elseif ns.locale == "zhTW" then
 	ns.L["AddOn Description"] = "所有 SoD 符文。 （和更多！）。"
 	ns.L["Arcane"] = "奧術"
 	ns.L["Demonic"] = "惡魔"
 	ns.L["Duty"] = "義務"
-	ns.L["Hide if learnt"] = "隱藏已學會的符文"
-	ns.L["Map Pin"] = "地圖圖示"
+	ns.L["Hide if learnt"] = "如果學習了符文則隱藏"
+	ns.L["Map Pin"] = "地圖圖釘"
 	ns.L["Mjolnir"] = "雷神"
 	ns.L["Phase 1 Summary"] = "第一階段總結"
 	ns.L["Phase 2 Summary"] = "第二階段總結"
@@ -384,6 +462,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Nourish"] = "滋養"
 	ns.L["Revive"] = "起死回生"
 	ns.L["Survival Instincts"] = "生存本能"
+	-- Druid Phase 3
+	ns.L["Efflorescence"] = "百花齊放"
+	ns.L["Elune's Fires"] = "艾露恩之火"
+	ns.L["Gale Winds"] = "烈風"
+	ns.L["Gore"] = "淤血"
+	ns.L["Improved Barkskin"] = "強化樹皮術"
+	ns.L["Improved Frenzied Regeneration"] = "強化狂暴回覆"
 	-- Hunter Phase 1
 	ns.L["Beast Mastery"] = "野獸控制"
 	ns.L["Carve"] = "削鑿"
@@ -405,6 +490,12 @@ elseif ns.locale == "zhTW" then
 	ns.L["Melee Specialist"] = "近戰專家"
 	ns.L["Steady Shot"] = "穩固射擊"
 	ns.L["Trap Launcher"] = "陷阱發射器"
+	-- Hunter Phase 3
+	ns.L["Catlike Reflexes"] = "獵豹敏捷"
+	ns.L["Focus Fire"] = "集中火力"
+	ns.L["Lock and Load"] = "荷槍實彈"
+	ns.L["Rapid Killing"] = "疾速殺戮"
+	ns.L["Raptor Killing"] = "猛禽之怒"
 	-- Mage Phase 1
 	ns.L["Arcane Blast"] = "奧術衝擊"
 	ns.L["Arcane Surge"] = "奧術湧動"
@@ -427,6 +518,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Missile Barrage"] = "飛彈連射"
 	ns.L["Spell Power"] = "法術強權"
 	ns.L["Spellfrost Bolt"] = "法術冰霜箭"
+	-- Mage Phase 3
+	ns.L["Advanced Warding"] = "進階結界"
+	ns.L["Balefire Bolt"] = "怨火之箭"
+	ns.L["Deep Freeze"] = "深度凍結"
+	ns.L["Displacement"] = "閃回"
+	ns.L["Molten Armor"] = "熔岩護甲"
+	ns.L["Temporal Anomaly"] = "時空畸體"
 	-- Paladin Phase 1
 	ns.L["Aegis"] = "神盾"
 	ns.L["Avenger's Shield"] = "復仇者之盾"
@@ -448,6 +546,14 @@ elseif ns.locale == "zhTW" then
 	ns.L["Sacred Shield"] = "聖潔護盾"
 	ns.L["Sheath of Light"] = "聖光出鞘"
 	ns.L["The Art of War"] = "戰爭藝術"
+	-- Paladin Phase 3
+	ns.L["Fanaticism"] = "狂信"	
+	ns.L["Hammer of the Righteous"] = "正義之鎚"	
+	ns.L["Improved Hammer of Wrath"] = "強化憤怒之錘"	
+	ns.L["Improved Sanctuary"] = "強化庇護"	
+	ns.L["Light's Grace"] = "光之優雅"	
+	ns.L["Purifying Power"] = "淨化之力"	
+	ns.L["Wrath"] = "憤怒"	
 	-- Priest Phase 1
 	ns.L["Circle of Healing"] = "治療之環"
 	ns.L["Homunculi"] = "裂魂魔"
@@ -470,6 +576,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Renewed Hope"] = "新生希望"
 	ns.L["Shadowfiend"] = "暗影魔"
 	ns.L["Spirit of the Redeemer"] = "救贖者之魂"
+	-- Priest Phase 3
+	ns.L["Despair"] = "絕望"	
+	ns.L["Divine Aegis"] = "神聖庇護"	
+	ns.L["Eye of the Void"] = "虛空之眼"	
+	ns.L["Pain and Suffering"] = "飽受折磨"	
+	ns.L["Surge of Light"] = "聖光湧動"	
+	ns.L["Void Zone"] = "虛空領域"	
 	-- Rogue Phase 1
 	ns.L["Between the Eyes"] = "正中眉心"
 	ns.L["Blade Dance"] = "刃舞"
@@ -491,6 +604,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Shadowstep"] = "暗影步"
 	ns.L["Shuriken Toss"] = "飛鏢投擲"
 	ns.L["Waylay"] = "埋伏"
+	-- Rogue Phase 3
+	ns.L["Carnage"] = "誅滅"
+	ns.L["Combat Potency"] = "作戰潛能"
+	ns.L["Cut to the Chase"] = "窮追猛砍"
+	ns.L["Focused Attacks"] = "專注攻擊"
+	ns.L["Honor Among Thieves"] = "盜賊的尊嚴"
+	ns.L["Unfair Advantage"] = "壓倒優勢"
 	-- Shaman Phase 1
 	ns.L["Ancestral Guidance"] = "先祖指引"
 	ns.L["Dual Wield Specialization"] = "雙武器專精"
@@ -513,6 +633,14 @@ elseif ns.locale == "zhTW" then
 	ns.L["Spirit of the Alpha"] = "頭狼之魂"
 	ns.L["Totemic Projection"] = "圖騰投射"
 	ns.L["Two-Handed Mastery"] = "雙手精通"
+	-- Shaman Phase 3
+	ns.L["Burn"] = "燃燒"
+	ns.L["Mental Dexterity"] = "聰慧"
+	ns.L["Overcharged"] = "能量超載"
+	ns.L["Riptide"] = "激流"
+	ns.L["Rolling Thunder"] = "滾雷"
+	ns.L["Static Shock"] = "靜電震擊"
+	ns.L["Tidal Waves"] = "潮汐奔湧"
 	-- Warlock Phase 1
 	ns.L["Chaos Bolt"] = "混亂之箭"
 	ns.L["Demonic Grace"] = "惡魔優雅"
@@ -535,6 +663,13 @@ elseif ns.locale == "zhTW" then
 	ns.L["Shadow and Flame"] = "影與焰"
 	ns.L["Shadowflame"] = "暗影烈焰"
 	ns.L["Soul Harvesting"] = "靈魂收割"
+	-- Warlock Phase 3
+	ns.L["Backdraft"] = "爆燃"
+	ns.L["Immolation Aura"] = "獻祭光環"
+	ns.L["Pandemic"] = "惡疾"
+	ns.L["Summon Felguard"] = "召喚惡魔衛士"
+	ns.L["Unstable Affliction"] = "痛苦無常"
+	ns.L["Vengeance"] = "復仇"
 	-- Warrior Phase 1
 	ns.L["Blood Frenzy"] = "血之狂暴"
 	ns.L["Consumed by Rage"] = "噬心狂怒"
@@ -557,6 +692,14 @@ elseif ns.locale == "zhTW" then
 	ns.L["Precise Timing"] = "精準猛擊"
 	ns.L["Rallying Cry"] = "集結吶喊"
 	ns.L["Rallying Cry"] = "集結吶喊"
+	-- Warrior Phase 3
+	ns.L["Gladiator Stance"] = "角斗姿態"
+	ns.L["Rampage"] = "暴怒"
+	ns.L["Shield Mastery"] = "盾牌精通"
+	ns.L["Sword and Board"] = "劍盾猛攻"
+	ns.L["Taste for Blood"] = "血之氣息"
+	ns.L["Vigilance"] = "警戒"
+	ns.L["Wrecking Crew"] = "破壞能手"
 
 else
 	ns.L["AddOn Description"] = "All the SoD Runes. (And more!)"

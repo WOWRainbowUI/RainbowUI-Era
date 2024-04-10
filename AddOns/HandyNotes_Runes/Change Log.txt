@@ -1,3 +1,6 @@
+== v2.08 - 9th April 2024
+* Added translations for non-English players for Druid, Hunter, Mage, Paladin, Priest
+
 == v2.07 - 9th April 2024
 * Added Paladins, Priests, Rogues
 * Quests not showing fixed
