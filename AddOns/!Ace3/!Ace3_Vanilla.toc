@@ -53,3 +53,5 @@ LibSerialize\LibSerialize.lua
 HereBeDragons\HereBeDragons-2.0.lua
 HereBeDragons\HereBeDragons-Pins-2.0.lua
 HereBeDragons\HereBeDragons-Migrate.lua
+
+LibClassicDurations\LibClassicDurations.xml
