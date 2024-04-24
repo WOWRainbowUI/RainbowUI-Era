@@ -81,6 +81,8 @@ local function AddTexture(Texture, y, coord)
         coord = ":100:100:10:60:0:55"
         local t = "|T" .. Texture .. ":0:0:0:0" .. coord .. "|t"
         return t
+    elseif Texture == "QUEST" then -- 黄色感叹号
+        tex = "Interface\\GossipFrame\\AvailableQuestIcon"
     else
         tex = Texture
     end
@@ -169,7 +171,6 @@ end
 local function GetItemID(text)
     if not text then return end
     local h_item = "item:(%d+):"
-    -- local h_item = "|Hitem:(%d+):"
     local item = tonumber(strmatch(text, h_item))
     return item
 end
@@ -520,7 +521,7 @@ function BG.GetItemCount(_itemID)
         for itemID2, _ in pairs(BG.Loot[FB].ExchangeItems) do
             if itemID == itemID2 then
                 for _, itemID3 in pairs(BG.Loot[FB].ExchangeItems[itemID2]) do
-                    local count = GetItemCount(itemID3)
+                    local count = GetItemCount(itemID3, true)
                     if count ~= 0 then
                         return count
                     end
@@ -528,5 +529,5 @@ function BG.GetItemCount(_itemID)
             end
         end
     end
-    return GetItemCount(itemID)
+    return GetItemCount(itemID, true)
 end

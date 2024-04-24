@@ -73,11 +73,13 @@ ADDONSELF.IsVanilla_60 = IsVanilla_60
 
 local function IsAlliance()
     return UnitFactionGroup("player") == "Alliance"
+    -- return UnitFactionGroup("player") == "Horde"
 end
 ADDONSELF.IsAlliance = IsAlliance
 
 local function IsHorde()
     return UnitFactionGroup("player") == "Horde"
+    -- return UnitFactionGroup("player") == "Alliance"
 end
 ADDONSELF.IsHorde = IsHorde
 

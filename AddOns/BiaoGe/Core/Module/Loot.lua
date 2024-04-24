@@ -79,22 +79,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     BG.FrameLootMsg:SetScript("OnHyperlinkClick", function(self, link, text, button)
         local name, link, quality, level, _, _, _, _, _, Texture, _, typeID = GetItemInfo(link)
 
-        local FB = BG.FB2 or BG.FB1
-        if button == "RightButton" then -- 右键清除关注
-            for b = 1, Maxb[FB] do
-                for i = 1, Maxi[FB] do
-                    local bt = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
-                    if bt then
-                        if GetItemID(link) == GetItemID(bt:GetText()) then
-                            BiaoGe[FB]["boss" .. b]["guanzhu" .. i] = nil
-                            BG.Frame[FB]["boss" .. b]["guanzhu" .. i]:Hide()
-                            BG.FrameLootMsg:AddMessage(BG.STC_r1(format("已取消关注装备：%s",
-                                AddTexture(Texture) .. link)))
-                            return
-                        end
-                    end
-                end
-            end
+        if button == "RightButton" then
+            BG.CancelGuanZhu(link)
         end
         if IsShiftKeyDown() then
             ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
@@ -102,19 +88,10 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             return
         end
         if IsAltKeyDown() then
-            for b = 1, Maxb[FB] do
-                for i = 1, Maxi[FB] do
-                    local bt = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
-                    if bt then
-                        if GetItemID(link) == GetItemID(bt:GetText()) then
-                            BiaoGe[FB]["boss" .. b]["guanzhu" .. i] = true
-                            BG.Frame[FB]["boss" .. b]["guanzhu" .. i]:Show()
-                            BG.FrameLootMsg:AddMessage(BG.STC_g2(format(L["已成功关注装备：%s。团长拍卖此装备时会提醒"],
-                                AddTexture(Texture) .. link)))
-                            return
-                        end
-                    end
-                end
+            if BG.IsLeader then -- 开始拍卖
+                BG.StartAuction(link)
+            else                -- 关注装备
+                BG.AddGuanZhu(link)
             end
         end
     end)
@@ -216,11 +193,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     end)
 
     -- 记录物品进表格
-    local function UpdateBiaoGeAllIsHaved()
-        BG.After(0.2, function()
-            BG.UpdateBiaoGeAllIsHaved()
-        end)
-    end
+    local biaogefull
     local function AddLootItem(FB, numb, link, Texture, level, Hope, count)
         local itemID = GetItemInfoInstant(link)
         BG.Tooltip_SetItemByID(itemID)
@@ -260,7 +233,6 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                                 level, count, "|cff" .. BG.Boss[FB]["boss" .. numb]["color"],
                                 BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
                     end
-                    -- UpdateBiaoGeAllIsHaved()
                     return
                 elseif zb and not zb1 then
                     if Hope then
@@ -271,7 +243,13 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                         "|cffDC143C" .. L["自动记录失败：%s%s(%s)。因为%s< %s >%s的格子满了。。"], RR,
                         (AddTexture(Texture) .. link), level, "|cff" .. BG.Boss[FB]["boss" .. numb]["color"],
                         BG.Boss[FB]["boss" .. numb]["name2"], RR) .. icon)
-                    -- UpdateBiaoGeAllIsHaved()
+                    if not biaogefull then
+                        biaogefull = true
+                        BG.After(1, function()
+                            biaogefull = false
+                        end)
+                        PlaySoundFile(BG["sound_biaogefull" .. BiaoGe.options.Sound], "Master")
+                    end
                     return
                 end
             end
@@ -307,7 +285,6 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                             format(L["已自动记入表格：%s%s(%s) x%d => %s< %s >%s"], RR, (AddTexture(Texture) .. link),
                                 level, count, "|cff" .. BG.Boss[FB]["boss" .. b]["color"],
                                 BG.Boss[FB]["boss" .. b]["name2"], RR) .. icon)
-                        -- UpdateBiaoGeAllIsHaved()
                         return
                     end
                 end
@@ -317,7 +294,6 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         if not yes then
             local numb = Maxb[FB] - 1
             AddLootItem(FB, numb, link, Texture, level, Hope, count)
-            -- UpdateBiaoGeAllIsHaved()
             return
         end
     end
@@ -450,7 +426,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                             BG.FrameLootMsg:AddMessage(BG.STC_g1(format(L["你的心愿达成啦！！！>>>>> %s(%s) <<<<<"], (AddTexture(Texture) .. link), level)))
                             bt.looted:Show()
                             Hope = true
-                            PlaySoundFile(BG.sound_hope, "Master")
+                            PlaySoundFile(BG["sound_hope" .. BiaoGe.options.Sound], "Master")
                             break
                         end
                     end
@@ -466,15 +442,21 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             return
         end
 
+        -- 特殊物品总是记录到杂项，例如TOC北伐
+        for _, FB in pairs(BG.FBtable) do
+            for k, _itemID in pairs(BG.Loot[FB].ZaXiangItems) do
+                if _itemID == itemID then
+                    local numb = Maxb[FB] - 1
+                    -- local numb = Maxb[FB] -- test
+                    AddLootItem(FB, numb, link, Texture, level, Hope, count)
+                    return
+                end
+            end
+        end
+
         -- 经典旧世的图纸、牌子、宝石记录到杂项
         if BG.IsVanilla() then
             if typeID == 9 or typeID == 10 or typeID == 3 then
-                local numb = Maxb[FB] - 1
-                AddLootItem(FB, numb, link, Texture, level, Hope, count)
-                return
-            end
-            -- 安其拉徽记和武器记录到杂项
-            if itemID == 21237 or itemID == 21232 then
                 local numb = Maxb[FB] - 1
                 AddLootItem(FB, numb, link, Texture, level, Hope, count)
                 return
@@ -500,18 +482,23 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
         end
-        -- 北伐奖章记录到杂项
-        if itemID == 47242 then
-            local numb = Maxb[FB] - 1
-            AddLootItem(FB, numb, link, Texture, level, Hope, count)
-            return
-        end
 
         -- ICC小怪掉落
         if FB == "ICC" then
             for key, value in pairs(BG.Loot.ICC.H25.boss14) do
                 if itemID == value then
                     local numb = Maxb[FB] - 1
+                    AddLootItem(FB, numb, link, Texture, level, Hope, count)
+                    return
+                end
+            end
+        end
+
+        -- plus神庙老3
+        if FB == "Temple" then
+            for _, _itemID in pairs(BG.Loot.Temple.N.boss3) do
+                if itemID == _itemID then
+                    local numb = 3
                     AddLootItem(FB, numb, link, Texture, level, Hope, count)
                     return
                 end

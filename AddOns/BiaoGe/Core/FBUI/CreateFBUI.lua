@@ -16,23 +16,26 @@ local Maxi = ADDONSELF.Maxi
 local BossNum = ADDONSELF.BossNum
 local FrameHide = ADDONSELF.FrameHide
 
-
 local pt = print
+
+BG.zaxiang = {} -- 杂项如果太多，则需要换行
 
 local buttonCount = {}
 if BG.IsVanilla_Sod() then
     buttonCount.Temple = {
-        [1] = 7,
-        [2] = 7,
-        [3] = 7,
-        [4] = 7,
-        [5] = 7,
-        [6] = 7,
-        [7] = 7,
-        [8] = 8,
-        [9] = 6,
+        [1] = 5,
+        [2] = 5,
+        [3] = 5,
+        [4] = 4,
+        [5] = 4,
+        [6] = 4,
+        [7] = 4,
+        [8] = 6,
+        [9] = 25,
         [10] = 9,
     }
+    BG.zaxiang.Temple = { i = 20 }
+
     buttonCount.Gno = {
         [1] = 5,
         [2] = 5,

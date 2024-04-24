@@ -84,7 +84,6 @@ AddDB(215400, 7966, 5, 217337, nil, 700, 2, 7)
 AddDB(215387, 4235, 5, 217337, nil, 700, 2, 7)
 -- Lv35
 AddDB(215392, 8831, 8, 217337, nil, 700, 2, 7)
--- AddDB(215418, 17222, 5, 217337, nil, 700, 2, 7) -- 蜘蛛肉肠
 AddDB(215417, 3729, 10, 217337, nil, 700, 2, 7)
 AddDB(215419, 6451, 10, 217337, nil, 700, 2, 7)
 AddDB(215388, 4304, 10, 217337, nil, 700, 2, 7)
@@ -95,18 +94,16 @@ AddDB(215390, 3358, 10, 217337, nil, 700, 2, 7)
 AddDB(215411, 7377, 2, 217338, nil, 850, 5.50, 7)
 AddDB(215408, 5966, 5, 217338, nil, 850, 5.50, 7)
 AddDB(215398, 3835, 5, 217338, nil, 850, 5.50, 7)
--- AddDB(215403, 10546, 2, 217338, nil, 850, 5.50, 7) -- 致命瞄准镜
 AddDB(215402, 4394, 8, 217338, nil, 850, 5.50, 7)
 -- Lv35
 AddDB(215407, 5964, 4, 217338, nil, 850, 5.50, 7)
--- AddDB(215415, 4335, 5, 217338, nil, 850, 5.50, 7) -- 紫色丝质衬衣
 AddDB(215399, 7919, 3, 217338, nil, 850, 5.50, 7)
 AddDB(215414, 7062, 4, 217338, nil, 850, 5.50, 7)
 AddDB(215401, 4391, 2, 217338, nil, 850, 5.50, 7)
 AddDB(215385, 3577, 4, 217338, nil, 850, 5.50, 7)
 AddDB(215395, 8949, 6, 217338, nil, 850, 5.50, 7)
 AddDB(215393, 1710, 16, 217338, nil, 850, 5.50, 7)
-AddDB(215418, 17222, 5, 217337, nil, 850, 5.50, 7) -- 蜘蛛肉肠
+AddDB(215418, 17222, 5, 217338, nil, 850, 5.50, 7) -- 蜘蛛肉肠
 
 -- lv40
 AddDB(215416, 10008, 3, 217339, nil, 1000, 12, 7)
@@ -115,18 +112,51 @@ AddDB(215397, 3855, 2, 217339, nil, 1000, 12, 7)
 AddDB(215396, 8951, 14, 217339, nil, 1000, 12, 7)
 AddDB(215404, 10508, 2, 217339, nil, 1000, 12, 7)
 AddDB(215415, 4335, 5, 217339, nil, 1000, 12, 7)  -- 紫色丝质衬衣
-AddDB(215403, 10546, 2, 217338, nil, 1000, 12, 7) -- 致命瞄准镜
+AddDB(215403, 10546, 2, 217339, nil, 1000, 12, 7) -- 致命瞄准镜
 
+-- P3
+local topFactionValue = 8
+local fullitem, fullgive, moneygive = 221008, 950, 3.85
+AddDB(220918, 16766, 16, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220920, 18045, 12, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220922, 8838, 15, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220927, 8169, 8, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220919, 13931, 8, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220921, 8545, 14, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220923, 13463, 6, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220924, 6037, 12, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220926, 8170, 14, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220925, 12359, 16, fullitem, nil, fullgive, moneygive, topFactionValue)
 
--- AddDB(, , , 217339, nil, 1000,25000)
+local fullitem, fullgive, moneygive = 221009, 1300, 8.45
+AddDB(220942, 10034, 4, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220940, 10024, 5, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220937, 15564, 12, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220938, 15084, 6, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220931, 10562, 16, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220934, 7931, 3, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220929, 13443, 6, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220930, 13446, 8, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220928, 12655, 4, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220932, 15993, 3, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220935, 12406, 5, fullitem, nil, fullgive, moneygive, topFactionValue)
+
+local fullitem, fullgive, moneygive = 221010, 1850, 15.40
+AddDB(220939, 15092, 5, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220941, 13856, 6, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220936, 7938, 2, fullitem, nil, fullgive, moneygive, topFactionValue)
+AddDB(220933, 15995, 2, fullitem, nil, fullgive, moneygive, topFactionValue)
+
+-- AddDB(, , , 217339, nil, 1000, 25000)
+-- AddDB(, , , fullitem, nil, fullgive, moneygive, topFactionValue)
 
 for itemID in pairs(BG.CommerceAuthority) do
     GetItemInfo(itemID)
 end
 
--- print(GetItemInfo(211831))
--- print(GetItemInfo(6290))
--- print(GetItemInfo(6325))
+-- print(GetItemInfo(221010))
+-- print(GetItemInfo(220939))
+-- print(GetItemInfo(15092))
 
 -- pt("|cffffffff|Hitem:211827::::::::::::::::::|h[测试物品]|h|r")
 -- pt("|cffffffff|Hitem:211828::::::::::::::::::|h[测试物品]|h|r")

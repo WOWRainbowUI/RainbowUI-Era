@@ -25,6 +25,7 @@ local p = {}
 local preWidget
 local framedown
 local frameright
+-- local last
 local red, greed, blue = 1, 1, 1
 
 ------------------结算工资------------------
@@ -71,8 +72,9 @@ local function SumGZ()
 end
 BG.SumGZ = SumGZ
 
-local function HilightBiaoGeSaveItems(FB, itemID)
+local function HighlightBiaoGeSaveItems(itemID)
     local tbl = {}
+    local FB = BG.FB1
     for b = 1, Maxb[FB], 1 do
         for i = 1, Maxi[FB], 1 do
             local zb = BG.Frame[FB]["boss" .. b]["zhuangbei" .. i]
@@ -99,6 +101,52 @@ local function HilightBiaoGeSaveItems(FB, itemID)
         end
     end
     tbl = nil
+end
+
+function BG.UpdateZhiChuPercent(zhuangbei, jine)
+    local FB = BG.FB1
+    zhuangbei:SetTextColor(0, 1, 0)
+    jine:SetTextColor(0, 1, 0)
+    zhuangbei.hasPercent = false
+    jine.hasPercent = false
+    if BiaoGe.options["zhichuPercent"] ~= 1 then return end
+
+    local num = tonumber(zhuangbei:GetText():match("(%d+)%%"))
+    if num then
+        local text = floor(BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine1"]:GetText() * num * 0.01)
+        if text == 0 then text = "" end
+        jine:SetText(text)
+        zhuangbei:SetTextColor(RGB("008000"))
+        jine:SetTextColor(RGB("008000"))
+        zhuangbei.hasPercent = num
+        jine.hasPercent = num
+
+        if zhuangbei.isEnter then
+            zhuangbei:GetScript("OnEnter")(zhuangbei)
+        end
+        if jine.isEnter then
+            jine:GetScript("OnEnter")(jine)
+        end
+        return
+    end
+    if zhuangbei.isEnter or jine.isEnter then
+        GameTooltip:Hide()
+    end
+end
+
+local function OnEnterZhiChuPercent(self)
+    if self.hasPercent then
+        if BG.ButtonIsInRight(self) then
+            GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
+        else
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, 0)
+        end
+        GameTooltip:ClearLines()
+        GameTooltip:AddLine(self:GetText(), 1, 1, 1, true)
+        GameTooltip:AddLine(format(L["该支出项含有百分比|cff00ff00（%s%%）|r，正在自动计算支出金额。"], self.hasPercent), 1, 0.82, 0, true)
+        GameTooltip:AddLine(L["你可以通过删除支出项的百分比符号来取消自动计算，或者在表格设置里关闭该项功能。"], 0.5, 0.5, 0.5, true)
+        GameTooltip:Show()
+    end
 end
 
 ------------------标题------------------
@@ -147,16 +195,14 @@ local function OnTextChanged(self)
     local t = self.t
     local b = self.b
     local i = self.i
+    local bossnum = self.bossnum
     local itemText = self:GetText()
     local itemID = GetItemInfoInstant(itemText)
-    local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType
-    if itemID then
-        name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(itemID)
-    end
+    local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(itemText)
 
-    local hard
-    if link then
+    if link and itemText:find("item:") then
         if FB == "ULD" then
+            local hard
             for index, value in ipairs(BG.Loot.ULD.Hard10) do
                 if itemID == value then
                     self:SetText(link .. "H")
@@ -208,16 +254,31 @@ local function OnTextChanged(self)
     BG.LevelText(self, level, typeID)
     -- 已拥有图标
     BG.IsHave(self)
+
+    -- 支出百分比
+    if bossnum == Maxb[FB] + 1 then
+        local jine = BG.Frame[FB]["boss" .. Maxb[FB] + 1]["jine" .. i]
+        BG.UpdateZhiChuPercent(self, jine)
+    end
 end
 function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
     local bt = CreateFrame("EditBox", nil, BG["Frame" .. FB], "InputBoxTemplate")
     bt:SetSize(150, 20)
     bt:SetFrameLevel(110)
-    if b > 1 and i == 1 then
-        bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -20)
+    if BG.zaxiang[FB] and BossNum(FB, b, t) == Maxb[FB] - 1 and i == BG.zaxiang[FB].i then
+        bt:SetPoint("TOPLEFT", frameright, "TOPLEFT", 170, -18)
     else
-        bt:SetPoint("TOPLEFT", p["preWidget" .. i - 1], "BOTTOMLEFT", 0, -3)
+        if b > 1 and i == 1 then
+            bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -20)
+        else
+            if BG.zaxiang[FB] and BossNum(FB, b, t) == Maxb[FB] and i == 1 then
+                bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -20)
+            else
+                bt:SetPoint("TOPLEFT", p["preWidget" .. i - 1], "BOTTOMLEFT", 0, -3)
+            end
+        end
     end
+
     bt:SetAutoFocus(false)
     bt:Show()
     bt.FB = FB
@@ -327,10 +388,13 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
     end)
     -- 鼠标悬停在装备时
     bt:SetScript("OnEnter", function(self)
+        self.isEnter = true
         BG.FrameDs[FB .. 1]["boss" .. BossNum(FB, b, t)]["ds" .. i]:Show()
         if not tonumber(self:GetText()) then
             local itemLink = bt:GetText()
-            local itemID = select(1, GetItemInfoInstant(itemLink))
+            local itemID = GetItemInfoInstant(itemLink)
+            BG.Hide_AllHiLight()
+            BG.HighlightBag(itemLink)
             if itemID then
                 if BG.ButtonIsInRight(self) then
                     GameTooltip:SetOwner(self, "ANCHOR_LEFT", 0, 0)
@@ -344,12 +408,13 @@ function BG.FBZhuangBeiUI(FB, t, b, bb, i, ii)
                 BG.HistoryJine(unpack(h))
                 BG.HistoryMOD = h
 
-                HilightBiaoGeSaveItems(FB, itemID)
+                HighlightBiaoGeSaveItems(itemID)
             end
-            BG.HiLightBag(itemLink)
         end
+        OnEnterZhiChuPercent(self)
     end)
     bt:SetScript("OnLeave", function(self)
+        self.isEnter = false
         BG.FrameDs[FB .. 1]["boss" .. BossNum(FB, b, t)]["ds" .. i]:Hide()
         GameTooltip:Hide()
         if BG["HistoryJineFrameDB1"] then
@@ -713,6 +778,8 @@ function BG.FBJinEUI(FB, t, b, bb, i, ii)
 
     -- 当内容改变时
     bt:SetScript("OnTextChanged", function(self)
+        local bossnum = self.bossnum
+
         local name = "autoAdd0"
         if BiaoGe.options[name] == 1 and self ~= BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine" .. i] and not IsModifierKeyDown() then
             local len = strlen(self:GetText())
@@ -743,6 +810,21 @@ function BG.FBJinEUI(FB, t, b, bb, i, ii)
         BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine2"]:SetCursorPosition(0)
         BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine3"]:SetCursorPosition(0)
         BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine5"]:SetCursorPosition(0)
+
+        -- 支出百分比
+        if bossnum == Maxb[FB] + 1 then
+            local zhuangbei = BG.Frame[FB]["boss" .. Maxb[FB] + 1]["zhuangbei" .. i]
+            BG.UpdateZhiChuPercent(zhuangbei, self)
+        end
+        if self == BG.Frame[FB]["boss" .. Maxb[FB] + 2]["jine1"] then
+            for i = 1, Maxi[FB] do
+                local zhuangbei = BG.Frame[FB]["boss" .. Maxb[FB] + 1]["zhuangbei" .. i]
+                local jine = BG.Frame[FB]["boss" .. Maxb[FB] + 1]["jine" .. i]
+                if zhuangbei then
+                    BG.UpdateZhiChuPercent(zhuangbei, jine)
+                end
+            end
+        end
     end)
     -- 点击时
     bt:SetScript("OnMouseDown", function(self, enter)
@@ -772,10 +854,14 @@ function BG.FBJinEUI(FB, t, b, bb, i, ii)
     end)
     -- 悬停鼠标时
     bt:SetScript("OnEnter", function(self) -- 底色
+        self.isEnter = true
         BG.FrameDs[FB .. 1]["boss" .. BossNum(FB, b, t)]["ds" .. i]:Show()
+        OnEnterZhiChuPercent(self)
     end)
     bt:SetScript("OnLeave", function(self)
+        self.isEnter = false
         BG.FrameDs[FB .. 1]["boss" .. BossNum(FB, b, t)]["ds" .. i]:Hide()
+        GameTooltip:Hide()
     end)
     -- 获得光标时
     bt:SetScript("OnEditFocusGained", function(self)
@@ -987,11 +1073,12 @@ function BG.FBJiShaUI(FB, t, b, bb, i, ii)
     end
     text:SetPoint("TOPLEFT", BG.Frame[FB]["boss" .. BossNum(FB, b, t)]["zhuangbei" .. num], "BOTTOMLEFT", -0, -3)
     text:SetFont(BIAOGE_TEXT_FONT, 10, "OUTLINE,THICK")
+    text:SetTextColor(RGB(BG.Boss[FB]["boss" .. BossNum(FB, b, t)].color))
     text:SetAlpha(0)
     BG.Frame[FB]["boss" .. BossNum(FB, b, t)]["time"] = text
 
     if BiaoGe[FB]["boss" .. BossNum(FB, b, t)]["time"] then
-        text:SetText(BiaoGe[FB]["boss" .. BossNum(FB, b, t)]["time"])
+        text:SetText(L["击杀用时"] .. " " .. BiaoGe[FB]["boss" .. BossNum(FB, b, t)]["time"])
     end
 end
 

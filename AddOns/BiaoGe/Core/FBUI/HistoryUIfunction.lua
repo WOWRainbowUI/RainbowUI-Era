@@ -75,10 +75,18 @@ function BG.HistoryZhuangBeiUI(FB, t, b, bb, i, ii)
     local bt = CreateFrame("EditBox", nil, BG["HistoryFrame" .. FB], "InputBoxTemplate");
     bt:SetSize(150, 20)
     bt:SetFrameLevel(110)
-    if b > 1 and i == 1 then
-        bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -20);
+    if BG.zaxiang[FB] and BossNum(FB, b, t) == Maxb[FB] - 1 and i == BG.zaxiang[FB].i then
+        bt:SetPoint("TOPLEFT", frameright, "TOPLEFT", 170, -18)
     else
-        bt:SetPoint("TOPLEFT", p["preWidget" .. i - 1], "BOTTOMLEFT", 0, -3);
+        if b > 1 and i == 1 then
+            bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -20)
+        else
+            if BG.zaxiang[FB] and BossNum(FB, b, t) == Maxb[FB] and i == 1 then
+                bt:SetPoint("TOPLEFT", framedown, "BOTTOMLEFT", 0, -20)
+            else
+                bt:SetPoint("TOPLEFT", p["preWidget" .. i - 1], "BOTTOMLEFT", 0, -3)
+            end
+        end
     end
     bt:SetAutoFocus(false)
     bt:Show()
@@ -99,7 +107,7 @@ function BG.HistoryZhuangBeiUI(FB, t, b, bb, i, ii)
     local player = UnitName("player")
     bt:SetScript("OnTextChanged", function(self)
         local itemText = bt:GetText()
-        local itemID = select(1, GetItemInfoInstant(itemText))
+        local itemID = GetItemInfoInstant(itemText)
         local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(itemText)
 
         local num = BiaoGe.FilterClassItemDB[RealmId][player].chooseID -- 隐藏
@@ -107,7 +115,7 @@ function BG.HistoryZhuangBeiUI(FB, t, b, bb, i, ii)
             BG.UpdateFilter(self)
         end
 
-        if link then
+        if link and itemText:find("item:") then
             -- 装备图标
             icon:SetTexture(Texture)
         else
@@ -249,6 +257,7 @@ function BG.HistoryJiShaUI(FB, t, b, bb, i, ii)
     end
     text:SetPoint("TOPLEFT", BG.HistoryFrame[FB]["boss" .. BossNum(FB, b, t)]["zhuangbei" .. num], "BOTTOMLEFT", -0, -3)
     text:SetFont(BIAOGE_TEXT_FONT, 10, "OUTLINE,THICK")
+    text:SetTextColor(RGB(BG.Boss[FB]["boss" .. BossNum(FB, b, t)].color))
     text:SetAlpha(0.8)
     BG.HistoryFrame[FB]["boss" .. BossNum(FB, b, t)]["time"] = text
 end

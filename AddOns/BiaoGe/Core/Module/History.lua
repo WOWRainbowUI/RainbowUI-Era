@@ -303,6 +303,12 @@ function BG.HistoryUI()
             GameTooltip:Hide()
         end)
         bt:SetScript("OnClick", function(self)
+            if BG.frameWenBen.frame:IsVisible() then
+                BG.frameWenBen.frame:Hide()
+                return
+            else
+                BG.frameWenBen.frame:Show()
+            end
             local FB = BG.FB1
             local Frame
             local text
@@ -311,7 +317,6 @@ function BG.HistoryUI()
             elseif BG["HistoryFrame" .. FB]:IsVisible() then
                 Frame = BG.HistoryFrame
             end
-            BG.frameWenBen.frame:Show()
             BG.frameWenBen.edit:SetText("")
             for b = 1, Maxb[FB] + 2 do
                 local bossname2 = BG.Boss[FB]["boss" .. b].name2
@@ -384,7 +389,11 @@ function BG.HistoryUI()
                             end
                         end
                         if BG.Frame[FB]["boss" .. b]["time"] then
-                            BG.Frame[FB]["boss" .. b]["time"]:SetText(BiaoGe.History[FB][DT]["boss" .. b]["time"] or "")
+                            if BiaoGe.History[FB][DT]["boss" .. b]["time"] then
+                                BG.Frame[FB]["boss" .. b]["time"]:SetText(L["击杀用时"] .. " " .. BiaoGe.History[FB][DT]["boss" .. b]["time"])
+                            else
+                                BG.Frame[FB]["boss" .. b]["time"]:SetText("")
+                            end
                             BiaoGe[FB]["boss" .. b]["time"] = BiaoGe.History[FB][DT]["boss" .. b]["time"]
                         end
                     end
@@ -710,7 +719,11 @@ do
                                 end
                             end
                             if BG.HistoryFrame[FB]["boss" .. b]["time"] then
-                                BG.HistoryFrame[FB]["boss" .. b]["time"]:SetText(BiaoGe.History[FB][DT]["boss" .. b]["time"] or "")
+                                if BiaoGe.History[FB][DT]["boss" .. b]["time"] then
+                                    BG.HistoryFrame[FB]["boss" .. b]["time"]:SetText(L["击杀用时"] .. " " .. BiaoGe.History[FB][DT]["boss" .. b]["time"])
+                                else
+                                    BG.HistoryFrame[FB]["boss" .. b]["time"]:SetText("")
+                                end
                             end
                         end
                     end

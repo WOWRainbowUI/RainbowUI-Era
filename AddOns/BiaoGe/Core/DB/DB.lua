@@ -7,11 +7,12 @@ local pt = print
 local LibBG = LibStub:GetLibrary("LibUIDropDownMenu-4.0") -- 调用库菜单UI
 ADDONSELF.LibBG = LibBG
 
-C_ChatInfo.RegisterAddonMessagePrefix("BiaoGe")                                                      -- 注册插件通信频道
-C_ChatInfo.RegisterAddonMessagePrefix("BiaoGeYY")                                                    -- 注册插件通信频道（用于YY评价）
+C_ChatInfo.RegisterAddonMessagePrefix("BiaoGe")                                                -- 注册插件通信频道
+C_ChatInfo.RegisterAddonMessagePrefix("BiaoGeYY")                                              -- 注册插件通信频道（用于YY评价）
 
-BiaoGeTooltip = CreateFrame("GameTooltip", "BiaoGeFilterTooltip", UIParent, "GameTooltipTemplate")   -- 用于装备过滤功能
-BiaoGeTooltip2 = CreateFrame("GameTooltip", "BiaoGeFilterTooltip2", UIParent, "GameTooltipTemplate") -- 用于装备库
+BiaoGeTooltip = CreateFrame("GameTooltip", "BiaoGeTooltip", UIParent, "GameTooltipTemplate")   -- 用于装备过滤功能
+BiaoGeTooltip2 = CreateFrame("GameTooltip", "BiaoGeTooltip2", UIParent, "GameTooltipTemplate") -- 用于装备库
+BiaoGeTooltip3 = CreateFrame("GameTooltip", "BiaoGeTooltip3", UIParent, "GameTooltipTemplate") -- 用于装备过期提醒
 
 local l = GetLocale()
 if (l == "koKR") then
@@ -68,10 +69,9 @@ do
         BG.lootQuality[FB] = lootQuality or 4
     end
     if BG.IsVanilla_Sod() then
-        BG.FB1 = "Gno"
+        BG.FB1 = "Temple"
         BG.fullLevel = 25
-        BG.theEndBossID = { 2891, 2940 }
-        BG.Sod_10manRaidTbl = { 48, 90 }
+        BG.theEndBossID = { 2891, 2940, 2956 }
         AddDB("BD", 48, "P1", 10, 3)
         AddDB("Gno", 90, "P2", 10, 3)
         AddDB("Temple", 109, "P3", 20, 3)
@@ -120,7 +120,7 @@ do
     if BG.IsVanilla_Sod() then
         AddDB("BD", 1290, 835, 3, 9, 11)
         AddDB("Gno", 1290, 835, 3, 8, 11)
-        AddDB("Temple", 1290, 875, 3, 10, 11)
+        AddDB("Temple", 1290, 885, 3, 10, 25)
     elseif BG.IsVanilla_60() then
         AddDB("MC", 1290, 875, 3, 13, 15)
         AddDB("BWL", 1290, 810, 3, 10, 15)
@@ -181,7 +181,7 @@ do
         elseif FB == "Gno" then
             tbl = { 0, 5, 8 }
         elseif FB == "Temple" then
-            tbl = { 0, 4, 8 }
+            tbl = { 0, 6, 9, }
             -- 60
         elseif FB == "MC" then
             tbl = { 0, 8, 12 }
@@ -344,11 +344,11 @@ do
         BG.Loot = {}
         for key, FB in pairs(BG.FBtable) do
             BG.Loot[FB] = {
-                N = {},
-                N10 = {},
-                N25 = {},
-                H10 = {},
-                H25 = {},
+                N = { Quest = {}, },
+                N10 = { Quest = {}, },
+                N25 = { Quest = {}, },
+                H10 = { Quest = {}, },
+                H25 = { Quest = {}, },
 
                 DEATHKNIGHT = {},
                 PALADIN = {},
@@ -372,8 +372,11 @@ do
                 Quest = {},      -- 任务
 
                 Sod_Pvp = {},    -- 赛季服PVP活动
+                Sod_Currency = {},
 
                 ExchangeItems = {},
+
+                ZaXiangItems = {}, -- 总是记录到杂项的物品
             }
         end
     end
@@ -522,14 +525,24 @@ do
         BG.sound1 = SOUNDKIT.GS_TITLE_OPTION_OK -- 按键音效
         BG.sound2 = 569593                      -- 升级音效
         BG.sound3 = SOUNDKIT.UI_TRANSMOG_APPLY  -- 确认框弹出音效
-        BG.sound_paimai = "Interface\\AddOns\\BiaoGe\\Media\\sound\\paimai.mp3"
-        BG.sound_hope = "Interface\\AddOns\\BiaoGe\\Media\\sound\\hope.mp3"
-        BG.sound_qingkong = "Interface\\AddOns\\BiaoGe\\Media\\sound\\qingkong.mp3"
-        BG.sound_cehuiqingkong = "Interface\\AddOns\\BiaoGe\\Media\\sound\\cehuiqingkong.mp3"
-        BG.sound_alchemyReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\alchemyReady.mp3"
-        BG.sound_tailorReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\tailorReady.mp3"
-        BG.sound_leatherworkingReady = "Interface\\AddOns\\BiaoGe\\Media\\sound\\leatherworkingReady.mp3"
-        BG.sound_error = "Interface\\AddOns\\BiaoGe\\Media\\sound\\error.mp3"
+
+        local Interface = "Interface\\AddOns\\BiaoGe\\Media\\sound\\"
+        local tbl = {
+            "AI",
+            "YingXue",
+        }
+        for i, name in ipairs(tbl) do
+            BG["sound_paimai" .. name] = Interface .. name .. "\\拍卖啦.mp3"
+            BG["sound_hope" .. name] = Interface .. name .. "\\心愿达成.mp3"
+            BG["sound_qingkong" .. name] = Interface .. name .. "\\已清空表格.mp3"
+            BG["sound_cehuiqingkong" .. name] = Interface .. name .. "\\已撤回清空.mp3"
+            BG["sound_alchemyReady" .. name] = Interface .. name .. "\\炼金转化已就绪.mp3"
+            BG["sound_tailorReady" .. name] = Interface .. name .. "\\裁缝洗布已就绪.mp3"
+            BG["sound_leatherworkingReady" .. name] = Interface .. name .. "\\制皮筛盐已就绪.mp3"
+            BG["sound_error" .. name] = Interface .. name .. "\\检测到配置文件错误，现已重置.mp3"
+            BG["sound_pingjia" .. name] = Interface .. name .. "\\给个评价吧.mp3"
+            BG["sound_biaogefull" .. name] = Interface .. name .. "\\表格满了.mp3"
+        end
     end
 end
 
@@ -632,6 +645,8 @@ local function DataBase()
         if not BiaoGe.options[name] then
             BiaoGe.options[name] = BG.options[name .. "reset"]
         end
+        -- 声音方案
+        BiaoGe.options.Sound = BiaoGe.options.Sound or "YingXue"
 
         -- 高亮天赋装备
         if not BiaoGe.filterClassNum then

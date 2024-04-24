@@ -142,6 +142,8 @@ do
         -- H难度会显示PT装备
         BG.Loot.TOC.H10.boss7 = BG.Loot.TOC.N10.boss7
         BG.Loot.TOC.H25.boss7 = BG.Loot.TOC.N25.boss7
+
+        BG.Loot.TOC.ZaXiangItems = { 47242 }
     end
     -- ULD
     do
