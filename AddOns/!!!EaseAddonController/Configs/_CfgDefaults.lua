@@ -23,6 +23,13 @@ D["!!!gmFonts"] = {
 		text = "|cffFF2D2D特別注意：請不要選擇英文字體，會無法顯示中文字。|r",
 	},
 };
+D["!Ace3"] = {
+	defaultEnable = 1,
+	protected = true, 
+	tags = { "MISC" },
+	title = "Ace3 共用函式庫",
+	desc = "大部分插件都會使用到的函式庫。``|cffFF2D2D請千萬千萬不要關閉!!!|r`",
+};
 D["!BugGrabber"] = { 
 	defaultEnable = 1,
 	optdeps = { "BugSack", },
@@ -47,29 +54,26 @@ D["!KalielsTracker"] = {
 		text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",
 	},
 };
+D["!KalielsTracker-Classic"] = {
+	defaultEnable = 1,
+	title = "任務追蹤清單增強",
+	desc = "增強畫面右方任務追蹤清單的功能。在設定選項中可以調整位置和文字大小。`",
+	modifier = "BNS, 彩虹ui",
+	img = true,
+    {
+        text = "設定選項",
+        callback = function(cfg, v, loading) SlashCmdList["KALIELSTRACKER"]("config") end,
+    },
+	{
+		type = "text",
+		text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",
+	},
+};
 D["aBlueShaman"] = {
 	defaultEnable = 1,
 	tags = { "ENHANCEMENT" },
 	title = "薩滿職業顏色修正",
 	desc = "修正經典時期薩滿變成粉紅色的問題，讓薩滿恢復成藍色。",
-};
-D["D4KiR Healer Protection"] = {
-	defaultEnable = 0,
-	tags = { "CLASSALL" },
-	title = "救救奶媽",
-	desc = "法力過低或被怪打時自動在隊伍頻道發話讓隊友知道，推薦補師使用，可以少打很多字哦!``在設定選項中可以自訂何時要發話，以及要顯示哪些文字。`",
-	modifier = "彩虹ui",
-    {
-        text = "設定選項",
-        callback = function(cfg, v, loading) 
-			InterfaceOptionsFrame_OpenToCategory("救救奶媽")
-			InterfaceOptionsFrame_OpenToCategory("救救奶媽")
-		end,
-    },
-	{
-		type = "text",
-        text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",       
-	},
 };
 D["Accountant_Classic"] = {
 	defaultEnable = 1,
@@ -93,10 +97,26 @@ D["Accountant_Classic"] = {
 		text = "點小地圖按鈕的 '個人會計' 按鈕也可以開啟主視窗。",
 	}
 };
-D["ActionCam"] = {
-	defaultEnable = 1,
+D["ActionCamPlus"] = {
+	defaultEnable = 0,
 	tags = { "MISC" },
-	title = "微動感鏡頭",
+	title = "動感鏡頭 Plus",
+	desc = "啟用遊戲內建的動作鏡頭功能，有多種不同的鏡頭效果可供調整。``像是會記憶騎乘坐騎的鏡頭距離，下坐騎後便會自動恢復。或是記憶戰鬥中的鏡頭距離，戰鬥結束後便會自動恢復。``如果想要更像家機般的遊玩感受，請在設定選項中啟用 '動感鏡頭' 和 '上下調整鏡頭'`",
+	modifier = "彩虹ui",
+	icon = "Interface\\Icons\\ability_racial_soar",
+    {
+        text = "開/關動感鏡頭",
+        callback = function(cfg, v, loading) SlashCmdList["ACTIONCAMPLUS"]("") end,
+    },
+	{
+        text = "設定選項",
+        callback = function(cfg, v, loading) SlashCmdList["ACTIONCAMPLUS"]("h") end,
+    },
+};
+D["ActionCam"] = {
+	defaultEnable = 0,
+	tags = { "MISC" },
+	title = "微動感鏡頭 (舊版)",
 	desc = "登入時自動啟用遊戲內建的動作鏡頭功能，角色稍微偏下、加大前方的視野、畫面不會晃動。``要恢復讓角色置中，取消載入這個插件，重新載入介面後在詢問實驗性功能的對話框按 '關閉' 即可。`",
 	modifier = "彩虹ui",
 };
