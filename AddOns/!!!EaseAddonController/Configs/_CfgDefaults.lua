@@ -41,21 +41,7 @@ D["!BugGrabber"] = {
 };
 D["!KalielsTracker"] = {
 	defaultEnable = 1,
-	title = "任務追蹤清單增強",
-	desc = "增強畫面右方任務追蹤清單的功能。在設定選項中可以調整位置和文字大小。`",
-	modifier = "BNS, 彩虹ui",
-	img = true,
-    {
-        text = "設定選項",
-        callback = function(cfg, v, loading) SlashCmdList["KALIELSTRACKER"]("config") end,
-    },
-	{
-		type = "text",
-		text = "|cffFF2D2D啟用插件後需要重新載入介面。|r",
-	},
-};
-D["!KalielsTracker-Classic"] = {
-	defaultEnable = 1,
+	tags = { "QUEST" },
 	title = "任務追蹤清單增強",
 	desc = "增強畫面右方任務追蹤清單的功能。在設定選項中可以調整位置和文字大小。`",
 	modifier = "BNS, 彩虹ui",
@@ -121,7 +107,7 @@ D["ActionCam"] = {
 	modifier = "彩虹ui",
 };
 D["AdiBags"] = {
-	defaultEnable = 1,
+	defaultEnable = 0,
 	tags = { "ITEM" },
 	title = "Adi 分類背包",
 	desc = "會自動分類物品的整合背包，預設有多種分類，可以自訂分類，也可以安裝外掛套件增加新的分類。``如果你喜歡一個不分類的大背包，打開背包 > 在背包視窗內的空白處點右鍵 > 過濾方式 > 把每一個分類的 '啟用' 都分別取消打勾即可。`",
@@ -151,28 +137,14 @@ D["AdvancedInterfaceOptions"] = {
         text = "自己的戰鬥文字捲動：請改在 Esc > 介面設定 > 戰鬥，勾選/取消勾選。\n\n鏡頭最遠距離：調整前請先關閉功能百寶箱裡面的 '最大鏡頭縮放'。\n",       
 	},
 };
-D["alaCalendar"] = {
-	defaultEnable = 0,
-	tags = { "BOSSRAID" },
-	title = "行事曆和副本進度",
-	desc = "在經典版中提供行事曆的功能，顯示副本重置和節日活動的時間。``也能夠顯示同帳號中所有角色的副本進度，方便查看每個角色是否打過哪個副本。`",
-	author = "ALA @ 网易有爱",
-	modifier = "ALA, 彩虹ui",
-	{
-        text = "顯示行事曆",
-        callback = function(cfg, v, loading) SlashCmdList["ALACALENDAR"]("calendar") end,
-    },
-	{
-        text = "顯示副本進度",
-        callback = function(cfg, v, loading) SlashCmdList["ALACALENDAR"]("board") end,
-    },	
-	{
-        text = "設定選項",
-        callback = function(cfg, v, loading) SlashCmdList["ALACALENDAR"]("") end,
-    },
+D["alaGearMan"] = {
+    defaultEnable = 1,
+	tags = { "ENHANCEMENT" },
+	title = "一鍵換裝",
+	desc = "提供建立多套不同裝備的功能，方便快速切換裝備。有一鍵換裝的快速按鈕，也可以建立一鍵換裝巨集拉到快捷列上使用。`",
 	{
 		type = "text",
-        text = "以下這幾種方式都可以打開行事曆和副本進度:\n\n1.點畫面最下方中間的時間。\n(需要載入 '功能資訊列' 插件)\n\n2.點小地圖按鈕的 '行事曆' 按鈕。\n\n3.點小地圖旁的白天/夜晚按鈕。\n(需要在性感小地圖的設定 > 按鈕 > 顯示白天/夜晚指示 > 滑鼠指向時，打勾。)\n",       
+        text = "開啟裝備管理員：點角色視窗右上角的按鈕。\n\n建立新套裝後要記得按下儲存，才會保存套裝。\n",
 	},
 };
 D["Align"] = {
@@ -202,6 +174,17 @@ D["Align"] = {
 		type = "text",
         text = "按一下顯示，再按一下隱藏網格。\n",       
 	},
+};
+D["ArenaScreenshot"] = {
+	defaultEnable = 0,
+	tags = { "PVP" },
+	title = "敵方目標警報",
+	desc = "競技場被集火提示。",
+	modifier = "彩虹ui",
+    {
+		type = "text",
+        text = "此UI不需要設定\n由麻也魔改版本。",
+    },
 };
 D["Atlas"] = {
 	defaultEnable = 0,
@@ -246,17 +229,6 @@ D["AtlasLootClassic"] = {
 		type = "text",
         text = "點小地圖按鈕的 '副本戰利品查詢' 按鈕也可以開啟主視窗。\n\n",       
 	},
-};
-D["ArenaScreenshot"] = {
-	defaultEnable = 0,
-	tags = { "PVP" },
-	title = "敵方目標警報",
-	desc = "競技場被集火提示。",
-	modifier = "彩虹ui",
-    {
-		type = "text",
-        text = "此UI不需要設定\n由麻也魔改版本。",
-    },
 };
 D["Auctionator"] = {
 	defaultEnable = 1,
@@ -2596,7 +2568,7 @@ D["VuhDo"] = {
 };
 D["Wardrobe"] = {
     defaultEnable = 0,
-	title = "裝備管理員",
+	title = "裝備管理員 (舊版)",
 	desc = "提供建立多套不同裝備的功能，方便快速切換裝備。有一鍵換裝的快速按鈕，也可以建立一鍵換裝巨集拉到快捷列上使用。`",
 	{
 		type = "text",
