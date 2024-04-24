@@ -64,7 +64,7 @@ do
     L["如果有金额我就能识别了"] = "I can recognize it if there is an amount"
     L["（欠款%d）"] = "(Debt %d)"
     L["< 交易记账成功 >"] = "< Trade Account Success >"
-    L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s< %s >|r"] = "< Trade Account Success >|r\nItem: %s\nBuyer: %s\nAmount: %s%d|rg%s\nBOSS: %s< %s >|r"
+    L["< 交易记账成功 >|r\n装备：%s\n买家：%s\n金额：%s%d|rg%s\nBOSS：%s%s|r"] = "< Trade Account Success >|r\nItem: %s\nBuyer: %s\nAmount: %s%d|rg%s\nBOSS: %s< %s >|r"
     L["表格里没找到此次交易的装备"] = "The item for this transaction was not found in the table"
     L["该BOSS格子已满"] = "The slot for this BOSS is already full"
     L["欠款："] = "Debt:"

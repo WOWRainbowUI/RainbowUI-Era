@@ -36,12 +36,16 @@ if BG.IsVanilla_Sod() then
         { name = L["腐\n溃\n烂\n泥"], color = "90EE90" },
         { name = L["阿\n塔\n莱\n防\n御\n者"], color = "9932CC" },
         { name = L["德\n姆\n塞\n卡\n尔"], color = BG.g2 },
-        { name = L["哈\n卡\n的\n化\n身"], color = "C0C0C0" },
         { name = L["迦\n玛\n兰\n和\n奥\n戈\n姆"], color = "FF69B4" },
-        { name = L["摩\n弗\n拉\n斯"], color = BG.g2 },
-        { name = L["伊\n兰\n尼\n库\n斯\n的\n阴\n影"], color = BG.b1 },
+        { name = L["哈\n扎\n斯"], color = BG.g2 },
+        { name = L["伊\n兰\n尼\n库\n斯"], color = "7B68EE" },
+        -- { name = L["伊\n兰\n尼\n库\n斯\n的\n阴\n影"], color = "7B68EE" },
+        { name = L["哈\n卡\n的\n化\n身"], color = "FF4400" },
     }
     AddForBoss(boss)
+    BG.Boss.Temple["boss" .. (Maxb.Temple + 3)] = {
+        name2 = "",
+    }
     AddDB("Temple", boss)
 
     local boss = {
@@ -240,12 +244,12 @@ else
     AddDB(FB, boss)
 end
 
---[[
-local f = CreateFrame("Frame")
+
+--[[ local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
 f:SetScript("OnEvent", function(self, even)
-    local FB = "Gno"
-    local boss = 6
+    local FB = "Temple"
+    local boss = 8
 
     local function RGB_16(r, g, b)
         local r = string.format("%X", tonumber(r) * 255)
@@ -300,10 +304,10 @@ f:SetScript("OnEvent", function(self, even)
         BG.Frame[FB]["boss" .. boss]["name"]:SetTextColor(r, g, b, a)
         edit:SetText(RGB_16(r, g, b))
         edit:HighlightText()
+        pt(r, g, b)
     end
 
     BG.MainFrame:HookScript("OnShow", function(self)
         ShowColorPicker(r, g, b, a, myColorCallback)
     end)
-end)
- ]]
+end) ]]

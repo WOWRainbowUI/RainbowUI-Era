@@ -849,32 +849,6 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
                         end,
                     })
 
-                    if BiaoGe.options["report"] == 1 and activity.guid then
-                        local ReportType = Enum.ReportType.Chat
-                        local leader = activity:GetLeader()
-                        local playerLocation = PlayerLocation:CreateFromGUID(activity.guid)
-
-                        local chattype = "RMT"
-                        local mybuttontext = L["一键举报RMT"]
-                        local tooltipText = format(L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"],
-                            REPORTING_MAJOR_CATEGORY_INAPPROPRIATE_COMMUNICATION,
-                            REPORTING_MINOR_CATEGORY_TEXT_CHAT .. " " ..
-                            REPORTING_MINOR_CATEGORY_SPAM .. " " ..
-                            REPORTING_MINOR_CATEGORY_ADVERTISEMENT .. " " ..
-                            REPORTING_MINOR_CATEGORY_BOOSTING,
-                            "RMT")
-                        tinsert(tbl, BG.AddReportButton(ReportType, chattype, leader, playerLocation, mybuttontext, tooltipText))
-
-                        local chattype = "jiaoben"
-                        local ReportType = Enum.ReportType.InWorld
-                        local mybuttontext = L["一键举报脚本"]
-                        local tooltipText = format(L["选择举报理由：%s\n选择举报项目：%s\n填写举报细节：%s\n\n快捷命令：/BGReport\n\n|cff808080你可在插件设置-BiaoGe-其他功能里关闭这个功能。|r"],
-                            REPORTING_MAJOR_CATEGORY_CHEATING,
-                            REPORTING_MINOR_CATEGORY_HACKING,
-                            "自动脚本 自動腳本 Automatic Scripting")
-                        tinsert(tbl, BG.AddReportButton(ReportType, chattype, leader, playerLocation, mybuttontext, tooltipText))
-                    end
-
                     tinsert(tbl, { isSeparator = true })
                     tinsert(tbl, { text = CANCEL })
                 end
@@ -1070,25 +1044,4 @@ BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload
             return true
         end
     end
-
-    --[[     -- 把赛季服的团本人数改为10人
-    do
-        local Activity = MeetingHorn:GetClass('Activity')
-        function Activity:SetActivityId(id)
-            self.id = id
-            if BG.Sod_RaidTbl then
-                local data = ns.GetActivityData(id)
-                for i, fbID in ipairs(BG.Sod_RaidTbl) do
-                    if data.name == GetRealZoneText(fbID) then
-                    -- if data.name == "其它" then
-                        -- data.members = 2
-                        data.members = 10
-                        self.data = data
-                        return
-                    end
-                end
-            end
-            self.data = ns.GetActivityData(id)
-        end
-    end ]]
 end)

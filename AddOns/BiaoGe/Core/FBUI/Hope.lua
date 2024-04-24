@@ -130,7 +130,7 @@ function BG.HopeUI(FB)
                         local itemID = select(1, GetItemInfoInstant(itemText))
                         local name, link, quality, level, _, _, _, _, _, Texture, _, typeID, _, bindType = GetItemInfo(itemText)
                         local hard
-                        if link then
+                        if link and itemText:find("item:") then
                             if FB == "ULD" then
                                 for index, value in ipairs(BG.Loot.ULD.Hard10) do
                                     if itemID == value then

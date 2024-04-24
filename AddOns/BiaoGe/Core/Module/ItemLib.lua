@@ -49,7 +49,19 @@ BG.ItemLibFramewidth = width
 local maxhope
 
 -- 给获取途径排序
-local typeIDtbl = { "raid", "fb5", "quest", "T", "currency", "faction", "profession", "world", "worldboss", "sod_pvp", "pvp", }
+local typeIDtbl = {
+    "raid",
+    "fb5",
+    "quest",
+    "T",
+    "currency",
+    "faction",
+    "profession",
+    "sod_currency",
+    "world",
+    "worldboss",
+    "pvp",
+}
 local function GetTypeID(type)
     for i, v in ipairs(typeIDtbl) do
         if type == v then
@@ -162,6 +174,9 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             if bossname == L["杂项"] then
                 bossname = L["小怪"]
             end
+        end
+        if ii == Maxb[FB] then
+            bossname = ""
         end
 
         -- 兑换物
@@ -315,8 +330,9 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
         if standingID then
             standing = "-" .. tbl[tonumber(standingID)]
         end
+        local factionName = GetFactionInfoByID(faction) or ""
 
-        local name = REPUTATION .. ": " .. GetFactionInfoByID(faction) .. standing
+        local name = REPUTATION .. ": " .. factionName .. standing
         local get = BG.STC_g2(name) .. AddPrice(itemID)
 
         local a = {
@@ -458,10 +474,15 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             haved = CheckHaved(itemID)
         }
         return a
-    elseif type == "sod_pvp" then -- 赛季服特殊PVP事件
-        local name, count, icon = strsplit("-", otherID)
-        local get = "|cff" .. "FF6347" .. name .. RR .. " " .. count .. AddTexture(icon) .. RR .. AddPrice(itemID)
-
+    elseif type == "sod_currency" then -- 赛季服货币/牌子
+        local get, count, icon, color, _type = strsplit("-", otherID)
+        if not count then
+            count = ""
+        elseif _type and _type ~= "" then
+            count = select(2, GetItemInfo(count)) or ""
+        end
+        if not color then color = "FFFFFF" end
+        local get = "|cff" .. color .. get .. RR .. " " .. count .. AddTexture(icon) .. RR .. AddPrice(itemID)
         local a = {
             itemID = itemID,
             link = link,
@@ -471,11 +492,12 @@ local function FilterItem(FB, itemID, EquipLocs, type, hard, ii, otherID) -- 重
             get = get,
             bindType = bindType,
             type = GetTypeID(type),
+            type2 = get,
             haved = CheckHaved(itemID)
         }
         return a
     end
-    -- 团本 任务 套装 牌子 声望 专业 5人 世界掉落 世界boss PVP 赛季服特殊PVP事件
+    -- 团本 任务 套装 牌子 声望 专业 5人 世界掉落 世界boss PVP 赛季服货币/牌子
 end
 local function Mode(FB, count1, count2, tbl, EquipLocs, itemID, type, hard, ii, k)
     if EquipLocs then
@@ -488,7 +510,7 @@ local function Mode(FB, count1, count2, tbl, EquipLocs, itemID, type, hard, ii, 
         if GetItemInfo(itemID) then
             count2 = count2 + 1
             -- else
-            --     pt(itemID)     -- 用于查看哪些装备ID是错误的
+            --     pt(itemID) -- 用于查看哪些装备ID是错误的
         end
 
         local item = Item:CreateFromItemID(itemID)
@@ -523,6 +545,7 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
                     ii = ii + 1
                 end
                 -- 团本任务奖励
+                local ii = 1
                 if BG.Loot[FB][hard].Quest then
                     for name, _ in pairs(BG.Loot[FB][hard].Quest) do
                         for _, itemID in pairs(BG.Loot[FB][hard].Quest[name]) do
@@ -584,9 +607,11 @@ local function CheckItemCache(EquipLocs) -- 不传入参数时是检查所有物
                 count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "pvp", hard, ii, k)
             end
         end
-        -- 赛季服特殊PVP事件
-        for itemID, currency in pairs(BG.Loot[FB].Sod_Pvp) do
-            count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "sod_pvp", hard, ii, currency)
+        -- 赛季服货币/牌子
+        for i, v in pairs(BG.Loot[FB].Sod_Currency) do
+            for itemID, currency in pairs(BG.Loot[FB].Sod_Currency[i]) do
+                count1, count2, tbl = Mode(FB, count1, count2, tbl, EquipLocs, itemID, "sod_currency", hard, ii, currency)
+            end
         end
     end
 
@@ -923,15 +948,35 @@ local function SetItemLib(num, itemtbale)
                             end
                         end
                     else
-                        for i = 1, HopeMaxi do
-                            if BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:GetText() == "" then
-                                BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:SetText(vv.link)
-                                BiaoGe.Hope[RealmId][player][FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] = vv.link
-                                BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
-                                if FB == BG.FB1 then
-                                    BG.UpdateItemLib_RightHope(itemID, 1)
+                        if boss == Maxb[FB] then
+                            for n = 1, HopeMaxn[FB] do
+                                for b = 1, HopeMaxb[FB] do
+                                    for i = 1, HopeMaxi do
+                                        local hope = BG.HopeFrame[FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i]
+                                        if hope and hope:GetText() == "" then
+                                            hope:SetText(vv.link)
+                                            BiaoGe.Hope[RealmId][player][FB]["nandu" .. n]["boss" .. b]["zhuangbei" .. i] = vv.link
+                                            BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
+                                            if FB == BG.FB1 then
+                                                BG.UpdateItemLib_RightHope(itemID, 1)
+                                            end
+                                            return
+                                        end
+                                    end
                                 end
-                                return
+                            end
+                        else
+                            for i = 1, HopeMaxi do
+                                if BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] and
+                                    BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:GetText() == "" then
+                                    BG.HopeFrame[FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i]:SetText(vv.link)
+                                    BiaoGe.Hope[RealmId][player][FB]["nandu" .. nandu]["boss" .. boss]["zhuangbei" .. i] = vv.link
+                                    BG.ItemLibMainFrame[num]["button" .. ii].item.hope:Show()
+                                    if FB == BG.FB1 then
+                                        BG.UpdateItemLib_RightHope(itemID, 1)
+                                    end
+                                    return
+                                end
                             end
                         end
                     end

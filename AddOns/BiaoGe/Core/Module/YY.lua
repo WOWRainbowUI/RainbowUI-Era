@@ -1249,6 +1249,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
     ------------------把聊天里的YY转换为链接------------------
     local starttime
     local UpdateFrame = CreateFrame("Frame")
+    Y.yykey = "[yY][yY][：:/%-%s]*([%d%s]*%d+)"
+    Y.yykey2 = "(%d+[%d%s]*)[：:/%-%s]*[yY][yY]"
     do
         local function PingJia(cleanedYY)
             local text = ""
@@ -1272,12 +1274,11 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         end
 
         local function CreateLink(cleanedYY)
-            return "|cff00BFFF|Hgarrmission:YY:" .. cleanedYY ..
+            return "|cff00BFFF|Hgarrmission:BiaoGeYY:YY:" .. cleanedYY ..
                 "|h[YY:" .. cleanedYY .. PingJia(cleanedYY) .. "]|h|r"
         end
-
-        local function remove_spaces(s)
-            return s:gsub("%s", "")
+        local function CreateLinkForGsub(yy)
+            return CreateLink(yy:gsub("%s", ""))
         end
 
         local function ChangSendLink(self, even, msg, player, l, cs, t, flag, channelId, ...)
@@ -1285,7 +1286,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             -- 进团5分钟内把纯数字转换为超链接
             local playerName = strsplit("-", player)
             if starttime and Y.IsLeader(playerName) then
-                msg = gsub(msg, " ", "")
+                msg = gsub(msg, "%s", "")
                 local cleanedYY = strmatch(msg, "^%d+$")
                 if cleanedYY and strlen(cleanedYY) >= 4 then
                     local link = CreateLink(cleanedYY)
@@ -1293,14 +1294,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
 
-            local yykey = "[yY][yY][：: ]*([%d%s]*%d+)"
-            msg = msg:gsub(yykey, function(text)
-                return CreateLink(remove_spaces(text))
-            end)
-            local yykey2 = "(%d+[%d%s]*)[yY][yY]"
-            msg = msg:gsub(yykey2, function(text)
-                return CreateLink(remove_spaces(text))
-            end)
+            msg = msg:gsub(Y.yykey, CreateLinkForGsub)
+            msg = msg:gsub(Y.yykey2, CreateLinkForGsub)
             return false, msg, player, l, cs, t, flag, channelId, ...
         end
 
@@ -1321,23 +1316,8 @@ frame:SetScript("OnEvent", function(self, event, addonName)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER_INFORM", ChangSendLink)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT", ChangSendLink)
         ChatFrame_AddMessageEventFilter("CHAT_MSG_INSTANCE_CHAT_LEADER", ChangSendLink)
-        -- 点击YY链接后
-        hooksecurefunc("SetItemRef", function(link)
-            local _, YY, yy = strsplit(":", link, 3)
-            if not (YY == "YY" and yy) then return end
-            if IsShiftKeyDown() then
-                ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
-                ChatEdit_ChooseBoxForSend():SetText(yy)
-                ChatEdit_ChooseBoxForSend():HighlightText()
-            else
-                BG.YYMainFrame.search.edit:SetText(yy)
-                Y.SearchButtonOnClick()
-            end
-        end)
-        -- 点击[详细]后打开UI
-        hooksecurefunc("SetItemRef", function(link)
-            local _, BiaoGeYY, xiangxi, yy = strsplit(":", link, 4)
-            if not (BiaoGeYY == "BiaoGeYY" and xiangxi == L["详细"] and yy) then return end
+
+        function BG.OnClickYYXiangXi(yy)
             BG.MainFrame:Show()
             BG.ClickTabButton(BG.tabButtons, BG.YYMainFrameTabNum)
             for i, v in ipairs(BiaoGe.YYdb.history) do
@@ -1349,38 +1329,68 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                     return
                 end
             end
+        end
+
+        hooksecurefunc("SetItemRef", function(link)
+            local arg1, arg2, arg3, arg4 = strsplit(":", link)
+            local yy = arg4
+            if arg2 == "BiaoGeYY" and arg3 == L["详细"] and arg4 then
+                -- 点击[详细]后打开UI
+                BG.OnClickYYXiangXi(yy)
+            elseif arg2 == "BiaoGeYY" and arg3 == "YY" and arg4 then
+                -- 点击YY链接后
+                if IsShiftKeyDown() then
+                    ChatEdit_ActivateChat(ChatEdit_ChooseBoxForSend())
+                    ChatEdit_ChooseBoxForSend():SetText(yy)
+                    ChatEdit_ChooseBoxForSend():HighlightText()
+                else
+                    BG.YYMainFrame.search.edit:SetText(yy)
+                    Y.SearchButtonOnClick()
+                end
+            end
         end)
-        local function OnHyperlinkEnter(self, link)
-            local _, YY, yy = strsplit(":", link, 3)
-            if not (YY == "YY" and yy) then return end
-            GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT", 0, 0)
+
+        function BG.OnEnterYYXiangXi(yy, frame, anchor)
+            GameTooltip:SetOwner(frame, anchor, 0, 0)
             GameTooltip:ClearLines()
             GameTooltip:AddLine("|cff00BFFFYY:" .. yy .. RR)
             GameTooltip:AddLine(" ")
-            GameTooltip:AddLine(L["|cffFFFFFF左键：|r查询大众评价"])
-            GameTooltip:AddLine(L["|cffFFFFFFSHIFT+左键：|r复制该号码"])
-
-            -- 以往查询结果
-            local yes
             for i, v in ipairs(BiaoGe.YYdb.history) do
                 if tonumber(yy) == tonumber(v.yy) then
-                    GameTooltip:AddLine(" ")
-                    if v.date then
-                        local date = v.date
-                        date       = strsub(date, 1, 2) .. "/" .. strsub(date, 3, 4) .. "/" .. strsub(date, 5, 6)
-                        GameTooltip:AddLine(format(L["以往查询结果(%s)："], date))
-                    else
-                        GameTooltip:AddLine(L["以往查询结果(可能已过时)："])
+                    for ii, vv in ipairs(BiaoGe.YYdb.history[i].all) do
+                        local date = vv.date
+                        date = strsub(date, 1, 2) .. "/"
+                            .. strsub(date, 3, 4) .. "/"
+                            .. strsub(date, 5, 6)
+                        local edit = vv.edit
+                        if edit ~= "" then
+                            edit = ": "
+                        end
+                        local r, g, b = RGB(Y.PingjiaColor(vv.pingjia))
+                        GameTooltip:AddLine(ii .. ". " .. date .. " " .. Y.Pingjia(vv.pingjia)
+                            .. edit .. vv.edit, r, g, b, true)
                     end
-                    GameTooltip:AddLine(format(L["|cff00FF00好评：%s个|r"], v.sumpingjia[1]))
-                    GameTooltip:AddLine(format(L["|cffFFFF00中评：%s个|r"], v.sumpingjia[2]))
-                    GameTooltip:AddLine(format(L["|cffDC143C差评：%s个|r"], v.sumpingjia[3]))
-                    yes = true
-                    break
                 end
             end
-            if not yes then
-                for i, v in ipairs(BiaoGe.YYdb.historyEmpty) do
+            GameTooltip:Show()
+        end
+
+        local function OnHyperlinkEnter(self, link)
+            local arg1, arg2, arg3, arg4 = strsplit(":", link)
+            local yy = arg4
+            if arg2 == "BiaoGeYY" and arg3 == L["详细"] and arg4 then
+                BG.OnEnterYYXiangXi(yy, self, "ANCHOR_TOPRIGHT")
+            elseif arg2 == "BiaoGeYY" and arg3 == "YY" and arg4 then
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT", 0, 0)
+                GameTooltip:ClearLines()
+                GameTooltip:AddLine("|cff00BFFFYY:" .. yy .. RR)
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine(L["|cffFFFFFF左键：|r查询大众评价"])
+                GameTooltip:AddLine(L["|cffFFFFFFSHIFT+左键：|r复制该号码"])
+
+                -- 以往查询结果
+                local yes
+                for i, v in ipairs(BiaoGe.YYdb.history) do
                     if tonumber(yy) == tonumber(v.yy) then
                         GameTooltip:AddLine(" ")
                         if v.date then
@@ -1390,33 +1400,52 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                         else
                             GameTooltip:AddLine(L["以往查询结果(可能已过时)："])
                         end
-                        GameTooltip:AddLine(BG.STC_r1(L["没有找到任何评价"]))
+                        GameTooltip:AddLine(format(L["|cff00FF00好评：%s个|r"], v.sumpingjia[1]))
+                        GameTooltip:AddLine(format(L["|cffFFFF00中评：%s个|r"], v.sumpingjia[2]))
+                        GameTooltip:AddLine(format(L["|cffDC143C差评：%s个|r"], v.sumpingjia[3]))
                         yes = true
                         break
                     end
                 end
-            end
+                if not yes then
+                    for i, v in ipairs(BiaoGe.YYdb.historyEmpty) do
+                        if tonumber(yy) == tonumber(v.yy) then
+                            GameTooltip:AddLine(" ")
+                            if v.date then
+                                local date = v.date
+                                date       = strsub(date, 1, 2) .. "/" .. strsub(date, 3, 4) .. "/" .. strsub(date, 5, 6)
+                                GameTooltip:AddLine(format(L["以往查询结果(%s)："], date))
+                            else
+                                GameTooltip:AddLine(L["以往查询结果(可能已过时)："])
+                            end
+                            GameTooltip:AddLine(BG.STC_r1(L["没有找到任何评价"]))
+                            yes = true
+                            break
+                        end
+                    end
+                end
 
-            -- 看看自己是否有评价过
-            local mypingjia = {}
-            for i, v in ipairs(BiaoGe.YYdb.all) do
-                if tonumber(yy) == tonumber(v.yy) then
-                    local date = v.date
-                    date       = strsub(date, 1, 2) .. "/" .. strsub(date, 3, 4) .. "/" .. strsub(date, 5, 6)
-                    tinsert(mypingjia, { name = L["日期："], name2 = date })
-                    tinsert(mypingjia, { name = L["频道名称："], name2 = v.name })
-                    tinsert(mypingjia, { name = L["评价："], name2 = Y.Pingjia(v.pingjia) })
-                    tinsert(mypingjia, { name = L["理由："], name2 = v.edit })
+                -- 看看自己是否有评价过
+                local mypingjia = {}
+                for i, v in ipairs(BiaoGe.YYdb.all) do
+                    if tonumber(yy) == tonumber(v.yy) then
+                        local date = v.date
+                        date       = strsub(date, 1, 2) .. "/" .. strsub(date, 3, 4) .. "/" .. strsub(date, 5, 6)
+                        tinsert(mypingjia, { name = L["日期："], name2 = date })
+                        tinsert(mypingjia, { name = L["频道名称："], name2 = v.name })
+                        tinsert(mypingjia, { name = L["评价："], name2 = Y.Pingjia(v.pingjia) })
+                        tinsert(mypingjia, { name = L["理由："], name2 = v.edit })
+                    end
                 end
-            end
-            if #mypingjia ~= 0 then
-                GameTooltip:AddLine(L[" "])
-                GameTooltip:AddLine(L["我的评价："])
-                for i, v in ipairs(mypingjia) do
-                    GameTooltip:AddLine(BG.STC_w1(v.name) .. v.name2, 1, 0.82, 0, true)
+                if #mypingjia ~= 0 then
+                    GameTooltip:AddLine(L[" "])
+                    GameTooltip:AddLine(L["我的评价："])
+                    for i, v in ipairs(mypingjia) do
+                        GameTooltip:AddLine(BG.STC_w1(v.name) .. v.name2, 1, 0.82, 0, true)
+                    end
                 end
+                GameTooltip:Show()
             end
-            GameTooltip:Show()
         end
         local function OnHyperlinkLeave(self, link)
             GameTooltip:Hide()
@@ -1465,7 +1494,7 @@ frame:SetScript("OnEvent", function(self, event, addonName)
             if not Y.IsLeader(playerName) then return end
 
             if starttime then
-                msg = gsub(msg, " ", "")
+                msg = gsub(msg, "%s", "")
                 local cleanedYY = strmatch(msg, "^%d+$")
                 if cleanedYY and strlen(cleanedYY) >= 4 then
                     for k, v in pairs(BiaoGe.YYdb.LeaderYY) do
@@ -1479,23 +1508,23 @@ frame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
 
-            msg = gsub(msg, "yy", "YY")
-            msg = gsub(msg, "Yy", "YY")
-            msg = gsub(msg, "yY", "YY")
-            msg = gsub(msg, "YY[：: ]*(%d+)", "YY%1")
-
-            local yykey = "YY%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d*%s*%d+"
-            for yy in string.gmatch(msg, yykey) do
-                local cleanedYY = gsub(yy, "%D", "")
-
-                for k, v in pairs(BiaoGe.YYdb.LeaderYY) do
-                    if tonumber(v.yy) == tonumber(cleanedYY) and v.name == playerName then
-                        return
-                    end
-                end
-                local a = { yy = cleanedYY, time = time(), name = playerName, colorname = SetClassCFF(playerName) }
-                tinsert(BiaoGe.YYdb.LeaderYY, 1, a)
+            local cleanedYY = msg:match(Y.yykey)
+            if not cleanedYY then
+                cleanedYY = msg:match(Y.yykey2)
             end
+            if cleanedYY then
+                cleanedYY = cleanedYY:gsub("%s", "")
+            else
+                return
+            end
+
+            for k, v in pairs(BiaoGe.YYdb.LeaderYY) do
+                if tonumber(v.yy) == tonumber(cleanedYY) and v.name == playerName then
+                    return
+                end
+            end
+            local a = { yy = cleanedYY, time = time(), name = playerName, colorname = SetClassCFF(playerName) }
+            tinsert(BiaoGe.YYdb.LeaderYY, 1, a)
         end)
 
         -- 进团后的5分钟内生效
@@ -1694,6 +1723,9 @@ frame:SetScript("OnEvent", function(self, event, addonName)
 
                 BG.ClearFocus()
                 PlaySoundFile(BG.sound2, "Master")
+                BG.After(1.5, function()
+                    PlaySoundFile(BG["sound_pingjia" .. BiaoGe.options.Sound], "Master")
+                end)
             end)
 
             -- 大标题

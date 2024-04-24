@@ -7240,6 +7240,10 @@
         "ChatEdit_SendText",
         "COMBATLOG_HONORGAIN",
         "AuctionatorShoppingFrame",
-        "AuctionFrameBrowse"
+        "AuctionFrameBrowse",
+        "GetQuestsCompleted",
+        "AtlasLoot",
+        "ChatFrameEditBox",
+        "ElvLootFrame"
     ]
 }

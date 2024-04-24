@@ -24,6 +24,7 @@ function BG.RoleOverviewUI()
     local player = UnitName("player")
     local RealmId = GetRealmID()
 
+    -- 初始化
     if not BiaoGe.FBCDchoice then
         if BG.IsVanilla() then
             BiaoGe.FBCDchoice = {
@@ -36,6 +37,7 @@ function BG.RoleOverviewUI()
                 ["Temple"] = 1,
                 ["Gno"] = 1,
                 ["BD"] = 1,
+                ["mengyan"] = 1,
                 ["huiguweek"] = 1,
                 ["alchemy"] = 1,
                 ["leatherworking"] = 1,
@@ -55,30 +57,10 @@ function BG.RoleOverviewUI()
             }
         end
     end
-    do
-        if BG.IsVanilla_Sod() then
-            BG.Once("FBCDchoice", 240328, function()
-                BiaoGe.FBCDchoice["Temple"] = 1
-                BiaoGe.FBCDchoice["leatherworking"] = 1
-                BiaoGe.FBCDchoice["tailor"] = 1
-            end)
-        elseif BG.IsVanilla_60() then
-            BG.Once("FBCDchoice", 240329, function()
-                BiaoGe.FBCDchoice["alchemy"] = 1
-                BiaoGe.FBCDchoice["leatherworking"] = 1
-                BiaoGe.FBCDchoice["tailor"] = 1
-            end)
-        else
-            BG.Once("FBCDchoice", 240111, function()
-                BiaoGe.FBCDchoice["25RS"] = 1
-                BiaoGe.FBCDchoice["10RS"] = 1
-            end)
-        end
-    end
-
     if not BiaoGe.MONEYchoice then
         if BG.IsVanilla() then
             BiaoGe.MONEYchoice = {
+                [221262] = 1,
                 ["money"] = 1,
             }
         else
@@ -94,37 +76,78 @@ function BG.RoleOverviewUI()
             }
         end
     end
+    -- 更新
+    do
+        if BG.IsVanilla_Sod() then
+            BG.Once("FBCDchoice", 240328, function()
+                BiaoGe.FBCDchoice["Temple"] = 1
+                BiaoGe.FBCDchoice["leatherworking"] = 1
+                BiaoGe.FBCDchoice["tailor"] = 1
+            end)
+            BG.Once("FBCDchoice", 240412, function()
+                BiaoGe.FBCDchoice["mengyan"] = 1
+            end)
+            BG.Once("MONEYchoice", 240408, function()
+                BiaoGe.MONEYchoice[221262] = 1
+                BiaoGe.MONEYchoice[221365] = 1
+            end)
+        elseif BG.IsVanilla_60() then
+            BG.Once("FBCDchoice", 240329, function()
+                BiaoGe.FBCDchoice["alchemy"] = 1
+                BiaoGe.FBCDchoice["leatherworking"] = 1
+                BiaoGe.FBCDchoice["tailor"] = 1
+            end)
+        else
+            BG.Once("FBCDchoice", 240111, function()
+                BiaoGe.FBCDchoice["25RS"] = 1
+                BiaoGe.FBCDchoice["10RS"] = 1
+            end)
+        end
+    end
 
-    if BG.IsVanilla() then
+    if BG.IsVanilla_Sod() then
+        local questID
+        if BG.IsAlliance() then
+            questID = 79090
+        else
+            questID = 79098
+        end
+        BG.FBCDall_table = {
+            { name = "Temple", color = "00BFFF", fbId = 109, num = 20, type = "fb" },
+            { name = "Gno", color = "00BFFF", fbId = 90, num = 10, type = "fb" },
+            { name = "BD", color = "00BFFF", fbId = 48, num = 10, type = "fb" },
+            -- 任务
+            { name = "mengyan", name2 = L["梦魇日常"], color = "FF8C00", questID = 82068, type = "quest" },
+            { name = "huiguweek", name2 = L["灰谷日常"], color = "FF8C00", questID = questID, type = "quest" },
+            -- 专业
+            { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
+            { name = "leatherworking", name2 = L["制皮筛盐"], color = "ADFF2F", type = "profession" },
+            { name = "tailor", name2 = L["裁缝洗布"], color = "ADFF2F", type = "profession" },
+        }
+
+        BG.MONEYall_table = {
+            { name = L["荒野祭品"], color = "98FB98", id = 221262, tex = 132119, width = 70 }, -- 荒野祭品
+            -- { name = L["白银戮币"], color = "FF6347", id = 221365, id_gold = 221366, id_copper = 213168, tex = 237282, width = 70 }, -- test
+            { name = L["白银戮币"], color = "FF6347", id = 221365, id_gold = 221366, id_copper = 221364, tex = 237282, width = 70 }, -- 白银戮币
+            { name = L["金币"], color = "FFD700", id = "money", tex = 237618, width = 90 }, -- 金币
+        }
+    elseif BG.IsVanilla_60() then
+        BG.FBCDall_table = {
+            { name = "NAXX", color = "00BFFF", fbId = 533, num = 40, type = "fb" },
+            { name = "TAQ", color = "00BFFF", fbId = 531, num = 40, type = "fb" },
+            { name = "BWL", color = "00BFFF", fbId = 469, num = 40, type = "fb" },
+            { name = "MC", color = "00BFFF", fbId = 409, num = 40, type = "fb" },
+            { name = "AQL", color = "BA55D3", fbId = 509, num = 20, type = "fb" },
+            { name = "ZUG", color = "BA55D3", fbId = 309, num = 20, type = "fb" },
+            -- 专业
+            { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
+            { name = "leatherworking", name2 = L["制皮筛盐"], color = "ADFF2F", type = "profession" },
+            { name = "tailor", name2 = L["裁缝洗布"], color = "ADFF2F", type = "profession" },
+        }
+
         BG.MONEYall_table = {
             { name = L["金币"], color = "FFD700", id = "money", tex = 237618, width = 90 }, -- 金币
         }
-        if BG.IsVanilla_Sod() then
-            BG.FBCDall_table = {
-                { name = "Temple", color = "00BFFF", fbId = 109, num = 20, type = "fb" },
-                { name = "Gno", color = "00BFFF", fbId = 90, num = 10, type = "fb" },
-                { name = "BD", color = "00BFFF", fbId = 48, num = 10, type = "fb" },
-                -- 周常
-                { name = "huiguweek", name2 = L["灰谷周常"], color = "FF8C00", questID = "huiguweek", type = "quest" },
-                -- 专业
-                { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
-                { name = "leatherworking", name2 = L["制皮筛盐"], color = "ADFF2F", type = "profession" },
-                { name = "tailor", name2 = L["裁缝洗布"], color = "ADFF2F", type = "profession" },
-            }
-        elseif BG.IsVanilla_60() then
-            BG.FBCDall_table = {
-                { name = "NAXX", color = "00BFFF", fbId = 533, num = 40, type = "fb" },
-                { name = "TAQ", color = "00BFFF", fbId = 531, num = 40, type = "fb" },
-                { name = "BWL", color = "00BFFF", fbId = 469, num = 40, type = "fb" },
-                { name = "MC", color = "00BFFF", fbId = 409, num = 40, type = "fb" },
-                { name = "AQL", color = "BA55D3", fbId = 509, num = 20, type = "fb" },
-                { name = "ZUG", color = "BA55D3", fbId = 309, num = 20, type = "fb" },
-                -- 专业
-                { name = "alchemy", name2 = L["炼金转化"], color = "ADFF2F", type = "profession" },
-                { name = "leatherworking", name2 = L["制皮筛盐"], color = "ADFF2F", type = "profession" },
-                { name = "tailor", name2 = L["裁缝洗布"], color = "ADFF2F", type = "profession" },
-            }
-        end
     else
         BG.FBCDall_table = {
             --WLK
@@ -268,9 +291,9 @@ function BG.RoleOverviewUI()
         for p, v in pairs(BiaoGe.FBCD[RealmId]) do
             for i, cd in pairs(BiaoGe.FBCD[RealmId][p]) do
                 if cd.resettime then
-                    if cd.fbId == 309 or cd.fbId == 568 or cd.fbId == 509 then -- ZUG ZA AQL
-                        -- or cd.fbId == 48 or cd.fbId == 90 then -- BD Gno
-                        text3 = format(L["小团本 %s"], SecondsToTime(cd.resettime, true, nil, 2))
+                    if cd.fbId == 309 or cd.fbId == 568 or cd.fbId == 509 -- ZUG ZA AQL
+                        or cd.fbId == 48 or cd.fbId == 90 then            -- BD Gno
+                        text3 = format(L["小团本%s"], SecondsToTime(cd.resettime, true, nil, 2))
                     elseif cd.num ~= 5 then
                         text7 = SecondsToTime(cd.resettime, true, nil, 2)
                     end
@@ -496,7 +519,12 @@ function BG.RoleOverviewUI()
                 BG.m_new[player] = value
                 for i, v in pairs(MONEYchoice_table) do                   -- 给空key添加值0，主要是为了填补一些旧角色缺少某些新数据
                     if tonumber(v.id) and not BG.m_new[player][v.id] then -- 排除掉角色名字和金币
-                        local tex = C_CurrencyInfo.GetCurrencyInfo(v.id).iconFileID
+                        local tex
+                        if BG.IsVanilla() then
+                            tex = v.tex
+                        else
+                            tex = C_CurrencyInfo.GetCurrencyInfo(v.id).iconFileID
+                        end
                         BG.m_new[player][v.id] = { count = 0, tex = tex }
                     elseif v.id == "money" and not BG.m_new[player][v.id] then -- 如果是金币
                         BG.m_new[player][v.id] = 0
@@ -577,6 +605,10 @@ function BG.RoleOverviewUI()
                                     t_paizi:SetPoint("TOPRIGHT", right, "TOPRIGHT", width, 0)
                                 end
                                 t_paizi:SetText(a)
+                                -- pt(a:match("^%d+"))
+                                if a:match("^%d+") == "0" then
+                                    t_paizi:SetTextColor(0.5, 0.5, 0.5)
+                                end
                                 right = t_paizi
                             end
                         end
@@ -621,6 +653,9 @@ function BG.RoleOverviewUI()
                                 t_paizi:SetPoint("TOPRIGHT", right, "TOPRIGHT", width, 0)
                             end
                             t_paizi:SetText(a)
+                            if a:match("^%d+") == "0" then
+                                t_paizi:SetTextColor(0.5, 0.5, 0.5)
+                            end
                             right = t_paizi
                         end
                     end
@@ -1045,10 +1080,22 @@ function BG.RoleOverviewUI()
         end
 
         -- 日常
-        if not BG.IsVanilla() then
+        if BG.IsVanilla_Sod() then
+            local questID
+            if BG.IsAlliance() then
+                questID = 79090
+            else
+                questID = 79098
+            end
             BG.dayQuests = {
-                { questID = 78752, name = L["伽马"], color = "FF8C00", },
-                { questID = 78753, name = L["英雄"], color = "FF8C00", },
+                { questID = questID, }, -- 灰谷
+                { questID = 82068, },   -- 梦魇
+
+            }
+        elseif not BG.IsVanilla() then
+            BG.dayQuests = {
+                { questID = 78752, }, -- 伽马
+                { questID = 78753, }, -- 英雄
             }
         end
 
@@ -1093,9 +1140,6 @@ function BG.RoleOverviewUI()
 
         -- 周常
         if BG.IsVanilla_Sod() then
-            BG.weekQuests = {
-                huiguweek = { 79098, 79090, },
-            }
         elseif not BG.IsVanilla_60() then
             BG.weekQuests = {
                 week1 = { 24579, 24580, 24581, 24582, 24583, 24584, 24585, 24586, 24587, 24588, 24589, 24590, },
@@ -1158,7 +1202,6 @@ function BG.RoleOverviewUI()
         -- 交任务时触发
         BG.RegisterEvent("QUEST_TURNED_IN", function(self, even, questID)
             UpdateDayQuest(questID)
-
             if BG.IsCN() then
                 UpdateWeekQuest(questID, "CN")
             else
@@ -1167,9 +1210,19 @@ function BG.RoleOverviewUI()
         end)
 
         -- 检查全部角色的任务重置cd是否到期（第二天凌晨7点）
-        BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even)
-            if BG.IsVanilla_Sod() then
-                BG.Once("QuestCD", 240113, function()
+        BG.RegisterEvent("PLAYER_ENTERING_WORLD", function(self, even, isLogin, isReload)
+            if isLogin or isReload then
+                if BG.IsVanilla_Sod() then
+                    local p, r = UnitFullName("player")
+                    BG.Once("QuestCD", "240403" .. p .. "-" .. r, function()
+                        BiaoGe.QuestCD[RealmId][player]["huiguweek"] = nil
+                        for questID in pairs(GetQuestsCompleted()) do
+                            UpdateDayQuest(questID)
+                        end
+                    end)
+                end
+
+                --[[                 BG.Once("QuestCD", 240113, function()
                     for questID in pairs(GetQuestsCompleted()) do
                         for k, v in pairs(BG.weekQuests) do
                             for i, _questID in pairs(BG.weekQuests[k]) do
@@ -1183,7 +1236,7 @@ function BG.RoleOverviewUI()
                             end
                         end
                     end
-                end)
+                end) ]]
             end
 
             local time = GetServerTime()
@@ -1222,23 +1275,34 @@ function BG.RoleOverviewUI()
             local player = UnitName("player")
             g.player = player
             g.colorplayer = SetClassCFF(player, "player")
-
-            local money = floor(GetMoney() / 1e4)
-            g.money = money
+            g.money = floor(GetMoney() / 1e4)
             for i, v in ipairs(BG.MONEYall_table) do
                 if v.id ~= "money" then
-                    local count = C_CurrencyInfo.GetCurrencyInfo(v.id).quantity
-                    local tex = C_CurrencyInfo.GetCurrencyInfo(v.id).iconFileID
-                    g[v.id] = { count = count, tex = tex }
+                    if BG.IsVanilla_Sod() then
+                        local count
+                        if v.id_gold and v.id_copper then
+                            count = GetItemCount(v.id_gold, true) * 100 + GetItemCount(v.id, true) + floor(GetItemCount(v.id_copper, true) / 100)
+                        else
+                            count = GetItemCount(v.id, true)
+                        end
+                        local tex = v.tex
+
+                        g[v.id] = { count = count, tex = tex }
+                    elseif not BG.IsVanilla() then
+                        local count = C_CurrencyInfo.GetCurrencyInfo(v.id).quantity
+                        local tex = C_CurrencyInfo.GetCurrencyInfo(v.id).iconFileID
+                        g[v.id] = { count = count, tex = tex }
+                    end
                 end
             end
-            return g
+            BiaoGe.Money[RealmId][player] = g
         end
     end
 
     ------------------当前角色货币面板------------------
     do
-        function BG.MoneyBannerupdate()
+        function BG.MoneyBannerUpdate()
+            if not BG.MainFrame:IsVisible() then return end
             -- 根据你选择的货币，生成table
             MONEYchoice_table = {}
             for i, v in ipairs(BG.MONEYall_table) do
@@ -1249,7 +1313,8 @@ function BG.RoleOverviewUI()
                 end
             end
 
-            local g = BG.MONEYupdate()
+            BG.MONEYupdate()
+            local g = BiaoGe.Money[RealmId][player]
             local t = {}
             local a = g.colorplayer .. "  "
             tinsert(t, a) -- 玩家
@@ -1306,10 +1371,10 @@ function BG.RoleOverviewUI()
             f:RegisterEvent("PLAYER_ENTERING_WORLD")
             f:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
             f:RegisterEvent("PLAYER_MONEY")
+            f:RegisterEvent("BAG_UPDATE_DELAYED")
             f:SetScript("OnEvent", function(self, even, ...)
                 C_Timer.After(0.5, function()
-                    BG.MoneyBannerupdate()
-                    BiaoGe.Money[RealmId][player] = BG.MONEYupdate()
+                    BG.MONEYupdate()
                 end)
             end)
         end
@@ -1480,7 +1545,7 @@ function BG.RoleOverviewUI()
                                         name, tbl[profession].name)))
                                     SendSystemMessage(BG.BG .. BG.STC_g1(format(L["%s%s已就绪！"],
                                         name, tbl[profession].name)))
-                                    PlaySoundFile(BG["sound_" .. profession .. "Ready"], "Master")
+                                    PlaySoundFile(BG["sound_" .. profession .. "Ready" .. BiaoGe.options.Sound], "Master")
                                 end)
                                 i = i + 3
                             elseif time < v.endtime then
