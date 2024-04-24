@@ -43,6 +43,11 @@ function KT.IsHigherVersion(newVersion, oldVersion)
     return result
 end
 
+-- Debug
+function KT.Debug(text)
+    return "\n|cffff6060"..KT.title.." "..KT.db.global.version.." - DEBUG:|r\n|cff00ff00Please copy this error and report it on CurseForge addon page!|r\n"..text
+end
+
 -- Table
 function KT.IsTableEmpty(table)
     return (next(table) == nil)
@@ -57,6 +62,31 @@ function KT.IsInTable(table, item)
         end
     end
     return result
+end
+
+function KT.PrintTable(tbl, indent)
+    if not indent then indent = 0 end
+    local toprint = "{\n"
+    indent = indent + 2
+    for k, v in pairs(tbl) do
+        toprint = toprint .. string.rep(" ", indent)
+        if (type(k) == "number") then
+            toprint = toprint .. "[" .. k .. "] = "
+        elseif (type(k) == "string") then
+            toprint = toprint  .. k ..  " = "
+        end
+        if (type(v) == "number") then
+            toprint = toprint .. v .. ",\n"
+        elseif (type(v) == "string") then
+            toprint = toprint .. "\"" .. v .. "\",\n"
+        elseif (type(v) == "table") then
+            toprint = toprint .. KT.PrintTable(v, indent) .. ",\n"
+        else
+            toprint = toprint .. tostring(v) .. ",\n"
+        end
+    end
+    toprint = toprint .. string.rep(" ", indent - 2) .. "}"
+    return toprint
 end
 
 -- Quest
@@ -169,12 +199,13 @@ function KT.GameTooltip_AddQuestRewardsToTooltip(tooltip, questID, isBonus)
 
     local xp = GetQuestLogRewardXP(questID)
     local money = GetQuestLogRewardMoney(questID)
-    local artifactXP = 0    -- GetQuestLogRewardArtifactXP(questID)
-    local numQuestCurrencies = 0    -- GetNumQuestLogRewardCurrencies(questID)
+    local artifactXP = 0  -- GetQuestLogRewardArtifactXP(questID)
+    local numQuestCurrencies = GetNumQuestLogRewardCurrencies(questID)
     local numQuestRewards = GetNumQuestLogRewards(questID)
     local numQuestSpellRewards, questSpellRewards = KT.GetQuestRewardSpells(questID)
     local numQuestChoices = GetNumQuestLogChoices()
-    local honor = 0   -- GetQuestLogRewardHonor(questID)
+    local honor = GetQuestLogRewardHonor(questID)
+    local playerTitle = GetQuestLogRewardTitle()
     if xp > 0 or
             money > 0 or
             artifactXP > 0 or
@@ -182,7 +213,8 @@ function KT.GameTooltip_AddQuestRewardsToTooltip(tooltip, questID, isBonus)
             numQuestRewards > 0 or
             numQuestSpellRewards > 0 or
             numQuestChoices > 0 or
-            honor > 0 then
+            honor > 0 or
+            playerTitle then
         tooltip:AddLine(" ")
         tooltip:AddLine(REWARDS..":")
         if not isBonus then
@@ -238,12 +270,20 @@ function KT.GameTooltip_AddQuestRewardsToTooltip(tooltip, questID, isBonus)
             tooltip:AddLine(format(BONUS_OBJECTIVE_ARTIFACT_XP_FORMAT, FormatLargeNumber(artifactXP)), 1, 1, 1)
         end
         -- currencies
-        if numQuestCurrencies > 0 then
-            QuestUtils_AddQuestCurrencyRewardsToTooltip(questID, tooltip)
+        for i = 1, numQuestCurrencies do
+            local name, texture, numItems, _, quality = GetQuestLogRewardCurrencyInfo(i, questID)
+            if name and texture and numItems and quality then
+                local color = ITEM_QUALITY_COLORS[quality]
+                tooltip:AddLine(format(BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT, texture, numItems, name), color.r, color.g, color.b)
+            end
         end
         -- honor
         if honor > 0 then
-            tooltip:AddLine(format(BONUS_OBJECTIVE_REWARD_WITH_COUNT_FORMAT, "Interface\\ICONS\\Achievement_LegionPVPTier4", honor, HONOR), 1, 1, 1)
+            tooltip:AddLine(format("|T%1$s:16:16:0:0:64:64:3:39:1:37|t %2$s %3$s", "Interface\\TargetingFrame\\UI-PVP-"..KT.playerFaction, honor, HONOR), 1, 1, 1)
+        end
+        -- title
+        if playerTitle then
+            tooltip:AddLine(HONOR_REWARD_TITLE_TOOLTIP..": |cffe6cc80"..playerTitle.."|r", 1, 1, 1)
         end
     end
 
@@ -263,6 +303,17 @@ end
 function KT.ConvertPixelsToUI(pixels, frameScale)
     local physicalScreenHeight = select(2, GetPhysicalScreenSize());
     return (pixels * 768.0)/(physicalScreenHeight * frameScale);
+end
+
+-- WotLK Classic -------------------------------------------------------------------------------------------------------
+
+-- TODO: Test after every WoW update
+GetSuperTrackedQuestID = function()
+    local questID = 0
+    if WorldMapFrame and WorldMapFrame:IsShown() then
+        questID = QuestMapFrame_GetFocusedQuestID()
+    end
+    return questID
 end
 
 -- Classic - removed functions -----------------------------------------------------------------------------------------
@@ -301,5 +352,11 @@ if not QuestMapQuestOptions_AbandonQuest then
         end
 
         SelectQuestLogEntry(bckQuestLogSelection)  -- restore Quest Log selection
+    end
+end
+
+if not OpenAchievementFrameToAchievement then
+    function OpenAchievementFrameToAchievement(achievementID)
+        WatchFrame_OpenAchievementFrame(_, achievementID)
     end
 end

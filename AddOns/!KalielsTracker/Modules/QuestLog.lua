@@ -46,18 +46,31 @@ end
 
 local function SetHooks()
 	-- QuestLogFrame.lua
+	function _QuestLog_ToggleQuestWatch(questIndex)  -- R
+		if not db.filterAuto[1] and KT_GetNumQuestWatches() < MAX_WATCHABLE_QUESTS then
+			local questID = GetQuestIDFromLogIndex(questIndex)
+			if IsQuestWatched(questIndex) then
+				KT_RemoveQuestWatch(questID)
+			else
+				KT_AddQuestWatch(questID)
+			end
+			QuestMapFrame_UpdateAll()
+		end
+	end
+
+--[[
 	function QuestLogTitleButton_OnClick(self, button)  -- R
-		local questName = self:GetText();
-		local questIndex = self:GetID() + FauxScrollFrame_GetOffset(QuestLogListScrollFrame);
-		local questID = GetQuestIDFromLogIndex(questIndex);
 		if ( IsModifiedClick("CHATLINK") and ChatEdit_GetActiveWindow() ) then
 			-- If header then return
 			if ( self.isHeader ) then
 				return;
 			end
 
-			-- Otherwise trim leading whitespace and put it into chat
-			ChatEdit_InsertLink("["..gsub(questName, " *(.*)", "%1").." ("..questID..")]")
+			local questIndex = self:GetID() + FauxScrollFrame_GetOffset(QuestLogListScrollFrame);
+			local questLink = GetQuestLink(GetQuestIDFromLogIndex(questIndex));
+			if ( questLink ) then
+				ChatEdit_InsertLink(questLink);
+			end
 		elseif ( IsShiftKeyDown() ) then
 			-- If header then return
 			if ( self.isHeader ) then
@@ -66,35 +79,32 @@ local function SetHooks()
 
 			-- Shift-click toggles quest-watch on this quest.
 			if not db.filterAuto[1] then
-				if ( IsQuestWatched(questIndex) ) then
-					KT_RemoveQuestWatch(questID);
-				else
-					AutoQuestWatch_Insert(questIndex);
-				end
+				_QuestLog_ToggleQuestWatch(self:GetID());
+			else
+				return;
 			end
 		end
-		QuestLog_SetSelection(questIndex)
+		QuestLog_SetSelection(self:GetID())
 		QuestLog_Update();
 	end
+--]]
 
-	function AutoQuestWatch_Insert(questIndex, watchTimer)  -- R
-		if KT_GetNumQuestWatches() < KT.MAX_WATCHABLE_QUESTS then
-			local questID = GetQuestIDFromLogIndex(questIndex)
-			KT_AddQuestWatch(questID)
+	-- QuestMapFrame.lua
+	hooksecurefunc("QuestMapFrame_UpdateAll", function(numPOIs)
+		if db.filterAuto[1] then
+			WorldMapTrackQuest:Disable()
+		else
+			WorldMapTrackQuest:Enable()
 		end
-	end
+	end)
 
+	-- WatchFrame.lua
 	function IsQuestWatched(questLogIndex)  -- R
 		local questID = GetQuestIDFromLogIndex(questLogIndex)
 		return IsQuestInList(questID)
 	end
 
-	-- Quest Watch
-	QuestWatch_OnLogin = function() end
-	QuestWatch_Update = function() end
-	AutoQuestWatch_CheckDeleted = function() end
-	AutoQuestWatch_Update = function() end
-	AutoQuestWatch_OnUpdate = function() end
+	WatchFrame_Update = function() end
 end
 
 --------------
@@ -155,7 +165,7 @@ function M:OnEnable()
 		local questIndex = GetQuestIndexForWatch(i)
 		RemoveQuestWatch(questIndex)
 	end
-	QuestWatch_Update()
+	WatchFrame_Update()
 
 	SetHooks()
 end

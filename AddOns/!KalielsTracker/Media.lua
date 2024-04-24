@@ -16,6 +16,10 @@ local media = {
     { type = "STATUSBAR",   name = "Flat",          filePath = mediaPath.."KT-statusbar-flat" },
     -- Sounds (Blizzard)
     { type = "SOUND",       name = "Default",       filePath = 558132 },    -- PeonBuildingComplete1.ogg
+    { type = "SOUND",       name = "BloodElf (M)",  filePath = 539400 },    -- BloodElfMaleCongratulations02.ogg
+    { type = "SOUND",       name = "BloodElf (F)",  filePath = 539175 },    -- BloodElfFemaleCongratulations03.ogg
+    { type = "SOUND",       name = "Draenei (M)",   filePath = 539661 },    -- DraeneiMaleCongratulations02.ogg
+    { type = "SOUND",       name = "Draenei (F)",   filePath = 539676 },    -- DraeneiFemaleCongratulations03.ogg
     { type = "SOUND",       name = "Dwarf (M)",     filePath = 540042 },    -- DwarfMaleCongratulations04.ogg
     { type = "SOUND",       name = "Dwarf (F)",     filePath = 539981 },    -- DwarfFemaleCongratulations01.ogg
     { type = "SOUND",       name = "Gnome (M)",     filePath = 540512 },    -- GnomeMaleCongratulations03.ogg

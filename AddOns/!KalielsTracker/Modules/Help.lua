@@ -35,7 +35,7 @@ local KTF = KT.frame
 
 local function AddonInfo(name)
 	local info = "插件 "..name
-	if C_AddOns.IsAddOnLoaded(name) then
+	if IsAddOnLoaded(name) then
 		info = info.." |cff00ff00已安裝|r。"
 	else
 		info = info.." |cffff0000未安裝|r。"
@@ -85,6 +85,7 @@ local function SetupTutorials()
 			image = helpPath.."help_kaliels-tracker",
 			text = cTitle..KT.title.." (Classic)|r 取代遊戲內建的任務追蹤清單，並且加入了一些和正式版相同的功能。\n\n"..
 					"包含下面這些功能:\n"..
+					"- 追蹤任務和成就\n"..
 					"- 更改追蹤清單位置\n"..
 					"- 根據追蹤清單位置 (方向) 展開/收起追蹤清單\n"..
 					"- 根據內容自動調整追蹤清單高度，可以限制最大高度\n"..
@@ -105,10 +106,11 @@ local function SetupTutorials()
 					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:-1:2:32:64:0:14:0:14:209:170:0|t "..cDots.."...|r 展開追蹤清單                    "..
 					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:3:2:32:64:16:30:0:14:209:170:0|t  "..cDots.."...|r 開啟任務日誌\n"..
 					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:-1:2:32:64:0:14:16:30:209:170:0|t "..cDots.."...|r 收起追蹤清單                    "..
-					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:3:2:32:64:16:30:32:46:209:170:0|t  "..cDots.."...|r 開啟過濾方式選單\n"..
-					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:-1:2:32:64:0:14:32:46:209:170:0|t "..cDots.."...|r 追蹤清單是空的時候\n\n"..
-					"按鈕 |T"..mediaPath.."UI-KT-HeaderButtons:14:14:-1:2:32:64:16:30:0:14:209:170:0|t "..
-					"可以在設定選項中停用。\n\n"..
+					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:3:2:32:64:16:30:16:30:209:170:0|t  "..cDots.."...|r 開啟成就視窗\n"..
+					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:-1:2:32:64:0:14:32:46:209:170:0|t "..cDots.."...|r 追蹤清單是空的時候          "..
+					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:3:2:32:64:16:30:32:46:209:170:0|t  "..cDots.."...|r 開啟過濾方式選單\n\n"..
+					"按鈕 |T"..mediaPath.."UI-KT-HeaderButtons:14:14:0:2:32:64:16:30:0:14:209:170:0|t 和 "..
+					"|T"..mediaPath.."UI-KT-HeaderButtons:14:14:0:2:32:64:16:30:16:30:209:170:0|t 可以在設定選項中停用。\n\n"..
 					"可以設定"..cBold.." [快速鍵]|r 來最小化追蹤清單。\n"..
 					cBold.."Alt+左鍵|r 點擊最小化按鈕會開啟 "..KT.title.."的設定選項。",
 			textY = 16,
@@ -148,6 +150,7 @@ local function SetupTutorials()
 					cTitle.."動態過濾|r - 自動新增任務/成就依據條件 (例如 \"|cff00ff00自動|r區域\") "..
 					"會持續更新項目。這種類型不允許手動加入/移除項目。"..
 					"啟用動態過濾時，標題按鈕是綠色 |T"..mediaPath.."UI-KT-HeaderButtons:14:14:-2:1:32:64:16:30:32:46:0:255:0|t.\n\n"..
+					"更改成就的搜尋類別時，也會影響過濾的結果。\n\n"..
 					"這個選單也會顯示影響追蹤清單內容的其他選項。",
 			textY = 16,
 			shine = KTF.FilterButton,
@@ -174,8 +177,7 @@ local function SetupTutorials()
 		{	-- 6
 			image = helpPath.."help_tracker-modules",
 			text = cTitle.."模組順序|r\n\n"..
-					"允許更改模組在追蹤清單中的順序。支援所有的模組，也包含外部插件 (例如：戰寵助手)。\n\n"..
-					cWarning.."備註:|r 在經典時期還不會用到這個功能。",
+					"允許更改模組在追蹤清單中的順序。支援所有的模組，也包含外部插件 (例如：戰寵助手)。",
 			shine = KTF,
 			shineTop = 5,
 			shineBottom = -5,
@@ -190,23 +192,16 @@ local function SetupTutorials()
 
 					cTitle.."支援插件|r\n"..
 					"- Classic Quest Log\n"..ebSpace.."\n"..
-					"- QuestGuru\n"..ebSpace.."\n"..
-					"- QuestLogEx\n"..ebSpace,
+					"- QuestGuru\n"..ebSpace,
 			editbox = {
 				{
 					text = "https://www.wowinterface.com/downloads/info24937-ClassicQuestLogforClassic.html",
 					width = 485,
 					left = 9,
-					bottom = 71,
-				},
-				{
-					text = "https://www.curseforge.com/wow/addons/questguru_classic",
-					width = 485,
-					left = 9,
 					bottom = 37,
 				},
 				{
-					text = "https://www.wowinterface.com/downloads/info24980-QuestLogEx.html",
+					text = "https://www.curseforge.com/wow/addons/questguru_classic",
 					width = 485,
 					left = 9,
 					bottom = 3,
@@ -247,17 +242,17 @@ local function SetupTutorials()
 		},
 		{	-- 9
 			text = cTitle.."         更新資訊|r\n\n"..
-					cTitle.."版本 1.6.0|r\n"..
-					"- 新增 - 支援 WoW 1.15.1\n"..
-					"- 更新 - WoW 1.15.0 捨棄的函數\n"..
+					cTitle.."版本 3.5.0|r\n"..
+					"- 新增 - 支援 WoW 3.4.3\n"..
+					"- 更新 - WoW 3.4.2 捨棄的函數\n"..
 					"- 更新 - 支援插件 - Questie 9.4.9\n"..
 					"- 更新 - 支援插件 - ElvUI 13.59, Tukui 20.41\n"..
 					"- 更新 - 說明 - Active Patrons\n"..
 					"- 更新 - 函式庫\n\n"..
 
-					cTitle.."WoW 1.15.1 - 尚無解決辦法的已知問題|r\n"..
-					"- 戰鬥中點擊已追蹤的任務沒有反應。\n"..
-					"- 戰鬥中無法使用標題列按鈕 Q。\n\n"..
+					cTitle.."WoW 3.4.3 - 尚無解決辦法的已知問題|r\n"..
+					"- 戰鬥中點擊追蹤的任務或成就不會有反應。\n"..
+					"- 戰鬥中標題列的 Q 和 A 按鈕無法運作。\n\n"..
 
 					cTitle.."回報問題|r\n"..
 					"請使用下方的"..cBold.."回報單網址|r而不是在 CurseForge 留言。\n"..ebSpace.."\n\n"..
@@ -284,9 +279,9 @@ local function SetupTutorials()
 			end
 			if i == 2 then
 				if KTF.FilterButton then
-					self[i].shineLeft = db.headerOtherButtons and -55 or -35
+					self[i].shineLeft = db.headerOtherButtons and -75 or -35
 				else
-					self[i].shineLeft = db.headerOtherButtons and -35 or -15
+					self[i].shineLeft = db.headerOtherButtons and -55 or -15
 				end
 			elseif i == 3 then
 				local questInfo = KT_GetQuestListInfo(1)
