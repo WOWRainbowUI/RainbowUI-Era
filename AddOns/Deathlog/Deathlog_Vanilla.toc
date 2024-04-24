@@ -4,7 +4,7 @@
 ## Author: Yazpad
 ## X-License: GNU GPL3
 ## X-Category: Leveling,Guild
-## Version: 0.1.11
+## Version: 0.1.14
 
 
 ## SavedVariables: deathlog_settings, deathlog_data, deathlog_data_map, dev_precomputed_general_stats, dev_precomputed_log_normal_params, dev_precomputed_skull_locs, dev_class_data, deathlog_watchlist_entries
