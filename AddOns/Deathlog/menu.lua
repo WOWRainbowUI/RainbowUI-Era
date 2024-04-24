@@ -148,9 +148,20 @@ local subtitle_data = {
 		"Class",
 		60,
 		function(_entry, _server_name)
-			local class_str, _, _ = GetClassInfo(_entry["class_id"])
-			if RAID_CLASS_COLORS[class_str:upper()] then
-				return "|c" .. RAID_CLASS_COLORS[class_str:upper()].colorStr .. class_str .. "|r"
+			if _entry["class_id"] == nil then
+				return ""
+			end
+			local class_id = _entry["class_id"]
+			local class_str, _, _ = GetClassInfo(class_id)
+			if class_id then
+				if deathlog_id_to_class_tbl[class_id] then
+					if RAID_CLASS_COLORS[deathlog_id_to_class_tbl[class_id]:upper()] then
+						return "|c"
+							.. RAID_CLASS_COLORS[deathlog_id_to_class_tbl[class_id]:upper()].colorStr
+							.. class_str
+							.. "|r"
+					end
+				end
 			end
 			return class_str or ""
 		end,
@@ -159,6 +170,9 @@ local subtitle_data = {
 		"Race",
 		60,
 		function(_entry, _server_name)
+			if _entry["race_id"] == nil then
+				return ""
+			end
 			local race_info = C_CreatureInfo.GetRaceInfo(_entry["race_id"])
 			if race_info then
 				return race_info.raceName or ""

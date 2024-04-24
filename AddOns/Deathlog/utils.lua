@@ -41,6 +41,18 @@ deathlog_class_tbl = {
 	["Druid"] = 11,
 }
 
+deathlog_id_to_class_tbl = {
+	[1] = "Warrior",
+	[2] = "Paladin",
+	[3] = "Hunter",
+	[4] = "Rogue",
+	[5] = "Priest",
+	[7] = "Shaman",
+	[8] = "Mage",
+	[9] = "Warlock",
+	[11] = "Druid",
+}
+
 -- values between 0 and 7
 deathlog_pvp_flag = {
 	NONE = 0,
@@ -106,6 +118,9 @@ function deathlogShallowCopy(t)
 end
 
 function deathlogPredictSource(entry_map_pos, entry_map_id)
+	if entry_map_pos == nil then
+		return nil
+	end
 	local xx, yy = strsplit(",", entry_map_pos, 2)
 	if xx == nil or tonumber(entry_map_id) == nil then
 		return nil
