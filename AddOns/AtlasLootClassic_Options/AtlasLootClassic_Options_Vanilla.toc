@@ -34,7 +34,7 @@
 ## Notes-zhTW: AtlasLootClassic - Options |n副本戰利品查詢的選項設定。
 ## DefaultState: disabled
 
-embeds.xml
+## embeds.xml
 
 Locales\constants.cn.lua
 Locales\constants.tw.lua

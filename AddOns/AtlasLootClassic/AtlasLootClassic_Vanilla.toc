@@ -42,7 +42,9 @@
 ## Notes-zhTW: AtlasLoot Classic |n顯示首領與小怪可能掉落的物品，並可查詢各陣營與戰場的獎勵物品、套裝物品等資訊。|n|cffffd200使用方法：|r點小地圖按鈕。
 ## DefaultState: disabled
 
-embeds.xml
+## embeds.xml
+
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 
 Init.lua
 Constants.lua
