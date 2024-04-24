@@ -14,7 +14,7 @@
 ## X-Category-zhTW: 社交
 ## IconTexture: Interface\Icons\boss_odunrunes_orange
 
-Libs.xml
+Libs\LibCopyPaste-1.0\LibCopyPaste-1.0.lua
 Locales\locales.xml
 Bindings.lua
 Core.lua
