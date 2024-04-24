@@ -78,7 +78,8 @@ AddSpellName("ShieldSlam", 47488, 47487, 30356, 25258, 23925, 23924, 23923, 2392
 AddSpellName("ArcaneMissiles", 42846, 42843, 38704, 38699, 27075, 25345, 10212, 10211, 8417, 8416, 5145, 5144, 5143)
 AddSpellName("FrostBolt", 42842, 42841, 38697, 27072, 27071, 25304, 10181, 10180, 10179, 8408, 8407, 8406, 7322, 837, 205, 116)
 AddSpellName("IceLance", 42914, 42913, 30455)
-AddSpellName("FrostfireBolt", 47610, 44614 )
+AddSpellName("FrostfireBolt", 47610, 44614, 401502 ) -- 401502 - SoD rune
+AddSpellName("SpellfrostBolt", 412532 ) -- SoD Rune
 AddSpellName("Fireball", 42833, 42832, 38692, 27070, 25306, 10151, 10150, 10149, 10148, 8402, 8401, 8400, 3140, 145, 143, 133)
 AddSpellName("Pyroblast", 42891, 42890, 33938, 27132, 18809, 12526, 12525, 12524, 12523, 12522, 12505, 11366)
 AddSpellName("Flamestrike", 42926, 42925, 27086, 10216, 10215, 8423, 8422, 2121, 2120)
@@ -99,6 +100,8 @@ AddSpellName("ChainLightning", 408484, 408482, 408481, 408479, 10605, 2860, 930,
 AddSpellName("ChainHeal", 416246, 416245, 416244, 10623, 10622, 1064)
 AddSpellName("LavaBurst", 408490)
 
+AddSpellName("FlashHeal", 48071, 48070, 25235, 25233, 10917, 10916, 10915, 9474, 9473, 9472, 2061)
+AddSpellName("Smite", 48123, 48122, 25364, 25363, 10934, 10933, 6060, 1004, 984, 598, 591, 585)
 
 local function OnAuraStateChange(conditionFunc, actions)
     local state = -1
@@ -293,6 +296,7 @@ function ns.findHighestRank(spellName)
             return
         end
     end
+    if not reverseSpellRanks[spellName] then return end
     for _, spellID in ipairs(reverseSpellRanks[spellName]) do
         if IsPlayerSpell(spellID) then return spellID end
     end
@@ -491,6 +495,15 @@ function ns.CheckRampage(eventType, isSrcPlayer, isDstPlayer, ...)
     end
 end
 
+local CheckTasteForBloodSoD = OnAuraStateChange(function() return FindAura("player", 426969, "HELPFUL") end,
+    function(present, duration)
+        if present then
+            f:Activate("Overpower", "TasteForBlood", duration, true)
+        else
+            f:Deactivate("Overpower", "TasteForBlood")
+        end
+    end
+)
 local CheckTasteForBlood = OnAuraStateChange(function() return FindAura("player", 60503, "HELPFUL") end,
     function(present, duration)
         if present then
@@ -599,7 +612,9 @@ ns.configs.WARRIOR = function(self)
     local hasSuddenDeathTalent = IsPlayerSpell(29723) or IsPlayerSpell(29725) or IsPlayerSpell(29724)
     local hasSwordAndBoardTalent = IsPlayerSpell(46951) or IsPlayerSpell(46952) or IsPlayerSpell(46953)
     local hasBloodsurgeTalent = IsPlayerSpell(46913) or IsPlayerSpell(46914) or IsPlayerSpell(46915)
-    local hasBloodsurgeEngraving = ns.findHighestRank("BloodSurgeSoD")
+    -- local hasBloodsurgeEngraving = ns.findHighestRank("BloodSurgeSoD")
+    local hasBloodsurgeEngraving = APILevel == 1
+    local hasTasteForBloodRune = APILevel == 1
     if hasTasteForBloodTalent or hasSuddenDeathTalent or hasSwordAndBoardTalent or hasBloodsurgeTalent or hasBloodsurgeEngraving then
         self:RegisterUnitEvent("UNIT_AURA", "player")
         self.UNIT_AURA = function(self, event, unit)
@@ -617,6 +632,9 @@ ns.configs.WARRIOR = function(self)
             end
             if hasBloodsurgeEngraving then  -- Season of Discovery
                 CheckBloodsurgeSoD()
+            end
+            if hasTasteForBloodRune then -- Season of Discovery
+                CheckTasteForBloodSoD()
             end
         end
     else
@@ -1113,6 +1131,19 @@ if APILevel == 3 then
             end
         end
     )
+    local CheckBrainFreezeSoD = OnAuraStateChange(function() return FindAura("player", 400730, "HELPFUL") end,
+        function(present, duration)
+            if present then
+                f:Activate("Fireball", "BrainFreeze", duration, true)
+                f:Activate("FrostfireBolt", "BrainFreeze", duration, true)
+                f:Activate("SpellfrostBolt", "BrainFreeze", duration, true)
+            else
+                f:Deactivate("Fireball", "BrainFreeze")
+                f:Deactivate("FrostfireBolt", "BrainFreeze")
+                f:Deactivate("SpellfrostBolt", "BrainFreeze")
+            end
+        end
+    )
     local CheckHotStreak = OnAuraStateChange(function() return FindAura("player", 48108, "HELPFUL") end,
         function(present, duration)
             if present then
@@ -1138,6 +1169,7 @@ if APILevel == 3 then
         local hasBrainFreeze = IsPlayerSpell(44546) or IsPlayerSpell(44548) or IsPlayerSpell(44549)
         local hasHotStreak = IsPlayerSpell(44445) or IsPlayerSpell(44446) or IsPlayerSpell(44448)
         local hasFirestarter = IsPlayerSpell(44442) or IsPlayerSpell(44443)
+        local hasBrainFreezeSoD = APILevel == 1
 
         -- if hasFingersOfFrost then
 
@@ -1158,6 +1190,9 @@ if APILevel == 3 then
             end
             if hasFirestarter then
                 CheckFirestarter()
+            end
+            if hasBrainFreezeSoD then
+                CheckBrainFreezeSoD()
             end
         end
         -- else
@@ -1230,42 +1265,69 @@ end
 -- PRIEST
 -----------------
 
-if APILevel == 3 then
-    local CheckSerendipity = OnAuraStateChange(
-        function()
-            local name, _, count, _, duration, expirationTime = FindAura("player", 63734, "HELPFUL")
-            if count == 3 then
-                return name, _, count, _, duration, expirationTime
-            end
-        end,
-        function(present, duration)
-            if present then
-                f:Activate("GreaterHeal", "Serendipity", duration, true)
-            else
-                f:Deactivate("GreaterHeal", "Serendipity")
-            end
-        end
-    )
-
-    ns.configs.PRIEST = function(self)
-        self:SetScript("OnUpdate", self.timerOnUpdate)
-        local hasSerendipityRank3 = IsPlayerSpell(63737)
-        if hasSerendipityRank3 then
-            self:RegisterUnitEvent("UNIT_AURA", "player")
-            self:SetScript("OnUpdate", self.timerOnUpdate)
-            self.UNIT_AURA = function(self, event, unit)
-                if hasSerendipityRank3 then
-                    CheckSerendipity()
-                end
-            end
+local CheckSurgeOfLight = OnAuraStateChange(function() return FindAura("player", 33151, "HELPFUL") end,
+    function(present, duration)
+        if present then
+            f:Activate("Smite", "SurgeOfLight", duration, true)
+            f:Activate("FlashHeal", "SurgeOfLight", duration, true)
         else
-            self:SetScript("OnUpdate", nil)
-            self:UnregisterEvent("UNIT_AURA")
+            f:Deactivate("Smite", "SurgeOfLight")
+            f:Deactivate("FlashHeal", "SurgeOfLight")
         end
     end
+)
+local CheckSurgeOfLightSoD = OnAuraStateChange(function() return FindAura("player", 431666, "HELPFUL") end,
+    function(present, duration)
+        if present then
+            f:Activate("Smite", "SurgeOfLight", duration, true)
+            f:Activate("FlashHeal", "SurgeOfLight", duration, true)
+        else
+            f:Deactivate("Smite", "SurgeOfLight")
+            f:Deactivate("FlashHeal", "SurgeOfLight")
+        end
+    end
+)
 
+local CheckSerendipity = OnAuraStateChange(
+    function()
+        local name, _, count, _, duration, expirationTime = FindAura("player", 63734, "HELPFUL")
+        if count == 3 then
+            return name, _, count, _, duration, expirationTime
+        end
+    end,
+    function(present, duration)
+        if present then
+            f:Activate("GreaterHeal", "Serendipity", duration, true)
+        else
+            f:Deactivate("GreaterHeal", "Serendipity")
+        end
+    end
+)
+
+ns.configs.PRIEST = function(self)
+    self:SetScript("OnUpdate", self.timerOnUpdate)
+    local hasSerendipityRank3 = IsPlayerSpell(63737)
+    local hasSurgeOfLight = IsPlayerSpell(33154)
+    local hasSurgeOfLightSoD = APILevel == 1
+    if hasSerendipityRank3 or hasSurgeOfLight or hasSurgeOfLightSoD then
+        self:RegisterUnitEvent("UNIT_AURA", "player")
+        self:SetScript("OnUpdate", self.timerOnUpdate)
+        self.UNIT_AURA = function(self, event, unit)
+            if hasSerendipityRank3 then
+                CheckSerendipity()
+            end
+            if hasSurgeOfLight then
+                CheckSurgeOfLight()
+            end
+            if hasSurgeOfLightSoD then
+                CheckSurgeOfLightSoD()
+            end
+        end
+    else
+        self:SetScript("OnUpdate", nil)
+        self:UnregisterEvent("UNIT_AURA")
+    end
 end
-
 
 -----------------
 -- DEATHKNIGHT
