@@ -1,10 +1,16 @@
-lightweight tag b780e404b5255e9d85741c8a7413b1b0fbed843d v1.14.4
+lightweight tag 5fcbc230a78631d9fce247e5a799d93b537f50fb v1.14.6
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Thu Mar 28 23:35:15 2024 -0400
+Date:	Wed Apr 17 03:12:18 2024 -0400
 
-commit b780e404b5255e9d85741c8a7413b1b0fbed843d
+commit 5fcbc230a78631d9fce247e5a799d93b537f50fb
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Thu Mar 28 23:35:15 2024 -0400
+Date:   Wed Apr 17 03:12:18 2024 -0400
 
-    Added information section to options
+    hide CD when using ShowOnMouseOver
+
+commit 8e6f00b627af25e7aed0c714de75ce74049030cf
+Author: Mike D <mcd8604@users.noreply.github.com>
+Date:   Wed Apr 17 00:52:27 2024 -0400
+
+    fix ENGRAVER_SHOW_HIDE binding for shared options
 
