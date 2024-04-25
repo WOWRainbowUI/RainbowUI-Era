@@ -1,4 +1,4 @@
-local 	TOCNAME,GBB=...
+local TOCNAME, GBB = ...
 
 --ScrollList / Request
 -------------------------------------------------------------------------------------
@@ -9,6 +9,13 @@ local requestNil={dungeon="NIL",start=0,last=0,name=""}
 local function requestSort_TOP_TOTAL (a,b)
 	--a=a or requestNil
 	--b=b or requestNil
+	if GBB.dungeonSort[a.dungeon] == nil then
+		a = requestNil
+	end
+	if GBB.dungeonSort[b.dungeon] == nil then
+		b = requestNil
+	end
+
 	if GBB.dungeonSort[a.dungeon] < GBB.dungeonSort[b.dungeon] then
 		return true
 	elseif GBB.dungeonSort[a.dungeon] == GBB.dungeonSort[b.dungeon]then
@@ -23,6 +30,13 @@ end
 local function requestSort_TOP_nTOTAL (a,b)
 	--a=a or requestNil
 	--b=b or requestNil
+	if GBB.dungeonSort[a.dungeon] == nil then
+		a = requestNil
+	end
+	if GBB.dungeonSort[b.dungeon] == nil then
+		b = requestNil
+	end
+
 	if GBB.dungeonSort[a.dungeon] < GBB.dungeonSort[b.dungeon] then
 		return true
 	elseif GBB.dungeonSort[a.dungeon] == GBB.dungeonSort[b.dungeon] then
@@ -37,6 +51,13 @@ end
 local function requestSort_nTOP_TOTAL (a,b)
 	--a=a or requestNil
 	--b=b or requestNil
+	if GBB.dungeonSort[a.dungeon] == nil then
+		a = requestNil
+	end
+	if GBB.dungeonSort[b.dungeon] == nil then
+		b = requestNil
+	end
+
 	if GBB.dungeonSort[a.dungeon] < GBB.dungeonSort[b.dungeon] then
 		return true
 	elseif GBB.dungeonSort[a.dungeon] == GBB.dungeonSort[b.dungeon] then
@@ -51,6 +72,13 @@ end
 local function requestSort_nTOP_nTOTAL (a,b)
 	--a=a or requestNil
 	--b=b or requestNil
+	if GBB.dungeonSort[a.dungeon] == nil then
+		a = requestNil
+	end
+	if GBB.dungeonSort[b.dungeon] == nil then
+		b = requestNil
+	end
+	
 	if GBB.dungeonSort[a.dungeon] < GBB.dungeonSort[b.dungeon] then
 		return true
 	elseif GBB.dungeonSort[a.dungeon] == GBB.dungeonSort[b.dungeon] then
@@ -92,6 +120,12 @@ local function CreateHeader(yy,dungeon)
 		end
 	else
 		colTXT="|r"
+	end
+
+	-- Initialize this value now so we can (un)fold only existing entries later
+	-- while still allowing new headers to follow the HeadersStartFolded setting
+	if GBB.FoldedDungeons[dungeon]==nil then
+		GBB.FoldedDungeons[dungeon]=GBB.DB.HeadersStartFolded
 	end
 
 	if LastDungeon~="" and not (lastIsFolded and GBB.FoldedDungeons[dungeon]) then
@@ -162,8 +196,8 @@ local function CreateItem(yy,i,doCompact,req,forceHight)
 
 	if req then
 		local prefix
-		if GBB.DB.ColorByClass and req.class and RAID_CLASS_COLORS[req.class].colorStr then
-			prefix="|c"..RAID_CLASS_COLORS[req.class].colorStr
+		if GBB.DB.ColorByClass and req.class and GBB.Tool.ClassColor[req.class].colorStr then
+			prefix="|c"..GBB.Tool.ClassColor[req.class].colorStr
 		else
 			prefix="|r"
 		end
@@ -347,6 +381,25 @@ function GBB.Clear()
 	end
 end
 
+--- Used alongside the `GroupBulletinBoardFrameResultsFilter` editbox to filter requests by their message content.
+--- An empty editbox assumes no filter is set and all requests should be shown.
+---@param message string
+---@return boolean
+local function doesRequestMatchResultsFilter(message)
+	assert(
+		GroupBulletinBoardFrameResultsFilter and GroupBulletinBoardFrameResultsFilter.GetFilters, 
+		"`GroupBulletinBoardFrameResultsFilter` frame should be defined and initialized with a call to `GBB.Init` before calling `doesRequestMatchResultsFilter`."
+	)
+
+	local filters = GroupBulletinBoardFrameResultsFilter:GetFilters()
+	for _, filter in ipairs(filters) do
+		if not string.find(message:lower(), filter:lower(), nil, true) then
+			return false
+		end
+	end
+	return true
+end
+
 local ownRequestDungeons={}
 function GBB.UpdateList()
 
@@ -444,7 +497,10 @@ function GBB.UpdateList()
 				end
 
 				--entry
-				if GBB.FoldedDungeons[req.dungeon]~=true and (not GBB.DB.EnableShowOnly or cEntrys<GBB.DB.ShowOnlyNb) then
+				if GBB.FoldedDungeons[req.dungeon] ~= true 
+					and (not GBB.DB.EnableShowOnly or cEntrys<GBB.DB.ShowOnlyNb) 
+					and doesRequestMatchResultsFilter(req.message)
+				then
 					yy=yy+ CreateItem(yy,i,doCompact,req,itemHight)+3
 					cEntrys=cEntrys+1
 				end
@@ -758,7 +814,7 @@ function GBB.ParseMessage(msg,name,guid,channel)
 			local FriendIcon=(C_FriendList.IsFriend(guid) and string.format(GBB.TxtEscapePicture,GBB.FriendIcon) or "") ..
 						 ((IsInGuild() and IsGuildMember(guid)) and string.format(GBB.TxtEscapePicture,GBB.GuildIcon) or "") ..
 						 (GBB.GroupTrans[name]~=nil and string.format(GBB.TxtEscapePicture,GBB.PastPlayerIcon) or "" )
-			local linkname=	"|Hplayer:"..name.."|h[|c"..RAID_CLASS_COLORS[engClass].colorStr ..name.."|r]|h"
+			local linkname=	"|Hplayer:"..name.."|h[|c"..GBB.Tool.ClassColor[engClass].colorStr ..name.."|r]|h"
 			if GBB.DB.OneLineNotification then
 				DEFAULT_CHAT_FRAME:AddMessage(GBB.MSGPREFIX..linkname..FriendIcon..": "..msg,GBB.DB.NotifyColor.r,GBB.DB.NotifyColor.g,GBB.DB.NotifyColor.b)
 			else
@@ -802,12 +858,14 @@ function GBB.ParseMessage(msg,name,guid,channel)
 
 end
 function GBB.UnfoldAllDungeon()
-	wipe(GBB.FoldedDungeons)
+	for k,v in pairs(GBB.FoldedDungeons) do
+		GBB.FoldedDungeons[k]=false
+	end
 	GBB.UpdateList()
 end
 function GBB.FoldAllDungeon()
-	for i=1,GBB.WOTLKMAXDUNGEON do
-		GBB.FoldedDungeons[GBB.dungeonSort[i]]=true
+	for k,v in pairs(GBB.FoldedDungeons) do
+		GBB.FoldedDungeons[k]=true
 	end
 	GBB.UpdateList()
 end
@@ -842,9 +900,9 @@ local function createMenu(DungeonID,req)
 	GBB.PopupDynamic:AddItem("",true)
 	GBB.PopupDynamic:AddItem(GBB.L["HeaderSettings"],false, GBB.Options.Open, 1)
 
-	GBB.PopupDynamic:AddItem(GBB.L["WotlkPanelFilter"], false, GBB.Options.Open, 2)
+	GBB.PopupDynamic:AddItem(GBB.L["PanelFilter"], false, GBB.Options.Open, 2)
 
-	GBB.PopupDynamic:AddItem(GBB.L["PanelAbout"], false, GBB.Options.Open, 7)
+	GBB.PopupDynamic:AddItem(GBB.L["PanelAbout"], false, GBB.Options.Open, 3)
 	GBB.PopupDynamic:AddItem(GBB.L["BtnCancel"],false)
 	GBB.PopupDynamic:Show()
 end
@@ -860,13 +918,22 @@ function GBB.ClickDungeon(self,button)
 	local id=string.match(self:GetName(), "GBB.Dungeon_(.+)")
 	if id==nil or id==0 then return end
 
-	if button=="LeftButton" then
+	-- Shift + Left-Click
+	if button=="LeftButton" and IsShiftKeyDown() then
+		if GBB.FoldedDungeons[id] then
+			GBB.UnfoldAllDungeon()
+		else
+			GBB.FoldAllDungeon()
+		end
+	-- Left-Click
+	elseif button=="LeftButton" then
 		if GBB.FoldedDungeons[id] then
 			GBB.FoldedDungeons[id]=false
 		else
 			GBB.FoldedDungeons[id]=true
 		end
 		GBB.UpdateList()
+	-- Any other mouse click
 	else
 		createMenu(id)
 	end

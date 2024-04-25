@@ -52,6 +52,7 @@ GBB.locales = {
 		["CboxOnDebug"]="Show debug information",
 		["CboxNotifyChat"]="On new request make a chat notification",
 		["CboxNotifySound"]="On new request make a sound notification",
+		["CboxFilterTravel"]="Filter travel requests",
 		["CboxRemoveRealm"]="Always remove Realm",
 		["CboxCharFilterLevel"]="Filter on recommended level ranges",
 		["CboxColorOnLevel"]="Highlight dungeons on recommended level ranges",
@@ -64,6 +65,7 @@ GBB.locales = {
 		["CboxTagsCustom"]="Custom",
 		["CboxRemoveRaidSymbols"]="Remove raid symbols like {rt1}",
 		["CboxOrderNewTop"]="Sort new requests above",
+		["CboxHeadersStartFolded"]="Dungeon categories start collapsed",
 		["CboxColorByClass"]="Colorize name by class",
 		["CboxShowClassIcon"]="and show icon",
 		["CboxUseAllInLFG"]="Show all messages from lfg-channel",
@@ -102,9 +104,9 @@ GBB.locales = {
 		["BtnInvite"]="Invite %s",
 		["BtnWho"]="Who %s",
 		["BtnIgnore"]="Ignore %s",
-		["BtnFold"]="Fold",
-		["BtnFoldAll"]="Fold all",
-		["BtnUnFoldAll"]="Unfold all",
+		["BtnFold"]="Collapse",
+		["BtnFoldAll"]="Collapse all",
+		["BtnUnFoldAll"]="Expand all",
 		["BtnCancel"]="Cancel",
 		["BtnEntryColor"]="Color of the message",
 		["BtnHeroicDungeonColor"]="Color of heroic dungeon tooltip",
@@ -190,6 +192,7 @@ GBB.locales = {
 		["CboxOnDebug"]="顯示除錯資訊",
 		["CboxNotifyChat"]="有新尋求組隊時顯示聊天通知",
 		["CboxNotifySound"]="有新尋求組隊時顯示聲音通知",
+		["CboxFilterTravel"]="過濾傳送請求",
 		["CboxRemoveRealm"]="總是移除伺服器",
 		["CboxCharFilterLevel"]="過濾建議的等級區間",
 		["CboxColorOnLevel"]="強調地城建議等級區間",
@@ -202,6 +205,7 @@ GBB.locales = {
 		["CboxTagsCustom"]="自訂",
 		["CboxRemoveRaidSymbols"]="移除團隊圖示 如 {rt1}",
 		["CboxOrderNewTop"]="排序愈新的顯示在愈上面",
+		["CboxHeadersStartFolded"]="開始時收合標題",
 		["CboxColorByClass"]="根據職業著色名字",
 		["CboxShowClassIcon"]="並顯示圖示",
 		["CboxUseAllInLFG"]="顯示來自組隊頻道的所有訊息",
@@ -325,6 +329,7 @@ GBB.locales = {
 		["CboxOnDebug"]="显示除錯咨询",
 		["CboxNotifyChat"]="有新寻求组队时显示聊天通知",
 		["CboxNotifySound"]="有新寻求组队时进行声音提示",
+		["CboxFilterTravel"]="Filter travel requests",
 		["CboxRemoveRealm"]="始终删除服务器",
 		["CboxCharFilterLevel"]="过滤建议的等级区间",
 		["CboxColorOnLevel"]="强调地下城建议等级区间",
@@ -337,6 +342,7 @@ GBB.locales = {
 		["CboxTagsCustom"]="自订",
 		["CboxRemoveRaidSymbols"]="移除团队图标 如 {rt1}",
 		["CboxOrderNewTop"]="排序越新的显示越上面",
+		["CboxHeadersStartFolded"]="标题开始折叠",
 		["CboxColorByClass"]="名字依职业著色",
 		["CboxShowClassIcon"]="並显示图标",
 		["CboxUseAllInLFG"]="显示來自组队频道的所有讯息",
@@ -430,14 +436,14 @@ function GBB.LocalizationInit()
 
 	-- Needed to not cause overflow when using english
 	if (locale ~= "enGB" and locale ~= "enUS") then
-		setmetatable(l, {__index = function (t, k)  
-			if GBB.l and GBB.l[k] then 
+		setmetatable(l, {__index = function (t, k)
+			if GBB.l and GBB.l[k] then
 				return GBB.l[k]
 			elseif GBB.locales.enGB and GBB.locales.enGB[k] then
 				return GBB.locales.enGB[k]
 			else
 				return "["..k.."]"
-			end	
+			end
 		end})
 	end
 	return l
