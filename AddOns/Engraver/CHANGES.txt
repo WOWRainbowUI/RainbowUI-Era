@@ -1,22 +1,16 @@
-lightweight tag 9a55d543883b40986b76d343ab423c29123e8ac1 v1.14.5
+lightweight tag 5fcbc230a78631d9fce247e5a799d93b537f50fb v1.14.6
 Author:	Mike D <mcd8604@users.noreply.github.com>
-Date:	Tue Apr 2 11:09:21 2024 -0400
+Date:	Wed Apr 17 03:12:18 2024 -0400
 
-commit 9a55d543883b40986b76d343ab423c29123e8ac1
+commit 5fcbc230a78631d9fce247e5a799d93b537f50fb
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Tue Apr 2 11:09:21 2024 -0400
+Date:   Wed Apr 17 03:12:18 2024 -0400
 
-    Update Engraver.toc
+    hide CD when using ShowOnMouseOver
 
-commit 18e37bad7943edf7c8203c0c9b664809e2fcaf4b
+commit 8e6f00b627af25e7aed0c714de75ce74049030cf
 Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Fri Mar 29 01:53:32 2024 -0400
+Date:   Wed Apr 17 00:52:27 2024 -0400
 
-    Update README.md
-
-commit c46373ab1eed990c881efd834558b4891bfc5a94
-Author: Mike D <mcd8604@users.noreply.github.com>
-Date:   Fri Mar 29 00:13:11 2024 -0400
-
-    Update issue templates
+    fix ENGRAVER_SHOW_HIDE binding for shared options
 
