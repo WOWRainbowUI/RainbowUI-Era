@@ -25,6 +25,11 @@ f:SetMovable(true)
 f:RegisterForDrag("LeftButton")
 f:SetScript("OnDragStart", f.StartMoving)
 f:SetScript("OnDragStop", f.StopMovingOrSizing)
+f:SetScript("OnKeyDown", function (_, key) 
+    if key == "ESCAPE" then
+        f:Hide()
+    end
+end)
 f:Hide()
 
 MySlot.MainFrame = f
@@ -484,7 +489,45 @@ end)
 SlashCmdList["MYSLOT"] = function(msg, editbox)
     local cmd, what = msg:match("^(%S*)%s*(%S*)%s*$")
 
-    if cmd == "clear" then
+    if cmd == "load" then
+
+        if not MyslotExports then
+            MyslotExports = {}
+        end
+        if not MyslotExports["exports"] then
+            MyslotExports["exports"] = {}
+        end
+        local exports = MyslotExports["exports"]
+        local profileString = ""
+
+        for i, profile in ipairs(exports) do
+
+            if profile.name == what then
+                MySlot:Print(L["Profile to load found : " .. profile.name])
+                profileString = profile.value
+            end
+        end
+
+        if profileString == "" then
+            MySlot:Print(L["No profile found with name " .. what])
+        else
+            local msg = MySlot:Import(profileString, { force = false })
+
+            if not msg then
+                return
+            end
+
+            MySlot:RecoverData(msg, {
+                ignoreAction = false,
+                ignoreBinding = false,
+                ignoreMacro = false,
+                clearAction = false,
+                clearBinding = false,
+                clearMacro = false,
+            })
+        end
+
+    elseif cmd == "clear" then
         -- MySlot:Clear(what)
         InterfaceOptionsFrame_OpenToCategory(L["My-slot"])
         InterfaceOptionsFrame_OpenToCategory(L["My-slot"])

@@ -61,60 +61,6 @@ L["Try force importing"] = true
 L["Unsaved"] = true
 L["Use random mount instead of an unattained mount"] = true
 
-elseif locale == 'esES' then
---[[Translation missing --]]
---[[ L["[WARN] Ignore slot due to an unknown error DEBUG INFO = [S=%s T=%s I=%s] Please send Importing Text and DEBUG INFO to %s"] = "[WARN] Ignore slot due to an unknown error DEBUG INFO = [S=%s T=%s I=%s] Please send Importing Text and DEBUG INFO to %s"--]] 
---[[Translation missing --]]
---[[ L["[WARN] Ignore unsupported Key Binding [ %s ] , contact %s please"] = "[WARN] Ignore unsupported Key Binding [ %s ] , contact %s please"--]] 
---[[Translation missing --]]
---[[ L["[WARN] Ignore unsupported Slot Type [ %s ] , contact %s please"] = "[WARN] Ignore unsupported Slot Type [ %s ] , contact %s please"--]] 
-L["All slots were restored"] = "Se han restaurado todos los huecos"
---[[Translation missing --]]
---[[ L["Are you SURE to delete '%s'?"] = "Are you SURE to delete '%s'?"--]] 
-L["Are you SURE to import ?"] = "¿Seguro que quieres importarlo?"
-L["Bad importing text [CRC32]"] = "Texto de importación incorrecto [CRC32]"
-L["Bad importing text [TEXT]"] = "Texto de importación incorrecto [TEXT]"
---[[Translation missing --]]
---[[ L["Clear Action before applying"] = "Clear Action before applying"--]] 
---[[Translation missing --]]
---[[ L["Clear Binding before applying"] = "Clear Binding before applying"--]] 
---[[Translation missing --]]
---[[ L["Clear Macro before applying"] = "Clear Macro before applying"--]] 
-L["Close"] = "Cerrar"
-L["DANGEROUS"] = "PELIGROSO"
-L["Export"] = "Exportar"
-L["Feedback"] = "Comentarios"
-L["Force Import"] = "Importación forzosa"
-L["Ignore Import/Export Action"] = "Ignorar las barras de acción en la importación/exportación"
-L["Ignore Import/Export Key Binding"] = "Ignorar los atajos de teclado en la importación/exportación"
-L["Ignore Import/Export Macro"] = "Ignorar las macros en la importación/exportación"
-L["Ignore unattained pet[id=%s], %s"] = [=[Ignora la mascota no obtenida [id=%s], %s
-
-]=]
-L["Ignore unlearned skill [id=%s], %s"] = "Ignora la facultad no obtenida [id=%s], %s"
-L["Import"] = "Importar"
-L["Import is not allowed when you are in combat"] = "No se puede importar mientras estás en combate"
-L["Importing text [ver:%s] is not compatible with current version"] = "El texto de importación [ver:%s] no es compatible con la versión actual"
-L["Macro %s was ignored, check if there is enough space to create"] = "La macro %s se ha ignorado, comprueba si tienes suficiente espacio para crearla"
---[[Translation missing --]]
---[[ L["Minimap Icon"] = "Minimap Icon"--]] 
-L["Myslot"] = "Myslot"
-L["Name of exported text"] = "Nombre del texto exportado"
-L["Open Myslot"] = "Abrir Myslot"
-L["Please type %s to confirm"] = "Escribe %s para confirmar"
-L["Remove all Key Bindings"] = "Borrar todos los atajos de teclado"
-L["Remove all Macros"] = "Borrar todas las macros"
-L["Remove everything in ActionBar"] = "Borrar todo sobre las barras de acción"
-L["Rename"] = "Renombrar"
-L["Skip bad CRC32"] = "Se salta CRC32 maligno"
-L["Skip CRC32, version and any other validation before importing. May cause unknown behavior"] = "Se salta CRC32, versión y cualquier otra validación antes de importar. Puede provocar comportamientos indeseados"
-L["Skip unsupported version"] = "Se salta la validación de versión no soportada"
-L["Time"] = "Hora"
-L["TOC_NOTES"] = "Myslot sirve para transferir opciones entre distintas cuentas. Comentarios a farmer1992@gmail.com"
-L["Try force importing"] = "Intentar importación forzosa"
-L["Unsaved"] = "No está guardado"
-L["Use random mount instead of an unattained mount"] = "Usa una montura aleatoria en vez de una no disponible"
-
 elseif locale == 'zhCN' then
 L["[WARN] Ignore slot due to an unknown error DEBUG INFO = [S=%s T=%s I=%s] Please send Importing Text and DEBUG INFO to %s"] = "[WARN] 忽略出错技能 DEBUG INFO = [S=%s T=%s I=%s] 请将出错的字符和 DEBUG INFO 发给作者 %s"
 L["[WARN] Ignore unsupported Key Binding [ %s ] , contact %s please"] = "[WARN] 忽略不支持的按键绑定 [ %s ]，请通知作者 %s"
