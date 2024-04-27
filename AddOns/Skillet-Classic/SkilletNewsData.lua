@@ -25,6 +25,24 @@ local isWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
 
 Skillet.NewsName = "Skillet-Classic News"
 Skillet.NewsData = {
+	{	version = "1.83",
+		data = {
+			{	name = "Changes",
+				data = {
+					{ header = "Skill Levels", body = "Update for WotLK recipes" },
+				},
+				data = {
+					{ header = "Slot Filter", body = "Change itemEquipLoc from INVTYPE_ROBE to INVTYPE_CHEST" },
+				},
+				data = {
+					{ header = "TOC", body = "Update TOC" },
+				},
+				data = {
+					{ header = "TradeSkill", body = "Better handling of scan trade errors" },
+				},
+			},
+		},
+	},
 	{	version = "1.82",
 		data = {
 			{	name = "Changes",

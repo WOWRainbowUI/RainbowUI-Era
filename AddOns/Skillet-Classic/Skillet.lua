@@ -32,12 +32,14 @@ Skillet.L = L
 local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
 Skillet.version = GetAddOnMetadata("Skillet-Classic", "Version")
 Skillet.interface = select(4, GetBuildInfo())
-Skillet.build = (Skillet.interface < 11404 and "Classic") or (Skillet.interface < 20000 and "Classic2") or (Skillet.interface < 30000 and "BCC") or (Skillet.interface < 40000 and "Wrath") or "Retail"
+Skillet.build = (Skillet.interface < 20000 and "Classic") or (Skillet.interface < 30000 and "BCC") or
+  (Skillet.interface < 40000 and "Wrath") or (Skillet.interface < 50000 and "Cata") or "Retail"
 Skillet.project = WOW_PROJECT_ID
 local isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local isClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 local isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 local isWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+-- local isCata = WOW_PROJECT_ID == WOW_PROJECT_CATA_CLASSIC
 
 Skillet.isCraft = false			-- true for the Blizzard Craft UI, false for the Blizzard TradeSkill UI
 Skillet.lastCraft = false		-- help events know when to call ConfigureRecipeControls()
@@ -153,10 +155,12 @@ function Skillet:DisableBlizzardFrame()
 		if (not IsAddOnLoaded("Blizzard_CraftUI")) then
 			LoadAddOn("Blizzard_CraftUI");
 		end
-		self.BlizzardCraftFrame = CraftFrame
-		self.craftHide = CraftFrame:GetScript("OnHide")
-		CraftFrame:SetScript("OnHide", nil)
-		HideUIPanel(CraftFrame)
+		if CraftFrame then
+			self.BlizzardCraftFrame = CraftFrame
+			self.craftHide = CraftFrame:GetScript("OnHide")
+			CraftFrame:SetScript("OnHide", nil)
+			HideUIPanel(CraftFrame)
+		end
 	end
 end
 
@@ -300,7 +304,7 @@ function Skillet:OnInitialize()
 	local dataVersion = 5
 	local queueVersion = 1
 	local customVersion = 1
-	local recipeVersion = 4
+	local recipeVersion = 5
 	local _,wowBuild,_,wowVersion = GetBuildInfo();
 	self.wowBuild = wowBuild
 	self.wowVersion = wowVersion
@@ -481,6 +485,7 @@ function Skillet:FlushRecipeData()
 	Skillet.db.global.recipeDB = {}
 	Skillet.db.global.itemRecipeUsedIn = {}
 	Skillet.db.global.itemRecipeSource = {}
+	Skillet.db.global.SkillLevels = nil
 	Skillet.db.realm.skillDB = {}
 	Skillet.db.realm.subClass = {}
 	Skillet.db.realm.invSlot = {}
@@ -1288,21 +1293,27 @@ function Skillet:SkilletShowWindow()
 		self.db.realm.skillDB[self.currentPlayer][self.currentTrade] = {}
 	end
 	if not self:RescanTrade() then
-		if TSM_API or ZygorGuidesViewerClassicSettings then
-			if TSM_API then
-				DA.MARK3(L["Conflict with the addon TradeSkillMaster"])
-				self.db.profile.TSM_API = true
+		if self.scanTradeReason == 1 then
+			if TSM_API or ZygorGuidesViewerClassicSettings then
+				if TSM_API then
+					DA.MARK3(L["Conflict with the addon TradeSkillMaster"])
+					self.db.profile.TSM_API = true
+				end
+				if ZygorGuidesViewerClassicSettings then
+					DA.MARK3(L["Conflict with the addon Zygor Guides"])
+					self.db.profile.ZYGOR = true
+				end
+			else
+	--
+	-- Changed from DA.CHAT because this state can happen before enough
+	-- TRADE_SKILL_UPDATE or CRAFT_UPDATE events have occurred.
+	--
+				DA.WARN(L["No headers, try again"])
 			end
-			if ZygorGuidesViewerClassicSettings then
-				DA.MARK3(L["Conflict with the addon Zygor Guides"])
-				self.db.profile.ZYGOR = true
-			end
-		else
---
--- Changed from DA.CHAT because this state can happen before enough
--- TRADE_SKILL_UPDATE or CRAFT_UPDATE events have occurred.
---
-			DA.WARN(L["No headers, try again"])
+		elseif self.scanTradeReason == 2 then
+				DA.WARN("Missing Reagent Links, try again")
+		elseif self.scanTradeReason == 3 then
+				DA.WARN("Missing Reagent Names, try again")
 		end
 		return
 	end
