@@ -83,6 +83,10 @@ My goal is to append onto the existing Spellbook in WoW's UI in order to minimiz
 with other addons that may alter the Spellbook.  With the next potential feature I am reviewing 
 to add into the Spellbook, my goal to keep the Spellbook simple may change.
 
+Version 2.6.12
+		Version bump for Classic ERA
+
+
 Version 2.6.5
 		Updated for Wrath of the Lich King Classic
 		Removed spell rank filter as unneded because SpellBook in WotLKC already has this functionality
