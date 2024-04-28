@@ -55,6 +55,8 @@ function addon.GetRecipeRequirementText(data, itemCallback)
             source = addon.Strings.Sources.Quest
         elseif data.itemSource == sources.ZoneDrop then
             source = addon.Strings.Sources.ZoneDrop
+        elseif data.itemSource == sources.Drop then
+            source = addon.Strings.Sources.Drop .. " " .. data.itemSourceDropName
         else
             source = "[NYI] " .. data.itemSource 
         end
@@ -105,7 +107,7 @@ function addon.GetRecipeDB(professionName, getCraftInfoFunc, currentSkill, inclu
             if data.source == sources.Trainer then
                 table.insert(trainerDB, data)
             elseif data.source == sources.Item then
-                if data.itemSource == sources.WorldDrop then
+                if (data.itemSource == sources.WorldDrop) or (data.itemSource == sources.Drop) then
                     table.insert(recipeWorldDropDB, data)
                 elseif data.itemSource == sources.Vendors then
                     table.insert(recipeVendorDB, data)

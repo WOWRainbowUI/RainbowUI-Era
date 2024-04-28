@@ -1,7 +1,7 @@
 # Unlearned Recipes
 
-## [r009](https://github.com/TLDRMissions/UnlearnedRecipes/tree/r009) (2024-04-03)
-[Full Changelog](https://github.com/TLDRMissions/UnlearnedRecipes/compare/r008...r009) [Previous Releases](https://github.com/TLDRMissions/UnlearnedRecipes/releases)
+## [r014](https://github.com/TLDRMissions/UnlearnedRecipes/tree/r014) (2024-04-23)
+[Full Changelog](https://github.com/TLDRMissions/UnlearnedRecipes/compare/r013...r014) [Previous Releases](https://github.com/TLDRMissions/UnlearnedRecipes/releases)
 
-- Fix Zone Drop and Quest display  
-- Update TradeSkillFrame.lua  
+- Scraper can now tell the difference between a vendor recipe and a drop from a named mob  
+    Closes: https://github.com/TLDRMissions/UnlearnedRecipes/issues/2  

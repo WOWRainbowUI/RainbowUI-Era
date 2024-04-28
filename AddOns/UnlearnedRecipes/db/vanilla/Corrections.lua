@@ -43,6 +43,7 @@ end
 local isSoD = C_Seasons.GetActiveSeason() == 2
 if isSoD then
     addon.db.Tailoring[8764] = nil -- Earthen Vest, has a different recipe 439100 on SoD
+    addon.db.Blacksmithing[3503] = nil -- Golden Scale Coif
 else
     for _, prof in pairs(addon.db) do
         for id, data in pairs(prof) do
@@ -57,3 +58,6 @@ end
 -- Pearl-handled dagger, requires 115, wowhead lists 110 for some reason?
 -- https://www.wowhead.com/classic/spell=6517/pearl-handled-dagger#comments
 addon.db.Blacksmithing[6517].minSkill = 115
+
+-- Smelt Truesilver is taught by the trainer but not listed on wowhead for some reason
+addon.db.Mining[10098].source = sources.Trainer

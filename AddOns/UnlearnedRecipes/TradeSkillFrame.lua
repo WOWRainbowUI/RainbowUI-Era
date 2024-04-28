@@ -18,9 +18,11 @@ local currentRecipes = {}
 
 local function detectChanges()
     for i = 1, GetNumTradeSkills() do
-        local skillName = GetTradeSkillInfo(i)
+        local info = {GetTradeSkillInfo(i)}
         if not currentRecipes[i] then return true end
-        if currentRecipes[i] ~= skillName then return true end
+        for j = 1, 4 do
+            if info[j] ~= currentRecipes[i][j] then return true end
+        end
     end
     return false
 end
@@ -89,10 +91,9 @@ function TradeSkillFrame_Update()
     local professionName, currentSkill = GetTradeSkillLine()
 	local db = dbCache[professionName]
     
+    wipe(currentRecipes)
     for i = 1, numTradeSkills do
-    	wipe(currentRecipes)
-        local skillName = GetTradeSkillInfo(i)
-        currentRecipes[i] = skillName
+        currentRecipes[i] = {GetTradeSkillInfo(i)}
     end
     
     if not db then
