@@ -1,16 +1,3 @@
---[[
-                                ----o----(||)----oo----(||)----o----
-
-                                        Chests, Gear and More
-                                         Localisation Module
-
-                                       v1.02 - 7th April 2024
-                                Copyright (C) Taraezor / Chris Birch
-                                         All Rights Reserved
-
-                                ----o----(||)----oo----(||)----o----
-]]
-
 local _, ns = ...
 L = {}
 ns.L = L
@@ -394,36 +381,105 @@ end
 
 if ns.locale == "deDE" then
 	ns.L["AddOn Description"] = "Alle ramponierten Truhen"
+	ns.L["AoPD"] = "Aura des paralysierenden Schreckens"
 	ns.L["Battered Chest"] = "Ramponierte Truhe"
+	ns.L["Best Hunter Pets"] = "Beste Jägerhaustiere"
+	ns.L["Chest Rank"] = "Der Rang der Truhe: "
+	ns.L["Cozy Sleeping Bag"] = "Gemütlicher Schlafsack"
+	ns.L["Fel Portal"] = "Teufelsportal "
+	ns.L["Nightmare"] = "Alptraum"
+	ns.L["Priest"] = "Priester"
+	ns.L["Void Touched"] = "Leerenberührte"
 	
 elseif ns.locale == "esES" or ns.locale == "esMX" then
 	ns.L["AddOn Description"] = "Todos los cofres maltratados"
+	ns.L["AoPD"] = "Aura de terror paralizante"
 	ns.L["Battered Chest"] = "Cofre maltrecho"
+	ns.L["Best Hunter Pets"] = "Mascotas de cazador"
+	ns.L["Chest Rank"] = "Rango de cofre: "
+	ns.L["Cozy Sleeping Bag"] = "Saco de dormir acogedor"
+	ns.L["Fel Portal"] = "Portal vil"
+	ns.L["Nightmare"] = "Pesadilla"
+	ns.L["Priest"] = "Sacerdote"
+	ns.L["Void Touched"] = "Tocados por el Vacío"
 
 elseif ns.locale == "frFR" then
 	ns.L["AddOn Description"] = "Tous les coffres battus"
+	ns.L["AoPD"] = "Aura d’effroi paralysant"
 	ns.L["Battered Chest"] = "Coffre endommagé"
+	ns.L["Best Hunter Pets"] = "Meilleurs mascotte de cazador"
+	ns.L["Chest Rank"] = "Rang du coffre: "
+	ns.L["Cozy Sleeping Bag"] = "Sac de couchage douillet"
+	ns.L["Fel Portal"] = "Portail gangrené"
+	ns.L["Nightmare"] = "Cauchemar"
+	ns.L["Priest"] = "Prêtre"
+	ns.L["Void Touched"] = "Touché par le Vide"
 
 elseif ns.locale == "koKR" then
 	ns.L["AddOn Description"] = "모든 낡은 궤짝"
+	ns.L["AoPD"] = "마비의 공포 오라"
 	ns.L["Battered Chest"] = "낡은 궤짝"
+	ns.L["Best Hunter Pets"] = "최고의 사냥꾼 야수"
+	ns.L["Chest Rank"] = "가슴 순위: "
+	ns.L["Cozy Sleeping Bag"] = "아늑한 침낭"
+	ns.L["Fel Portal"] = "지옥 차원문"
+	ns.L["Gnomeregan"] = "놈리건"
+	ns.L["Nightmare"] = "악몽"
+	ns.L["Priest"] = "사제"
+	ns.L["Void Touched"] = "공허에 물든"
 
 elseif ns.locale == "ptBR" or ns.locale == "ptPT" then
 	ns.L["AddOn Description"] = "Todos os Baús Desgastado"
+	ns.L["AoPD"] = "Aura de Horror Paralisante"
 	ns.L["Battered Chest"] = "Baú Desgastado"
+	ns.L["Best Hunter Pets"] = "Os melhores Ajudante de Caçador"
+	ns.L["Chest Rank"] = "Classificação do baú: "
+	ns.L["Fel Portal"] = "Portal Vil"
+	ns.L["Gnomeregan"] = "Гномреган"
+	ns.L["Nightmare"] = "Pesadelo"
+	ns.L["Priest"] = "Sacerdote"
+	ns.L["Void Touched"] = "Tocadas pelo Caos"
 
 elseif ns.locale == "ruRU" then
 	ns.L["AddOn Description"] = "Все Побитые сундукии"
+	ns.L["AoPD"] = "Аура парализующего ужаса"
 	ns.L["Battered Chest"] = "Побитый сундук"
+	ns.L["Best Hunter Pets"] = "Лучшие питомцы для охотников"
+	ns.L["Chest Rank"] = "Ранг Сундука: "
+	ns.L["Cozy Sleeping Bag"] = "Уютный спальный мешок"
+	ns.L["Fel Portal"] = "Портал Скверны"
+	ns.L["Gnomeregan"] = "Гномреган"
+	ns.L["Nightmare"] = "Кошмар"
+	ns.L["Priest"] = "Жрец"
+	ns.L["Void Touched"] = "Меченные Бездной"
 
 elseif ns.locale == "zhCN" then
 	ns.L["AddOn Description"] = "所有破损的箱子"
+	ns.L["AoPD"] = "痹体恐惧氛围"
 	ns.L["Battered Chest"] = "破损的箱子"
+	ns.L["Best Hunter Pets"] = "最佳猎人宠物"
+	ns.L["Chest Rank"] = "宝箱的等级: "
+	ns.L["Fel Portal"] = "邪能传送门"
+	ns.L["Gnomeregan"] = "诺莫瑞根"
+	ns.L["Nightmare"] = "恶梦"
+	ns.L["Priest"] = "牧师"
+	ns.L["Void Touched"] = "虚空触动"
 
 elseif ns.locale == "zhTW" then
 	ns.L["AddOn Description"] = "所有破損的箱子"
+	ns.L["AoPD"] = "麻痺體恐懼氛圍"
 	ns.L["Battered Chest"] = "破損的箱子"
+	ns.L["Best Hunter Pets"] = "最佳獵人寵物"
+	ns.L["Chest Rank"] = "寶箱的等級: "
+	ns.L["Fel Portal"] = "邪能傳送門"
+	ns.L["Gnomeregan"] = "諾莫瑞根"
+	ns.L["Nightmare"] = "惡夢"
+	ns.L["Priest"] = "牧師"
+	ns.L["Void Touched"] = "虛空觸動"
 
 else
 	ns.L["AddOn Description"] = "Helps you to collect Battered Chests"
+	ns.L["AoPD"] = "Aura of Paralyzing Dread"
+	ns.L["Chest Rank"] = "Chest Rank: "
+	ns.L["Void Touched"] = "Void-Touched"
 end
