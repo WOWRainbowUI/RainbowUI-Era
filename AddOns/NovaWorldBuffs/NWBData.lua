@@ -70,13 +70,22 @@ function NWB:OnCommReceived(commPrefix, string, distribution, sender)
 		return;
 	end
 	local _, realm = strsplit("-", sender, 2);
-	if (not NWB.isClassic) then
+	--[[if (not NWB.isClassic) then
 		--Ignore this check on classic era, there's no crossrealm (only linked realms) there except in bgs and we ignore bgs already.
 		--If realm found then it's not my realm.
 		--If acecomm changes and starts supplying realm for own realm then this needs to be changed.
 		--if (realm and (realm ~= GetRealmName() and realm ~= GetNormalizedRealmName())) then
 		if (realm and not connectedRealms[realm]) then
 			--Ignore data from other realms (in bgs and lfg now it's been added to wrath).
+			return;
+		end
+	end]]
+	--Now checking connected realms in all versions of the game instead, connected realms are coming with cata.
+	if (realm) then
+		NWB:debug("Realm data received:", realm);
+		--Realm name is only supplied by ace if not our realm.
+		if (realm ~= GetRealmName() and not connectedRealms[realm]) then
+			--Ignore data from other realms.
 			return;
 		end
 	end
@@ -203,7 +212,7 @@ function NWB:OnCommReceived(commPrefix, string, distribution, sender)
 			NWB:sendLayerBuffs();
 		end
 	end
-	if (tonumber(remoteVersion) < 2.45) then
+	if (tonumber(remoteVersion) < 2.75) then
 		if (cmd == "requestData" and distribution == "GUILD") then
 			if (not NWB:getGuildDataStatus()) then
 				NWB:sendSettings("GUILD");
@@ -571,6 +580,14 @@ end
 
 --Send first yell msg.
 function NWB:sendYell(distribution, type, target, layer, arg)
+	if (type == "zan") then
+		--They reused the same NPC and drop msg as ZF buff in SoD for the Sunken Temple buff.
+		--So block it from announcing during phase 3 until everyone updates the addon and it's blocked in yell detection.
+		--6 second drop time like the other SoD buffs, no reason to announce.
+		if (NWB.isSOD and NWB.sodPhase == 3) then
+			return;
+		end
+	end
 	if (NWB.sharedLayerBuffs) then
 		layer = nil;
 	end
@@ -1915,7 +1932,7 @@ function NWB:receivedData(dataReceived, sender, distribution, elapsed)
 		end
 	end
 	--If new flower data received and not freshly picked by guild member (that sends a msg to guild chat already)
-	if (newFlowerData and NWB.db.global.showNewFlower) then
+	if (newFlowerData and NWB.db.global.showNewFlower and not NWB.isLayered) then
 		--local string = "New songflower timer received:";
 		local string = L["newSongflowerReceived"] .. ":";
 		local found;
@@ -3519,7 +3536,7 @@ end
 function NWB:recalcLFrame()
 	NWBLFrame.EditBox:SetText("\n\n");
 	if (not IsInGuild()) then
-		NWBLFrame.EditBox:Insert("|cffFFFF00You have no guild, this command shows guild members only.\n");
+		NWBLFrame.EditBox:Insert("|cffFFFF00" .. L["layersNoGuild"] .. "\n");
 	else
 		GuildRoster();
 		local numTotalMembers = GetNumGuildMembers();
@@ -3604,7 +3621,7 @@ f:RegisterEvent("AREA_POIS_UPDATED");
 f:SetScript('OnEvent', function(self, event, ...)
 	if (event == "PLAYER_ENTERING_WORLD" ) then
 		lastPew = GetServerTime();
-		local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+		local _, _, zone = NWB:GetPlayerZonePosition();
 		if (zone == 1952) then
 			--Make a NPC retarget be required when entering terok to record timers.
 			NWB.lastTerokNPCID = nil;
@@ -3635,7 +3652,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 			end
 		end]]
 	elseif (event == "AREA_POIS_UPDATED") then
-		local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+		local _, _, zone = NWB:GetPlayerZonePosition();
 		if (lastZone ~= 1952 and zone == 1952) then
 			--Make a NPC retarget be required when entering terok to record timers.
 			NWB.lastTerokNPCID = nil;
@@ -3649,7 +3666,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 		if (lastZone == 1952 and zone == 1955) then
 			C_Timer.After(14, function()
 			
-				local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+				local _, _, zone = NWB:GetPlayerZonePosition();
 				if (zone == 1955 and GetServerTime() - lastZoneSend > 120) then
 					NWB:sendData("YELL", nil, nil, true, true, "terokkar");
 					lastZoneSend = GetServerTime();
@@ -5110,7 +5127,7 @@ end)]]
 --[[local f = CreateFrame("Frame");
 f:RegisterEvent("UPDATE_BATTLEFIELD_SCORE");
 f:SetScript('OnEvent', function(self, event, ...)
-	local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+	local _, _, zone = NWB:GetPlayerZonePosition();
 	if (C_Map.GetBestMapForUnit("player") == 2104) then
 		if (GetBattlefieldWinner()) then
 			--WG ended, stuff added here later.
