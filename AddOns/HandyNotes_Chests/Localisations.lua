@@ -166,6 +166,7 @@ elseif ns.locale == "zhTW" then
 	
 	-- 自行加入
 	ns.L["Cozy Sleeping Bag"] = "舒適的睡袋"
+	ns.L["Nightmare Bloom / Seed"] = "共鳴的夢魘之花 / 夢魘種子"
 
 else
 	ns.L["AddOn Description"] = "Helps you to collect Battered Chests"
@@ -175,4 +176,5 @@ else
 	
 	-- 自行加入
 	ns.L["Cozy Sleeping Bag"] = "Cozy Sleeping Bag"
+	ns.L["Nightmare Bloom / Seed"] = "Nightmare Bloom / Seed"
 end
