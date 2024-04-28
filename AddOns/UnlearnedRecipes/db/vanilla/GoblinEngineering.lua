@@ -59,7 +59,10 @@ addon.db.GoblinEngineering = {
 		itemID = 10577,
 		reagents = {10559, 3860, 10505, 10558, 7068, },
 		reagentQuantities = {2, 4, 5, 1, 1, },
-		source = sources.Unknown,
+		source = sources.Item,
+		sourceItemID = 221337,
+		itemSource = sources.Vendors,
+		itemVendors = {222261},
 	},
 	[8895] = {
 		spellID = 8895,

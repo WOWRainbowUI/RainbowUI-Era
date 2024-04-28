@@ -93,8 +93,8 @@ addon.db.GnomishEngineering = {
 		reagentQuantities = {1, 2, 1, 1, 1, },
 		source = sources.Item,
 		sourceItemID = 18661,
-		itemSource = sources.Vendors,
-		itemVendors = {8920},
+		itemSource = sources.Drop,
+		itemSourceDropName = 'Weapon Technician',
 	},
 	[23489] = {
 		spellID = 23489,
