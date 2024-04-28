@@ -18,7 +18,7 @@ local isUS;
 local region = GetCurrentRegion();
 if (region == 1 and string.match(NWB.realm, "(AU)")) then
 	--OCE.
-	calcStart = 1707267600; --Date and time (GMT): Wednesday, February 7, 2024 1:00:00 AM
+	calcStart = 1707264000; --Date and time (GMT): Wednesday, February 7, 2024 12:00:00 AM
 elseif (region == 1) then
 	--US.
 	isUS = true;
@@ -45,11 +45,10 @@ local function getTimeLeft()
 		local start = calcStart;
 		local isDST = NWB:isDST();
 		if (isDST) then
-			--wtf...
-			if (region == 3) then
-				start = start - 3600;
-			else
+			if (isUS) then
 				start = start + 3600;
+			else
+				start = start - 3600;
 			end
 		end
 		local utc = GetServerTime();
@@ -416,7 +415,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 			lastWidget = data.widgetID;
 		end
 	elseif (event == "CHAT_MSG_BG_SYSTEM_NEUTRAL") then
-		local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+		local _, _, zone = NWB:GetPlayerZonePosition();
 		if (zone == 1440) then
 			local msg = ...;
 			if (strmatch(msg, L["ashenvaleHordeVictoryMsg"])) then
@@ -438,7 +437,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 	elseif (event == "PLAYER_ENTERING_WORLD") then
 		local isLogon, isReload = ...;
 		if (isLogon or isReload) then
-			local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+			local _, _, zone = NWB:GetPlayerZonePosition();
 			if (zone == 1440) then
 				--If we logon in the zone and it's already about to start don't announce to guild, someone probably already did.
 				logonStartDelay = GetServerTime();
@@ -498,7 +497,7 @@ function NWB:isAshenvaleRunning()
 	if (isRunning) then
 		return true;
 	end
-	local _, _, zone = NWB.dragonLib:GetPlayerZonePosition();
+	local _, _, zone = NWB:GetPlayerZonePosition();
 	if (zone == 1440) then
 		local children = {UIWidgetTopCenterContainerFrame:GetChildren()};
 		for k, v in pairs(children) do

@@ -890,7 +890,7 @@ L["Left-Click"] = "Left-Click";
 L["Right-Click"] = "Right-Click";
 L["Shift Left-Click"] = "Shift Left-Click";
 L["Shift Right-Click"] = "Shift Right-Click";
-L["Control Left-Click"] = "Control Left-Click";
+L["Control Left-Click"] = "Ctrl Left-Click";
 
 --Try keep these roughly the same length or shorter.
 L["Guild Layers"] = "Guild Layers";
@@ -920,7 +920,6 @@ L["Hold to drag"] = "Hold to drag";
 
 L["Can't find current layer or no timers active for this layer."] = "Can't find current layer or no timers active for this layer.";
 L["No guild members online sharing layer data found."] = "No guild members online sharing layer data found.";
-L["You have no guild, this command shows guild members only."] = "You have no guild, this command shows guild members only.";
 
 L["ashenvaleOverlayFontTitle"] = "Overlay Font";
 L["ashenvaleOverlayFontDesc"] = "Which font to use for overlay displays.";
@@ -1005,3 +1004,11 @@ L["Last seen"] = "Last seen";
 
 L["Yes"] = "Yes"
 L["No"] = "No"
+
+L["World Events"] = "World Events";
+L["layersNoGuild"] = "You have no guild, this command shows guild members only.";
+
+L["Fervor of the Temple Explorer"] = "Fervor of the Temple Explorer";
+L["No guild"] = "No guild";
+
+L["Temple of Atal'Hakkar"] = "Temple of Atal'Hakkar"; --Not necessarily the dungeon name, need to match what Zandalarian Emissary shouts calls it for sunken temple buff in SoD.

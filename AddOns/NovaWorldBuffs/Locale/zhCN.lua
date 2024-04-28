@@ -30,6 +30,7 @@ L["Mol'dar's Moxie"] = "摩尔达的勇气";
 L["Boon of Blackfathom"] = "黑暗深渊的祝福";
 L["Ashenvale Rallying Cry"] = "灰谷集结呐喊";
 L["Spark of Inspiration"] = "癫狂灵感火花"; --Phase 2 SoD world buff.
+L["Fervor of the Temple Explorer"] = "神庙探索者的热忱";
 
 ---=====---
 ---Horde---
@@ -696,3 +697,5 @@ L["ammunition"] = "Ammo";
 L["attunements"] = "Attunements";
 L["currentRaidLockouts"] = "Current Raid Lockouts";
 L["none"] = "None.";
+
+L["Temple of Atal'Hakkar"] = "阿塔哈卡神庙";
