@@ -253,10 +253,13 @@ readers["spawnlist"] = function(stream)
         local list = {}
         for i = 1, spawnCount do
             local x, y = stream:ReadInt12Pair()
+            local phase = stream:ReadShort()
             if x == 0 and y == 0 then
                 list[i] = {-1, -1}
-            else
+            elseif phase == 0 then
                 list[i] = {x / 40.90, y / 40.90}
+            else
+                list[i] = {x / 40.90, y / 40.90, phase}
             end
         end
         spawnlist[zone] = list
@@ -285,7 +288,7 @@ readers["objective"] = function(stream)
 
     local ret = {}
     for i = 1, count do
-        ret[i] = {stream:ReadInt24(), stream:ReadTinyStringNil()}
+        ret[i] = {stream:ReadInt24(), stream:ReadTinyStringNil(), stream:ReadByte()}
     end
     return ret
 end
@@ -554,6 +557,7 @@ QuestieDBCompiler.writers = {
                     else
                         stream:WriteInt12Pair(floor(spawn[1] * 40.90), floor(spawn[2] * 40.90))
                     end
+                    stream:WriteShort(spawn[3] or 0) -- spawn phase
                 end
             end
         else
@@ -589,6 +593,7 @@ QuestieDBCompiler.writers = {
             for _, pair in pairs(value) do
                 stream:WriteInt24(pair[1])
                 stream:WriteTinyString(pair[2] or "")
+                stream:WriteByte(pair[3] or 0)
             end
         else
             stream:WriteByte(0)
@@ -620,8 +625,8 @@ QuestieDBCompiler.writers = {
                 for i=1, #killobjectives do -- iterate over all killobjectives
                     local killobjective = killobjectives[i]
                     local npcIds = killobjective[1]
-                    assert(type(npcIds) == "table", "killobjective's npcids is not a table.")
-                    assert(#npcIds > 0, "killOojective has 0 npcIDs.")
+                    assert(type(npcIds) == "table", "killObjective's npcids is not a table.")
+                    assert(#npcIds > 0, "killObjective has 0 npcIDs.")
                     stream:WriteByte(#npcIds) -- write count of creatureIDs
                     for j=1, #npcIds do
                         stream:WriteInt24(npcIds[j]) -- write creatureID
@@ -732,7 +737,9 @@ skippers["spawnlist"] = function(stream)
     local count = stream:ReadByte()
     for _ = 1, count do
         stream._pointer = stream._pointer + 2
-        stream._pointer = stream:ReadShort() * 3 + stream._pointer
+        -- Skip over the 5 bytes of each spawn
+        -- 3 bytes for the spawn-pair of 12-bit integers and 2 byte for the phase
+        stream._pointer = stream:ReadShort() * 5 + stream._pointer
     end
 end
 local spawnlistSkipper = skippers["spawnlist"]
@@ -751,6 +758,7 @@ skippers["objective"] = function(stream)
     for _=1,count do
         stream._pointer = stream._pointer + 3
         stream._pointer = stream:ReadByte() + stream._pointer
+        stream._pointer = stream._pointer + 1
     end
 end
 skippers["spellobjective"] = function(stream)
@@ -1310,7 +1318,7 @@ function QuestieDBCompiler:ValidateQuests()
             local b = nonCompiledData[QuestieDB.questKeys[key]]
 
             --Special case for questLevel
-            if (Questie.IsTBC or Questie.IsWotlk) and (key == "questLevel" or key == "requiredLevel") then
+            if (Questie.IsTBC or Questie.IsWotlk or Questie.IsCata) and (key == "questLevel" or key == "requiredLevel") then
                 local questLevel, requiredLevel = getTbcLevel(compiledData[2], compiledData[1], playerLevel)
                 if (key == "questLevel") then
                     a = questLevel

@@ -346,7 +346,8 @@ function QuestieLib:GetRaceString(raceMask)
             l10n('Troll'),
             l10n('Goblin'),
             l10n('Blood Elf'),
-            l10n('Draenei')
+            l10n('Draenei'),
+            l10n('Worgen'),
         }
         local firstRun = true
         for k, v in pairs(raceTable) do
@@ -737,3 +738,5 @@ function QuestieLib.GetSpawnDistance(spawnA, spawnB)
 
     return math_sqrt(distanceX * distanceX + distanceY * distanceY)
 end
+
+return QuestieLib

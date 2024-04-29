@@ -1092,3 +1092,5 @@ function QuestieComms:ResetAll()
     QuestieComms.data:ResetAll()
     QuestieComms.remoteQuestLogs = {}
 end
+
+return QuestieComms

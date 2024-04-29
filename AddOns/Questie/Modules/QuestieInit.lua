@@ -33,6 +33,8 @@ local QuestieDBCompiler = QuestieLoader:ImportModule("DBCompiler")
 local QuestieCorrections = QuestieLoader:ImportModule("QuestieCorrections")
 ---@type QuestieMenu
 local QuestieMenu = QuestieLoader:ImportModule("QuestieMenu")
+---@type Townsfolk
+local Townsfolk = QuestieLoader:ImportModule("Townsfolk")
 ---@type QuestieQuest
 local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest")
 ---@type IsleOfQuelDanas
@@ -73,12 +75,16 @@ local QuestieSlash = QuestieLoader:ImportModule("QuestieSlash")
 local QuestXP = QuestieLoader:ImportModule("QuestXP")
 ---@type Tutorial
 local Tutorial = QuestieLoader:ImportModule("Tutorial")
+---@type Phasing
+local Phasing = QuestieLoader:ImportModule("Phasing")
 ---@type WorldMapButton
 local WorldMapButton = QuestieLoader:ImportModule("WorldMapButton")
 ---@type AvailableQuests
 local AvailableQuests = QuestieLoader:ImportModule("AvailableQuests")
 ---@type SeasonOfDiscovery
 local SeasonOfDiscovery = QuestieLoader:ImportModule("SeasonOfDiscovery")
+---@type WatchFrameHook
+local WatchFrameHook = QuestieLoader:ImportModule("WatchFrameHook")
 
 local coYield = coroutine.yield
 
@@ -94,7 +100,7 @@ local function loadFullDatabase()
 
     print("\124cFF4DDBFF [3/9] " .. l10n("Initializing townfolks") .. "...")
     coYield()
-    QuestieMenu:PopulateTownsfolk()
+    Townsfolk.Initialize()
 
     print("\124cFF4DDBFF [4/9] " .. l10n("Initializing locale") .. "...")
     coYield()
@@ -177,6 +183,7 @@ QuestieInit.Stages[1] = function() -- run as a coroutine
 
     QuestieProfessions:Init()
     QuestXP.Init()
+    Phasing.Initialize()
     coYield()
 
     local dbCompiled = false
@@ -190,6 +197,11 @@ QuestieInit.Stages[1] = function() -- run as a coroutine
         dbIsCompiled = Questie.db.global.dbIsCompiled or false
         dbCompiledOnVersion = Questie.db.global.dbCompiledOnVersion
         dbCompiledLang = Questie.db.global.dbCompiledLang
+    end
+
+    if Questie.IsSoD then
+        coYield()
+        SeasonOfDiscovery.Initialize()
     end
 
     -- Check if the DB needs to be recompiled
@@ -212,7 +224,7 @@ QuestieInit.Stages[1] = function() -- run as a coroutine
     if (not Questie.db.char.townsfolk) or (dbCompiledCount ~= Questie.db.char.townsfolkVersion) or (Questie.db.char.townsfolkClass ~= UnitClass("player")) then
         Questie.db.char.townsfolkVersion = dbCompiledCount
         coYield()
-        QuestieMenu:BuildCharacterTownsfolk()
+        Townsfolk:BuildCharacterTownsfolk()
     end
 
     coYield()
@@ -290,7 +302,7 @@ QuestieInit.Stages[3] = function() -- run as a coroutine
     coYield()
     QuestieQuest:GetAllQuestIdsNoObjectives()
     coYield()
-    QuestieMenu:PopulateTownsfolkPostBoot()
+    Townsfolk.PostBoot()
     coYield()
     QuestieQuest:GetAllQuestIds()
 
@@ -337,11 +349,6 @@ QuestieInit.Stages[3] = function() -- run as a coroutine
         end
     end
 
-    if Questie.IsSoD then
-        coYield()
-        SeasonOfDiscovery.Initialize()
-    end
-
     -- We do this last because it will run for a while and we don't want to block the rest of the init
     coYield()
     AvailableQuests.CalculateAndDrawAll()
@@ -357,7 +364,12 @@ end
 function QuestieInit:LoadDatabase(key)
     if QuestieDB[key] then
         coYield()
-        QuestieDB[key] = loadstring(QuestieDB[key]) -- load the table from string (returns a function)
+        local func, err = loadstring(QuestieDB[key]) -- load the table from string (returns a function)
+        if (not func) then
+            Questie:Error("Failed to load database: ", key, err)
+            return
+        end
+        QuestieDB[key] = func
         coYield()
         QuestieDB[key] = QuestieDB[key]()           -- execute the function (returns the table)
     else
@@ -385,18 +397,9 @@ function QuestieInit:Init()
 
     if Questie.db.profile.trackerEnabled then
         -- This needs to be called ASAP otherwise tracked Achievements in the Blizzard WatchFrame shows upon login
-        local WatchFrame = QuestTimerFrame or WatchFrame
+        WatchFrameHook.Hide()
 
-        if Questie.IsWotlk then
-            -- Classic WotLK
-            WatchFrame:Hide()
-        else
-            -- Classic WoW: This moves the QuestTimerFrame off screen. A faux Hide().
-            -- Otherwise, if the frame is hidden then the OnUpdate doesn't work.
-            WatchFrame:ClearAllPoints()
-            WatchFrame:SetPoint("TOP", "UIParent", -10000, -10000)
-        end
-        if not Questie.IsWotlk then
+        if (not Questie.IsWotlk) and (not Questie.IsCata) then
             -- Need to hook this ASAP otherwise the scroll bars show up
             hooksecurefunc("ScrollFrame_OnScrollRangeChanged", function()
                 if TrackedQuestsScrollFrame then
