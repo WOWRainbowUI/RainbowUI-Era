@@ -61,6 +61,12 @@ function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
         for i = 1, #gameObjects do
             local obj = QuestieDB:GetObject(gameObjects[i])
 
+            if (not obj) then
+                -- TODO: This check can be removed once the DB is fixed
+                Questie:Error("Object not found for quest", quest.Id, "NPC ID:", gameObjects[i], "- Please report this on Github or Discord!")
+                return
+            end
+
             _AddStarter(obj, quest, "o_" .. obj.id)
         end
     end
@@ -68,6 +74,12 @@ function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
         local npcs = quest.Starts["NPC"]
         for i = 1, #npcs do
             local npc = QuestieDB:GetNPC(npcs[i])
+
+            if (not npc) then
+                -- TODO: This check can be removed once the DB is fixed
+                Questie:Error("NPC not found for quest", quest.Id, "NPC ID:", npcs[i], "- Please report this on Github or Discord!")
+                return
+            end
 
             _AddStarter(npc, quest, "m_" .. npc.id)
         end
@@ -265,7 +277,7 @@ end
 ---@param quest Quest
 ---@param tooltipKey string the tooltip key. For objects it's "o_<ID>", for NPCs it's "m_<ID>"
 _AddStarter = function(starter, quest, tooltipKey)
-    if (not starter) or (not starter.spawns) then
+    if (not starter) then
         return
     end
 
@@ -273,7 +285,7 @@ _AddStarter = function(starter, quest, tooltipKey)
 
     local starterIcons = {}
     local starterLocs = {}
-    for zone, spawns in pairs(starter.spawns) do
+    for zone, spawns in pairs(starter.spawns or {}) do
         local alreadyAddedSpawns = {}
         if (zone and spawns) then
             local coords
@@ -299,7 +311,7 @@ _AddStarter = function(starter, quest, tooltipKey)
                             end
                         end
                     else
-                        local icon = QuestieMap:DrawWorldIcon(data, zone, coords[1], coords[2])
+                        local icon = QuestieMap:DrawWorldIcon(data, zone, coords[1], coords[2], coords[3])
                         if starter.waypoints then
                             -- This is only relevant for waypoint drawing
                             starterIcons[zone] = icon
@@ -307,7 +319,9 @@ _AddStarter = function(starter, quest, tooltipKey)
                                 starterLocs[zone] = { coords[1], coords[2] }
                             end
                         end
-                        tinsert(alreadyAddedSpawns, coords)
+                        if icon then
+                            tinsert(alreadyAddedSpawns, coords)
+                        end
                     end
                 end
             end
@@ -316,7 +330,7 @@ _AddStarter = function(starter, quest, tooltipKey)
 
     -- Only for NPCs since objects do not move
     if starter.waypoints then
-        for zone, waypoints in pairs(starter.waypoints) do
+        for zone, waypoints in pairs(starter.waypoints or {}) do
             if not dungeons[zone] and waypoints[1] and waypoints[1][1] and waypoints[1][1][1] then
                 if not starterIcons[zone] then
                     local data = {

@@ -204,7 +204,7 @@ local debugMessagesLocales = {
         ["zhCN"] = "正在更新 NPC 数据",
         ["zhTW"] = "正在更新 NPC 資料",
         ["esES"] = "Actualizando PNJs",
-        ["frFR"] = "Mise à jour PNJs",
+        ["frFR"] = "Mise à jour des PNJs",
     },
     ["Updating objects"] = {
         ["ptBR"] = "Atualizando objetos",
@@ -216,7 +216,7 @@ local debugMessagesLocales = {
         ["zhCN"] = "正在更新 目标 数据",
         ["zhTW"] = "正在更新物件資料",
         ["esES"] = "Actualizando objetos",
-        ["frFR"] = "Mise à jour objets",
+        ["frFR"] = "Mise à jour des objets",
     },
     ["Updating quests"] = {
         ["ptBR"] = "Atualizando missões",
@@ -228,7 +228,7 @@ local debugMessagesLocales = {
         ["zhCN"] = "正在更新 任务 数据",
         ["zhTW"] = "正在更新任務資料",
         ["esES"] = "Actualizando misiones",
-        ["frFR"] = "Mise à jour quêtes",
+        ["frFR"] = "Mise à jour des quêtes",
     },
     ["Loading database"] = {
         ["ptBR"] = "Carregando o banco de dados",
@@ -240,7 +240,7 @@ local debugMessagesLocales = {
         ["zhCN"] = "加载数据库中",
         ["zhTW"] = "正在載入資料庫",
         ["esES"] = "Cargando la base de datos",
-        ["frFR"] = "Chargement base de données",
+        ["frFR"] = "Chargement de la base de données",
     },
     ["Applying database corrections"] = {
         ["ptBR"] = "Aplicando correções ao banco de dados",
@@ -252,7 +252,7 @@ local debugMessagesLocales = {
         ["zhCN"] = "更新数据库中",
         ["zhTW"] = "正在校正資料庫",
         ["esES"] = "Aplicando correcciones a la base de datos",
-        ["frFR"] = "Application des correctifs de base de données",
+        ["frFR"] = "Application des correctifs de la base de données",
     },
     ["Initializing locale"] = {
         ["ptBR"] = "Inicializando idioma",
@@ -300,7 +300,7 @@ local debugMessagesLocales = {
         ["zhCN"] = "正在读出 物品信息",
         ["zhTW"] = "正在更新物品資訊",
         ["esES"] = "Actualizando objetos",
-        ["frFR"] = "Mise à jour objets",
+        ["frFR"] = "Mise à jour des objets",
     },
     ["Questie DB update complete!"] = {
         ["ptBR"] = "Atualização do banco de dados do Questie concluída!",
@@ -323,8 +323,8 @@ local debugMessagesLocales = {
         ["enUS"] = true,
         ["zhTW"] = "%s 任務 %s!",
         ["deDE"] = "%s für %s!",
-        ["esES"] = "%s para %s!",
-        ["esMX"] = "%s para %s!",
+        ["esES"] = "¡%s para %s!",
+        ["esMX"] = "¡%s para %s!",
     },
     ["Picked up %s which starts %s!"] = {
         ["ptBR"] = "Pegou %s que inicia %s!",
@@ -335,8 +335,8 @@ local debugMessagesLocales = {
         ["enUS"] = true,
         ["zhTW"] = "拾取 %s 自動接受任務 %s!",
         ["deDE"] = "%s aufgehoben, das %s startet!",
-        ["esES"] = "Recogió %s que inicia %s!",
-        ["esMX"] = "Recogió %s que inicia %s!",
+        ["esES"] = "¡Recogió %s que inicia %s!",
+        ["esMX"] = "¡Recogió %s que inicia %s!",
     },
     ["You picked up %s which starts %s!"] = {
         ["ptBR"] = "Você pegou %s que inicia %s!",
@@ -500,10 +500,10 @@ local debugMessagesLocales = {
         ["ruRU"] = "Обнаруженный вами предмет отсутствует в БД Questie.",
         ["deDE"] = "Ein Gegenstand, den du gerade gefunden hast, fehlt in der Questie-Datenbank.",
         ["koKR"] = "방금 획득한 아이템은 퀘스티 데이터베이스에 등록되지 않은 아이템입니다",
-        ["esMX"] = "Un objeto que acaba de encontrar falta en la base de datos de Questie.",
+        ["esMX"] = "Un objeto que acabas de encontrar tiene datos faltantes en la base de datos de Questie.",
         ["enUS"] = true,
         ["frFR"] = "Un objet que vous venez de rencontrer présente des données manquantes dans la base de données de Questie.",
-        ["esES"] = "Un objeto que acaba de encontrar falta en la base de datos de Questie.",
+        ["esES"] = "Un objeto que acabas de encontrar tiene datos faltantes en la base de datos de Questie.",
         ["zhTW"] = "Questie 資料庫中缺少你剛才遇到的物品的資料。",
         ["zhCN"] = false,
     },

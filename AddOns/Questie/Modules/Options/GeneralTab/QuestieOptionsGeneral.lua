@@ -386,7 +386,7 @@ function QuestieOptions.tabs.general:Initialize()
                         end,
                         width = 1.063,
                         min = 0,
-                        max = 60 + 10 * GetExpansionLevel(),
+                        max = Questie.IsCata and 85 or (60 + 10 * GetExpansionLevel()),
                         step = 1,
                         disabled = function() return (Questie.db.profile.lowLevelStyle ~= Questie.LOWLEVEL_RANGE) end,
                         get = function(info) return Questie.db.profile.maxLevelFilter; end,
@@ -450,9 +450,20 @@ function QuestieOptions.tabs.general:Initialize()
                         get = function () return Questie.db.profile.showQuestXpAtMaxLevel; end,
                         set = function (_, value) Questie.db.profile.showQuestXpAtMaxLevel = value end
                     },
-                    partyOnlyToggle = {
+                    showNextInChain = {
                         type = "toggle",
                         order = 8.5,
+                        name = function() return l10n('Show next quests in chain'); end,
+                        desc = function() return l10n('When this is checked, the next quests in the chain will show in the expanded map tooltips.'); end,
+                        width = 1.5,
+                        get = function() return Questie.db.profile.enableTooltipsNextInChain; end,
+                        set = function (_, value)
+                            Questie.db.profile.enableTooltipsNextInChain = value
+                        end
+                    },
+                    partyOnlyToggle = {
+                        type = "toggle",
+                        order = 8.6,
                         name = function() return l10n('Only show party members'); end,
                         desc = function() return l10n('When this is enabled, shared quest info will only show players in your party.'); end,
                         width = 1.5,
@@ -670,7 +681,7 @@ _GetObjectiveSoundChoices = function()
         ["Bell Toll Alliance"] = "Bell Toll Alliance",
         ["Bell Toll Horde"]    = "Bell Toll Horde",
     }
-    if Questie.IsWotlk then
+    if Questie.IsWotlk or Questie.IsCata then
         choices["Explosion"] = "Explosion"
         choices["Shing!"] = "Shing!"
         choices["Wham!"] = "Wham!"
@@ -692,7 +703,7 @@ _GetObjectiveSoundChoicesSort = function()
         "Bell Toll Alliance",
         "Bell Toll Horde",
     }
-    if Questie.IsWotlk then
+    if Questie.IsWotlk or Questie.IsCata then
         tinsert(sorting, "Explosion")
         tinsert(sorting, "Shing!")
         tinsert(sorting, "Wham!")
@@ -715,7 +726,7 @@ _GetObjectiveProgressSoundChoices = function()
         ["Bell Toll Alliance"] = "Bell Toll Alliance",
         ["Bell Toll Horde"]    = "Bell Toll Horde",
     }
-    if Questie.IsWotlk then
+    if Questie.IsWotlk or Questie.IsCata then
         choices["Explosion"] = "Explosion"
         choices["Shing!"] = "Shing!"
         choices["Wham!"] = "Wham!"
@@ -738,7 +749,7 @@ _GetObjectiveProgressSoundChoicesSort = function()
         "Bell Toll Alliance",
         "Bell Toll Horde",
     }
-    if Questie.IsWotlk then
+    if Questie.IsWotlk or Questie.IsCata then
         tinsert(sorting, "Explosion")
         tinsert(sorting, "Shing!")
         tinsert(sorting, "Wham!")
