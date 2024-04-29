@@ -765,40 +765,59 @@ NRC.foods = {
 	},
 	[18191] = {
 		name = "Increased Stamina",
-		icon = 132584,
+		icon = 136000,
 		desc = "+10 Stamina",
 		maxRankSodPhases = {2}, --35.
 	},
 	[18192] = {
 		name = "Increased Agility",
-		icon = 132953,
+		icon = 136000,
 		desc = "+10 Agility",
 		maxRankSodPhases = {2}, --35.
 	},
 	[18193] = {
 		name = "Increased Spirit",
-		icon = 132335,
+		icon = 136000,
 		desc = "+10 Spirit",
 		maxRankSodPhases = {2}, --35.
 	},
 	[18222] = {
 		name = "Health Regeneration",
-		icon = 132917,
+		icon = 136000,
 		desc = "Regenerate 6 Health every 5 seconds",
 		maxRankSodPhases = {2}, --35.
 	},
 	[18194] = {
 		name = "Mana Regeneration",
-		icon = 136053,
+		icon = 136000,
 		desc = "Regenerate 8 Mana every 5 seconds",
 		maxRankSodPhases = {2}, --35.
 	},
 	[22730] = {
 		name = "Increased Intellect",
-		icon = 134340,
+		icon = 136000,
 		desc = "+10 Intellect",
 		maxRankSodPhases = {2}, --55.
 	},--
+};
+
+--"Food" buffs used in RaidStatus to show player is currently eating buff food, these must match all foods above.
+--Current expansion and 1 previous expansion.
+NRC.eating = {
+	[5004] = "Food", --2 stam 2 spirit.
+	[5005] = "Food", --4 stam 4 spirit.
+	[5006] = "Food", --6 stam 6 spirit.
+	[5007] = "Food", --8 stam 8 spirit.
+	[10256] = "Food", --12 stam 12 spirit.
+	[10257] = "Food", --14 stam 14 spirit.
+	[24800] = "Food", --20 strength.
+	[18229] = "Food", --+10 Stamina, 35.
+	[18230] = "Food", --+10 Agility, 35.
+	[18231] = "Food", --+10 Spirit, 35.
+	[18232] = "Food", --+6 Health every 5 seconds, 35.
+	[18233] = "Food", --+8 Mana every 5 seconds, 35.
+	[18234] = "Food", --+10 Stamina, 55, has level 35 equivalent.
+	[22731] = "Food", --+Intellect, 55.
 };
 
 NRC.scrolls = {
@@ -1040,7 +1059,218 @@ NRC.scrolls = {
 
 --Spell cast IDs not item IDs.
 NRC.trackedConsumes = {
-
+	[22792] = {
+		name = "Thornling Seed",
+		icon = 132877,
+		desc = "Plants a Thornling which attracts nearby enemies.",
+		itemID = 18297,
+		quality = 1,
+	},
+	--Engi.
+	[44389] = {
+		name = "Field Repair Bot 110G",
+		icon = 133859,
+		desc = "Unfolds into a Field Repair Bot that sells reagents and can repair damaged items.  After 10 minutes its internal motor fails.",
+		itemID = 34113,
+		quality = 1,
+	},
+	--Potions.
+	[17530] = {
+		name = "Superior Mana Potion",
+		icon = 134854,
+		desc = "Restores 900 to 1500 mana.",
+		itemID = 13443,
+		quality = 1,
+	},
+	[4042] = {
+		name = "Superior Healing Potion",
+		icon = 134833,
+		desc = "Restores 700 to 900 health.",
+		itemID = 3928,
+		quality = 1,
+	},
+	[17531] = {
+		name = "Major Mana Potion",
+		icon = 134856,
+		desc = "Restores 1350 to 2250 mana.",
+		itemID = 13444,
+		quality = 1,
+	},
+	[17534] = {
+		name = "Major Healing Potion",
+		icon = 134834,
+		desc = "Restores 1050 to 1750 health.",
+		itemID = 13446,
+		quality = 1,
+	},
+	[17549] = {
+		name = "Greater Arcane Protection Potion",
+		icon = 134863,
+		desc = "Absorbs 1950 to 3250 arcane damage. Last 1 hour.",
+		itemID = 13461,
+		quality = 1,
+	},
+	[17543] = {
+		name = "Greater Fire Protection Potion",
+		icon = 134804,
+		desc = "Absorbs 1950 to 3250 fire damage. Last 1 hour.",
+		itemID = 13457,
+		quality = 1,
+	},
+	[17544] = {
+		name = "Greater Frost Protection Potion",
+		icon = 134800,
+		desc = "Absorbs 1950 to 3250 frost damage. Last 1 hour.",
+		itemID = 13456,
+		quality = 1,
+	},
+	[17545] = {
+		name = "Greater Holy Protection Potion",
+		icon = 134720,
+		desc = "Absorbs 1950 to 3250 holy damage. Last 1 hour.",
+		itemID = 13460,
+		quality = 1,
+	},
+	[17546] = {
+		name = "Greater Nature Protection Potion",
+		icon = 134802,
+		desc = "Absorbs 1950 to 3250 nature damage. Last 1 hour.",
+		itemID = 13458,
+		quality = 1,
+	},
+	[17548] = {
+		name = "Greater Shadow Protection Potion",
+		icon = 134803,
+		desc = "Absorbs 1950 to 3250 shadow damage.  Last 1 hour.",
+		itemID = 13459,
+		quality = 1,
+	},
+	[24360] = {
+		name = "Greater Dreamless Sleep Potion",
+		icon = 134863,
+		desc = "Puts the imbiber in a dreamless sleep for 12 sec. During that time the imbiber heals 2100 health and 2100 mana.",
+		itemID = 20002,
+		quality = 1,
+	},
+	[7233] = {
+		name = "Fire Protection Potion",
+		icon = 134787,
+		desc = "Absorbs 975 to 1625 fire damage. Last 1 hour.",
+		itemID = 6049,
+		quality = 1,
+	},
+	[7239] = {
+		name = "Frost Protection Potion",
+		icon = 134754,
+		desc = "Absorbs 1350 to 2250 frost damage. Last 1 hour.",
+		itemID = 6050,
+		quality = 1,
+	},
+	[7245] = {
+		name = "Holy Protection Potion",
+		icon = 134720,
+		desc = "Absorbs 300 to 500 holy damage. Last 1 hour.",
+		itemID = 6051,
+		quality = 1,
+	},
+	[7254] = {
+		name = "Nature Protection Potion",
+		icon = 134717,
+		desc = "Absorbs 1350 to 2250 nature damage. Last 1 hour.",
+		itemID = 6052,
+		quality = 1,
+	},
+	[7242] = {
+		name = "Shadow Protection Potion",
+		icon = 134824,
+		desc = "Absorbs 675 to 1125 shadow damage.  Last 1 hour.",
+		itemID = 6048,
+		quality = 1,
+	},
+	[15822] = {
+		name = "Dreamless Sleep Potion",
+		icon = 134863,
+		desc = "Puts the imbiber in a dreamless sleep for 12 sec. During that time the imbiber heals 1200 health and 1200 mana.",
+		itemID = 12190,
+		quality = 1,
+	},
+	[11392] = {
+		name = "Invisibility Potion",
+		icon = 134805,
+		desc = "Gives the imbiber invisibility for 18 sec. (10 Min Cooldown)",
+		itemID = 9172,
+		quality = 1,
+	},
+	[3680] = {
+		name = "Lesser Invisibility Potion",
+		icon = 134798,
+		desc = "Gives the imbiber lesser invisibility for 15 sec. (10 Min Cooldown)",
+		itemID = 3823,
+		quality = 1,
+	},
+	[16666] = {
+		name = "Demonic Rune",
+		icon = 134417,
+		desc = "Restores 900 to 1500 mana at the cost of 600 to 1000 life.",
+		itemID = 12662,
+		quality = 2,
+	},
+	[27869] = {
+		name = "Dark Rune",
+		icon = 136192,
+		desc = "Restores 900 to 1500 mana at the cost of 600 to 1000 life.",
+		itemID = 20520,
+		quality = 2,
+	},
+	[11371] = {
+		name = "Gift of Arthas",
+		icon = 134808,
+		desc = "+10 Shadow Resistnce, attacker has a 30% chance of being inflicted with disease that increases their damage taken by 8 for 3 min.",
+		itemID = 9088,
+		quality = 1,
+	},
+	[6615] = {
+		name = "Free Action Potion",
+		icon = 134715,
+		desc = "Makes you immune to Stun and Movement Impairing effects for the next 30 sec.",
+		itemID = 5634,
+		quality = 1,
+	},
+	[3169] = {
+		name = "Limited Invulnerability Potion",
+		icon = 134842,
+		desc = "Imbiber is immune to physical attacks for the next 6 sec.",
+		itemID = 3387,
+		quality = 1,
+	},
+	[11359] = {
+		name = "Restorative Potion",
+		icon = 134712,
+		desc = "Removes 1 magic, curse, poison or disease effect on you every 5 seconds for 30 seconds.",
+		itemID = 9030,
+		quality = 1,
+	},
+	[17528] = {
+		name = "Mighty Rage Potion",
+		icon = 134821,
+		desc = "Increases Rage by 45 to 70.",
+		itemID = 13442,
+		quality = 1,
+	},
+	[17540] = {
+		name = "Greater Stoneshield Potion",
+		icon = 134849,
+		desc = "Increases armor by 2000 for 2 min.",
+		itemID = 13455,
+		quality = 1,
+	},
+	[24364] = {
+		name = "Living Action Potion",
+		icon = 134718,
+		desc = "Makes you immune to Stun and Movement Impairing effects for the next 5 sec.  Also removes existing Stun and Movement Impairing effects.",
+		itemID = 20008,
+		quality = 1,
+	},
 };
 
 NRC.racials = {
@@ -2340,10 +2570,22 @@ if (NRC.isSOD) then
 	NRC.encounters[2927] = {"991", "Electrocutioner 6000", "", 36558, 607594, 9, 1, 90};
 	NRC.encounters[2935] = {"2671", "Mechanical Menagerie", "", 117368, nil, 9, 1, 90};
 	NRC.encounters[2940] = {"992", "Mekgineer Thermaplugg", "", 36563, 607714, 9, 1, 90};
+	
+	--Sunken Temple raid.
+	NRC.encounters[2952] = {"0", "Atal’alrion", "", 7873, 1064178, 9, 1, 109}; --Mushlump close enough I guess...
+	NRC.encounters[2953] = {"3771", "Festering Rot Slime", "", 15686, 1385771, 9, 1, 109};
+	NRC.encounters[2957] = {"1027", "Jammal'an and Ogom", "", 6708, 607665, 9, 1, 109};
+	--NRC.encounters[0] = {"0", "Ogom the Wretched", "", 6709, 607541, 9, 1, 109}; --Merged in to Jammal encounter?
+	NRC.encounters[2954] = {"0", "The Atal'ai Defenders", "", 6709, 607541, 9, 1, 109}; --Antu'sul from ZF close enough texture?
+	NRC.encounters[2959] = {"1032", "Shade of Eranikus", "", 7806, 607768, 9, 1, 109};
+	NRC.encounters[2956] = {"1026", "Avatar of Hakkar", "", 8053, 607548, 9, 1, 109};
+	NRC.encounters[2955] = {"1028", "Dreamscythe and Weaver", "", 7553, 608311, 9, 1, 109};
+	NRC.encounters[2958] = {"1028", "Morphaz and Hazzas", "", 7533, 608311, 9, 1, 109};
     
     --Change Sod dungs to a raid.
-    NRC.zones[48].type = "raid";
-	NRC.zones[90].type = "raid";
+    NRC.zones[48].type = "raid"; --BRD.
+	NRC.zones[90].type = "raid"; --Gnomeregan.
+	NRC.zones[109].type = "raid"; --Sunken Temple.
 	
 	--Add hunter kings buff to paladin table.
 	NRC.pal[409583] = {

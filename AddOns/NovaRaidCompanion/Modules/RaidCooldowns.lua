@@ -812,6 +812,10 @@ function NRC:removeRaidCooldownsEncounterEnd(success)
 end
 
 function NRC:loadPartyNeckBuffs()
+	if (NRC.expansionNum > 3) then
+		--No longer tracking necks from cata onwards.
+		return;
+	end
 	--Wipe current party list.
 	NRC.cooldownList["NeckSP"] = nil;
 	NRC.cooldownList["NeckCrit"] = nil;

@@ -5202,6 +5202,7 @@ if (NRC.isClassic) then
 end
 
 --Raid cooldown options have be changed to a func that creates them from db.
+--At some point I'll remove all the static config funcs and locales for them.
 local function loadAllCooldownOptions()
 	local cooldowns = {};
 	for k, v in pairs(NRC.cooldowns) do

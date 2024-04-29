@@ -21,14 +21,16 @@ local aoeSpells = {
 	[27026] = "Explosive Trap (Rank 4)",
 	[49064] = "Explosive Trap (Rank 5)",
 	[49065] = "Explosive Trap (Rank 6)",
+	[13813] = "Explosive Trap", --Cata.
 	--[13812] = "Immolation Trap (Rank 1)", --Immolation trap takes a charge when it hits but does no initial dmg it seems, maybe the dot spell application has threat?
 	[13241] = "Goblin Sapper Charge",
 	[30486] = "Super Sapper Charge",
 	[56488] = "Global Thermal Sapper Charge";
 	[56350] = "Saronite Bomb";
+	--No new bombs in cata?
 };
-if (not NRC.isClassic and not NRC.isTBC) then
-	aoeSpells[42243] = "Volley (Rank 1)";
+if (NRC.isWrath) then
+	aoeSpells[42243] = "Volley (Rank 1)"; --Volley removed in cata.
 	aoeSpells[42244] = "Volley (Rank 2)";
 	aoeSpells[42245] = "Volley (Rank 3)";
 	aoeSpells[42234] = "Volley (Rank 4)";
