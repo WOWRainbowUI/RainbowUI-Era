@@ -132,7 +132,7 @@ st.hunter.rapidKilling = "Enter the Firewatch Ridge cave, north-west corner\nof 
 
 -- Mage
 st.mage.books = "There are three runes to be earned from collecting books from across Azeroth. Any of the listed books count.\n"
-			.."You hand in each book that you discover to Owen Thadd (H) in Undercity or Garion Wendell in Stormwind.\n\n"
+			.."You hand in each book that you discover to Owen Thadd (H) in Undercity or Garion Wendell (A) in Stormwind.\n\n"
 			.."You may hand in the books singly or several at a time. When you have handed in sufficient books for a rune a\n"
 			.."trivial completion quest will then reward you with your rune."
 st.mage.booksQuestIDsA = { 79953, 81955, 79949, 78145, 79091, 79092, 79535, 79097, 78142, 81956, 
@@ -143,7 +143,7 @@ st.mage.booksQuestNamesA = {
 						"A Mind of Metal" ..colourPlaintext .."    On a table in a tent, Searing Gorge",
 						"A Web of Lies: Debunking Myths and Legends" ..colourPlaintext .."    Alongside a tent. Winterbark Village, Arathi",
 						"Arcanic Systems Manual" ..colourPlaintext .."    The Sludge Fen, The Barrens",
-						"Archmage Antonidas: The Unabridged ..." ..colourPlaintext .."    Hall of Explorers, Ironforge",
+						"Archmage Antonidas: The Unabridged Autobiography" ..colourPlaintext .."    Hall of Explorers, Ironforge",
 						"Archmage Theocritus's Research Journal"..colourPlaintext .."    Tower of Azora, Elwynn Forest",
 						"Basilisks: Should Petrification be Feared?" ..colourPlaintext .."    Entrance to Crystalvein Mine, Stranglethorn",
 						"Baxtan: On Destructive Magics" ..colourPlaintext .."    Next to Gazlove, Ratchet, The Barrens",
@@ -161,7 +161,7 @@ st.mage.booksQuestNamesA = {
 						"Nar'thalas Almanac" ..colourPlaintext .."    Darkshore Ruins",
 						"Rumi of Gnomeregan: The Collected Works" ..colourPlaintext .."    Thelsamar or Westfall Inn",
 						"Runes of the Sorcerer-Kings" ..colourPlaintext .."    The Ogre Cave in Loch Modan",
-						"RwlRwlRwlRwl" ..colourPlaintext .."    Witch Hill murloc Camp, Swamp of Sorrows",
+						"RwlRwlRwlRwl!" ..colourPlaintext .."    Witch Hill murloc Camp, Swamp of Sorrows",
 						"Sanguine Sorcery" ..colourPlaintext .."    On top of the Sunken Temple, Swamp of Sorrows",
 						"Secrets of the Dreamers" ..colourPlaintext .."    Near the Wailing Caverns portal",
 						"Stonewrought Design" ..colourPlaintext .."    On Franclorn Forgewright's altar, Black Mountain",
@@ -195,7 +195,7 @@ st.mage.booksQuestNamesH = {
 						"Mummies: A Guide to the Unsavory Undead" ..colourPlaintext .."    Crypt within a mesa. Badlands",
 						"Nar'thalas Almanac" ..colourPlaintext .."    Darkshore Ruins",
 						"Runes of the Sorcerer-Kings" ..colourPlaintext .."    The Ogre Cave in Loch Modan",
-						"RwlRwlRwlRwl" ..colourPlaintext .."    Witch Hill murloc Camp, Swamp of Sorrows",
+						"RwlRwlRwlRwl!" ..colourPlaintext .."    Witch Hill murloc Camp, Swamp of Sorrows",
 						"Sanguine Sorcery" ..colourPlaintext .."    On top of the Sunken Temple, Swamp of Sorrows",
 						"Secrets of the Dreamers" ..colourPlaintext .."    Near the Wailing Caverns portal",
 						"Stonewrought Design" ..colourPlaintext .."    On Franclorn Forgewright's altar, Black Mountain",
@@ -315,6 +315,15 @@ st.paladin.hammerRighteous = "In Felwood you climb up the rope to reach Aeonis.\
 			.."The Tripple-Brewed Molten Lager you purchase from\nPlugger Spazzring at the Grim Guzzler tavern, well\n"
 			.."into Blackrock Depths. That's one mighty series of\ncorpse runs for solo players.\n\n"
 			.."Return to Gregory for the hand in. Accept your Rune!"
+st.paladin.lightsGrace = "You must travel to an inaccessible platform\nin Feralas. You may use a nearby teleporter,\n"
+			.."as marked or a different teleporter in Booty\nBay. The BB teleporter requires unlocking.\n\n"
+			.."The teleporter puts you near Wirdal Wondergear.\nLook across at the pin marked \"Frix Xizzix\".\n"
+			.."Go to him. You must do this via a knockback\nfrom a Tower Defense Automation (L57e) in the,\n"
+			.."same area as Wirdal. Set your Gadgetzan rep to\n\"At War\". Position yourself with the\n"
+			.."shortest distance to Frix and ensure you are\noptimally facing away from your flight path.\n\n"
+			.."Begin attacking and pray. Seriously. It's a\ngamble. Consider removing gear to save repair\n"
+			.."costs as you'll likely need a few attempts.\nThere's a nasty silence debuff, thus no bubbling.\n\n"
+			.."Now, speak to Frix and he'll send you to the Bay\nto speak to his brother. The rune is yours!"
 st.paladin.wrath = "North of Quel'Danil Lodge in The Hinterlands is\nwhere Paladins will use their Sense Undead to\n"
 			.."locate a Vengeful Spirit (L45). Kill it.\n\nSpeak to Magister Falath in the Mystic Ward of\nIronforge. Enjoy!"
 
@@ -886,10 +895,10 @@ ns.runes = {
 				start="Rageclaw, near Ban'ethil Barrow Den, Teldrassil; Flatland Prowler mobs, north and north-east of Mulgore (H)" },
 		["Wild Strikes"]={ rune="Idol of the Wild", phase=1, spellID=407977, level=14, icon=6, slot=5,
 				start="Grimtotem mobs, south-east entrance/exit of Stonetalon Mountains" },
-		["Lacerate"]={ rune="Rune of Lacerate", phase=1, spellID=414644, level=15, icon=7, slot=10,
+		["Lacerate"]={ rune="Rune of Lacerate", phase=1, spellID=414644, level=15, icon=7, slot=7,
 				start="Khara Deepwater, The Loch, Loch Modan (A)\n"
 					.."Crab Treats from coastal Furlbogs, Darkshore; Abandoned Snapjaw Nest, Forgotten Pools, The Barrens" },
-		["Skull Bash"]={ rune="Rune of Skull Bash", phase=1, spellID=410176, level=15, icon=8, slot=7,
+		["Skull Bash"]={ rune="Rune of Skull Bash", phase=1, spellID=410176, level=15, icon=8, slot=10,
 				start=st.supplyFactionStart },
 		["Starsurge"]={ rune="Rune of the Stars", phase=1, spellID=417157, level=20, icon=9, slot=7,
 				start="Speak to Grugimdern, under a bridge, north-east Wetlands" },
@@ -1138,8 +1147,8 @@ ns.runes = {
 		["Hammer of the Righteous"]={ rune="Hammer of the Righteous", phase=3, spellID=409922, level=50, icon=24, slot=9,
 				start="Learn Fanaticism prior. Speak to Aeonas the Vindicated at the Bloodvenom Falls, Felwood. Must be L44.\n"
 					.."Along the way you'll go to the Grim Guzzler, inside Blackrock Depths, and Maraudon (group for that)" },
-		["Light's Grace"]={ rune="Rune of Grace", phase=3, spellID=428909, level=100, icon=25, slot=1,
-				start="Unknown. People consider that it's probably not worth the effort of discovering" },
+		["Light's Grace"]={ rune="Rune of Grace", phase=3, spellID=428909, level=50, icon=25, slot=9,
+				start="Head to the Lower Wilds of Feralas, south east of Camp Mojache." },
 
 		spells={ "Crusader Strike", "Inspiration Exemplar", "Rebuke", "Aegis", "Horn of Lordaeron",
 			"Seal of Martyrdom", "Beacon of Light", "Hand of Reckoning", "Divine Sacrifice",
@@ -1510,7 +1519,7 @@ ns.runes = {
 --=======================================================================================================
 
 points[ 1416 ] = { -- Alterac Mountains
-	[39606080] = { item=213452, name="Dormant Holy Rune", class={ "PALADIN" }, spell={ "Guarded by the Light" },
+	[39616086] = { item=213452, name="Dormant Holy Rune", class={ "PALADIN" }, spell={ "Guarded by the Light" },
 					guide={ st.paladin.guardedLight } },
 	[40604700] = { name="Crushridge mobs (Various)", class={ "WARRIOR" }, spell={ "Blood Surge" }, guide={ st.warrior.bloodSurge },
 					quest={ { 79624, 79677, 79678 } }, questName={ { "Anyone Can Cook", "A Quick Grocery Run", "Taste Testing" } } },
@@ -2661,11 +2670,8 @@ points[ 1421 ] = { -- Silverpine Forest
 					spell={ "Beast Mastery" }, guide={ st.hunter.beastMastery } },
 	[46802660] = { npc=1778, name="Ferocious Grizzled Bear", class={ "HUNTER" },
 					spell={ "Beast Mastery" }, guide={ st.hunter.beastMastery } },
-	[47107110] = { object=410369, name="Dead Drop", class={ "ROGUE", "ROGUE" },
-					spell={ "Deadly Brew", "Shadowstep" },
-					guide={ st.rogue.deadlyBrew, st.rogue.shadowstep },
-					preRune={ {}, {}, { "Deadly Brew", "Shadowstep" } },
-					quest={ { 78261, 78307 }, { 78699,78676 } },
+	[47107110] = { object=410369, name="Dead Drop", class={ "ROGUE", "ROGUE" }, spell={ "Deadly Brew", "Shadowstep" },
+					guide={ st.rogue.deadlyBrew, st.rogue.shadowstep }, quest={ { 78261, 78307 }, { 78699,78676 } },
 					questName={ { "The Horn of Xelthos (Main)", "The Horn of Xelthos (Reward)" },
 						{ "The Eye of Bhossca (Dead Drop)", "The Eye of Bhossca (SM)" }, } },
 	[48607260] = { object=410369, name="Dead Drop", class={ "ROGUE" }, spell={ "Honor Among Thieves" },
@@ -2816,6 +2822,15 @@ points[ 1434 ] = { -- Stranglethorn Vale
 					guide={ st.pillaged }, quest={ { 79229, 79235, 79236, 79242 } }, 
 					questName={ { "Highway Robbery", "On the Lam", "Cherry for Your Thoughts", "No Honor Among Thieves" } } },
 	[27607660] = { npc=218229,name="CaptainAransas", class={ "ROGUE" }, spell={ "Master of Subtlety" }, guide={ st.rogue.subtlety } },
+	[27607740] = { name="Teleporter", class={ "PALADIN" }, spell={ "Light's Grace" },
+					tip="This teleporter is only available on completion\n"
+						.."of the above quest. That quest is part of the\n"
+						.."Phase 2 / Gnomeregan profession gear quest line.\n\n"
+						.."If you do use this portal then consider setting\n"
+						.."your hearth here as you'll need to return",
+					guide={ st.paladin.lightsGrace }, quest={ 79984 }, questName={ "Quadrangulation" } },
+	[28407580] = { npc=214954, name="Rix Xizzix", class={ "PALADIN" }, spell={ "Light's Grace" },
+					guide={ st.paladin.lightsGrace }, quest={ 79984 }, questName={ "Quadrangulation" } },
 	[28906200] = { item=737,name="Holy Water", class={ "PRIEST" }, spell={ "Dispersion" }, guide={ st.priest.dispersion } },
 	[30804700] = { npc=217620, name="Reckless Warlock", class={ "WARLOCK" }, spell={ "Dance of the Wicked" }, guide={ st.warlock.dance },
 					tip="Western side of the Gurubashi Arena" },
@@ -3158,16 +3173,16 @@ points[ 1420 ] = { -- Tirisfal Glades
 					spell={ "Frenzied Assault" },
 					guide={ st.warrior.frenziedAssault },
 					tip= "He'll be in the Inn's basement. Speak to Penny\nfirst if you haven't already done so" },
-	[60507350] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[60507350] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Icy Veins" }, tip="Collect any 10 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsH }, questName={ st.mage.booksQuestNamesH }, },
-	[62007500] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[62007500] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Spell Power" }, tip="Collect any 20 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsH }, questName={ st.mage.booksQuestNamesH }, },
-	[63507650] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[63507650] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Deep Freeze" }, tip="Collect any 25 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsH }, questName={ st.mage.booksQuestNamesH, }, },					
-	[60507650] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[60507650] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Temporal Anomaly" }, guide={ st.mage.temporal },
 					quest={ 82084 }, questName={ "A Lesson in Literacy" }, },					
 	[63603080] = {  name="Vile Fin mobs (Various)", class={ "ROGUE", "ROGUE", "WARRIOR" }, faction="Horde",
@@ -3227,16 +3242,16 @@ points[ 1458 ] = { -- Undercity
 					spell={ "Devastate" }, guide={ st.warrior.devastate ..st.warrior.devastateDor }, },
 	[64603820] = { npc=214098, name="Gishah", faction="Horde",
 					class=st.allClass, spell=st.allSpellACA, guide={ st.supplyFaction } },
-	[72103150] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[72103150] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Icy Veins" }, tip="Collect any 10 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsH }, questName={ st.mage.booksQuestNamesH }, },
-	[73603300] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[73603300] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Spell Power" }, tip="Collect any 20 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsH }, questName={ st.mage.booksQuestNamesH }, },
-	[75103450] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[75103450] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Deep Freeze" }, tip="Collect any 25 books", guide={ st.mage.books },
 					quest={ st.mage.booksQuestIDsH }, questName={ st.mage.booksQuestNamesH, }, },					
-	[72103450] = { npc=211033, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
+	[72103450] = { npc=211022, name="Owen Thadd", class={ "MAGE" }, faction="Horde",
 					spell={ "Temporal Anomaly" }, guide={ st.mage.temporal },
 					quest={ 82084 }, questName={ "A Lesson in Literacy" }, },					
 	[83602620] = { npc=208682, name="Denton Bleakway", class={ "WARLOCK" }, faction="Horde",
@@ -3711,10 +3726,6 @@ points[ 1440 ] = { -- Ashenvale
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" }, { "The Orb of Soran'ruk", "Rumors Abound",
 						"The Conjuring", "The Mysterious Traveler", "Raszel Ander" } } },
-	[84205920] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
-					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
-	[84606260] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
-					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
 	[84607060] = { name="Mannoroc Lasher + (Infernals, Felguards, Hounds)", class={ "PALADIN", "WARLOCK" },
 					faction="Alliance",
 					spell={ "Divine Storm", "Metamorphosis" }, guide={ st.paladin.divineStorm, st.warlock.metamorphosis },
@@ -3729,6 +3740,8 @@ points[ 1440 ] = { -- Ashenvale
 					questName={ { "A Strange Artifact", "Advice from Stormwind", "A Second Opinion", "Earning Your Salt", 
 						"It Must Be Destroyed", "Return to Delgren" }, { "The Orb of Soran'ruk", "Rumors Abound",
 						"The Conjuring", "The Mysterious Traveler", "Raszel Ander" } } },
+	[85106070] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
+					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
 	[86007860] = { name="Mannoroc Lasher + (Infernals, Felguards, Hounds)", class={ "PALADIN", "WARLOCK" },
 					faction="Alliance",
 					spell={ "Divine Storm", "Metamorphosis" }, guide={ st.paladin.divineStorm, st.warlock.metamorphosis },
@@ -3737,8 +3750,6 @@ points[ 1440 ] = { -- Ashenvale
 						"It Must Be Destroyed", "Return to Delgren" }, { "The Orb of Soran'ruk", "Rumors Abound",
 						"The Conjuring", "The Mysterious Traveler", "Raszel Ander" } } },
 	[86205440] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
-					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
-	[86606160] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
 	[86954316] = { item=210044, name="Symbol of the First Owl", class={ "DRUID" },
 					spell={ "Wild Growth" }, guide={ st.druid.wildGrowth },
@@ -3749,7 +3760,8 @@ points[ 1440 ] = { -- Ashenvale
 					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
 	[89205420] = { npc=11684, name="Warsong Shredder", class=st.allClass, spell=st.allSpellG,
 					guide={ st.grizzby }, quest={ 78267 }, questName={ "Shredder Turbochargers" } },
-	[89504060] = { name="Quartermaster Kyleen / Field Captain Hannalah", class=st.allClass, spell=st.emeraldSpell,
+	[89604040] = { name="Quartermaster Kyleen / Field Captain Hannalah", class=st.allClass, spell=st.emeraldSpell,
+					tip="Pin also used by the CGM AddOn so one\nmay be mostly overlapping the other",
 					guide={ st.nightmareIncursions } },
 	[89507700] = { object=409315, name="Shattered Orb", class={ "PALADIN" },
 					faction="Alliance", tip="Click below the weapons",
@@ -4204,7 +4216,7 @@ points[ 1445 ] = { -- Dustwallow Marsh
 	[57202080] = { object=423900, name="Waterlogged Book", class={ "MAGE" },
 					spell={ "Spell Power" }, guide={ st.mage.books }, alsoTestQuest=true,
 					tip="Discarded on the ground on the\neastern side of the murloc camp",
-					quest={ { 79952 } }, questName={ { "RwlRwlRwlRwl" } } },
+					quest={ { 79952 } }, questName={ { "RwlRwlRwlRwl!" } } },
 	[63704250] = { object=424264, name="Grave", class={ "PRIEST" }, tip="Theramore Echo",
 					spell={ "Pain Suppression" }, guide={ st.priest.painSuppression } },
 	[66604520] = { npc=221575, name="Elrick", class={ "PALADIN" }, faction="Alliance", preRune={ { "Sheath of Light" } },
@@ -4298,6 +4310,15 @@ points[ 1444 ] = { -- Feralas
 					guide={ "He'll be inside the round chamber. Hits very hard" } },
 	[79204950] = { object=442685, name="Old Chest", class={ "SHAMAN" }, spell={ "Tidal Waves" },
 					guide={ st.shaman.tidalWaves } },
+	[81604240] = { npc=220930, name="Frix Xizzix", class={ "PALADIN" }, spell={ "Light's Grace" },
+					guide={ st.paladin.lightsGrace }, quest={ 79984 }, questName={ "Quadrangulation" } },
+	[83004360] = { name="Teleporter", class={ "PALADIN" }, spell={ "Light's Grace" },
+					tip="This teleporter is always available for this\n"
+						.."rune. There's another portal in Booty Bay\n"
+						.."but it requires the quest above to have\nbeen completed",
+					guide={ st.paladin.lightsGrace }, quest={ 79984 }, questName={ "Quadrangulation" } },
+	[84204380] = { npc=218237, name="Wirdal Wondergear", class={ "PALADIN" }, spell={ "Light's Grace" },
+					guide={ st.paladin.lightsGrace }, quest={ 79984 }, questName={ "Quadrangulation" } },
 }
 points[ 1450 ] = { -- Moonglade
 	[41304360] = { npc=216289, name="Orokai", class={ "DRUID" }, spell={ "Nourish" }, guide={ st.druid.nourish },
