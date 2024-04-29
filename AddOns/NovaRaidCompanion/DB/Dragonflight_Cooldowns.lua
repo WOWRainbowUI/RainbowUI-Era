@@ -1,3 +1,7 @@
+---There is no retail of this addon, probably never will be.
+---This is just copy pasted from wrath for now basically.
+
+
 ----------------------------------
 ---Nova Raid Companion Cooldowns--
 ----------------------------------

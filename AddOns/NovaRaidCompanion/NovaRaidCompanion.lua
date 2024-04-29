@@ -13,18 +13,27 @@ NRC.expansionNum = 1;
 local _, _, _, tocVersion = GetBuildInfo();
 if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 	NRC.isClassic = true;
-elseif (tocVersion > 30000 and tocVersion < 40000) then
-	NRC.isWrath = true;
-	NRC.expansionNum = 3;
-	if (GetRealmName() ~= "Classic Beta PvE" and GetServerTime() < 1664200800) then --Mon Sep 26 2022 14:00:00 GMT+0000;
-		NRC.isPrepatch = true;
-	end
 elseif (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) then
 	NRC.isTBC = true;
 	NRC.expansionNum = 3;
---elseif (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then
---	NRC.isWrath = true;
---	NRC.expansionNum = 3;
+elseif (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then
+	NRC.isWrath = true;
+	NRC.expansionNum = 3;
+elseif (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC) then
+	if (GetRealmName() ~= "Classic Beta PvE" and GetServerTime() < 1716127200) then --Sun May 19 2024 14:00:00 GMT;
+		NRC.isCataPrepatch = true;
+	end
+	NRC.isCata = true;
+	NRC.expansionNum = 4;
+elseif (WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC) then
+	NRC.isMOP = true; --Later expansion project id's will likely need updating once Blizzard decides on the names.
+	NRC.expansionNum = 5;
+elseif (WOW_PROJECT_ID == WOW_PROJECT_WARLORDS_CLASSIC) then
+	NRC.isWOD = true;
+	NRC.expansionNum = 6;
+elseif (WOW_PROJECT_ID == WOW_PROJECT_LEGION_CLASSIC) then
+	NRC.isLegion = true;
+	NRC.expansionNum = 7;
 elseif (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	NRC.isRetail = true;
 	NRC.expansionNum = 10;

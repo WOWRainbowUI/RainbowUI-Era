@@ -3,7 +3,7 @@
 ----------------------------------
 
 local addonName, NRC = ...;
-if (not NRC.isWrath) then
+if (not NRC.isWrath and not NRC.isCataPrepatch) then
 	return;
 end
 

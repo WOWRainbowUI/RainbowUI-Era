@@ -1,8 +1,8 @@
-## Interface: 11501
+## Interface: 11502
 ## Notes: Raid and combat helpers, raid wide cooldown tracking.
 ## Title: Nova Raid Companion
 ## Author: Novaspark-Arugal OCE
-## Version: 1.34
+## Version: 1.36
 ## SavedVariables: NRCdatabase
 
 embeds.xml
@@ -18,9 +18,9 @@ DB\TBC_Cooldowns.lua
 DB\Wrath_DB.lua
 DB\Wrath_TalentData.lua
 DB\Wrath_Cooldowns.lua
-DB\Dragonflight_DB.lua
-DB\Dragonflight_TalentData.lua
-DB\Dragonflight_Cooldowns.lua
+DB\Cata_DB.lua
+DB\Cata_TalentData.lua
+DB\Cata_Cooldowns.lua
 DB\zDB_Tools.lua
 Modules\Tools.lua
 Modules\Frames.lua

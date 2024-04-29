@@ -640,7 +640,7 @@ function NRC:styleTimerBar(bar, duration, maxDuration, name, height, guid, test)
 	end
 	bar.texture:SetTexture("Interface\\Icons\\spell_shadow_soulgem");
 
-	bar.candyBarLabel:SetJustifyH("MIDDLE");
+	bar.candyBarLabel:SetJustifyH("CENTER");
 	--Custom timer text so we can update it at the same time as the rest of the raid cooldown bars
 	--And change the format a little.
 	if (not bar.customTimer) then
@@ -708,7 +708,7 @@ function NRC:styleTimerBar(bar, duration, maxDuration, name, height, guid, test)
 		end
 		bar.texture:SetTexture("Interface\\Icons\\spell_shadow_soulgem");
 		
-		bar.candyBarLabel:SetJustifyH("MIDDLE");
+		bar.candyBarLabel:SetJustifyH("CENTER");
 		--Custom timer text so we can update it at the same time as the rest of the raid cooldown bars
 		--And change the format a little.
 		if (not bar.customTimer) then
@@ -2598,9 +2598,10 @@ function NRC:createTalentFrame(name, width, height, x, y, borderSpacing)
 		offsetY = height * 0.0828;
 	end
 	if (NRC.isClassic) then
-		--Squish them together a bit closer to fit all talents in to the frame for wrath.
-		--Our wrath talent frame also has a bit more height.
 		offsetY = height * 0.115;
+	end
+	if (NRC.isCata) then
+		offsetY = height * 0.120;
 	end
 	frame.setClass = function(class, classID)
 		local offset = 24;
@@ -2661,7 +2662,11 @@ function NRC:createTalentFrame(name, width, height, x, y, borderSpacing)
 							end
 						end
 						GameTooltip:AddLine("Rank " .. currentRank .. "/" .. talentFrame.maxRank, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-						if (NRC.isTBC or NRC.isClassic) then
+						--For MoP later: Patch 5.0.4 (2012-08-28): Arguments changed; talent tabs no longer exist. 
+						if (NRC.expansionNum > 2 and not talentFrame.talentRankSpellIds) then
+							--This doesn't continue on load and requires 2 mouseovers?
+							GameTooltip:SetTalent(tree, talentData.info.wowTreeIndex);
+						elseif (NRC.isTBC or NRC.isClassic) then
 							if (talentFrame.tooltip) then
 								if (talentFrame.tooltipValues and talentFrame.tooltipValues[tooltipRank]) then
 									local text = string.format(talentFrame.tooltip, unpack(talentFrame.tooltipValues[tooltipRank]));

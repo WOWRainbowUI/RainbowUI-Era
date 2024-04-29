@@ -6,7 +6,7 @@
 ---Better to use slightly more ram with table storage than losing fps.
 
 local addonName, NRC = ...;
-if (not NRC.isWrath and not NRC.isCataPrepatch) then
+if (NRC.isCataPrepatch or not NRC.isCata) then
 	return;
 end
 local L = LibStub("AceLocale-3.0"):GetLocale("NovaRaidCompanion");
@@ -207,6 +207,77 @@ NRC.companionCreatures = {
 	[211025] = "Lil' Wrathion", --Cata preorder pet.
 	[32638] = "Hakmud of Argus",
 	[32639] = "Gnimo",
+	
+	--Cata.
+	[55367] = "Darkmoon Zeppelin",
+	[50468] = "Landro's Lil' XT",
+	[51632] = "Tiny Flamefly",
+	[52226] = "Panther Cub",
+	[53661] = "Crimson Lasher",
+	[54539] = "Alliance Balloon",
+	[53232] = "Voodoo Figurine",
+	[43800] = "Personal World Destroyer",
+	[48242] = "Armadillo Pup",
+	[53225] = "Pterrordax Hatchling",
+	[53623] = "Cenarion Hatchling",
+	[54027] = "Lil' Tarecgosa",
+	[42177] = "Blue Mini Jouster",
+	[47944] = "Dark Phoenix Hatchling",
+	[55356] = "Darkmoon Tonk",
+	[56266] = "Fetish Shaman",
+	[43916] = "De-Weaponized Mechanical Companion",
+	[45340] = "Fossilized Hatchling",
+	[48609] = "Clockwork Gnome",
+	[51090] = "Singing Sunflower",
+	[51122] = "Deathy",
+	[52894] = "Lashtail Hatchling",
+	[54374] = "Brilliant Kaliri",
+	[54730] = "Gregarious Grell",
+	[45128] = "Crawling Claw",
+	[45247] = "Pebble",
+	[51600] = "Lil' Ragnaros",
+	[53048] = "Legs",
+	[54541] = "Horde Balloon",
+	[56031] = "Darkmoon Cub",
+	[46896] = "Lil' Deathwing",
+	[48107] = "Rustberg Gull",
+	[50586] = "Mr. Grubbs",
+	[51635] = "Scooter the Snail",
+	[53884] = "Feline Familiar",
+	[54128] = "Creepy Crate",
+	[54227] = "Nuts",
+	[54487] = "Darkmoon Turtle",
+	[55187] = "Darkmoon Balloon",
+	[55215] = "Lumpy",
+	[55386] = "Sea Pony",
+	[55571] = "Lunar Lantern",
+	[55574] = "Festival Lantern",
+	[56082] = "Green Balloon",
+	[56083] = "Yellow Balloon",
+	[59020] = "Eye of the Legion",
+	[34278] = "Withers",
+	[42183] = "Gold Mini Jouster",
+	[46898] = "Enchanted Lantern",
+	[48641] = "Fox Kit",
+	[48982] = "Tiny Shale Spider",
+	[49586] = "Guild Page",
+	[49588] = "Guild Page",
+	[49587] = "Guild Herald",
+	[49590] = "Guild Herald",
+	[50545] = "Magic Lamp",
+	[50722] = "Elementium Geode",
+	[51601] = "Moonkin Hatchling",
+	[51649] = "Moonkin Hatchling",
+	[52343] = "Landro's Lichling",
+	[52344] = "Nightsaber Cub",
+	[52831] = "Winterspring Cub",
+	[53283] = "Guardian Cub",
+	[53658] = "Hyjal Bear Cub",
+	[54383] = "Purple Puffer",
+	[54438] = "Murkablo",
+	[54491] = "Darkmoon Monkey",
+	[58163] = "Soul of the Aspects",
+	[54745] = "Sand Scarab",
 }
 
 NRC.critterCreatures = {
@@ -430,6 +501,207 @@ NRC.critterCreatures = {
 	[34360] = "Wabbit",
 	[29776] = "Wisp, Ghost Mount",
 	[36643] = "[DND] Valentine Boss Manager",
+	
+	--Cata critters.
+	[48630] = "Baradin Fox Kit",
+	[50419] = "Grotto Vole",
+	[48683] = "Yellow-Bellied Marmot",
+	[47682] = "Sassy Cat",
+	[48706] = "Highlands Turkey",
+	[50481] = "Rock Viper",
+	[50496] = "Oasis Moth",
+	[48802] = "Sea Cucumber",
+	[48686] = "Rattlesnake",
+	[48848] = "Rockchewer Whelk",
+	[45657] = "Infectis Scuttler",
+	[49757] = "Borer Hatchling",
+	[47667] = "Wharf Rat",
+	[40000] = "Injured Fawn",
+	[50491] = "Mac Frog",
+	[36714] = "Sheep",
+	[48873] = "Tekton",
+	[49779] = "Alpine Chipmunk",
+	[43975] = "Jazzranache",
+	[49928] = "Crimson Moth",
+	[46509] = "Darkwood Hatchling",
+	[47194] = "Sheep",
+	[39999] = "Injured Fawn",
+	[54475] = "Crab",
+	[48833] = "Crab Hatchling",
+	[49835] = "Desert Spider",
+	[49857] = "Emerald Shale Hatchling",
+	[40031] = "Injured Fawn (Quest Credit)",
+	[48935] = "Alpine Hare",
+	[49568] = "Ash Viper",
+	[54275] = "Ashtongue Adder",
+	[41078] = "Bebe",
+	[35844] = "Crab",
+	[36539] = "Crab",
+	[36203] = "Crab",
+	[49929] = "Crimson Shale Hatchling",
+	[49759] = "Death's Head Cockroach",
+	[49743] = "Dung Beetle",
+	[54188] = "Eerie Spider (G)",
+	[54167] = "Eerie Spider (H)",
+	[42375] = "Galleo",
+	[47255] = "Gobbles",
+	[48689] = "Highlands Mouse",
+	[47977] = "Inky Ooze",
+	[51462] = "Mine Rat",
+	[33313] = "Mottled Doe",
+	[44935] = "Mutant Bush Chicken",
+	[40095] = "Needy Evil Squirrel",
+	[49778] = "Red-Tailed Chipmunk",
+	[43500] = "Silithian Hatchling",
+	[44205] = "Tiny Ooze",
+	[49722] = "Tree Python",
+	[43518] = "Wild Rat",
+	[48624] = "Wisp",
+	[34167] = "Ashenvale Oak",
+	[40074] = "Atiu",
+	[35162] = "Azshara Sapling",
+	[44873] = "Buzzard",
+	[36459] = "Chance",
+	[53697] = "Cinderling",
+	[49719] = "Copperhead",
+	[49724] = "Coral Snake",
+	[33012] = "Corrupted Duskrat (OLD)",
+	[36507] = "Crab",
+	[36201] = "Crab",
+	[49731] = "Dofda Frog",
+	[48841] = "Eel Larva",
+	[54035] = "Eerie Spider",
+	[49780] = "Fire-Proof Roach",
+	[48671] = "Flamefly",
+	[49777] = "Forest Scorpion",
+	[50487] = "Forest Spiderling",
+	[40073] = "Funafuti",
+	[47191] = "Gobbles",
+	[49742] = "Hairy Armadillo",
+	[49776] = "Hairy Scorpion",
+	[43973] = "Hazzranache",
+	[48786] = "Highlands Clucker",
+	[49839] = "Horny Toad",
+	[54274] = "Magmaspray Beetle",
+	[40077] = "Mata",
+	[49996] = "Mountain Cottontail",
+	[51589] = "Mountain Horse",
+	[36560] = "Mountain Horse Credit",
+	[48687] = "Mule Deer",
+	[56237] = "Nyxi",
+	[39997] = "Panicked Bunny",
+	[47968] = "Papyrus Beetle",
+	[48537] = "Prison Rat",
+	[37892] = "Putrescent Maggot",
+	[49774] = "Rabid Nut Varmint 5000",
+	[51967] = "Ring Wisp",
+	[44880] = "Sea Gull",
+	[44908] = "Skitterweb Invisible Stalker",
+	[49840] = "Spiky Lizard",
+	[49837] = "Spiny Lizard",
+	[49836] = "Stinkbug",
+	[49540] = "Stormwind Rat",
+	[49758] = "Stowaway Rat",
+	[49833] = "Stripe-Tailed Scorpion",
+	[49859] = "Topaz Shale Hatchling",
+	[49861] = "Twilight Beetle",
+	[37891] = "Underground Spider",
+	[47713] = "Villainous Evil Squirrel",
+	[38111] = "Wild Clucker",
+	[51126] = "Wildhammer Gryphon Hatchling",
+	[48915] = "Wildhammer Gryphon Hatchling",
+	[40034] = "Anxious Doe",
+	[40075] = "Avarua",
+	[40539] = "Beetle",
+	[43074] = "Bile Toad",
+	[50141] = "Corpse-Fed Rat",
+	[55741] = "Crow",
+	[49771] = "Crystal Beetle",
+	[51984] = "Deadwind Widow Invisible Stalker",
+	[49770] = "Deepholm Cockroach",
+	[53568] = "Dun Morogh Chicken",
+	[49842] = "Forest Moth",
+	[36591] = "Frog",
+	[49847] = "Fungal Moth",
+	[49735] = "Harlequin Frog",
+	[48688] = "Highlands Skunk",
+	[49732] = "Horned Lizard",
+	[51721] = "Hunted Hare",
+	[45655] = "Infectis Incher",
+	[48956] = "Irradiated Roach",
+	[48877] = "Juvenile Coral Crab",
+	[49832] = "Leopard Scorpion",
+	[50479] = "Lizard Hatchling",
+	[34008] = "Plague Frog",
+	[49772] = "Rabbot",
+	[49673] = "Rat Snake",
+	[48838] = "Rift Elver",
+	[40076] = "Rima",
+	[49773] = "Robo-Chick",
+	[49746] = "Scarab Hatchling",
+	[49727] = "Sidewinder",
+	[53512] = "Silkworm",
+	[44907] = "Skitterweb Hatchling",
+	[41626] = "Spaz",
+	[35173] = "Stonetalon Wisp",
+	[50493] = "Striped Armadillo",
+	[48457] = "Tainted Squirrel",
+	[39998] = "Terrified Squirrel",
+	[49965] = "Undercity Rat",
+	[44338] = "White Chicken",
+	[48623] = "Wisp",
+	[49858] = "Amethyst Shale Hatchling",
+	[50495] = "Armadillo Adolescent",
+	[50478] = "Ash Lizard",
+	[49496] = "Ash Spiderling",
+	[45439] = "Cockroach",
+	[33884] = "Corrupted Duskrat",
+	[34306] = "Darkshore Wisp",
+	[54148] = "Eerie Spider (H)",
+	[49728] = "Elfin Rabbit",
+	[49725] = "Emerald Boa",
+	[48800] = "Giant Isopod",
+	[49999] = "Grasslands Cottontail",
+	[36721] = "Island Turtle",
+	[45371] = "Lil' Sooty",
+	[50490] = "Locust",
+	[48972] = "Long-tailed Mole",
+	[44934] = "Mutant Bush Chicken",
+	[45650] = "Plague Puffer",
+	[41651] = "Raven",
+	[43974] = "Razzranache",
+	[49995] = "Redridge Rat",
+	[49860] = "Ruby Borer Hatchling",
+	[44710] = "Sand Kitten",
+	[45373] = "Scoot",
+	[55749] = "Sea Gull",
+	[49844] = "Silky Moth",
+	[43976] = "Spazzranache",
+	[50003] = "Tainted Moth",
+	[41143] = "Tame Crag Boar",
+	[48692] = "Twilight Spider",
+	[42687] = "Vashj'ir Fish",
+	[50486] = "Carrion Lizard",
+	[50485] = "Carrion Rat",
+	[54276] = "Cinderslither Snake",
+	[49690] = "Dusk Spiderling",
+	[53965] = "Eerie Spider",
+	[37738] = "Enervated Adder",
+	[44426] = "Frightened Chicken",
+	[50260] = "Gilnean Crow",
+	[48458] = "Healthy Squirrel",
+	[54277] = "Kindleworm",
+	[55487] = "Moonweb Spider",
+	[40499] = "Puffer Hatchling",
+	[36437] = "Rocketway Rat",
+	[45370] = "Smokey",
+	[47794] = "Snake",
+	[39568] = "Spartacus",
+	[39569] = "Spartacus the Cat",
+	[46016] = "Spectral Critter",
+	[49734] = "Spotted Bell Frog",
+	[50000] = "Swamp Moth",
+	[34866] = "Webbed Rabbit",
 };
 
 --Other NPC's to ignore, player pets that have a creature guid, so it doesn't add to creature death counts.
@@ -471,6 +743,7 @@ NRC.ignoredCreatures = {
 	[32980] = "Faithful Mule",
 	[36544] = "Night Elf Mohawk",
 	[32247] = "Zippy Copper Racer",
+	--Cata.
 };
 --Some data taken from from retail EJ_GetCreatureInfo() with adjustments, some extra data manually added, mapped to encounterID.
 --JournalEncounterCreature.ID, name, description, displayInfo, iconImage, uiModelSceneID, expansion, zoneID.
@@ -667,7 +940,7 @@ NRC.encounters = {
 	[1150] = {"3949", "Halion", "", 31952, 1385738, 9, 3, 724},
 	
 	--Baradin hold.
-	--[[[1033] = {"463", "Argaloth", "", 35426, 522198, 9, 3, 757},
+	[1033] = {"463", "Argaloth", "", 35426, 522198, 9, 3, 757},
 	[1250] = {"464", "Occu'thar", "", 37876, 523207, 9, 3, 757},
 	[1332] = {"896", "Alizabal", "", 21252, 571742, 9, 3, 757},
 	--Blackwing descent.
@@ -701,7 +974,7 @@ NRC.encounters = {
 	[1297] = {"875", "Ultraxion", "", 39099, 571750, 9, 3, 967},
 	[1298] = {"877", "Warmaster Blackhorn", "", 39399, 571752, 9, 3, 967},
 	[1291] = {"855", "Deathwing", "", 35268, 536056, 9, 3, 967}, --One of these is probably spine?
-	[1299] = {"905", "Deathwing", "", 40087, 536055, 9, 3, 967},]]
+	[1299] = {"905", "Deathwing", "", 40087, 536055, 9, 3, 967},
 };
 
 --Data from EJ_GetInstanceByIndex, some modifications and mapped to instanceID.
@@ -791,27 +1064,25 @@ NRC.instanceTextures = {
 	[631] = {"Icecrown Citadel", "", 1396457, 1396502, 1396583, 336390, 0},
 	[724] = {"The Ruby Sanctum", "", 1396464, 1396509, 1396590, 366689, 0},
 	--Cata dungs.
-	--[[[645] = {"Blackrock Caverns", "Rumors suggest that Deathwing himself carved out the subterranean labyrinth that allows the Twilight's Hammer to secretly transport elementals from the majestic Mount Hyjal to Blackrock Mountain. A vital hub of this shadow network is Blackrock Caverns, site of the cult's blistering forge and some of its most heinous experiments, including the transformation of cultists into twilight dragonkin.", 522334, 526402, 522350, 460859, 0},
-	--[63] = {"Deadmines", "It is said the Deadmines' gold deposits once accounted for a third of Stormwind's treasure reserves. Amid the chaos of the First War, the mines were abandoned and later thought to be haunted, leaving them relatively untouched until the Defias Brotherhood--a group of former laborers turned brigands--claimed the labyrinth as a base of operations for its subversive activities against Stormwind.", 522336, 526404, 522352, 136332, 0},
+	[645] = {"Blackrock Caverns", "Rumors suggest that Deathwing himself carved out the subterranean labyrinth that allows the Twilight's Hammer to secretly transport elementals from the majestic Mount Hyjal to Blackrock Mountain. A vital hub of this shadow network is Blackrock Caverns, site of the cult's blistering forge and some of its most heinous experiments, including the transformation of cultists into twilight dragonkin.", 522334, 526402, 522350, 460859, 0},
 	[938] = {"End Time", "One of an infinite number of potential outcomes, this timeway depicts the desolate future of Azeroth should Deathwing fail to be stopped.  Nozdormu has identified a powerful anomaly that exists in this moment and bars access to the past - and hope of retrieving the Demon Soul. The powerful creature from out of time lives alone amidst the time-twisted echoes of the past.", 571739, 571758, 571754, 575262, 0},
 	[670] = {"Grim Batol", "Don't be fooled by Grim Batol's humble exterior; many of this mountain fortress's desecrated chambers are buried deep in the Twilight Highlands. Once the stronghold of the Wildhammer dwarves, and later seized by orcs as a prison for Alextrasza, the city is now in the clutches of the Twilight's Hammer cult. Heroes brave enough to infiltrate the brooding depths of the stronghold must confront Deathwing's agents to thwart the mysterious evil within.", 522338, 526406, 522354, 460863, 0},
 	[644] = {"Halls of Origination", "Constructed by the great titans, the Halls of Origination are filled with ancient relics and the fearsome guardians that protect them. Rumors abound that the complex also contains a devastating weapon capable of reordering all life on Azeroth. Deathwing has moved to obtain this terrifying device through his agent, Al'Akir the Windlord. Thus far the facility's communication systems have been fully corrupted, but the weapon inside continues to elude Deathwing's grasp.", 522340, 526408, 522356, 460865, 0},
 	[940] = {"Hour of Twilight", "With the Dragon Soul retrieved from the past, the Heroes of Azeroth now prepare for the final confrontation with Deathwing.  In the frozen wastes of Northrend, the towering spire of Wyrmrest Temple is under the assault of Deathwing's Twilight forces.  In order to save Azeroth, Thrall must arrive safely at the temple with the Dragon Soul in hand.", 571740, 571759, 571755, 575264, 0},
 	[755] = {"Lost City of the Tol'vir", "The Lost City of the Tol'vir is the stronghold of the Neferset, a faction of the cat-like tol'vir who swore fealty to Deathwing in exchange for a cure to the curse of flesh, which had turned their rocky hides to soft skin. With the affliction expunged, the tol'vir have rebelled against their benefactor, although they remain irrevocably twisted and hostile due to the dark pact that they made.", 522341, 526409, 522357, 460866, 0},
-	--[64] = {"Shadowfang Keep", "Looming over Pyrewood Village from the southern bluffs of Silverpine Forest, Shadowfang Keep casts a shadow as dark as its legacy. Sinister forces occupy these ruins, formerly the dwelling of the mad archmage Arugal's worgen. The restless shade of Baron Silverlaine lingers, while Lord Godfrey and his cabal of erstwhile Gilnean noblemen plot against their enemies both living and undead.", 522342, 526410, 522358, 136357, 0},
 	[725] = {"The Stonecore", "Within the Temple of Earth, locked in the heart of Deepholm, lies the Stonecore. It was inside these caverns that the Twilight's Hammer toiled over Deathwing, hammering elementium plates to the Dragon Aspect's body in an attempt to hold his tormented form together. With his renewal complete, Deathwing ascended into Azeroth, shattering the World Pillar and destabilizing the region of Deepholm.", 522344, 526412, 522360, 460872, 0},
 	[657] = {"The Vortex Pinnacle", "The Vortex Pinnacle exists within the elemental plane of Skywall. Its elegant structures, crowned with bronze and gold, sit atop platforms bridged by pure air. Yet behind its exterior beauty, the pinnacle harbors Neferset tol'vir, as well as Al'Akir the Windlord's merciless elemental legions. As long as the barrier between Skywall and Azeroth remains open, terror will rain down on Uldum from the skies.", 522345, 526414, 522361, 460873, 0},
 	[643] = {"Throne of the Tides", "Deep within the Abyssal Maw's fathomless expanses lies the Throne of the Tides. From here, the great elemental lord Neptulon the Tidehunter has surveyed and protected his aquatic domain for ages. He now faces his greatest challenge as a force of serpentine naga and malefic faceless ones threaten to depose him, leaving his realm and its secrets ripe for the plundering.", 522346, 526413, 522362, 460875, 0},
 	[939] = {"Well of Eternity", "Ten-thousand years in the past, the night elven capital city of Zin-Azshari was a magnificent, sparkling metropolis.  Situated on the shores of the Well of Eternity, it was here that the aristocratic Highborne first opened a portal into the Twisting Nether and invited the Burning Legion to invade Azeroth.  Under the command of the night elven queen, Azshara, they now pour their energies into the portal, preparing it for the terrifying and glorious entrance of the demon god Sargeras.", 571741, 571760, 571756, 575266, 0},
 	[568] = {"Zul'Aman", "Echoes of unfulfilled vengeance linger in the one-time capital of the Amani tribe, Zul'Aman. Though the Amani trolls answered their warlord's call to arms, Zul'jin was denied his goal of restoring the empire to its former glory. Where he failed, the Zandalar tribe will succeed. Left unchecked, the united tribes will reclaim their lands and savor a merciless retribution.", 522347, 526415, 522363, 136367, 0},
-	[859] = {"Zul'Gurub", "Zul'Gurub was the capital of the Gurubashi jungle trolls, a tribe that once controlled the vast jungles of the south. It was here that Jin'do the Hexxer summoned the savage loa Hakkar the Soulflayer into Azeroth. Of late, these efforts have begun anew amid an alliance between the Gurubashi and Zandalar trolls that seeks to establish a unified troll empire.", 522348, 526416, 522364, 136369, 0},]]
+	[859] = {"Zul'Gurub", "Zul'Gurub was the capital of the Gurubashi jungle trolls, a tribe that once controlled the vast jungles of the south. It was here that Jin'do the Hexxer summoned the savage loa Hakkar the Soulflayer into Azeroth. Of late, these efforts have begun anew amid an alliance between the Gurubashi and Zandalar trolls that seeks to establish a unified troll empire.", 522348, 526416, 522364, 136369, 0},
 	--Cata raids.
-	--[[[757] = {"Baradin Hold", "Following the Second War, the ruined fortress of Baradin Hold on the remote island of Tol Barad was converted into a prison for some of the most dangerous forces on Azeroth. Yet with the devastation wrought by the Cataclysm, the prison's integrity has been compromised. Now as the Horde and Alliance vie for supremacy on the island, the liberation of its forgotten horrors may be at hand.", 522333, 526401, 522349, 464826, 0},
+	[757] = {"Baradin Hold", "Following the Second War, the ruined fortress of Baradin Hold on the remote island of Tol Barad was converted into a prison for some of the most dangerous forces on Azeroth. Yet with the devastation wrought by the Cataclysm, the prison's integrity has been compromised. Now as the Horde and Alliance vie for supremacy on the island, the liberation of its forgotten horrors may be at hand.", 522333, 526401, 522349, 464826, 0},
 	[669] = {"Blackwing Descent", "Nefarian and his warped attempts to create a new breed of dragon were thought to be defeated after his death in Blackwing Lair. Yet tales have emerged that his father, Deathwing, has reanimated  Nefarian and set him to work in Blackwing Descent. The gruesome experiments being conducted there are feared to be on a level of wickedness far surpassing Nefarian's previous crimes against nature.", 522335, 526403, 522351, 460860, 0},
 	[671] = {"The Bastion of Twilight", "The Bastion of Twilight stands as a dark symbol of the Old Gods' burgeoning power on Azeroth. Various branches of the Twilight's Hammer dwell deep beneath the towering form--considered the cult's foremost command center--along with their twisted leader, Cho'gall. There, he and his servants conspire to bring the Old Gods' apocalyptic visions to fruition by bleeding Azeroth of all sanity, hope, and life.", 522339, 526407, 522355, 460863, 0},
 	[754] = {"Throne of the Four Winds", "Al'Akir the Windlord's personal lair, the Throne of the Four Winds, glides high among Skywall's boundless vistas. Now that the barriers of the Elemental Plane have been ruptured, Al'Akir is free to travel Azeroth's winds at his leisure. He has mustered his fiercest tempests to scour Uldum of life and seize control of the mysterious titan-forged Halls of Origination.", 522343, 526411, 522359, 460874, 0},
 	[720] = {"Firelands", "The Firelands is the molten domain forged by the titans to house Ragnaros and his wayward minions. Following Deathwing's emergence into Azeroth, Ragnaros and his servants surged onto the slopes of Mount Hyjal before being driven back by the sacred mountain's valiant defenders. Now Ragnaros is rallying his loyalists to defend the Firelands from Azeroth's champions.", 522337, 526405, 522353, 529270, 0},
-	[967] = {"Dragon Soul", "Forged by Deathwing during the War of the Ancients, the Dragon Soul harnessed the combined power of the dragonflights until it was ultimately destroyed. Through the Caverns of Time, Thrall and the remaining dragonflights were able to recover the powerful artifact before its destruction.  Now they have rallied at Wyrmrest Temple in a desperate attempt to use the might of the Dragon Soul against Deathwing himself.", 571738, 571757, 571753, 575261, 0},]]
+	[967] = {"Dragon Soul", "Forged by Deathwing during the War of the Ancients, the Dragon Soul harnessed the combined power of the dragonflights until it was ultimately destroyed. Through the Caverns of Time, Thrall and the remaining dragonflights were able to recover the powerful artifact before its destruction.  Now they have rallied at Wyrmrest Temple in a desperate attempt to use the might of the Dragon Soul against Deathwing himself.", 571738, 571757, 571753, 575261, 0},
 };
 
 --Trash and boss lists taken from wowhead and refined.
@@ -1906,7 +2177,473 @@ NRC.zones = {
 			[12129] = "Onyxian Warder",
 		},
 	},
-}
+	
+	--Cata.
+	[568] = {
+		name = L["Zul'Aman"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[643] = {
+		name = L["Throne of the Tides"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[644] = {
+		name = L["Halls of Origination"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[645] = {
+		name = L["Blackrock Caverns"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[657] = {
+		name = L["The Vortex Pinnacle"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[670] = {
+		name = L["Grim Batol"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[725] = {
+		name = L["The Stonecore"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[755] = {
+		name = L["Lost City of the Tol'vir"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[859] = {
+		name = L["Zul'Gurub"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[938] = {
+		name = L["End Time"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[939] = {
+		name = L["Well of Eternity"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	[940] = {
+		name = L["Hour of Twilight"],
+		type = "dungeon",
+		expansion = "cata",
+	},
+	
+	[249] = {
+		name = L["Onyxia's Lair"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 1,
+		bosses = {
+			[2159] = L["Onyxia"],
+		},
+		trash = {
+			[36561] = "Onyxian Lair Guard",
+			[11262] = "Onyxian Whelp",
+			[12129] = "Onyxian Warder",
+		},
+	},
+	[669] = {
+		name = L["Blackwing Descent"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[671] = {
+		name = L["The Bastion of Twilight"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[720] = {
+		name = L["Firelands"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[754] = {
+		name = L["Throne of the Four Winds"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[757] = {
+		name = L["Baradin Hold"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[967] = {
+		name = L["Dragon Soul"],
+		type = "raid",
+		expansion = "cata",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	
+	--MoP.
+	--[[[959] = {
+		name = L["Shado-pan Monastery"],
+		type = "dungeon",
+		expansion = "mop",
+	},
+	[960] = {
+		name = L["Temple of the Jade Serpent"],
+		type = "dungeon",
+		expansion = "mop",
+	},
+	[961] = {
+		name = L["Stormstout Brewery"],
+		type = "dungeon",
+		expansion = "mop",
+	},
+	[962] = {
+		name = L["Gate of the Setting Sun"],
+		type = "dungeon",
+		expansion = "mop",
+	},
+	[944] = {
+		name = L["Mogu'Shan Palace"],
+		type = "dungeon",
+		expansion = "mop",
+	},
+	[1011] = {
+		name = L["Siege of Niuzao Temple"],
+		type = "dungeon",
+		expansion = "mop",
+	},
+	[996] = {
+		name = L["Terrace of Endless Spring"],
+		type = "raid",
+		expansion = "mop",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1008] = {
+		name = L["Mogu'shan Vaults"],
+		type = "raid",
+		expansion = "mop",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1009] = {
+		name = L["Heart of Fear"],
+		type = "raid",
+		expansion = "mop",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1098] = {
+		name = L["Throne of Thunder"],
+		type = "raid",
+		expansion = "mop",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1136] = {
+		name = L["Siege of Orgrimmar"],
+		type = "raid",
+		expansion = "mop",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	
+	--WoD.
+	[1182] = {
+		name = L["Auchindoun"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1175] = {
+		name = L["Bloodmaul Slag Mines"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1176] = {
+		name = L["Shadowmoon Burial Grounds"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1195] = {
+		name = L["Iron Docks"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1208] = {
+		name = L["Grimrail Depot"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1209] = {
+		name = L["Skyreach"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1279] = {
+		name = L["The Everbloom"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1358] = {
+		name = L["Upper Blackrock Spire"],
+		type = "dungeon",
+		expansion = "wod",
+	},
+	[1205] = {
+		name = L["Blackrock Foundry"],
+		type = "raid",
+		expansion = "wod",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1228] = {
+		name = L["Highmaul"],
+		type = "raid",
+		expansion = "wod",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1448] = {
+		name = L["Hellfire Citadel"],
+		type = "raid",
+		expansion = "wod",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	
+	--Legion.
+	[1456] = {
+		name = L["Eye of Azshara"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1458] = {
+		name = L["Neltharion's Lair"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1466] = {
+		name = L["Darkheart Thicket"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1477] = {
+		name = L["Halls of Valor"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1492] = {
+		name = L["Maw of Souls"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1493] = {
+		name = L["Vault of the Wardens"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1501] = {
+		name = L["Black Rook Hold"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1516] = {
+		name = L["The Arcway"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1544] = {
+		name = L["Violet Hold"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1571] = {
+		name = L["Court of Stars"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1651] = {
+		name = L["Return to Karazhan"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1677] = {
+		name = L["Cathedral of Eternal Night"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1753] = {
+		name = L["Seat of the Triumvirate"],
+		type = "dungeon",
+		expansion = "legion",
+	},
+	[1520] = {
+		name = L["The Emerald Nightmare"],
+		type = "raid",
+		expansion = "legion",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1530] = {
+		name = L["The Nighthold"],
+		type = "raid",
+		expansion = "legion",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1648] = {
+		name = L["Trial of Valor"],
+		type = "raid",
+		expansion = "legion",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1676] = {
+		name = L["Tomb of Sargeras"],
+		type = "raid",
+		expansion = "legion",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},
+	[1712] = {
+		name = L["Antorus, the Burning Throne"],
+		type = "raid",
+		expansion = "legion",
+		noLockout = true,
+		bossCount = 0,
+		bosses = {
+			
+		},
+		trash = {
+			
+		},
+	},]]
+};
 
 NRC.flasks = {
 	--Classic flasks.
@@ -2071,13 +2808,11 @@ NRC.flasks = {
 		name = "Flask of Endless Rage",
 		icon = 236880,
 		desc = "+180 AP",
-		maxRank = true,
 	},
 	[53755] = {
 		name = "Flask of the Frost Wyrm",
 		icon = 236878,
 		desc = "+125 SP",
-		maxRank = true,
 	},
 	[67019] = {
 		name = "Flask of the North",
@@ -2088,26 +2823,59 @@ NRC.flasks = {
 		name = "Flask of Stoneblood",
 		icon = 236879,
 		desc = "+1300 HP",
-		maxRank = true,
 	},
 	[54212] = {
 		name = "Flask of Pure Mojo",
 		icon = 236877,
 		desc = "+45 MP5",
-		maxRank = true,
 	},
 	[62380] = {
 		name = "Lesser Flask of Resistance",
 		icon = 134741,
 		desc = "+50 All Resistances",
-		maxRank = true,
 	},
 	[53752] = {
 		name = "Lesser Flask of Toughness",
 		icon = 236876,
 		desc = "+50 Resilience",
+	},
+	--Cata.
+	[79470] = {
+		name = "Flask of the Draconic Mind",
+		icon = 463930,
+		desc = "+300 Intellect",
 		maxRank = true,
 	},
+	[79471] = {
+		name = "Flask of the Winds",
+		icon = 463927,
+		desc = "+300 Agility",
+		maxRank = true,
+	},
+	[79472] = {
+		name = "Flask of Titanic Strength",
+		icon = 463931,
+		desc = "+300 Strength",
+		maxRank = true,
+	},
+	[79469] = {
+		name = "Flask of Steelskin",
+		icon = 463926,
+		desc = "+450 Stamina",
+		maxRank = true,
+	},
+	[94160] = {
+		name = "Flask of Flowing Water",
+		icon = 463929,
+		desc = "+300 Spirit",
+		maxRank = true,
+	},
+	--[[[92679] = { --Probably just grants one of the other flask buffs?
+		name = "Flask of Battle",
+		icon = 134735,
+		desc = "Grants the effect of a flask based on your class and talents.",
+		maxRank = true,
+	},]]
 };
 
 NRC.battleElixirs = {
@@ -2181,61 +2949,82 @@ NRC.battleElixirs = {
 		name = "Spellpower Elixir",
 		icon = 236885,
 		desc = "+58 SP",
-		maxRank = true,
 	},
 	[60345] = {
 		name = "Elixir of Armor Piercing",
 		icon = 236886,
 		desc = "+45 Armor Pen",
-		maxRank = true,
 	},
 	[28497] = {
 		name = "Elixir of Mighty Agility",
 		icon = 134790,
 		desc = "+45 Agility",
-		maxRank = true,
 	},
 	[53748] = {
 		name = "Elixir of Mighty Strength",
 		icon = 134793,
 		desc = "+50 Strength",
-		maxRank = true,
 	},
 	[53749] = {
 		name = "Guru's Elixir",
 		icon = 134735,
 		desc = "+20 All Stats",
-		maxRank = true,
 	},
 	[60340] = {
 		name = "Elixir of Accuracy",
 		icon = 134841,
 		desc = "+45 Hit",
-		maxRank = true,
 	},
 	[60346] = {
 		name = "Elixir of Lightning Speed",
 		icon = 236884,
 		desc = "+45 Haste",
-		maxRank = true,
 	},
 	[60344] = {
 		name = "Elixir of Expertise",
 		icon = 236881,
 		desc = "+45 Expertise",
-		maxRank = true,
 	},
 	[60341] = {
 		name = "Elixir of Deadly Strikes",
 		icon = 236882,
 		desc = "+45 Crit",
-		maxRank = true,
 	},
 	[53746] = {
 		name = "Wrath Elixir",
 		icon = 134737,
 		desc = "+90 AP",
-		maxRank = true,
+	},
+	--Cata.
+	[79477] = {
+		name = "Elixir of the Cobra",
+		icon = 463860,
+		desc = "+225 Crit Rating",
+	},
+	[79632] = {
+		name = "Elixir of Mighty Speed",
+		icon = 464025,
+		desc = "+225 Haste",
+	},
+	[79635] = {
+		name = "Elixir of the Master",
+		icon = 463921,
+		desc = "+225 Mastery",
+	},
+	[79468] = {
+		name = "Ghost Elixir",
+		icon = 463924,
+		desc = "+225 Spirit",
+	},
+	[79474] = {
+		name = "Elixir of the Naga",
+		icon = 463899,
+		desc = "+225 Expertise",
+	},
+	[79481] = {
+		name = "Elixir of Impossible Accuracy",
+		icon = 464029,
+		desc = "+225 Hit Rating",
 	},
 };
 
@@ -2295,37 +3084,42 @@ NRC.guardianElixirs = {
 		name = "Elixir of Mighty Mageblood",
 		icon = 134753,
 		desc = "+30 MP5",
-		maxRank = true,
 	},
 	[53747] = {
 		name = "Elixir of Spirit",
 		icon = 134713,
 		desc = "+50 Spirit",
-		maxRank = true,
 	},
 	[60347] = {
 		name = "Elixir of Mighty Thoughts",
 		icon = 134789,
 		desc = "+45 Intellect",
-		maxRank = true,
 	},
 	[60343] = {
 		name = "Elixir of Mighty Defense",
 		icon = 236883,
 		desc = "+45 Defense",
-		maxRank = true,
 	},
 	[53751] = {
 		name = "Elixir of Mighty Fortitude",
 		icon = 134792,
 		desc = "+350 HP, +20 HP5",
-		maxRank = true,
 	},
 	[53763] = {
 		name = "Elixir of Protection",
 		icon = 236887,
 		desc = "+800 Armor",
-		maxRank = true,
+	},
+	--Cata.
+	[79480] = {
+		name = "Elixir of Deep Earth",
+		icon = 464028,
+		desc = "+900 Armor",
+	},
+	[79631] = {
+		name = "Prismatic Elixir",
+		icon = 464027,
+		desc = "+90 Resistances",
 	},
 };
 
@@ -2400,25 +3194,21 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+80 AP, +46 SP, +40 Stamina",
-		maxRank = true,
 	},
 	[69559] = {
 		name = "\"Well Fed\"", --Brewfest.
 		icon = 133696,
 		desc = "+40 Stamina and Resilience",
-		maxRank = true,
 	},
 	[65365] = {
 		name = "\"Well Fed\"", --Brewfest.
 		icon = 133696,
 		desc = "+40 Crit",
-		maxRank = true,
 	},
 	[59230] = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Dodge",
-		maxRank = true,
 	},
 	[64057] = {
 		name = "Well Fed",
@@ -2439,7 +3229,6 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+80 AP, +40 Stamina",
-		maxRank = true,
 	},
 	[57139] = {
 		name = "Well Fed",
@@ -2455,7 +3244,6 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+46 SP, +40 Stamina",
-		maxRank = true,
 	},
 	[57288] = {
 		name = "Well Fed",
@@ -2471,7 +3259,6 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Haste, +40 Stamina",
-		maxRank = true,
 	},
 	[62349] = {
 		name = "Well Fed",
@@ -2482,7 +3269,6 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Hit, +40 Stamina",
-		maxRank = true,
 	},
 	[57286] = {
 		name = "Well Fed",
@@ -2498,13 +3284,11 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Crit, +40 Stamina",
-		maxRank = true,
 	},
 	[57358] = {
 		name = "Well Fed",
 		icon = 136000,
-		desc = "+40 Armor Pen, +40 Stamina",
-		maxRank = true,
+		desc = "+40 Crit, +40 Stamina",
 	},
 	--[[[65247] = { --Pet buff? New kibler's bits ID?
 		name = "Well Fed",
@@ -2515,19 +3299,16 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Strength, +40 Stamina",
-		maxRank = true,
 	},
 	[57356] = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Expertise, +40 Stamina",
-		maxRank = true,
 	},
 	[57367] = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Agility, +40 Stamina",
-		maxRank = true,
 	},
 	[53284] = {
 		name = "Well Fed",
@@ -2538,47 +3319,150 @@ NRC.foods = {
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+40 Spirit, +40 Stamina",
-		maxRank = true,
 	},
 	[57107] = {
 		name = "Well Fed",
 		icon = 136000,
-		desc = "+15 MP5, +40 Stamina",
+		desc = "+30 Spirit, +40 Stamina",
 	},
 	[57291] = {
 		name = "Well Fed",
 		icon = 136000,
-		desc = "+15 MP5, +30 Stamina",
+		desc = "+30 Spirit, +30 Stamina",
 	},
 	[57334] = {
 		name = "Well Fed",
 		icon = 136000,
-		desc = "+20 MP5, +40 Stamina",
-		maxRank = true,
+		desc = "+40 Spirit, +40 Stamina",
 	},
 	[66623] = { --https://www.wowhead.com/wotlk/item=46887/bountiful-feast (Pilgrim's event food)
 		name = "Well Fed",
 		icon = 136000,
 		desc = "+80 AP, +47 SP, +40 Stamina",
+	},
+	--Cata.
+	--I'm assuming food with "gain useful stat" just uses the normal food buffs below, but have to test after launch.
+	[87549] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Mastery, +90 Stamina",
 		maxRank = true,
+	},
+	[87545] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Strength, +90 Stamina",
+		maxRank = true,
+	},
+	[87552] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Hit, +90 Stamina",
+		maxRank = true,
+	},
+	[87551] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Crit, +90 Stamina",
+		maxRank = true,
+	},
+	[87595] = { --Why are there duplicate +hit well fed buffs with diff ids?
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Hit, +90 Stamina",
+		maxRank = true,
+	},
+	[87548] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Spirit, +90 Stamina",
+		maxRank = true,
+	},
+	[87637] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Expertise, +90 Stamina",
+		maxRank = true,
+	},
+	[87555] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Parry, +90 Stamina",
+		maxRank = true,
+	},
+	[87554] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Dodge, +90 Stamina",
+		maxRank = true,
+	},
+	[87587] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Int, +90 Stamina",
+		maxRank = true,
+	},
+	[87586] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+90 Agility, +90 Stamina",
+		maxRank = true,
+	},
+	[87634] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Expertise, +60 Stamina",
+	},
+	[87559] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Spirit, +60 Stamina",
+	},
+	[87561] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Hit, +60 Stamina",
+	},
+	[87556] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Strength, +60 Stamina",
+	},
+	[87562] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Crit, +60 Stamina",
+	},
+	[87560] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Mastery, +60 Stamina",
+	},
+	[87564] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Dodge, +60 Stamina",
+	},
+	[87563] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Haste, +60 Stamina",
+	},
+	[87558] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Int, +60 Stamina",
+	},
+	[87557] = {
+		name = "Well Fed",
+		icon = 136000,
+		desc = "+60 Agility, +60 Stamina",
 	},
 };
 
 --"Food" buffs used in RaidStatus to show player is currently eating buff food, these must match all foods above.
 --Current expansion and 1 previous expansion.
 NRC.eating = {
-	--TBC.
-	[33258] = "Food", --30 stam 20 spirit.
-	[33269] = "Food", --44 healing 20 spirit.
-	[33264] = "Food", --23 SP 20 spirit.
-	[33260] = "Food", --40 AP 20 spirit.
-	[33262] = "Food", --20 agi 20 spirit.
-	[43763] = "Food", --20 hit 20 spirit.
-	[33255] = "Food", --20 str 20 spirit.
-	[43706] = "Drink", --20 crit 20 spirit.
-	[33266] = "Food", --20 stam 8MP5.
-	[45618] = "Food", --8 resistances.
-	[43730] = "Electrified", --Zap nearby enemies.
 	--Wrath.
 	[57292] = "Refreshment", --Attack Power increased by 60, Spell Power increased by 35 and Stamina increased by 30.
 	[58067] = "Refreshment", --Attack Power increased by 60, Spell Power increased by 35 and Stamina increased by 30.
@@ -2618,9 +3502,33 @@ NRC.eating = {
 	[53283] = "Food", --Stamina and Spirit increased by 25.
 	[64056] = "Food", --Attack power increased by 24 and spell power increased by 14.
 	--Seems you don't actually get the above buffs in wrath, you get seperate drink and food?
-	--Track he food buff, I think al
 	[45548] = "Food", --Restores 22500 health over 30 sec.
+	--Cata.
+	[87604] = "Food", -- +90 foods.
+	[87587] = "Food",
+	[87586] = "Food",
+	[87594] = "Food",
+	[87584] = "Food",
+	[87599] = "Food",
+	[87597] = "Food",
+	[87595] = "Food",
+	[87588] = "Food",
+	[87637] = "Food",
+	[87602] = "Food",
+	[87601] = "Food",
+	[87604] = "Food",
+	[87636] = "Food", -- +60 foods.
+	[87568] = "Food",
+	[87571] = "Food",
+	[87544] = "Food",
+	[87572] = "Food",
+	[87570] = "Food",
+	[87577] = "Food",
+	[87573] = "Food",
+	[87567] = "Food",
+	[87566] = "Food",
 };
+
 --Scrolls get overridden by dk buffs in wrath.
 --Also the lower ranks can be removed a month after wrath launches.
 NRC.scrolls = {
@@ -2664,9 +3572,18 @@ NRC.scrolls = {
 		name = "Scroll of Agility VIII",
 		icon = 135879,
 		desc = "+30 Agility",
-		maxRank = true,
 		order = 1,
 		itemID = 43464,
+		itemIcon = 134938,
+		quality = 1,
+	},
+	[89343] = {
+		name = "Scroll of Agility IX",
+		icon = 135879,
+		desc = "+100 Agility",
+		maxRank = true,
+		order = 1,
+		itemID = 63303,
 		itemIcon = 134938,
 		quality = 1,
 	},
@@ -2710,16 +3627,25 @@ NRC.scrolls = {
 		name = "Scroll of Strength VIII",
 		icon = 136101,
 		desc = "+30 Strength",
-		maxRank = true,
 		order = 2,
 		itemID = 43466,
+		itemIcon = 134938,
+		quality = 1,
+	},
+	[89346] = {
+		name = "Scroll of Strength IX",
+		icon = 136101,
+		desc = "+100 Strength",
+		maxRank = true,
+		order = 2,
+		itemID = 63304,
 		itemIcon = 134938,
 		quality = 1,
 	},
 	[12175] = {
 		name = "Scroll of Protection IV",
 		icon = 132341,
-		desc = "+195 Armor",
+		desc = "+40 Armor",
 		order = 3,
 		itemID = 10305,
 		itemIcon = 134943,
@@ -2728,7 +3654,7 @@ NRC.scrolls = {
 	[33079] = {
 		name = "Scroll of Protection V",
 		icon = 132341,
-		desc = "+240 Armor",
+		desc = "+60 Armor",
 		order = 3,
 		itemID = 27500,
 		itemIcon = 134943,
@@ -2737,7 +3663,7 @@ NRC.scrolls = {
 	[43196] = {
 		name = "Scroll of Protection VI",
 		icon = 132341,
-		desc = "+285 Armor",
+		desc = "+80 Armor",
 		order = 3,
 		itemID = 33459,
 		itemIcon = 134943,
@@ -2746,7 +3672,7 @@ NRC.scrolls = {
 	[58452] = {
 		name = "Scroll of Protection VII",
 		icon = 132341,
-		desc = "+340 Armor",
+		desc = "+100 Armor",
 		order = 3,
 		itemID = 43467,
 		itemIcon = 134943,
@@ -2755,17 +3681,26 @@ NRC.scrolls = {
 	[58453] = {
 		name = "Scroll of Protection VIII",
 		icon = 132341,
-		desc = "+750 Armor",
-		maxRank = true,
+		desc = "+120 Armor",
 		order = 3,
 		itemID = 43468,
+		itemIcon = 134943,
+		quality = 1,
+	},
+	[89344] = {
+		name = "Scroll of Protection IX",
+		icon = 132341,
+		desc = "+400 Armor",
+		maxRank = true,
+		order = 3,
+		itemID = 63308,
 		itemIcon = 134943,
 		quality = 1,
 	},
 	[12176] = {
 		name = "Scroll of Intellect IV",
 		icon = 135932,
-		desc = "+17 Intellect",
+		desc = "+10 Intellect",
 		order = 4,
 		itemID = 10308,
 		itemIcon = 134937,
@@ -2774,7 +3709,7 @@ NRC.scrolls = {
 	[33078] = {
 		name = "Scroll of Intellect V",
 		icon = 135932,
-		desc = "+21 Intellect",
+		desc = "+15 Intellect",
 		order = 4,
 		itemID = 27499,
 		itemIcon = 134937,
@@ -2783,7 +3718,7 @@ NRC.scrolls = {
 	[43195] = {
 		name = "Scroll of Intellect VI",
 		icon = 135932,
-		desc = "+24 Intellect",
+		desc = "+20 Intellect",
 		order = 4,
 		itemID = 33458,
 		itemIcon = 134937,
@@ -2792,7 +3727,7 @@ NRC.scrolls = {
 	[48099] = {
 		name = "Scroll of Intellect VII",
 		icon = 135932,
-		desc = "+32 Intellect",
+		desc = "+25 Intellect",
 		order = 4,
 		itemID = 37091,
 		itemIcon = 134937,
@@ -2801,17 +3736,26 @@ NRC.scrolls = {
 	[48100] = {
 		name = "Scroll of Intellect VIII",
 		icon = 135932,
-		desc = "+48 Intellect",
-		maxRank = true,
+		desc = "+30 Intellect",
 		order = 4,
 		itemID = 37092,
+		itemIcon = 134937,
+		quality = 1,
+	},
+	[89347] = {
+		name = "Scroll of Intellect IX",
+		icon = 135932,
+		desc = "+100 Intellect",
+		maxRank = true,
+		order = 4,
+		itemID = 63305,
 		itemIcon = 134937,
 		quality = 1,
 	},
 	[12177] = {
 		name = "Scroll of Spirit IV",
 		icon = 136126,
-		desc = "+18 Spirit",
+		desc = "+10 Spirit",
 		order = 5,
 		itemID = 10306,
 		itemIcon = 134937,
@@ -2820,7 +3764,7 @@ NRC.scrolls = {
 	[33080] = {
 		name = "Scroll of Spirit V",
 		icon = 136126,
-		desc = "+26 Spirit",
+		desc = "+15 Spirit",
 		order = 5,
 		itemID = 27501,
 		itemIcon = 134937,
@@ -2829,7 +3773,7 @@ NRC.scrolls = {
 	[43197] = {
 		name = "Scroll of Spirit VI",
 		icon = 136126,
-		desc = "+32 Spirit",
+		desc = "+20 Spirit",
 		order = 5,
 		itemID = 33460,
 		itemIcon = 134937,
@@ -2838,7 +3782,7 @@ NRC.scrolls = {
 	[48103] = {
 		name = "Scroll of Spirit VII",
 		icon = 136126,
-		desc = "+40 Spirit",
+		desc = "+25 Spirit",
 		order = 5,
 		itemID = 37097,
 		itemIcon = 134937,
@@ -2847,17 +3791,26 @@ NRC.scrolls = {
 	[48104] = {
 		name = "Scroll of Spirit VIII",
 		icon = 136126,
-		desc = "+64 Spirit",
-		maxRank = true,
+		desc = "+30 Spirit",
 		order = 5,
 		itemID = 37098,
+		itemIcon = 134937,
+		quality = 1,
+	},
+	[89342] = {
+		name = "Scroll of Spirit IX",
+		icon = 136126,
+		desc = "+100 Spirit",
+		maxRank = true,
+		order = 5,
+		itemID = 63307,
 		itemIcon = 134937,
 		quality = 1,
 	},
 	[12178] = {
 		name = "Scroll of Stamina IV",
 		icon = 136112,
-		desc = "+25 Stamina",
+		desc = "+10 Stamina",
 		order = 6,
 		itemID = 10307,
 		itemIcon = 134943,
@@ -2866,7 +3819,7 @@ NRC.scrolls = {
 	[33081] = {
 		name = "Scroll of Stamina V",
 		icon = 136112,
-		desc = "+34 Stamina",
+		desc = "+15 Stamina",
 		order = 6,
 		itemID = 27502,
 		itemIcon = 134943,
@@ -2875,7 +3828,7 @@ NRC.scrolls = {
 	[43198] = {
 		name = "Scroll of Stamina VI",
 		icon = 136112,
-		desc = "+43 Stamina",
+		desc = "+20 Stamina",
 		order = 6,
 		itemID = 33461,
 		itemIcon = 134943,
@@ -2884,7 +3837,7 @@ NRC.scrolls = {
 	[48101] = {
 		name = "Scroll of Stamina VII",
 		icon = 136112,
-		desc = "+63 Stamina",
+		desc = "+25 Stamina",
 		order = 6,
 		itemID = 37093,
 		itemIcon = 134943,
@@ -2893,10 +3846,19 @@ NRC.scrolls = {
 	[48102] = {
 		name = "Scroll of Stamina VIII",
 		icon = 136112,
-		desc = "+132 Stamina",
-		maxRank = true,
+		desc = "+30 Stamina",
 		order = 6,
 		itemID = 37094,
+		itemIcon = 134943,
+		quality = 1,
+	},
+	[89345] = {
+		name = "Scroll of Stamina IX",
+		icon = 136112,
+		desc = "+150 Stamina",
+		maxRank = true,
+		order = 6,
+		itemID = 63306,
 		itemIcon = 134943,
 		quality = 1,
 	},
@@ -2904,21 +3866,6 @@ NRC.scrolls = {
 
 --Spell cast IDs not item IDs.
 NRC.trackedConsumes = {
-	--[[[22734] = { --Debug.
-		name = "Drink",
-		icon = 132805,
-		desc = "Restores 4200 mana over 30 sec. Must remain seated while drinking.",
-	},
-	[34291] = { --Debug.
-		name = "Drink",
-		icon = 132805,
-		desc = "Restores 5100 mana over 30 sec. Must remain seated while drinking.",
-	},
-	[25389] = { --Debug.
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "Power infuses the target increasing their Stamina by 79 for 30 min.",
-	},]]
 	[22792] = {
 		name = "Thornling Seed",
 		icon = 132877,
@@ -2935,28 +3882,11 @@ NRC.trackedConsumes = {
 		quality = 1,
 	},
 	--Healthstones.
-	[47875] = {
-		name = "Master Healthstone",
+	[6262] = {
+		name = "Healthstone",
 		icon = 135230,
-		desc = "Instantly restores 4280 life.",
-		extraInfo = "0/2",
-		itemID = 36892,
-		quality = 1,
-	},
-	[47876] = {
-		name = "Fel Healthstone",
-		icon = 135230,
-		desc = "Instantly restores 4708 life.",
-		extraInfo = "1/2",
-		itemID = 36893,
-		quality = 1,
-	},
-	[47877] = {
-		name = "Fel Healthstone",
-		icon = 135230,
-		desc = "Instantly restores 5136 life.",
-		extraInfo = "2/2",
-		itemID = 36894,
+		desc = "Instantly restores 45% health.",
+		itemID = 5512,
 		quality = 1,
 	},
 	--Potions.
@@ -3220,6 +4150,77 @@ NRC.trackedConsumes = {
 		itemID = 22779,
 		quality = 1,
 	},
+	--Cata.
+	[78989] = {
+		name = "Mythical Healing Potion",
+		icon = 463548,
+		desc = "Restores 22500 to 27500 health.",
+		itemID = 57191,
+		quality = 1,
+	},
+	[78990] = {
+		name = "Mythical Mana Potion",
+		icon = 463545,
+		desc = "Restores 9250 to 10750 mana.",
+		itemID = 57192,
+		quality = 1,
+	},
+	[79476] = {
+		name = "Volcanic Potion",
+		icon = 463922,
+		desc = "Increases Intellect by 1200 for 25 sec.",
+		itemID = 58091,
+		quality = 1,
+	},
+	[79633] = {
+		name = "Potion of the Tol'vir",
+		icon = 463923,
+		desc = "Increases your Agility by 1200 for 25 sec.",
+		itemID = 58145,
+		quality = 1,
+	},
+	[79634] = {
+		name = "Golemblood Potion",
+		icon = 463920,
+		desc = "Increases your Strength by 1200 for 25 sec.",
+		itemID = 58146,
+		quality = 1,
+	},
+	[79475] = {
+		name = "Earthen Potion",
+		icon = 236874,
+		desc = "Increases armor by 4800 for 25 sec.",
+		itemID = 58090,
+		quality = 1,
+	},
+	[78993] = {
+		name = "Potion of Concentration",
+		icon = 463900,
+		desc = "Puts the imbiber in an elevated state of concentration where they can restore up to 22000 mana over 10 sec.",
+		itemID = 57194,
+		quality = 1,
+	},
+	[78778] = {
+		name = "Mysterious Potion",
+		icon = 463925,
+		desc = "Restores 1 to 50000 health and 1 to 20000 mana.",
+		itemID = 57099,
+		quality = 1,
+	},
+	[78992] = {
+		name = "Mighty Rejuvenation Potion",
+		icon = 463546,
+		desc = "Restores 9000 to 11000 mana and health.",
+		itemID = 57193,
+		quality = 1,
+	},
+	[78989] = {
+		name = "Rogue's Draught",
+		icon = 134804,
+		desc = "Restores 22500 to 27500 health.",
+		itemID = 63300,
+		quality = 1,
+	},
 }
 
 NRC.racials = {
@@ -3253,6 +4254,16 @@ NRC.racials = {
 		icon = 136222,
 		desc = "Silence all enemies within 8 yards for 2 sec and restores 15 Runic Power.",
 	},
+	[80483] = {
+		name = "Arcane Torrent",
+		icon = 136222,
+		desc = "Silence all enemies within 8 yards for 2 sec and restores 15 Focus.",
+	},
+	[69179] = {
+		name = "Arcane Torrent",
+		icon = 136222,
+		desc = "Silence all enemies within 8 yards for 2 sec and restores 15 Rage.",
+	},
 	[20549] = {
 		name = "War Stomp",
 		icon = 132368,
@@ -3266,57 +4277,52 @@ NRC.racials = {
 	[7744] = {
 		name = "Will of the Forsaken",
 		icon = 136187,
-		desc = "Removes any Charm, Fear and Sleep effect. This effect shares a 45 sec cooldown with other similar effects.",
+		desc = "Removes any Charm, Fear and Sleep effect. This effect shares a 30 sec cooldown with other similar effects.",
 	},
 	[28880] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[59547] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[59543] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[59542] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[59545] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[59544] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[59548] = {
 		name = "Gift of the Naaru",
 		icon = 135923,
-		desc = "Heals the target over 15 sec.",
+		desc = "Heals the target for 20% of their total health over 15 sec.",
 	},
 	[20594] = {
 		name = "Stoneform",
 		icon = 136225,
-		desc = "Removes all poison, disease and bleed effects and increases your armor by 10% for 8 sec.",
+		desc = "Removes all poison, disease and bleed effects and reduces all damage taken by 10% for 8 sec.",
 	},
 	[20589] = {
 		name = "Escape Artist",
 		icon = 132309,
 		desc = "Escape the effects of any immobilization or movement speed reduction effect.",
-	},
-	[20600] = {
-		name = "Perception",
-		icon = 136090,
-		desc = "Dramatically increases stealth detection for 20 sec.",
 	},
 	[58984] = { --Old tbc id changed.
 		name = "Shadowmeld",
@@ -3326,60 +4332,36 @@ NRC.racials = {
 	[59752] = {
 		name = "Will to Survive",
 		icon = 136129,
-		desc = "Removes all movement impairing effects and all effects which cause loss of control of your character.  This effect shares a cooldown with other similar effects.",
+		desc = "Removes all movement impairing effects and all effects which cause loss of control of your character. This effect shares a cooldown with other similar effects.",
 	},
 	[20577] = {
 		name = "Cannibalize",
 		icon = 132278,
 		desc = "When activated, regenerates 7% of total health every 2 sec for 10 sec.",
 	},
-	[2481] = {
-		name = "Find Treasure",
-		icon = 135725,
-		desc = "Allows the dwarf to sense nearby treasure, making it appear on the minimap.",
+	[69070] = {
+		name = "Rocket Jump",
+		icon = 370769,
+		desc = "Activates your rocket belt to jump forward.",
+	},
+	[69041] = {
+		name = "Rocket Barrage",
+		icon = 133032,
+		desc = "Launches your belt rockets at an enemy, dealing fire damage.",
+	},
+	[68992] = {
+		name = "Darkflight",
+		icon = 366937,
+		desc = "Activates your true form, increasing current movement speed by an additional 40% for 10 sec.",
 	},
 }
 
+--Some of these are NPC spells, not sure if used in cata but leaving them in anyway.
 NRC.interrupts = {
 	[1766] = {
 		name = "Kick",
 		icon = 132219,
 		rank = 1,
-	};
-	[1767] = {
-		name = "Kick",
-		icon = 132219,
-		rank = 2,
-	};
-	[1768] = {
-		name = "Kick",
-		icon = 132219,
-		rank = 3,
-	};
-	[1769] = {
-		name = "Kick",
-		icon = 132219,
-		rank = 4,
-	};
-	[38768] = { --Why are there 3 rank 5 kicks in game?
-		name = "Kick",
-		icon = 132219,
-		rank = 5,
-	};
-	[1770] = {
-		name = "Kick",
-		icon = 132219,
-		rank = 5,
-	};
-	[45356] = {
-		name = "Kick",
-		icon = 132219,
-		rank = 5,
-	};
-	[3466] = {
-		name = "Kick",
-		icon = 132219,
-		rank = 6,
 	};
 	[57994] = {
 		name = "Wind Shear",
@@ -3390,72 +4372,35 @@ NRC.interrupts = {
 		name = "Counterspell",
 		icon = 135856,
 	};
-	[65790] = { --These are NPC versions?
-		name = "Counterspell",
-		icon = 135856,
-	};
-	[20537] = {
-		name = "Counterspell",
-		icon = 135856,
-	};
-	[51610] = {
-		name = "Counterspell",
-		icon = 135856,
-	};
-	[29443] = {
-		name = "Counterspell",
-		icon = 135856,
-	};
 	[6552] = {
 		name = "Pummel",
 		icon = 132938,
 		rank = 1,
 	};
-	[6554] = {
-		name = "Pummel",
-		icon = 132938,
-		rank = 2,
+	[80965] = { --Cat.
+		name = "Skull Bash",
+		icon = 236946,
 	};
-	[6555] = { --Requires lvl 99?
-		name = "Pummel",
-		icon = 132938,
-		rank = 3,
-	};
-	[16979] = {
-		name = "Feral Charge",
-		icon = 132183,
-	};
-	[19244] = {
-		name = "Spell Lock",
-		icon = 136174,
-		rank = 1,
+	[80964] = { --Bear.
+		name = "Skull Bash",
+		icon = 133732,
 	};
 	[19647] = {
 		name = "Spell Lock",
 		icon = 136174,
 		rank = 2,
 	};
-	[24259] = { --NPC?
-		name = "Spell Lock",
-		icon = 136174,
-		rank = 1,
-	};
-	[30849] = { --NPC?
-		name = "Spell Lock",
-		icon = 136174,
-		rank = 1,
-	};
 	[15487] = {
-		name = "Silence",
-		icon = 136164,
-	};
-	[65542] = { --Not sure what this new higher ID is.
 		name = "Silence",
 		icon = 136164,
 	};
 	[47528] = {
 		name = "Mind Freeze",
 		icon = 237527,
+	};
+	[96231] = {
+		name = "Rebuke",
+		icon = 523893,
 	};
 };
 
@@ -8764,17 +9709,12 @@ NRC.ignoredLoot = {
 	[40752] = "Emblem of Heroism",
 	[45624] = "Emblem of Conquest",
 	[49426] = "Emblem of Frost",
+	--No badges in cata?
 };
 
 NRC.distractingShot = {
 	--Id = threat.
-	[20736] = 110, --All higher ranks were removed and now this is an actual taunt?
-	--[14274] = 160,
-	--[15629] = 250,
-	--[15630] = 350,
-	--[15631] = 465,
-	--[15632] = 600,
-	--[27020] = 900,
+	[20736] = 61, --Now just a 6 second taunt in cata?
 };
 
 NRC.resurrectionSpells = {
@@ -8782,52 +9722,8 @@ NRC.resurrectionSpells = {
 		name = "Resurrection", --Priest Rank 1.
 		icon = 135955,
 	},
-	[2010] = {
-		name = "Resurrection", --Priest Rank 2.
-		icon = 135955,
-	},
-	[10880] = {
-		name = "Resurrection", --Priest Rank 3.
-		icon = 135955,
-	},
-	[10881] = {
-		name = "Resurrection", --Priest Rank 4.
-		icon = 135955,
-	},
-	[20770] = {
-		name = "Resurrection", --Priest Rank 5.
-		icon = 135955,
-	},
-	[25435] = {
-		name = "Resurrection", --Priest Rank 6.
-		icon = 135955,
-	},
-	[48171] = {
-		name = "Resurrection", --Priest Rank 7.
-		icon = 135955,
-	},
 	[2008] = {
 		name = "Ancestral Spirit", --Shaman rank 1.
-		icon = 136077,
-	},
-	[20609] = {
-		name = "Ancestral Spirit", --Shaman rank 2.
-		icon = 136077,
-	},
-	[20610] = {
-		name = "Ancestral Spirit", --Shaman rank 3.
-		icon = 136077,
-	},
-	[20776] = {
-		name = "Ancestral Spirit", --Shaman rank 4.
-		icon = 136077,
-	},
-	[20777] = {
-		name = "Ancestral Spirit", --Shaman rank 5.
-		icon = 136077,
-	},
-	[25590] = {
-		name = "Ancestral Spirit", --Shaman rank 6.
 		icon = 136077,
 	},
 	[49277] = {
@@ -8838,56 +9734,8 @@ NRC.resurrectionSpells = {
 		name = "Redemption", --Paladin rank 1.
 		icon = 135955,
 	},
-	[10322] = {
-		name = "Redemption", --Paladin rank 2.
-		icon = 135955,
-	},
-	[10324] = {
-		name = "Redemption", --Paladin rank 3.
-		icon = 135955,
-	},
-	[20772] = {
-		name = "Redemption", --Paladin rank 4.
-		icon = 135955,
-	},
-	[20773] = {
-		name = "Redemption", --Paladin rank 5.
-		icon = 135955,
-	},
-	[48949] = {
-		name = "Redemption", --Paladin rank 6.
-		icon = 135955,
-	},
-	[48950] = {
-		name = "Redemption", --Paladin rank 7.
-		icon = 135955,
-	},
 	[20484] = {
 		name = "Rebirth", --Rank 1.
-		icon = 136080,
-	},
-	[20739] = {
-		name = "Rebirth", --Rank 2.
-		icon = 136080,
-	},
-	[20742] = {
-		name = "Rebirth", --Rank 3.
-		icon = 136080,
-	},
-	[20747] = {
-		name = "Rebirth", --Rank 4.
-		icon = 136080,
-	},
-	[20748] = {
-		name = "Rebirth", --Rank 5.
-		icon = 136080,
-	},
-	[26994] = {
-		name = "Rebirth", --Rank 6.
-		icon = 136080,
-	},
-	[48477] = {
-		name = "Rebirth", --Rank 7.
 		icon = 136080,
 	},
 };
@@ -8945,52 +9793,19 @@ NRC.magePortals = {
 		name = "Portal: Dalaran",
 		icon = 237508,
 	},
+	[88345] = { --Alliance.
+		name = "Portal: Tol Barad",
+		icon = 462339,
+	},
+	[88346] = { --Horde.
+		name = "Portal: Tol Barad",
+		icon = 462339,
+	},
 };
 
 NRC.healthstones = {
-	[27235] = {
-		name = "Healthstone (0/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[27236] = {
-		name = "Healthstone (1/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[27237] = {
-		name = "Healthstone (2/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	--Wrath.
-	[47874] = {
-		name = "Healthstone (0/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[47873] = {
-		name = "Healthstone (1/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[47872] = {
-		name = "Healthstone (2/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[47875] = {
-		name = "Healthstone (0/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[47876] = {
-		name = "Healthstone (1/2)",
-		icon = 135230,
-		spellName = "Healthstone",
-	},
-	[47877] = {
-		name = "Healthstone (2/2)",
+	[6262] = {
+		name = "Healthstone",
 		icon = 135230,
 		spellName = "Healthstone",
 	},
@@ -9039,6 +9854,23 @@ NRC.dpsPotions = {
 	},
 	[53762] = {
 		name = "Indestructible Potion",
+		icon = 236874,
+	},
+	--Cata.
+	[79476] = {
+		name = "Volcanic Potion",
+		icon = 463922,
+	},
+	[79633] = {
+		name = "Potion of the Tol'vir",
+		icon = 463923,
+	},
+	[79634] = {
+		name = "Golemblood Potion",
+		icon = 463920,
+	},
+	[79475] = {
+		name = "Earthen Potion",
 		icon = 236874,
 	},
 };
@@ -9097,6 +9929,32 @@ NRC.manaPotions = {
 		name = "Potion of Nightmares",
 		icon = 236870,
 	},
+	--Cata.
+	[78990] = {
+		name = "Mythical Mana Potion",
+		icon = 463545,
+	},
+	[78993] = {
+		name = "Potion of Concentration",
+		icon = 463900,
+		desc = "Puts the imbiber in an elevated state of concentration where they can restore up to 22000 mana over 10 sec.",
+		itemID = 57194,
+		quality = 1,
+	},
+	[78778] = {
+		name = "Mysterious Potion",
+		icon = 463925,
+		desc = "Restores 1 to 50000 health and 1 to 20000 mana.",
+		itemID = 57099,
+		quality = 1,
+	},
+	[78992] = {
+		name = "Mighty Rejuvenation Potion",
+		icon = 463546,
+		desc = "Restores 9000 to 11000 mana and health.",
+		itemID = 57193,
+		quality = 1,
+	},
 };
 
 NRC.healingPotions = {
@@ -9153,549 +10011,84 @@ NRC.healingPotions = {
 		name = "Runic Battle Potion",
 		icon = 134788,
 	},
+	--Cata.
+	[78989] = {
+		name = "Mythical Healing Potion",
+		icon = 463548,
+	},
+	[78778] = {
+		name = "Mysterious Potion",
+		icon = 463925,
+		desc = "Restores 1 to 50000 health and 1 to 20000 mana.",
+		itemID = 57099,
+		quality = 1,
+	},
+	[78992] = {
+		name = "Mighty Rejuvenation Potion",
+		icon = 463546,
+		desc = "Restores 9000 to 11000 mana and health.",
+		itemID = 57193,
+		quality = 1,
+	},
+	[78989] = {
+		name = "Rogue's Draught",
+		icon = 134804,
+		desc = "Restores 22500 to 27500 health.",
+		itemID = 63300,
+		quality = 1,
+	},
 };
 
 NRC.tempEnchants = {
 	--Mapped to enchantID not spellID.
-	[2713] = {
-		name = "Adamantite Sharpening Stone",
-		icon = 135254,
-		desc = "Increase sharp weapon damage by 12 and add 14 melee critical strike rating for 1 hour.",
-		maxRank = true,
-	},
-	[2955] = {
-		name = "Adamantite Weightstone",
-		icon = 135261,
-		desc = "Increase blunt weapon damage by 12 and add 14 critical hit rating for 1 hour.",
-		maxRank = true,
-	},
-	[2640] = {
-		name = "Anesthetic Poison",
-		icon = 136093,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 134 to 172 Nature damage, but causes no additional threat.",
-	},
-	[3774] = {
-		name = "Anesthetic Poison II",
-		icon = 136093,
-		desc = "Each strike has a 50% chance of poisoning the enemy which instantly inflicts 218 to 280 Nature damage and dispels 1 Enrage effect, but causes no additional threat.",
-		maxRank = true,
-	},
-	[3265] = {
-		name = "Blessed Weapon Coating",
-		icon = 134723,
-		desc = "Chance to regain 165 mana on each spell cast. Only functions on the Isle of Quel'Danas.",
-		maxRank = true,
-	},
-	[2685] = {
-		name = "Blessed Wizard Oil",
-		icon = 134806,
-		desc = "Increases spell damage against undead by up to 60.",
-		maxRank = true,
-	},
-	[2629] = {
-		name = "Brilliant Mana Oil",
-		icon = 134722,
-		desc = "Restores 12 mana to the caster every 5 seconds and increases the effect of healing spells by up to 25.",
-		maxRank = true,
-	},
-	[2628] = {
-		name = "Brilliant Wizard Oil",
-		icon = 134727,
-		desc = "Increases spell damage by up to 36 and increases spell critical strike rating by 14.",
-		maxRank = true,
-	},
-	[13] = {
-		name = "Coarse Sharpening Stone",
-		icon = 135249,
-		desc = "Increase sharp weapon damage by 3 for 1 hour.",
-	},
-	[20] = {
-		name = "Coarse Weightstone",
-		icon = 135256,
-		desc = "Increase the damage of a blunt weapon by 3 for 1 hour.",
-	},
-	[2684] = {
-		name = "Consecrated Sharpening Stone",
-		icon = 135249,
-		desc = "Increases attack power against undead by 100.",
-		maxRank = true,
-	},
 	[22] = {
 		name = "Crippling Poison",
 		icon = 132274,
-		desc = "Each strike has a 30% chance of poisoning the enemy, slowing their movement speed by 50% for 12 sec.",
-	},
-	[603] = {
-		name = "Crippling Poison II",
-		icon = 132274,
-		desc = "Each strike has a 30% chance of poisoning the enemy, slowing their movement speed by 70% for 12 sec.",
-		maxRank = true,
+		desc = "Each strike has a 50% chance of poisoning the enemy, slowing their movement speed by 70% for 12 sec.",
 	},
 	[7] = {
 		name = "Deadly Poison",
 		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 36 Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[8] = {
-		name = "Deadly Poison II",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 52 Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[626] = {
-		name = "Deadly Poison III",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 80 Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[627] = {
-		name = "Deadly Poison IV",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 108 Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[2630] = {
-		name = "Deadly Poison V",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 136 Nature damage over 12 sec.  Stacks up to 5 times on a single target.",
-	},
-	[2642] = {
-		name = "Deadly Poison VI",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 144 Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[2643] = {
-		name = "Deadly Poison VII",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for 180 Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[3770] = {
-		name = "Deadly Poison VIII",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for (61 * 4 + 0.12 * Attack power) Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-	},
-	[3771] = {
-		name = "Deadly Poison IX",
-		icon = 132290,
-		desc = "Each strike has a 30% chance of poisoning the enemy for (74 * 4 + 0.12 * Attack power) Nature damage over 12 sec. Stacks up to 5 times on a single target.",
-		maxRank = true,
-	},
-	[1643] = {
-		name = "Dense Sharpening Stone",
-		icon = 135252,
-		desc = "Increase sharp weapon damage by 8 for 1 hour.",
-	},
-	[1703] = {
-		name = "Dense Weightstone",
-		icon = 135259,
-		desc = "Increase the damage of a blunt weapon by 8 for 1 hour.",
-	},
-	[2506] = {
-		name = "Elemental Sharpening Stone",
-		icon = 135228,
-		desc = "Increase the critical strike rating on a melee weapon by 28 for 1 hour.",
-		maxRank = true,
-	},
-	[2712] = {
-		name = "Fel Sharpening Stone",
-		icon = 135253,
-		desc = "Increase sharp weapon damage by 12 for 1 hour.",
-	},
-	[2954] = {
-		name = "Fel Weightstone",
-		icon = 135260,
-		desc = "Increase blunt weapon damage by 12 for 1 hour.",
-	},
-	[26] = {
-		name = "Frost Oil",
-		icon = 134800,
-		desc = "10% chance of casting Frostbolt at the opponent when it hits.",
-	},
-	--[[[2791] = {
-		name = "Greater Rune of Warding",
-		icon = 134423,
-		desc = "Enchant chest armor so it has a 25% chance per hit of giving you 400 points of physical damage absorption. 90 sec cooldown.",
-		maxRank = true,
-	},
-	[2720] = {
-		name = "Greater Ward of Shielding",
-		icon = 134426,
-		desc = "Applies the Greater Ward of Shielding to your shield.  This ward absorbs up to 4000 points of damage before it fails.",
-		maxRank = true,
-	},]]
-	[14] = {
-		name = "Heavy Sharpening Stone",
-		icon = 135250,
-		desc = "Increase sharp weapon damage by 4 for 1 hour.",
-	},
-	[21] = {
-		name = "Heavy Weightstone",
-		icon = 135257,
-		desc = "Increase the damage of a blunt weapon by 4 for 1 hour.",
+		desc = "Each strike has a 30% chance of poisoning the enemy for Nature damage over 12 sec. Stacks up to 5 times on a single target.",
 	},
 	[323] = {
 		name = "Instant Poison",
 		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 19 to 25 Nature damage.",
-	},
-	[324] = {
-		name = "Instant Poison II",
-		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 30 to 38 Nature damage.",
-	},
-	[325] = {
-		name = "Instant Poison III",
-		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 44 to 56 Nature damage.",
-	},
-	[623] = {
-		name = "Instant Poison IV",
-		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 67 to 85 Nature damage.",
-	},
-	[624] = {
-		name = "Instant Poison V",
-		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 92 to 118 Nature damage.",
-	},
-	[625] = {
-		name = "Instant Poison VI",
-		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 112 to 148 Nature damage.",
-	},
-	[2641] = {
-		name = "Instant Poison VII",
-		icon = 132273,
-		desc = "Each strike has a 20% chance of poisoning the enemy which instantly inflicts 146 to 194 Nature damage.",
-	},
-	[3768] = {
-		name = "Instant Poison VIII",
-		icon = 132273,
-		desc = "Each strike has a chance of poisoning the enemy which instantly inflicts (245 + 0.10 * Attack power) Nature damage.",
-	},
-	[3769] = {
-		name = "Instant Poison IX",
-		icon = 132273,
-		desc = "Each strike has a chance of poisoning the enemy which instantly inflicts (300 + 0.10 * Attack power) Nature damage.",
-		maxRank = true,
-	},
-	[2625] = {
-		name = "Lesser Mana Oil",
-		icon = 134879,
-		desc = "While applied to target weapon it restores 8 mana to the caster every 5 seconds.",
-	},
-	--[[[2781] = {
-		name = "Lesser Rune of Warding",
-		icon = 134424,
-		desc = "Enchant chest armor so it has a 25% chance per hit of giving you 200 points of physical damage absorption. 90 sec cooldown.",
-	},
-	[2719] = {
-		name = "Lesser Ward of Shielding",
-		icon = 134425,
-		desc = "Applies the Lesser Ward of Shielding to your shield.  This ward absorbs up to 1000 points of damage before it fails.",
-	},]]
-	[2626] = {
-		name = "Lesser Wizard Oil",
-		icon = 134725,
-		desc = "While applied to target weapon it increases spell damage by up to 16.",
+		desc = "Each strike has a chance of poisoning the enemy which instantly inflicts Nature damage.",
 	},
 	[35] = {
 		name = "Mind-numbing Poison",
 		icon = 136066,
-		desc = "Each strike has a 20% chance of poisoning the enemy, increasing their casting time by 40% for 10 sec.",
-	},
-	[23] = {
-		name = "Mind-numbing Poison II",
-		icon = 136066,
-		desc = "Each strike has a 20% chance of poisoning the enemy, increasing their casting time by 50% for 12 sec.",
-	},
-	[643] = {
-		name = "Mind-numbing Poison III",
-		icon = 136066,
-		desc = "Each strike has a 20% chance of poisoning the enemy, increasing their casting time by 60% for 14 sec.",
-		maxRank = true,
-	},
-	[2624] = {
-		name = "Minor Mana Oil",
-		icon = 134878,
-		desc = "While applied to target weapon it restores 4 mana to the caster every 5 seconds.",
-	},
-	[2623] = {
-		name = "Minor Wizard Oil",
-		icon = 134711,
-		desc = "While applied to target weapon it increases spell damage by up to 8.",
-	},
-	[3266] = {
-		name = "Righteous Weapon Coating",
-		icon = 134723,
-		desc = "While applied to target weapon, wielder has a chance to gain 300 attack power on every melee or ranged attack for 10 sec. Only functions on the Isle of Quel'Danas.",
-		maxRank = true,
-	},
-	[40] = {
-		name = "Rough Sharpening Stone",
-		icon = 135248,
-		desc = "Increase sharp weapon damage by 2 for 1 hour.",
-	},
-	[19] = {
-		name = "Rough Weightstone",
-		icon = 135255,
-		desc = "Increase the damage of a blunt weapon by 2 for 1 hour.",
-	},
-	[25] = {
-		name = "Shadow Oil",
-		icon = 134803,
-		desc = "15% chance of casting Shadow Bolt (Rank 3) at the opponent when it hits.",
-	},
-	[483] = {
-		name = "Solid Sharpening Stone",
-		icon = 135251,
-		desc = "Increase sharp weapon damage by 6 for 1 hour.",
-	},
-	[484] = {
-		name = "Solid Weightstone",
-		icon = 135258,
-		desc = "Increase the damage of a blunt weapon by 6 for 1 hour.",
-	},
-	[2677] = {
-		name = "Superior Mana Oil",
-		icon = 134723,
-		desc = "Restores 14 mana to the caster every 5 seconds.",
-		maxRank = true,
-	},
-	[2678] = {
-		name = "Superior Wizard Oil",
-		icon = 134767,
-		desc = "Increases spell damage by up to 42.",
-		maxRank = true,
-	},
-	[2627] = {
-		name = "Wizard Oil",
-		icon = 134726,
-		desc = "Increases spell damage by up to 24.",
+		desc = "Each strike has a 50% chance of poisoning the enemy, increasing their casting time by 430% for 10 sec.",
 	},
 	[703] = {
 		name = "Wound Poison",
 		icon = 134197,
-		desc = "Each strike has a 30% chance of poisoning the enemy, causing 17 Nature damage and reducing all healing effects used on them by 10% for 15 sec.",
-	},
-	[704] = {
-		name = "Wound Poison II",
-		icon = 134197,
-		desc = "Each strike has a 30% chance of poisoning the enemy, causing 25 Nature damage and reducing all healing effects used on them by 10% for 15 sec.",
-	},
-	[705] = {
-		name = "Wound Poison III",
-		icon = 134197,
-		desc = "Each strike has a 30% chance of poisoning the enemy, causing 38 Nature damage and reducing all healing effects used on them by 10% for 15 sec.",
-	},
-	[706] = {
-		name = "Wound Poison IV",
-		icon = 134197,
-		desc = "Each strike has a 30% chance of poisoning the enemy, causing 53 Nature damage and reducing all healing effects used on them by 10% for 15 sec.",
-	},
-	[2644] = {
-		name = "Wound Poison V",
-		icon = 134197,
-		desc = "Each strike has a 30% chance of poisoning the enemy, causing 65 Nature damage and reducing all healing effects used on them by 10% for 15 sec",
-	},
-	[3772] = {
-		name = "Wound Poison VI",
-		icon = 134197,
-		desc = "Each strike has a chance of poisoning the enemy, causing (188 + 0.04 * Attack power) Nature damage and reducing all healing effects used on them by 50% for 15 sec.",
-	},
-	[3773] = {
-		name = "Wound Poison VII",
-		icon = 134197,
-		desc = "Each strike has a chance of poisoning the enemy, causing (231 + 0.04 * Attack power) Nature damage and reducing all healing effects used on them by 50% for 15 sec.",
-		maxRank = true,
+		desc = "Each strike has a chance of poisoning the enemy, causing Nature damage and reducing all healing effects used on them by 25% for 15 sec.",
 	},
 	--Shaman self weapon enchants.
-	[15] = {
+	[5] = {
 		name = "Flametongue Weapon 1",
 		icon = 135814,
-		desc = "Each hit causes 6 to 18 additional Fire damage, based on the speed of the weapon.",
-	},
-	[4] = {
-		name = "Flametongue Weapon 2",
-		icon = 135814,
-		desc = "Each hit causes 9 to 26 additional Fire damage, based on the speed of the weapon.",
-	},
-	[3] = {
-		name = "Flametongue Weapon 3",
-		icon = 135814,
-		desc = "Each hit causes 22 to 69 additional Fire damage, based on the speed of the weapon.",
-	},
-	[523] = {
-		name = "Flametongue Weapon 4",
-		icon = 135814,
-		desc = "Each hit causes 6 to 18 additional Fire damage, based on the speed of the weapon.",
-	},
-	[1665] = {
-		name = "Flametongue Weapon 5",
-		icon = 135814,
-		desc = "Each hit causes 31 to 95 additional Fire damage, based on the speed of the weapon.",
-	},
-	[1666] = {
-		name = "Flametongue Weapon 6",
-		icon = 135814,
-		desc = "Each hit causes 40 to 124 additional Fire damage, based on the speed of the weapon.",
-	},
-	[2634] = {
-		name = "Flametongue Weapon 7",
-		icon = 135814,
-		desc = "Each hit causes 46 to 140 additional Fire damage, based on the speed of the weapon.",
-	},
-	[3779] = {
-		name = "Flametongue Weapon 8",
-		icon = 135814,
-		desc = "Each hit causes 71 to 217 additional Fire damage, based on the speed of the weapon.",
-	},
-	[3780] = {
-		name = "Flametongue Weapon 9",
-		icon = 135814,
-		desc = "Each hit causes 83 to 256 additional Fire damage, based on the speed of the weapon.",
-	},
-	[3781] = {
-		name = "Flametongue Weapon 10",
-		icon = 135814,
-		desc = "Each hit causes 89 to 274 additional Fire damage, based on the speed of the weapon.",
+		desc = "Each hit causes additional Fire damage, based on the speed of the weapon.",
 		maxRank = true,
 	},
 	[2] = {
 		name = "Frostbrand Weapon 1",
 		icon = 135847,
-		desc = "Each hit has a chance of causing 48 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[12] = {
-		name = "Frostbrand Weapon 2",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 77 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[524] = {
-		name = "Frostbrand Weapon 3",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 124 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[1667] = {
-		name = "Frostbrand Weapon 4",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 166 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[1668] = {
-		name = "Frostbrand Weapon 5",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 215 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[2635] = {
-		name = "Frostbrand Weapon 6",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 246 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[3782] = {
-		name = "Frostbrand Weapon 7",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 421 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[3783] = {
-		name = "Frostbrand Weapon 8",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 493 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
-	},
-	[3784] = {
-		name = "Frostbrand Weapon 9",
-		icon = 135847,
-		desc = "Each hit has a chance of causing 530 additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
+		desc = "Each hit has a chance of causing additional Frost damage and slowing the target's movement speed by 50% for 8 sec.",
 		maxRank = true,
 	},
-	[29] = {
-		name = "Rockbiter Weapon 1",
+	[3021] = {
+		name = "Rockbiter Weapon",
 		icon = 136086,
-		desc = "Increase weapon damage per second by 2.",
-	},
-	[6] = {
-		name = "Rockbiter Weapon 2",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 4.",
-	},
-	[1] = {
-		name = "Rockbiter Weapon 3",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 6.",
-	},
-	[503] = {
-		name = "Rockbiter Weapon 4",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 9.",
-	},
-	[1663] = {
-		name = "Rockbiter Weapon 5",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 15.",
-	},
-	[683] = {
-		name = "Rockbiter Weapon 6",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 28.",
-	},
-	[1664] = {
-		name = "Rockbiter Weapon 7",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 40.",
-	},
-	[2632] = {
-		name = "Rockbiter Weapon 8",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 49.",
-	},
-	[2633] = {
-		name = "Rockbiter Weapon 9",
-		icon = 136086,
-		desc = "Increase weapon damage per second by 62.",
+		desc = "+30% Threat, -5% Damage Taken.",
 		maxRank = true,
 	},
 	[283] = {
-		name = "Windfury Weapon 1",
+		name = "Windfury Weapon",
 		icon = 136018,
-		desc = "Each hit has a 20% chance of dealing additional damage equal to two extra attacks with 104 extra attack power.",
-	},
-	[284] = {
-		name = "Windfury Weapon 2",
-		icon = 136018,
-		desc = "Each hit has a 20% chance of dealing additional damage equal to two extra attacks with 222 extra attack power.",
-	},
-	[525] = {
-		name = "Windfury Weapon 3",
-		icon = 136018,
-		desc = "Each hit has a 20% chance of dealing additional damage equal to two extra attacks with 316 extra attack power.",
-	},
-	[1669] = {
-		name = "Windfury Weapon 4",
-		icon = 136018,
-		desc = "Each hit has a 20% chance of dealing additional damage equal to two extra attacks with 433 extra attack power.",
-	},
-	[2636] = {
-		name = "Windfury Weapon 5",
-		icon = 136018,
-		desc = "Each hit has a 20% chance of dealing additional damage equal to two extra attacks with 475 extra attack power.",
-		maxRank = true,
-	},
-	[3619] = {
-		name = "Demonic Spellstone",
-		icon = 134131,
-		desc = "While applied to target weapon it increases damage dealt by periodic spells by 1% and spell haste rating by 50.",
-	},
-	[3620] = {
-		name = "Grand Spellstone",
-		icon = 134131,
-		desc = "While applied to target weapon it increases damage dealt by periodic spells by 1% and spell haste rating by 60.",
-		maxRank = true,
-	},
-	[3613] = {
-		name = "Fel Firestone",
-		icon = 134085,
-		desc = "While applied to target weapon it increases damage dealt by direct spells by 1% and spell critical strike rating by 42.",
-	},
-	[3614] = {
-		name = "Grand Firestone",
-		icon = 134085,
-		desc = "While applied to target weapon it increases damage dealt by direct spells by 1% and spell critical strike rating by 49.",
+		desc = "Each hit has a 20% chance of dealing additional damage.",
 		maxRank = true,
 	},
 };
@@ -9710,88 +10103,11 @@ NRC.healingSpecs = {
 ---These buff tables below are wiped after being loaded locally in RaidStatus.
 ---They are just loaded here first for expansion seperation reasons.
 
---Remove old TBC ranks maxRank setting after prepatch.
 NRC.int = {
 	[1459] = {
 		name = "Arcane Intellect",
 		icon = 135932,
-		desc = "+2 Int",
-		rank = 1,
-	},
-	[1460] = {
-		name = "Arcane Intellect",
-		icon = 135932,
-		desc = "+7 Int",
-		rank = 2,
-	},
-	[1461] = {
-		name = "Arcane Intellect",
-		icon = 135932,
-		desc = "+15 Int",
-		rank = 3,
-	},
-	[10156] = {
-		name = "Arcane Intellect",
-		icon = 135932,
-		desc = "+22 Int",
-		rank = 4,
-	},
-	[10157] = {
-		name = "Arcane Intellect",
-		icon = 135932,
-		desc = "+31 Int",
-		rank = 5,
-	},
-	[27126] = {
-		name = "Arcane Intellect",
-		icon = 135932,
-		desc = "+40 Int",
-		rank = 6,
-	},
-	[42995] = {
-		name = "Arcane Intellect",
-		icon = 135932,
-		desc = "+60 Int",
-		rank = 7,
-		maxRank = true,
-	},
-	[61024] = {
-		name = "Dalaran Intellect",
-		icon = 135932,
-		desc = "+60 Int",
-		rank = 7,
-		maxRank = true,
-	},
-	[23028] = {
-		name = "Arcane Brilliance",
-		icon = 135869,
-		desc = "+31 Int",
-		rank = 1,
-	},
-	[27127] = {
-		name = "Arcane Brilliance",
-		icon = 135869,
-		desc = "+40 Int",
-		rank = 2,
-	},
-	[43002] = {
-		name = "Arcane Brilliance",
-		icon = 135869,
-		desc = "+60 Int",
-		rank = 3,
-		maxRank = true,
-	},
-	[61316] = {
-		name = "Dalaran Brilliance",
-		icon = 135869,
-		desc = "+60 Int",
-		rank = 3,
-		maxRank = true,
-	},
-	[46302] = { --Sunwell zone buff doesn't stack with int, but is overwritten by fort..
-		name = "K'iru's Song of Victory",
-		icon = 135981,
-		desc = "+40 Int",
+		desc = "+6% Spell Power",
 		rank = 1,
 		maxRank = true,
 	},
@@ -9805,340 +10121,72 @@ NRC.int = {
 };
 
 NRC.fort = {
-	[1243] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+3 Stam",
-		rank = 1,
-	},
-	[1244] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+8 Stam",
-		rank = 2,
-	},
-	[1245] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+20 Stam",
-		rank = 3,
-	},
-	[2791] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+32 Stam",
-		rank = 4,
-	},
-	[10937] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+43 Stam",
-		rank = 5,
-	},
-	[10938] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+54 Stam",
-		rank = 6,
-	},
-	[25389] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+79 Stam",
-		rank = 7,
-	},
-	[48161] = {
-		name = "Power Word: Fortitude",
-		icon = 135987,
-		desc = "+165 Stam",
-		rank = 8,
-		maxRank = true,
-	},
 	[21562] = {
-		name = "Prayer of Fortitude",
+		name = "Power Word: Fortitude",
 		icon = 135941,
-		desc = "+43 Stam",
+		desc = "+10% Stam",
 		rank = 1,
-	},
-	[21564] = {
-		name = "Prayer of Fortitude",
-		icon = 135941,
-		desc = "+54 Stam",
-		rank = 2,
-	},
-	[25392] = {
-		name = "Prayer of Fortitude",
-		icon = 135941,
-		desc = "+79 Stam",
-		rank = 3,
-	},
-	[48162] = {
-		name = "Prayer of Fortitude",
-		icon = 135941,
-		desc = "+165 Stam",
-		rank = 4,
 		maxRank = true,
 	},
 	--Runescroll.
-	[72590] = {
+	[69377] = { --These are meant to be % but wowhead shows flat numbers?
 		name = "Runescroll of Fortitude",
 		icon = 135987,
-		desc = "+165 Stam",
+		desc = "+132 Stam",
+		maxRank = true,
+	},
+	[86507] = {
+		name = "Runescroll of Fortitude II",
+		icon = 135987,
+		desc = "+468 Stam",
 		maxRank = true,
 	},
 };
 
 NRC.spirit = {
-	[14752] = {
-		name = "Divine Spirit",
-		icon = 135898,
-		desc = "+17 Spirit",
-		rank = 1,
-	},
-	[14818] = {
-		name = "Divine Spirit",
-		icon = 135898,
-		desc = "+17 Spirit",
-		rank = 2,
-	},
-	[14819] = {
-		name = "Divine Spirit",
-		icon = 135898,
-		desc = "+33 Spirit",
-		rank = 3,
-	},
-	[27841] = {
-		name = "Divine Spirit",
-		icon = 135898,
-		desc = "+40 Spirit",
-		rank = 4,
-	},
-	[25312] = {
-		name = "Divine Spirit",
-		icon = 135898,
-		desc = "+50 Spirit",
-		rank = 5,
-	},
-	[48073] = {
-		name = "Divine Spirit",
-		icon = 135898,
-		desc = "+80 Spirit",
-		rank = 6,
-		maxRank = true,
-	},
-	[27681] = {
-		name = "Prayer of Spirit",
-		icon = 135946,
-		desc = "+40 Spirit",
-		rank = 1,
-	},
-	[32999] = {
-		name = "Prayer of Spirit",
-		icon = 135946,
-		desc = "+50 Spirit",
-		rank = 2,
-	},
-	[48074] = {
-		name = "Prayer of Spirit",
-		icon = 135946,
-		desc = "+80 Spirit",
-		rank = 3,
-		maxRank = true,
-	},
+	--Does this exist in cata?
 };
 
 NRC.shadow = {
-	[976] = {
-		name = "Shadow Protection",
-		icon = 136121,
-		desc = "+30 Shadow Resistance",
-		rank = 1,
-	},
-	[10957] = {
-		name = "Shadow Protection",
-		icon = 136121,
-		desc = "+45 Shadow Resistance",
-		rank = 2,
-	},
-	[10958] = {
-		name = "Shadow Protection",
-		icon = 136121,
-		desc = "+60 Shadow Resistance",
-		rank = 3,
-	},
-	[25433] = {
-		name = "Shadow Protection",
-		icon = 136121,
-		desc = "+70 Shadow Resistance",
-		rank = 4,
-	},
-	[48169] = {
-		name = "Shadow Protection",
-		icon = 136121,
-		desc = "+130 Shadow Resistance",
-		rank = 5,
-		maxRank = true,
-	},
 	[27683] = {
-		name = "Prayer of Shadow Protection",
+		name = "Shadow Protection",
 		icon = 135945,
-		desc = "+60 Shadow Resistance",
+		desc = "+85 Shadow Resistance",
 		rank = 1,
-	},
-	[39374] = {
-		name = "Prayer of Shadow Protection",
-		icon = 135945,
-		desc = "+70 Shadow Resistance",
-		rank = 2,
-	},
-	[48170] = {
-		name = "Prayer of Shadow Protection",
-		icon = 135945,
-		desc = "+130 Shadow Resistance",
-		rank = 3,
 		maxRank = true,
 	},
 };
 
 NRC.motw = {
-	[1126] = {
+	[1126] = { --Same as pally buff in cata? Maybe change Motw/Pally colums to just kings/might colums.
 		name = "Mark of the Wild",
 		icon = 136078,
-		desc = "+25 Armor",
+		desc = "+5% stats, +42 Resistances",
 		rank = 1,
-	},
-	[5232] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+2 Stats, +65 Armor",
-		rank = 2,
-	},
-	[6756] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+4 Stats, +105 Armor",
-		rank = 3,
-	},
-	[5234] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+6 Stats, +150 Armor, +5 Resistances",
-		rank = 4,
-	},
-	[8907] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+8 Stats, +195 Armor, +10 Resistances",
-		rank = 5,
-	},
-	[9884] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+10 Stats, +240 Armor, +15 Resistances",
-		rank = 6,
-	},
-	[9885] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+12 Stats, +285 Armor, +20 Resistances",
-		rank = 7,
-	},
-	[26990] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+14 Stats, +350 Armor, +25 Resistances",
-		rank = 8,
-	},
-	[48469] = {
-		name = "Mark of the Wild",
-		icon = 136078,
-		desc = "+37 Stats, +750 Armor, +54 Resistances",
-		rank = 9,
-		maxRank = true,
-	},
-	[21849] = {
-		name = "Gift of the Wild",
-		icon = 136038,
-		desc = "+10 Stats, +240 Armor, +15 Resistances",
-		rank = 1,
-	},
-	[21850] = {
-		name = "Gift of the Wild",
-		icon = 136038,
-		desc = "+12 Stats, +285 Armor, +20 Resistances",
-		rank = 2,
-	},
-	[26991] = {
-		name = "Gift of the Wild",
-		icon = 136038,
-		desc = "+14 Stats, +350 Armor, +25 Resistances",
-		rank = 3,
-	},
-	[48470] = {
-		name = "Gift of the Wild",
-		icon = 136038,
-		desc = "+37 Stats, +750 Armor, +54 Resistances",
-		rank = 4,
 		maxRank = true,
 	},
 	--Drums.
-	[72588] = {
+	--[[[72588] = { --No more in cata? Replaced by Drums of Forgotten Kings?
 		name = "Drums of the Wild",
 		icon = 136078,
 		desc = "Gives the Gift of the Wild to all party and raid members",
 		maxRank = true,
-	},
+	},]]
 };
 
 NRC.pal = {
-	--Salv.
-	[1038] = { --Reworked in wrath to be a super short -90% threat buff.
-		name = "Blessing of Salvation",
-		icon = 135967,
-		desc = "-30% Threat",
-		maxRank = true,
-		order = 1,
-	},
-	[25895] = {
-		name = "Greater Blessing of Salvation",
-		icon = 135910,
-		desc = "-30% Threat",
-		maxRank = true,
-		order = 1,
-	},
 	--Kings.
 	[20217] = {
 		name = "Blessing of Kings",
 		icon = 135995,
-		desc = "+10% Stats",
+		desc = "+5% Stats, +42 Resistances",
 		maxRank = true,
 		order = 2,
-	},
-	[58054] = { --New 2nd spellID in wrath?
-		name = "Blessing of Kings",
-		icon = 135995,
-		desc = "+10% Stats",
-		maxRank = true,
-		order = 2,
-	},
-	[25898] = {
-		name = "Greater Blessing of Kings",
-		icon = 135993,
-		desc = "+10% Stats",
-		maxRank = true,
-		order = 2,
-	},
-	[69378] = { --Drums.
-		name = "Drums of Forgotten Kings",
-		icon = 135995,
-		desc = "+8% Stats Blessing of Forgotten Kings",
-		order = 2,
-		maxRank = true,
 	},
 	[72586] = { --Drums.
 		name = "Drums of Forgotten Kings",
 		icon = 135995,
-		desc = "+8% Stats Blessing of Forgotten Kings",
+		desc = "+4% Stats, +52 Resistances",
 		order = 2,
 		maxRank = true,
 	},
@@ -10146,271 +10194,17 @@ NRC.pal = {
 	[19740] = {
 		name = "Blessing of Might",
 		icon = 135906,
-		desc = "+20 Attack Power",
+		desc = "+20% AP (10% Ranged AP), +MP5",
 		rank = 1,
 		order = 3,
-	},
-	[19834] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+35 Attack Power",
-		rank = 2,
-		order = 3,
-	},
-	[19835] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+55 Attack Power",
-		rank = 3,
-		order = 3,
-	},
-	[19836] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+85 Attack Power",
-		rank = 4,
-		order = 3,
-	},
-	[19837] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+130 Attack Power",
-		rank = 5,
-		order = 3,
-	},
-	[19838] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+185 Attack Power",
-		rank = 6,
-		order = 3,
-	},
-	[25291] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+232 Attack Power",
-		rank = 7,
-		order = 3,
-	},
-	[27140] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+306 Attack Power",
-		rank = 8,
-		order = 3,
-	},
-	[48931] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+410 Attack Power",
-		rank = 9,
-		order = 3,
-	},
-	[48932] = {
-		name = "Blessing of Might",
-		icon = 135906,
-		desc = "+550 Attack Power",
-		rank = 10,
-		maxRank = true,
-		order = 3,
-	},
-	[25782] = {
-		name = "Greater Blessing of Might",
-		icon = 135908,
-		desc = "+185 Attack Power",
-		rank = 1,
-		order = 3,
-	},
-	[25916] = {
-		name = "Greater Blessing of Might",
-		icon = 135908,
-		desc = "+232 Attack Power",
-		rank = 2,
-		order = 3,
-	},
-	[27141] = {
-		name = "Greater Blessing of Might",
-		icon = 135908,
-		desc = "+306 Attack Power",
-		rank = 3,
-		order = 3,
-	},
-	[48933] = {
-		name = "Greater Blessing of Might",
-		icon = 135908,
-		desc = "+410 Attack Power",
-		rank = 4,
-		order = 3,
-	},
-	[48934] = {
-		name = "Greater Blessing of Might",
-		icon = 135908,
-		desc = "+550 Attack Power",
-		rank = 5,
-		maxRank = true,
-		order = 3,
-	},
-	--Wisdom.
-	[19742] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+10 MP5",
-		rank = 1,
-		order = 4,
-	},
-	[19850] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+15 MP5",
-		rank = 2,
-		order = 4,
-	},
-	[19852] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+20 MP5",
-		rank = 3,
-		order = 4,
-	},
-	[19853] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+25 MP5",
-		rank = 4,
-		order = 4,
-	},
-	[19854] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+30 MP5",
-		rank = 5,
-		order = 4,
-	},
-	[25290] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+33 MP5",
-		rank = 6,
-		order = 4,
-	},
-	[27142] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+41 MP5",
-		rank = 7,
-		order = 4,
-	},
-	[48935] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+73 MP5",
-		rank = 8,
-		order = 4,
-	},
-	[48936] = {
-		name = "Blessing of Wisdom",
-		icon = 135970,
-		desc = "+92 MP5",
-		rank = 9,
-		maxRank = true,
-		order = 4,
-	},
-	[25894] = {
-		name = "Greater Blessing of Wisdom",
-		icon = 135912,
-		desc = "+30 MP5",
-		rank = 1,
-		order = 4,
-	},
-	[25918] = {
-		name = "Greater Blessing of Wisdom",
-		icon = 135912,
-		desc = "+33 MP5",
-		rank = 2,
-		order = 4,
-	},
-	[27143] = {
-		name = "Greater Blessing of Wisdom",
-		icon = 135912,
-		desc = "+41 MP5",
-		rank = 3,
-		order = 4,
-	},
-	[48937] = {
-		name = "Greater Blessing of Wisdom",
-		icon = 135912,
-		desc = "+73 MP5",
-		rank = 4,
-		order = 4,
-	},
-	[48938] = {
-		name = "Greater Blessing of Wisdom",
-		icon = 135912,
-		desc = "+92 MP5",
-		rank = 5,
-		maxRank = true,
-		order = 4,
-	},
-	--Light. Removed in wrath?
-	--[[[19977] = {
-		name = "Blessing of Light",
-		icon = 135943,
-		desc = "+210 Holy Light, +60 Flash of Light",
-		rank = 1,
-		order = 5,
-	},
-	[19977] = {
-		name = "Blessing of Light",
-		icon = 135943,
-		desc = "+300 Holy Light, +85 Flash of Light",
-		rank = 2,
-		order = 5,
-	},
-	[19977] = {
-		name = "Blessing of Light",
-		icon = 135943,
-		desc = "+400 Holy Light, +115 Flash of Light",
-		rank = 3,
-		order = 5,
-	},
-	[19977] = {
-		name = "Blessing of Light",
-		icon = 135943,
-		desc = "+580 Holy Light, +185 Flash of Light",
-		rank = 4,
-		maxRank = true,
-		order = 5,
-	},
-	[25890] = {
-		name = "Greater Blessing of Light",
-		icon = 135909,
-		desc = "+400 Holy Light, +115 Flash of Light",
-		rank = 1,
-		order = 5,
-	},
-	[27145] = {
-		name = "Greater Blessing of Light",
-		icon = 135909,
-		desc = "+580 Holy Light, +185 Flash of Light",
-		rank = 2,
-		maxRank = true,
-		order = 5,
-	},]]
-	--Sanctuary.
-	[20911] = { --Changed in wrath to a single rank.
-		name = "Blessing of Sanctuary",
-		icon = 136051,
-		desc = "-3% Damage Taken, +10% Str/Stam, Blocked/Parried/Dodged +2% Mana Gain",
-		rank = 1,
-		order = 6,
 		maxRank = true,
 	},
-	[25899] = {
-		name = "Greater Blessing of Sanctuary",
-		icon = 135911,
-		desc = "-3% Damage Taken, +10% Str/Stam, Blocked/Parried/Dodged +2% Mana Gain",
+	[93744] = {
+		name = "Runescroll of Might",
+		icon = 135906,
+		desc = "+16% AP (8% Ranged AP), +MP5",
 		rank = 1,
-		order = 6,
+		order = 3,
 		maxRank = true,
 	},
 };

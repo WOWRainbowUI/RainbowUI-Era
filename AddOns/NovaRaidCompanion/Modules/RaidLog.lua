@@ -3156,13 +3156,15 @@ local function openTrackedItemsList()
 	table.sort(d, function(a, b)
 		return a.name < b.name
 	    	or a.name == b.name and a.spellID < b.spellID;
+	    --return a.name < b.name;
 	end)
+	--NRC:debug(d)
 	local text = "";
 	--Non-foods first.
 	for k, v in ipairs(d) do
 		if (not NRC.foods[v.spellID] and not NRC.scrolls[v.spellID]
 				and not NRC.interrupts[v.spellID] and not NRC.racials[v.spellID]) then
-			local item, icon
+			local item, icon;
 			if (v.itemID) then
 				local itemName, itemLink, itemQuality = GetItemInfo(v.itemID);
 				if (itemLink and itemLink ~= "") then
@@ -3219,10 +3221,10 @@ local function openTrackedItemsList()
 			text = text .. icon .. " " .. item .. "\n";
 		end
 	end
-	--Interrups.
+	--Interrupts.
 	for k, v in ipairs(d) do
 		if (NRC.interrupts[v.spellID]) then
-			local item, icon
+			local item, icon;
 			if (v.itemID) then
 				local itemName, itemLink, itemQuality = GetItemInfo(v.itemID);
 				if (itemLink and itemLink ~= "") then
@@ -3279,7 +3281,7 @@ local function openTrackedItemsList()
 	--Racials.
 	for k, v in ipairs(d) do
 		if (NRC.racials[v.spellID]) then
-			local item, icon
+			local item, icon;
 			if (v.itemID) then
 				local itemName, itemLink, itemQuality = GetItemInfo(v.itemID);
 				if (itemLink and itemLink ~= "") then
@@ -3336,7 +3338,7 @@ local function openTrackedItemsList()
 	--Scrolls.
 	for k, v in ipairs(d) do
 		if (NRC.scrolls[v.spellID]) then
-			local item, icon
+			local item, icon;
 			if (v.itemID) then
 				local itemName, itemLink, itemQuality = GetItemInfo(v.itemID);
 				if (itemLink and itemLink ~= "") then
@@ -3396,7 +3398,7 @@ local function openTrackedItemsList()
 	--Foods at the end for neatness.
 	for k, v in ipairs(d) do
 		if (NRC.foods[v.spellID]) then
-			local item, icon
+			local item, icon;
 			if (v.itemID) then
 				local itemName, itemLink, itemQuality = GetItemInfo(v.itemID);
 				if (itemLink and itemLink ~= "") then
@@ -5495,7 +5497,7 @@ function NRC:enteredInstanceRD(isReload, isLogon)
 	end
 	if (instanceType == "raid" and NRC.config.autoCombatLog) then
 		C_Timer.After(1, function()
-			NRC:startCombatLogging();
+			NRC:startCombatLogging(true);
 		end)
 	end
 end

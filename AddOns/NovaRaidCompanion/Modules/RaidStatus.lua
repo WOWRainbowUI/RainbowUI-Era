@@ -500,84 +500,13 @@ else
 end
 
 --These are actual "Food" buff you get while eating, these are from buff food so the raid status can display when a player is eating.
+--These match the well fed buffs in db.
 local validFoods = {};
-if (NRC.isWrath) then
-	validFoods = {
-		[57292] = "Refreshment", --Attack Power increased by 60, Spell Power increased by 35 and Stamina increased by 30.
-		[58067] = "Refreshment", --Attack Power increased by 60, Spell Power increased by 35 and Stamina increased by 30.
-		[57398] = "Refreshment", --Attack Power increased by 80, Spell Power increased by 46 and Stamina increased by 40.
-		[69560] = "Brewfest Drink", --Resilience rating and Stamina increased by 40.
-		[65363] = "Brewfest Drink", --Critical strike rating increased by 40.
-		[69561] = "Brewfest Drink", --Critical strike rating increased by 40.
-		[59227] = "Refreshment", --You are covered in eel oil!  On the bright side, at least your dodge rating has increased by 40. 
-		[57110] = "Refreshment", --Attack Power increased by 60 and Stamina increased by 30.
-		[58503] = "Refreshment", --Attack Power increased by 60 and Stamina increased by 30. (or this is just a human form buff?)
-		[57085] = "Refreshment", --Attack Power increased by 60 and Stamina increased by 40.
-		[57324] = "Refreshment", --Attack Power increased by 80 and Stamina increased by 40.
-		[57335] = "Refreshment", --Attack Power increased by 80 and Stamina increased by 40.
-		[57138] = "Refreshment", --Spell Power increased by 35 and Stamina increased by 30.
-		[57096] = "Refreshment", --Spell Power increased by 35 and Stamina increased by 40.
-		[57326] = "Refreshment", --Spell Power increased by 46 and Stamina increased by 40.
-		[57341] = "Refreshment", --Spell Power increased by 46 and Stamina increased by 40.
-		[57287] = "Refreshment", --Haste Rating increased by 30 and Stamina increased by 30.
-		[57101] = "Refreshment", --Haste Rating increased by 30 and Stamina increased by 40.
-		[57331] = "Refreshment", --Haste Rating increased by 40 and Stamina increased by 40.
-		[57344] = "Refreshment", --Haste Rating increased by 40 and Stamina increased by 40.
-		[62351] = "Refreshment", --Hit rating increased by 30 and Stamina increased by 40.
-		[57359] = "Refreshment", --Hit Rating increased by 40 and Stamina increased by 40.
-		[57285] = "Refreshment", --Critical Rating increased by 30 and Stamina increased by 30.
-		[57098] = "Refreshment", --Critical Strike Rating increased by 30 and Stamina increased by 40.
-		[57328] = "Refreshment", --Critical Strike Rating increased by 40 and Stamina increased by 40.
-		[57343] = "Refreshment", --Critical Strike Rating increased by 40 and Stamina increased by 40.
-		[57357] = "Refreshment", --Armor penetration rating increased by 40 and Stamina increased by 40.
-		[57370] = "Refreshment", --Strength increased by 40 and Stamina increased by 40.
-		[57355] = "Refreshment", --Expertise Rating increased by 40 and Stamina increased by 40.
-		[57366] = "Refreshment", --Agility increased by 40 and Stamina increased by 40.
-		[57364] = "Refreshment", --Spirit increased by 40 and Stamina increased by 40.
-		[57106] = "Refreshment", --Mana Regeneration increased by 15 every 5 seconds and Stamina increased by 40.
-		[57289] = "Refreshment", --Mana Regeneration increased by 15 every 5 seconds and Stamina increased by 30.
-		[57333] = "Refreshment", --Mana Regeneration increased by 20 every 5 seconds and Stamina increased by 40.
-		[57354] = "Refreshment", --Mana Regeneration increased by 20 every 5 seconds and Stamina increased by 40.
-		[53283] = "Food", --Stamina and Spirit increased by 25.
-		[64056] = "Food", --Attack power increased by 24 and spell power increased by 14.
-		--Seems you don't actually get the above buffs in wrath, you get seperate drink and food?
-		--Track he food buff, I think al
-		[45548] = "Food", --Restores 22500 health over 30 sec.
-		---Test feasts.
-	};
-elseif (NRC.isTBC) then
-	validFoods = {
-		[33258] = "Food", --30 stam 20 spirit.
-		[33269] = "Food", --44 healing 20 spirit.
-		[33264] = "Food", --23 SP 20 spirit.
-		[33260] = "Food", --40 AP 20 spirit.
-		[33262] = "Food", --20 agi 20 spirit.
-		[43763] = "Food", --20 hit 20 spirit.
-		[33255] = "Food", --20 str 20 spirit.
-		[43706] = "Drink", --20 crit 20 spirit.
-		[33266] = "Food", --20 stam 8MP5.
-		[45618] = "Food", --8 resistances.
-		[43730] = "Electrified", --Zap nearby enemies.
-	};
-else
-	--Era/SoD.
-	validFoods = {
-		[5004] = "Food", --2 stam 2 spirit.
-		[5005] = "Food", --4 stam 4 spirit.
-		[5006] = "Food", --6 stam 6 spirit.
-		[5007] = "Food", --8 stam 8 spirit.
-		[10256] = "Food", --12 stam 12 spirit.
-		[10257] = "Food", --14 stam 14 spirit.
-		[24800] = "Food", --20 strength.
-		[18229] = "Food", --+10 Stamina, 35.
-		[18230] = "Food", --+10 Agility, 35.
-		[18231] = "Food", --+10 Spirit, 35.
-		[18232] = "Food", --+6 Health every 5 seconds, 35.
-		[18233] = "Food", --+8 Mana every 5 seconds, 35.
-		[18234] = "Food", --+10 Stamina, 55, has level 35 equivalent.
-		[22731] = "Food", --+Intellect, 55.
-	};
+for k, v in pairs(NRC.eating) do
+	validFoods[k] = v;
 end
+NRC.eating = nil;
+
 
 --Future notes.
 --[[if (wrath) then
@@ -800,6 +729,7 @@ local function updateCooldownSwipe(texture, endTime, maxDuration)
 		local elapsedDuration = maxDuration - remaining;
 		if (not texture.cooldown) then
 			local cooldown = CreateFrame("Cooldown", texture:GetName() .. "Cooldown", texture:GetParent(), "CooldownFrameTemplate");
+			cooldown:SetHideCountdownNumbers(true); --Hide cooldown number incase user has enabled it in options for hotbars.
 			cooldown:ClearAllPoints();
 			cooldown:SetSize(texture:GetSize());
 			cooldown:SetPoint("CENTER", texture);

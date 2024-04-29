@@ -329,6 +329,10 @@ local portals = {
 	[54710] = 133871,
 };
 
+if (NRC.isSOD) then
+	cauldrons[429961] = 133662;
+end
+
 local trackAnnounce = {};
 for k, v in pairs(cauldrons) do
 	trackAnnounce[k] = v;
@@ -376,6 +380,9 @@ local function combatLogEventUnfiltered(...)
 				if (inInstance) then
 					--Trim the msg a bit for english clients, no need to show it's a major, all cauldrons are.
 					spellName = string.gsub(spellName, "Major ", "");
+					if (spellID == 429961) then
+						spellName = L["Sleeping Bag"];
+					end
 					local msg = spellName .. " placed on the ground.";
 					if (spellName == "Wormhole") then
 						msg = spellName .. " Portal placed on the ground.";
@@ -706,9 +713,9 @@ if (not NRC.isRetail) then
 	GameTooltip:HookScript("OnTooltipSetItem", GameTooltipSetItem);
 end
 
-function NRC:startCombatLogging()
+function NRC:startCombatLogging(isRaid)
 	local instance, instanceType = IsInInstance();
-	if (instance and instanceType == "raid") then
+	if (instance and (instanceType == "raid" or isRaid)) then
 		if (not LoggingCombat()) then
 			LoggingCombat(true);
 			print("|cFFFFFF00" .. COMBATLOGENABLED);
