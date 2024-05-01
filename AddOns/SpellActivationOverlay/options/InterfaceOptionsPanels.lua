@@ -54,7 +54,7 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     end
 
     local soundSlider = SpellActivationOverlayOptionsPanelSpellAlertSoundSlider;
-    soundSlider.Text:SetText("Spell Alert Sound Effect");
+    soundSlider.Text:SetText("法術警告音效");
     _G[soundSlider:GetName().."Low"]:SetText(DISABLE);
     _G[soundSlider:GetName().."High"]:SetText(ENABLE);
     soundSlider:SetMinMaxValues(0, 1);
@@ -100,7 +100,7 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     SAO:MarkTexture(testTextureTop);
 
     local debugButton = SpellActivationOverlayOptionsPanelSpellAlertDebugButton;
-    debugButton.Text:SetText("Write Debug to Chatbox");
+    debugButton.Text:SetText("將除錯訊息輸出到聊天視窗");
     debugButton:SetChecked(SpellActivationOverlayDB.debug == true);
 
     local glowingButtonCheckbox = SpellActivationOverlayOptionsPanelGlowingButtons;
@@ -301,13 +301,19 @@ function SpellActivationOverlayOptionsPanel_OnLoad(self)
     SAO.OptionsPanel = self;
 end
 
+local optionsLoaded = false; -- Make sure we do not load the options panel twice
 function SpellActivationOverlayOptionsPanel_OnShow(self)
-    if (SAO.CurrentClass) then
-        if (SAO.CurrentClass.LoadOptions) then
-            SAO.CurrentClass.LoadOptions(SAO);
-            SAO.CurrentClass.LoadOptions = nil; -- Reset callback so that it is not called again on next show
-        end
+    if optionsLoaded then
+        return;
     end
+
+    SAO:AddEffectOptions();
+
+    if SAO.CurrentClass and type(SAO.CurrentClass.LoadOptions) == 'function' then
+        SAO.CurrentClass.LoadOptions(SAO);
+    end
+
+    optionsLoaded = true;
 end
 
 SLASH_SAO1 = "/sao"
