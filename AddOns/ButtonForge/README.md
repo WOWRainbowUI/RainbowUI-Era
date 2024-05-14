@@ -1,5 +1,5 @@
-﻿# ButtonForge-Wrath-classic
-Unofficial fork of ButtonForge addon for World of Warcraft WotLK classic. 
+﻿# ButtonForge-classic
+Unofficial (now official) fork of ButtonForge addon for World of Warcraft classic. 
 
 ![Featured Image](screenshot.jpg)
 
