@@ -25,6 +25,7 @@ L["GUILD_ACHIEVEMENT_UNLOCKED"] = _G.GUILD_ACHIEVEMENT_UNLOCKED
 L["ID"] = _G.ID
 L["ITEM_LEGENDARY"] = _G.LEGENDARY_ITEM_LOOT_LABEL
 L["LOOT_THRESHOLD"] = _G.LOOT_THRESHOLD
+L["MATERIALS"] = _G.WORLD_QUEST_REWARD_FILTERS_PROFESSION_MATERIALS
 L["NEW"] = _G.NEW
 L["OKAY"] = _G.OKAY
 L["PETS"] = _G.PETS
@@ -82,7 +83,7 @@ L["Y_OFFSET"] = "yOffset"
 L["YOU_LOST"] = "You Lost"
 L["YOU_RECEIVED"] = "You Received"
 
--- Classic
+-- Classic Era
 L["ITEM_FILTERS_DESC"] = "These items ignore the loot quality threshold."
 L["NEW_ITEM_FILTER_DESC"] = "Enter an item ID."
 L["TYPE_LOOT_ITEMS"] = "Loot (Items)"
