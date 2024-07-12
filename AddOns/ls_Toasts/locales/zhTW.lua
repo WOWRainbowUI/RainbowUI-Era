@@ -82,7 +82,7 @@ L["Y_OFFSET"] = "垂直位移"
 L["YOU_LOST"] = "你失去了"
 L["YOU_RECEIVED"] = "你收到了"
 
--- Classic
+-- Classic Era
 L["ITEM_FILTERS_DESC"] = "這些物品會忽略拾取品質過濾方式。"
 L["NEW_ITEM_FILTER_DESC"] = "輸入物品 ID。"
 L["TYPE_LOOT_ITEMS"] = "拾取 (物品)"
